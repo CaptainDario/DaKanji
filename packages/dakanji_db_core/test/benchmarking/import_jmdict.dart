@@ -11,7 +11,7 @@ void main() async {
 
   if(File(dakanjiDbPath).existsSync()) File(dakanjiDbPath).deleteSync();
   DaKanjiDB db = DaKanjiDB(
-    dbPath: dakanjiDbPath, inMemory: true, languageProcessor: japaneseProcessor);
+    dbPath: dakanjiDbPath, inMemory: true, languageProcessor: await japaneseProcessor);
 
   Stopwatch s = Stopwatch()..start();
 

@@ -59,7 +59,7 @@ Future<DaKanjiDB> setupFreshDB() async {
   // create the testing database (delete any existing database)
   if(File(dakanjiDbPath).existsSync()) File(dakanjiDbPath).deleteSync();
   DaKanjiDB db = DaKanjiDB(
-    dbPath: dakanjiDbPath, inMemory: true, languageProcessor: japaneseProcessor);
+    dbPath: dakanjiDbPath, inMemory: true, languageProcessor: await japaneseProcessor);
 
   // init mecab
   final mecab = Mecab();

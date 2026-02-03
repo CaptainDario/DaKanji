@@ -59,7 +59,7 @@ Future<DaKanjiDB> setupFreshDB() async {
   // setup 
   if(File(dakanjiDbPath).existsSync()) File(dakanjiDbPath).deleteSync();
   DaKanjiDB db = DaKanjiDB(
-    dbPath: dakanjiDbPath, inMemory: true, languageProcessor: japaneseProcessor);
+    dbPath: dakanjiDbPath, inMemory: true, languageProcessor: await japaneseProcessor);
 
   // convert krad / radk file
   Stopwatch s = Stopwatch()..start();

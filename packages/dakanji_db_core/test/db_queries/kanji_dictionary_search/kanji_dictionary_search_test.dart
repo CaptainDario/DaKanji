@@ -3,7 +3,6 @@ import 'package:dakanji_db_core/database/dakanji_db.dart';
 import 'package:dakanji_db_core/database/db_queries/kanji_dictionary_search/kanji_dictionary_search_result.dart';
 import 'package:dakanji_db_core/parsing/dictionary_parser.dart';
 import 'package:dakanji_db_shared/paths.dart';
-import 'package:mecab_for_dart/mecab_dart.dart';
 import 'package:path/path.dart' as p;
 import 'package:test/test.dart';
 import 'package:universal_io/io.dart';
@@ -79,10 +78,7 @@ Future<DaKanjiDB> setupFreshDB() async {
   // create the testing database (delete any existing database)
   if (File(dakanjiDbPath).existsSync()) File(dakanjiDbPath).deleteSync();
   DaKanjiDB db = DaKanjiDB(
-    dbPath: dakanjiDbPath, inMemory: true, languageProcessor: japaneseProcessor);
-
-  final mecab = Mecab();
-  await mecab.init(mecabDynamicLibPath, mecabDicPath, true);
+    dbPath: dakanjiDbPath, inMemory: true, languageProcessor: await japaneseProcessor);
 
   // import the yomitan test files
   Stopwatch s = Stopwatch()..start();
@@ -100,7 +96,7 @@ Future<DaKanjiDB> setupFreshDB() async {
 
   // import the custom database
   s = Stopwatch()..start();
-  await partialInit(db, (File f) => true, "term_search_test", mecab, 
+  await partialInit(db, (File f) => true, "term_search_test",
     otherFilesToCopy: [
       File(p.join(dataFilesPath, "testing_db", "kanji_bank_1.json")),
       File(p.join(dataFilesPath, "testing_db", "kanji_meta_bank_1.json")),

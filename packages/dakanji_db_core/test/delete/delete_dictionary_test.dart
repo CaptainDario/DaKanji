@@ -17,7 +17,7 @@ void main() {
   // Set up the DB, Mecab, and Zipped Dictionary Path ONCE for all tests
   setUpAll(() async {
     db = DaKanjiDB(
-    dbPath: dakanjiDbPath, inMemory: true, languageProcessor: japaneseProcessor);
+    dbPath: dakanjiDbPath, inMemory: true, languageProcessor: await japaneseProcessor);
 
     mecab = Mecab();
     await mecab.init(mecabDynamicLibPath, mecabDicPath, true);

@@ -47,7 +47,7 @@ Future<DaKanjiDB> setupFreshDB() async {
 
   // setup 
   DaKanjiDB db = DaKanjiDB(
-    dbPath: dakanjiDbPath, inMemory: true, languageProcessor: japaneseProcessor);
+    dbPath: dakanjiDbPath, inMemory: true, languageProcessor: await japaneseProcessor);
 
   // convert kanjivg database
   Stopwatch s = Stopwatch()..start();

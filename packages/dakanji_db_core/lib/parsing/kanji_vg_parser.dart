@@ -40,9 +40,7 @@ Future<void> _addKanjiVGToDB(
     inMemory: inMemory,
     // is not used in this context
     languageProcessor: JapaneseProcessor(
-      dicMecabPath: "",
-      libMecabPath: "",
-      mecabIncludeFeatures: true,
+      mecabTransferableState: null
     )
   );
 

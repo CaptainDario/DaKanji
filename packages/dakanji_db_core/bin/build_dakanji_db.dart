@@ -86,16 +86,14 @@ void main(List<String> args) async {
     File(dakanjiDbPath).deleteSync();
   }
   LanguageProcessor languageProcessor = JapaneseProcessor(
-    libMecabPath: mecabDynamicLibPath,
-    dicMecabPath: mecabDicPath,
-    mecabIncludeFeatures: true
+    mecabTransferableState: MecabTransferableState(
+      libmecabPath: mecabDynamicLibPath,
+      mecabDictDirPath: mecabDicPath,
+      includeFeatures: true,
+    )
   );
   DaKanjiDB db = DaKanjiDB(
     dbPath: dakanjiDbPath, inMemory: false, languageProcessor: languageProcessor);
-
-  // init mecab
-  final mecab = Mecab();
-  await mecab.init(mecabDynamicLibPath, mecabDicPath, true);
 
   // add the default search profile
   await db.searchProfilesDao.createNewProfile(true);
@@ -110,7 +108,7 @@ void main(List<String> args) async {
   //await importRadicals(db);
 
   print("Importing yomitan dicts...");
-  await importYomitanDicts(db, mecab,
+  await importYomitanDicts(db,
     [
       //(kanjidic2InputPath, "KanjiDic2"),
       //(jpdb2_2InputPath, "JPDB 2.2"),
@@ -216,7 +214,6 @@ Future importRadicals(DaKanjiDB db) async {
 /// parses the kanjidic2 and adds it to the given [DaKanjiDB]
 Future importYomitanDicts(
   DaKanjiDB db,
-  Mecab mecab,
   List<(String path, String name)> inputs,
   bool addStructuredContentJsonDefs,
 ) async {

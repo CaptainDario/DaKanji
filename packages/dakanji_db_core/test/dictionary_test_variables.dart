@@ -5,14 +5,25 @@ import 'package:dakanji_db_core/database/tag/tag_bank_v3_entry.dart';
 import 'package:dakanji_db_core/database/term_meta/term_meta_bank_entry.dart';
 import 'package:dakanji_db_shared/dakanji_db_shared.dart';
 import 'package:language_processing/japanese_processor.dart';
+import 'package:mecab_for_dart/mecab_dart.dart';
 
 
 
-JapaneseProcessor japaneseProcessor = JapaneseProcessor(
-    libMecabPath: mecabDynamicLibPath,
-    dicMecabPath: mecabDicPath,
-    mecabIncludeFeatures: true
-  );
+JapaneseProcessor? _japaneseProcessor;
+
+Future<JapaneseProcessor> get japaneseProcessor async{
+  if (_japaneseProcessor == null) {
+    _japaneseProcessor = JapaneseProcessor(
+      mecabTransferableState: MecabTransferableState(
+        libmecabPath: mecabDynamicLibPath,
+        mecabDictDirPath: mecabDicPath,
+        includeFeatures: true
+      )
+    );
+    await _japaneseProcessor!.init();
+  }
+  return _japaneseProcessor!;
+}
 
 final namaGyouzaMeta = TermMetaBankV3Entry(
   id: 0,

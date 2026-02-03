@@ -70,11 +70,12 @@ Map<String, String> kanjiCodeLookup = {
 Future addRadicalsToDB(String radkPath, String kradPath, DaKanjiDB db) async {
 
   final connection = await db.attachedDatabase.serializableConnection();
+  final processorJson = db.languageProcessor.toJsonString();
 
   // spawn isolate
   bool inMemory = db.inMemory;
   await Isolate.run(() async {
-    await _addRadicalsToDB(radkPath, kradPath, connection, inMemory, db.languageProcessor.toJsonString());
+    await _addRadicalsToDB(radkPath, kradPath, connection, inMemory, processorJson);
   });
 
   await optimizeDbAfterImport(db);

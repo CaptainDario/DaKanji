@@ -7,9 +7,7 @@ import 'preprocess_input_test_cases.dart';
 void main() { 
 
   JapaneseProcessor jp = JapaneseProcessor(
-    dicMecabPath: "",
-    libMecabPath: "",
-    mecabIncludeFeatures: true,
+    mecabTransferableState: null
   );
 
   group('preprocessInput', () {

@@ -2,7 +2,6 @@ import 'package:archive/archive_io.dart';
 import 'package:dakanji_db_core/database/dakanji_db.dart';
 import 'package:dakanji_db_core/parsing/dictionary_parser.dart';
 import 'package:dakanji_db_shared/dakanji_db_shared.dart';
-import 'package:mecab_for_dart/mecab_dart.dart';
 import 'package:path/path.dart' as p;
 import 'package:universal_io/io.dart';
 
@@ -15,7 +14,6 @@ Future<void> partialInit(
   DaKanjiDB db,
   bool Function(File) shouldIncludeFile,
   String folderName,
-  Mecab mecab,
   {
     List<File> otherFilesToCopy = const [],
     required bool isDefaultDictionary,

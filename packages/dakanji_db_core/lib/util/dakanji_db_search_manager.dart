@@ -6,7 +6,10 @@ import 'package:dakanji_db_core/database/dakanji_db.dart';
 import 'package:dakanji_db_core/database/db_queries/dictionary_search/dictionary_search_params.dart';
 import 'package:dakanji_db_core/database/db_queries/dictionary_search/dictionary_search_result.dart';
 import 'package:drift/drift.dart';
-import 'package:drift/isolate.dart'; 
+import 'package:drift/isolate.dart';
+import 'package:language_processing/language_processor.dart';
+// Note: You do not need to import specific processors like JapaneseProcessor here
+// because the static 'LanguageProcessor.fromJson' handles the types.
 
 class DaKanjiDbSearchManager {
   
@@ -77,14 +80,13 @@ class DaKanjiDbSearchManager {
     // 1. Check if user typed again while debounce was waiting
     if (searchId != _currentSearchId) return;
 
-    if (params.query.isEmpty) {
+    if (params.searchInput.isEmpty) {
       _activeJob?.cancel();
       onResult(null);
       return;
     }
 
     // 2. Logically cancel the previous job (ignore its results)
-    // We DO NOT kill the worker. Let it finish and close DB cleanly.
     _activeJob?.cancel();
 
     // 3. Create a new handle for this specific search
@@ -102,7 +104,8 @@ class DaKanjiDbSearchManager {
         worker = await _spawnWorker();
         // Check if cancelled during spawn await
         if (job.isCancelled || searchId != _currentSearchId) {
-          _idleWorkers.add(worker); // Save for next time
+          // Worker created but job cancelled; save it for next time
+          _idleWorkers.add(worker); 
           return; 
         }
       } catch (e) {
@@ -127,6 +130,16 @@ class DaKanjiDbSearchManager {
       }
       
       resultPort.close();
+      
+      // CRITICAL: Return the worker to the pool so it stays "Warm"
+      if (!job.isCancelled) {
+         _idleWorkers.add(worker);
+      } else {
+         // If the job was cancelled mid-flight, the worker might be processing
+         // old data. In a simple implementation, we can still re-use it,
+         // or kill it if we want to be strict. Here we re-use.
+         _idleWorkers.add(worker);
+      }
     });
 
     // 6. Send Job
@@ -136,7 +149,7 @@ class DaKanjiDbSearchManager {
       debug: debug,
     ));
 
-    // 7. Ensure we have workers ready for the NEXT keystroke
+    // Ensure workers ready for the NEXT keystroke
     _replenishQueue();
   }
 
@@ -161,6 +174,9 @@ class DaKanjiDbSearchManager {
     final completer = Completer<_WorkerHandle>();
 
     try {
+      // --- INTEGRATION POINT: Capture Processor State ---
+      final processorState = daKanjiDB.languageProcessor.toJson();
+      
       final driftIsolate = await daKanjiDB.attachedDatabase.serializableConnection();
 
       final isolate = await Isolate.spawn(
@@ -169,6 +185,7 @@ class DaKanjiDbSearchManager {
           handshakeSendPort: handshakePort.sendPort,
           dbConnection: driftIsolate,
           inMemory: daKanjiDB.inMemory,
+          processorState: processorState, // Pass state to isolate
         ),
         debugName: "SearchWorker",
       );
@@ -190,21 +207,33 @@ class DaKanjiDbSearchManager {
 
   void dispose() {
     cancelCurrentOperations();
-    // It is safe to kill IDLE workers as they hold no active DB locks/connections
+    // Signal workers to shutdown cleanly
     for (final w in _idleWorkers) {
+      w.sendPort.send("shutdown");
       w.isolate.kill(priority: Isolate.immediate);
     }
     _idleWorkers.clear();
   }
 
-  // --- Worker Logic (Same as before) ---
+  // --- Worker Logic ---
 
   static void _workerEntry(_InitMessage init) async {
     final commandPort = ReceivePort();
     init.handshakeSendPort.send(commandPort.sendPort);
 
+    final processor = LanguageProcessor.fromJson(init.processorState);
+    try {
+      await processor.init();
+    } catch (e) {
+      print("Worker failed to init language processor: $e");
+    }
+
     final QueryExecutor executor = await init.dbConnection.connect();
-    final DaKanjiDB db = DaKanjiDB(executor: executor, inMemory: init.inMemory);
+    final DaKanjiDB db = DaKanjiDB(
+      executor: executor,
+      inMemory: init.inMemory,
+      languageProcessor: processor // Pass the local, initialized processor
+    );
 
     await for (final msg in commandPort) {
       if (msg is _WorkerJob) {
@@ -213,12 +242,15 @@ class DaKanjiDbSearchManager {
             msg.params,
             printDebugInfo: msg.debug,
           );
-          await db.close(); // Crucial: Properly close connection
-          Isolate.exit(msg.replyPort, result);
+          // Do NOT close DB or exit Isolate here if we want "Warm" workers.
+          msg.replyPort.send(result);
         } catch (e) {
-          try { await db.close(); } catch (_) {}
-          Isolate.exit(msg.replyPort, _ErrorResult(e.toString()));
+          msg.replyPort.send(_ErrorResult(e.toString()));
         }
+      } else if (msg == "shutdown") {
+        await processor.close();
+        await db.close();
+        break; 
       }
     }
   }
@@ -241,7 +273,14 @@ class _InitMessage {
   final SendPort handshakeSendPort;
   final DriftIsolate dbConnection;
   final bool inMemory;
-  _InitMessage({required this.handshakeSendPort, required this.dbConnection, required this.inMemory});
+  final Map<String, dynamic> processorState; // Added field
+
+  _InitMessage({
+    required this.handshakeSendPort, 
+    required this.dbConnection, 
+    required this.inMemory,
+    required this.processorState,
+  });
 }
 
 class _WorkerJob {

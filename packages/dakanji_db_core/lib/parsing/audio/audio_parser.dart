@@ -33,6 +33,7 @@ Future parseAudioDataSource({
 
   /// get parameters for isolate and spawn it
   final connection = await db.attachedDatabase.serializableConnection();
+  final processorJson = db.languageProcessor.toJsonString();
 
   // setup isolate communication
   ReceivePort receivePort = ReceivePort();
@@ -49,7 +50,7 @@ Future parseAudioDataSource({
     audioDataSourceFile: audioDataSourceFile,
     audioDataSourceBytes: audioDataSourceBytes,
     dbConnection: connection,
-    processor: db.languageProcessor,
+    processorJson: processorJson,
     mainIsolateSendPort: receivePort.sendPort,
     isDefaultDictionary: isDefaultDictionary,
     inMemory: db.inMemory,
@@ -65,7 +66,7 @@ Future _parseAudioDataSource(({
   String? audioDataSourceFile,
   Uint8List? audioDataSourceBytes,
   DriftIsolate dbConnection,
-  LanguageProcessor processor,
+  String processorJson,
   SendPort mainIsolateSendPort,
   bool isDefaultDictionary,
   bool inMemory
@@ -74,9 +75,9 @@ Future _parseAudioDataSource(({
   final db = DaKanjiDB(
     executor: await params.dbConnection.connect(),
     inMemory: params.inMemory,
-    languageProcessor: params.processor,
+    languageProcessor: LanguageProcessor.fromJsonString(params.processorJson),
   );
-  await params.processor.init();
+  await db.languageProcessor.init();
 
   // Read the neccessary data from the DB
   AudioParserContext aC = await AudioParserContext.create(db);
@@ -115,17 +116,17 @@ Future _parseAudioDataSource(({
     switch (format) {
       case AudioDataSourceFormats.filesNames:
         await parseAudioDataSourceFileNameFormat(
-          dataSources, db, indexId, aC, params.processor, params.mainIsolateSendPort);
+          dataSources, db, indexId, aC, params.mainIsolateSendPort);
         break;
       case AudioDataSourceFormats.indexJson:
         String jsonString = utf8.decode(dataSources.first.fileContent);
         await parseAudioDataSourceIndexFormat(
-          dataSources.skip(1), db, indexId, jsonString, aC, params.processor, params.mainIsolateSendPort);
+          dataSources.skip(1), db, indexId, jsonString, aC, params.mainIsolateSendPort);
         break;
       case AudioDataSourceFormats.entriesJson:
         String jsonString = utf8.decode(dataSources.first.fileContent);
         await parseAudioDataSourceEntriesFormat(
-          dataSources.skip(1), db, indexId, jsonString, aC, params.processor, params.mainIsolateSendPort);
+          dataSources.skip(1), db, indexId, jsonString, aC, params.mainIsolateSendPort);
         break;
     }
 
@@ -143,7 +144,7 @@ Future _parseAudioDataSource(({
     params.mainIsolateSendPort.send(e);
   }
   
-  params.processor.close();
+  db.languageProcessor.close();
   params.mainIsolateSendPort.send(null);
 
 }
@@ -155,7 +156,6 @@ Future parseAudioDataSourceEntry(
   int indexId,
   DaKanjiDB db,
   AudioParserContext aC,
-  LanguageProcessor processor
 ) async {
 
   aC.currentMaxAudioId++;
@@ -165,11 +165,11 @@ Future parseAudioDataSourceEntry(
     if(termId == null){
       termId = ++aC.currentMaxTermId;
 
-      String? termNormalized = processor.normalize(term, ProcessorOptions()).firstOrNull;
-      String? termTokens = processor.segment(term);
+      String? termNormalized = db.languageProcessor.normalize(term, ProcessorOptions()).firstOrNull;
+      String? termTokens = db.languageProcessor.segment(term);
       String? termTokensNormalized = termTokens==null
         ? null
-        :  processor.normalize(termTokens, ProcessorOptions()).firstOrNull;
+        :  db.languageProcessor.normalize(termTokens, ProcessorOptions()).firstOrNull;
       aC.termComps.add(TermTableCompanion(
         id: Value(termId),
         term: Value(term),
@@ -197,7 +197,7 @@ Future parseAudioDataSourceEntry(
     if(readingId == null) {
       readingId = ++aC.currentMaxReadingId;
 
-      String? readingNormalized =  processor.normalize(reading, ProcessorOptions()).firstOrNull;
+      String? readingNormalized = db.languageProcessor.normalize(reading, ProcessorOptions()).firstOrNull;
       aC.readingComps.add(ReadingTableCompanion(
         id: Value(readingId),
         reading: Value(reading),
@@ -225,7 +225,6 @@ Future parseAudioDataSourceFileNameFormat(
   DaKanjiDB db,
   int indexId,
   AudioParserContext aC,
-  LanguageProcessor processor,
   SendPort mainIsolate
 ) async {
   final int noEntries = dataSources.length;
@@ -260,7 +259,7 @@ Future parseAudioDataSourceFileNameFormat(
 
     // Pass extracted data to the entry parser
     await parseAudioDataSourceEntry(
-      [term], reading, pitch, indexId, db, aC, processor);
+      [term], reading, pitch, indexId, db, aC);
 
     // if enough audios have been processed, import them into the DB
     if(i % noFilesToBatchInsert == 0 || i == noEntries) {
@@ -277,7 +276,6 @@ Future parseAudioDataSourceIndexFormat(
   int indexId,
   String jsonString,
   AudioParserContext aC,
-  LanguageProcessor processor,
   SendPort mainIsolate
 ) async {
 
@@ -320,7 +318,7 @@ Future parseAudioDataSourceIndexFormat(
     String term = entry.term;
     String? reading = entry.reading;
     int? pitchPattern = entry.pitchPattern;
-    await parseAudioDataSourceEntry([term], reading, pitchPattern, indexId, db, aC, processor);
+    await parseAudioDataSourceEntry([term], reading, pitchPattern, indexId, db, aC);
 
     // if enough audios have been processed, import them into the DB
     if(i % noFilesToBatchInsert == 0 || i == noEntries) {
@@ -337,7 +335,6 @@ Future parseAudioDataSourceEntriesFormat(
   int indexId,
   String jsonString,
   AudioParserContext aC,
-  LanguageProcessor processor,
   SendPort mainIsolate
 ) async {
 
@@ -373,7 +370,7 @@ Future parseAudioDataSourceEntriesFormat(
     final entry = fileData[filePath]!;
 
     await parseAudioDataSourceEntry(
-      entry.term, entry.reading, entry.pitchPattern, indexId, db, aC, processor);
+      entry.term, entry.reading, entry.pitchPattern, indexId, db, aC);
 
     // if enough audios have been processed, import them into the DB
     if(i % noFilesToBatchInsert == 0 || i == noEntries) {

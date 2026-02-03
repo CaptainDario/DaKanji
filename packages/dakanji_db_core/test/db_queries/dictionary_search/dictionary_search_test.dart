@@ -232,7 +232,7 @@ Future setupFreshDB() async {
 
   //if(File(dakanjiDbPath).existsSync()) File(dakanjiDbPath).deleteSync();
   DaKanjiDB db = DaKanjiDB(
-    dbPath: dakanjiDbPath, inMemory: true, languageProcessor: japaneseProcessor);
+    dbPath: dakanjiDbPath, inMemory: true, languageProcessor: await japaneseProcessor);
 
   // init mecab
   final mecab = Mecab();
@@ -246,7 +246,7 @@ Future setupFreshDB() async {
       (i == 1 && !p.basename(file.path).contains("term_bank")) || 
       p.basename(file.path).contains("index"); // always include index files
 
-    await partialInit(db, shouldIncludeFile, "term_search_test", mecab,
+    await partialInit(db, shouldIncludeFile, "term_search_test",
       otherFilesToCopy: [
         File(p.join(dataFilesPath, "testing_db", 'term_bank_$i.json')),
         if(i == 3)File(p.join(dataFilesPath, "testing_db", 'term_meta_bank_2.json')),

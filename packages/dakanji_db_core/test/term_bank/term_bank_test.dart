@@ -76,7 +76,7 @@ void main() async {
 Future<DaKanjiDB> setupFreshDB(int testCaseIndex) async {
 
   DaKanjiDB db = DaKanjiDB(
-    dbPath: dakanjiDbPath, inMemory: true, languageProcessor: japaneseProcessor);
+    dbPath: dakanjiDbPath, inMemory: true, languageProcessor: await japaneseProcessor);
   db.clearDB();
 
   Mecab mecab = Mecab();
@@ -85,7 +85,7 @@ Future<DaKanjiDB> setupFreshDB(int testCaseIndex) async {
   bool shouldIncludeFile(File file) =>
     (p.basename(file.path) == "term_bank_$testCaseIndex.json" ||
     !p.basename(file.path).contains("term_bank"));
-  await partialInit(db, shouldIncludeFile, "term_bank_test", mecab,
+  await partialInit(db, shouldIncludeFile, "term_bank_test",
     isDefaultDictionary: false); 
 
   return db;

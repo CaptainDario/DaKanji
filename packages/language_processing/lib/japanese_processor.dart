@@ -12,18 +12,10 @@ import 'package:mecab_for_dart/mecab_dart.dart';
 
 class JapaneseProcessor extends LanguageProcessor{
 
-  /// Optional, path to the mecab library.
-  /// Must be provided if `mecab` is not provided to the constructor.
-  final String? libMecabPath;
-  /// Optional, path to the mecab dictionary.
-  /// Must be provided if `mecab` is not provided to the constructor.
-  final String? dicMecabPath;
-  /// Options for mecab initialization.
-  /// Must be provided if `mecab` is not provided to the constructor.
-  final bool? mecabIncludeFeatures;
-
-  bool _initialized = false;
-
+  /// State from which a new mecab instance can be created
+  /// Note: if this is set to null some methods will throw an exception
+  MecabTransferableState? mecabTransferableState;
+    
   Mecab? _mecab;
 
   Mecab get mecab {
@@ -32,36 +24,31 @@ class JapaneseProcessor extends LanguageProcessor{
     }
     return _mecab!;
   }
+
+  bool _initialized = false;
   
   JapaneseProcessor({
-    this.libMecabPath,
-    this.dicMecabPath,
-    this.mecabIncludeFeatures,
-    Mecab? mecab
-  }){
-    _mecab = mecab;
-  }
+    this.mecabTransferableState
+  });
 
   @override
   Map<String, dynamic> toJson() {
     return {
       'type': 'japanese', // <--- CRITICAL: Identifies this class
-      'libMecabPath': libMecabPath,
-      'dicMecabPath': dicMecabPath,
-      'mecabIncludeFeatures': mecabIncludeFeatures,
+      'transferableMecab': _mecab?.transferableState,
     };
   }
 
-  JapaneseProcessor.fromJson(Map<String, dynamic> json) :
-    libMecabPath = json['libMecabPath'],
-    dicMecabPath = json['dicMecabPath'],
-    mecabIncludeFeatures = json['mecabIncludeFeatures'];
+  JapaneseProcessor.fromJson(Map<String, dynamic> json) {
+    if (json['transferableMecab'] != null) {
+      mecabTransferableState = MecabTransferableState.fromJson(json['transferableMecab']);
+    }
+  }
 
   @override
   Future<void> init() async {
-    if ([libMecabPath, dicMecabPath, mecabIncludeFeatures].nonNulls.length == 3) {
-      _mecab = Mecab();
-      await _mecab!.init(libMecabPath!, dicMecabPath!, mecabIncludeFeatures!);
+    if(mecabTransferableState != null){
+      _mecab = await Mecab().fromTransferableState(mecabTransferableState!);
     }
     _initialized = true;
   }
