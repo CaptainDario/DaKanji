@@ -92,6 +92,7 @@ void main(List<String> args) async {
       includeFeatures: true,
     )
   );
+  await languageProcessor.init();
   DaKanjiDB db = DaKanjiDB(
     dbPath: dakanjiDbPath, inMemory: false, languageProcessor: languageProcessor);
 
@@ -112,7 +113,7 @@ void main(List<String> args) async {
     [
       //(kanjidic2InputPath, "KanjiDic2"),
       //(jpdb2_2InputPath, "JPDB 2.2"),
-      //(dictNameToPath[dictToUse]!(), dictToUse.name),
+      (dictNameToPath[dictToUse]!(), dictToUse.name),
       ?(includeExampleDictArg ? (exampleDictPath, "yomitan example dictionary"): null),
     ],
     addStructuredContentJsonDefs,

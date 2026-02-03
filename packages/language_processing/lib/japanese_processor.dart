@@ -35,7 +35,7 @@ class JapaneseProcessor extends LanguageProcessor{
   Map<String, dynamic> toJson() {
     return {
       'type': 'japanese', // <--- CRITICAL: Identifies this class
-      'transferableMecab': _mecab?.transferableState,
+      'transferableMecab': _mecab?.transferableState.toJson(),
     };
   }
 
@@ -55,8 +55,9 @@ class JapaneseProcessor extends LanguageProcessor{
 
   @override
   Future<void> close() async {
+    if (_mecab != null) _mecab!.destroy();
+
     _initialized = false;
-    _mecab!.destroy();
   }
   
   /// Normalizes aterm by:
