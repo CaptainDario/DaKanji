@@ -14,6 +14,7 @@ import 'package:dakanji_db_core/parsing/term_meta/term_meta_bank_v3_parser_conte
 import 'package:dakanji_db_core/parsing/util/db_optimization.dart';
 import 'package:dakanji_db_core/parsing/util/import_context.dart';
 import 'package:dakanji_db_core/parsing/util/parsing_util.dart';
+import 'package:dakanji_db_core/util/memory_usage.dart';
 import 'package:drift/isolate.dart';
 import 'package:language_processing/language_processor.dart';
 import 'package:path/path.dart' as p;
@@ -113,6 +114,7 @@ Future _parseDictionaryDataSource(({
     languageProcessor: LanguageProcessor.fromJsonString(params.languageProcessorJson)
   );
   await db.languageProcessor.init();
+  printMemoryUsage();
 
   try {
     Iterable<({String filePath, Uint8List fileContent})> dataSources = dakanjiDBDataSourceIterator(
@@ -140,6 +142,7 @@ Future _parseDictionaryDataSource(({
 
       progressCounter++;
       params.mainIsolateSendPort.send("Parsing ${data.filePath} ($progressCounter/$noEntries) ...");
+      printMemoryUsage();
 
       if(p.basename(data.filePath).contains(indexFileNamingScheme)) continue; // skip index file (already parsed)
       if(!validDictionaryFiles.any((scheme) => p.basename(data.filePath).contains(scheme))){
