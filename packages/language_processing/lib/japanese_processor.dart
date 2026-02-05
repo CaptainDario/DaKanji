@@ -35,7 +35,7 @@ class JapaneseProcessor extends LanguageProcessor{
   Map<String, dynamic> toJson() {
     return {
       'type': 'japanese', // <--- CRITICAL: Identifies this class
-      'transferableMecab': _mecab?.transferableState.toJson(),
+      'transferableMecab': _mecab?.transferableState.toJson() ?? mecabTransferableState?.toJson(),
     };
   }
 
