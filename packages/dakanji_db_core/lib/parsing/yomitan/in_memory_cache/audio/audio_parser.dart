@@ -2,11 +2,11 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:isolate';
 
+import 'package:dakanji_db_core/data/audio_data_source_formats.dart';
 import 'package:dakanji_db_core/data/dictionary_types.dart';
 import 'package:dakanji_db_core/database/dakanji_db.dart';
 import 'package:dakanji_db_core/parsing/util/db_optimization.dart';
 import 'package:dakanji_db_core/parsing/util/parsing_util.dart';
-import 'package:dakanji_db_core/parsing/yomitan/in_memory_cache/audio/audio_data_source_formats.dart';
 import 'package:dakanji_db_core/parsing/yomitan/in_memory_cache/audio/audio_parser_context.dart';
 import 'package:dakanji_db_core/parsing/yomitan/in_memory_cache/index/index_parser.dart';
 import 'package:dakanji_db_core/parsing/yomitan/in_memory_cache/media/media_importer.dart';
