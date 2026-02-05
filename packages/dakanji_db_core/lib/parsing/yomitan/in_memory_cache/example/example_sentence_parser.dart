@@ -1,7 +1,7 @@
 
 import 'dart:convert';
 
-import 'package:dakanji_db_core/parsing/example/example_parser_context.dart';
+import 'package:dakanji_db_core/parsing/yomitan/in_memory_cache/example/example_parser_context.dart';
 import 'package:drift/drift.dart';
 import 'package:language_processing/iso/iso_table.dart';
 

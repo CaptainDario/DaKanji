@@ -4,12 +4,12 @@ import 'dart:isolate';
 
 import 'package:dakanji_db_core/data/dictionary_types.dart';
 import 'package:dakanji_db_core/database/dakanji_db.dart';
-import 'package:dakanji_db_core/parsing/audio/audio_data_source_formats.dart';
-import 'package:dakanji_db_core/parsing/audio/audio_parser_context.dart';
-import 'package:dakanji_db_core/parsing/index/index_parser.dart';
-import 'package:dakanji_db_core/parsing/media/media_importer.dart';
 import 'package:dakanji_db_core/parsing/util/db_optimization.dart';
 import 'package:dakanji_db_core/parsing/util/parsing_util.dart';
+import 'package:dakanji_db_core/parsing/yomitan/in_memory_cache/audio/audio_data_source_formats.dart';
+import 'package:dakanji_db_core/parsing/yomitan/in_memory_cache/audio/audio_parser_context.dart';
+import 'package:dakanji_db_core/parsing/yomitan/in_memory_cache/index/index_parser.dart';
+import 'package:dakanji_db_core/parsing/yomitan/in_memory_cache/media/media_importer.dart';
 import 'package:drift/drift.dart';
 import 'package:drift/isolate.dart';
 import 'package:language_processing/language_processor.dart';

@@ -1,4 +1,4 @@
-import 'package:dakanji_db_core/parsing/term/definition_parsing_classes.dart';
+import 'package:dakanji_db_core/parsing/yomitan/in_memory_cache/term/definition_parsing_classes.dart';
 
 class YomitanDefinitionParser {
   

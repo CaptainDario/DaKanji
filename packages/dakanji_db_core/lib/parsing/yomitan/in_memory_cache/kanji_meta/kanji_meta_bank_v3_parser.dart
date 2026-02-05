@@ -1,7 +1,7 @@
 // Dart imports:
 import 'dart:convert';
 
-import 'package:dakanji_db_core/parsing/kanji_meta/kanji_meta_bank_v3_parser_context.dart';
+import 'package:dakanji_db_core/parsing/yomitan/in_memory_cache/kanji_meta/kanji_meta_bank_v3_parser_context.dart';
 import 'package:drift/drift.dart';
 import 'package:universal_io/io.dart';
 

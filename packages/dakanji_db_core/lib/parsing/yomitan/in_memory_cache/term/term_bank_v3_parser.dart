@@ -1,9 +1,9 @@
 // Dart imports:
 import 'dart:convert';
 
-import 'package:dakanji_db_core/parsing/term/definition_parser.dart';
-import 'package:dakanji_db_core/parsing/term/definition_parsing_classes.dart';
-import 'package:dakanji_db_core/parsing/term/term_bank_v3_parser_context.dart';
+import 'package:dakanji_db_core/parsing/yomitan/in_memory_cache/term/definition_parser.dart';
+import 'package:dakanji_db_core/parsing/yomitan/in_memory_cache/term/definition_parsing_classes.dart';
+import 'package:dakanji_db_core/parsing/yomitan/in_memory_cache/term/term_bank_v3_parser_context.dart';
 import 'package:drift/drift.dart';
 import 'package:kana_kit/kana_kit.dart';
 import 'package:language_processing/language_processor_options.dart';
