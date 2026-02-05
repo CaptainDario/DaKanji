@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:dakanji_db_core/parsing/term/definition_parser.dart';
+import 'package:dakanji_db_core/parsing/yomitan/in_memory_cache/term/definition_parser.dart';
 import 'package:dakanji_db_shared/paths.dart';
 import 'package:path/path.dart' as p;
 import 'package:test/test.dart';
