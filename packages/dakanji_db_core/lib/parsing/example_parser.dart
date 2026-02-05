@@ -4,17 +4,17 @@ import 'dart:convert';
 import 'dart:isolate';
 
 import 'package:dakanji_db_core/data/dictionary_types.dart';
-import 'package:dakanji_db_core/parsing/example/example_parser_context.dart';
-import 'package:dakanji_db_core/parsing/example/example_text_parser.dart';
-import 'package:dakanji_db_core/parsing/index/index_parser.dart';
 import 'package:dakanji_db_core/parsing/util/db_optimization.dart';
 import 'package:dakanji_db_core/parsing/util/parsing_util.dart';
+import 'package:dakanji_db_core/parsing/yomitan/in_memory_cache/example/example_parser_context.dart';
+import 'package:dakanji_db_core/parsing/yomitan/in_memory_cache/example/example_text_parser.dart';
+import 'package:dakanji_db_core/parsing/yomitan/in_memory_cache/index/index_parser.dart';
 import 'package:drift/drift.dart';
 import 'package:drift/isolate.dart';
 import 'package:language_processing/language_processor.dart';
 
 import '/database/dakanji_db.dart';
-import '/parsing/example/example_sentence_parser.dart';
+import 'yomitan/in_memory_cache/example/example_sentence_parser.dart';
 
 /// Parses the given dakanji example folder
 Future<Stream<String>> parseExampleDataSource(
