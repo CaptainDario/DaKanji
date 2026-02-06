@@ -1,11 +1,12 @@
+import 'dart:async';
 
 import 'package:dakanji_db_core/database/dakanji_db.dart';
-import 'package:dakanji_db_core/parsing/audio/audio_parser.dart';
-import 'package:dakanji_db_core/parsing/dictionary_parser.dart';
 import 'package:dakanji_db_core/parsing/example_parser.dart';
 import 'package:dakanji_db_core/parsing/kanji_vg_parser.dart';
 import 'package:dakanji_db_core/parsing/radicals_parser.dart';
 import 'package:dakanji_db_core/parsing/tatoeba_parser.dart';
+import 'package:dakanji_db_core/parsing/yomitan/in_memory_cache/audio/audio_parser.dart';
+import 'package:dakanji_db_core/parsing/yomitan_staging_db_parser.dart';
 import 'package:dakanji_db_shared/paths.dart';
 import 'package:language_processing/iso/iso_table.dart';
 import 'package:language_processing/language_processing.dart';
@@ -92,7 +93,7 @@ void main(List<String> args) async {
       includeFeatures: true,
     )
   );
-  await languageProcessor.init();
+
   DaKanjiDB db = DaKanjiDB(
     dbPath: dakanjiDbPath, inMemory: false, languageProcessor: languageProcessor);
 
