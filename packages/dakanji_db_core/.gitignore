@@ -4,3 +4,6 @@
 
 hook/**
 !hook/build.dart
+
+bin/benchmarking/**
+bin/build/**
