@@ -1,6 +1,10 @@
 import 'dart:io';
 
 void printMemoryUsage() {
+ printFullMemoryUsage();
+}
+
+void printFullMemoryUsage() {
   // Get the resident set size (RSS) in bytes
   int memoryBytes = ProcessInfo.currentRss;
   
