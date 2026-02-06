@@ -3,7 +3,6 @@ import 'package:dakanji_db_core/database/audio/audio_entry.dart';
 import 'package:dakanji_db_core/database/dakanji_db.dart';
 import 'package:dakanji_db_core/parsing/yomitan/in_memory_cache/audio/audio_parser.dart';
 import 'package:dakanji_db_shared/paths.dart';
-import 'package:mecab_for_dart/mecab_dart.dart';
 import 'package:test/test.dart';
 import 'package:universal_io/io.dart';
 
@@ -91,9 +90,6 @@ Future<DaKanjiDB> setupFreshDB(
   if(File(dakanjiDbPath).existsSync()) File(dakanjiDbPath).deleteSync();
   DaKanjiDB db = DaKanjiDB(
     dbPath: dakanjiDbPath, inMemory: true, languageProcessor: await japaneseProcessor);
-
-  Mecab mecab = Mecab();
-  await mecab.init(mecabDynamicLibPath, mecabDicPath, true);
 
   // parse the test files
   Stopwatch s = Stopwatch()..start();

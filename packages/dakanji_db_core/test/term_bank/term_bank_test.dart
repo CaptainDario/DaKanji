@@ -4,7 +4,6 @@ import 'dart:io';
 import 'package:dakanji_db_core/database/dakanji_db.dart';
 import 'package:dakanji_db_core/database/term/term_bank_v3_entry.dart';
 import 'package:dakanji_db_shared/paths.dart';
-import 'package:mecab_for_dart/mecab_dart.dart';
 import 'package:path/path.dart' as p;
 import 'package:test/test.dart';
 
@@ -78,9 +77,6 @@ Future<DaKanjiDB> setupFreshDB(int testCaseIndex) async {
   DaKanjiDB db = DaKanjiDB(
     dbPath: dakanjiDbPath, inMemory: true, languageProcessor: await japaneseProcessor);
   db.clearDB();
-
-  Mecab mecab = Mecab();
-  await mecab.init(mecabDynamicLibPath, mecabDicPath, true);
   
   bool shouldIncludeFile(File file) =>
     (p.basename(file.path) == "term_bank_$testCaseIndex.json" ||
