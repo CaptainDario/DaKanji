@@ -1,7 +1,7 @@
 
 import 'package:dakanji_db_core/database/dakanji_db.dart';
 import 'package:dakanji_db_core/database/db_queries/kanji_dictionary_search/kanji_dictionary_search_result.dart';
-import 'package:dakanji_db_core/parsing/dictionary_parser.dart';
+import 'package:dakanji_db_core/parsing/yomitan_in_memory_cache_parser.dart';
 import 'package:dakanji_db_shared/paths.dart';
 import 'package:path/path.dart' as p;
 import 'package:test/test.dart';

@@ -1,5 +1,5 @@
 import 'package:dakanji_db_core/database/dakanji_db.dart';
-import 'package:dakanji_db_core/parsing/dictionary_parser.dart';
+import 'package:dakanji_db_core/parsing/yomitan_in_memory_cache_parser.dart';
 import 'package:dakanji_db_shared/paths.dart';
 import 'package:mecab_for_dart/mecab_dart.dart';
 import 'package:test/test.dart';

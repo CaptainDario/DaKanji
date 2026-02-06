@@ -5,27 +5,29 @@ import 'dart:isolate';
 import 'dart:typed_data';
 
 import 'package:dakanji_db_core/data/dictionary_types.dart';
-import 'package:dakanji_db_core/parsing/audio_source_list/audio_source_list_parser.dart';
-import 'package:dakanji_db_core/parsing/kanji/kanji_bank_v3_parser_context.dart';
-import 'package:dakanji_db_core/parsing/kanji_meta/kanji_meta_bank_v3_parser_context.dart';
-import 'package:dakanji_db_core/parsing/media/media_importer.dart';
-import 'package:dakanji_db_core/parsing/term/term_bank_v3_parser_context.dart';
-import 'package:dakanji_db_core/parsing/term_meta/term_meta_bank_v3_parser_context.dart';
 import 'package:dakanji_db_core/parsing/util/db_optimization.dart';
 import 'package:dakanji_db_core/parsing/util/import_context.dart';
 import 'package:dakanji_db_core/parsing/util/parsing_util.dart';
+import 'package:dakanji_db_core/parsing/yomitan/in_memory_cache/audio_source_list/audio_source_list_parser.dart';
+import 'package:dakanji_db_core/parsing/yomitan/in_memory_cache/index/index_parser.dart';
+import 'package:dakanji_db_core/parsing/yomitan/in_memory_cache/kanji/kanji_bank_v3_parser.dart';
+import 'package:dakanji_db_core/parsing/yomitan/in_memory_cache/kanji/kanji_bank_v3_parser_context.dart';
+import 'package:dakanji_db_core/parsing/yomitan/in_memory_cache/kanji_meta/kanji_meta_bank_v3_parser.dart';
+import 'package:dakanji_db_core/parsing/yomitan/in_memory_cache/kanji_meta/kanji_meta_bank_v3_parser_context.dart';
+import 'package:dakanji_db_core/parsing/yomitan/in_memory_cache/media/media_importer.dart';
+import 'package:dakanji_db_core/parsing/yomitan/in_memory_cache/tag/tag_bank_v3_parser.dart';
+import 'package:dakanji_db_core/parsing/yomitan/in_memory_cache/term/term_bank_v3_parser.dart';
+import 'package:dakanji_db_core/parsing/yomitan/in_memory_cache/term/term_bank_v3_parser_context.dart';
+import 'package:dakanji_db_core/parsing/yomitan/in_memory_cache/term_meta/term_meta_bank_v3_parser.dart';
+import 'package:dakanji_db_core/parsing/yomitan/in_memory_cache/term_meta/term_meta_bank_v3_parser_context.dart';
 import 'package:dakanji_db_core/util/memory_usage.dart';
 import 'package:drift/isolate.dart';
 import 'package:language_processing/language_processor.dart';
 import 'package:path/path.dart' as p;
 
 import '/database/dakanji_db.dart';
-import '/parsing/index/index_parser.dart';
-import '/parsing/kanji/kanji_bank_v3_parser.dart';
-import '/parsing/kanji_meta/kanji_meta_bank_v3_parser.dart';
-import '/parsing/tag/tag_bank_v3_parser.dart';
-import '/parsing/term_meta/term_meta_bank_v3_parser.dart';
-import 'term/term_bank_v3_parser.dart';
+
+
 
 /// A list containing the names of files that are valid yomtain files
 List<String> validDictionaryFiles = [

@@ -1,0 +1,9 @@
+# Legacy DaKanjiDB parsers
+
+This contains the legacy parsers of DaKanjiDB.
+While these work, they are mostly not used in the current parsing process.
+They are kept here for reference and potential future use, but they may not be maintained or updated.
+
+This approach used an in-memory map to load the data somewhat efficiently.
+But the memory is rising and the speed is decraesing the more dictionaries are imported.
+Therefore, the V2 parsers have been built which are in `../staging_db/` 
