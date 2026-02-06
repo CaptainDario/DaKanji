@@ -3,7 +3,10 @@ import 'package:dakanji_db_core/parsing/yomitan/staging_db/mergers/staging_merge
 import 'package:dakanji_db_core/parsing/yomitan/staging_db/mergers/term_bank_v3_merger.dart';
 
 
-
+/// Merges the [workerDbPath] staging database into the main [db] by attaching
+/// the worker DB, running each merger, and then detaching the worker DB.
+/// The [indexId] is assigned to all merged entries to link them to the correct
+/// dictionary.
 Future<void> mergeStagingDb({
   required DaKanjiDB db,
   required String workerDbPath,
@@ -15,14 +18,13 @@ Future<void> mergeStagingDb({
   
   // 1. Disable disk sync (Speed)
   await db.customStatement('PRAGMA synchronous = OFF;');
-  
   // 2. Disable Foreign Keys (Speed - Trusts worker data structure)
   await db.customStatement('PRAGMA foreign_keys = OFF;');
 
   await db.customStatement('ATTACH DATABASE ? AS $workerAlias', [workerDbPath]);
 
   final mergers = <StagingMerger>[
-    TermBankV3Merger(),
+    TermBankV3Merger(addJsonDefs: addJsonDefs),
   ];
 
   try {
@@ -32,7 +34,6 @@ Future<void> mergeStagingDb({
           targetDb: db, 
           workerAlias: workerAlias, 
           indexId: indexId, 
-          addJsonDefs: addJsonDefs
         );
       }
     });
@@ -43,5 +44,7 @@ Future<void> mergeStagingDb({
     await db.customStatement('DETACH DATABASE $workerAlias');
     // Restore Foreign Keys
     await db.customStatement('PRAGMA foreign_keys = ON;');
+    // Restore Synchronous
+    await db.customStatement('PRAGMA synchronous = NORMAL;');
   }
 }

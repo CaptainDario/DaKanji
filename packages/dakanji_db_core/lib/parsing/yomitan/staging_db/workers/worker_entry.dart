@@ -39,7 +39,7 @@ Future<void> workerEntry(SendPort mainSendPort) async {
     if (message is MsgInit) {
       db = StagingDatabase(NativeDatabase(File(message.dbPath)));
       
-      // --- WORKER SPEED SETTINGS ---
+      // SQLite speed optimizations for bulk insert
       await db.customStatement('PRAGMA synchronous = OFF;');
       await db.customStatement('PRAGMA journal_mode = MEMORY;'); 
       await db.customStatement('PRAGMA cache_size = -4000;'); 
@@ -54,51 +54,38 @@ Future<void> workerEntry(SendPort mainSendPort) async {
 
       try {
         zipInputStream = InputFileStream(message.zipPath);
-        archiveHeaders = ZipDecoder().decodeStream(zipInputStream!);
+        archiveHeaders = ZipDecoder().decodeStream(zipInputStream);
         message.replyPort.send(MsgReady(receivePort.sendPort));
-      } catch (e) {
+      }
+      catch (e) {
         message.replyPort.send(MsgError("Failed to open zip: $e"));
+        continue;
       }
     }
     
     else if (message is MsgProcessFile) {
-      if (db == null || archiveHeaders == null) {
-        mainSendPort.send(MsgError("Worker not initialized"));
-        continue;
-      }
+      if (db == null) continue;
 
       try {
         final parser = parsers.firstWhere(
           (p) => p.canHandle(message.fileName),
-          orElse: () => _NoOpParser()
+          orElse: () => throw Exception("No parser found for ${message.fileName}")
         );
 
-        if (parser is _NoOpParser) {
-           mainSendPort.send(MsgDone());
-           continue;
-        }
-
-        final fileHeader = archiveHeaders!.findFile(message.fileName);
-        if (fileHeader == null) throw Exception("File not found");
-
-        final content = fileHeader.content as List<int>;
-        final jsonString = utf8.decode(content);
-        final jsonObject = jsonDecode(jsonString);
+        final fileHeader = archiveHeaders!.findFile(message.fileName)!;
+        final jsonObject = jsonDecode(utf8.decode(fileHeader.content));
 
         if (jsonObject is List) {
           currentLocalId = await parser.parseFileContent(
-            jsonObject, 
-            db, 
-            lp, 
-            processorOptions!, 
-            saveJson,
-            currentLocalId 
+            jsonObject, db, lp, 
+            processorOptions!, saveJson, currentLocalId 
           );
         }
 
         mainSendPort.send(MsgDone());
 
-      } catch (e, s) {
+      }
+      catch (e, s) {
         print("Error processing ${message.fileName}: $e");
         mainSendPort.send(MsgError("Error in ${message.fileName}: $e"));
       }
@@ -106,7 +93,7 @@ Future<void> workerEntry(SendPort mainSendPort) async {
     
     else if (message is MsgTerminate) {
       if (db != null) {
-        // --- PRE-INDEXING (Crucial for Merge Speed) ---
+        // --- pre-indexing for Merge Speed ---
         await db.customStatement('CREATE INDEX IF NOT EXISTS idx_staging_term ON staging_term_table(term)');
         await db.customStatement('CREATE INDEX IF NOT EXISTS idx_staging_reading ON staging_term_table(reading)');
         await db.customStatement('CREATE INDEX IF NOT EXISTS idx_staging_def ON staging_definition_table(definition)');
@@ -123,11 +110,4 @@ Future<void> workerEntry(SendPort mainSendPort) async {
       return;
     }
   }
-}
-
-class _NoOpParser implements YomitanFileParser {
-  @override
-  bool canHandle(String fileName) => false;
-  @override
-  Future<int> parseFileContent(List<dynamic> j, StagingDatabase d, LanguageProcessor? l, ProcessorOptions o, bool s, int i) async => i;
 }

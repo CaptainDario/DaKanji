@@ -20,14 +20,18 @@ class TermBankV3Parser implements YomitanFileParser {
     bool saveJson,
     int startId,
   ) async {
+
+    if (lp == null) throw Exception("LanguageProcessor is required for parsing term_bank");
     
+    // buffers
     int localId = startId;
     var termRows = <List<Object?>>[];
     var defRows = <List<Object?>>[];
     var tagRows = <List<Object?>>[];
     var ruleRows = <List<Object?>>[];
     
-    const int batchSize = 1000;
+    // amount of rows to batch insert at once
+    const int batchSize = 500;
 
     for (final entry in jsonContent) {
       if (entry is! List) continue;
@@ -47,20 +51,18 @@ class TermBankV3Parser implements YomitanFileParser {
       String? termTokens;
       String? termTokensNormalized;
       String? readingNormalized;
-
-      if (lp != null) {
-        termNormalized = lp.normalize(term, options).firstOrNull;
-        if (termNormalized == term) termNormalized = null;
-        
-        termTokens = lp.segment(term);
-        if (termTokens != null) {
-          termTokensNormalized = lp.normalize(termTokens, options).firstOrNull;
-          if (termTokensNormalized == termTokens) termTokensNormalized = null;
-        }
-        
-        readingNormalized = lp.normalize(reading, options).firstOrNull;
-        if (readingNormalized == reading) readingNormalized = null;
+      
+      termNormalized = lp.normalize(term, options).firstOrNull;
+      if (termNormalized == term) termNormalized = null;
+      
+      termTokens = lp.segment(term);
+      if (termTokens != null) {
+        termTokensNormalized = lp.normalize(termTokens, options).firstOrNull;
+        if (termTokensNormalized == termTokens) termTokensNormalized = null;
       }
+      
+      readingNormalized = lp.normalize(reading, options).firstOrNull;
+      if (readingNormalized == reading) readingNormalized = null;
 
       termRows.add([
         localId, term, reading, termNormalized, termTokens, 
@@ -74,22 +76,19 @@ class TermBankV3Parser implements YomitanFileParser {
          defRows.add([localId, text]);
       }
 
-      if (defTags.isNotEmpty) {
-        for (var t in defTags.split(' ')) {
-          tagRows.add([localId, t, 1]); 
-        }
+      for (var t in defTags.split(' ')) {
+        if (t.isEmpty) continue;
+        tagRows.add([localId, t, 1]); 
       }
       
-      if (termTags.isNotEmpty) {
-        for (var t in termTags.split(' ')) {
-          tagRows.add([localId, t, 0]); 
-        }
+      for (var t in termTags.split(' ')) {
+        if (t.isEmpty) continue;
+        tagRows.add([localId, t, 0]); 
       }
 
-      if (ruleIds.isNotEmpty) {
-         for (var r in ruleIds.split(' ')) {
-           ruleRows.add([localId, r]);
-         }
+      for (var r in ruleIds.split(' ')) {
+        if (r.isEmpty) continue;
+        ruleRows.add([localId, r]);
       }
 
       if (termRows.length >= batchSize) {
