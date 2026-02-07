@@ -93,12 +93,7 @@ Future<void> workerEntry(SendPort mainSendPort) async {
     
     else if (message is MsgTerminate) {
       if (db != null) {
-        // --- pre-indexing for Merge Speed ---
-        await db.customStatement('CREATE INDEX IF NOT EXISTS idx_staging_term ON staging_term_table(term)');
-        await db.customStatement('CREATE INDEX IF NOT EXISTS idx_staging_reading ON staging_term_table(reading)');
-        await db.customStatement('CREATE INDEX IF NOT EXISTS idx_staging_def ON staging_definition_table(definition)');
-        await db.customStatement('CREATE INDEX IF NOT EXISTS idx_staging_tag ON staging_tag_table(tag_name)');
-        await db.customStatement('CREATE INDEX IF NOT EXISTS idx_staging_rule ON staging_rule_table(rule_id)');
+        await preIndex(db);
         await db.close();
       }
       
@@ -110,4 +105,23 @@ Future<void> workerEntry(SendPort mainSendPort) async {
       return;
     }
   }
+}
+
+Future<void> preIndex(StagingDatabase db) async {
+  // 1. Existing Term Indices (Good)
+  await db.customStatement('CREATE INDEX IF NOT EXISTS idx_st_term ON ${db.termStagingTable.actualTableName}(term)');
+  await db.customStatement('CREATE INDEX IF NOT EXISTS idx_st_reading ON ${db.termStagingTable.actualTableName}(reading)');
+  
+  // 2. Existing Definition Indices (Good)
+  await db.customStatement('CREATE INDEX IF NOT EXISTS idx_sd_def ON ${db.termDefinitionStagingTable.actualTableName}(definition)');
+  await db.customStatement('CREATE INDEX IF NOT EXISTS idx_sd_link ON ${db.termDefinitionStagingTable.actualTableName}(term_local_id)');
+  
+  // 3. OPTIMIZED: Composite index for Term/Def tag splitting
+  await db.customStatement('CREATE INDEX IF NOT EXISTS idx_stg_tag_split ON ${db.termTagStagingTable.actualTableName}(is_definition_tag, tag_name)');
+  
+  // 4. NEW: Index for Tag Metadata (was missing)
+  await db.customStatement('CREATE INDEX IF NOT EXISTS idx_stg_meta_tag ON ${db.tagStagingTable.actualTableName}(tag_name)');
+
+  // 5. Existing Rule Index (Good)
+  await db.customStatement('CREATE INDEX IF NOT EXISTS idx_stg_rule ON ${db.termRuleStagingTable.actualTableName}(rule_id)');
 }
