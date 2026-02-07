@@ -1,8 +1,8 @@
 import 'dart:convert';
 
 import 'package:dakanji_db_core/parsing/yomitan/in_memory_cache/term/definition_parser.dart';
+import 'package:dakanji_db_core/parsing/yomitan/staging_db/db/staging_db.dart';
 import 'package:dakanji_db_core/parsing/yomitan/staging_db/parsers/yomitan_file_parser.dart';
-import 'package:dakanji_db_core/staging_database/staging_db.dart';
 import 'package:language_processing/language_processor.dart';
 import 'package:language_processing/language_processor_options.dart';
 
@@ -20,18 +20,15 @@ class TermBankV3Parser implements YomitanFileParser {
     bool saveJson,
     int startId,
   ) async {
-
     if (lp == null) throw Exception("LanguageProcessor is required for parsing term_bank");
-    
-    // buffers
     int localId = startId;
+    
     var termRows = <List<Object?>>[];
     var defRows = <List<Object?>>[];
     var tagRows = <List<Object?>>[];
     var ruleRows = <List<Object?>>[];
     
-    // amount of rows to batch insert at once
-    const int batchSize = 500;
+    const int batchSize = 1000;
 
     for (final entry in jsonContent) {
       if (entry is! List) continue;
@@ -43,91 +40,94 @@ class TermBankV3Parser implements YomitanFileParser {
       final defTags = entry[2] as String; 
       final ruleIds = entry[3] as String; 
       final popularity = entry[4] as int;
-      final definitionBlock = entry[5] as List;
+      final definitionBlock = entry[5]; 
       final sequence = entry[6] as int;
       final termTags = entry[7] as String; 
 
-      String? termNormalized;
-      String? termTokens;
-      String? termTokensNormalized;
-      String? readingNormalized;
-      
-      termNormalized = lp.normalize(term, options).firstOrNull;
+      // --- 1. NLP Processing ---
+      String? termNormalized = lp.normalize(term, options).firstOrNull;
       if (termNormalized == term) termNormalized = null;
       
-      termTokens = lp.segment(term);
+      String? termTokens = lp.segment(term);
+      String? termTokensNormalized;
       if (termTokens != null) {
         termTokensNormalized = lp.normalize(termTokens, options).firstOrNull;
         if (termTokensNormalized == termTokens) termTokensNormalized = null;
       }
       
-      readingNormalized = lp.normalize(reading, options).firstOrNull;
+      String? readingNormalized = lp.normalize(reading, options).firstOrNull;
       if (readingNormalized == reading) readingNormalized = null;
 
       termRows.add([
         localId, term, reading, termNormalized, termTokens, 
-        termTokensNormalized, readingNormalized, popularity, sequence,
-        saveJson ? jsonEncode(definitionBlock) : null
+        termTokensNormalized, readingNormalized, popularity,
+        sequence, jsonEncode(definitionBlock)
       ]);
 
-      final parsedDefs = YomitanDefinitionParser.parse(definitionBlock);
-      for (final def in parsedDefs.definitions) {
-         final text = def.replaceAll(RegExp(r'[\s\u00A0]+'), ' ').trim();
-         defRows.add([localId, text]);
+      // --- 3. Definitions ---
+      final parsedDefinitions = YomitanDefinitionParser.parse(definitionBlock);
+      
+      for (String parsedDefinition in parsedDefinitions.definitions) {
+        String text = parsedDefinition.replaceAll(RegExp(r'[\s\u00A0]+'), ' ').trim();
+        defRows.add([localId, text]);
       }
 
+      // --- 4. Tags ---
       for (var t in defTags.split(' ')) {
         if (t.isEmpty) continue;
-        tagRows.add([localId, t, 1]); 
+        tagRows.add([localId, t, 1]);
       }
-      
       for (var t in termTags.split(' ')) {
         if (t.isEmpty) continue;
-        tagRows.add([localId, t, 0]); 
+        tagRows.add([localId, t, 0]);
       }
 
+      // --- 5. Rules ---
       for (var r in ruleIds.split(' ')) {
         if (r.isEmpty) continue;
         ruleRows.add([localId, r]);
       }
 
       if (termRows.length >= batchSize) {
-        await _flushToDb(db, termRows, defRows, tagRows, ruleRows);
+        await _flush(db, termRows, defRows, tagRows, ruleRows);
         termRows.clear(); defRows.clear(); tagRows.clear(); ruleRows.clear();
       }
     }
 
     if (termRows.isNotEmpty) {
-      await _flushToDb(db, termRows, defRows, tagRows, ruleRows);
+      await _flush(db, termRows, defRows, tagRows, ruleRows);
     }
     
     return localId;
   }
 
-  Future<void> _flushToDb(
+  Future<void> _flush(
     StagingDatabase db, 
     List<List<Object?>> termRows,
     List<List<Object?>> defRows,
     List<List<Object?>> tagRows,
-    List<List<Object?>> ruleRows
+    List<List<Object?>> ruleRows,
   ) async {
     String placeholders(int count) => '(${List.filled(count, '?').join(', ')})';
-  
+
     await db.transaction(() async {
       if (termRows.isNotEmpty) {
-        final sql = 'INSERT INTO staging_term_table (local_id, term, reading, term_normalized, term_tokens, term_tokens_normalized, reading_normalized, popularity, sequence_number, original_json) VALUES ${List.filled(termRows.length, placeholders(10)).join(', ')}';
+        final sql = 'INSERT INTO ${db.termStagingTable.actualTableName} (local_id, term, reading, term_normalized, term_tokens, term_tokens_normalized, reading_normalized, popularity, sequence_number, original_json) VALUES ${List.filled(termRows.length, placeholders(10)).join(', ')}';
         await db.customStatement(sql, termRows.expand((i) => i).toList());
       }
+
       if (defRows.isNotEmpty) {
-        final sql = 'INSERT INTO staging_definition_table (term_local_id, definition) VALUES ${List.filled(defRows.length, placeholders(2)).join(', ')}';
+        final sql = 'INSERT INTO ${db.termDefinitionStagingTable.actualTableName} (term_local_id, definition) VALUES ${List.filled(defRows.length, placeholders(2)).join(', ')}';
         await db.customStatement(sql, defRows.expand((i) => i).toList());
       }
+
       if (tagRows.isNotEmpty) {
-        final sql = 'INSERT INTO staging_tag_table (term_local_id, tag_name, is_definition_tag) VALUES ${List.filled(tagRows.length, placeholders(3)).join(', ')}';
+        final sql = 'INSERT INTO ${db.termTagStagingTable.actualTableName} (term_local_id, tag_name, is_definition_tag) VALUES ${List.filled(tagRows.length, placeholders(3)).join(', ')}';
         await db.customStatement(sql, tagRows.expand((i) => i).toList());
       }
+
       if (ruleRows.isNotEmpty) {
-        final sql = 'INSERT INTO staging_rule_table (term_local_id, rule_id) VALUES ${List.filled(ruleRows.length, placeholders(2)).join(', ')}';
+        final sql = 'INSERT INTO ${db.termRuleStagingTable.actualTableName} (term_local_id, rule_id) VALUES ${List.filled(ruleRows.length, placeholders(2)).join(', ')}';
         await db.customStatement(sql, ruleRows.expand((i) => i).toList());
       }
     });
