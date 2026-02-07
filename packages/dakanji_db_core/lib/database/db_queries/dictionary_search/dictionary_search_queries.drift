@@ -353,7 +353,8 @@ dictionary_search_drift_find_term_bank_entries(
             ELSE 0
         END,
         TBM.rank,
-        LENGTH(matchedText)
+        LENGTH(matchedText),
+        matchedText ASC
 
     LIMIT :limit OFFSET :offset;
 
