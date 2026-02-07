@@ -58,10 +58,11 @@ List<DictionarySearchTestCase> sortingTestCases = [
           // We assume length refers to the term's character count.
 
           // '日本人' and '日本酒' are both 3 characters long, so they come before the 4-character term.
-          // The tie between them is broken by the final rule (fts5/ID). '日本人' (ID 207) comes before '日本酒' (ID 502).
-          [ExpectedDictionaryMatch(term: '日本人', reading: 'にほんじん', match: 'にほんじん', definitions: ["Japanese person"])], // pop 95, length 3
+          // The tie between them is broken by the final rule ('alphabetical').
+          // '日本酒' comes before '日本人'.
           [ExpectedDictionaryMatch(term: '日本酒', reading: 'にほんしゅ', match: 'にほんしゅ', definitions: ["sake; Japanese rice wine"])], // pop 95, length 3
-
+          [ExpectedDictionaryMatch(term: '日本人', reading: 'にほんじん', match: 'にほんじん', definitions: ["Japanese person"])], // pop 95, length 3
+          
           // '日本晴れ' comes last because it is the longest term (4 characters).
           [ExpectedDictionaryMatch(term: '日本晴れ', reading: 'にほんばれ', match: 'にほんばれ', definitions: ["clear weather; cloudless sky"])], // pop 95, length 4
         ]
