@@ -5,6 +5,8 @@ import 'dart:isolate';
 
 import 'package:archive/archive_io.dart';
 import 'package:dakanji_db_core/parsing/yomitan/staging_db/db/staging_db.dart';
+import 'package:dakanji_db_core/parsing/yomitan/staging_db/parsers/kanji_bank_v3_parser.dart';
+import 'package:dakanji_db_core/parsing/yomitan/staging_db/parsers/kanji_meta_bank_v3_parser.dart';
 import 'package:dakanji_db_core/parsing/yomitan/staging_db/parsers/tag_bank_v3_parser.dart';
 import 'package:dakanji_db_core/parsing/yomitan/staging_db/parsers/term_bank_v3_parser.dart';
 import 'package:dakanji_db_core/parsing/yomitan/staging_db/parsers/term_meta_bank_v3_parser.dart';
@@ -33,7 +35,8 @@ Future<void> workerEntry(SendPort mainSendPort) async {
     TagBankParser(),
     TermBankV3Parser(),
     TermMetaBankV3Parser(),
-    // TODO
+    KanjiBankV3Parser(),
+    KanjiMetaBankV3Parser()
   ];
 
   bool saveJson = false;
@@ -129,5 +132,16 @@ Future<void> preIndex(StagingDatabase db) async {
   await db.customStatement('CREATE INDEX IF NOT EXISTS idx_stm_reading ON ${db.termMetaStagingTable.actualTableName}(reading)');
   await db.customStatement('CREATE INDEX IF NOT EXISTS idx_stm_mode ON ${db.termMetaStagingTable.actualTableName}(mode)');
   await db.customStatement('CREATE INDEX IF NOT EXISTS idx_stm_tag_composite ON ${db.termMetaTagStagingTable.actualTableName}(parent_type, tag_name)');
+
+  // 4. Kanji Bank Indexes
+  await db.customStatement('CREATE INDEX IF NOT EXISTS idx_sk_kanji ON ${db.kanjiStagingTable.actualTableName}(kanji)');
+  await db.customStatement('CREATE INDEX IF NOT EXISTS idx_sk_reading_composite ON ${db.kanjiReadingStagingTable.actualTableName}(type, reading)');
+  await db.customStatement('CREATE INDEX IF NOT EXISTS idx_sk_def ON ${db.kanjiDefinitionStagingTable.actualTableName}(definition)');
+  await db.customStatement('CREATE INDEX IF NOT EXISTS idx_sk_tag ON ${db.kanjiTagStagingTable.actualTableName}(tag_name)');
+  await db.customStatement('CREATE INDEX IF NOT EXISTS idx_sk_stat_tag ON ${db.kanjiStatStagingTable.actualTableName}(tag_name)');
+
+  // 5. Kanji Meta Bank Indexes
+  await db.customStatement('CREATE INDEX IF NOT EXISTS idx_skm_kanji ON ${db.kanjiMetaStagingTable.actualTableName}(kanji)');
+  await db.customStatement('CREATE INDEX IF NOT EXISTS idx_skm_type ON ${db.kanjiMetaStagingTable.actualTableName}(type)');
 
 }

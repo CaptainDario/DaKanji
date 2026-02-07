@@ -102,7 +102,7 @@ Future<void> _orchestratorEntry(({
     zipStream = InputFileStream(params.dataSourcePath);
     final archiveHeaders = ZipDecoder().decodeStream(zipStream);
 
-    // 3. Parse Index (Using Existing Utility)
+    // 3. Parse Index
     final indexHeader = archiveHeaders.findFile(indexFileNamingScheme);
     if (indexHeader == null) throw Exception("Invalid Dictionary: No index.json found.");
 
@@ -111,11 +111,7 @@ Future<void> _orchestratorEntry(({
     indexHeader.closeSync(); // Clear memory
 
     final int indexId = await parseAndInsertIndex(
-      indexJson, 
-      db, 
-      DictionaryTypes.yomitan, 
-      params.isDefaultDictionary
-    );
+      indexJson, db, DictionaryTypes.yomitan, params.isDefaultDictionary);
 
     // 4. Sort Files
     final parallelParseQueue = <String>[];
@@ -127,7 +123,8 @@ Future<void> _orchestratorEntry(({
 
       if (parallelHandledFiles.any((s) => name.contains(s))) {
         parallelParseQueue.add(file.name);
-      } else {
+      }
+      else {
         // Collect media files for standard import
         final content = file.content as List<int>;
         mediaFilesToInsert.add((
@@ -140,9 +137,7 @@ Future<void> _orchestratorEntry(({
       }
     }
 
-    // -------------------------------------------------------------
-    // PHASE 1: PARALLEL PARSING
-    // -------------------------------------------------------------
+    // PARALLEL PARSING
     if (parallelParseQueue.isNotEmpty) {
       sendPort.send("Starting parallel import of ${parallelParseQueue.length} data files...");
       
@@ -171,7 +166,8 @@ Future<void> _orchestratorEntry(({
              completer: completer,
              onStatus: (msg) => sendPort.send(msg)
            );
-        } else {
+        }
+        else {
           completer.complete();
         }
       }
@@ -179,9 +175,7 @@ Future<void> _orchestratorEntry(({
       await Future.wait(workerCompletions);
       sendPort.send("Parallel parsing complete. Merging data...");
 
-      // -------------------------------------------------------------
-      // PHASE 2: MERGE STAGING DB
-      // -------------------------------------------------------------
+      // MERGE STAGING DB
       for (int i = 0; i < workerDbPaths.length; i++) {
         final path = workerDbPaths[i];
         final f = File(path);
@@ -200,9 +194,7 @@ Future<void> _orchestratorEntry(({
       await tempDir.delete(recursive: true);
     }
 
-    // -------------------------------------------------------------
-    // PHASE 3: IMPORT MEDIA (Using Existing Utility)
-    // -------------------------------------------------------------
+    // IMPORT MEDIA (Using Existing Utility)
     if (mediaFilesToInsert.isNotEmpty) {
       sendPort.send("Importing ${mediaFilesToInsert.length} media files...");
       
@@ -226,9 +218,7 @@ Future<void> _orchestratorEntry(({
   }
 }
 
-// -----------------------------------------------------------------------------
-// WORKER SPAWNER HELPER
-// -----------------------------------------------------------------------------
+
 
 Future<void> _spawnWorker({
   required int id,

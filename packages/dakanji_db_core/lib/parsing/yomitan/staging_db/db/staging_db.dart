@@ -1,3 +1,5 @@
+import 'package:dakanji_db_core/parsing/yomitan/staging_db/db/kanji_meta_staging_tables.dart';
+import 'package:dakanji_db_core/parsing/yomitan/staging_db/db/kanji_staging_tables.dart';
 import 'package:dakanji_db_core/parsing/yomitan/staging_db/db/tag_staging_tables.dart';
 import 'package:dakanji_db_core/parsing/yomitan/staging_db/db/term_meta_staging_tables.dart';
 import 'package:dakanji_db_core/parsing/yomitan/staging_db/db/term_staging_tables.dart';
@@ -17,6 +19,10 @@ part 'staging_db.g.dart';
     TermStagingTable, TermDefinitionStagingTable, TermTagStagingTable, TermRuleStagingTable,
     // term meta
     TermMetaStagingTable, TermMetaPitchStagingTable, TermMetaIpaStagingTable, TermMetaTagStagingTable,
+    // Kanji
+    KanjiStagingTable, KanjiReadingStagingTable, KanjiDefinitionStagingTable, KanjiTagStagingTable, KanjiStatStagingTable,
+    // Kanji Meta
+    KanjiMetaStagingTable
   ]
 )
 class StagingDatabase extends _$StagingDatabase {

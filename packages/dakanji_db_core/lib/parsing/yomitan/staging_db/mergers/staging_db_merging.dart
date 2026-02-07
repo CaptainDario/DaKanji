@@ -1,7 +1,10 @@
 import 'package:dakanji_db_core/database/dakanji_db.dart';
+import 'package:dakanji_db_core/parsing/yomitan/staging_db/mergers/kanji_bank_v3_merger.dart';
+import 'package:dakanji_db_core/parsing/yomitan/staging_db/mergers/kanji_meta_bank_v3_merger.dart';
 import 'package:dakanji_db_core/parsing/yomitan/staging_db/mergers/staging_merger.dart';
 import 'package:dakanji_db_core/parsing/yomitan/staging_db/mergers/tag_bank_v3_merger.dart';
 import 'package:dakanji_db_core/parsing/yomitan/staging_db/mergers/term_bank_v3_merger.dart';
+import 'package:dakanji_db_core/parsing/yomitan/staging_db/mergers/term_meta_bank_v3_merger.dart';
 
 
 /// Merges the [workerDbPath] staging database into the main [db] by attaching
@@ -27,6 +30,9 @@ Future<void> mergeStagingDb({
   final mergers = <StagingMerger>[
     TagBankMerger(),
     TermBankV3Merger(addJsonDefs: addJsonDefs),
+    TermMetaBankV3Merger(),
+    KanjiBankV3Merger(),
+    KanjiMetaBankV3Merger()
   ];
 
   try {

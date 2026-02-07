@@ -3399,6 +3399,1915 @@ class TermMetaTagStagingTableCompanion
   }
 }
 
+class $KanjiStagingTableTable extends KanjiStagingTable
+    with TableInfo<$KanjiStagingTableTable, KanjiStagingTableData> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $KanjiStagingTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _localIdMeta = const VerificationMeta(
+    'localId',
+  );
+  @override
+  late final GeneratedColumn<int> localId = GeneratedColumn<int>(
+    'local_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _kanjiMeta = const VerificationMeta('kanji');
+  @override
+  late final GeneratedColumn<String> kanji = GeneratedColumn<String>(
+    'kanji',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _originalOnyomiMeta = const VerificationMeta(
+    'originalOnyomi',
+  );
+  @override
+  late final GeneratedColumn<String> originalOnyomi = GeneratedColumn<String>(
+    'original_onyomi',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _originalKunyomiMeta = const VerificationMeta(
+    'originalKunyomi',
+  );
+  @override
+  late final GeneratedColumn<String> originalKunyomi = GeneratedColumn<String>(
+    'original_kunyomi',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    localId,
+    kanji,
+    originalOnyomi,
+    originalKunyomi,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'kanji_staging_table';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<KanjiStagingTableData> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('local_id')) {
+      context.handle(
+        _localIdMeta,
+        localId.isAcceptableOrUnknown(data['local_id']!, _localIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_localIdMeta);
+    }
+    if (data.containsKey('kanji')) {
+      context.handle(
+        _kanjiMeta,
+        kanji.isAcceptableOrUnknown(data['kanji']!, _kanjiMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_kanjiMeta);
+    }
+    if (data.containsKey('original_onyomi')) {
+      context.handle(
+        _originalOnyomiMeta,
+        originalOnyomi.isAcceptableOrUnknown(
+          data['original_onyomi']!,
+          _originalOnyomiMeta,
+        ),
+      );
+    }
+    if (data.containsKey('original_kunyomi')) {
+      context.handle(
+        _originalKunyomiMeta,
+        originalKunyomi.isAcceptableOrUnknown(
+          data['original_kunyomi']!,
+          _originalKunyomiMeta,
+        ),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => const {};
+  @override
+  KanjiStagingTableData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return KanjiStagingTableData(
+      localId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}local_id'],
+      )!,
+      kanji: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}kanji'],
+      )!,
+      originalOnyomi: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}original_onyomi'],
+      ),
+      originalKunyomi: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}original_kunyomi'],
+      ),
+    );
+  }
+
+  @override
+  $KanjiStagingTableTable createAlias(String alias) {
+    return $KanjiStagingTableTable(attachedDatabase, alias);
+  }
+}
+
+class KanjiStagingTableData extends DataClass
+    implements Insertable<KanjiStagingTableData> {
+  final int localId;
+  final String kanji;
+  final String? originalOnyomi;
+  final String? originalKunyomi;
+  const KanjiStagingTableData({
+    required this.localId,
+    required this.kanji,
+    this.originalOnyomi,
+    this.originalKunyomi,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['local_id'] = Variable<int>(localId);
+    map['kanji'] = Variable<String>(kanji);
+    if (!nullToAbsent || originalOnyomi != null) {
+      map['original_onyomi'] = Variable<String>(originalOnyomi);
+    }
+    if (!nullToAbsent || originalKunyomi != null) {
+      map['original_kunyomi'] = Variable<String>(originalKunyomi);
+    }
+    return map;
+  }
+
+  KanjiStagingTableCompanion toCompanion(bool nullToAbsent) {
+    return KanjiStagingTableCompanion(
+      localId: Value(localId),
+      kanji: Value(kanji),
+      originalOnyomi: originalOnyomi == null && nullToAbsent
+          ? const Value.absent()
+          : Value(originalOnyomi),
+      originalKunyomi: originalKunyomi == null && nullToAbsent
+          ? const Value.absent()
+          : Value(originalKunyomi),
+    );
+  }
+
+  factory KanjiStagingTableData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return KanjiStagingTableData(
+      localId: serializer.fromJson<int>(json['localId']),
+      kanji: serializer.fromJson<String>(json['kanji']),
+      originalOnyomi: serializer.fromJson<String?>(json['originalOnyomi']),
+      originalKunyomi: serializer.fromJson<String?>(json['originalKunyomi']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'localId': serializer.toJson<int>(localId),
+      'kanji': serializer.toJson<String>(kanji),
+      'originalOnyomi': serializer.toJson<String?>(originalOnyomi),
+      'originalKunyomi': serializer.toJson<String?>(originalKunyomi),
+    };
+  }
+
+  KanjiStagingTableData copyWith({
+    int? localId,
+    String? kanji,
+    Value<String?> originalOnyomi = const Value.absent(),
+    Value<String?> originalKunyomi = const Value.absent(),
+  }) => KanjiStagingTableData(
+    localId: localId ?? this.localId,
+    kanji: kanji ?? this.kanji,
+    originalOnyomi: originalOnyomi.present
+        ? originalOnyomi.value
+        : this.originalOnyomi,
+    originalKunyomi: originalKunyomi.present
+        ? originalKunyomi.value
+        : this.originalKunyomi,
+  );
+  KanjiStagingTableData copyWithCompanion(KanjiStagingTableCompanion data) {
+    return KanjiStagingTableData(
+      localId: data.localId.present ? data.localId.value : this.localId,
+      kanji: data.kanji.present ? data.kanji.value : this.kanji,
+      originalOnyomi: data.originalOnyomi.present
+          ? data.originalOnyomi.value
+          : this.originalOnyomi,
+      originalKunyomi: data.originalKunyomi.present
+          ? data.originalKunyomi.value
+          : this.originalKunyomi,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('KanjiStagingTableData(')
+          ..write('localId: $localId, ')
+          ..write('kanji: $kanji, ')
+          ..write('originalOnyomi: $originalOnyomi, ')
+          ..write('originalKunyomi: $originalKunyomi')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(localId, kanji, originalOnyomi, originalKunyomi);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is KanjiStagingTableData &&
+          other.localId == this.localId &&
+          other.kanji == this.kanji &&
+          other.originalOnyomi == this.originalOnyomi &&
+          other.originalKunyomi == this.originalKunyomi);
+}
+
+class KanjiStagingTableCompanion
+    extends UpdateCompanion<KanjiStagingTableData> {
+  final Value<int> localId;
+  final Value<String> kanji;
+  final Value<String?> originalOnyomi;
+  final Value<String?> originalKunyomi;
+  final Value<int> rowid;
+  const KanjiStagingTableCompanion({
+    this.localId = const Value.absent(),
+    this.kanji = const Value.absent(),
+    this.originalOnyomi = const Value.absent(),
+    this.originalKunyomi = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  KanjiStagingTableCompanion.insert({
+    required int localId,
+    required String kanji,
+    this.originalOnyomi = const Value.absent(),
+    this.originalKunyomi = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : localId = Value(localId),
+       kanji = Value(kanji);
+  static Insertable<KanjiStagingTableData> custom({
+    Expression<int>? localId,
+    Expression<String>? kanji,
+    Expression<String>? originalOnyomi,
+    Expression<String>? originalKunyomi,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (localId != null) 'local_id': localId,
+      if (kanji != null) 'kanji': kanji,
+      if (originalOnyomi != null) 'original_onyomi': originalOnyomi,
+      if (originalKunyomi != null) 'original_kunyomi': originalKunyomi,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  KanjiStagingTableCompanion copyWith({
+    Value<int>? localId,
+    Value<String>? kanji,
+    Value<String?>? originalOnyomi,
+    Value<String?>? originalKunyomi,
+    Value<int>? rowid,
+  }) {
+    return KanjiStagingTableCompanion(
+      localId: localId ?? this.localId,
+      kanji: kanji ?? this.kanji,
+      originalOnyomi: originalOnyomi ?? this.originalOnyomi,
+      originalKunyomi: originalKunyomi ?? this.originalKunyomi,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (localId.present) {
+      map['local_id'] = Variable<int>(localId.value);
+    }
+    if (kanji.present) {
+      map['kanji'] = Variable<String>(kanji.value);
+    }
+    if (originalOnyomi.present) {
+      map['original_onyomi'] = Variable<String>(originalOnyomi.value);
+    }
+    if (originalKunyomi.present) {
+      map['original_kunyomi'] = Variable<String>(originalKunyomi.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('KanjiStagingTableCompanion(')
+          ..write('localId: $localId, ')
+          ..write('kanji: $kanji, ')
+          ..write('originalOnyomi: $originalOnyomi, ')
+          ..write('originalKunyomi: $originalKunyomi, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $KanjiReadingStagingTableTable extends KanjiReadingStagingTable
+    with
+        TableInfo<
+          $KanjiReadingStagingTableTable,
+          KanjiReadingStagingTableData
+        > {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $KanjiReadingStagingTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _kanjiLocalIdMeta = const VerificationMeta(
+    'kanjiLocalId',
+  );
+  @override
+  late final GeneratedColumn<int> kanjiLocalId = GeneratedColumn<int>(
+    'kanji_local_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _readingMeta = const VerificationMeta(
+    'reading',
+  );
+  @override
+  late final GeneratedColumn<String> reading = GeneratedColumn<String>(
+    'reading',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _readingNormalizedMeta = const VerificationMeta(
+    'readingNormalized',
+  );
+  @override
+  late final GeneratedColumn<String> readingNormalized =
+      GeneratedColumn<String>(
+        'reading_normalized',
+        aliasedName,
+        true,
+        type: DriftSqlType.string,
+        requiredDuringInsert: false,
+      );
+  static const VerificationMeta _typeMeta = const VerificationMeta('type');
+  @override
+  late final GeneratedColumn<String> type = GeneratedColumn<String>(
+    'type',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _positionMeta = const VerificationMeta(
+    'position',
+  );
+  @override
+  late final GeneratedColumn<int> position = GeneratedColumn<int>(
+    'position',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    kanjiLocalId,
+    reading,
+    readingNormalized,
+    type,
+    position,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'kanji_reading_staging_table';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<KanjiReadingStagingTableData> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('kanji_local_id')) {
+      context.handle(
+        _kanjiLocalIdMeta,
+        kanjiLocalId.isAcceptableOrUnknown(
+          data['kanji_local_id']!,
+          _kanjiLocalIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_kanjiLocalIdMeta);
+    }
+    if (data.containsKey('reading')) {
+      context.handle(
+        _readingMeta,
+        reading.isAcceptableOrUnknown(data['reading']!, _readingMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_readingMeta);
+    }
+    if (data.containsKey('reading_normalized')) {
+      context.handle(
+        _readingNormalizedMeta,
+        readingNormalized.isAcceptableOrUnknown(
+          data['reading_normalized']!,
+          _readingNormalizedMeta,
+        ),
+      );
+    }
+    if (data.containsKey('type')) {
+      context.handle(
+        _typeMeta,
+        type.isAcceptableOrUnknown(data['type']!, _typeMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_typeMeta);
+    }
+    if (data.containsKey('position')) {
+      context.handle(
+        _positionMeta,
+        position.isAcceptableOrUnknown(data['position']!, _positionMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_positionMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => const {};
+  @override
+  KanjiReadingStagingTableData map(
+    Map<String, dynamic> data, {
+    String? tablePrefix,
+  }) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return KanjiReadingStagingTableData(
+      kanjiLocalId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}kanji_local_id'],
+      )!,
+      reading: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}reading'],
+      )!,
+      readingNormalized: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}reading_normalized'],
+      ),
+      type: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}type'],
+      )!,
+      position: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}position'],
+      )!,
+    );
+  }
+
+  @override
+  $KanjiReadingStagingTableTable createAlias(String alias) {
+    return $KanjiReadingStagingTableTable(attachedDatabase, alias);
+  }
+}
+
+class KanjiReadingStagingTableData extends DataClass
+    implements Insertable<KanjiReadingStagingTableData> {
+  final int kanjiLocalId;
+  final String reading;
+  final String? readingNormalized;
+  final String type;
+  final int position;
+  const KanjiReadingStagingTableData({
+    required this.kanjiLocalId,
+    required this.reading,
+    this.readingNormalized,
+    required this.type,
+    required this.position,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['kanji_local_id'] = Variable<int>(kanjiLocalId);
+    map['reading'] = Variable<String>(reading);
+    if (!nullToAbsent || readingNormalized != null) {
+      map['reading_normalized'] = Variable<String>(readingNormalized);
+    }
+    map['type'] = Variable<String>(type);
+    map['position'] = Variable<int>(position);
+    return map;
+  }
+
+  KanjiReadingStagingTableCompanion toCompanion(bool nullToAbsent) {
+    return KanjiReadingStagingTableCompanion(
+      kanjiLocalId: Value(kanjiLocalId),
+      reading: Value(reading),
+      readingNormalized: readingNormalized == null && nullToAbsent
+          ? const Value.absent()
+          : Value(readingNormalized),
+      type: Value(type),
+      position: Value(position),
+    );
+  }
+
+  factory KanjiReadingStagingTableData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return KanjiReadingStagingTableData(
+      kanjiLocalId: serializer.fromJson<int>(json['kanjiLocalId']),
+      reading: serializer.fromJson<String>(json['reading']),
+      readingNormalized: serializer.fromJson<String?>(
+        json['readingNormalized'],
+      ),
+      type: serializer.fromJson<String>(json['type']),
+      position: serializer.fromJson<int>(json['position']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'kanjiLocalId': serializer.toJson<int>(kanjiLocalId),
+      'reading': serializer.toJson<String>(reading),
+      'readingNormalized': serializer.toJson<String?>(readingNormalized),
+      'type': serializer.toJson<String>(type),
+      'position': serializer.toJson<int>(position),
+    };
+  }
+
+  KanjiReadingStagingTableData copyWith({
+    int? kanjiLocalId,
+    String? reading,
+    Value<String?> readingNormalized = const Value.absent(),
+    String? type,
+    int? position,
+  }) => KanjiReadingStagingTableData(
+    kanjiLocalId: kanjiLocalId ?? this.kanjiLocalId,
+    reading: reading ?? this.reading,
+    readingNormalized: readingNormalized.present
+        ? readingNormalized.value
+        : this.readingNormalized,
+    type: type ?? this.type,
+    position: position ?? this.position,
+  );
+  KanjiReadingStagingTableData copyWithCompanion(
+    KanjiReadingStagingTableCompanion data,
+  ) {
+    return KanjiReadingStagingTableData(
+      kanjiLocalId: data.kanjiLocalId.present
+          ? data.kanjiLocalId.value
+          : this.kanjiLocalId,
+      reading: data.reading.present ? data.reading.value : this.reading,
+      readingNormalized: data.readingNormalized.present
+          ? data.readingNormalized.value
+          : this.readingNormalized,
+      type: data.type.present ? data.type.value : this.type,
+      position: data.position.present ? data.position.value : this.position,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('KanjiReadingStagingTableData(')
+          ..write('kanjiLocalId: $kanjiLocalId, ')
+          ..write('reading: $reading, ')
+          ..write('readingNormalized: $readingNormalized, ')
+          ..write('type: $type, ')
+          ..write('position: $position')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(kanjiLocalId, reading, readingNormalized, type, position);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is KanjiReadingStagingTableData &&
+          other.kanjiLocalId == this.kanjiLocalId &&
+          other.reading == this.reading &&
+          other.readingNormalized == this.readingNormalized &&
+          other.type == this.type &&
+          other.position == this.position);
+}
+
+class KanjiReadingStagingTableCompanion
+    extends UpdateCompanion<KanjiReadingStagingTableData> {
+  final Value<int> kanjiLocalId;
+  final Value<String> reading;
+  final Value<String?> readingNormalized;
+  final Value<String> type;
+  final Value<int> position;
+  final Value<int> rowid;
+  const KanjiReadingStagingTableCompanion({
+    this.kanjiLocalId = const Value.absent(),
+    this.reading = const Value.absent(),
+    this.readingNormalized = const Value.absent(),
+    this.type = const Value.absent(),
+    this.position = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  KanjiReadingStagingTableCompanion.insert({
+    required int kanjiLocalId,
+    required String reading,
+    this.readingNormalized = const Value.absent(),
+    required String type,
+    required int position,
+    this.rowid = const Value.absent(),
+  }) : kanjiLocalId = Value(kanjiLocalId),
+       reading = Value(reading),
+       type = Value(type),
+       position = Value(position);
+  static Insertable<KanjiReadingStagingTableData> custom({
+    Expression<int>? kanjiLocalId,
+    Expression<String>? reading,
+    Expression<String>? readingNormalized,
+    Expression<String>? type,
+    Expression<int>? position,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (kanjiLocalId != null) 'kanji_local_id': kanjiLocalId,
+      if (reading != null) 'reading': reading,
+      if (readingNormalized != null) 'reading_normalized': readingNormalized,
+      if (type != null) 'type': type,
+      if (position != null) 'position': position,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  KanjiReadingStagingTableCompanion copyWith({
+    Value<int>? kanjiLocalId,
+    Value<String>? reading,
+    Value<String?>? readingNormalized,
+    Value<String>? type,
+    Value<int>? position,
+    Value<int>? rowid,
+  }) {
+    return KanjiReadingStagingTableCompanion(
+      kanjiLocalId: kanjiLocalId ?? this.kanjiLocalId,
+      reading: reading ?? this.reading,
+      readingNormalized: readingNormalized ?? this.readingNormalized,
+      type: type ?? this.type,
+      position: position ?? this.position,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (kanjiLocalId.present) {
+      map['kanji_local_id'] = Variable<int>(kanjiLocalId.value);
+    }
+    if (reading.present) {
+      map['reading'] = Variable<String>(reading.value);
+    }
+    if (readingNormalized.present) {
+      map['reading_normalized'] = Variable<String>(readingNormalized.value);
+    }
+    if (type.present) {
+      map['type'] = Variable<String>(type.value);
+    }
+    if (position.present) {
+      map['position'] = Variable<int>(position.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('KanjiReadingStagingTableCompanion(')
+          ..write('kanjiLocalId: $kanjiLocalId, ')
+          ..write('reading: $reading, ')
+          ..write('readingNormalized: $readingNormalized, ')
+          ..write('type: $type, ')
+          ..write('position: $position, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $KanjiDefinitionStagingTableTable extends KanjiDefinitionStagingTable
+    with
+        TableInfo<
+          $KanjiDefinitionStagingTableTable,
+          KanjiDefinitionStagingTableData
+        > {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $KanjiDefinitionStagingTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _kanjiLocalIdMeta = const VerificationMeta(
+    'kanjiLocalId',
+  );
+  @override
+  late final GeneratedColumn<int> kanjiLocalId = GeneratedColumn<int>(
+    'kanji_local_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _definitionMeta = const VerificationMeta(
+    'definition',
+  );
+  @override
+  late final GeneratedColumn<String> definition = GeneratedColumn<String>(
+    'definition',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _positionMeta = const VerificationMeta(
+    'position',
+  );
+  @override
+  late final GeneratedColumn<int> position = GeneratedColumn<int>(
+    'position',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [kanjiLocalId, definition, position];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'kanji_definition_staging_table';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<KanjiDefinitionStagingTableData> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('kanji_local_id')) {
+      context.handle(
+        _kanjiLocalIdMeta,
+        kanjiLocalId.isAcceptableOrUnknown(
+          data['kanji_local_id']!,
+          _kanjiLocalIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_kanjiLocalIdMeta);
+    }
+    if (data.containsKey('definition')) {
+      context.handle(
+        _definitionMeta,
+        definition.isAcceptableOrUnknown(data['definition']!, _definitionMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_definitionMeta);
+    }
+    if (data.containsKey('position')) {
+      context.handle(
+        _positionMeta,
+        position.isAcceptableOrUnknown(data['position']!, _positionMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_positionMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => const {};
+  @override
+  KanjiDefinitionStagingTableData map(
+    Map<String, dynamic> data, {
+    String? tablePrefix,
+  }) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return KanjiDefinitionStagingTableData(
+      kanjiLocalId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}kanji_local_id'],
+      )!,
+      definition: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}definition'],
+      )!,
+      position: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}position'],
+      )!,
+    );
+  }
+
+  @override
+  $KanjiDefinitionStagingTableTable createAlias(String alias) {
+    return $KanjiDefinitionStagingTableTable(attachedDatabase, alias);
+  }
+}
+
+class KanjiDefinitionStagingTableData extends DataClass
+    implements Insertable<KanjiDefinitionStagingTableData> {
+  final int kanjiLocalId;
+  final String definition;
+  final int position;
+  const KanjiDefinitionStagingTableData({
+    required this.kanjiLocalId,
+    required this.definition,
+    required this.position,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['kanji_local_id'] = Variable<int>(kanjiLocalId);
+    map['definition'] = Variable<String>(definition);
+    map['position'] = Variable<int>(position);
+    return map;
+  }
+
+  KanjiDefinitionStagingTableCompanion toCompanion(bool nullToAbsent) {
+    return KanjiDefinitionStagingTableCompanion(
+      kanjiLocalId: Value(kanjiLocalId),
+      definition: Value(definition),
+      position: Value(position),
+    );
+  }
+
+  factory KanjiDefinitionStagingTableData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return KanjiDefinitionStagingTableData(
+      kanjiLocalId: serializer.fromJson<int>(json['kanjiLocalId']),
+      definition: serializer.fromJson<String>(json['definition']),
+      position: serializer.fromJson<int>(json['position']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'kanjiLocalId': serializer.toJson<int>(kanjiLocalId),
+      'definition': serializer.toJson<String>(definition),
+      'position': serializer.toJson<int>(position),
+    };
+  }
+
+  KanjiDefinitionStagingTableData copyWith({
+    int? kanjiLocalId,
+    String? definition,
+    int? position,
+  }) => KanjiDefinitionStagingTableData(
+    kanjiLocalId: kanjiLocalId ?? this.kanjiLocalId,
+    definition: definition ?? this.definition,
+    position: position ?? this.position,
+  );
+  KanjiDefinitionStagingTableData copyWithCompanion(
+    KanjiDefinitionStagingTableCompanion data,
+  ) {
+    return KanjiDefinitionStagingTableData(
+      kanjiLocalId: data.kanjiLocalId.present
+          ? data.kanjiLocalId.value
+          : this.kanjiLocalId,
+      definition: data.definition.present
+          ? data.definition.value
+          : this.definition,
+      position: data.position.present ? data.position.value : this.position,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('KanjiDefinitionStagingTableData(')
+          ..write('kanjiLocalId: $kanjiLocalId, ')
+          ..write('definition: $definition, ')
+          ..write('position: $position')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(kanjiLocalId, definition, position);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is KanjiDefinitionStagingTableData &&
+          other.kanjiLocalId == this.kanjiLocalId &&
+          other.definition == this.definition &&
+          other.position == this.position);
+}
+
+class KanjiDefinitionStagingTableCompanion
+    extends UpdateCompanion<KanjiDefinitionStagingTableData> {
+  final Value<int> kanjiLocalId;
+  final Value<String> definition;
+  final Value<int> position;
+  final Value<int> rowid;
+  const KanjiDefinitionStagingTableCompanion({
+    this.kanjiLocalId = const Value.absent(),
+    this.definition = const Value.absent(),
+    this.position = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  KanjiDefinitionStagingTableCompanion.insert({
+    required int kanjiLocalId,
+    required String definition,
+    required int position,
+    this.rowid = const Value.absent(),
+  }) : kanjiLocalId = Value(kanjiLocalId),
+       definition = Value(definition),
+       position = Value(position);
+  static Insertable<KanjiDefinitionStagingTableData> custom({
+    Expression<int>? kanjiLocalId,
+    Expression<String>? definition,
+    Expression<int>? position,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (kanjiLocalId != null) 'kanji_local_id': kanjiLocalId,
+      if (definition != null) 'definition': definition,
+      if (position != null) 'position': position,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  KanjiDefinitionStagingTableCompanion copyWith({
+    Value<int>? kanjiLocalId,
+    Value<String>? definition,
+    Value<int>? position,
+    Value<int>? rowid,
+  }) {
+    return KanjiDefinitionStagingTableCompanion(
+      kanjiLocalId: kanjiLocalId ?? this.kanjiLocalId,
+      definition: definition ?? this.definition,
+      position: position ?? this.position,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (kanjiLocalId.present) {
+      map['kanji_local_id'] = Variable<int>(kanjiLocalId.value);
+    }
+    if (definition.present) {
+      map['definition'] = Variable<String>(definition.value);
+    }
+    if (position.present) {
+      map['position'] = Variable<int>(position.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('KanjiDefinitionStagingTableCompanion(')
+          ..write('kanjiLocalId: $kanjiLocalId, ')
+          ..write('definition: $definition, ')
+          ..write('position: $position, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $KanjiTagStagingTableTable extends KanjiTagStagingTable
+    with TableInfo<$KanjiTagStagingTableTable, KanjiTagStagingTableData> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $KanjiTagStagingTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _kanjiLocalIdMeta = const VerificationMeta(
+    'kanjiLocalId',
+  );
+  @override
+  late final GeneratedColumn<int> kanjiLocalId = GeneratedColumn<int>(
+    'kanji_local_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _tagNameMeta = const VerificationMeta(
+    'tagName',
+  );
+  @override
+  late final GeneratedColumn<String> tagName = GeneratedColumn<String>(
+    'tag_name',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [kanjiLocalId, tagName];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'kanji_tag_staging_table';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<KanjiTagStagingTableData> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('kanji_local_id')) {
+      context.handle(
+        _kanjiLocalIdMeta,
+        kanjiLocalId.isAcceptableOrUnknown(
+          data['kanji_local_id']!,
+          _kanjiLocalIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_kanjiLocalIdMeta);
+    }
+    if (data.containsKey('tag_name')) {
+      context.handle(
+        _tagNameMeta,
+        tagName.isAcceptableOrUnknown(data['tag_name']!, _tagNameMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_tagNameMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => const {};
+  @override
+  KanjiTagStagingTableData map(
+    Map<String, dynamic> data, {
+    String? tablePrefix,
+  }) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return KanjiTagStagingTableData(
+      kanjiLocalId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}kanji_local_id'],
+      )!,
+      tagName: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}tag_name'],
+      )!,
+    );
+  }
+
+  @override
+  $KanjiTagStagingTableTable createAlias(String alias) {
+    return $KanjiTagStagingTableTable(attachedDatabase, alias);
+  }
+}
+
+class KanjiTagStagingTableData extends DataClass
+    implements Insertable<KanjiTagStagingTableData> {
+  final int kanjiLocalId;
+  final String tagName;
+  const KanjiTagStagingTableData({
+    required this.kanjiLocalId,
+    required this.tagName,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['kanji_local_id'] = Variable<int>(kanjiLocalId);
+    map['tag_name'] = Variable<String>(tagName);
+    return map;
+  }
+
+  KanjiTagStagingTableCompanion toCompanion(bool nullToAbsent) {
+    return KanjiTagStagingTableCompanion(
+      kanjiLocalId: Value(kanjiLocalId),
+      tagName: Value(tagName),
+    );
+  }
+
+  factory KanjiTagStagingTableData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return KanjiTagStagingTableData(
+      kanjiLocalId: serializer.fromJson<int>(json['kanjiLocalId']),
+      tagName: serializer.fromJson<String>(json['tagName']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'kanjiLocalId': serializer.toJson<int>(kanjiLocalId),
+      'tagName': serializer.toJson<String>(tagName),
+    };
+  }
+
+  KanjiTagStagingTableData copyWith({int? kanjiLocalId, String? tagName}) =>
+      KanjiTagStagingTableData(
+        kanjiLocalId: kanjiLocalId ?? this.kanjiLocalId,
+        tagName: tagName ?? this.tagName,
+      );
+  KanjiTagStagingTableData copyWithCompanion(
+    KanjiTagStagingTableCompanion data,
+  ) {
+    return KanjiTagStagingTableData(
+      kanjiLocalId: data.kanjiLocalId.present
+          ? data.kanjiLocalId.value
+          : this.kanjiLocalId,
+      tagName: data.tagName.present ? data.tagName.value : this.tagName,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('KanjiTagStagingTableData(')
+          ..write('kanjiLocalId: $kanjiLocalId, ')
+          ..write('tagName: $tagName')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(kanjiLocalId, tagName);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is KanjiTagStagingTableData &&
+          other.kanjiLocalId == this.kanjiLocalId &&
+          other.tagName == this.tagName);
+}
+
+class KanjiTagStagingTableCompanion
+    extends UpdateCompanion<KanjiTagStagingTableData> {
+  final Value<int> kanjiLocalId;
+  final Value<String> tagName;
+  final Value<int> rowid;
+  const KanjiTagStagingTableCompanion({
+    this.kanjiLocalId = const Value.absent(),
+    this.tagName = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  KanjiTagStagingTableCompanion.insert({
+    required int kanjiLocalId,
+    required String tagName,
+    this.rowid = const Value.absent(),
+  }) : kanjiLocalId = Value(kanjiLocalId),
+       tagName = Value(tagName);
+  static Insertable<KanjiTagStagingTableData> custom({
+    Expression<int>? kanjiLocalId,
+    Expression<String>? tagName,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (kanjiLocalId != null) 'kanji_local_id': kanjiLocalId,
+      if (tagName != null) 'tag_name': tagName,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  KanjiTagStagingTableCompanion copyWith({
+    Value<int>? kanjiLocalId,
+    Value<String>? tagName,
+    Value<int>? rowid,
+  }) {
+    return KanjiTagStagingTableCompanion(
+      kanjiLocalId: kanjiLocalId ?? this.kanjiLocalId,
+      tagName: tagName ?? this.tagName,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (kanjiLocalId.present) {
+      map['kanji_local_id'] = Variable<int>(kanjiLocalId.value);
+    }
+    if (tagName.present) {
+      map['tag_name'] = Variable<String>(tagName.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('KanjiTagStagingTableCompanion(')
+          ..write('kanjiLocalId: $kanjiLocalId, ')
+          ..write('tagName: $tagName, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $KanjiStatStagingTableTable extends KanjiStatStagingTable
+    with TableInfo<$KanjiStatStagingTableTable, KanjiStatStagingTableData> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $KanjiStatStagingTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _kanjiLocalIdMeta = const VerificationMeta(
+    'kanjiLocalId',
+  );
+  @override
+  late final GeneratedColumn<int> kanjiLocalId = GeneratedColumn<int>(
+    'kanji_local_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _tagNameMeta = const VerificationMeta(
+    'tagName',
+  );
+  @override
+  late final GeneratedColumn<String> tagName = GeneratedColumn<String>(
+    'tag_name',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _valueMeta = const VerificationMeta('value');
+  @override
+  late final GeneratedColumn<String> value = GeneratedColumn<String>(
+    'value',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [kanjiLocalId, tagName, value];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'kanji_stat_staging_table';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<KanjiStatStagingTableData> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('kanji_local_id')) {
+      context.handle(
+        _kanjiLocalIdMeta,
+        kanjiLocalId.isAcceptableOrUnknown(
+          data['kanji_local_id']!,
+          _kanjiLocalIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_kanjiLocalIdMeta);
+    }
+    if (data.containsKey('tag_name')) {
+      context.handle(
+        _tagNameMeta,
+        tagName.isAcceptableOrUnknown(data['tag_name']!, _tagNameMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_tagNameMeta);
+    }
+    if (data.containsKey('value')) {
+      context.handle(
+        _valueMeta,
+        value.isAcceptableOrUnknown(data['value']!, _valueMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_valueMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => const {};
+  @override
+  KanjiStatStagingTableData map(
+    Map<String, dynamic> data, {
+    String? tablePrefix,
+  }) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return KanjiStatStagingTableData(
+      kanjiLocalId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}kanji_local_id'],
+      )!,
+      tagName: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}tag_name'],
+      )!,
+      value: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}value'],
+      )!,
+    );
+  }
+
+  @override
+  $KanjiStatStagingTableTable createAlias(String alias) {
+    return $KanjiStatStagingTableTable(attachedDatabase, alias);
+  }
+}
+
+class KanjiStatStagingTableData extends DataClass
+    implements Insertable<KanjiStatStagingTableData> {
+  final int kanjiLocalId;
+  final String tagName;
+  final String value;
+  const KanjiStatStagingTableData({
+    required this.kanjiLocalId,
+    required this.tagName,
+    required this.value,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['kanji_local_id'] = Variable<int>(kanjiLocalId);
+    map['tag_name'] = Variable<String>(tagName);
+    map['value'] = Variable<String>(value);
+    return map;
+  }
+
+  KanjiStatStagingTableCompanion toCompanion(bool nullToAbsent) {
+    return KanjiStatStagingTableCompanion(
+      kanjiLocalId: Value(kanjiLocalId),
+      tagName: Value(tagName),
+      value: Value(value),
+    );
+  }
+
+  factory KanjiStatStagingTableData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return KanjiStatStagingTableData(
+      kanjiLocalId: serializer.fromJson<int>(json['kanjiLocalId']),
+      tagName: serializer.fromJson<String>(json['tagName']),
+      value: serializer.fromJson<String>(json['value']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'kanjiLocalId': serializer.toJson<int>(kanjiLocalId),
+      'tagName': serializer.toJson<String>(tagName),
+      'value': serializer.toJson<String>(value),
+    };
+  }
+
+  KanjiStatStagingTableData copyWith({
+    int? kanjiLocalId,
+    String? tagName,
+    String? value,
+  }) => KanjiStatStagingTableData(
+    kanjiLocalId: kanjiLocalId ?? this.kanjiLocalId,
+    tagName: tagName ?? this.tagName,
+    value: value ?? this.value,
+  );
+  KanjiStatStagingTableData copyWithCompanion(
+    KanjiStatStagingTableCompanion data,
+  ) {
+    return KanjiStatStagingTableData(
+      kanjiLocalId: data.kanjiLocalId.present
+          ? data.kanjiLocalId.value
+          : this.kanjiLocalId,
+      tagName: data.tagName.present ? data.tagName.value : this.tagName,
+      value: data.value.present ? data.value.value : this.value,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('KanjiStatStagingTableData(')
+          ..write('kanjiLocalId: $kanjiLocalId, ')
+          ..write('tagName: $tagName, ')
+          ..write('value: $value')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(kanjiLocalId, tagName, value);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is KanjiStatStagingTableData &&
+          other.kanjiLocalId == this.kanjiLocalId &&
+          other.tagName == this.tagName &&
+          other.value == this.value);
+}
+
+class KanjiStatStagingTableCompanion
+    extends UpdateCompanion<KanjiStatStagingTableData> {
+  final Value<int> kanjiLocalId;
+  final Value<String> tagName;
+  final Value<String> value;
+  final Value<int> rowid;
+  const KanjiStatStagingTableCompanion({
+    this.kanjiLocalId = const Value.absent(),
+    this.tagName = const Value.absent(),
+    this.value = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  KanjiStatStagingTableCompanion.insert({
+    required int kanjiLocalId,
+    required String tagName,
+    required String value,
+    this.rowid = const Value.absent(),
+  }) : kanjiLocalId = Value(kanjiLocalId),
+       tagName = Value(tagName),
+       value = Value(value);
+  static Insertable<KanjiStatStagingTableData> custom({
+    Expression<int>? kanjiLocalId,
+    Expression<String>? tagName,
+    Expression<String>? value,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (kanjiLocalId != null) 'kanji_local_id': kanjiLocalId,
+      if (tagName != null) 'tag_name': tagName,
+      if (value != null) 'value': value,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  KanjiStatStagingTableCompanion copyWith({
+    Value<int>? kanjiLocalId,
+    Value<String>? tagName,
+    Value<String>? value,
+    Value<int>? rowid,
+  }) {
+    return KanjiStatStagingTableCompanion(
+      kanjiLocalId: kanjiLocalId ?? this.kanjiLocalId,
+      tagName: tagName ?? this.tagName,
+      value: value ?? this.value,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (kanjiLocalId.present) {
+      map['kanji_local_id'] = Variable<int>(kanjiLocalId.value);
+    }
+    if (tagName.present) {
+      map['tag_name'] = Variable<String>(tagName.value);
+    }
+    if (value.present) {
+      map['value'] = Variable<String>(value.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('KanjiStatStagingTableCompanion(')
+          ..write('kanjiLocalId: $kanjiLocalId, ')
+          ..write('tagName: $tagName, ')
+          ..write('value: $value, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $KanjiMetaStagingTableTable extends KanjiMetaStagingTable
+    with TableInfo<$KanjiMetaStagingTableTable, KanjiMetaStagingTableData> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $KanjiMetaStagingTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _localIdMeta = const VerificationMeta(
+    'localId',
+  );
+  @override
+  late final GeneratedColumn<int> localId = GeneratedColumn<int>(
+    'local_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _kanjiMeta = const VerificationMeta('kanji');
+  @override
+  late final GeneratedColumn<String> kanji = GeneratedColumn<String>(
+    'kanji',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _typeMeta = const VerificationMeta('type');
+  @override
+  late final GeneratedColumn<String> type = GeneratedColumn<String>(
+    'type',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _freqValueMeta = const VerificationMeta(
+    'freqValue',
+  );
+  @override
+  late final GeneratedColumn<int> freqValue = GeneratedColumn<int>(
+    'freq_value',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _freqDisplayValueMeta = const VerificationMeta(
+    'freqDisplayValue',
+  );
+  @override
+  late final GeneratedColumn<String> freqDisplayValue = GeneratedColumn<String>(
+    'freq_display_value',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    localId,
+    kanji,
+    type,
+    freqValue,
+    freqDisplayValue,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'kanji_meta_staging_table';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<KanjiMetaStagingTableData> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('local_id')) {
+      context.handle(
+        _localIdMeta,
+        localId.isAcceptableOrUnknown(data['local_id']!, _localIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_localIdMeta);
+    }
+    if (data.containsKey('kanji')) {
+      context.handle(
+        _kanjiMeta,
+        kanji.isAcceptableOrUnknown(data['kanji']!, _kanjiMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_kanjiMeta);
+    }
+    if (data.containsKey('type')) {
+      context.handle(
+        _typeMeta,
+        type.isAcceptableOrUnknown(data['type']!, _typeMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_typeMeta);
+    }
+    if (data.containsKey('freq_value')) {
+      context.handle(
+        _freqValueMeta,
+        freqValue.isAcceptableOrUnknown(data['freq_value']!, _freqValueMeta),
+      );
+    }
+    if (data.containsKey('freq_display_value')) {
+      context.handle(
+        _freqDisplayValueMeta,
+        freqDisplayValue.isAcceptableOrUnknown(
+          data['freq_display_value']!,
+          _freqDisplayValueMeta,
+        ),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => const {};
+  @override
+  KanjiMetaStagingTableData map(
+    Map<String, dynamic> data, {
+    String? tablePrefix,
+  }) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return KanjiMetaStagingTableData(
+      localId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}local_id'],
+      )!,
+      kanji: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}kanji'],
+      )!,
+      type: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}type'],
+      )!,
+      freqValue: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}freq_value'],
+      ),
+      freqDisplayValue: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}freq_display_value'],
+      ),
+    );
+  }
+
+  @override
+  $KanjiMetaStagingTableTable createAlias(String alias) {
+    return $KanjiMetaStagingTableTable(attachedDatabase, alias);
+  }
+}
+
+class KanjiMetaStagingTableData extends DataClass
+    implements Insertable<KanjiMetaStagingTableData> {
+  final int localId;
+  final String kanji;
+  final String type;
+  final int? freqValue;
+  final String? freqDisplayValue;
+  const KanjiMetaStagingTableData({
+    required this.localId,
+    required this.kanji,
+    required this.type,
+    this.freqValue,
+    this.freqDisplayValue,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['local_id'] = Variable<int>(localId);
+    map['kanji'] = Variable<String>(kanji);
+    map['type'] = Variable<String>(type);
+    if (!nullToAbsent || freqValue != null) {
+      map['freq_value'] = Variable<int>(freqValue);
+    }
+    if (!nullToAbsent || freqDisplayValue != null) {
+      map['freq_display_value'] = Variable<String>(freqDisplayValue);
+    }
+    return map;
+  }
+
+  KanjiMetaStagingTableCompanion toCompanion(bool nullToAbsent) {
+    return KanjiMetaStagingTableCompanion(
+      localId: Value(localId),
+      kanji: Value(kanji),
+      type: Value(type),
+      freqValue: freqValue == null && nullToAbsent
+          ? const Value.absent()
+          : Value(freqValue),
+      freqDisplayValue: freqDisplayValue == null && nullToAbsent
+          ? const Value.absent()
+          : Value(freqDisplayValue),
+    );
+  }
+
+  factory KanjiMetaStagingTableData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return KanjiMetaStagingTableData(
+      localId: serializer.fromJson<int>(json['localId']),
+      kanji: serializer.fromJson<String>(json['kanji']),
+      type: serializer.fromJson<String>(json['type']),
+      freqValue: serializer.fromJson<int?>(json['freqValue']),
+      freqDisplayValue: serializer.fromJson<String?>(json['freqDisplayValue']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'localId': serializer.toJson<int>(localId),
+      'kanji': serializer.toJson<String>(kanji),
+      'type': serializer.toJson<String>(type),
+      'freqValue': serializer.toJson<int?>(freqValue),
+      'freqDisplayValue': serializer.toJson<String?>(freqDisplayValue),
+    };
+  }
+
+  KanjiMetaStagingTableData copyWith({
+    int? localId,
+    String? kanji,
+    String? type,
+    Value<int?> freqValue = const Value.absent(),
+    Value<String?> freqDisplayValue = const Value.absent(),
+  }) => KanjiMetaStagingTableData(
+    localId: localId ?? this.localId,
+    kanji: kanji ?? this.kanji,
+    type: type ?? this.type,
+    freqValue: freqValue.present ? freqValue.value : this.freqValue,
+    freqDisplayValue: freqDisplayValue.present
+        ? freqDisplayValue.value
+        : this.freqDisplayValue,
+  );
+  KanjiMetaStagingTableData copyWithCompanion(
+    KanjiMetaStagingTableCompanion data,
+  ) {
+    return KanjiMetaStagingTableData(
+      localId: data.localId.present ? data.localId.value : this.localId,
+      kanji: data.kanji.present ? data.kanji.value : this.kanji,
+      type: data.type.present ? data.type.value : this.type,
+      freqValue: data.freqValue.present ? data.freqValue.value : this.freqValue,
+      freqDisplayValue: data.freqDisplayValue.present
+          ? data.freqDisplayValue.value
+          : this.freqDisplayValue,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('KanjiMetaStagingTableData(')
+          ..write('localId: $localId, ')
+          ..write('kanji: $kanji, ')
+          ..write('type: $type, ')
+          ..write('freqValue: $freqValue, ')
+          ..write('freqDisplayValue: $freqDisplayValue')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(localId, kanji, type, freqValue, freqDisplayValue);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is KanjiMetaStagingTableData &&
+          other.localId == this.localId &&
+          other.kanji == this.kanji &&
+          other.type == this.type &&
+          other.freqValue == this.freqValue &&
+          other.freqDisplayValue == this.freqDisplayValue);
+}
+
+class KanjiMetaStagingTableCompanion
+    extends UpdateCompanion<KanjiMetaStagingTableData> {
+  final Value<int> localId;
+  final Value<String> kanji;
+  final Value<String> type;
+  final Value<int?> freqValue;
+  final Value<String?> freqDisplayValue;
+  final Value<int> rowid;
+  const KanjiMetaStagingTableCompanion({
+    this.localId = const Value.absent(),
+    this.kanji = const Value.absent(),
+    this.type = const Value.absent(),
+    this.freqValue = const Value.absent(),
+    this.freqDisplayValue = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  KanjiMetaStagingTableCompanion.insert({
+    required int localId,
+    required String kanji,
+    required String type,
+    this.freqValue = const Value.absent(),
+    this.freqDisplayValue = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : localId = Value(localId),
+       kanji = Value(kanji),
+       type = Value(type);
+  static Insertable<KanjiMetaStagingTableData> custom({
+    Expression<int>? localId,
+    Expression<String>? kanji,
+    Expression<String>? type,
+    Expression<int>? freqValue,
+    Expression<String>? freqDisplayValue,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (localId != null) 'local_id': localId,
+      if (kanji != null) 'kanji': kanji,
+      if (type != null) 'type': type,
+      if (freqValue != null) 'freq_value': freqValue,
+      if (freqDisplayValue != null) 'freq_display_value': freqDisplayValue,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  KanjiMetaStagingTableCompanion copyWith({
+    Value<int>? localId,
+    Value<String>? kanji,
+    Value<String>? type,
+    Value<int?>? freqValue,
+    Value<String?>? freqDisplayValue,
+    Value<int>? rowid,
+  }) {
+    return KanjiMetaStagingTableCompanion(
+      localId: localId ?? this.localId,
+      kanji: kanji ?? this.kanji,
+      type: type ?? this.type,
+      freqValue: freqValue ?? this.freqValue,
+      freqDisplayValue: freqDisplayValue ?? this.freqDisplayValue,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (localId.present) {
+      map['local_id'] = Variable<int>(localId.value);
+    }
+    if (kanji.present) {
+      map['kanji'] = Variable<String>(kanji.value);
+    }
+    if (type.present) {
+      map['type'] = Variable<String>(type.value);
+    }
+    if (freqValue.present) {
+      map['freq_value'] = Variable<int>(freqValue.value);
+    }
+    if (freqDisplayValue.present) {
+      map['freq_display_value'] = Variable<String>(freqDisplayValue.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('KanjiMetaStagingTableCompanion(')
+          ..write('localId: $localId, ')
+          ..write('kanji: $kanji, ')
+          ..write('type: $type, ')
+          ..write('freqValue: $freqValue, ')
+          ..write('freqDisplayValue: $freqDisplayValue, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$StagingDatabase extends GeneratedDatabase {
   _$StagingDatabase(QueryExecutor e) : super(e);
   $StagingDatabaseManager get managers => $StagingDatabaseManager(this);
@@ -3422,6 +5331,18 @@ abstract class _$StagingDatabase extends GeneratedDatabase {
       $TermMetaIpaStagingTableTable(this);
   late final $TermMetaTagStagingTableTable termMetaTagStagingTable =
       $TermMetaTagStagingTableTable(this);
+  late final $KanjiStagingTableTable kanjiStagingTable =
+      $KanjiStagingTableTable(this);
+  late final $KanjiReadingStagingTableTable kanjiReadingStagingTable =
+      $KanjiReadingStagingTableTable(this);
+  late final $KanjiDefinitionStagingTableTable kanjiDefinitionStagingTable =
+      $KanjiDefinitionStagingTableTable(this);
+  late final $KanjiTagStagingTableTable kanjiTagStagingTable =
+      $KanjiTagStagingTableTable(this);
+  late final $KanjiStatStagingTableTable kanjiStatStagingTable =
+      $KanjiStatStagingTableTable(this);
+  late final $KanjiMetaStagingTableTable kanjiMetaStagingTable =
+      $KanjiMetaStagingTableTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -3436,6 +5357,12 @@ abstract class _$StagingDatabase extends GeneratedDatabase {
     termMetaPitchStagingTable,
     termMetaIpaStagingTable,
     termMetaTagStagingTable,
+    kanjiStagingTable,
+    kanjiReadingStagingTable,
+    kanjiDefinitionStagingTable,
+    kanjiTagStagingTable,
+    kanjiStatStagingTable,
+    kanjiMetaStagingTable,
   ];
 }
 
@@ -5389,6 +7316,1177 @@ typedef $$TermMetaTagStagingTableTableProcessedTableManager =
       TermMetaTagStagingTableData,
       PrefetchHooks Function()
     >;
+typedef $$KanjiStagingTableTableCreateCompanionBuilder =
+    KanjiStagingTableCompanion Function({
+      required int localId,
+      required String kanji,
+      Value<String?> originalOnyomi,
+      Value<String?> originalKunyomi,
+      Value<int> rowid,
+    });
+typedef $$KanjiStagingTableTableUpdateCompanionBuilder =
+    KanjiStagingTableCompanion Function({
+      Value<int> localId,
+      Value<String> kanji,
+      Value<String?> originalOnyomi,
+      Value<String?> originalKunyomi,
+      Value<int> rowid,
+    });
+
+class $$KanjiStagingTableTableFilterComposer
+    extends Composer<_$StagingDatabase, $KanjiStagingTableTable> {
+  $$KanjiStagingTableTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get localId => $composableBuilder(
+    column: $table.localId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get kanji => $composableBuilder(
+    column: $table.kanji,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get originalOnyomi => $composableBuilder(
+    column: $table.originalOnyomi,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get originalKunyomi => $composableBuilder(
+    column: $table.originalKunyomi,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$KanjiStagingTableTableOrderingComposer
+    extends Composer<_$StagingDatabase, $KanjiStagingTableTable> {
+  $$KanjiStagingTableTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get localId => $composableBuilder(
+    column: $table.localId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get kanji => $composableBuilder(
+    column: $table.kanji,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get originalOnyomi => $composableBuilder(
+    column: $table.originalOnyomi,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get originalKunyomi => $composableBuilder(
+    column: $table.originalKunyomi,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$KanjiStagingTableTableAnnotationComposer
+    extends Composer<_$StagingDatabase, $KanjiStagingTableTable> {
+  $$KanjiStagingTableTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get localId =>
+      $composableBuilder(column: $table.localId, builder: (column) => column);
+
+  GeneratedColumn<String> get kanji =>
+      $composableBuilder(column: $table.kanji, builder: (column) => column);
+
+  GeneratedColumn<String> get originalOnyomi => $composableBuilder(
+    column: $table.originalOnyomi,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get originalKunyomi => $composableBuilder(
+    column: $table.originalKunyomi,
+    builder: (column) => column,
+  );
+}
+
+class $$KanjiStagingTableTableTableManager
+    extends
+        RootTableManager<
+          _$StagingDatabase,
+          $KanjiStagingTableTable,
+          KanjiStagingTableData,
+          $$KanjiStagingTableTableFilterComposer,
+          $$KanjiStagingTableTableOrderingComposer,
+          $$KanjiStagingTableTableAnnotationComposer,
+          $$KanjiStagingTableTableCreateCompanionBuilder,
+          $$KanjiStagingTableTableUpdateCompanionBuilder,
+          (
+            KanjiStagingTableData,
+            BaseReferences<
+              _$StagingDatabase,
+              $KanjiStagingTableTable,
+              KanjiStagingTableData
+            >,
+          ),
+          KanjiStagingTableData,
+          PrefetchHooks Function()
+        > {
+  $$KanjiStagingTableTableTableManager(
+    _$StagingDatabase db,
+    $KanjiStagingTableTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$KanjiStagingTableTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$KanjiStagingTableTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$KanjiStagingTableTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<int> localId = const Value.absent(),
+                Value<String> kanji = const Value.absent(),
+                Value<String?> originalOnyomi = const Value.absent(),
+                Value<String?> originalKunyomi = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => KanjiStagingTableCompanion(
+                localId: localId,
+                kanji: kanji,
+                originalOnyomi: originalOnyomi,
+                originalKunyomi: originalKunyomi,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required int localId,
+                required String kanji,
+                Value<String?> originalOnyomi = const Value.absent(),
+                Value<String?> originalKunyomi = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => KanjiStagingTableCompanion.insert(
+                localId: localId,
+                kanji: kanji,
+                originalOnyomi: originalOnyomi,
+                originalKunyomi: originalKunyomi,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$KanjiStagingTableTableProcessedTableManager =
+    ProcessedTableManager<
+      _$StagingDatabase,
+      $KanjiStagingTableTable,
+      KanjiStagingTableData,
+      $$KanjiStagingTableTableFilterComposer,
+      $$KanjiStagingTableTableOrderingComposer,
+      $$KanjiStagingTableTableAnnotationComposer,
+      $$KanjiStagingTableTableCreateCompanionBuilder,
+      $$KanjiStagingTableTableUpdateCompanionBuilder,
+      (
+        KanjiStagingTableData,
+        BaseReferences<
+          _$StagingDatabase,
+          $KanjiStagingTableTable,
+          KanjiStagingTableData
+        >,
+      ),
+      KanjiStagingTableData,
+      PrefetchHooks Function()
+    >;
+typedef $$KanjiReadingStagingTableTableCreateCompanionBuilder =
+    KanjiReadingStagingTableCompanion Function({
+      required int kanjiLocalId,
+      required String reading,
+      Value<String?> readingNormalized,
+      required String type,
+      required int position,
+      Value<int> rowid,
+    });
+typedef $$KanjiReadingStagingTableTableUpdateCompanionBuilder =
+    KanjiReadingStagingTableCompanion Function({
+      Value<int> kanjiLocalId,
+      Value<String> reading,
+      Value<String?> readingNormalized,
+      Value<String> type,
+      Value<int> position,
+      Value<int> rowid,
+    });
+
+class $$KanjiReadingStagingTableTableFilterComposer
+    extends Composer<_$StagingDatabase, $KanjiReadingStagingTableTable> {
+  $$KanjiReadingStagingTableTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get kanjiLocalId => $composableBuilder(
+    column: $table.kanjiLocalId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get reading => $composableBuilder(
+    column: $table.reading,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get readingNormalized => $composableBuilder(
+    column: $table.readingNormalized,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get type => $composableBuilder(
+    column: $table.type,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get position => $composableBuilder(
+    column: $table.position,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$KanjiReadingStagingTableTableOrderingComposer
+    extends Composer<_$StagingDatabase, $KanjiReadingStagingTableTable> {
+  $$KanjiReadingStagingTableTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get kanjiLocalId => $composableBuilder(
+    column: $table.kanjiLocalId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get reading => $composableBuilder(
+    column: $table.reading,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get readingNormalized => $composableBuilder(
+    column: $table.readingNormalized,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get type => $composableBuilder(
+    column: $table.type,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get position => $composableBuilder(
+    column: $table.position,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$KanjiReadingStagingTableTableAnnotationComposer
+    extends Composer<_$StagingDatabase, $KanjiReadingStagingTableTable> {
+  $$KanjiReadingStagingTableTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get kanjiLocalId => $composableBuilder(
+    column: $table.kanjiLocalId,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get reading =>
+      $composableBuilder(column: $table.reading, builder: (column) => column);
+
+  GeneratedColumn<String> get readingNormalized => $composableBuilder(
+    column: $table.readingNormalized,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get type =>
+      $composableBuilder(column: $table.type, builder: (column) => column);
+
+  GeneratedColumn<int> get position =>
+      $composableBuilder(column: $table.position, builder: (column) => column);
+}
+
+class $$KanjiReadingStagingTableTableTableManager
+    extends
+        RootTableManager<
+          _$StagingDatabase,
+          $KanjiReadingStagingTableTable,
+          KanjiReadingStagingTableData,
+          $$KanjiReadingStagingTableTableFilterComposer,
+          $$KanjiReadingStagingTableTableOrderingComposer,
+          $$KanjiReadingStagingTableTableAnnotationComposer,
+          $$KanjiReadingStagingTableTableCreateCompanionBuilder,
+          $$KanjiReadingStagingTableTableUpdateCompanionBuilder,
+          (
+            KanjiReadingStagingTableData,
+            BaseReferences<
+              _$StagingDatabase,
+              $KanjiReadingStagingTableTable,
+              KanjiReadingStagingTableData
+            >,
+          ),
+          KanjiReadingStagingTableData,
+          PrefetchHooks Function()
+        > {
+  $$KanjiReadingStagingTableTableTableManager(
+    _$StagingDatabase db,
+    $KanjiReadingStagingTableTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$KanjiReadingStagingTableTableFilterComposer(
+                $db: db,
+                $table: table,
+              ),
+          createOrderingComposer: () =>
+              $$KanjiReadingStagingTableTableOrderingComposer(
+                $db: db,
+                $table: table,
+              ),
+          createComputedFieldComposer: () =>
+              $$KanjiReadingStagingTableTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<int> kanjiLocalId = const Value.absent(),
+                Value<String> reading = const Value.absent(),
+                Value<String?> readingNormalized = const Value.absent(),
+                Value<String> type = const Value.absent(),
+                Value<int> position = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => KanjiReadingStagingTableCompanion(
+                kanjiLocalId: kanjiLocalId,
+                reading: reading,
+                readingNormalized: readingNormalized,
+                type: type,
+                position: position,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required int kanjiLocalId,
+                required String reading,
+                Value<String?> readingNormalized = const Value.absent(),
+                required String type,
+                required int position,
+                Value<int> rowid = const Value.absent(),
+              }) => KanjiReadingStagingTableCompanion.insert(
+                kanjiLocalId: kanjiLocalId,
+                reading: reading,
+                readingNormalized: readingNormalized,
+                type: type,
+                position: position,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$KanjiReadingStagingTableTableProcessedTableManager =
+    ProcessedTableManager<
+      _$StagingDatabase,
+      $KanjiReadingStagingTableTable,
+      KanjiReadingStagingTableData,
+      $$KanjiReadingStagingTableTableFilterComposer,
+      $$KanjiReadingStagingTableTableOrderingComposer,
+      $$KanjiReadingStagingTableTableAnnotationComposer,
+      $$KanjiReadingStagingTableTableCreateCompanionBuilder,
+      $$KanjiReadingStagingTableTableUpdateCompanionBuilder,
+      (
+        KanjiReadingStagingTableData,
+        BaseReferences<
+          _$StagingDatabase,
+          $KanjiReadingStagingTableTable,
+          KanjiReadingStagingTableData
+        >,
+      ),
+      KanjiReadingStagingTableData,
+      PrefetchHooks Function()
+    >;
+typedef $$KanjiDefinitionStagingTableTableCreateCompanionBuilder =
+    KanjiDefinitionStagingTableCompanion Function({
+      required int kanjiLocalId,
+      required String definition,
+      required int position,
+      Value<int> rowid,
+    });
+typedef $$KanjiDefinitionStagingTableTableUpdateCompanionBuilder =
+    KanjiDefinitionStagingTableCompanion Function({
+      Value<int> kanjiLocalId,
+      Value<String> definition,
+      Value<int> position,
+      Value<int> rowid,
+    });
+
+class $$KanjiDefinitionStagingTableTableFilterComposer
+    extends Composer<_$StagingDatabase, $KanjiDefinitionStagingTableTable> {
+  $$KanjiDefinitionStagingTableTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get kanjiLocalId => $composableBuilder(
+    column: $table.kanjiLocalId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get definition => $composableBuilder(
+    column: $table.definition,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get position => $composableBuilder(
+    column: $table.position,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$KanjiDefinitionStagingTableTableOrderingComposer
+    extends Composer<_$StagingDatabase, $KanjiDefinitionStagingTableTable> {
+  $$KanjiDefinitionStagingTableTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get kanjiLocalId => $composableBuilder(
+    column: $table.kanjiLocalId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get definition => $composableBuilder(
+    column: $table.definition,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get position => $composableBuilder(
+    column: $table.position,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$KanjiDefinitionStagingTableTableAnnotationComposer
+    extends Composer<_$StagingDatabase, $KanjiDefinitionStagingTableTable> {
+  $$KanjiDefinitionStagingTableTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get kanjiLocalId => $composableBuilder(
+    column: $table.kanjiLocalId,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get definition => $composableBuilder(
+    column: $table.definition,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get position =>
+      $composableBuilder(column: $table.position, builder: (column) => column);
+}
+
+class $$KanjiDefinitionStagingTableTableTableManager
+    extends
+        RootTableManager<
+          _$StagingDatabase,
+          $KanjiDefinitionStagingTableTable,
+          KanjiDefinitionStagingTableData,
+          $$KanjiDefinitionStagingTableTableFilterComposer,
+          $$KanjiDefinitionStagingTableTableOrderingComposer,
+          $$KanjiDefinitionStagingTableTableAnnotationComposer,
+          $$KanjiDefinitionStagingTableTableCreateCompanionBuilder,
+          $$KanjiDefinitionStagingTableTableUpdateCompanionBuilder,
+          (
+            KanjiDefinitionStagingTableData,
+            BaseReferences<
+              _$StagingDatabase,
+              $KanjiDefinitionStagingTableTable,
+              KanjiDefinitionStagingTableData
+            >,
+          ),
+          KanjiDefinitionStagingTableData,
+          PrefetchHooks Function()
+        > {
+  $$KanjiDefinitionStagingTableTableTableManager(
+    _$StagingDatabase db,
+    $KanjiDefinitionStagingTableTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$KanjiDefinitionStagingTableTableFilterComposer(
+                $db: db,
+                $table: table,
+              ),
+          createOrderingComposer: () =>
+              $$KanjiDefinitionStagingTableTableOrderingComposer(
+                $db: db,
+                $table: table,
+              ),
+          createComputedFieldComposer: () =>
+              $$KanjiDefinitionStagingTableTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<int> kanjiLocalId = const Value.absent(),
+                Value<String> definition = const Value.absent(),
+                Value<int> position = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => KanjiDefinitionStagingTableCompanion(
+                kanjiLocalId: kanjiLocalId,
+                definition: definition,
+                position: position,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required int kanjiLocalId,
+                required String definition,
+                required int position,
+                Value<int> rowid = const Value.absent(),
+              }) => KanjiDefinitionStagingTableCompanion.insert(
+                kanjiLocalId: kanjiLocalId,
+                definition: definition,
+                position: position,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$KanjiDefinitionStagingTableTableProcessedTableManager =
+    ProcessedTableManager<
+      _$StagingDatabase,
+      $KanjiDefinitionStagingTableTable,
+      KanjiDefinitionStagingTableData,
+      $$KanjiDefinitionStagingTableTableFilterComposer,
+      $$KanjiDefinitionStagingTableTableOrderingComposer,
+      $$KanjiDefinitionStagingTableTableAnnotationComposer,
+      $$KanjiDefinitionStagingTableTableCreateCompanionBuilder,
+      $$KanjiDefinitionStagingTableTableUpdateCompanionBuilder,
+      (
+        KanjiDefinitionStagingTableData,
+        BaseReferences<
+          _$StagingDatabase,
+          $KanjiDefinitionStagingTableTable,
+          KanjiDefinitionStagingTableData
+        >,
+      ),
+      KanjiDefinitionStagingTableData,
+      PrefetchHooks Function()
+    >;
+typedef $$KanjiTagStagingTableTableCreateCompanionBuilder =
+    KanjiTagStagingTableCompanion Function({
+      required int kanjiLocalId,
+      required String tagName,
+      Value<int> rowid,
+    });
+typedef $$KanjiTagStagingTableTableUpdateCompanionBuilder =
+    KanjiTagStagingTableCompanion Function({
+      Value<int> kanjiLocalId,
+      Value<String> tagName,
+      Value<int> rowid,
+    });
+
+class $$KanjiTagStagingTableTableFilterComposer
+    extends Composer<_$StagingDatabase, $KanjiTagStagingTableTable> {
+  $$KanjiTagStagingTableTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get kanjiLocalId => $composableBuilder(
+    column: $table.kanjiLocalId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get tagName => $composableBuilder(
+    column: $table.tagName,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$KanjiTagStagingTableTableOrderingComposer
+    extends Composer<_$StagingDatabase, $KanjiTagStagingTableTable> {
+  $$KanjiTagStagingTableTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get kanjiLocalId => $composableBuilder(
+    column: $table.kanjiLocalId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get tagName => $composableBuilder(
+    column: $table.tagName,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$KanjiTagStagingTableTableAnnotationComposer
+    extends Composer<_$StagingDatabase, $KanjiTagStagingTableTable> {
+  $$KanjiTagStagingTableTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get kanjiLocalId => $composableBuilder(
+    column: $table.kanjiLocalId,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get tagName =>
+      $composableBuilder(column: $table.tagName, builder: (column) => column);
+}
+
+class $$KanjiTagStagingTableTableTableManager
+    extends
+        RootTableManager<
+          _$StagingDatabase,
+          $KanjiTagStagingTableTable,
+          KanjiTagStagingTableData,
+          $$KanjiTagStagingTableTableFilterComposer,
+          $$KanjiTagStagingTableTableOrderingComposer,
+          $$KanjiTagStagingTableTableAnnotationComposer,
+          $$KanjiTagStagingTableTableCreateCompanionBuilder,
+          $$KanjiTagStagingTableTableUpdateCompanionBuilder,
+          (
+            KanjiTagStagingTableData,
+            BaseReferences<
+              _$StagingDatabase,
+              $KanjiTagStagingTableTable,
+              KanjiTagStagingTableData
+            >,
+          ),
+          KanjiTagStagingTableData,
+          PrefetchHooks Function()
+        > {
+  $$KanjiTagStagingTableTableTableManager(
+    _$StagingDatabase db,
+    $KanjiTagStagingTableTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$KanjiTagStagingTableTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$KanjiTagStagingTableTableOrderingComposer(
+                $db: db,
+                $table: table,
+              ),
+          createComputedFieldComposer: () =>
+              $$KanjiTagStagingTableTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<int> kanjiLocalId = const Value.absent(),
+                Value<String> tagName = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => KanjiTagStagingTableCompanion(
+                kanjiLocalId: kanjiLocalId,
+                tagName: tagName,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required int kanjiLocalId,
+                required String tagName,
+                Value<int> rowid = const Value.absent(),
+              }) => KanjiTagStagingTableCompanion.insert(
+                kanjiLocalId: kanjiLocalId,
+                tagName: tagName,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$KanjiTagStagingTableTableProcessedTableManager =
+    ProcessedTableManager<
+      _$StagingDatabase,
+      $KanjiTagStagingTableTable,
+      KanjiTagStagingTableData,
+      $$KanjiTagStagingTableTableFilterComposer,
+      $$KanjiTagStagingTableTableOrderingComposer,
+      $$KanjiTagStagingTableTableAnnotationComposer,
+      $$KanjiTagStagingTableTableCreateCompanionBuilder,
+      $$KanjiTagStagingTableTableUpdateCompanionBuilder,
+      (
+        KanjiTagStagingTableData,
+        BaseReferences<
+          _$StagingDatabase,
+          $KanjiTagStagingTableTable,
+          KanjiTagStagingTableData
+        >,
+      ),
+      KanjiTagStagingTableData,
+      PrefetchHooks Function()
+    >;
+typedef $$KanjiStatStagingTableTableCreateCompanionBuilder =
+    KanjiStatStagingTableCompanion Function({
+      required int kanjiLocalId,
+      required String tagName,
+      required String value,
+      Value<int> rowid,
+    });
+typedef $$KanjiStatStagingTableTableUpdateCompanionBuilder =
+    KanjiStatStagingTableCompanion Function({
+      Value<int> kanjiLocalId,
+      Value<String> tagName,
+      Value<String> value,
+      Value<int> rowid,
+    });
+
+class $$KanjiStatStagingTableTableFilterComposer
+    extends Composer<_$StagingDatabase, $KanjiStatStagingTableTable> {
+  $$KanjiStatStagingTableTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get kanjiLocalId => $composableBuilder(
+    column: $table.kanjiLocalId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get tagName => $composableBuilder(
+    column: $table.tagName,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get value => $composableBuilder(
+    column: $table.value,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$KanjiStatStagingTableTableOrderingComposer
+    extends Composer<_$StagingDatabase, $KanjiStatStagingTableTable> {
+  $$KanjiStatStagingTableTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get kanjiLocalId => $composableBuilder(
+    column: $table.kanjiLocalId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get tagName => $composableBuilder(
+    column: $table.tagName,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get value => $composableBuilder(
+    column: $table.value,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$KanjiStatStagingTableTableAnnotationComposer
+    extends Composer<_$StagingDatabase, $KanjiStatStagingTableTable> {
+  $$KanjiStatStagingTableTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get kanjiLocalId => $composableBuilder(
+    column: $table.kanjiLocalId,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get tagName =>
+      $composableBuilder(column: $table.tagName, builder: (column) => column);
+
+  GeneratedColumn<String> get value =>
+      $composableBuilder(column: $table.value, builder: (column) => column);
+}
+
+class $$KanjiStatStagingTableTableTableManager
+    extends
+        RootTableManager<
+          _$StagingDatabase,
+          $KanjiStatStagingTableTable,
+          KanjiStatStagingTableData,
+          $$KanjiStatStagingTableTableFilterComposer,
+          $$KanjiStatStagingTableTableOrderingComposer,
+          $$KanjiStatStagingTableTableAnnotationComposer,
+          $$KanjiStatStagingTableTableCreateCompanionBuilder,
+          $$KanjiStatStagingTableTableUpdateCompanionBuilder,
+          (
+            KanjiStatStagingTableData,
+            BaseReferences<
+              _$StagingDatabase,
+              $KanjiStatStagingTableTable,
+              KanjiStatStagingTableData
+            >,
+          ),
+          KanjiStatStagingTableData,
+          PrefetchHooks Function()
+        > {
+  $$KanjiStatStagingTableTableTableManager(
+    _$StagingDatabase db,
+    $KanjiStatStagingTableTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$KanjiStatStagingTableTableFilterComposer(
+                $db: db,
+                $table: table,
+              ),
+          createOrderingComposer: () =>
+              $$KanjiStatStagingTableTableOrderingComposer(
+                $db: db,
+                $table: table,
+              ),
+          createComputedFieldComposer: () =>
+              $$KanjiStatStagingTableTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<int> kanjiLocalId = const Value.absent(),
+                Value<String> tagName = const Value.absent(),
+                Value<String> value = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => KanjiStatStagingTableCompanion(
+                kanjiLocalId: kanjiLocalId,
+                tagName: tagName,
+                value: value,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required int kanjiLocalId,
+                required String tagName,
+                required String value,
+                Value<int> rowid = const Value.absent(),
+              }) => KanjiStatStagingTableCompanion.insert(
+                kanjiLocalId: kanjiLocalId,
+                tagName: tagName,
+                value: value,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$KanjiStatStagingTableTableProcessedTableManager =
+    ProcessedTableManager<
+      _$StagingDatabase,
+      $KanjiStatStagingTableTable,
+      KanjiStatStagingTableData,
+      $$KanjiStatStagingTableTableFilterComposer,
+      $$KanjiStatStagingTableTableOrderingComposer,
+      $$KanjiStatStagingTableTableAnnotationComposer,
+      $$KanjiStatStagingTableTableCreateCompanionBuilder,
+      $$KanjiStatStagingTableTableUpdateCompanionBuilder,
+      (
+        KanjiStatStagingTableData,
+        BaseReferences<
+          _$StagingDatabase,
+          $KanjiStatStagingTableTable,
+          KanjiStatStagingTableData
+        >,
+      ),
+      KanjiStatStagingTableData,
+      PrefetchHooks Function()
+    >;
+typedef $$KanjiMetaStagingTableTableCreateCompanionBuilder =
+    KanjiMetaStagingTableCompanion Function({
+      required int localId,
+      required String kanji,
+      required String type,
+      Value<int?> freqValue,
+      Value<String?> freqDisplayValue,
+      Value<int> rowid,
+    });
+typedef $$KanjiMetaStagingTableTableUpdateCompanionBuilder =
+    KanjiMetaStagingTableCompanion Function({
+      Value<int> localId,
+      Value<String> kanji,
+      Value<String> type,
+      Value<int?> freqValue,
+      Value<String?> freqDisplayValue,
+      Value<int> rowid,
+    });
+
+class $$KanjiMetaStagingTableTableFilterComposer
+    extends Composer<_$StagingDatabase, $KanjiMetaStagingTableTable> {
+  $$KanjiMetaStagingTableTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get localId => $composableBuilder(
+    column: $table.localId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get kanji => $composableBuilder(
+    column: $table.kanji,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get type => $composableBuilder(
+    column: $table.type,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get freqValue => $composableBuilder(
+    column: $table.freqValue,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get freqDisplayValue => $composableBuilder(
+    column: $table.freqDisplayValue,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$KanjiMetaStagingTableTableOrderingComposer
+    extends Composer<_$StagingDatabase, $KanjiMetaStagingTableTable> {
+  $$KanjiMetaStagingTableTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get localId => $composableBuilder(
+    column: $table.localId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get kanji => $composableBuilder(
+    column: $table.kanji,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get type => $composableBuilder(
+    column: $table.type,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get freqValue => $composableBuilder(
+    column: $table.freqValue,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get freqDisplayValue => $composableBuilder(
+    column: $table.freqDisplayValue,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$KanjiMetaStagingTableTableAnnotationComposer
+    extends Composer<_$StagingDatabase, $KanjiMetaStagingTableTable> {
+  $$KanjiMetaStagingTableTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get localId =>
+      $composableBuilder(column: $table.localId, builder: (column) => column);
+
+  GeneratedColumn<String> get kanji =>
+      $composableBuilder(column: $table.kanji, builder: (column) => column);
+
+  GeneratedColumn<String> get type =>
+      $composableBuilder(column: $table.type, builder: (column) => column);
+
+  GeneratedColumn<int> get freqValue =>
+      $composableBuilder(column: $table.freqValue, builder: (column) => column);
+
+  GeneratedColumn<String> get freqDisplayValue => $composableBuilder(
+    column: $table.freqDisplayValue,
+    builder: (column) => column,
+  );
+}
+
+class $$KanjiMetaStagingTableTableTableManager
+    extends
+        RootTableManager<
+          _$StagingDatabase,
+          $KanjiMetaStagingTableTable,
+          KanjiMetaStagingTableData,
+          $$KanjiMetaStagingTableTableFilterComposer,
+          $$KanjiMetaStagingTableTableOrderingComposer,
+          $$KanjiMetaStagingTableTableAnnotationComposer,
+          $$KanjiMetaStagingTableTableCreateCompanionBuilder,
+          $$KanjiMetaStagingTableTableUpdateCompanionBuilder,
+          (
+            KanjiMetaStagingTableData,
+            BaseReferences<
+              _$StagingDatabase,
+              $KanjiMetaStagingTableTable,
+              KanjiMetaStagingTableData
+            >,
+          ),
+          KanjiMetaStagingTableData,
+          PrefetchHooks Function()
+        > {
+  $$KanjiMetaStagingTableTableTableManager(
+    _$StagingDatabase db,
+    $KanjiMetaStagingTableTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$KanjiMetaStagingTableTableFilterComposer(
+                $db: db,
+                $table: table,
+              ),
+          createOrderingComposer: () =>
+              $$KanjiMetaStagingTableTableOrderingComposer(
+                $db: db,
+                $table: table,
+              ),
+          createComputedFieldComposer: () =>
+              $$KanjiMetaStagingTableTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<int> localId = const Value.absent(),
+                Value<String> kanji = const Value.absent(),
+                Value<String> type = const Value.absent(),
+                Value<int?> freqValue = const Value.absent(),
+                Value<String?> freqDisplayValue = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => KanjiMetaStagingTableCompanion(
+                localId: localId,
+                kanji: kanji,
+                type: type,
+                freqValue: freqValue,
+                freqDisplayValue: freqDisplayValue,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required int localId,
+                required String kanji,
+                required String type,
+                Value<int?> freqValue = const Value.absent(),
+                Value<String?> freqDisplayValue = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => KanjiMetaStagingTableCompanion.insert(
+                localId: localId,
+                kanji: kanji,
+                type: type,
+                freqValue: freqValue,
+                freqDisplayValue: freqDisplayValue,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$KanjiMetaStagingTableTableProcessedTableManager =
+    ProcessedTableManager<
+      _$StagingDatabase,
+      $KanjiMetaStagingTableTable,
+      KanjiMetaStagingTableData,
+      $$KanjiMetaStagingTableTableFilterComposer,
+      $$KanjiMetaStagingTableTableOrderingComposer,
+      $$KanjiMetaStagingTableTableAnnotationComposer,
+      $$KanjiMetaStagingTableTableCreateCompanionBuilder,
+      $$KanjiMetaStagingTableTableUpdateCompanionBuilder,
+      (
+        KanjiMetaStagingTableData,
+        BaseReferences<
+          _$StagingDatabase,
+          $KanjiMetaStagingTableTable,
+          KanjiMetaStagingTableData
+        >,
+      ),
+      KanjiMetaStagingTableData,
+      PrefetchHooks Function()
+    >;
 
 class $StagingDatabaseManager {
   final _$StagingDatabase _db;
@@ -5424,4 +8522,23 @@ class $StagingDatabaseManager {
         _db,
         _db.termMetaTagStagingTable,
       );
+  $$KanjiStagingTableTableTableManager get kanjiStagingTable =>
+      $$KanjiStagingTableTableTableManager(_db, _db.kanjiStagingTable);
+  $$KanjiReadingStagingTableTableTableManager get kanjiReadingStagingTable =>
+      $$KanjiReadingStagingTableTableTableManager(
+        _db,
+        _db.kanjiReadingStagingTable,
+      );
+  $$KanjiDefinitionStagingTableTableTableManager
+  get kanjiDefinitionStagingTable =>
+      $$KanjiDefinitionStagingTableTableTableManager(
+        _db,
+        _db.kanjiDefinitionStagingTable,
+      );
+  $$KanjiTagStagingTableTableTableManager get kanjiTagStagingTable =>
+      $$KanjiTagStagingTableTableTableManager(_db, _db.kanjiTagStagingTable);
+  $$KanjiStatStagingTableTableTableManager get kanjiStatStagingTable =>
+      $$KanjiStatStagingTableTableTableManager(_db, _db.kanjiStatStagingTable);
+  $$KanjiMetaStagingTableTableTableManager get kanjiMetaStagingTable =>
+      $$KanjiMetaStagingTableTableTableManager(_db, _db.kanjiMetaStagingTable);
 }
