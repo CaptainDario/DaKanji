@@ -7,6 +7,7 @@ import 'package:archive/archive_io.dart';
 import 'package:dakanji_db_core/parsing/yomitan/staging_db/db/staging_db.dart';
 import 'package:dakanji_db_core/parsing/yomitan/staging_db/parsers/tag_bank_v3_parser.dart';
 import 'package:dakanji_db_core/parsing/yomitan/staging_db/parsers/term_bank_v3_parser.dart';
+import 'package:dakanji_db_core/parsing/yomitan/staging_db/parsers/term_meta_bank_v3_parser.dart';
 import 'package:dakanji_db_core/parsing/yomitan/staging_db/parsers/yomitan_file_parser.dart';
 import 'package:drift/native.dart';
 import 'package:language_processing/language_processor.dart';
@@ -31,6 +32,8 @@ Future<void> workerEntry(SendPort mainSendPort) async {
   final List<YomitanFileParser> parsers = [
     TagBankParser(),
     TermBankV3Parser(),
+    TermMetaBankV3Parser(),
+    // TODO
   ];
 
   bool saveJson = false;
@@ -109,20 +112,22 @@ Future<void> workerEntry(SendPort mainSendPort) async {
 }
 
 Future<void> preIndex(StagingDatabase db) async {
-  // 1. Existing Term Indices (Good)
+
+  // 1. Tag indexes
+  await db.customStatement('CREATE INDEX IF NOT EXISTS idx_stg_meta_tag ON ${db.tagStagingTable.actualTableName}(tag_name)');
+  await db.customStatement('CREATE INDEX IF NOT EXISTS idx_stg_rule ON ${db.termRuleStagingTable.actualTableName}(rule_id)');
+
+  // 2. Term indexes
   await db.customStatement('CREATE INDEX IF NOT EXISTS idx_st_term ON ${db.termStagingTable.actualTableName}(term)');
   await db.customStatement('CREATE INDEX IF NOT EXISTS idx_st_reading ON ${db.termStagingTable.actualTableName}(reading)');
-  
-  // 2. Existing Definition Indices (Good)
   await db.customStatement('CREATE INDEX IF NOT EXISTS idx_sd_def ON ${db.termDefinitionStagingTable.actualTableName}(definition)');
   await db.customStatement('CREATE INDEX IF NOT EXISTS idx_sd_link ON ${db.termDefinitionStagingTable.actualTableName}(term_local_id)');
-  
-  // 3. OPTIMIZED: Composite index for Term/Def tag splitting
   await db.customStatement('CREATE INDEX IF NOT EXISTS idx_stg_tag_split ON ${db.termTagStagingTable.actualTableName}(is_definition_tag, tag_name)');
-  
-  // 4. NEW: Index for Tag Metadata (was missing)
-  await db.customStatement('CREATE INDEX IF NOT EXISTS idx_stg_meta_tag ON ${db.tagStagingTable.actualTableName}(tag_name)');
 
-  // 5. Existing Rule Index (Good)
-  await db.customStatement('CREATE INDEX IF NOT EXISTS idx_stg_rule ON ${db.termRuleStagingTable.actualTableName}(rule_id)');
+  // 3. Term Meta indexes
+  await db.customStatement('CREATE INDEX IF NOT EXISTS idx_stm_term ON ${db.termMetaStagingTable.actualTableName}(term)');
+  await db.customStatement('CREATE INDEX IF NOT EXISTS idx_stm_reading ON ${db.termMetaStagingTable.actualTableName}(reading)');
+  await db.customStatement('CREATE INDEX IF NOT EXISTS idx_stm_mode ON ${db.termMetaStagingTable.actualTableName}(mode)');
+  await db.customStatement('CREATE INDEX IF NOT EXISTS idx_stm_tag_composite ON ${db.termMetaTagStagingTable.actualTableName}(parent_type, tag_name)');
+
 }

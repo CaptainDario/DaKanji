@@ -1784,6 +1784,1621 @@ class TermRuleStagingTableCompanion
   }
 }
 
+class $TermMetaStagingTableTable extends TermMetaStagingTable
+    with TableInfo<$TermMetaStagingTableTable, TermMetaStagingTableData> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $TermMetaStagingTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _localIdMeta = const VerificationMeta(
+    'localId',
+  );
+  @override
+  late final GeneratedColumn<int> localId = GeneratedColumn<int>(
+    'local_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _termMeta = const VerificationMeta('term');
+  @override
+  late final GeneratedColumn<String> term = GeneratedColumn<String>(
+    'term',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _termNormalizedMeta = const VerificationMeta(
+    'termNormalized',
+  );
+  @override
+  late final GeneratedColumn<String> termNormalized = GeneratedColumn<String>(
+    'term_normalized',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _termTokensMeta = const VerificationMeta(
+    'termTokens',
+  );
+  @override
+  late final GeneratedColumn<String> termTokens = GeneratedColumn<String>(
+    'term_tokens',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _termTokensNormalizedMeta =
+      const VerificationMeta('termTokensNormalized');
+  @override
+  late final GeneratedColumn<String> termTokensNormalized =
+      GeneratedColumn<String>(
+        'term_tokens_normalized',
+        aliasedName,
+        true,
+        type: DriftSqlType.string,
+        requiredDuringInsert: false,
+      );
+  static const VerificationMeta _modeMeta = const VerificationMeta('mode');
+  @override
+  late final GeneratedColumn<String> mode = GeneratedColumn<String>(
+    'mode',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _readingMeta = const VerificationMeta(
+    'reading',
+  );
+  @override
+  late final GeneratedColumn<String> reading = GeneratedColumn<String>(
+    'reading',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _readingNormalizedMeta = const VerificationMeta(
+    'readingNormalized',
+  );
+  @override
+  late final GeneratedColumn<String> readingNormalized =
+      GeneratedColumn<String>(
+        'reading_normalized',
+        aliasedName,
+        true,
+        type: DriftSqlType.string,
+        requiredDuringInsert: false,
+      );
+  static const VerificationMeta _freqValueMeta = const VerificationMeta(
+    'freqValue',
+  );
+  @override
+  late final GeneratedColumn<int> freqValue = GeneratedColumn<int>(
+    'freq_value',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _freqDisplayMeta = const VerificationMeta(
+    'freqDisplay',
+  );
+  @override
+  late final GeneratedColumn<String> freqDisplay = GeneratedColumn<String>(
+    'freq_display',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    localId,
+    term,
+    termNormalized,
+    termTokens,
+    termTokensNormalized,
+    mode,
+    reading,
+    readingNormalized,
+    freqValue,
+    freqDisplay,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'term_meta_staging_table';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<TermMetaStagingTableData> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('local_id')) {
+      context.handle(
+        _localIdMeta,
+        localId.isAcceptableOrUnknown(data['local_id']!, _localIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_localIdMeta);
+    }
+    if (data.containsKey('term')) {
+      context.handle(
+        _termMeta,
+        term.isAcceptableOrUnknown(data['term']!, _termMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_termMeta);
+    }
+    if (data.containsKey('term_normalized')) {
+      context.handle(
+        _termNormalizedMeta,
+        termNormalized.isAcceptableOrUnknown(
+          data['term_normalized']!,
+          _termNormalizedMeta,
+        ),
+      );
+    }
+    if (data.containsKey('term_tokens')) {
+      context.handle(
+        _termTokensMeta,
+        termTokens.isAcceptableOrUnknown(data['term_tokens']!, _termTokensMeta),
+      );
+    }
+    if (data.containsKey('term_tokens_normalized')) {
+      context.handle(
+        _termTokensNormalizedMeta,
+        termTokensNormalized.isAcceptableOrUnknown(
+          data['term_tokens_normalized']!,
+          _termTokensNormalizedMeta,
+        ),
+      );
+    }
+    if (data.containsKey('mode')) {
+      context.handle(
+        _modeMeta,
+        mode.isAcceptableOrUnknown(data['mode']!, _modeMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_modeMeta);
+    }
+    if (data.containsKey('reading')) {
+      context.handle(
+        _readingMeta,
+        reading.isAcceptableOrUnknown(data['reading']!, _readingMeta),
+      );
+    }
+    if (data.containsKey('reading_normalized')) {
+      context.handle(
+        _readingNormalizedMeta,
+        readingNormalized.isAcceptableOrUnknown(
+          data['reading_normalized']!,
+          _readingNormalizedMeta,
+        ),
+      );
+    }
+    if (data.containsKey('freq_value')) {
+      context.handle(
+        _freqValueMeta,
+        freqValue.isAcceptableOrUnknown(data['freq_value']!, _freqValueMeta),
+      );
+    }
+    if (data.containsKey('freq_display')) {
+      context.handle(
+        _freqDisplayMeta,
+        freqDisplay.isAcceptableOrUnknown(
+          data['freq_display']!,
+          _freqDisplayMeta,
+        ),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => const {};
+  @override
+  TermMetaStagingTableData map(
+    Map<String, dynamic> data, {
+    String? tablePrefix,
+  }) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return TermMetaStagingTableData(
+      localId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}local_id'],
+      )!,
+      term: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}term'],
+      )!,
+      termNormalized: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}term_normalized'],
+      ),
+      termTokens: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}term_tokens'],
+      ),
+      termTokensNormalized: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}term_tokens_normalized'],
+      ),
+      mode: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}mode'],
+      )!,
+      reading: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}reading'],
+      ),
+      readingNormalized: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}reading_normalized'],
+      ),
+      freqValue: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}freq_value'],
+      ),
+      freqDisplay: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}freq_display'],
+      ),
+    );
+  }
+
+  @override
+  $TermMetaStagingTableTable createAlias(String alias) {
+    return $TermMetaStagingTableTable(attachedDatabase, alias);
+  }
+}
+
+class TermMetaStagingTableData extends DataClass
+    implements Insertable<TermMetaStagingTableData> {
+  final int localId;
+  final String term;
+  final String? termNormalized;
+  final String? termTokens;
+  final String? termTokensNormalized;
+  final String mode;
+  final String? reading;
+  final String? readingNormalized;
+  final int? freqValue;
+  final String? freqDisplay;
+  const TermMetaStagingTableData({
+    required this.localId,
+    required this.term,
+    this.termNormalized,
+    this.termTokens,
+    this.termTokensNormalized,
+    required this.mode,
+    this.reading,
+    this.readingNormalized,
+    this.freqValue,
+    this.freqDisplay,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['local_id'] = Variable<int>(localId);
+    map['term'] = Variable<String>(term);
+    if (!nullToAbsent || termNormalized != null) {
+      map['term_normalized'] = Variable<String>(termNormalized);
+    }
+    if (!nullToAbsent || termTokens != null) {
+      map['term_tokens'] = Variable<String>(termTokens);
+    }
+    if (!nullToAbsent || termTokensNormalized != null) {
+      map['term_tokens_normalized'] = Variable<String>(termTokensNormalized);
+    }
+    map['mode'] = Variable<String>(mode);
+    if (!nullToAbsent || reading != null) {
+      map['reading'] = Variable<String>(reading);
+    }
+    if (!nullToAbsent || readingNormalized != null) {
+      map['reading_normalized'] = Variable<String>(readingNormalized);
+    }
+    if (!nullToAbsent || freqValue != null) {
+      map['freq_value'] = Variable<int>(freqValue);
+    }
+    if (!nullToAbsent || freqDisplay != null) {
+      map['freq_display'] = Variable<String>(freqDisplay);
+    }
+    return map;
+  }
+
+  TermMetaStagingTableCompanion toCompanion(bool nullToAbsent) {
+    return TermMetaStagingTableCompanion(
+      localId: Value(localId),
+      term: Value(term),
+      termNormalized: termNormalized == null && nullToAbsent
+          ? const Value.absent()
+          : Value(termNormalized),
+      termTokens: termTokens == null && nullToAbsent
+          ? const Value.absent()
+          : Value(termTokens),
+      termTokensNormalized: termTokensNormalized == null && nullToAbsent
+          ? const Value.absent()
+          : Value(termTokensNormalized),
+      mode: Value(mode),
+      reading: reading == null && nullToAbsent
+          ? const Value.absent()
+          : Value(reading),
+      readingNormalized: readingNormalized == null && nullToAbsent
+          ? const Value.absent()
+          : Value(readingNormalized),
+      freqValue: freqValue == null && nullToAbsent
+          ? const Value.absent()
+          : Value(freqValue),
+      freqDisplay: freqDisplay == null && nullToAbsent
+          ? const Value.absent()
+          : Value(freqDisplay),
+    );
+  }
+
+  factory TermMetaStagingTableData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return TermMetaStagingTableData(
+      localId: serializer.fromJson<int>(json['localId']),
+      term: serializer.fromJson<String>(json['term']),
+      termNormalized: serializer.fromJson<String?>(json['termNormalized']),
+      termTokens: serializer.fromJson<String?>(json['termTokens']),
+      termTokensNormalized: serializer.fromJson<String?>(
+        json['termTokensNormalized'],
+      ),
+      mode: serializer.fromJson<String>(json['mode']),
+      reading: serializer.fromJson<String?>(json['reading']),
+      readingNormalized: serializer.fromJson<String?>(
+        json['readingNormalized'],
+      ),
+      freqValue: serializer.fromJson<int?>(json['freqValue']),
+      freqDisplay: serializer.fromJson<String?>(json['freqDisplay']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'localId': serializer.toJson<int>(localId),
+      'term': serializer.toJson<String>(term),
+      'termNormalized': serializer.toJson<String?>(termNormalized),
+      'termTokens': serializer.toJson<String?>(termTokens),
+      'termTokensNormalized': serializer.toJson<String?>(termTokensNormalized),
+      'mode': serializer.toJson<String>(mode),
+      'reading': serializer.toJson<String?>(reading),
+      'readingNormalized': serializer.toJson<String?>(readingNormalized),
+      'freqValue': serializer.toJson<int?>(freqValue),
+      'freqDisplay': serializer.toJson<String?>(freqDisplay),
+    };
+  }
+
+  TermMetaStagingTableData copyWith({
+    int? localId,
+    String? term,
+    Value<String?> termNormalized = const Value.absent(),
+    Value<String?> termTokens = const Value.absent(),
+    Value<String?> termTokensNormalized = const Value.absent(),
+    String? mode,
+    Value<String?> reading = const Value.absent(),
+    Value<String?> readingNormalized = const Value.absent(),
+    Value<int?> freqValue = const Value.absent(),
+    Value<String?> freqDisplay = const Value.absent(),
+  }) => TermMetaStagingTableData(
+    localId: localId ?? this.localId,
+    term: term ?? this.term,
+    termNormalized: termNormalized.present
+        ? termNormalized.value
+        : this.termNormalized,
+    termTokens: termTokens.present ? termTokens.value : this.termTokens,
+    termTokensNormalized: termTokensNormalized.present
+        ? termTokensNormalized.value
+        : this.termTokensNormalized,
+    mode: mode ?? this.mode,
+    reading: reading.present ? reading.value : this.reading,
+    readingNormalized: readingNormalized.present
+        ? readingNormalized.value
+        : this.readingNormalized,
+    freqValue: freqValue.present ? freqValue.value : this.freqValue,
+    freqDisplay: freqDisplay.present ? freqDisplay.value : this.freqDisplay,
+  );
+  TermMetaStagingTableData copyWithCompanion(
+    TermMetaStagingTableCompanion data,
+  ) {
+    return TermMetaStagingTableData(
+      localId: data.localId.present ? data.localId.value : this.localId,
+      term: data.term.present ? data.term.value : this.term,
+      termNormalized: data.termNormalized.present
+          ? data.termNormalized.value
+          : this.termNormalized,
+      termTokens: data.termTokens.present
+          ? data.termTokens.value
+          : this.termTokens,
+      termTokensNormalized: data.termTokensNormalized.present
+          ? data.termTokensNormalized.value
+          : this.termTokensNormalized,
+      mode: data.mode.present ? data.mode.value : this.mode,
+      reading: data.reading.present ? data.reading.value : this.reading,
+      readingNormalized: data.readingNormalized.present
+          ? data.readingNormalized.value
+          : this.readingNormalized,
+      freqValue: data.freqValue.present ? data.freqValue.value : this.freqValue,
+      freqDisplay: data.freqDisplay.present
+          ? data.freqDisplay.value
+          : this.freqDisplay,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('TermMetaStagingTableData(')
+          ..write('localId: $localId, ')
+          ..write('term: $term, ')
+          ..write('termNormalized: $termNormalized, ')
+          ..write('termTokens: $termTokens, ')
+          ..write('termTokensNormalized: $termTokensNormalized, ')
+          ..write('mode: $mode, ')
+          ..write('reading: $reading, ')
+          ..write('readingNormalized: $readingNormalized, ')
+          ..write('freqValue: $freqValue, ')
+          ..write('freqDisplay: $freqDisplay')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    localId,
+    term,
+    termNormalized,
+    termTokens,
+    termTokensNormalized,
+    mode,
+    reading,
+    readingNormalized,
+    freqValue,
+    freqDisplay,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is TermMetaStagingTableData &&
+          other.localId == this.localId &&
+          other.term == this.term &&
+          other.termNormalized == this.termNormalized &&
+          other.termTokens == this.termTokens &&
+          other.termTokensNormalized == this.termTokensNormalized &&
+          other.mode == this.mode &&
+          other.reading == this.reading &&
+          other.readingNormalized == this.readingNormalized &&
+          other.freqValue == this.freqValue &&
+          other.freqDisplay == this.freqDisplay);
+}
+
+class TermMetaStagingTableCompanion
+    extends UpdateCompanion<TermMetaStagingTableData> {
+  final Value<int> localId;
+  final Value<String> term;
+  final Value<String?> termNormalized;
+  final Value<String?> termTokens;
+  final Value<String?> termTokensNormalized;
+  final Value<String> mode;
+  final Value<String?> reading;
+  final Value<String?> readingNormalized;
+  final Value<int?> freqValue;
+  final Value<String?> freqDisplay;
+  final Value<int> rowid;
+  const TermMetaStagingTableCompanion({
+    this.localId = const Value.absent(),
+    this.term = const Value.absent(),
+    this.termNormalized = const Value.absent(),
+    this.termTokens = const Value.absent(),
+    this.termTokensNormalized = const Value.absent(),
+    this.mode = const Value.absent(),
+    this.reading = const Value.absent(),
+    this.readingNormalized = const Value.absent(),
+    this.freqValue = const Value.absent(),
+    this.freqDisplay = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  TermMetaStagingTableCompanion.insert({
+    required int localId,
+    required String term,
+    this.termNormalized = const Value.absent(),
+    this.termTokens = const Value.absent(),
+    this.termTokensNormalized = const Value.absent(),
+    required String mode,
+    this.reading = const Value.absent(),
+    this.readingNormalized = const Value.absent(),
+    this.freqValue = const Value.absent(),
+    this.freqDisplay = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : localId = Value(localId),
+       term = Value(term),
+       mode = Value(mode);
+  static Insertable<TermMetaStagingTableData> custom({
+    Expression<int>? localId,
+    Expression<String>? term,
+    Expression<String>? termNormalized,
+    Expression<String>? termTokens,
+    Expression<String>? termTokensNormalized,
+    Expression<String>? mode,
+    Expression<String>? reading,
+    Expression<String>? readingNormalized,
+    Expression<int>? freqValue,
+    Expression<String>? freqDisplay,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (localId != null) 'local_id': localId,
+      if (term != null) 'term': term,
+      if (termNormalized != null) 'term_normalized': termNormalized,
+      if (termTokens != null) 'term_tokens': termTokens,
+      if (termTokensNormalized != null)
+        'term_tokens_normalized': termTokensNormalized,
+      if (mode != null) 'mode': mode,
+      if (reading != null) 'reading': reading,
+      if (readingNormalized != null) 'reading_normalized': readingNormalized,
+      if (freqValue != null) 'freq_value': freqValue,
+      if (freqDisplay != null) 'freq_display': freqDisplay,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  TermMetaStagingTableCompanion copyWith({
+    Value<int>? localId,
+    Value<String>? term,
+    Value<String?>? termNormalized,
+    Value<String?>? termTokens,
+    Value<String?>? termTokensNormalized,
+    Value<String>? mode,
+    Value<String?>? reading,
+    Value<String?>? readingNormalized,
+    Value<int?>? freqValue,
+    Value<String?>? freqDisplay,
+    Value<int>? rowid,
+  }) {
+    return TermMetaStagingTableCompanion(
+      localId: localId ?? this.localId,
+      term: term ?? this.term,
+      termNormalized: termNormalized ?? this.termNormalized,
+      termTokens: termTokens ?? this.termTokens,
+      termTokensNormalized: termTokensNormalized ?? this.termTokensNormalized,
+      mode: mode ?? this.mode,
+      reading: reading ?? this.reading,
+      readingNormalized: readingNormalized ?? this.readingNormalized,
+      freqValue: freqValue ?? this.freqValue,
+      freqDisplay: freqDisplay ?? this.freqDisplay,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (localId.present) {
+      map['local_id'] = Variable<int>(localId.value);
+    }
+    if (term.present) {
+      map['term'] = Variable<String>(term.value);
+    }
+    if (termNormalized.present) {
+      map['term_normalized'] = Variable<String>(termNormalized.value);
+    }
+    if (termTokens.present) {
+      map['term_tokens'] = Variable<String>(termTokens.value);
+    }
+    if (termTokensNormalized.present) {
+      map['term_tokens_normalized'] = Variable<String>(
+        termTokensNormalized.value,
+      );
+    }
+    if (mode.present) {
+      map['mode'] = Variable<String>(mode.value);
+    }
+    if (reading.present) {
+      map['reading'] = Variable<String>(reading.value);
+    }
+    if (readingNormalized.present) {
+      map['reading_normalized'] = Variable<String>(readingNormalized.value);
+    }
+    if (freqValue.present) {
+      map['freq_value'] = Variable<int>(freqValue.value);
+    }
+    if (freqDisplay.present) {
+      map['freq_display'] = Variable<String>(freqDisplay.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('TermMetaStagingTableCompanion(')
+          ..write('localId: $localId, ')
+          ..write('term: $term, ')
+          ..write('termNormalized: $termNormalized, ')
+          ..write('termTokens: $termTokens, ')
+          ..write('termTokensNormalized: $termTokensNormalized, ')
+          ..write('mode: $mode, ')
+          ..write('reading: $reading, ')
+          ..write('readingNormalized: $readingNormalized, ')
+          ..write('freqValue: $freqValue, ')
+          ..write('freqDisplay: $freqDisplay, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $TermMetaPitchStagingTableTable extends TermMetaPitchStagingTable
+    with
+        TableInfo<
+          $TermMetaPitchStagingTableTable,
+          TermMetaPitchStagingTableData
+        > {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $TermMetaPitchStagingTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _pitchLocalIdMeta = const VerificationMeta(
+    'pitchLocalId',
+  );
+  @override
+  late final GeneratedColumn<int> pitchLocalId = GeneratedColumn<int>(
+    'pitch_local_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _metaLocalIdMeta = const VerificationMeta(
+    'metaLocalId',
+  );
+  @override
+  late final GeneratedColumn<int> metaLocalId = GeneratedColumn<int>(
+    'meta_local_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _positionMeta = const VerificationMeta(
+    'position',
+  );
+  @override
+  late final GeneratedColumn<int> position = GeneratedColumn<int>(
+    'position',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _nasalMeta = const VerificationMeta('nasal');
+  @override
+  late final GeneratedColumn<int> nasal = GeneratedColumn<int>(
+    'nasal',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _devoiceMeta = const VerificationMeta(
+    'devoice',
+  );
+  @override
+  late final GeneratedColumn<int> devoice = GeneratedColumn<int>(
+    'devoice',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    pitchLocalId,
+    metaLocalId,
+    position,
+    nasal,
+    devoice,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'term_meta_pitch_staging_table';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<TermMetaPitchStagingTableData> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('pitch_local_id')) {
+      context.handle(
+        _pitchLocalIdMeta,
+        pitchLocalId.isAcceptableOrUnknown(
+          data['pitch_local_id']!,
+          _pitchLocalIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_pitchLocalIdMeta);
+    }
+    if (data.containsKey('meta_local_id')) {
+      context.handle(
+        _metaLocalIdMeta,
+        metaLocalId.isAcceptableOrUnknown(
+          data['meta_local_id']!,
+          _metaLocalIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_metaLocalIdMeta);
+    }
+    if (data.containsKey('position')) {
+      context.handle(
+        _positionMeta,
+        position.isAcceptableOrUnknown(data['position']!, _positionMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_positionMeta);
+    }
+    if (data.containsKey('nasal')) {
+      context.handle(
+        _nasalMeta,
+        nasal.isAcceptableOrUnknown(data['nasal']!, _nasalMeta),
+      );
+    }
+    if (data.containsKey('devoice')) {
+      context.handle(
+        _devoiceMeta,
+        devoice.isAcceptableOrUnknown(data['devoice']!, _devoiceMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => const {};
+  @override
+  TermMetaPitchStagingTableData map(
+    Map<String, dynamic> data, {
+    String? tablePrefix,
+  }) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return TermMetaPitchStagingTableData(
+      pitchLocalId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}pitch_local_id'],
+      )!,
+      metaLocalId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}meta_local_id'],
+      )!,
+      position: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}position'],
+      )!,
+      nasal: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}nasal'],
+      ),
+      devoice: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}devoice'],
+      ),
+    );
+  }
+
+  @override
+  $TermMetaPitchStagingTableTable createAlias(String alias) {
+    return $TermMetaPitchStagingTableTable(attachedDatabase, alias);
+  }
+}
+
+class TermMetaPitchStagingTableData extends DataClass
+    implements Insertable<TermMetaPitchStagingTableData> {
+  final int pitchLocalId;
+  final int metaLocalId;
+  final int position;
+  final int? nasal;
+  final int? devoice;
+  const TermMetaPitchStagingTableData({
+    required this.pitchLocalId,
+    required this.metaLocalId,
+    required this.position,
+    this.nasal,
+    this.devoice,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['pitch_local_id'] = Variable<int>(pitchLocalId);
+    map['meta_local_id'] = Variable<int>(metaLocalId);
+    map['position'] = Variable<int>(position);
+    if (!nullToAbsent || nasal != null) {
+      map['nasal'] = Variable<int>(nasal);
+    }
+    if (!nullToAbsent || devoice != null) {
+      map['devoice'] = Variable<int>(devoice);
+    }
+    return map;
+  }
+
+  TermMetaPitchStagingTableCompanion toCompanion(bool nullToAbsent) {
+    return TermMetaPitchStagingTableCompanion(
+      pitchLocalId: Value(pitchLocalId),
+      metaLocalId: Value(metaLocalId),
+      position: Value(position),
+      nasal: nasal == null && nullToAbsent
+          ? const Value.absent()
+          : Value(nasal),
+      devoice: devoice == null && nullToAbsent
+          ? const Value.absent()
+          : Value(devoice),
+    );
+  }
+
+  factory TermMetaPitchStagingTableData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return TermMetaPitchStagingTableData(
+      pitchLocalId: serializer.fromJson<int>(json['pitchLocalId']),
+      metaLocalId: serializer.fromJson<int>(json['metaLocalId']),
+      position: serializer.fromJson<int>(json['position']),
+      nasal: serializer.fromJson<int?>(json['nasal']),
+      devoice: serializer.fromJson<int?>(json['devoice']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'pitchLocalId': serializer.toJson<int>(pitchLocalId),
+      'metaLocalId': serializer.toJson<int>(metaLocalId),
+      'position': serializer.toJson<int>(position),
+      'nasal': serializer.toJson<int?>(nasal),
+      'devoice': serializer.toJson<int?>(devoice),
+    };
+  }
+
+  TermMetaPitchStagingTableData copyWith({
+    int? pitchLocalId,
+    int? metaLocalId,
+    int? position,
+    Value<int?> nasal = const Value.absent(),
+    Value<int?> devoice = const Value.absent(),
+  }) => TermMetaPitchStagingTableData(
+    pitchLocalId: pitchLocalId ?? this.pitchLocalId,
+    metaLocalId: metaLocalId ?? this.metaLocalId,
+    position: position ?? this.position,
+    nasal: nasal.present ? nasal.value : this.nasal,
+    devoice: devoice.present ? devoice.value : this.devoice,
+  );
+  TermMetaPitchStagingTableData copyWithCompanion(
+    TermMetaPitchStagingTableCompanion data,
+  ) {
+    return TermMetaPitchStagingTableData(
+      pitchLocalId: data.pitchLocalId.present
+          ? data.pitchLocalId.value
+          : this.pitchLocalId,
+      metaLocalId: data.metaLocalId.present
+          ? data.metaLocalId.value
+          : this.metaLocalId,
+      position: data.position.present ? data.position.value : this.position,
+      nasal: data.nasal.present ? data.nasal.value : this.nasal,
+      devoice: data.devoice.present ? data.devoice.value : this.devoice,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('TermMetaPitchStagingTableData(')
+          ..write('pitchLocalId: $pitchLocalId, ')
+          ..write('metaLocalId: $metaLocalId, ')
+          ..write('position: $position, ')
+          ..write('nasal: $nasal, ')
+          ..write('devoice: $devoice')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(pitchLocalId, metaLocalId, position, nasal, devoice);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is TermMetaPitchStagingTableData &&
+          other.pitchLocalId == this.pitchLocalId &&
+          other.metaLocalId == this.metaLocalId &&
+          other.position == this.position &&
+          other.nasal == this.nasal &&
+          other.devoice == this.devoice);
+}
+
+class TermMetaPitchStagingTableCompanion
+    extends UpdateCompanion<TermMetaPitchStagingTableData> {
+  final Value<int> pitchLocalId;
+  final Value<int> metaLocalId;
+  final Value<int> position;
+  final Value<int?> nasal;
+  final Value<int?> devoice;
+  final Value<int> rowid;
+  const TermMetaPitchStagingTableCompanion({
+    this.pitchLocalId = const Value.absent(),
+    this.metaLocalId = const Value.absent(),
+    this.position = const Value.absent(),
+    this.nasal = const Value.absent(),
+    this.devoice = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  TermMetaPitchStagingTableCompanion.insert({
+    required int pitchLocalId,
+    required int metaLocalId,
+    required int position,
+    this.nasal = const Value.absent(),
+    this.devoice = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : pitchLocalId = Value(pitchLocalId),
+       metaLocalId = Value(metaLocalId),
+       position = Value(position);
+  static Insertable<TermMetaPitchStagingTableData> custom({
+    Expression<int>? pitchLocalId,
+    Expression<int>? metaLocalId,
+    Expression<int>? position,
+    Expression<int>? nasal,
+    Expression<int>? devoice,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (pitchLocalId != null) 'pitch_local_id': pitchLocalId,
+      if (metaLocalId != null) 'meta_local_id': metaLocalId,
+      if (position != null) 'position': position,
+      if (nasal != null) 'nasal': nasal,
+      if (devoice != null) 'devoice': devoice,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  TermMetaPitchStagingTableCompanion copyWith({
+    Value<int>? pitchLocalId,
+    Value<int>? metaLocalId,
+    Value<int>? position,
+    Value<int?>? nasal,
+    Value<int?>? devoice,
+    Value<int>? rowid,
+  }) {
+    return TermMetaPitchStagingTableCompanion(
+      pitchLocalId: pitchLocalId ?? this.pitchLocalId,
+      metaLocalId: metaLocalId ?? this.metaLocalId,
+      position: position ?? this.position,
+      nasal: nasal ?? this.nasal,
+      devoice: devoice ?? this.devoice,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (pitchLocalId.present) {
+      map['pitch_local_id'] = Variable<int>(pitchLocalId.value);
+    }
+    if (metaLocalId.present) {
+      map['meta_local_id'] = Variable<int>(metaLocalId.value);
+    }
+    if (position.present) {
+      map['position'] = Variable<int>(position.value);
+    }
+    if (nasal.present) {
+      map['nasal'] = Variable<int>(nasal.value);
+    }
+    if (devoice.present) {
+      map['devoice'] = Variable<int>(devoice.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('TermMetaPitchStagingTableCompanion(')
+          ..write('pitchLocalId: $pitchLocalId, ')
+          ..write('metaLocalId: $metaLocalId, ')
+          ..write('position: $position, ')
+          ..write('nasal: $nasal, ')
+          ..write('devoice: $devoice, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $TermMetaIpaStagingTableTable extends TermMetaIpaStagingTable
+    with TableInfo<$TermMetaIpaStagingTableTable, TermMetaIpaStagingTableData> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $TermMetaIpaStagingTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _ipaLocalIdMeta = const VerificationMeta(
+    'ipaLocalId',
+  );
+  @override
+  late final GeneratedColumn<int> ipaLocalId = GeneratedColumn<int>(
+    'ipa_local_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _metaLocalIdMeta = const VerificationMeta(
+    'metaLocalId',
+  );
+  @override
+  late final GeneratedColumn<int> metaLocalId = GeneratedColumn<int>(
+    'meta_local_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _ipaMeta = const VerificationMeta('ipa');
+  @override
+  late final GeneratedColumn<String> ipa = GeneratedColumn<String>(
+    'ipa',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [ipaLocalId, metaLocalId, ipa];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'term_meta_ipa_staging_table';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<TermMetaIpaStagingTableData> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('ipa_local_id')) {
+      context.handle(
+        _ipaLocalIdMeta,
+        ipaLocalId.isAcceptableOrUnknown(
+          data['ipa_local_id']!,
+          _ipaLocalIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_ipaLocalIdMeta);
+    }
+    if (data.containsKey('meta_local_id')) {
+      context.handle(
+        _metaLocalIdMeta,
+        metaLocalId.isAcceptableOrUnknown(
+          data['meta_local_id']!,
+          _metaLocalIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_metaLocalIdMeta);
+    }
+    if (data.containsKey('ipa')) {
+      context.handle(
+        _ipaMeta,
+        ipa.isAcceptableOrUnknown(data['ipa']!, _ipaMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_ipaMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => const {};
+  @override
+  TermMetaIpaStagingTableData map(
+    Map<String, dynamic> data, {
+    String? tablePrefix,
+  }) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return TermMetaIpaStagingTableData(
+      ipaLocalId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}ipa_local_id'],
+      )!,
+      metaLocalId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}meta_local_id'],
+      )!,
+      ipa: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}ipa'],
+      )!,
+    );
+  }
+
+  @override
+  $TermMetaIpaStagingTableTable createAlias(String alias) {
+    return $TermMetaIpaStagingTableTable(attachedDatabase, alias);
+  }
+}
+
+class TermMetaIpaStagingTableData extends DataClass
+    implements Insertable<TermMetaIpaStagingTableData> {
+  final int ipaLocalId;
+  final int metaLocalId;
+  final String ipa;
+  const TermMetaIpaStagingTableData({
+    required this.ipaLocalId,
+    required this.metaLocalId,
+    required this.ipa,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['ipa_local_id'] = Variable<int>(ipaLocalId);
+    map['meta_local_id'] = Variable<int>(metaLocalId);
+    map['ipa'] = Variable<String>(ipa);
+    return map;
+  }
+
+  TermMetaIpaStagingTableCompanion toCompanion(bool nullToAbsent) {
+    return TermMetaIpaStagingTableCompanion(
+      ipaLocalId: Value(ipaLocalId),
+      metaLocalId: Value(metaLocalId),
+      ipa: Value(ipa),
+    );
+  }
+
+  factory TermMetaIpaStagingTableData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return TermMetaIpaStagingTableData(
+      ipaLocalId: serializer.fromJson<int>(json['ipaLocalId']),
+      metaLocalId: serializer.fromJson<int>(json['metaLocalId']),
+      ipa: serializer.fromJson<String>(json['ipa']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'ipaLocalId': serializer.toJson<int>(ipaLocalId),
+      'metaLocalId': serializer.toJson<int>(metaLocalId),
+      'ipa': serializer.toJson<String>(ipa),
+    };
+  }
+
+  TermMetaIpaStagingTableData copyWith({
+    int? ipaLocalId,
+    int? metaLocalId,
+    String? ipa,
+  }) => TermMetaIpaStagingTableData(
+    ipaLocalId: ipaLocalId ?? this.ipaLocalId,
+    metaLocalId: metaLocalId ?? this.metaLocalId,
+    ipa: ipa ?? this.ipa,
+  );
+  TermMetaIpaStagingTableData copyWithCompanion(
+    TermMetaIpaStagingTableCompanion data,
+  ) {
+    return TermMetaIpaStagingTableData(
+      ipaLocalId: data.ipaLocalId.present
+          ? data.ipaLocalId.value
+          : this.ipaLocalId,
+      metaLocalId: data.metaLocalId.present
+          ? data.metaLocalId.value
+          : this.metaLocalId,
+      ipa: data.ipa.present ? data.ipa.value : this.ipa,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('TermMetaIpaStagingTableData(')
+          ..write('ipaLocalId: $ipaLocalId, ')
+          ..write('metaLocalId: $metaLocalId, ')
+          ..write('ipa: $ipa')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(ipaLocalId, metaLocalId, ipa);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is TermMetaIpaStagingTableData &&
+          other.ipaLocalId == this.ipaLocalId &&
+          other.metaLocalId == this.metaLocalId &&
+          other.ipa == this.ipa);
+}
+
+class TermMetaIpaStagingTableCompanion
+    extends UpdateCompanion<TermMetaIpaStagingTableData> {
+  final Value<int> ipaLocalId;
+  final Value<int> metaLocalId;
+  final Value<String> ipa;
+  final Value<int> rowid;
+  const TermMetaIpaStagingTableCompanion({
+    this.ipaLocalId = const Value.absent(),
+    this.metaLocalId = const Value.absent(),
+    this.ipa = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  TermMetaIpaStagingTableCompanion.insert({
+    required int ipaLocalId,
+    required int metaLocalId,
+    required String ipa,
+    this.rowid = const Value.absent(),
+  }) : ipaLocalId = Value(ipaLocalId),
+       metaLocalId = Value(metaLocalId),
+       ipa = Value(ipa);
+  static Insertable<TermMetaIpaStagingTableData> custom({
+    Expression<int>? ipaLocalId,
+    Expression<int>? metaLocalId,
+    Expression<String>? ipa,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (ipaLocalId != null) 'ipa_local_id': ipaLocalId,
+      if (metaLocalId != null) 'meta_local_id': metaLocalId,
+      if (ipa != null) 'ipa': ipa,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  TermMetaIpaStagingTableCompanion copyWith({
+    Value<int>? ipaLocalId,
+    Value<int>? metaLocalId,
+    Value<String>? ipa,
+    Value<int>? rowid,
+  }) {
+    return TermMetaIpaStagingTableCompanion(
+      ipaLocalId: ipaLocalId ?? this.ipaLocalId,
+      metaLocalId: metaLocalId ?? this.metaLocalId,
+      ipa: ipa ?? this.ipa,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (ipaLocalId.present) {
+      map['ipa_local_id'] = Variable<int>(ipaLocalId.value);
+    }
+    if (metaLocalId.present) {
+      map['meta_local_id'] = Variable<int>(metaLocalId.value);
+    }
+    if (ipa.present) {
+      map['ipa'] = Variable<String>(ipa.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('TermMetaIpaStagingTableCompanion(')
+          ..write('ipaLocalId: $ipaLocalId, ')
+          ..write('metaLocalId: $metaLocalId, ')
+          ..write('ipa: $ipa, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $TermMetaTagStagingTableTable extends TermMetaTagStagingTable
+    with TableInfo<$TermMetaTagStagingTableTable, TermMetaTagStagingTableData> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $TermMetaTagStagingTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _parentLocalIdMeta = const VerificationMeta(
+    'parentLocalId',
+  );
+  @override
+  late final GeneratedColumn<int> parentLocalId = GeneratedColumn<int>(
+    'parent_local_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _parentTypeMeta = const VerificationMeta(
+    'parentType',
+  );
+  @override
+  late final GeneratedColumn<String> parentType = GeneratedColumn<String>(
+    'parent_type',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _tagNameMeta = const VerificationMeta(
+    'tagName',
+  );
+  @override
+  late final GeneratedColumn<String> tagName = GeneratedColumn<String>(
+    'tag_name',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [parentLocalId, parentType, tagName];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'term_meta_tag_staging_table';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<TermMetaTagStagingTableData> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('parent_local_id')) {
+      context.handle(
+        _parentLocalIdMeta,
+        parentLocalId.isAcceptableOrUnknown(
+          data['parent_local_id']!,
+          _parentLocalIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_parentLocalIdMeta);
+    }
+    if (data.containsKey('parent_type')) {
+      context.handle(
+        _parentTypeMeta,
+        parentType.isAcceptableOrUnknown(data['parent_type']!, _parentTypeMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_parentTypeMeta);
+    }
+    if (data.containsKey('tag_name')) {
+      context.handle(
+        _tagNameMeta,
+        tagName.isAcceptableOrUnknown(data['tag_name']!, _tagNameMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_tagNameMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => const {};
+  @override
+  TermMetaTagStagingTableData map(
+    Map<String, dynamic> data, {
+    String? tablePrefix,
+  }) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return TermMetaTagStagingTableData(
+      parentLocalId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}parent_local_id'],
+      )!,
+      parentType: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}parent_type'],
+      )!,
+      tagName: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}tag_name'],
+      )!,
+    );
+  }
+
+  @override
+  $TermMetaTagStagingTableTable createAlias(String alias) {
+    return $TermMetaTagStagingTableTable(attachedDatabase, alias);
+  }
+}
+
+class TermMetaTagStagingTableData extends DataClass
+    implements Insertable<TermMetaTagStagingTableData> {
+  final int parentLocalId;
+  final String parentType;
+  final String tagName;
+  const TermMetaTagStagingTableData({
+    required this.parentLocalId,
+    required this.parentType,
+    required this.tagName,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['parent_local_id'] = Variable<int>(parentLocalId);
+    map['parent_type'] = Variable<String>(parentType);
+    map['tag_name'] = Variable<String>(tagName);
+    return map;
+  }
+
+  TermMetaTagStagingTableCompanion toCompanion(bool nullToAbsent) {
+    return TermMetaTagStagingTableCompanion(
+      parentLocalId: Value(parentLocalId),
+      parentType: Value(parentType),
+      tagName: Value(tagName),
+    );
+  }
+
+  factory TermMetaTagStagingTableData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return TermMetaTagStagingTableData(
+      parentLocalId: serializer.fromJson<int>(json['parentLocalId']),
+      parentType: serializer.fromJson<String>(json['parentType']),
+      tagName: serializer.fromJson<String>(json['tagName']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'parentLocalId': serializer.toJson<int>(parentLocalId),
+      'parentType': serializer.toJson<String>(parentType),
+      'tagName': serializer.toJson<String>(tagName),
+    };
+  }
+
+  TermMetaTagStagingTableData copyWith({
+    int? parentLocalId,
+    String? parentType,
+    String? tagName,
+  }) => TermMetaTagStagingTableData(
+    parentLocalId: parentLocalId ?? this.parentLocalId,
+    parentType: parentType ?? this.parentType,
+    tagName: tagName ?? this.tagName,
+  );
+  TermMetaTagStagingTableData copyWithCompanion(
+    TermMetaTagStagingTableCompanion data,
+  ) {
+    return TermMetaTagStagingTableData(
+      parentLocalId: data.parentLocalId.present
+          ? data.parentLocalId.value
+          : this.parentLocalId,
+      parentType: data.parentType.present
+          ? data.parentType.value
+          : this.parentType,
+      tagName: data.tagName.present ? data.tagName.value : this.tagName,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('TermMetaTagStagingTableData(')
+          ..write('parentLocalId: $parentLocalId, ')
+          ..write('parentType: $parentType, ')
+          ..write('tagName: $tagName')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(parentLocalId, parentType, tagName);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is TermMetaTagStagingTableData &&
+          other.parentLocalId == this.parentLocalId &&
+          other.parentType == this.parentType &&
+          other.tagName == this.tagName);
+}
+
+class TermMetaTagStagingTableCompanion
+    extends UpdateCompanion<TermMetaTagStagingTableData> {
+  final Value<int> parentLocalId;
+  final Value<String> parentType;
+  final Value<String> tagName;
+  final Value<int> rowid;
+  const TermMetaTagStagingTableCompanion({
+    this.parentLocalId = const Value.absent(),
+    this.parentType = const Value.absent(),
+    this.tagName = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  TermMetaTagStagingTableCompanion.insert({
+    required int parentLocalId,
+    required String parentType,
+    required String tagName,
+    this.rowid = const Value.absent(),
+  }) : parentLocalId = Value(parentLocalId),
+       parentType = Value(parentType),
+       tagName = Value(tagName);
+  static Insertable<TermMetaTagStagingTableData> custom({
+    Expression<int>? parentLocalId,
+    Expression<String>? parentType,
+    Expression<String>? tagName,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (parentLocalId != null) 'parent_local_id': parentLocalId,
+      if (parentType != null) 'parent_type': parentType,
+      if (tagName != null) 'tag_name': tagName,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  TermMetaTagStagingTableCompanion copyWith({
+    Value<int>? parentLocalId,
+    Value<String>? parentType,
+    Value<String>? tagName,
+    Value<int>? rowid,
+  }) {
+    return TermMetaTagStagingTableCompanion(
+      parentLocalId: parentLocalId ?? this.parentLocalId,
+      parentType: parentType ?? this.parentType,
+      tagName: tagName ?? this.tagName,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (parentLocalId.present) {
+      map['parent_local_id'] = Variable<int>(parentLocalId.value);
+    }
+    if (parentType.present) {
+      map['parent_type'] = Variable<String>(parentType.value);
+    }
+    if (tagName.present) {
+      map['tag_name'] = Variable<String>(tagName.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('TermMetaTagStagingTableCompanion(')
+          ..write('parentLocalId: $parentLocalId, ')
+          ..write('parentType: $parentType, ')
+          ..write('tagName: $tagName, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$StagingDatabase extends GeneratedDatabase {
   _$StagingDatabase(QueryExecutor e) : super(e);
   $StagingDatabaseManager get managers => $StagingDatabaseManager(this);
@@ -1799,6 +3414,14 @@ abstract class _$StagingDatabase extends GeneratedDatabase {
       $TermTagStagingTableTable(this);
   late final $TermRuleStagingTableTable termRuleStagingTable =
       $TermRuleStagingTableTable(this);
+  late final $TermMetaStagingTableTable termMetaStagingTable =
+      $TermMetaStagingTableTable(this);
+  late final $TermMetaPitchStagingTableTable termMetaPitchStagingTable =
+      $TermMetaPitchStagingTableTable(this);
+  late final $TermMetaIpaStagingTableTable termMetaIpaStagingTable =
+      $TermMetaIpaStagingTableTable(this);
+  late final $TermMetaTagStagingTableTable termMetaTagStagingTable =
+      $TermMetaTagStagingTableTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -1809,6 +3432,10 @@ abstract class _$StagingDatabase extends GeneratedDatabase {
     termDefinitionStagingTable,
     termTagStagingTable,
     termRuleStagingTable,
+    termMetaStagingTable,
+    termMetaPitchStagingTable,
+    termMetaIpaStagingTable,
+    termMetaTagStagingTable,
   ];
 }
 
@@ -2848,6 +4475,920 @@ typedef $$TermRuleStagingTableTableProcessedTableManager =
       TermRuleStagingTableData,
       PrefetchHooks Function()
     >;
+typedef $$TermMetaStagingTableTableCreateCompanionBuilder =
+    TermMetaStagingTableCompanion Function({
+      required int localId,
+      required String term,
+      Value<String?> termNormalized,
+      Value<String?> termTokens,
+      Value<String?> termTokensNormalized,
+      required String mode,
+      Value<String?> reading,
+      Value<String?> readingNormalized,
+      Value<int?> freqValue,
+      Value<String?> freqDisplay,
+      Value<int> rowid,
+    });
+typedef $$TermMetaStagingTableTableUpdateCompanionBuilder =
+    TermMetaStagingTableCompanion Function({
+      Value<int> localId,
+      Value<String> term,
+      Value<String?> termNormalized,
+      Value<String?> termTokens,
+      Value<String?> termTokensNormalized,
+      Value<String> mode,
+      Value<String?> reading,
+      Value<String?> readingNormalized,
+      Value<int?> freqValue,
+      Value<String?> freqDisplay,
+      Value<int> rowid,
+    });
+
+class $$TermMetaStagingTableTableFilterComposer
+    extends Composer<_$StagingDatabase, $TermMetaStagingTableTable> {
+  $$TermMetaStagingTableTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get localId => $composableBuilder(
+    column: $table.localId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get term => $composableBuilder(
+    column: $table.term,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get termNormalized => $composableBuilder(
+    column: $table.termNormalized,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get termTokens => $composableBuilder(
+    column: $table.termTokens,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get termTokensNormalized => $composableBuilder(
+    column: $table.termTokensNormalized,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get mode => $composableBuilder(
+    column: $table.mode,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get reading => $composableBuilder(
+    column: $table.reading,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get readingNormalized => $composableBuilder(
+    column: $table.readingNormalized,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get freqValue => $composableBuilder(
+    column: $table.freqValue,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get freqDisplay => $composableBuilder(
+    column: $table.freqDisplay,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$TermMetaStagingTableTableOrderingComposer
+    extends Composer<_$StagingDatabase, $TermMetaStagingTableTable> {
+  $$TermMetaStagingTableTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get localId => $composableBuilder(
+    column: $table.localId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get term => $composableBuilder(
+    column: $table.term,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get termNormalized => $composableBuilder(
+    column: $table.termNormalized,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get termTokens => $composableBuilder(
+    column: $table.termTokens,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get termTokensNormalized => $composableBuilder(
+    column: $table.termTokensNormalized,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get mode => $composableBuilder(
+    column: $table.mode,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get reading => $composableBuilder(
+    column: $table.reading,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get readingNormalized => $composableBuilder(
+    column: $table.readingNormalized,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get freqValue => $composableBuilder(
+    column: $table.freqValue,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get freqDisplay => $composableBuilder(
+    column: $table.freqDisplay,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$TermMetaStagingTableTableAnnotationComposer
+    extends Composer<_$StagingDatabase, $TermMetaStagingTableTable> {
+  $$TermMetaStagingTableTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get localId =>
+      $composableBuilder(column: $table.localId, builder: (column) => column);
+
+  GeneratedColumn<String> get term =>
+      $composableBuilder(column: $table.term, builder: (column) => column);
+
+  GeneratedColumn<String> get termNormalized => $composableBuilder(
+    column: $table.termNormalized,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get termTokens => $composableBuilder(
+    column: $table.termTokens,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get termTokensNormalized => $composableBuilder(
+    column: $table.termTokensNormalized,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get mode =>
+      $composableBuilder(column: $table.mode, builder: (column) => column);
+
+  GeneratedColumn<String> get reading =>
+      $composableBuilder(column: $table.reading, builder: (column) => column);
+
+  GeneratedColumn<String> get readingNormalized => $composableBuilder(
+    column: $table.readingNormalized,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get freqValue =>
+      $composableBuilder(column: $table.freqValue, builder: (column) => column);
+
+  GeneratedColumn<String> get freqDisplay => $composableBuilder(
+    column: $table.freqDisplay,
+    builder: (column) => column,
+  );
+}
+
+class $$TermMetaStagingTableTableTableManager
+    extends
+        RootTableManager<
+          _$StagingDatabase,
+          $TermMetaStagingTableTable,
+          TermMetaStagingTableData,
+          $$TermMetaStagingTableTableFilterComposer,
+          $$TermMetaStagingTableTableOrderingComposer,
+          $$TermMetaStagingTableTableAnnotationComposer,
+          $$TermMetaStagingTableTableCreateCompanionBuilder,
+          $$TermMetaStagingTableTableUpdateCompanionBuilder,
+          (
+            TermMetaStagingTableData,
+            BaseReferences<
+              _$StagingDatabase,
+              $TermMetaStagingTableTable,
+              TermMetaStagingTableData
+            >,
+          ),
+          TermMetaStagingTableData,
+          PrefetchHooks Function()
+        > {
+  $$TermMetaStagingTableTableTableManager(
+    _$StagingDatabase db,
+    $TermMetaStagingTableTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$TermMetaStagingTableTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$TermMetaStagingTableTableOrderingComposer(
+                $db: db,
+                $table: table,
+              ),
+          createComputedFieldComposer: () =>
+              $$TermMetaStagingTableTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<int> localId = const Value.absent(),
+                Value<String> term = const Value.absent(),
+                Value<String?> termNormalized = const Value.absent(),
+                Value<String?> termTokens = const Value.absent(),
+                Value<String?> termTokensNormalized = const Value.absent(),
+                Value<String> mode = const Value.absent(),
+                Value<String?> reading = const Value.absent(),
+                Value<String?> readingNormalized = const Value.absent(),
+                Value<int?> freqValue = const Value.absent(),
+                Value<String?> freqDisplay = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => TermMetaStagingTableCompanion(
+                localId: localId,
+                term: term,
+                termNormalized: termNormalized,
+                termTokens: termTokens,
+                termTokensNormalized: termTokensNormalized,
+                mode: mode,
+                reading: reading,
+                readingNormalized: readingNormalized,
+                freqValue: freqValue,
+                freqDisplay: freqDisplay,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required int localId,
+                required String term,
+                Value<String?> termNormalized = const Value.absent(),
+                Value<String?> termTokens = const Value.absent(),
+                Value<String?> termTokensNormalized = const Value.absent(),
+                required String mode,
+                Value<String?> reading = const Value.absent(),
+                Value<String?> readingNormalized = const Value.absent(),
+                Value<int?> freqValue = const Value.absent(),
+                Value<String?> freqDisplay = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => TermMetaStagingTableCompanion.insert(
+                localId: localId,
+                term: term,
+                termNormalized: termNormalized,
+                termTokens: termTokens,
+                termTokensNormalized: termTokensNormalized,
+                mode: mode,
+                reading: reading,
+                readingNormalized: readingNormalized,
+                freqValue: freqValue,
+                freqDisplay: freqDisplay,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$TermMetaStagingTableTableProcessedTableManager =
+    ProcessedTableManager<
+      _$StagingDatabase,
+      $TermMetaStagingTableTable,
+      TermMetaStagingTableData,
+      $$TermMetaStagingTableTableFilterComposer,
+      $$TermMetaStagingTableTableOrderingComposer,
+      $$TermMetaStagingTableTableAnnotationComposer,
+      $$TermMetaStagingTableTableCreateCompanionBuilder,
+      $$TermMetaStagingTableTableUpdateCompanionBuilder,
+      (
+        TermMetaStagingTableData,
+        BaseReferences<
+          _$StagingDatabase,
+          $TermMetaStagingTableTable,
+          TermMetaStagingTableData
+        >,
+      ),
+      TermMetaStagingTableData,
+      PrefetchHooks Function()
+    >;
+typedef $$TermMetaPitchStagingTableTableCreateCompanionBuilder =
+    TermMetaPitchStagingTableCompanion Function({
+      required int pitchLocalId,
+      required int metaLocalId,
+      required int position,
+      Value<int?> nasal,
+      Value<int?> devoice,
+      Value<int> rowid,
+    });
+typedef $$TermMetaPitchStagingTableTableUpdateCompanionBuilder =
+    TermMetaPitchStagingTableCompanion Function({
+      Value<int> pitchLocalId,
+      Value<int> metaLocalId,
+      Value<int> position,
+      Value<int?> nasal,
+      Value<int?> devoice,
+      Value<int> rowid,
+    });
+
+class $$TermMetaPitchStagingTableTableFilterComposer
+    extends Composer<_$StagingDatabase, $TermMetaPitchStagingTableTable> {
+  $$TermMetaPitchStagingTableTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get pitchLocalId => $composableBuilder(
+    column: $table.pitchLocalId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get metaLocalId => $composableBuilder(
+    column: $table.metaLocalId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get position => $composableBuilder(
+    column: $table.position,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get nasal => $composableBuilder(
+    column: $table.nasal,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get devoice => $composableBuilder(
+    column: $table.devoice,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$TermMetaPitchStagingTableTableOrderingComposer
+    extends Composer<_$StagingDatabase, $TermMetaPitchStagingTableTable> {
+  $$TermMetaPitchStagingTableTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get pitchLocalId => $composableBuilder(
+    column: $table.pitchLocalId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get metaLocalId => $composableBuilder(
+    column: $table.metaLocalId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get position => $composableBuilder(
+    column: $table.position,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get nasal => $composableBuilder(
+    column: $table.nasal,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get devoice => $composableBuilder(
+    column: $table.devoice,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$TermMetaPitchStagingTableTableAnnotationComposer
+    extends Composer<_$StagingDatabase, $TermMetaPitchStagingTableTable> {
+  $$TermMetaPitchStagingTableTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get pitchLocalId => $composableBuilder(
+    column: $table.pitchLocalId,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get metaLocalId => $composableBuilder(
+    column: $table.metaLocalId,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get position =>
+      $composableBuilder(column: $table.position, builder: (column) => column);
+
+  GeneratedColumn<int> get nasal =>
+      $composableBuilder(column: $table.nasal, builder: (column) => column);
+
+  GeneratedColumn<int> get devoice =>
+      $composableBuilder(column: $table.devoice, builder: (column) => column);
+}
+
+class $$TermMetaPitchStagingTableTableTableManager
+    extends
+        RootTableManager<
+          _$StagingDatabase,
+          $TermMetaPitchStagingTableTable,
+          TermMetaPitchStagingTableData,
+          $$TermMetaPitchStagingTableTableFilterComposer,
+          $$TermMetaPitchStagingTableTableOrderingComposer,
+          $$TermMetaPitchStagingTableTableAnnotationComposer,
+          $$TermMetaPitchStagingTableTableCreateCompanionBuilder,
+          $$TermMetaPitchStagingTableTableUpdateCompanionBuilder,
+          (
+            TermMetaPitchStagingTableData,
+            BaseReferences<
+              _$StagingDatabase,
+              $TermMetaPitchStagingTableTable,
+              TermMetaPitchStagingTableData
+            >,
+          ),
+          TermMetaPitchStagingTableData,
+          PrefetchHooks Function()
+        > {
+  $$TermMetaPitchStagingTableTableTableManager(
+    _$StagingDatabase db,
+    $TermMetaPitchStagingTableTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$TermMetaPitchStagingTableTableFilterComposer(
+                $db: db,
+                $table: table,
+              ),
+          createOrderingComposer: () =>
+              $$TermMetaPitchStagingTableTableOrderingComposer(
+                $db: db,
+                $table: table,
+              ),
+          createComputedFieldComposer: () =>
+              $$TermMetaPitchStagingTableTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<int> pitchLocalId = const Value.absent(),
+                Value<int> metaLocalId = const Value.absent(),
+                Value<int> position = const Value.absent(),
+                Value<int?> nasal = const Value.absent(),
+                Value<int?> devoice = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => TermMetaPitchStagingTableCompanion(
+                pitchLocalId: pitchLocalId,
+                metaLocalId: metaLocalId,
+                position: position,
+                nasal: nasal,
+                devoice: devoice,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required int pitchLocalId,
+                required int metaLocalId,
+                required int position,
+                Value<int?> nasal = const Value.absent(),
+                Value<int?> devoice = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => TermMetaPitchStagingTableCompanion.insert(
+                pitchLocalId: pitchLocalId,
+                metaLocalId: metaLocalId,
+                position: position,
+                nasal: nasal,
+                devoice: devoice,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$TermMetaPitchStagingTableTableProcessedTableManager =
+    ProcessedTableManager<
+      _$StagingDatabase,
+      $TermMetaPitchStagingTableTable,
+      TermMetaPitchStagingTableData,
+      $$TermMetaPitchStagingTableTableFilterComposer,
+      $$TermMetaPitchStagingTableTableOrderingComposer,
+      $$TermMetaPitchStagingTableTableAnnotationComposer,
+      $$TermMetaPitchStagingTableTableCreateCompanionBuilder,
+      $$TermMetaPitchStagingTableTableUpdateCompanionBuilder,
+      (
+        TermMetaPitchStagingTableData,
+        BaseReferences<
+          _$StagingDatabase,
+          $TermMetaPitchStagingTableTable,
+          TermMetaPitchStagingTableData
+        >,
+      ),
+      TermMetaPitchStagingTableData,
+      PrefetchHooks Function()
+    >;
+typedef $$TermMetaIpaStagingTableTableCreateCompanionBuilder =
+    TermMetaIpaStagingTableCompanion Function({
+      required int ipaLocalId,
+      required int metaLocalId,
+      required String ipa,
+      Value<int> rowid,
+    });
+typedef $$TermMetaIpaStagingTableTableUpdateCompanionBuilder =
+    TermMetaIpaStagingTableCompanion Function({
+      Value<int> ipaLocalId,
+      Value<int> metaLocalId,
+      Value<String> ipa,
+      Value<int> rowid,
+    });
+
+class $$TermMetaIpaStagingTableTableFilterComposer
+    extends Composer<_$StagingDatabase, $TermMetaIpaStagingTableTable> {
+  $$TermMetaIpaStagingTableTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get ipaLocalId => $composableBuilder(
+    column: $table.ipaLocalId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get metaLocalId => $composableBuilder(
+    column: $table.metaLocalId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get ipa => $composableBuilder(
+    column: $table.ipa,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$TermMetaIpaStagingTableTableOrderingComposer
+    extends Composer<_$StagingDatabase, $TermMetaIpaStagingTableTable> {
+  $$TermMetaIpaStagingTableTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get ipaLocalId => $composableBuilder(
+    column: $table.ipaLocalId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get metaLocalId => $composableBuilder(
+    column: $table.metaLocalId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get ipa => $composableBuilder(
+    column: $table.ipa,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$TermMetaIpaStagingTableTableAnnotationComposer
+    extends Composer<_$StagingDatabase, $TermMetaIpaStagingTableTable> {
+  $$TermMetaIpaStagingTableTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get ipaLocalId => $composableBuilder(
+    column: $table.ipaLocalId,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get metaLocalId => $composableBuilder(
+    column: $table.metaLocalId,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get ipa =>
+      $composableBuilder(column: $table.ipa, builder: (column) => column);
+}
+
+class $$TermMetaIpaStagingTableTableTableManager
+    extends
+        RootTableManager<
+          _$StagingDatabase,
+          $TermMetaIpaStagingTableTable,
+          TermMetaIpaStagingTableData,
+          $$TermMetaIpaStagingTableTableFilterComposer,
+          $$TermMetaIpaStagingTableTableOrderingComposer,
+          $$TermMetaIpaStagingTableTableAnnotationComposer,
+          $$TermMetaIpaStagingTableTableCreateCompanionBuilder,
+          $$TermMetaIpaStagingTableTableUpdateCompanionBuilder,
+          (
+            TermMetaIpaStagingTableData,
+            BaseReferences<
+              _$StagingDatabase,
+              $TermMetaIpaStagingTableTable,
+              TermMetaIpaStagingTableData
+            >,
+          ),
+          TermMetaIpaStagingTableData,
+          PrefetchHooks Function()
+        > {
+  $$TermMetaIpaStagingTableTableTableManager(
+    _$StagingDatabase db,
+    $TermMetaIpaStagingTableTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$TermMetaIpaStagingTableTableFilterComposer(
+                $db: db,
+                $table: table,
+              ),
+          createOrderingComposer: () =>
+              $$TermMetaIpaStagingTableTableOrderingComposer(
+                $db: db,
+                $table: table,
+              ),
+          createComputedFieldComposer: () =>
+              $$TermMetaIpaStagingTableTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<int> ipaLocalId = const Value.absent(),
+                Value<int> metaLocalId = const Value.absent(),
+                Value<String> ipa = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => TermMetaIpaStagingTableCompanion(
+                ipaLocalId: ipaLocalId,
+                metaLocalId: metaLocalId,
+                ipa: ipa,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required int ipaLocalId,
+                required int metaLocalId,
+                required String ipa,
+                Value<int> rowid = const Value.absent(),
+              }) => TermMetaIpaStagingTableCompanion.insert(
+                ipaLocalId: ipaLocalId,
+                metaLocalId: metaLocalId,
+                ipa: ipa,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$TermMetaIpaStagingTableTableProcessedTableManager =
+    ProcessedTableManager<
+      _$StagingDatabase,
+      $TermMetaIpaStagingTableTable,
+      TermMetaIpaStagingTableData,
+      $$TermMetaIpaStagingTableTableFilterComposer,
+      $$TermMetaIpaStagingTableTableOrderingComposer,
+      $$TermMetaIpaStagingTableTableAnnotationComposer,
+      $$TermMetaIpaStagingTableTableCreateCompanionBuilder,
+      $$TermMetaIpaStagingTableTableUpdateCompanionBuilder,
+      (
+        TermMetaIpaStagingTableData,
+        BaseReferences<
+          _$StagingDatabase,
+          $TermMetaIpaStagingTableTable,
+          TermMetaIpaStagingTableData
+        >,
+      ),
+      TermMetaIpaStagingTableData,
+      PrefetchHooks Function()
+    >;
+typedef $$TermMetaTagStagingTableTableCreateCompanionBuilder =
+    TermMetaTagStagingTableCompanion Function({
+      required int parentLocalId,
+      required String parentType,
+      required String tagName,
+      Value<int> rowid,
+    });
+typedef $$TermMetaTagStagingTableTableUpdateCompanionBuilder =
+    TermMetaTagStagingTableCompanion Function({
+      Value<int> parentLocalId,
+      Value<String> parentType,
+      Value<String> tagName,
+      Value<int> rowid,
+    });
+
+class $$TermMetaTagStagingTableTableFilterComposer
+    extends Composer<_$StagingDatabase, $TermMetaTagStagingTableTable> {
+  $$TermMetaTagStagingTableTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get parentLocalId => $composableBuilder(
+    column: $table.parentLocalId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get parentType => $composableBuilder(
+    column: $table.parentType,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get tagName => $composableBuilder(
+    column: $table.tagName,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$TermMetaTagStagingTableTableOrderingComposer
+    extends Composer<_$StagingDatabase, $TermMetaTagStagingTableTable> {
+  $$TermMetaTagStagingTableTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get parentLocalId => $composableBuilder(
+    column: $table.parentLocalId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get parentType => $composableBuilder(
+    column: $table.parentType,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get tagName => $composableBuilder(
+    column: $table.tagName,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$TermMetaTagStagingTableTableAnnotationComposer
+    extends Composer<_$StagingDatabase, $TermMetaTagStagingTableTable> {
+  $$TermMetaTagStagingTableTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get parentLocalId => $composableBuilder(
+    column: $table.parentLocalId,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get parentType => $composableBuilder(
+    column: $table.parentType,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get tagName =>
+      $composableBuilder(column: $table.tagName, builder: (column) => column);
+}
+
+class $$TermMetaTagStagingTableTableTableManager
+    extends
+        RootTableManager<
+          _$StagingDatabase,
+          $TermMetaTagStagingTableTable,
+          TermMetaTagStagingTableData,
+          $$TermMetaTagStagingTableTableFilterComposer,
+          $$TermMetaTagStagingTableTableOrderingComposer,
+          $$TermMetaTagStagingTableTableAnnotationComposer,
+          $$TermMetaTagStagingTableTableCreateCompanionBuilder,
+          $$TermMetaTagStagingTableTableUpdateCompanionBuilder,
+          (
+            TermMetaTagStagingTableData,
+            BaseReferences<
+              _$StagingDatabase,
+              $TermMetaTagStagingTableTable,
+              TermMetaTagStagingTableData
+            >,
+          ),
+          TermMetaTagStagingTableData,
+          PrefetchHooks Function()
+        > {
+  $$TermMetaTagStagingTableTableTableManager(
+    _$StagingDatabase db,
+    $TermMetaTagStagingTableTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$TermMetaTagStagingTableTableFilterComposer(
+                $db: db,
+                $table: table,
+              ),
+          createOrderingComposer: () =>
+              $$TermMetaTagStagingTableTableOrderingComposer(
+                $db: db,
+                $table: table,
+              ),
+          createComputedFieldComposer: () =>
+              $$TermMetaTagStagingTableTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<int> parentLocalId = const Value.absent(),
+                Value<String> parentType = const Value.absent(),
+                Value<String> tagName = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => TermMetaTagStagingTableCompanion(
+                parentLocalId: parentLocalId,
+                parentType: parentType,
+                tagName: tagName,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required int parentLocalId,
+                required String parentType,
+                required String tagName,
+                Value<int> rowid = const Value.absent(),
+              }) => TermMetaTagStagingTableCompanion.insert(
+                parentLocalId: parentLocalId,
+                parentType: parentType,
+                tagName: tagName,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$TermMetaTagStagingTableTableProcessedTableManager =
+    ProcessedTableManager<
+      _$StagingDatabase,
+      $TermMetaTagStagingTableTable,
+      TermMetaTagStagingTableData,
+      $$TermMetaTagStagingTableTableFilterComposer,
+      $$TermMetaTagStagingTableTableOrderingComposer,
+      $$TermMetaTagStagingTableTableAnnotationComposer,
+      $$TermMetaTagStagingTableTableCreateCompanionBuilder,
+      $$TermMetaTagStagingTableTableUpdateCompanionBuilder,
+      (
+        TermMetaTagStagingTableData,
+        BaseReferences<
+          _$StagingDatabase,
+          $TermMetaTagStagingTableTable,
+          TermMetaTagStagingTableData
+        >,
+      ),
+      TermMetaTagStagingTableData,
+      PrefetchHooks Function()
+    >;
 
 class $StagingDatabaseManager {
   final _$StagingDatabase _db;
@@ -2866,4 +5407,21 @@ class $StagingDatabaseManager {
       $$TermTagStagingTableTableTableManager(_db, _db.termTagStagingTable);
   $$TermRuleStagingTableTableTableManager get termRuleStagingTable =>
       $$TermRuleStagingTableTableTableManager(_db, _db.termRuleStagingTable);
+  $$TermMetaStagingTableTableTableManager get termMetaStagingTable =>
+      $$TermMetaStagingTableTableTableManager(_db, _db.termMetaStagingTable);
+  $$TermMetaPitchStagingTableTableTableManager get termMetaPitchStagingTable =>
+      $$TermMetaPitchStagingTableTableTableManager(
+        _db,
+        _db.termMetaPitchStagingTable,
+      );
+  $$TermMetaIpaStagingTableTableTableManager get termMetaIpaStagingTable =>
+      $$TermMetaIpaStagingTableTableTableManager(
+        _db,
+        _db.termMetaIpaStagingTable,
+      );
+  $$TermMetaTagStagingTableTableTableManager get termMetaTagStagingTable =>
+      $$TermMetaTagStagingTableTableTableManager(
+        _db,
+        _db.termMetaTagStagingTable,
+      );
 }
