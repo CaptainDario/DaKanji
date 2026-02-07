@@ -3,12 +3,382 @@
 part of 'staging_db.dart';
 
 // ignore_for_file: type=lint
-class $StagingTermTableTable extends StagingTermTable
-    with TableInfo<$StagingTermTableTable, StagingTermTableData> {
+class $TagStagingTableTable extends TagStagingTable
+    with TableInfo<$TagStagingTableTable, TagStagingTableData> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
-  $StagingTermTableTable(this.attachedDatabase, [this._alias]);
+  $TagStagingTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _tagNameMeta = const VerificationMeta(
+    'tagName',
+  );
+  @override
+  late final GeneratedColumn<String> tagName = GeneratedColumn<String>(
+    'tag_name',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _categoryMeta = const VerificationMeta(
+    'category',
+  );
+  @override
+  late final GeneratedColumn<String> category = GeneratedColumn<String>(
+    'category',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _sortingOrderMeta = const VerificationMeta(
+    'sortingOrder',
+  );
+  @override
+  late final GeneratedColumn<int> sortingOrder = GeneratedColumn<int>(
+    'sorting_order',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _notesMeta = const VerificationMeta('notes');
+  @override
+  late final GeneratedColumn<String> notes = GeneratedColumn<String>(
+    'notes',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _scoreMeta = const VerificationMeta('score');
+  @override
+  late final GeneratedColumn<int> score = GeneratedColumn<int>(
+    'score',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    tagName,
+    category,
+    sortingOrder,
+    notes,
+    score,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'tag_staging_table';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<TagStagingTableData> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('tag_name')) {
+      context.handle(
+        _tagNameMeta,
+        tagName.isAcceptableOrUnknown(data['tag_name']!, _tagNameMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_tagNameMeta);
+    }
+    if (data.containsKey('category')) {
+      context.handle(
+        _categoryMeta,
+        category.isAcceptableOrUnknown(data['category']!, _categoryMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_categoryMeta);
+    }
+    if (data.containsKey('sorting_order')) {
+      context.handle(
+        _sortingOrderMeta,
+        sortingOrder.isAcceptableOrUnknown(
+          data['sorting_order']!,
+          _sortingOrderMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_sortingOrderMeta);
+    }
+    if (data.containsKey('notes')) {
+      context.handle(
+        _notesMeta,
+        notes.isAcceptableOrUnknown(data['notes']!, _notesMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_notesMeta);
+    }
+    if (data.containsKey('score')) {
+      context.handle(
+        _scoreMeta,
+        score.isAcceptableOrUnknown(data['score']!, _scoreMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_scoreMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => const {};
+  @override
+  TagStagingTableData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return TagStagingTableData(
+      tagName: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}tag_name'],
+      )!,
+      category: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}category'],
+      )!,
+      sortingOrder: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}sorting_order'],
+      )!,
+      notes: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}notes'],
+      )!,
+      score: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}score'],
+      )!,
+    );
+  }
+
+  @override
+  $TagStagingTableTable createAlias(String alias) {
+    return $TagStagingTableTable(attachedDatabase, alias);
+  }
+}
+
+class TagStagingTableData extends DataClass
+    implements Insertable<TagStagingTableData> {
+  final String tagName;
+  final String category;
+  final int sortingOrder;
+  final String notes;
+  final int score;
+  const TagStagingTableData({
+    required this.tagName,
+    required this.category,
+    required this.sortingOrder,
+    required this.notes,
+    required this.score,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['tag_name'] = Variable<String>(tagName);
+    map['category'] = Variable<String>(category);
+    map['sorting_order'] = Variable<int>(sortingOrder);
+    map['notes'] = Variable<String>(notes);
+    map['score'] = Variable<int>(score);
+    return map;
+  }
+
+  TagStagingTableCompanion toCompanion(bool nullToAbsent) {
+    return TagStagingTableCompanion(
+      tagName: Value(tagName),
+      category: Value(category),
+      sortingOrder: Value(sortingOrder),
+      notes: Value(notes),
+      score: Value(score),
+    );
+  }
+
+  factory TagStagingTableData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return TagStagingTableData(
+      tagName: serializer.fromJson<String>(json['tagName']),
+      category: serializer.fromJson<String>(json['category']),
+      sortingOrder: serializer.fromJson<int>(json['sortingOrder']),
+      notes: serializer.fromJson<String>(json['notes']),
+      score: serializer.fromJson<int>(json['score']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'tagName': serializer.toJson<String>(tagName),
+      'category': serializer.toJson<String>(category),
+      'sortingOrder': serializer.toJson<int>(sortingOrder),
+      'notes': serializer.toJson<String>(notes),
+      'score': serializer.toJson<int>(score),
+    };
+  }
+
+  TagStagingTableData copyWith({
+    String? tagName,
+    String? category,
+    int? sortingOrder,
+    String? notes,
+    int? score,
+  }) => TagStagingTableData(
+    tagName: tagName ?? this.tagName,
+    category: category ?? this.category,
+    sortingOrder: sortingOrder ?? this.sortingOrder,
+    notes: notes ?? this.notes,
+    score: score ?? this.score,
+  );
+  TagStagingTableData copyWithCompanion(TagStagingTableCompanion data) {
+    return TagStagingTableData(
+      tagName: data.tagName.present ? data.tagName.value : this.tagName,
+      category: data.category.present ? data.category.value : this.category,
+      sortingOrder: data.sortingOrder.present
+          ? data.sortingOrder.value
+          : this.sortingOrder,
+      notes: data.notes.present ? data.notes.value : this.notes,
+      score: data.score.present ? data.score.value : this.score,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('TagStagingTableData(')
+          ..write('tagName: $tagName, ')
+          ..write('category: $category, ')
+          ..write('sortingOrder: $sortingOrder, ')
+          ..write('notes: $notes, ')
+          ..write('score: $score')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(tagName, category, sortingOrder, notes, score);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is TagStagingTableData &&
+          other.tagName == this.tagName &&
+          other.category == this.category &&
+          other.sortingOrder == this.sortingOrder &&
+          other.notes == this.notes &&
+          other.score == this.score);
+}
+
+class TagStagingTableCompanion extends UpdateCompanion<TagStagingTableData> {
+  final Value<String> tagName;
+  final Value<String> category;
+  final Value<int> sortingOrder;
+  final Value<String> notes;
+  final Value<int> score;
+  final Value<int> rowid;
+  const TagStagingTableCompanion({
+    this.tagName = const Value.absent(),
+    this.category = const Value.absent(),
+    this.sortingOrder = const Value.absent(),
+    this.notes = const Value.absent(),
+    this.score = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  TagStagingTableCompanion.insert({
+    required String tagName,
+    required String category,
+    required int sortingOrder,
+    required String notes,
+    required int score,
+    this.rowid = const Value.absent(),
+  }) : tagName = Value(tagName),
+       category = Value(category),
+       sortingOrder = Value(sortingOrder),
+       notes = Value(notes),
+       score = Value(score);
+  static Insertable<TagStagingTableData> custom({
+    Expression<String>? tagName,
+    Expression<String>? category,
+    Expression<int>? sortingOrder,
+    Expression<String>? notes,
+    Expression<int>? score,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (tagName != null) 'tag_name': tagName,
+      if (category != null) 'category': category,
+      if (sortingOrder != null) 'sorting_order': sortingOrder,
+      if (notes != null) 'notes': notes,
+      if (score != null) 'score': score,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  TagStagingTableCompanion copyWith({
+    Value<String>? tagName,
+    Value<String>? category,
+    Value<int>? sortingOrder,
+    Value<String>? notes,
+    Value<int>? score,
+    Value<int>? rowid,
+  }) {
+    return TagStagingTableCompanion(
+      tagName: tagName ?? this.tagName,
+      category: category ?? this.category,
+      sortingOrder: sortingOrder ?? this.sortingOrder,
+      notes: notes ?? this.notes,
+      score: score ?? this.score,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (tagName.present) {
+      map['tag_name'] = Variable<String>(tagName.value);
+    }
+    if (category.present) {
+      map['category'] = Variable<String>(category.value);
+    }
+    if (sortingOrder.present) {
+      map['sorting_order'] = Variable<int>(sortingOrder.value);
+    }
+    if (notes.present) {
+      map['notes'] = Variable<String>(notes.value);
+    }
+    if (score.present) {
+      map['score'] = Variable<int>(score.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('TagStagingTableCompanion(')
+          ..write('tagName: $tagName, ')
+          ..write('category: $category, ')
+          ..write('sortingOrder: $sortingOrder, ')
+          ..write('notes: $notes, ')
+          ..write('score: $score, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $TermStagingTableTable extends TermStagingTable
+    with TableInfo<$TermStagingTableTable, TermStagingTableData> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $TermStagingTableTable(this.attachedDatabase, [this._alias]);
   static const VerificationMeta _localIdMeta = const VerificationMeta(
     'localId',
   );
@@ -119,7 +489,7 @@ class $StagingTermTableTable extends StagingTermTable
         true,
         type: DriftSqlType.blob,
         requiredDuringInsert: false,
-      ).withConverter<String?>($StagingTermTableTable.$converteroriginalJsonn);
+      ).withConverter<String?>($TermStagingTableTable.$converteroriginalJsonn);
   @override
   List<GeneratedColumn> get $columns => [
     localId,
@@ -137,10 +507,10 @@ class $StagingTermTableTable extends StagingTermTable
   String get aliasedName => _alias ?? actualTableName;
   @override
   String get actualTableName => $name;
-  static const String $name = 'staging_term_table';
+  static const String $name = 'term_staging_table';
   @override
   VerificationContext validateIntegrity(
-    Insertable<StagingTermTableData> instance, {
+    Insertable<TermStagingTableData> instance, {
     bool isInserting = false,
   }) {
     final context = VerificationContext();
@@ -225,9 +595,9 @@ class $StagingTermTableTable extends StagingTermTable
   @override
   Set<GeneratedColumn> get $primaryKey => {localId};
   @override
-  StagingTermTableData map(Map<String, dynamic> data, {String? tablePrefix}) {
+  TermStagingTableData map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return StagingTermTableData(
+    return TermStagingTableData(
       localId: attachedDatabase.typeMapping.read(
         DriftSqlType.int,
         data['${effectivePrefix}local_id'],
@@ -264,7 +634,7 @@ class $StagingTermTableTable extends StagingTermTable
         DriftSqlType.int,
         data['${effectivePrefix}sequence_number'],
       )!,
-      originalJson: $StagingTermTableTable.$converteroriginalJsonn.fromSql(
+      originalJson: $TermStagingTableTable.$converteroriginalJsonn.fromSql(
         attachedDatabase.typeMapping.read(
           DriftSqlType.blob,
           data['${effectivePrefix}original_json'],
@@ -274,8 +644,8 @@ class $StagingTermTableTable extends StagingTermTable
   }
 
   @override
-  $StagingTermTableTable createAlias(String alias) {
-    return $StagingTermTableTable(attachedDatabase, alias);
+  $TermStagingTableTable createAlias(String alias) {
+    return $TermStagingTableTable(attachedDatabase, alias);
   }
 
   static TypeConverter<String, Uint8List> $converteroriginalJson =
@@ -284,8 +654,8 @@ class $StagingTermTableTable extends StagingTermTable
       NullAwareTypeConverter.wrap($converteroriginalJson);
 }
 
-class StagingTermTableData extends DataClass
-    implements Insertable<StagingTermTableData> {
+class TermStagingTableData extends DataClass
+    implements Insertable<TermStagingTableData> {
   final int localId;
   final String term;
   final String reading;
@@ -296,7 +666,7 @@ class StagingTermTableData extends DataClass
   final int popularity;
   final int sequenceNumber;
   final String? originalJson;
-  const StagingTermTableData({
+  const TermStagingTableData({
     required this.localId,
     required this.term,
     required this.reading,
@@ -330,14 +700,14 @@ class StagingTermTableData extends DataClass
     map['sequence_number'] = Variable<int>(sequenceNumber);
     if (!nullToAbsent || originalJson != null) {
       map['original_json'] = Variable<Uint8List>(
-        $StagingTermTableTable.$converteroriginalJsonn.toSql(originalJson),
+        $TermStagingTableTable.$converteroriginalJsonn.toSql(originalJson),
       );
     }
     return map;
   }
 
-  StagingTermTableCompanion toCompanion(bool nullToAbsent) {
-    return StagingTermTableCompanion(
+  TermStagingTableCompanion toCompanion(bool nullToAbsent) {
+    return TermStagingTableCompanion(
       localId: Value(localId),
       term: Value(term),
       reading: Value(reading),
@@ -361,12 +731,12 @@ class StagingTermTableData extends DataClass
     );
   }
 
-  factory StagingTermTableData.fromJson(
+  factory TermStagingTableData.fromJson(
     Map<String, dynamic> json, {
     ValueSerializer? serializer,
   }) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
-    return StagingTermTableData(
+    return TermStagingTableData(
       localId: serializer.fromJson<int>(json['localId']),
       term: serializer.fromJson<String>(json['term']),
       reading: serializer.fromJson<String>(json['reading']),
@@ -400,7 +770,7 @@ class StagingTermTableData extends DataClass
     };
   }
 
-  StagingTermTableData copyWith({
+  TermStagingTableData copyWith({
     int? localId,
     String? term,
     String? reading,
@@ -411,7 +781,7 @@ class StagingTermTableData extends DataClass
     int? popularity,
     int? sequenceNumber,
     Value<String?> originalJson = const Value.absent(),
-  }) => StagingTermTableData(
+  }) => TermStagingTableData(
     localId: localId ?? this.localId,
     term: term ?? this.term,
     reading: reading ?? this.reading,
@@ -429,8 +799,8 @@ class StagingTermTableData extends DataClass
     sequenceNumber: sequenceNumber ?? this.sequenceNumber,
     originalJson: originalJson.present ? originalJson.value : this.originalJson,
   );
-  StagingTermTableData copyWithCompanion(StagingTermTableCompanion data) {
-    return StagingTermTableData(
+  TermStagingTableData copyWithCompanion(TermStagingTableCompanion data) {
+    return TermStagingTableData(
       localId: data.localId.present ? data.localId.value : this.localId,
       term: data.term.present ? data.term.value : this.term,
       reading: data.reading.present ? data.reading.value : this.reading,
@@ -460,7 +830,7 @@ class StagingTermTableData extends DataClass
 
   @override
   String toString() {
-    return (StringBuffer('StagingTermTableData(')
+    return (StringBuffer('TermStagingTableData(')
           ..write('localId: $localId, ')
           ..write('term: $term, ')
           ..write('reading: $reading, ')
@@ -491,7 +861,7 @@ class StagingTermTableData extends DataClass
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is StagingTermTableData &&
+      (other is TermStagingTableData &&
           other.localId == this.localId &&
           other.term == this.term &&
           other.reading == this.reading &&
@@ -504,7 +874,7 @@ class StagingTermTableData extends DataClass
           other.originalJson == this.originalJson);
 }
 
-class StagingTermTableCompanion extends UpdateCompanion<StagingTermTableData> {
+class TermStagingTableCompanion extends UpdateCompanion<TermStagingTableData> {
   final Value<int> localId;
   final Value<String> term;
   final Value<String> reading;
@@ -515,7 +885,7 @@ class StagingTermTableCompanion extends UpdateCompanion<StagingTermTableData> {
   final Value<int> popularity;
   final Value<int> sequenceNumber;
   final Value<String?> originalJson;
-  const StagingTermTableCompanion({
+  const TermStagingTableCompanion({
     this.localId = const Value.absent(),
     this.term = const Value.absent(),
     this.reading = const Value.absent(),
@@ -527,7 +897,7 @@ class StagingTermTableCompanion extends UpdateCompanion<StagingTermTableData> {
     this.sequenceNumber = const Value.absent(),
     this.originalJson = const Value.absent(),
   });
-  StagingTermTableCompanion.insert({
+  TermStagingTableCompanion.insert({
     this.localId = const Value.absent(),
     required String term,
     required String reading,
@@ -542,7 +912,7 @@ class StagingTermTableCompanion extends UpdateCompanion<StagingTermTableData> {
        reading = Value(reading),
        popularity = Value(popularity),
        sequenceNumber = Value(sequenceNumber);
-  static Insertable<StagingTermTableData> custom({
+  static Insertable<TermStagingTableData> custom({
     Expression<int>? localId,
     Expression<String>? term,
     Expression<String>? reading,
@@ -569,7 +939,7 @@ class StagingTermTableCompanion extends UpdateCompanion<StagingTermTableData> {
     });
   }
 
-  StagingTermTableCompanion copyWith({
+  TermStagingTableCompanion copyWith({
     Value<int>? localId,
     Value<String>? term,
     Value<String>? reading,
@@ -581,7 +951,7 @@ class StagingTermTableCompanion extends UpdateCompanion<StagingTermTableData> {
     Value<int>? sequenceNumber,
     Value<String?>? originalJson,
   }) {
-    return StagingTermTableCompanion(
+    return TermStagingTableCompanion(
       localId: localId ?? this.localId,
       term: term ?? this.term,
       reading: reading ?? this.reading,
@@ -629,7 +999,7 @@ class StagingTermTableCompanion extends UpdateCompanion<StagingTermTableData> {
     }
     if (originalJson.present) {
       map['original_json'] = Variable<Uint8List>(
-        $StagingTermTableTable.$converteroriginalJsonn.toSql(
+        $TermStagingTableTable.$converteroriginalJsonn.toSql(
           originalJson.value,
         ),
       );
@@ -639,7 +1009,7 @@ class StagingTermTableCompanion extends UpdateCompanion<StagingTermTableData> {
 
   @override
   String toString() {
-    return (StringBuffer('StagingTermTableCompanion(')
+    return (StringBuffer('TermStagingTableCompanion(')
           ..write('localId: $localId, ')
           ..write('term: $term, ')
           ..write('reading: $reading, ')
@@ -655,12 +1025,16 @@ class StagingTermTableCompanion extends UpdateCompanion<StagingTermTableData> {
   }
 }
 
-class $StagingDefinitionTableTable extends StagingDefinitionTable
-    with TableInfo<$StagingDefinitionTableTable, StagingDefinitionTableData> {
+class $TermDefinitionStagingTableTable extends TermDefinitionStagingTable
+    with
+        TableInfo<
+          $TermDefinitionStagingTableTable,
+          TermDefinitionStagingTableData
+        > {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
-  $StagingDefinitionTableTable(this.attachedDatabase, [this._alias]);
+  $TermDefinitionStagingTableTable(this.attachedDatabase, [this._alias]);
   static const VerificationMeta _termLocalIdMeta = const VerificationMeta(
     'termLocalId',
   );
@@ -689,10 +1063,10 @@ class $StagingDefinitionTableTable extends StagingDefinitionTable
   String get aliasedName => _alias ?? actualTableName;
   @override
   String get actualTableName => $name;
-  static const String $name = 'staging_definition_table';
+  static const String $name = 'term_definition_staging_table';
   @override
   VerificationContext validateIntegrity(
-    Insertable<StagingDefinitionTableData> instance, {
+    Insertable<TermDefinitionStagingTableData> instance, {
     bool isInserting = false,
   }) {
     final context = VerificationContext();
@@ -722,12 +1096,12 @@ class $StagingDefinitionTableTable extends StagingDefinitionTable
   @override
   Set<GeneratedColumn> get $primaryKey => const {};
   @override
-  StagingDefinitionTableData map(
+  TermDefinitionStagingTableData map(
     Map<String, dynamic> data, {
     String? tablePrefix,
   }) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return StagingDefinitionTableData(
+    return TermDefinitionStagingTableData(
       termLocalId: attachedDatabase.typeMapping.read(
         DriftSqlType.int,
         data['${effectivePrefix}term_local_id'],
@@ -740,16 +1114,16 @@ class $StagingDefinitionTableTable extends StagingDefinitionTable
   }
 
   @override
-  $StagingDefinitionTableTable createAlias(String alias) {
-    return $StagingDefinitionTableTable(attachedDatabase, alias);
+  $TermDefinitionStagingTableTable createAlias(String alias) {
+    return $TermDefinitionStagingTableTable(attachedDatabase, alias);
   }
 }
 
-class StagingDefinitionTableData extends DataClass
-    implements Insertable<StagingDefinitionTableData> {
+class TermDefinitionStagingTableData extends DataClass
+    implements Insertable<TermDefinitionStagingTableData> {
   final int termLocalId;
   final String definition;
-  const StagingDefinitionTableData({
+  const TermDefinitionStagingTableData({
     required this.termLocalId,
     required this.definition,
   });
@@ -761,19 +1135,19 @@ class StagingDefinitionTableData extends DataClass
     return map;
   }
 
-  StagingDefinitionTableCompanion toCompanion(bool nullToAbsent) {
-    return StagingDefinitionTableCompanion(
+  TermDefinitionStagingTableCompanion toCompanion(bool nullToAbsent) {
+    return TermDefinitionStagingTableCompanion(
       termLocalId: Value(termLocalId),
       definition: Value(definition),
     );
   }
 
-  factory StagingDefinitionTableData.fromJson(
+  factory TermDefinitionStagingTableData.fromJson(
     Map<String, dynamic> json, {
     ValueSerializer? serializer,
   }) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
-    return StagingDefinitionTableData(
+    return TermDefinitionStagingTableData(
       termLocalId: serializer.fromJson<int>(json['termLocalId']),
       definition: serializer.fromJson<String>(json['definition']),
     );
@@ -787,15 +1161,17 @@ class StagingDefinitionTableData extends DataClass
     };
   }
 
-  StagingDefinitionTableData copyWith({int? termLocalId, String? definition}) =>
-      StagingDefinitionTableData(
-        termLocalId: termLocalId ?? this.termLocalId,
-        definition: definition ?? this.definition,
-      );
-  StagingDefinitionTableData copyWithCompanion(
-    StagingDefinitionTableCompanion data,
+  TermDefinitionStagingTableData copyWith({
+    int? termLocalId,
+    String? definition,
+  }) => TermDefinitionStagingTableData(
+    termLocalId: termLocalId ?? this.termLocalId,
+    definition: definition ?? this.definition,
+  );
+  TermDefinitionStagingTableData copyWithCompanion(
+    TermDefinitionStagingTableCompanion data,
   ) {
-    return StagingDefinitionTableData(
+    return TermDefinitionStagingTableData(
       termLocalId: data.termLocalId.present
           ? data.termLocalId.value
           : this.termLocalId,
@@ -807,7 +1183,7 @@ class StagingDefinitionTableData extends DataClass
 
   @override
   String toString() {
-    return (StringBuffer('StagingDefinitionTableData(')
+    return (StringBuffer('TermDefinitionStagingTableData(')
           ..write('termLocalId: $termLocalId, ')
           ..write('definition: $definition')
           ..write(')'))
@@ -819,28 +1195,28 @@ class StagingDefinitionTableData extends DataClass
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is StagingDefinitionTableData &&
+      (other is TermDefinitionStagingTableData &&
           other.termLocalId == this.termLocalId &&
           other.definition == this.definition);
 }
 
-class StagingDefinitionTableCompanion
-    extends UpdateCompanion<StagingDefinitionTableData> {
+class TermDefinitionStagingTableCompanion
+    extends UpdateCompanion<TermDefinitionStagingTableData> {
   final Value<int> termLocalId;
   final Value<String> definition;
   final Value<int> rowid;
-  const StagingDefinitionTableCompanion({
+  const TermDefinitionStagingTableCompanion({
     this.termLocalId = const Value.absent(),
     this.definition = const Value.absent(),
     this.rowid = const Value.absent(),
   });
-  StagingDefinitionTableCompanion.insert({
+  TermDefinitionStagingTableCompanion.insert({
     required int termLocalId,
     required String definition,
     this.rowid = const Value.absent(),
   }) : termLocalId = Value(termLocalId),
        definition = Value(definition);
-  static Insertable<StagingDefinitionTableData> custom({
+  static Insertable<TermDefinitionStagingTableData> custom({
     Expression<int>? termLocalId,
     Expression<String>? definition,
     Expression<int>? rowid,
@@ -852,12 +1228,12 @@ class StagingDefinitionTableCompanion
     });
   }
 
-  StagingDefinitionTableCompanion copyWith({
+  TermDefinitionStagingTableCompanion copyWith({
     Value<int>? termLocalId,
     Value<String>? definition,
     Value<int>? rowid,
   }) {
-    return StagingDefinitionTableCompanion(
+    return TermDefinitionStagingTableCompanion(
       termLocalId: termLocalId ?? this.termLocalId,
       definition: definition ?? this.definition,
       rowid: rowid ?? this.rowid,
@@ -881,7 +1257,7 @@ class StagingDefinitionTableCompanion
 
   @override
   String toString() {
-    return (StringBuffer('StagingDefinitionTableCompanion(')
+    return (StringBuffer('TermDefinitionStagingTableCompanion(')
           ..write('termLocalId: $termLocalId, ')
           ..write('definition: $definition, ')
           ..write('rowid: $rowid')
@@ -890,12 +1266,12 @@ class StagingDefinitionTableCompanion
   }
 }
 
-class $StagingTagTableTable extends StagingTagTable
-    with TableInfo<$StagingTagTableTable, StagingTagTableData> {
+class $TermTagStagingTableTable extends TermTagStagingTable
+    with TableInfo<$TermTagStagingTableTable, TermTagStagingTableData> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
-  $StagingTagTableTable(this.attachedDatabase, [this._alias]);
+  $TermTagStagingTableTable(this.attachedDatabase, [this._alias]);
   static const VerificationMeta _termLocalIdMeta = const VerificationMeta(
     'termLocalId',
   );
@@ -938,10 +1314,10 @@ class $StagingTagTableTable extends StagingTagTable
   String get aliasedName => _alias ?? actualTableName;
   @override
   String get actualTableName => $name;
-  static const String $name = 'staging_tag_table';
+  static const String $name = 'term_tag_staging_table';
   @override
   VerificationContext validateIntegrity(
-    Insertable<StagingTagTableData> instance, {
+    Insertable<TermTagStagingTableData> instance, {
     bool isInserting = false,
   }) {
     final context = VerificationContext();
@@ -982,9 +1358,12 @@ class $StagingTagTableTable extends StagingTagTable
   @override
   Set<GeneratedColumn> get $primaryKey => const {};
   @override
-  StagingTagTableData map(Map<String, dynamic> data, {String? tablePrefix}) {
+  TermTagStagingTableData map(
+    Map<String, dynamic> data, {
+    String? tablePrefix,
+  }) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return StagingTagTableData(
+    return TermTagStagingTableData(
       termLocalId: attachedDatabase.typeMapping.read(
         DriftSqlType.int,
         data['${effectivePrefix}term_local_id'],
@@ -1001,17 +1380,17 @@ class $StagingTagTableTable extends StagingTagTable
   }
 
   @override
-  $StagingTagTableTable createAlias(String alias) {
-    return $StagingTagTableTable(attachedDatabase, alias);
+  $TermTagStagingTableTable createAlias(String alias) {
+    return $TermTagStagingTableTable(attachedDatabase, alias);
   }
 }
 
-class StagingTagTableData extends DataClass
-    implements Insertable<StagingTagTableData> {
+class TermTagStagingTableData extends DataClass
+    implements Insertable<TermTagStagingTableData> {
   final int termLocalId;
   final String tagName;
   final bool isDefinitionTag;
-  const StagingTagTableData({
+  const TermTagStagingTableData({
     required this.termLocalId,
     required this.tagName,
     required this.isDefinitionTag,
@@ -1025,20 +1404,20 @@ class StagingTagTableData extends DataClass
     return map;
   }
 
-  StagingTagTableCompanion toCompanion(bool nullToAbsent) {
-    return StagingTagTableCompanion(
+  TermTagStagingTableCompanion toCompanion(bool nullToAbsent) {
+    return TermTagStagingTableCompanion(
       termLocalId: Value(termLocalId),
       tagName: Value(tagName),
       isDefinitionTag: Value(isDefinitionTag),
     );
   }
 
-  factory StagingTagTableData.fromJson(
+  factory TermTagStagingTableData.fromJson(
     Map<String, dynamic> json, {
     ValueSerializer? serializer,
   }) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
-    return StagingTagTableData(
+    return TermTagStagingTableData(
       termLocalId: serializer.fromJson<int>(json['termLocalId']),
       tagName: serializer.fromJson<String>(json['tagName']),
       isDefinitionTag: serializer.fromJson<bool>(json['isDefinitionTag']),
@@ -1054,17 +1433,17 @@ class StagingTagTableData extends DataClass
     };
   }
 
-  StagingTagTableData copyWith({
+  TermTagStagingTableData copyWith({
     int? termLocalId,
     String? tagName,
     bool? isDefinitionTag,
-  }) => StagingTagTableData(
+  }) => TermTagStagingTableData(
     termLocalId: termLocalId ?? this.termLocalId,
     tagName: tagName ?? this.tagName,
     isDefinitionTag: isDefinitionTag ?? this.isDefinitionTag,
   );
-  StagingTagTableData copyWithCompanion(StagingTagTableCompanion data) {
-    return StagingTagTableData(
+  TermTagStagingTableData copyWithCompanion(TermTagStagingTableCompanion data) {
+    return TermTagStagingTableData(
       termLocalId: data.termLocalId.present
           ? data.termLocalId.value
           : this.termLocalId,
@@ -1077,7 +1456,7 @@ class StagingTagTableData extends DataClass
 
   @override
   String toString() {
-    return (StringBuffer('StagingTagTableData(')
+    return (StringBuffer('TermTagStagingTableData(')
           ..write('termLocalId: $termLocalId, ')
           ..write('tagName: $tagName, ')
           ..write('isDefinitionTag: $isDefinitionTag')
@@ -1090,24 +1469,25 @@ class StagingTagTableData extends DataClass
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is StagingTagTableData &&
+      (other is TermTagStagingTableData &&
           other.termLocalId == this.termLocalId &&
           other.tagName == this.tagName &&
           other.isDefinitionTag == this.isDefinitionTag);
 }
 
-class StagingTagTableCompanion extends UpdateCompanion<StagingTagTableData> {
+class TermTagStagingTableCompanion
+    extends UpdateCompanion<TermTagStagingTableData> {
   final Value<int> termLocalId;
   final Value<String> tagName;
   final Value<bool> isDefinitionTag;
   final Value<int> rowid;
-  const StagingTagTableCompanion({
+  const TermTagStagingTableCompanion({
     this.termLocalId = const Value.absent(),
     this.tagName = const Value.absent(),
     this.isDefinitionTag = const Value.absent(),
     this.rowid = const Value.absent(),
   });
-  StagingTagTableCompanion.insert({
+  TermTagStagingTableCompanion.insert({
     required int termLocalId,
     required String tagName,
     required bool isDefinitionTag,
@@ -1115,7 +1495,7 @@ class StagingTagTableCompanion extends UpdateCompanion<StagingTagTableData> {
   }) : termLocalId = Value(termLocalId),
        tagName = Value(tagName),
        isDefinitionTag = Value(isDefinitionTag);
-  static Insertable<StagingTagTableData> custom({
+  static Insertable<TermTagStagingTableData> custom({
     Expression<int>? termLocalId,
     Expression<String>? tagName,
     Expression<bool>? isDefinitionTag,
@@ -1129,13 +1509,13 @@ class StagingTagTableCompanion extends UpdateCompanion<StagingTagTableData> {
     });
   }
 
-  StagingTagTableCompanion copyWith({
+  TermTagStagingTableCompanion copyWith({
     Value<int>? termLocalId,
     Value<String>? tagName,
     Value<bool>? isDefinitionTag,
     Value<int>? rowid,
   }) {
-    return StagingTagTableCompanion(
+    return TermTagStagingTableCompanion(
       termLocalId: termLocalId ?? this.termLocalId,
       tagName: tagName ?? this.tagName,
       isDefinitionTag: isDefinitionTag ?? this.isDefinitionTag,
@@ -1163,7 +1543,7 @@ class StagingTagTableCompanion extends UpdateCompanion<StagingTagTableData> {
 
   @override
   String toString() {
-    return (StringBuffer('StagingTagTableCompanion(')
+    return (StringBuffer('TermTagStagingTableCompanion(')
           ..write('termLocalId: $termLocalId, ')
           ..write('tagName: $tagName, ')
           ..write('isDefinitionTag: $isDefinitionTag, ')
@@ -1173,12 +1553,12 @@ class StagingTagTableCompanion extends UpdateCompanion<StagingTagTableData> {
   }
 }
 
-class $StagingRuleTableTable extends StagingRuleTable
-    with TableInfo<$StagingRuleTableTable, StagingRuleTableData> {
+class $TermRuleStagingTableTable extends TermRuleStagingTable
+    with TableInfo<$TermRuleStagingTableTable, TermRuleStagingTableData> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
-  $StagingRuleTableTable(this.attachedDatabase, [this._alias]);
+  $TermRuleStagingTableTable(this.attachedDatabase, [this._alias]);
   static const VerificationMeta _termLocalIdMeta = const VerificationMeta(
     'termLocalId',
   );
@@ -1205,10 +1585,10 @@ class $StagingRuleTableTable extends StagingRuleTable
   String get aliasedName => _alias ?? actualTableName;
   @override
   String get actualTableName => $name;
-  static const String $name = 'staging_rule_table';
+  static const String $name = 'term_rule_staging_table';
   @override
   VerificationContext validateIntegrity(
-    Insertable<StagingRuleTableData> instance, {
+    Insertable<TermRuleStagingTableData> instance, {
     bool isInserting = false,
   }) {
     final context = VerificationContext();
@@ -1238,9 +1618,12 @@ class $StagingRuleTableTable extends StagingRuleTable
   @override
   Set<GeneratedColumn> get $primaryKey => const {};
   @override
-  StagingRuleTableData map(Map<String, dynamic> data, {String? tablePrefix}) {
+  TermRuleStagingTableData map(
+    Map<String, dynamic> data, {
+    String? tablePrefix,
+  }) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return StagingRuleTableData(
+    return TermRuleStagingTableData(
       termLocalId: attachedDatabase.typeMapping.read(
         DriftSqlType.int,
         data['${effectivePrefix}term_local_id'],
@@ -1253,16 +1636,19 @@ class $StagingRuleTableTable extends StagingRuleTable
   }
 
   @override
-  $StagingRuleTableTable createAlias(String alias) {
-    return $StagingRuleTableTable(attachedDatabase, alias);
+  $TermRuleStagingTableTable createAlias(String alias) {
+    return $TermRuleStagingTableTable(attachedDatabase, alias);
   }
 }
 
-class StagingRuleTableData extends DataClass
-    implements Insertable<StagingRuleTableData> {
+class TermRuleStagingTableData extends DataClass
+    implements Insertable<TermRuleStagingTableData> {
   final int termLocalId;
   final String ruleId;
-  const StagingRuleTableData({required this.termLocalId, required this.ruleId});
+  const TermRuleStagingTableData({
+    required this.termLocalId,
+    required this.ruleId,
+  });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -1271,19 +1657,19 @@ class StagingRuleTableData extends DataClass
     return map;
   }
 
-  StagingRuleTableCompanion toCompanion(bool nullToAbsent) {
-    return StagingRuleTableCompanion(
+  TermRuleStagingTableCompanion toCompanion(bool nullToAbsent) {
+    return TermRuleStagingTableCompanion(
       termLocalId: Value(termLocalId),
       ruleId: Value(ruleId),
     );
   }
 
-  factory StagingRuleTableData.fromJson(
+  factory TermRuleStagingTableData.fromJson(
     Map<String, dynamic> json, {
     ValueSerializer? serializer,
   }) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
-    return StagingRuleTableData(
+    return TermRuleStagingTableData(
       termLocalId: serializer.fromJson<int>(json['termLocalId']),
       ruleId: serializer.fromJson<String>(json['ruleId']),
     );
@@ -1297,13 +1683,15 @@ class StagingRuleTableData extends DataClass
     };
   }
 
-  StagingRuleTableData copyWith({int? termLocalId, String? ruleId}) =>
-      StagingRuleTableData(
+  TermRuleStagingTableData copyWith({int? termLocalId, String? ruleId}) =>
+      TermRuleStagingTableData(
         termLocalId: termLocalId ?? this.termLocalId,
         ruleId: ruleId ?? this.ruleId,
       );
-  StagingRuleTableData copyWithCompanion(StagingRuleTableCompanion data) {
-    return StagingRuleTableData(
+  TermRuleStagingTableData copyWithCompanion(
+    TermRuleStagingTableCompanion data,
+  ) {
+    return TermRuleStagingTableData(
       termLocalId: data.termLocalId.present
           ? data.termLocalId.value
           : this.termLocalId,
@@ -1313,7 +1701,7 @@ class StagingRuleTableData extends DataClass
 
   @override
   String toString() {
-    return (StringBuffer('StagingRuleTableData(')
+    return (StringBuffer('TermRuleStagingTableData(')
           ..write('termLocalId: $termLocalId, ')
           ..write('ruleId: $ruleId')
           ..write(')'))
@@ -1325,27 +1713,28 @@ class StagingRuleTableData extends DataClass
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is StagingRuleTableData &&
+      (other is TermRuleStagingTableData &&
           other.termLocalId == this.termLocalId &&
           other.ruleId == this.ruleId);
 }
 
-class StagingRuleTableCompanion extends UpdateCompanion<StagingRuleTableData> {
+class TermRuleStagingTableCompanion
+    extends UpdateCompanion<TermRuleStagingTableData> {
   final Value<int> termLocalId;
   final Value<String> ruleId;
   final Value<int> rowid;
-  const StagingRuleTableCompanion({
+  const TermRuleStagingTableCompanion({
     this.termLocalId = const Value.absent(),
     this.ruleId = const Value.absent(),
     this.rowid = const Value.absent(),
   });
-  StagingRuleTableCompanion.insert({
+  TermRuleStagingTableCompanion.insert({
     required int termLocalId,
     required String ruleId,
     this.rowid = const Value.absent(),
   }) : termLocalId = Value(termLocalId),
        ruleId = Value(ruleId);
-  static Insertable<StagingRuleTableData> custom({
+  static Insertable<TermRuleStagingTableData> custom({
     Expression<int>? termLocalId,
     Expression<String>? ruleId,
     Expression<int>? rowid,
@@ -1357,12 +1746,12 @@ class StagingRuleTableCompanion extends UpdateCompanion<StagingRuleTableData> {
     });
   }
 
-  StagingRuleTableCompanion copyWith({
+  TermRuleStagingTableCompanion copyWith({
     Value<int>? termLocalId,
     Value<String>? ruleId,
     Value<int>? rowid,
   }) {
-    return StagingRuleTableCompanion(
+    return TermRuleStagingTableCompanion(
       termLocalId: termLocalId ?? this.termLocalId,
       ruleId: ruleId ?? this.ruleId,
       rowid: rowid ?? this.rowid,
@@ -1386,7 +1775,7 @@ class StagingRuleTableCompanion extends UpdateCompanion<StagingRuleTableData> {
 
   @override
   String toString() {
-    return (StringBuffer('StagingRuleTableCompanion(')
+    return (StringBuffer('TermRuleStagingTableCompanion(')
           ..write('termLocalId: $termLocalId, ')
           ..write('ruleId: $ruleId, ')
           ..write('rowid: $rowid')
@@ -1398,31 +1787,245 @@ class StagingRuleTableCompanion extends UpdateCompanion<StagingRuleTableData> {
 abstract class _$StagingDatabase extends GeneratedDatabase {
   _$StagingDatabase(QueryExecutor e) : super(e);
   $StagingDatabaseManager get managers => $StagingDatabaseManager(this);
-  late final $StagingTermTableTable stagingTermTable = $StagingTermTableTable(
+  late final $TagStagingTableTable tagStagingTable = $TagStagingTableTable(
     this,
   );
-  late final $StagingDefinitionTableTable stagingDefinitionTable =
-      $StagingDefinitionTableTable(this);
-  late final $StagingTagTableTable stagingTagTable = $StagingTagTableTable(
+  late final $TermStagingTableTable termStagingTable = $TermStagingTableTable(
     this,
   );
-  late final $StagingRuleTableTable stagingRuleTable = $StagingRuleTableTable(
-    this,
-  );
+  late final $TermDefinitionStagingTableTable termDefinitionStagingTable =
+      $TermDefinitionStagingTableTable(this);
+  late final $TermTagStagingTableTable termTagStagingTable =
+      $TermTagStagingTableTable(this);
+  late final $TermRuleStagingTableTable termRuleStagingTable =
+      $TermRuleStagingTableTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
   @override
   List<DatabaseSchemaEntity> get allSchemaEntities => [
-    stagingTermTable,
-    stagingDefinitionTable,
-    stagingTagTable,
-    stagingRuleTable,
+    tagStagingTable,
+    termStagingTable,
+    termDefinitionStagingTable,
+    termTagStagingTable,
+    termRuleStagingTable,
   ];
 }
 
-typedef $$StagingTermTableTableCreateCompanionBuilder =
-    StagingTermTableCompanion Function({
+typedef $$TagStagingTableTableCreateCompanionBuilder =
+    TagStagingTableCompanion Function({
+      required String tagName,
+      required String category,
+      required int sortingOrder,
+      required String notes,
+      required int score,
+      Value<int> rowid,
+    });
+typedef $$TagStagingTableTableUpdateCompanionBuilder =
+    TagStagingTableCompanion Function({
+      Value<String> tagName,
+      Value<String> category,
+      Value<int> sortingOrder,
+      Value<String> notes,
+      Value<int> score,
+      Value<int> rowid,
+    });
+
+class $$TagStagingTableTableFilterComposer
+    extends Composer<_$StagingDatabase, $TagStagingTableTable> {
+  $$TagStagingTableTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get tagName => $composableBuilder(
+    column: $table.tagName,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get category => $composableBuilder(
+    column: $table.category,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get sortingOrder => $composableBuilder(
+    column: $table.sortingOrder,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get notes => $composableBuilder(
+    column: $table.notes,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get score => $composableBuilder(
+    column: $table.score,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$TagStagingTableTableOrderingComposer
+    extends Composer<_$StagingDatabase, $TagStagingTableTable> {
+  $$TagStagingTableTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get tagName => $composableBuilder(
+    column: $table.tagName,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get category => $composableBuilder(
+    column: $table.category,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get sortingOrder => $composableBuilder(
+    column: $table.sortingOrder,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get notes => $composableBuilder(
+    column: $table.notes,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get score => $composableBuilder(
+    column: $table.score,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$TagStagingTableTableAnnotationComposer
+    extends Composer<_$StagingDatabase, $TagStagingTableTable> {
+  $$TagStagingTableTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get tagName =>
+      $composableBuilder(column: $table.tagName, builder: (column) => column);
+
+  GeneratedColumn<String> get category =>
+      $composableBuilder(column: $table.category, builder: (column) => column);
+
+  GeneratedColumn<int> get sortingOrder => $composableBuilder(
+    column: $table.sortingOrder,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get notes =>
+      $composableBuilder(column: $table.notes, builder: (column) => column);
+
+  GeneratedColumn<int> get score =>
+      $composableBuilder(column: $table.score, builder: (column) => column);
+}
+
+class $$TagStagingTableTableTableManager
+    extends
+        RootTableManager<
+          _$StagingDatabase,
+          $TagStagingTableTable,
+          TagStagingTableData,
+          $$TagStagingTableTableFilterComposer,
+          $$TagStagingTableTableOrderingComposer,
+          $$TagStagingTableTableAnnotationComposer,
+          $$TagStagingTableTableCreateCompanionBuilder,
+          $$TagStagingTableTableUpdateCompanionBuilder,
+          (
+            TagStagingTableData,
+            BaseReferences<
+              _$StagingDatabase,
+              $TagStagingTableTable,
+              TagStagingTableData
+            >,
+          ),
+          TagStagingTableData,
+          PrefetchHooks Function()
+        > {
+  $$TagStagingTableTableTableManager(
+    _$StagingDatabase db,
+    $TagStagingTableTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$TagStagingTableTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$TagStagingTableTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$TagStagingTableTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> tagName = const Value.absent(),
+                Value<String> category = const Value.absent(),
+                Value<int> sortingOrder = const Value.absent(),
+                Value<String> notes = const Value.absent(),
+                Value<int> score = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => TagStagingTableCompanion(
+                tagName: tagName,
+                category: category,
+                sortingOrder: sortingOrder,
+                notes: notes,
+                score: score,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String tagName,
+                required String category,
+                required int sortingOrder,
+                required String notes,
+                required int score,
+                Value<int> rowid = const Value.absent(),
+              }) => TagStagingTableCompanion.insert(
+                tagName: tagName,
+                category: category,
+                sortingOrder: sortingOrder,
+                notes: notes,
+                score: score,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$TagStagingTableTableProcessedTableManager =
+    ProcessedTableManager<
+      _$StagingDatabase,
+      $TagStagingTableTable,
+      TagStagingTableData,
+      $$TagStagingTableTableFilterComposer,
+      $$TagStagingTableTableOrderingComposer,
+      $$TagStagingTableTableAnnotationComposer,
+      $$TagStagingTableTableCreateCompanionBuilder,
+      $$TagStagingTableTableUpdateCompanionBuilder,
+      (
+        TagStagingTableData,
+        BaseReferences<
+          _$StagingDatabase,
+          $TagStagingTableTable,
+          TagStagingTableData
+        >,
+      ),
+      TagStagingTableData,
+      PrefetchHooks Function()
+    >;
+typedef $$TermStagingTableTableCreateCompanionBuilder =
+    TermStagingTableCompanion Function({
       Value<int> localId,
       required String term,
       required String reading,
@@ -1434,8 +2037,8 @@ typedef $$StagingTermTableTableCreateCompanionBuilder =
       required int sequenceNumber,
       Value<String?> originalJson,
     });
-typedef $$StagingTermTableTableUpdateCompanionBuilder =
-    StagingTermTableCompanion Function({
+typedef $$TermStagingTableTableUpdateCompanionBuilder =
+    TermStagingTableCompanion Function({
       Value<int> localId,
       Value<String> term,
       Value<String> reading,
@@ -1448,9 +2051,9 @@ typedef $$StagingTermTableTableUpdateCompanionBuilder =
       Value<String?> originalJson,
     });
 
-class $$StagingTermTableTableFilterComposer
-    extends Composer<_$StagingDatabase, $StagingTermTableTable> {
-  $$StagingTermTableTableFilterComposer({
+class $$TermStagingTableTableFilterComposer
+    extends Composer<_$StagingDatabase, $TermStagingTableTable> {
+  $$TermStagingTableTableFilterComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -1509,9 +2112,9 @@ class $$StagingTermTableTableFilterComposer
       );
 }
 
-class $$StagingTermTableTableOrderingComposer
-    extends Composer<_$StagingDatabase, $StagingTermTableTable> {
-  $$StagingTermTableTableOrderingComposer({
+class $$TermStagingTableTableOrderingComposer
+    extends Composer<_$StagingDatabase, $TermStagingTableTable> {
+  $$TermStagingTableTableOrderingComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -1569,9 +2172,9 @@ class $$StagingTermTableTableOrderingComposer
   );
 }
 
-class $$StagingTermTableTableAnnotationComposer
-    extends Composer<_$StagingDatabase, $StagingTermTableTable> {
-  $$StagingTermTableTableAnnotationComposer({
+class $$TermStagingTableTableAnnotationComposer
+    extends Composer<_$StagingDatabase, $TermStagingTableTable> {
+  $$TermStagingTableTableAnnotationComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -1624,41 +2227,41 @@ class $$StagingTermTableTableAnnotationComposer
       );
 }
 
-class $$StagingTermTableTableTableManager
+class $$TermStagingTableTableTableManager
     extends
         RootTableManager<
           _$StagingDatabase,
-          $StagingTermTableTable,
-          StagingTermTableData,
-          $$StagingTermTableTableFilterComposer,
-          $$StagingTermTableTableOrderingComposer,
-          $$StagingTermTableTableAnnotationComposer,
-          $$StagingTermTableTableCreateCompanionBuilder,
-          $$StagingTermTableTableUpdateCompanionBuilder,
+          $TermStagingTableTable,
+          TermStagingTableData,
+          $$TermStagingTableTableFilterComposer,
+          $$TermStagingTableTableOrderingComposer,
+          $$TermStagingTableTableAnnotationComposer,
+          $$TermStagingTableTableCreateCompanionBuilder,
+          $$TermStagingTableTableUpdateCompanionBuilder,
           (
-            StagingTermTableData,
+            TermStagingTableData,
             BaseReferences<
               _$StagingDatabase,
-              $StagingTermTableTable,
-              StagingTermTableData
+              $TermStagingTableTable,
+              TermStagingTableData
             >,
           ),
-          StagingTermTableData,
+          TermStagingTableData,
           PrefetchHooks Function()
         > {
-  $$StagingTermTableTableTableManager(
+  $$TermStagingTableTableTableManager(
     _$StagingDatabase db,
-    $StagingTermTableTable table,
+    $TermStagingTableTable table,
   ) : super(
         TableManagerState(
           db: db,
           table: table,
           createFilteringComposer: () =>
-              $$StagingTermTableTableFilterComposer($db: db, $table: table),
+              $$TermStagingTableTableFilterComposer($db: db, $table: table),
           createOrderingComposer: () =>
-              $$StagingTermTableTableOrderingComposer($db: db, $table: table),
+              $$TermStagingTableTableOrderingComposer($db: db, $table: table),
           createComputedFieldComposer: () =>
-              $$StagingTermTableTableAnnotationComposer($db: db, $table: table),
+              $$TermStagingTableTableAnnotationComposer($db: db, $table: table),
           updateCompanionCallback:
               ({
                 Value<int> localId = const Value.absent(),
@@ -1671,7 +2274,7 @@ class $$StagingTermTableTableTableManager
                 Value<int> popularity = const Value.absent(),
                 Value<int> sequenceNumber = const Value.absent(),
                 Value<String?> originalJson = const Value.absent(),
-              }) => StagingTermTableCompanion(
+              }) => TermStagingTableCompanion(
                 localId: localId,
                 term: term,
                 reading: reading,
@@ -1695,7 +2298,7 @@ class $$StagingTermTableTableTableManager
                 required int popularity,
                 required int sequenceNumber,
                 Value<String?> originalJson = const Value.absent(),
-              }) => StagingTermTableCompanion.insert(
+              }) => TermStagingTableCompanion.insert(
                 localId: localId,
                 term: term,
                 reading: reading,
@@ -1715,43 +2318,43 @@ class $$StagingTermTableTableTableManager
       );
 }
 
-typedef $$StagingTermTableTableProcessedTableManager =
+typedef $$TermStagingTableTableProcessedTableManager =
     ProcessedTableManager<
       _$StagingDatabase,
-      $StagingTermTableTable,
-      StagingTermTableData,
-      $$StagingTermTableTableFilterComposer,
-      $$StagingTermTableTableOrderingComposer,
-      $$StagingTermTableTableAnnotationComposer,
-      $$StagingTermTableTableCreateCompanionBuilder,
-      $$StagingTermTableTableUpdateCompanionBuilder,
+      $TermStagingTableTable,
+      TermStagingTableData,
+      $$TermStagingTableTableFilterComposer,
+      $$TermStagingTableTableOrderingComposer,
+      $$TermStagingTableTableAnnotationComposer,
+      $$TermStagingTableTableCreateCompanionBuilder,
+      $$TermStagingTableTableUpdateCompanionBuilder,
       (
-        StagingTermTableData,
+        TermStagingTableData,
         BaseReferences<
           _$StagingDatabase,
-          $StagingTermTableTable,
-          StagingTermTableData
+          $TermStagingTableTable,
+          TermStagingTableData
         >,
       ),
-      StagingTermTableData,
+      TermStagingTableData,
       PrefetchHooks Function()
     >;
-typedef $$StagingDefinitionTableTableCreateCompanionBuilder =
-    StagingDefinitionTableCompanion Function({
+typedef $$TermDefinitionStagingTableTableCreateCompanionBuilder =
+    TermDefinitionStagingTableCompanion Function({
       required int termLocalId,
       required String definition,
       Value<int> rowid,
     });
-typedef $$StagingDefinitionTableTableUpdateCompanionBuilder =
-    StagingDefinitionTableCompanion Function({
+typedef $$TermDefinitionStagingTableTableUpdateCompanionBuilder =
+    TermDefinitionStagingTableCompanion Function({
       Value<int> termLocalId,
       Value<String> definition,
       Value<int> rowid,
     });
 
-class $$StagingDefinitionTableTableFilterComposer
-    extends Composer<_$StagingDatabase, $StagingDefinitionTableTable> {
-  $$StagingDefinitionTableTableFilterComposer({
+class $$TermDefinitionStagingTableTableFilterComposer
+    extends Composer<_$StagingDatabase, $TermDefinitionStagingTableTable> {
+  $$TermDefinitionStagingTableTableFilterComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -1769,9 +2372,9 @@ class $$StagingDefinitionTableTableFilterComposer
   );
 }
 
-class $$StagingDefinitionTableTableOrderingComposer
-    extends Composer<_$StagingDatabase, $StagingDefinitionTableTable> {
-  $$StagingDefinitionTableTableOrderingComposer({
+class $$TermDefinitionStagingTableTableOrderingComposer
+    extends Composer<_$StagingDatabase, $TermDefinitionStagingTableTable> {
+  $$TermDefinitionStagingTableTableOrderingComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -1789,9 +2392,9 @@ class $$StagingDefinitionTableTableOrderingComposer
   );
 }
 
-class $$StagingDefinitionTableTableAnnotationComposer
-    extends Composer<_$StagingDatabase, $StagingDefinitionTableTable> {
-  $$StagingDefinitionTableTableAnnotationComposer({
+class $$TermDefinitionStagingTableTableAnnotationComposer
+    extends Composer<_$StagingDatabase, $TermDefinitionStagingTableTable> {
+  $$TermDefinitionStagingTableTableAnnotationComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -1809,47 +2412,47 @@ class $$StagingDefinitionTableTableAnnotationComposer
   );
 }
 
-class $$StagingDefinitionTableTableTableManager
+class $$TermDefinitionStagingTableTableTableManager
     extends
         RootTableManager<
           _$StagingDatabase,
-          $StagingDefinitionTableTable,
-          StagingDefinitionTableData,
-          $$StagingDefinitionTableTableFilterComposer,
-          $$StagingDefinitionTableTableOrderingComposer,
-          $$StagingDefinitionTableTableAnnotationComposer,
-          $$StagingDefinitionTableTableCreateCompanionBuilder,
-          $$StagingDefinitionTableTableUpdateCompanionBuilder,
+          $TermDefinitionStagingTableTable,
+          TermDefinitionStagingTableData,
+          $$TermDefinitionStagingTableTableFilterComposer,
+          $$TermDefinitionStagingTableTableOrderingComposer,
+          $$TermDefinitionStagingTableTableAnnotationComposer,
+          $$TermDefinitionStagingTableTableCreateCompanionBuilder,
+          $$TermDefinitionStagingTableTableUpdateCompanionBuilder,
           (
-            StagingDefinitionTableData,
+            TermDefinitionStagingTableData,
             BaseReferences<
               _$StagingDatabase,
-              $StagingDefinitionTableTable,
-              StagingDefinitionTableData
+              $TermDefinitionStagingTableTable,
+              TermDefinitionStagingTableData
             >,
           ),
-          StagingDefinitionTableData,
+          TermDefinitionStagingTableData,
           PrefetchHooks Function()
         > {
-  $$StagingDefinitionTableTableTableManager(
+  $$TermDefinitionStagingTableTableTableManager(
     _$StagingDatabase db,
-    $StagingDefinitionTableTable table,
+    $TermDefinitionStagingTableTable table,
   ) : super(
         TableManagerState(
           db: db,
           table: table,
           createFilteringComposer: () =>
-              $$StagingDefinitionTableTableFilterComposer(
+              $$TermDefinitionStagingTableTableFilterComposer(
                 $db: db,
                 $table: table,
               ),
           createOrderingComposer: () =>
-              $$StagingDefinitionTableTableOrderingComposer(
+              $$TermDefinitionStagingTableTableOrderingComposer(
                 $db: db,
                 $table: table,
               ),
           createComputedFieldComposer: () =>
-              $$StagingDefinitionTableTableAnnotationComposer(
+              $$TermDefinitionStagingTableTableAnnotationComposer(
                 $db: db,
                 $table: table,
               ),
@@ -1858,7 +2461,7 @@ class $$StagingDefinitionTableTableTableManager
                 Value<int> termLocalId = const Value.absent(),
                 Value<String> definition = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
-              }) => StagingDefinitionTableCompanion(
+              }) => TermDefinitionStagingTableCompanion(
                 termLocalId: termLocalId,
                 definition: definition,
                 rowid: rowid,
@@ -1868,7 +2471,7 @@ class $$StagingDefinitionTableTableTableManager
                 required int termLocalId,
                 required String definition,
                 Value<int> rowid = const Value.absent(),
-              }) => StagingDefinitionTableCompanion.insert(
+              }) => TermDefinitionStagingTableCompanion.insert(
                 termLocalId: termLocalId,
                 definition: definition,
                 rowid: rowid,
@@ -1881,45 +2484,45 @@ class $$StagingDefinitionTableTableTableManager
       );
 }
 
-typedef $$StagingDefinitionTableTableProcessedTableManager =
+typedef $$TermDefinitionStagingTableTableProcessedTableManager =
     ProcessedTableManager<
       _$StagingDatabase,
-      $StagingDefinitionTableTable,
-      StagingDefinitionTableData,
-      $$StagingDefinitionTableTableFilterComposer,
-      $$StagingDefinitionTableTableOrderingComposer,
-      $$StagingDefinitionTableTableAnnotationComposer,
-      $$StagingDefinitionTableTableCreateCompanionBuilder,
-      $$StagingDefinitionTableTableUpdateCompanionBuilder,
+      $TermDefinitionStagingTableTable,
+      TermDefinitionStagingTableData,
+      $$TermDefinitionStagingTableTableFilterComposer,
+      $$TermDefinitionStagingTableTableOrderingComposer,
+      $$TermDefinitionStagingTableTableAnnotationComposer,
+      $$TermDefinitionStagingTableTableCreateCompanionBuilder,
+      $$TermDefinitionStagingTableTableUpdateCompanionBuilder,
       (
-        StagingDefinitionTableData,
+        TermDefinitionStagingTableData,
         BaseReferences<
           _$StagingDatabase,
-          $StagingDefinitionTableTable,
-          StagingDefinitionTableData
+          $TermDefinitionStagingTableTable,
+          TermDefinitionStagingTableData
         >,
       ),
-      StagingDefinitionTableData,
+      TermDefinitionStagingTableData,
       PrefetchHooks Function()
     >;
-typedef $$StagingTagTableTableCreateCompanionBuilder =
-    StagingTagTableCompanion Function({
+typedef $$TermTagStagingTableTableCreateCompanionBuilder =
+    TermTagStagingTableCompanion Function({
       required int termLocalId,
       required String tagName,
       required bool isDefinitionTag,
       Value<int> rowid,
     });
-typedef $$StagingTagTableTableUpdateCompanionBuilder =
-    StagingTagTableCompanion Function({
+typedef $$TermTagStagingTableTableUpdateCompanionBuilder =
+    TermTagStagingTableCompanion Function({
       Value<int> termLocalId,
       Value<String> tagName,
       Value<bool> isDefinitionTag,
       Value<int> rowid,
     });
 
-class $$StagingTagTableTableFilterComposer
-    extends Composer<_$StagingDatabase, $StagingTagTableTable> {
-  $$StagingTagTableTableFilterComposer({
+class $$TermTagStagingTableTableFilterComposer
+    extends Composer<_$StagingDatabase, $TermTagStagingTableTable> {
+  $$TermTagStagingTableTableFilterComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -1942,9 +2545,9 @@ class $$StagingTagTableTableFilterComposer
   );
 }
 
-class $$StagingTagTableTableOrderingComposer
-    extends Composer<_$StagingDatabase, $StagingTagTableTable> {
-  $$StagingTagTableTableOrderingComposer({
+class $$TermTagStagingTableTableOrderingComposer
+    extends Composer<_$StagingDatabase, $TermTagStagingTableTable> {
+  $$TermTagStagingTableTableOrderingComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -1967,9 +2570,9 @@ class $$StagingTagTableTableOrderingComposer
   );
 }
 
-class $$StagingTagTableTableAnnotationComposer
-    extends Composer<_$StagingDatabase, $StagingTagTableTable> {
-  $$StagingTagTableTableAnnotationComposer({
+class $$TermTagStagingTableTableAnnotationComposer
+    extends Composer<_$StagingDatabase, $TermTagStagingTableTable> {
+  $$TermTagStagingTableTableAnnotationComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -1990,48 +2593,54 @@ class $$StagingTagTableTableAnnotationComposer
   );
 }
 
-class $$StagingTagTableTableTableManager
+class $$TermTagStagingTableTableTableManager
     extends
         RootTableManager<
           _$StagingDatabase,
-          $StagingTagTableTable,
-          StagingTagTableData,
-          $$StagingTagTableTableFilterComposer,
-          $$StagingTagTableTableOrderingComposer,
-          $$StagingTagTableTableAnnotationComposer,
-          $$StagingTagTableTableCreateCompanionBuilder,
-          $$StagingTagTableTableUpdateCompanionBuilder,
+          $TermTagStagingTableTable,
+          TermTagStagingTableData,
+          $$TermTagStagingTableTableFilterComposer,
+          $$TermTagStagingTableTableOrderingComposer,
+          $$TermTagStagingTableTableAnnotationComposer,
+          $$TermTagStagingTableTableCreateCompanionBuilder,
+          $$TermTagStagingTableTableUpdateCompanionBuilder,
           (
-            StagingTagTableData,
+            TermTagStagingTableData,
             BaseReferences<
               _$StagingDatabase,
-              $StagingTagTableTable,
-              StagingTagTableData
+              $TermTagStagingTableTable,
+              TermTagStagingTableData
             >,
           ),
-          StagingTagTableData,
+          TermTagStagingTableData,
           PrefetchHooks Function()
         > {
-  $$StagingTagTableTableTableManager(
+  $$TermTagStagingTableTableTableManager(
     _$StagingDatabase db,
-    $StagingTagTableTable table,
+    $TermTagStagingTableTable table,
   ) : super(
         TableManagerState(
           db: db,
           table: table,
           createFilteringComposer: () =>
-              $$StagingTagTableTableFilterComposer($db: db, $table: table),
+              $$TermTagStagingTableTableFilterComposer($db: db, $table: table),
           createOrderingComposer: () =>
-              $$StagingTagTableTableOrderingComposer($db: db, $table: table),
+              $$TermTagStagingTableTableOrderingComposer(
+                $db: db,
+                $table: table,
+              ),
           createComputedFieldComposer: () =>
-              $$StagingTagTableTableAnnotationComposer($db: db, $table: table),
+              $$TermTagStagingTableTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
           updateCompanionCallback:
               ({
                 Value<int> termLocalId = const Value.absent(),
                 Value<String> tagName = const Value.absent(),
                 Value<bool> isDefinitionTag = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
-              }) => StagingTagTableCompanion(
+              }) => TermTagStagingTableCompanion(
                 termLocalId: termLocalId,
                 tagName: tagName,
                 isDefinitionTag: isDefinitionTag,
@@ -2043,7 +2652,7 @@ class $$StagingTagTableTableTableManager
                 required String tagName,
                 required bool isDefinitionTag,
                 Value<int> rowid = const Value.absent(),
-              }) => StagingTagTableCompanion.insert(
+              }) => TermTagStagingTableCompanion.insert(
                 termLocalId: termLocalId,
                 tagName: tagName,
                 isDefinitionTag: isDefinitionTag,
@@ -2057,43 +2666,43 @@ class $$StagingTagTableTableTableManager
       );
 }
 
-typedef $$StagingTagTableTableProcessedTableManager =
+typedef $$TermTagStagingTableTableProcessedTableManager =
     ProcessedTableManager<
       _$StagingDatabase,
-      $StagingTagTableTable,
-      StagingTagTableData,
-      $$StagingTagTableTableFilterComposer,
-      $$StagingTagTableTableOrderingComposer,
-      $$StagingTagTableTableAnnotationComposer,
-      $$StagingTagTableTableCreateCompanionBuilder,
-      $$StagingTagTableTableUpdateCompanionBuilder,
+      $TermTagStagingTableTable,
+      TermTagStagingTableData,
+      $$TermTagStagingTableTableFilterComposer,
+      $$TermTagStagingTableTableOrderingComposer,
+      $$TermTagStagingTableTableAnnotationComposer,
+      $$TermTagStagingTableTableCreateCompanionBuilder,
+      $$TermTagStagingTableTableUpdateCompanionBuilder,
       (
-        StagingTagTableData,
+        TermTagStagingTableData,
         BaseReferences<
           _$StagingDatabase,
-          $StagingTagTableTable,
-          StagingTagTableData
+          $TermTagStagingTableTable,
+          TermTagStagingTableData
         >,
       ),
-      StagingTagTableData,
+      TermTagStagingTableData,
       PrefetchHooks Function()
     >;
-typedef $$StagingRuleTableTableCreateCompanionBuilder =
-    StagingRuleTableCompanion Function({
+typedef $$TermRuleStagingTableTableCreateCompanionBuilder =
+    TermRuleStagingTableCompanion Function({
       required int termLocalId,
       required String ruleId,
       Value<int> rowid,
     });
-typedef $$StagingRuleTableTableUpdateCompanionBuilder =
-    StagingRuleTableCompanion Function({
+typedef $$TermRuleStagingTableTableUpdateCompanionBuilder =
+    TermRuleStagingTableCompanion Function({
       Value<int> termLocalId,
       Value<String> ruleId,
       Value<int> rowid,
     });
 
-class $$StagingRuleTableTableFilterComposer
-    extends Composer<_$StagingDatabase, $StagingRuleTableTable> {
-  $$StagingRuleTableTableFilterComposer({
+class $$TermRuleStagingTableTableFilterComposer
+    extends Composer<_$StagingDatabase, $TermRuleStagingTableTable> {
+  $$TermRuleStagingTableTableFilterComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -2111,9 +2720,9 @@ class $$StagingRuleTableTableFilterComposer
   );
 }
 
-class $$StagingRuleTableTableOrderingComposer
-    extends Composer<_$StagingDatabase, $StagingRuleTableTable> {
-  $$StagingRuleTableTableOrderingComposer({
+class $$TermRuleStagingTableTableOrderingComposer
+    extends Composer<_$StagingDatabase, $TermRuleStagingTableTable> {
+  $$TermRuleStagingTableTableOrderingComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -2131,9 +2740,9 @@ class $$StagingRuleTableTableOrderingComposer
   );
 }
 
-class $$StagingRuleTableTableAnnotationComposer
-    extends Composer<_$StagingDatabase, $StagingRuleTableTable> {
-  $$StagingRuleTableTableAnnotationComposer({
+class $$TermRuleStagingTableTableAnnotationComposer
+    extends Composer<_$StagingDatabase, $TermRuleStagingTableTable> {
+  $$TermRuleStagingTableTableAnnotationComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -2149,47 +2758,53 @@ class $$StagingRuleTableTableAnnotationComposer
       $composableBuilder(column: $table.ruleId, builder: (column) => column);
 }
 
-class $$StagingRuleTableTableTableManager
+class $$TermRuleStagingTableTableTableManager
     extends
         RootTableManager<
           _$StagingDatabase,
-          $StagingRuleTableTable,
-          StagingRuleTableData,
-          $$StagingRuleTableTableFilterComposer,
-          $$StagingRuleTableTableOrderingComposer,
-          $$StagingRuleTableTableAnnotationComposer,
-          $$StagingRuleTableTableCreateCompanionBuilder,
-          $$StagingRuleTableTableUpdateCompanionBuilder,
+          $TermRuleStagingTableTable,
+          TermRuleStagingTableData,
+          $$TermRuleStagingTableTableFilterComposer,
+          $$TermRuleStagingTableTableOrderingComposer,
+          $$TermRuleStagingTableTableAnnotationComposer,
+          $$TermRuleStagingTableTableCreateCompanionBuilder,
+          $$TermRuleStagingTableTableUpdateCompanionBuilder,
           (
-            StagingRuleTableData,
+            TermRuleStagingTableData,
             BaseReferences<
               _$StagingDatabase,
-              $StagingRuleTableTable,
-              StagingRuleTableData
+              $TermRuleStagingTableTable,
+              TermRuleStagingTableData
             >,
           ),
-          StagingRuleTableData,
+          TermRuleStagingTableData,
           PrefetchHooks Function()
         > {
-  $$StagingRuleTableTableTableManager(
+  $$TermRuleStagingTableTableTableManager(
     _$StagingDatabase db,
-    $StagingRuleTableTable table,
+    $TermRuleStagingTableTable table,
   ) : super(
         TableManagerState(
           db: db,
           table: table,
           createFilteringComposer: () =>
-              $$StagingRuleTableTableFilterComposer($db: db, $table: table),
+              $$TermRuleStagingTableTableFilterComposer($db: db, $table: table),
           createOrderingComposer: () =>
-              $$StagingRuleTableTableOrderingComposer($db: db, $table: table),
+              $$TermRuleStagingTableTableOrderingComposer(
+                $db: db,
+                $table: table,
+              ),
           createComputedFieldComposer: () =>
-              $$StagingRuleTableTableAnnotationComposer($db: db, $table: table),
+              $$TermRuleStagingTableTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
           updateCompanionCallback:
               ({
                 Value<int> termLocalId = const Value.absent(),
                 Value<String> ruleId = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
-              }) => StagingRuleTableCompanion(
+              }) => TermRuleStagingTableCompanion(
                 termLocalId: termLocalId,
                 ruleId: ruleId,
                 rowid: rowid,
@@ -2199,7 +2814,7 @@ class $$StagingRuleTableTableTableManager
                 required int termLocalId,
                 required String ruleId,
                 Value<int> rowid = const Value.absent(),
-              }) => StagingRuleTableCompanion.insert(
+              }) => TermRuleStagingTableCompanion.insert(
                 termLocalId: termLocalId,
                 ruleId: ruleId,
                 rowid: rowid,
@@ -2212,40 +2827,43 @@ class $$StagingRuleTableTableTableManager
       );
 }
 
-typedef $$StagingRuleTableTableProcessedTableManager =
+typedef $$TermRuleStagingTableTableProcessedTableManager =
     ProcessedTableManager<
       _$StagingDatabase,
-      $StagingRuleTableTable,
-      StagingRuleTableData,
-      $$StagingRuleTableTableFilterComposer,
-      $$StagingRuleTableTableOrderingComposer,
-      $$StagingRuleTableTableAnnotationComposer,
-      $$StagingRuleTableTableCreateCompanionBuilder,
-      $$StagingRuleTableTableUpdateCompanionBuilder,
+      $TermRuleStagingTableTable,
+      TermRuleStagingTableData,
+      $$TermRuleStagingTableTableFilterComposer,
+      $$TermRuleStagingTableTableOrderingComposer,
+      $$TermRuleStagingTableTableAnnotationComposer,
+      $$TermRuleStagingTableTableCreateCompanionBuilder,
+      $$TermRuleStagingTableTableUpdateCompanionBuilder,
       (
-        StagingRuleTableData,
+        TermRuleStagingTableData,
         BaseReferences<
           _$StagingDatabase,
-          $StagingRuleTableTable,
-          StagingRuleTableData
+          $TermRuleStagingTableTable,
+          TermRuleStagingTableData
         >,
       ),
-      StagingRuleTableData,
+      TermRuleStagingTableData,
       PrefetchHooks Function()
     >;
 
 class $StagingDatabaseManager {
   final _$StagingDatabase _db;
   $StagingDatabaseManager(this._db);
-  $$StagingTermTableTableTableManager get stagingTermTable =>
-      $$StagingTermTableTableTableManager(_db, _db.stagingTermTable);
-  $$StagingDefinitionTableTableTableManager get stagingDefinitionTable =>
-      $$StagingDefinitionTableTableTableManager(
+  $$TagStagingTableTableTableManager get tagStagingTable =>
+      $$TagStagingTableTableTableManager(_db, _db.tagStagingTable);
+  $$TermStagingTableTableTableManager get termStagingTable =>
+      $$TermStagingTableTableTableManager(_db, _db.termStagingTable);
+  $$TermDefinitionStagingTableTableTableManager
+  get termDefinitionStagingTable =>
+      $$TermDefinitionStagingTableTableTableManager(
         _db,
-        _db.stagingDefinitionTable,
+        _db.termDefinitionStagingTable,
       );
-  $$StagingTagTableTableTableManager get stagingTagTable =>
-      $$StagingTagTableTableTableManager(_db, _db.stagingTagTable);
-  $$StagingRuleTableTableTableManager get stagingRuleTable =>
-      $$StagingRuleTableTableTableManager(_db, _db.stagingRuleTable);
+  $$TermTagStagingTableTableTableManager get termTagStagingTable =>
+      $$TermTagStagingTableTableTableManager(_db, _db.termTagStagingTable);
+  $$TermRuleStagingTableTableTableManager get termRuleStagingTable =>
+      $$TermRuleStagingTableTableTableManager(_db, _db.termRuleStagingTable);
 }
