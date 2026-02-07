@@ -1,5 +1,6 @@
 import 'package:dakanji_db_core/database/dakanji_db.dart';
 import 'package:dakanji_db_core/parsing/yomitan/staging_db/mergers/staging_merger.dart';
+import 'package:dakanji_db_core/parsing/yomitan/staging_db/mergers/tag_bank_v3_merger.dart';
 import 'package:dakanji_db_core/parsing/yomitan/staging_db/mergers/term_bank_v3_merger.dart';
 
 
@@ -24,6 +25,7 @@ Future<void> mergeStagingDb({
   await db.customStatement('ATTACH DATABASE ? AS $workerAlias', [workerDbPath]);
 
   final mergers = <StagingMerger>[
+    TagBankMerger(),
     TermBankV3Merger(addJsonDefs: addJsonDefs),
   ];
 
@@ -37,10 +39,12 @@ Future<void> mergeStagingDb({
         );
       }
     });
-  } catch (e) {
+  }
+  catch (e) {
     print("Merge Error: $e");
     rethrow;
-  } finally {
+  }
+  finally {
     await db.customStatement('DETACH DATABASE $workerAlias');
     // Restore Foreign Keys
     await db.customStatement('PRAGMA foreign_keys = ON;');
