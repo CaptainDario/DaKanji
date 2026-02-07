@@ -155,7 +155,6 @@ Future parseTermBankV3(
 
     // Parse definitions
     ParsedDefinitions? parsedDefinitions = YomitanDefinitionParser.parse(jsonEntry[5]);
-    List<int> definitionIds = [];
     for (String parsedDefinition in parsedDefinitions.definitions) {
       // escape special characters
       String text = parsedDefinition.replaceAll(RegExp(r'[\s\u00A0]+'), ' ').trim();
@@ -168,7 +167,6 @@ Future parseTermBankV3(
           definition: Value(text)
         ));
       }
-      definitionIds.add(definitionInsertId);
       // create relationship
       definitionRelComps.add(TermBankV3_X_DefinitionTableCompanion(
         definitionId: Value(definitionInsertId),
@@ -212,7 +210,6 @@ Future parseTermBankV3(
       id: Value(pC.currentMaxTermBankId),
       indexId: Value(indexId),
       termId: Value(termInsertId),
-      definitionOrder: Value(definitionIds),
       definitionJsonId: jsonDefInsertId == null ? Value.absent() : Value(jsonDefInsertId),
       readingId: Value(readingInsertId),
       popularity: Value(jsonEntry[4]),

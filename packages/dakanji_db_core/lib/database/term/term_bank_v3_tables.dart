@@ -1,6 +1,5 @@
 
 import 'package:dakanji_db_core/database/index/index_tables.dart';
-import 'package:dakanji_db_core/util/data_converters/sql_json_converter.dart';
 import 'package:dakanji_db_core/util/data_converters/zlib_text_converter_io.dart';
 import 'package:drift/drift.dart';
 
@@ -28,11 +27,6 @@ class TermBankV3Table extends Table {
 
   /// The ID of the text for the term.
   IntColumn get termId => integer().references(TermTable, #id)();
-
-  /// The order of the definitions, used to sort them in the order they were
-  /// provided by the dictionary. This is a JSON array of integers, where each
-  /// integer corresponds to `termId`.
-  TextColumn get definitionOrder => text().map(const JsonConverter())();
 
   /// The ID of the JSON representation of the definition
   IntColumn get definitionJsonId => integer().nullable().references(TermBankV3DefinitionJsonTable, #id)();

@@ -553,7 +553,6 @@ dictionary_search_drift_find_term_bank_details:
         TT.term,
         RT.reading,
         TB3T.popularity,
-        TB3T.definition_order,
         TB3T.sequence_number,
         TDJT.definition_json AS structuredContentDefinitions,
         
