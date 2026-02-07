@@ -5,8 +5,11 @@ import 'package:dakanji_db_core/parsing/example_parser.dart';
 import 'package:dakanji_db_core/parsing/kanji_vg_parser.dart';
 import 'package:dakanji_db_core/parsing/radicals_parser.dart';
 import 'package:dakanji_db_core/parsing/tatoeba_parser.dart';
-import 'package:dakanji_db_core/parsing/yomitan/in_memory_cache/audio/audio_parser.dart';
-import 'package:dakanji_db_core/parsing/yomitan_staging_db_parser.dart';
+import 'package:dakanji_db_core/parsing/yomitan/in_memory_cache/audio/audio_parser.dart' ;
+// ignore: unused_import
+import 'package:dakanji_db_core/parsing/yomitan_in_memory_cache_parser.dart' as cache_parser;
+// ignore: unused_import
+import 'package:dakanji_db_core/parsing/yomitan_staging_db_parser.dart' as staging_parser;
 import 'package:dakanji_db_shared/paths.dart';
 import 'package:language_processing/iso/iso_table.dart';
 import 'package:language_processing/language_processing.dart';
@@ -113,9 +116,9 @@ void main(List<String> args) async {
   await importYomitanDicts(db,
     [
       //(kanjidic2InputPath, "KanjiDic2"),
-      //(jpdb2_2InputPath, "JPDB 2.2"),
-      (dictNameToPath[dictToUse]!(), dictToUse.name),
-      ?(includeExampleDictArg ? (exampleDictPath, "yomitan example dictionary"): null),
+      (jpdb2_2InputPath, "JPDB 2.2"),
+      //(dictNameToPath[dictToUse]!(), dictToUse.name),
+      //?(includeExampleDictArg ? (exampleDictPath, "yomitan example dictionary"): null),
     ],
     addStructuredContentJsonDefs,
   );
@@ -225,7 +228,10 @@ Future importYomitanDicts(
     print(" --- Importing ${inputs[i]}... ---");
     
     Stopwatch s = Stopwatch()..start();
-    Stream<String> progress = await parseDictionaryDataSource(
+    
+    final parse = staging_parser.parseDictionaryDataSource;
+    //final parse = cache_parser.parseDictionaryDataSource;
+    Stream<String> progress = await parse(
       dataSourcePath:  inputs[i].$1,
       db: db,
       addStructuredContentJsonDefs: addStructuredContentJsonDefs,
