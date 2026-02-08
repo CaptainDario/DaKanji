@@ -102,6 +102,7 @@ class _TermBankTermWidgetState extends State<TermBankTermWidget> {
                     children: [
                       InkWell(
                         onTap: () {
+                          // TODO play audio for term
                           print("Playing audio for term: ${termAndReading.map((e) => e.term.isNotEmpty ? e.term : e.reading).join()}");
                         },
                         borderRadius: BorderRadius.circular(40),
