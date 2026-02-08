@@ -6,10 +6,12 @@ import 'package:dakanji_db_core/data/audio_data_source_formats.dart';
 import 'package:dakanji_db_core/data/dictionary_types.dart';
 import 'package:dakanji_db_core/database/dakanji_db.dart';
 import 'package:dakanji_db_core/parsing/audio/in_memory_cache/audio_parser_context.dart';
+import 'package:dakanji_db_core/parsing/audio/in_memory_cache/parse_audio_data_source_entries_format.dart';
+import 'package:dakanji_db_core/parsing/audio/in_memory_cache/parse_audio_data_source_file_name_format.dart';
+import 'package:dakanji_db_core/parsing/audio/in_memory_cache/parse_audio_data_source_index_format.dart';
 import 'package:dakanji_db_core/parsing/util/db_optimization.dart';
 import 'package:dakanji_db_core/parsing/util/parsing_util.dart';
 import 'package:dakanji_db_core/parsing/yomitan/in_memory_cache/index/index_parser.dart';
-import 'package:dakanji_db_core/parsing/yomitan/in_memory_cache/media/media_importer.dart';
 import 'package:drift/drift.dart';
 import 'package:drift/isolate.dart';
 import 'package:language_processing/language_processing.dart';
@@ -216,165 +218,4 @@ Future parseAudioDataSourceEntry(
     pitchAccentPattern: Value(pitchPattern),
   ));
 
-}
-
-/// Parses audio data source in format 1 (file names)
-Future parseAudioDataSourceFileNameFormat(
-  Iterable<({String filePath, Uint8List fileContent})> dataSources,
-  DaKanjiDB db,
-  int indexId,
-  AudioParserContext aC,
-  SendPort mainIsolate
-) async {
-  final int noEntries = dataSources.length;
-  int i = 0;
-
-  // pattern to extract term, reading and pitch from file name
-  final RegExp pattern = RegExp(r'^(.+?)(?:\s*[\[【](.+?)[\]】])?(?:\s*[\(（](\d+)[\)）])?$');
-
-  List<({String filePath, Uint8List mediaContent, int indexId, int? insertId})> filesToInsert = [];
-  for (final dataSource in dataSources) {
-    mainIsolate.send("Processing audio source file: ${dataSource.filePath} ${++i}/$noEntries");
-    filesToInsert.add((filePath: dataSource.filePath, mediaContent: dataSource.fileContent,
-      indexId: indexId, insertId: ++aC.currentMaxMediaId));
-
-    String fileName = p.basenameWithoutExtension(dataSource.filePath);
-
-    String term = fileName;
-    String? reading;
-    int? pitch;
-
-    final Match? match = pattern.firstMatch(fileName);
-    if (match != null) {
-      // 1. Term (Trim whitespace in case user put "Word [Read]")
-      term = match.group(1)!.trim();
-
-      // 2. Reading (Exists only if [] or 【】 were found)
-      if (match.group(2) != null) reading = match.group(2)!.trim();
-
-      // 3. Pitch (Exists only if () or （） were found)
-      if (match.group(3) != null) pitch = int.tryParse(match.group(3)!);
-    }
-
-    // Pass extracted data to the entry parser
-    await parseAudioDataSourceEntry(
-      [term], reading, pitch, indexId, db, aC);
-
-    // if enough audios have been processed, import them into the DB
-    if(i % noFilesToBatchInsert == 0 || i == noEntries) {
-      await importMediaFiles(db, filesToInsert);
-      filesToInsert.clear();
-    }
-  }
-}
-
-/// Parses audio data source in format 2 (index.json)
-Future parseAudioDataSourceIndexFormat(
-  Iterable<({String filePath, Uint8List fileContent})> dataSources,
-  DaKanjiDB db,
-  int indexId,
-  String jsonString,
-  AudioParserContext aC,
-  SendPort mainIsolate
-) async {
-
-  // get data from json
-  Map jsonMap = jsonDecode(jsonString);
-  //String mediaDir = jsonMap["meta"]["media_dir"];
-  Map<String, List<String>> headwords = (jsonMap['headwords'] as Map).map(
-    (key, value) => MapEntry(key, List<String>.from(value)),
-  );
-  Map<String, Map<String, String>> files = (jsonMap["files"] as Map).map(
-    (key, value) => MapEntry(key, Map<String, String>.from(value)),
-  );
-
-  /// parse the original data into a more usable format
-  Map<String, ({String term, String reading, int? pitchPattern})> fileData = {};
-  mainIsolate.send("Parsing index data of ${files.length} files");
-  headwords.forEach((headword, fileList) {
-    for (final file in fileList) {
-      Map<String, String> fileDetails = files[file]!;
-      String pitchPattern = fileDetails["pitch_number"]!;
-      fileData[file] = (
-        term: headword,
-        reading: fileDetails["kana_reading"]!,
-        pitchPattern: int.tryParse(pitchPattern),
-      );
-    }
-  });
-
-  // import the files into the DB
-  int noEntries = dataSources.length; int i = 0;
-  List<({String filePath, Uint8List mediaContent, int indexId, int? insertId})> filesToInsert = [];
-  for (final dataSource in dataSources) {
-    mainIsolate.send("Processing audio source file: ${dataSource.filePath} ${++i}/$noEntries");
-    filesToInsert.add((filePath: dataSource.filePath, mediaContent: dataSource.fileContent,
-      indexId: indexId, insertId: ++aC.currentMaxMediaId));
-
-    String filePath = p.basename(dataSource.filePath);
-    if (!fileData.containsKey(filePath)) continue;
-    ({String term, String reading, int? pitchPattern}) entry = fileData[filePath]!;
-    String term = entry.term;
-    String? reading = entry.reading;
-    int? pitchPattern = entry.pitchPattern;
-    await parseAudioDataSourceEntry([term], reading, pitchPattern, indexId, db, aC);
-
-    // if enough audios have been processed, import them into the DB
-    if(i % noFilesToBatchInsert == 0 || i == noEntries) {
-      await importMediaFiles(db, filesToInsert);
-      filesToInsert.clear();
-    }
-  }
-}
-
-/// Parses audio data source in format 3 (entries.json)
-Future parseAudioDataSourceEntriesFormat(
-  Iterable<({String filePath, Uint8List fileContent})> dataSources,
-  DaKanjiDB db,
-  int indexId,
-  String jsonString,
-  AudioParserContext aC,
-  SendPort mainIsolate
-) async {
-
-  // parse the original data into a more usable format
-  final List jsonList = jsonDecode(jsonString);
-  Map<String, ({List<String> term, String reading, int? pitchPattern})> fileData = {};
-  mainIsolate.send("Parsing index data of ${jsonList.length} files");
-  
-  for (final entry in jsonList){
-    List<String> kanjis = List<String>.from(entry["kanji"]);
-    for (final accent in entry["accents"]) {
-
-      if(accent["soundFile"] == null) continue;
-
-      fileData[accent["soundFile"]] = (
-        term: kanjis,
-        reading: (accent["accent"][0]["pronunciation"] as String),
-        pitchPattern: accent["accent"][0]["pitchAccent"],
-      );
-    }
-  }
-
-  // import the files into the DB
-  int noEntries = dataSources.length; int i = 0;
-  List<({String filePath, Uint8List mediaContent, int indexId, int? insertId})> filesToInsert = [];
-  for (final dataSource in dataSources) {
-    mainIsolate.send("Processing audio source file: ${dataSource.filePath} ${++i}/$noEntries");
-    filesToInsert.add((filePath: dataSource.filePath, mediaContent: dataSource.fileContent,
-      indexId: indexId, insertId: ++aC.currentMaxMediaId));
-
-    String filePath = p.basename(dataSource.filePath);
-    if (!fileData.containsKey(filePath)) continue;
-    final entry = fileData[filePath]!;
-
-    await parseAudioDataSourceEntry(
-      entry.term, entry.reading, entry.pitchPattern, indexId, db, aC);
-
-    // if enough audios have been processed, import them into the DB
-    if(i % noFilesToBatchInsert == 0 || i == noEntries) {
-      await importMediaFiles(db, filesToInsert);
-      filesToInsert.clear();
-    }
-  }
 }

@@ -20,18 +20,13 @@ import 'package:path/path.dart' as p;
 import 'package:universal_io/io.dart';
 
 
-// -----------------------------------------------------------------------------
-// CONSTANTS
-// -----------------------------------------------------------------------------
+
 const String indexFileNamingScheme = "index.json";
 const List<String> parallelHandledFiles = [
   "term_bank", "kanji_bank", "tag_bank", 
   "term_meta_bank", "kanji_meta_bank"
 ];
 
-// -----------------------------------------------------------------------------
-// PUBLIC API
-// -----------------------------------------------------------------------------
 
 Future<Stream<String>> parseDictionaryDataSource({
   String? dataSourcePath,

@@ -5308,6 +5308,638 @@ class KanjiMetaStagingTableCompanion
   }
 }
 
+class $AudioStagingTableTable extends AudioStagingTable
+    with TableInfo<$AudioStagingTableTable, AudioStagingTableData> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $AudioStagingTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _localIdMeta = const VerificationMeta(
+    'localId',
+  );
+  @override
+  late final GeneratedColumn<int> localId = GeneratedColumn<int>(
+    'local_id',
+    aliasedName,
+    false,
+    hasAutoIncrement: true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'PRIMARY KEY AUTOINCREMENT',
+    ),
+  );
+  static const VerificationMeta _termMeta = const VerificationMeta('term');
+  @override
+  late final GeneratedColumn<String> term = GeneratedColumn<String>(
+    'term',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _readingMeta = const VerificationMeta(
+    'reading',
+  );
+  @override
+  late final GeneratedColumn<String> reading = GeneratedColumn<String>(
+    'reading',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _pitchPatternMeta = const VerificationMeta(
+    'pitchPattern',
+  );
+  @override
+  late final GeneratedColumn<int> pitchPattern = GeneratedColumn<int>(
+    'pitch_pattern',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _originalFileNameMeta = const VerificationMeta(
+    'originalFileName',
+  );
+  @override
+  late final GeneratedColumn<String> originalFileName = GeneratedColumn<String>(
+    'original_file_name',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    localId,
+    term,
+    reading,
+    pitchPattern,
+    originalFileName,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'audio_staging_table';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<AudioStagingTableData> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('local_id')) {
+      context.handle(
+        _localIdMeta,
+        localId.isAcceptableOrUnknown(data['local_id']!, _localIdMeta),
+      );
+    }
+    if (data.containsKey('term')) {
+      context.handle(
+        _termMeta,
+        term.isAcceptableOrUnknown(data['term']!, _termMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_termMeta);
+    }
+    if (data.containsKey('reading')) {
+      context.handle(
+        _readingMeta,
+        reading.isAcceptableOrUnknown(data['reading']!, _readingMeta),
+      );
+    }
+    if (data.containsKey('pitch_pattern')) {
+      context.handle(
+        _pitchPatternMeta,
+        pitchPattern.isAcceptableOrUnknown(
+          data['pitch_pattern']!,
+          _pitchPatternMeta,
+        ),
+      );
+    }
+    if (data.containsKey('original_file_name')) {
+      context.handle(
+        _originalFileNameMeta,
+        originalFileName.isAcceptableOrUnknown(
+          data['original_file_name']!,
+          _originalFileNameMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_originalFileNameMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {localId};
+  @override
+  AudioStagingTableData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return AudioStagingTableData(
+      localId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}local_id'],
+      )!,
+      term: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}term'],
+      )!,
+      reading: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}reading'],
+      ),
+      pitchPattern: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}pitch_pattern'],
+      ),
+      originalFileName: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}original_file_name'],
+      )!,
+    );
+  }
+
+  @override
+  $AudioStagingTableTable createAlias(String alias) {
+    return $AudioStagingTableTable(attachedDatabase, alias);
+  }
+}
+
+class AudioStagingTableData extends DataClass
+    implements Insertable<AudioStagingTableData> {
+  final int localId;
+  final String term;
+  final String? reading;
+  final int? pitchPattern;
+  final String originalFileName;
+  const AudioStagingTableData({
+    required this.localId,
+    required this.term,
+    this.reading,
+    this.pitchPattern,
+    required this.originalFileName,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['local_id'] = Variable<int>(localId);
+    map['term'] = Variable<String>(term);
+    if (!nullToAbsent || reading != null) {
+      map['reading'] = Variable<String>(reading);
+    }
+    if (!nullToAbsent || pitchPattern != null) {
+      map['pitch_pattern'] = Variable<int>(pitchPattern);
+    }
+    map['original_file_name'] = Variable<String>(originalFileName);
+    return map;
+  }
+
+  AudioStagingTableCompanion toCompanion(bool nullToAbsent) {
+    return AudioStagingTableCompanion(
+      localId: Value(localId),
+      term: Value(term),
+      reading: reading == null && nullToAbsent
+          ? const Value.absent()
+          : Value(reading),
+      pitchPattern: pitchPattern == null && nullToAbsent
+          ? const Value.absent()
+          : Value(pitchPattern),
+      originalFileName: Value(originalFileName),
+    );
+  }
+
+  factory AudioStagingTableData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return AudioStagingTableData(
+      localId: serializer.fromJson<int>(json['localId']),
+      term: serializer.fromJson<String>(json['term']),
+      reading: serializer.fromJson<String?>(json['reading']),
+      pitchPattern: serializer.fromJson<int?>(json['pitchPattern']),
+      originalFileName: serializer.fromJson<String>(json['originalFileName']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'localId': serializer.toJson<int>(localId),
+      'term': serializer.toJson<String>(term),
+      'reading': serializer.toJson<String?>(reading),
+      'pitchPattern': serializer.toJson<int?>(pitchPattern),
+      'originalFileName': serializer.toJson<String>(originalFileName),
+    };
+  }
+
+  AudioStagingTableData copyWith({
+    int? localId,
+    String? term,
+    Value<String?> reading = const Value.absent(),
+    Value<int?> pitchPattern = const Value.absent(),
+    String? originalFileName,
+  }) => AudioStagingTableData(
+    localId: localId ?? this.localId,
+    term: term ?? this.term,
+    reading: reading.present ? reading.value : this.reading,
+    pitchPattern: pitchPattern.present ? pitchPattern.value : this.pitchPattern,
+    originalFileName: originalFileName ?? this.originalFileName,
+  );
+  AudioStagingTableData copyWithCompanion(AudioStagingTableCompanion data) {
+    return AudioStagingTableData(
+      localId: data.localId.present ? data.localId.value : this.localId,
+      term: data.term.present ? data.term.value : this.term,
+      reading: data.reading.present ? data.reading.value : this.reading,
+      pitchPattern: data.pitchPattern.present
+          ? data.pitchPattern.value
+          : this.pitchPattern,
+      originalFileName: data.originalFileName.present
+          ? data.originalFileName.value
+          : this.originalFileName,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('AudioStagingTableData(')
+          ..write('localId: $localId, ')
+          ..write('term: $term, ')
+          ..write('reading: $reading, ')
+          ..write('pitchPattern: $pitchPattern, ')
+          ..write('originalFileName: $originalFileName')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(localId, term, reading, pitchPattern, originalFileName);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is AudioStagingTableData &&
+          other.localId == this.localId &&
+          other.term == this.term &&
+          other.reading == this.reading &&
+          other.pitchPattern == this.pitchPattern &&
+          other.originalFileName == this.originalFileName);
+}
+
+class AudioStagingTableCompanion
+    extends UpdateCompanion<AudioStagingTableData> {
+  final Value<int> localId;
+  final Value<String> term;
+  final Value<String?> reading;
+  final Value<int?> pitchPattern;
+  final Value<String> originalFileName;
+  const AudioStagingTableCompanion({
+    this.localId = const Value.absent(),
+    this.term = const Value.absent(),
+    this.reading = const Value.absent(),
+    this.pitchPattern = const Value.absent(),
+    this.originalFileName = const Value.absent(),
+  });
+  AudioStagingTableCompanion.insert({
+    this.localId = const Value.absent(),
+    required String term,
+    this.reading = const Value.absent(),
+    this.pitchPattern = const Value.absent(),
+    required String originalFileName,
+  }) : term = Value(term),
+       originalFileName = Value(originalFileName);
+  static Insertable<AudioStagingTableData> custom({
+    Expression<int>? localId,
+    Expression<String>? term,
+    Expression<String>? reading,
+    Expression<int>? pitchPattern,
+    Expression<String>? originalFileName,
+  }) {
+    return RawValuesInsertable({
+      if (localId != null) 'local_id': localId,
+      if (term != null) 'term': term,
+      if (reading != null) 'reading': reading,
+      if (pitchPattern != null) 'pitch_pattern': pitchPattern,
+      if (originalFileName != null) 'original_file_name': originalFileName,
+    });
+  }
+
+  AudioStagingTableCompanion copyWith({
+    Value<int>? localId,
+    Value<String>? term,
+    Value<String?>? reading,
+    Value<int?>? pitchPattern,
+    Value<String>? originalFileName,
+  }) {
+    return AudioStagingTableCompanion(
+      localId: localId ?? this.localId,
+      term: term ?? this.term,
+      reading: reading ?? this.reading,
+      pitchPattern: pitchPattern ?? this.pitchPattern,
+      originalFileName: originalFileName ?? this.originalFileName,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (localId.present) {
+      map['local_id'] = Variable<int>(localId.value);
+    }
+    if (term.present) {
+      map['term'] = Variable<String>(term.value);
+    }
+    if (reading.present) {
+      map['reading'] = Variable<String>(reading.value);
+    }
+    if (pitchPattern.present) {
+      map['pitch_pattern'] = Variable<int>(pitchPattern.value);
+    }
+    if (originalFileName.present) {
+      map['original_file_name'] = Variable<String>(originalFileName.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('AudioStagingTableCompanion(')
+          ..write('localId: $localId, ')
+          ..write('term: $term, ')
+          ..write('reading: $reading, ')
+          ..write('pitchPattern: $pitchPattern, ')
+          ..write('originalFileName: $originalFileName')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $MediaStagingTableTable extends MediaStagingTable
+    with TableInfo<$MediaStagingTableTable, MediaStagingTableData> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $MediaStagingTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _localIdMeta = const VerificationMeta(
+    'localId',
+  );
+  @override
+  late final GeneratedColumn<int> localId = GeneratedColumn<int>(
+    'local_id',
+    aliasedName,
+    false,
+    hasAutoIncrement: true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'PRIMARY KEY AUTOINCREMENT',
+    ),
+  );
+  static const VerificationMeta _fileNameMeta = const VerificationMeta(
+    'fileName',
+  );
+  @override
+  late final GeneratedColumn<String> fileName = GeneratedColumn<String>(
+    'file_name',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _contentMeta = const VerificationMeta(
+    'content',
+  );
+  @override
+  late final GeneratedColumn<Uint8List> content = GeneratedColumn<Uint8List>(
+    'content',
+    aliasedName,
+    false,
+    type: DriftSqlType.blob,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [localId, fileName, content];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'media_staging_table';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<MediaStagingTableData> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('local_id')) {
+      context.handle(
+        _localIdMeta,
+        localId.isAcceptableOrUnknown(data['local_id']!, _localIdMeta),
+      );
+    }
+    if (data.containsKey('file_name')) {
+      context.handle(
+        _fileNameMeta,
+        fileName.isAcceptableOrUnknown(data['file_name']!, _fileNameMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_fileNameMeta);
+    }
+    if (data.containsKey('content')) {
+      context.handle(
+        _contentMeta,
+        content.isAcceptableOrUnknown(data['content']!, _contentMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_contentMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {localId};
+  @override
+  MediaStagingTableData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return MediaStagingTableData(
+      localId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}local_id'],
+      )!,
+      fileName: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}file_name'],
+      )!,
+      content: attachedDatabase.typeMapping.read(
+        DriftSqlType.blob,
+        data['${effectivePrefix}content'],
+      )!,
+    );
+  }
+
+  @override
+  $MediaStagingTableTable createAlias(String alias) {
+    return $MediaStagingTableTable(attachedDatabase, alias);
+  }
+}
+
+class MediaStagingTableData extends DataClass
+    implements Insertable<MediaStagingTableData> {
+  final int localId;
+  final String fileName;
+  final Uint8List content;
+  const MediaStagingTableData({
+    required this.localId,
+    required this.fileName,
+    required this.content,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['local_id'] = Variable<int>(localId);
+    map['file_name'] = Variable<String>(fileName);
+    map['content'] = Variable<Uint8List>(content);
+    return map;
+  }
+
+  MediaStagingTableCompanion toCompanion(bool nullToAbsent) {
+    return MediaStagingTableCompanion(
+      localId: Value(localId),
+      fileName: Value(fileName),
+      content: Value(content),
+    );
+  }
+
+  factory MediaStagingTableData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return MediaStagingTableData(
+      localId: serializer.fromJson<int>(json['localId']),
+      fileName: serializer.fromJson<String>(json['fileName']),
+      content: serializer.fromJson<Uint8List>(json['content']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'localId': serializer.toJson<int>(localId),
+      'fileName': serializer.toJson<String>(fileName),
+      'content': serializer.toJson<Uint8List>(content),
+    };
+  }
+
+  MediaStagingTableData copyWith({
+    int? localId,
+    String? fileName,
+    Uint8List? content,
+  }) => MediaStagingTableData(
+    localId: localId ?? this.localId,
+    fileName: fileName ?? this.fileName,
+    content: content ?? this.content,
+  );
+  MediaStagingTableData copyWithCompanion(MediaStagingTableCompanion data) {
+    return MediaStagingTableData(
+      localId: data.localId.present ? data.localId.value : this.localId,
+      fileName: data.fileName.present ? data.fileName.value : this.fileName,
+      content: data.content.present ? data.content.value : this.content,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('MediaStagingTableData(')
+          ..write('localId: $localId, ')
+          ..write('fileName: $fileName, ')
+          ..write('content: $content')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(localId, fileName, $driftBlobEquality.hash(content));
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is MediaStagingTableData &&
+          other.localId == this.localId &&
+          other.fileName == this.fileName &&
+          $driftBlobEquality.equals(other.content, this.content));
+}
+
+class MediaStagingTableCompanion
+    extends UpdateCompanion<MediaStagingTableData> {
+  final Value<int> localId;
+  final Value<String> fileName;
+  final Value<Uint8List> content;
+  const MediaStagingTableCompanion({
+    this.localId = const Value.absent(),
+    this.fileName = const Value.absent(),
+    this.content = const Value.absent(),
+  });
+  MediaStagingTableCompanion.insert({
+    this.localId = const Value.absent(),
+    required String fileName,
+    required Uint8List content,
+  }) : fileName = Value(fileName),
+       content = Value(content);
+  static Insertable<MediaStagingTableData> custom({
+    Expression<int>? localId,
+    Expression<String>? fileName,
+    Expression<Uint8List>? content,
+  }) {
+    return RawValuesInsertable({
+      if (localId != null) 'local_id': localId,
+      if (fileName != null) 'file_name': fileName,
+      if (content != null) 'content': content,
+    });
+  }
+
+  MediaStagingTableCompanion copyWith({
+    Value<int>? localId,
+    Value<String>? fileName,
+    Value<Uint8List>? content,
+  }) {
+    return MediaStagingTableCompanion(
+      localId: localId ?? this.localId,
+      fileName: fileName ?? this.fileName,
+      content: content ?? this.content,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (localId.present) {
+      map['local_id'] = Variable<int>(localId.value);
+    }
+    if (fileName.present) {
+      map['file_name'] = Variable<String>(fileName.value);
+    }
+    if (content.present) {
+      map['content'] = Variable<Uint8List>(content.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('MediaStagingTableCompanion(')
+          ..write('localId: $localId, ')
+          ..write('fileName: $fileName, ')
+          ..write('content: $content')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$StagingDatabase extends GeneratedDatabase {
   _$StagingDatabase(QueryExecutor e) : super(e);
   $StagingDatabaseManager get managers => $StagingDatabaseManager(this);
@@ -5343,6 +5975,10 @@ abstract class _$StagingDatabase extends GeneratedDatabase {
       $KanjiStatStagingTableTable(this);
   late final $KanjiMetaStagingTableTable kanjiMetaStagingTable =
       $KanjiMetaStagingTableTable(this);
+  late final $AudioStagingTableTable audioStagingTable =
+      $AudioStagingTableTable(this);
+  late final $MediaStagingTableTable mediaStagingTable =
+      $MediaStagingTableTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -5363,6 +5999,8 @@ abstract class _$StagingDatabase extends GeneratedDatabase {
     kanjiTagStagingTable,
     kanjiStatStagingTable,
     kanjiMetaStagingTable,
+    audioStagingTable,
+    mediaStagingTable,
   ];
 }
 
@@ -8487,6 +9125,386 @@ typedef $$KanjiMetaStagingTableTableProcessedTableManager =
       KanjiMetaStagingTableData,
       PrefetchHooks Function()
     >;
+typedef $$AudioStagingTableTableCreateCompanionBuilder =
+    AudioStagingTableCompanion Function({
+      Value<int> localId,
+      required String term,
+      Value<String?> reading,
+      Value<int?> pitchPattern,
+      required String originalFileName,
+    });
+typedef $$AudioStagingTableTableUpdateCompanionBuilder =
+    AudioStagingTableCompanion Function({
+      Value<int> localId,
+      Value<String> term,
+      Value<String?> reading,
+      Value<int?> pitchPattern,
+      Value<String> originalFileName,
+    });
+
+class $$AudioStagingTableTableFilterComposer
+    extends Composer<_$StagingDatabase, $AudioStagingTableTable> {
+  $$AudioStagingTableTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get localId => $composableBuilder(
+    column: $table.localId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get term => $composableBuilder(
+    column: $table.term,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get reading => $composableBuilder(
+    column: $table.reading,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get pitchPattern => $composableBuilder(
+    column: $table.pitchPattern,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get originalFileName => $composableBuilder(
+    column: $table.originalFileName,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$AudioStagingTableTableOrderingComposer
+    extends Composer<_$StagingDatabase, $AudioStagingTableTable> {
+  $$AudioStagingTableTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get localId => $composableBuilder(
+    column: $table.localId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get term => $composableBuilder(
+    column: $table.term,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get reading => $composableBuilder(
+    column: $table.reading,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get pitchPattern => $composableBuilder(
+    column: $table.pitchPattern,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get originalFileName => $composableBuilder(
+    column: $table.originalFileName,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$AudioStagingTableTableAnnotationComposer
+    extends Composer<_$StagingDatabase, $AudioStagingTableTable> {
+  $$AudioStagingTableTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get localId =>
+      $composableBuilder(column: $table.localId, builder: (column) => column);
+
+  GeneratedColumn<String> get term =>
+      $composableBuilder(column: $table.term, builder: (column) => column);
+
+  GeneratedColumn<String> get reading =>
+      $composableBuilder(column: $table.reading, builder: (column) => column);
+
+  GeneratedColumn<int> get pitchPattern => $composableBuilder(
+    column: $table.pitchPattern,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get originalFileName => $composableBuilder(
+    column: $table.originalFileName,
+    builder: (column) => column,
+  );
+}
+
+class $$AudioStagingTableTableTableManager
+    extends
+        RootTableManager<
+          _$StagingDatabase,
+          $AudioStagingTableTable,
+          AudioStagingTableData,
+          $$AudioStagingTableTableFilterComposer,
+          $$AudioStagingTableTableOrderingComposer,
+          $$AudioStagingTableTableAnnotationComposer,
+          $$AudioStagingTableTableCreateCompanionBuilder,
+          $$AudioStagingTableTableUpdateCompanionBuilder,
+          (
+            AudioStagingTableData,
+            BaseReferences<
+              _$StagingDatabase,
+              $AudioStagingTableTable,
+              AudioStagingTableData
+            >,
+          ),
+          AudioStagingTableData,
+          PrefetchHooks Function()
+        > {
+  $$AudioStagingTableTableTableManager(
+    _$StagingDatabase db,
+    $AudioStagingTableTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$AudioStagingTableTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$AudioStagingTableTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$AudioStagingTableTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<int> localId = const Value.absent(),
+                Value<String> term = const Value.absent(),
+                Value<String?> reading = const Value.absent(),
+                Value<int?> pitchPattern = const Value.absent(),
+                Value<String> originalFileName = const Value.absent(),
+              }) => AudioStagingTableCompanion(
+                localId: localId,
+                term: term,
+                reading: reading,
+                pitchPattern: pitchPattern,
+                originalFileName: originalFileName,
+              ),
+          createCompanionCallback:
+              ({
+                Value<int> localId = const Value.absent(),
+                required String term,
+                Value<String?> reading = const Value.absent(),
+                Value<int?> pitchPattern = const Value.absent(),
+                required String originalFileName,
+              }) => AudioStagingTableCompanion.insert(
+                localId: localId,
+                term: term,
+                reading: reading,
+                pitchPattern: pitchPattern,
+                originalFileName: originalFileName,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$AudioStagingTableTableProcessedTableManager =
+    ProcessedTableManager<
+      _$StagingDatabase,
+      $AudioStagingTableTable,
+      AudioStagingTableData,
+      $$AudioStagingTableTableFilterComposer,
+      $$AudioStagingTableTableOrderingComposer,
+      $$AudioStagingTableTableAnnotationComposer,
+      $$AudioStagingTableTableCreateCompanionBuilder,
+      $$AudioStagingTableTableUpdateCompanionBuilder,
+      (
+        AudioStagingTableData,
+        BaseReferences<
+          _$StagingDatabase,
+          $AudioStagingTableTable,
+          AudioStagingTableData
+        >,
+      ),
+      AudioStagingTableData,
+      PrefetchHooks Function()
+    >;
+typedef $$MediaStagingTableTableCreateCompanionBuilder =
+    MediaStagingTableCompanion Function({
+      Value<int> localId,
+      required String fileName,
+      required Uint8List content,
+    });
+typedef $$MediaStagingTableTableUpdateCompanionBuilder =
+    MediaStagingTableCompanion Function({
+      Value<int> localId,
+      Value<String> fileName,
+      Value<Uint8List> content,
+    });
+
+class $$MediaStagingTableTableFilterComposer
+    extends Composer<_$StagingDatabase, $MediaStagingTableTable> {
+  $$MediaStagingTableTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get localId => $composableBuilder(
+    column: $table.localId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get fileName => $composableBuilder(
+    column: $table.fileName,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<Uint8List> get content => $composableBuilder(
+    column: $table.content,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$MediaStagingTableTableOrderingComposer
+    extends Composer<_$StagingDatabase, $MediaStagingTableTable> {
+  $$MediaStagingTableTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get localId => $composableBuilder(
+    column: $table.localId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get fileName => $composableBuilder(
+    column: $table.fileName,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<Uint8List> get content => $composableBuilder(
+    column: $table.content,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$MediaStagingTableTableAnnotationComposer
+    extends Composer<_$StagingDatabase, $MediaStagingTableTable> {
+  $$MediaStagingTableTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get localId =>
+      $composableBuilder(column: $table.localId, builder: (column) => column);
+
+  GeneratedColumn<String> get fileName =>
+      $composableBuilder(column: $table.fileName, builder: (column) => column);
+
+  GeneratedColumn<Uint8List> get content =>
+      $composableBuilder(column: $table.content, builder: (column) => column);
+}
+
+class $$MediaStagingTableTableTableManager
+    extends
+        RootTableManager<
+          _$StagingDatabase,
+          $MediaStagingTableTable,
+          MediaStagingTableData,
+          $$MediaStagingTableTableFilterComposer,
+          $$MediaStagingTableTableOrderingComposer,
+          $$MediaStagingTableTableAnnotationComposer,
+          $$MediaStagingTableTableCreateCompanionBuilder,
+          $$MediaStagingTableTableUpdateCompanionBuilder,
+          (
+            MediaStagingTableData,
+            BaseReferences<
+              _$StagingDatabase,
+              $MediaStagingTableTable,
+              MediaStagingTableData
+            >,
+          ),
+          MediaStagingTableData,
+          PrefetchHooks Function()
+        > {
+  $$MediaStagingTableTableTableManager(
+    _$StagingDatabase db,
+    $MediaStagingTableTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$MediaStagingTableTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$MediaStagingTableTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$MediaStagingTableTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<int> localId = const Value.absent(),
+                Value<String> fileName = const Value.absent(),
+                Value<Uint8List> content = const Value.absent(),
+              }) => MediaStagingTableCompanion(
+                localId: localId,
+                fileName: fileName,
+                content: content,
+              ),
+          createCompanionCallback:
+              ({
+                Value<int> localId = const Value.absent(),
+                required String fileName,
+                required Uint8List content,
+              }) => MediaStagingTableCompanion.insert(
+                localId: localId,
+                fileName: fileName,
+                content: content,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$MediaStagingTableTableProcessedTableManager =
+    ProcessedTableManager<
+      _$StagingDatabase,
+      $MediaStagingTableTable,
+      MediaStagingTableData,
+      $$MediaStagingTableTableFilterComposer,
+      $$MediaStagingTableTableOrderingComposer,
+      $$MediaStagingTableTableAnnotationComposer,
+      $$MediaStagingTableTableCreateCompanionBuilder,
+      $$MediaStagingTableTableUpdateCompanionBuilder,
+      (
+        MediaStagingTableData,
+        BaseReferences<
+          _$StagingDatabase,
+          $MediaStagingTableTable,
+          MediaStagingTableData
+        >,
+      ),
+      MediaStagingTableData,
+      PrefetchHooks Function()
+    >;
 
 class $StagingDatabaseManager {
   final _$StagingDatabase _db;
@@ -8541,4 +9559,8 @@ class $StagingDatabaseManager {
       $$KanjiStatStagingTableTableTableManager(_db, _db.kanjiStatStagingTable);
   $$KanjiMetaStagingTableTableTableManager get kanjiMetaStagingTable =>
       $$KanjiMetaStagingTableTableTableManager(_db, _db.kanjiMetaStagingTable);
+  $$AudioStagingTableTableTableManager get audioStagingTable =>
+      $$AudioStagingTableTableTableManager(_db, _db.audioStagingTable);
+  $$MediaStagingTableTableTableManager get mediaStagingTable =>
+      $$MediaStagingTableTableTableManager(_db, _db.mediaStagingTable);
 }

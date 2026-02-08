@@ -4,7 +4,7 @@ import 'dart:io';
 import 'dart:isolate';
 
 import 'package:archive/archive_io.dart';
-import 'package:dakanji_db_core/parsing/yomitan/staging_db/db/staging_db.dart';
+import 'package:dakanji_db_core/parsing/staging_db/staging_db.dart';
 import 'package:dakanji_db_core/parsing/yomitan/staging_db/parsers/kanji_bank_v3_parser.dart';
 import 'package:dakanji_db_core/parsing/yomitan/staging_db/parsers/kanji_meta_bank_v3_parser.dart';
 import 'package:dakanji_db_core/parsing/yomitan/staging_db/parsers/tag_bank_v3_parser.dart';
