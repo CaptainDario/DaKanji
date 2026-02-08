@@ -17,7 +17,7 @@ Future<JapaneseProcessor> get japaneseProcessor async{
       mecabTransferableState: MecabTransferableState(
         libmecabPath: mecabDynamicLibPath,
         mecabDictDirPath: mecabDicPath,
-        includeFeatures: true
+        options: ""
       )
     );
     await _japaneseProcessor!.init();

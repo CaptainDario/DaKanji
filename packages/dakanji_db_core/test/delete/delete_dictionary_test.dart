@@ -19,9 +19,6 @@ void main() {
     db = DaKanjiDB(
     dbPath: dakanjiDbPath, inMemory: true, languageProcessor: await japaneseProcessor);
 
-    mecab = Mecab();
-    await mecab.init(mecabDynamicLibPath, mecabDicPath, true);
-
     dataSourceZipPath =
         await createTmpZip(Directory(yomitanSampleDictionaryPath));
   });

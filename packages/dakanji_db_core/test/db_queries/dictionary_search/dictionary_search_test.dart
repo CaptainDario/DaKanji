@@ -7,7 +7,6 @@ import 'package:dakanji_db_core/database/db_queries/dictionary_search/dictionary
 import 'package:dakanji_db_shared/dakanji_db_shared.dart';
 import 'package:drift/drift.dart';
 import 'package:language_processing/src/language_processor_options.dart';
-import 'package:mecab_for_dart/mecab_dart.dart';
 import 'package:path/path.dart' as p;
 import 'package:test/test.dart';
 
@@ -233,10 +232,6 @@ Future setupFreshDB() async {
   //if(File(dakanjiDbPath).existsSync()) File(dakanjiDbPath).deleteSync();
   DaKanjiDB db = DaKanjiDB(
     dbPath: dakanjiDbPath, inMemory: true, languageProcessor: await japaneseProcessor);
-
-  // init mecab
-  final mecab = Mecab();
-  await mecab.init(mecabDynamicLibPath, mecabDicPath, true);
 
   // emulate importing 5 dictionaries
   // take all data form the yomitan sample dictionary except term banks

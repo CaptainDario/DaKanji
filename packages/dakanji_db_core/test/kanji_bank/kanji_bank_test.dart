@@ -3,7 +3,6 @@ import 'package:dakanji_db_core/database/dakanji_db.dart';
 import 'package:dakanji_db_core/database/kanji/kanji_bank_v3_entry.dart';
 import 'package:dakanji_db_core/parsing/yomitan_in_memory_cache_parser.dart';
 import 'package:dakanji_db_shared/paths.dart';
-import 'package:mecab_for_dart/mecab_dart.dart';
 import 'package:test/test.dart';
 import 'package:universal_io/io.dart';
 
@@ -49,9 +48,6 @@ Future setupFreshDB() async {
   DaKanjiDB db = DaKanjiDB(
     dbPath: dakanjiDbPath, inMemory: true, languageProcessor: await japaneseProcessor);
   await db.clearDB();
-
-  final mecab = Mecab();
-  await mecab.init(mecabDynamicLibPath, mecabDicPath, true);
 
   // convert the test files
   Stopwatch s = Stopwatch()..start();

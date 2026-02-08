@@ -55,14 +55,14 @@ class JapaneseProcessor extends LanguageProcessor{
   @override
   Future<void> init() async {
     if(mecabTransferableState != null){
-      _mecab = await Mecab().fromTransferableState(mecabTransferableState!);
+      _mecab = await Mecab.fromTransferableState(mecabTransferableState!);
     }
     _initialized = true;
   }
 
   @override
   Future<void> close() async {
-    if (_mecab != null) _mecab!.destroy();
+    if (_mecab != null) _mecab!.dispose();
 
     _initialized = false;
   }

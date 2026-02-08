@@ -9,8 +9,7 @@ import 'mecab_deconjugation_test_cases.dart';
 
 void main() async {
 
-  Mecab mecab = Mecab();
-  await mecab.init(mecabDynamicLibPath, mecabDicPath, true);
+  Mecab mecab = await Mecab.create(mecabDynamicLibPath, mecabDicPath, "");
 
   for (int i = 0; i < verbs.length; i++) {
 
