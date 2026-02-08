@@ -2,7 +2,6 @@
 import 'package:dakanji_db_core/database/audio/audio_entry.dart';
 import 'package:dakanji_db_core/database/dakanji_db.dart';
 import 'package:dakanji_db_core/parsing/audio/in_memory_cache/audio_parser.dart' as in_memory_audio_parser;
-import 'package:dakanji_db_core/parsing/audio_staging_db_parser.dart' as staging_audio_parser;
 import 'package:dakanji_db_shared/paths.dart';
 import 'package:test/test.dart';
 import 'package:universal_io/io.dart';
@@ -97,8 +96,8 @@ Future<DaKanjiDB> setupFreshDB(
   String dataSourceZipPath = await createTmpZip(Directory(dataSourcePath));
   print(dataSourceZipPath);
 
-  final parse = staging_audio_parser.par;
-  //final parse = in_memory_audio_parser.parseAudioDataSource;
+  //final parse = staging_audio_parser.par;
+  final parse = in_memory_audio_parser.parseAudioDataSource;
   Stream importProgress = await parse(
     audioDataSourceFile: dataSourceZipPath,
     db: db,
