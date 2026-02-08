@@ -1,4 +1,4 @@
-import 'japanese_string_operations.dart';
+import '../japanese_string_operations.dart';
 
 // Finds all sentences in the given `text` using a RegExp for estimation
 List<String> findSentencesRegexp(String text){
