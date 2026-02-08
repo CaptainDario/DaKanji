@@ -185,7 +185,7 @@ class _SmartHtmlSelectionState extends State<SmartHtmlSelection> {
 
   List<_TextToken> _tokenizeParagraph(RenderParagraph renderParagraph, RenderBox anchorBox) {
     final List<_TextToken> tokens = [];
-    final InlineSpan? rootSpan = renderParagraph.text;
+    final InlineSpan rootSpan = renderParagraph.text;
     final List<RenderBox> rubyChildren = _getRenderChildren(renderParagraph);
     int rubyIndex = 0;
 

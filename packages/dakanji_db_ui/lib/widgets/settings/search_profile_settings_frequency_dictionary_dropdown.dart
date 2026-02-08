@@ -47,7 +47,7 @@ class SearchProfileSettingsFrequencyDictionaryDropdown extends StatelessWidget {
               color: Theme.of(context).cardColor,
               borderRadius: BorderRadius.circular(8.0),
               border: Border.all(
-                color: Theme.of(context).dividerColor.withOpacity(0.5),
+                color: Theme.of(context).dividerColor.withValues(alpha: 0.5),
               ),
             ),
             child: DropdownButtonHideUnderline(
