@@ -1,7 +1,7 @@
 
 import 'package:dakanji_db_core/database/audio/audio_entry.dart';
 import 'package:dakanji_db_core/database/dakanji_db.dart';
-import 'package:dakanji_db_core/parsing/yomitan/in_memory_cache/audio/audio_parser.dart';
+import 'package:dakanji_db_core/parsing/audio/in_memory_cache/audio_parser.dart';
 import 'package:dakanji_db_shared/paths.dart';
 import 'package:test/test.dart';
 import 'package:universal_io/io.dart';
