@@ -7,7 +7,6 @@ import "package:dakanji_db_core/database/db_queries/dictionary_search/dictionary
 import "package:dakanji_db_core/database/db_queries/dictionary_search/grouping_rules.dart";
 import "package:dakanji_db_core/database/db_queries/kanji_dictionary_search/kanji_dictionary_search_result.dart";
 import "package:drift/drift.dart";
-import "package:language_processing/japanese/japanese_string_operations.dart";
 
 import "../dakanji_db.dart";
 
@@ -73,7 +72,7 @@ class DictionarySearchDao extends DatabaseAccessor<DaKanjiDB> with _$DictionaryS
     // Kanji lookup for single-character searches
     Stopwatch kS = Stopwatch()..start();
     Future<List<KanjiDictionarySearchResult>>? kanjiResults;
-    if(ctx.cleanedSearchInput.length == 1 && kanjiRegex.hasMatch(ctx.cleanedSearchInput)) {
+    if(ctx.cleanedSearchInput.length == 1 && db.languageProcessor.isIdeographic(ctx.cleanedSearchInput)) {
       kanjiResults = db.kanjiSearchDao.kanjiDictionarySearch(kanjis: [ctx.cleanedSearchInput])
         .then((value) {
           print("Kanji lookup took ${kS.elapsedMilliseconds}ms, found ${value.length} entries.");
@@ -268,7 +267,8 @@ class DictionarySearchDao extends DatabaseAccessor<DaKanjiDB> with _$DictionaryS
     if (queries.isEmpty) return [];
 
     return await db.dictionary_search_drift_find_term_bank_entries(
-      buildSearchInputJson(terms: queries, tags: tags, pos: pos),
+      buildSearchInputJson(
+        terms: queries, tags: tags, pos: pos, processor: db.languageProcessor),
       indexesToInclude == null ? null : jsonEncode(indexesToInclude),
       useGlob ? 1 : 0,
       searchNormalized ? 1 : 0,

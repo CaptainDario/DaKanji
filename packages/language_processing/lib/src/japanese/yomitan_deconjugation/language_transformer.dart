@@ -1,5 +1,5 @@
 import 'package:collection/collection.dart';
-import 'package:language_processing/japanese/conjugation/yomitan_conjugation_data/japanese_transforms.dart';
+import 'package:language_processing/src/japanese/conjugation/yomitan_conjugation_data/japanese_transforms.dart';
 
 /// Represents a single step in a deconjugation chain.
 class TraceFrame {

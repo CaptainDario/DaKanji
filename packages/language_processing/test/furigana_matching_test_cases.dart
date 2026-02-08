@@ -1,102 +1,102 @@
-import 'package:language_processing/japanese/furigana_matching.dart';
+import 'package:language_processing/language_processing.dart';
 
 
 
 List<(
   Map<String, String> input,
-  List<FuriganaPair> expectation,
+  List<TermReadingPair> expectation,
   bool convertToKatakana
 )> testCases = [
   (
     {"kanji": "言い方", "kana": "いいかた"},
     [
-      FuriganaPair("言", "イ"),
-      FuriganaPair("", "イ"),
-      FuriganaPair("方", "カタ"),
+      TermReadingPair("言", "イ"),
+      TermReadingPair("", "イ"),
+      TermReadingPair("方", "カタ"),
     ],
     true
   ),
   (
     {"kanji": "思い始め", "kana": "おもいはじめ"},
     [
-      FuriganaPair("思", "オモ"),
-      FuriganaPair("", "イ"),
-      FuriganaPair("始", "ハジ"),
-      FuriganaPair("", "メ"),
+      TermReadingPair("思", "オモ"),
+      TermReadingPair("", "イ"),
+      TermReadingPair("始", "ハジ"),
+      TermReadingPair("", "メ"),
     ],
     true
   ),
     (
     {"kanji": "言い方", "kana": "いいかた"},
     [
-      FuriganaPair("言", "い"),
-      FuriganaPair("", "い"),
-      FuriganaPair("方", "かた"),
+      TermReadingPair("言", "い"),
+      TermReadingPair("", "い"),
+      TermReadingPair("方", "かた"),
     ],
     false
   ),
   (
     {"kanji": "思い始め", "kana": "おもいはじめ"},
     [
-      FuriganaPair("思", "おも"),
-      FuriganaPair("", "い"),
-      FuriganaPair("始", "はじ"),
-      FuriganaPair("", "め"),
+      TermReadingPair("思", "おも"),
+      TermReadingPair("", "い"),
+      TermReadingPair("始", "はじ"),
+      TermReadingPair("", "め"),
     ],
     false
   ),
   (
     {"kanji": "東京", "kana": "トーキョー"},
     [
-      FuriganaPair("東京", "トーキョー"),
+      TermReadingPair("東京", "トーキョー"),
     ],
     true
   ),
   (
     {"kanji": "食べる", "kana": "たべる"},
     [
-      FuriganaPair("食", "タ"),
-      FuriganaPair("", "ベル"),
+      TermReadingPair("食", "タ"),
+      TermReadingPair("", "ベル"),
     ],
     true
   ),
   (
     {"kanji": "今日", "kana": "きょう"},
     [
-      FuriganaPair("今日", "キョウ"),
+      TermReadingPair("今日", "キョウ"),
     ],
     true
   ),
   (
     {"kanji": "友達", "kana": "ともだち"},
     [
-      FuriganaPair("友達", "トモダチ"),
+      TermReadingPair("友達", "トモダチ"),
     ],
     true
   ),
   (
     {"kanji": "ゴミ箱", "kana": "ごみばこ"},
     [
-      FuriganaPair("", "ゴミ"),
-      FuriganaPair("箱", "バコ"),
+      TermReadingPair("", "ゴミ"),
+      TermReadingPair("箱", "バコ"),
     ],
     true
   ),
   (
     {"kanji": "食べる辣油", "kana": "たべるラーゆ"},
     [
-      FuriganaPair("食", "タ"),
-      FuriganaPair("", "ベル"),
-      FuriganaPair("辣油", "ラーユ"),
+      TermReadingPair("食", "タ"),
+      TermReadingPair("", "ベル"),
+      TermReadingPair("辣油", "ラーユ"),
     ],
     true
   ),
   (
     {"kanji": "食べる辣油", "kana": "たべるラーゆ"},
     [
-      FuriganaPair("食", "た"),
-      FuriganaPair("", "べる"),
-      FuriganaPair("辣油", "ラーゆ"),
+      TermReadingPair("食", "た"),
+      TermReadingPair("", "べる"),
+      TermReadingPair("辣油", "ラーゆ"),
     ],
     false 
   ),
@@ -104,7 +104,7 @@ List<(
   (
     {"kanji": "食べる", "kana": "たべるべる"},
     [
-      FuriganaPair("食べる", "たべるべる"),
+      TermReadingPair("食べる", "たべるべる"),
     ],
     false
   ),

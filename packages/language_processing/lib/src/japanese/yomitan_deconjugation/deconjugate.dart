@@ -1,6 +1,6 @@
-import 'package:language_processing/japanese/conjugation/yomitan_conjugation_data/japanese_transforms.dart';
-import 'package:language_processing/util/deconjugation_result.dart';
-import 'package:language_processing/util/language_transformer.dart';
+import 'package:language_processing/src/deconjugation_result.dart';
+import 'package:language_processing/src/japanese/conjugation/yomitan_conjugation_data/japanese_transforms.dart';
+import 'package:language_processing/src/japanese/yomitan_deconjugation/language_transformer.dart';
 
 
 /// A service class to deconjugate Japanese words
@@ -25,9 +25,9 @@ class JapaneseDeconjugator {
   }
 
   /// Returns all possible deconjugations for a given [inflectedWord].
-  List<DeconjugationResult> deconjugate(String inflectedWord) {
+  Set<DeconjugationResult> deconjugate(String inflectedWord) {
     final allTransforms = _transformer.transform(inflectedWord); //
-    final validResults = <DeconjugationResult>[];
+    final validResults = <DeconjugationResult>{};
 
     for (final result in allTransforms) {
       final requiredPos = _findRequiredPartsOfSpeech(result.conditions);
@@ -45,6 +45,23 @@ class JapaneseDeconjugator {
       }
     }
     return validResults;
+  }
+
+  List<Set<DeconjugationResult>> deconjugateAll(List<String> terms) {
+
+    final List<Set<DeconjugationResult>> results = [];
+    final Set<String> exclusions = terms.toSet();
+
+    for (String d in terms) {
+      results.add({});
+      if (d.isEmpty) continue;
+      
+      results.last.addAll(
+        deconjugate(d).where((e) => !exclusions.contains(e.deconjugatedTerm))
+      );
+    }
+
+    return results;
   }
 
   /// Finds the required PoS by testing every known dictionary form

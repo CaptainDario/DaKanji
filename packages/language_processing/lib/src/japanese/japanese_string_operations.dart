@@ -137,7 +137,8 @@ List<String> _getAllRomajiConversionVariants(String romaji) {
       // --- Branch 2: Split (e.g., "n'a") ---
       // Add "n'" and move to the next character (the vowel/y).
       generateVariant(index + 1, "${currentVariant}n'");
-    } else {
+    }
+    else {
       // Not an ambiguous 'n', so just append the current character
       // and continue processing from the next index.
       generateVariant(index + 1, currentVariant + char);

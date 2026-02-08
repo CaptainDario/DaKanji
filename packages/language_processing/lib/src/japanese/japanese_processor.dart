@@ -1,11 +1,16 @@
-import 'package:language_processing/japanese/deconjugation/yomitan_deconjugate.dart' as jp_dec;
-import 'package:language_processing/japanese/normalize/normalize.dart' as jp_norm;
-import 'package:language_processing/japanese/spellfix/forbidden_sequences.dart';
-import 'package:language_processing/japanese/spellfix/spellfix.dart' as jp_spell;
-import 'package:language_processing/japanese/spellfix/substitutions.dart';
-import 'package:language_processing/language_processor.dart';
-import 'package:language_processing/language_processor_options.dart';
-import 'package:language_processing/util/deconjugation_result.dart';
+import 'package:language_processing/src/deconjugation_result.dart';
+import 'package:language_processing/src/japanese/japanese_string_operations.dart';
+import 'package:language_processing/src/japanese/normalize/normalize.dart' as jp_norm;
+import 'package:language_processing/src/japanese/segmentation/segment.dart' as jp_seg;
+import 'package:language_processing/src/japanese/sentence_finding.dart';
+import 'package:language_processing/src/japanese/spellfix/forbidden_sequences.dart';
+import 'package:language_processing/src/japanese/spellfix/spellfix.dart' as jp_spell;
+import 'package:language_processing/src/japanese/spellfix/substitutions.dart';
+import 'package:language_processing/src/japanese/term_reading_pair/furigana_matching.dart';
+import 'package:language_processing/src/japanese/yomitan_deconjugation/deconjugate.dart' as jp_dec;
+import 'package:language_processing/src/language_processor.dart';
+import 'package:language_processing/src/language_processor_options.dart';
+import 'package:language_processing/src/term_reading_pair.dart';
 import 'package:mecab_for_dart/mecab_dart.dart';
 
 
@@ -17,6 +22,8 @@ class JapaneseProcessor extends LanguageProcessor{
   MecabTransferableState? mecabTransferableState;
     
   Mecab? _mecab;
+
+  jp_dec.JapaneseDeconjugator deconjugator = jp_dec.JapaneseDeconjugator();
 
   Mecab get mecab {
     if (!_initialized || _mecab == null) {
@@ -87,40 +94,15 @@ class JapaneseProcessor extends LanguageProcessor{
   }
 
   @override
-  List<DeconjugationResult> deconjugate(String term) {
-    return jp_dec.JapaneseDeconjugator().deconjugate(term);
-  }
+  Set<DeconjugationResult> deconjugate(String term) 
+    => deconjugator.deconjugate(term);
 
   @override
-  List<DeconjugationResult> deconjugateAll(List<String> terms) {
-
-    final Set<DeconjugationResult> results = {};
-    final Set<String> exclusions = terms.toSet();
-    final deconjugator = jp_dec.JapaneseDeconjugator();
-
-    for (String d in terms) {
-      if (d.isEmpty) continue;
-      
-      results.addAll(
-        deconjugator.deconjugate(d)
-          .where((e) => !exclusions.contains(e.deconjugatedTerm))
-      );
-    }
-
-    return results.toList();
-  }
+  List<Set<DeconjugationResult>> deconjugateAll(List<String> terms)
+    => deconjugator.deconjugateAll(terms);
 
   @override
-  String? segment(String text) {
-    if (text.isEmpty) return null;
-
-    List<String> tokens = mecab.parse(text).map((e) => e.surface).toList();
-    
-    if (tokens.isNotEmpty) tokens = tokens.sublist(0, tokens.length - 1);
-    
-    String joinedTokens = tokens.join(" ");
-    return joinedTokens == text ? null : joinedTokens;
-  }
+  String? segment(String text) => jp_seg.segment(text, mecab);
 
   @override
   String getReadings(String sentence) {
@@ -155,4 +137,20 @@ class JapaneseProcessor extends LanguageProcessor{
       forbiddenSequences: forbiddenSequences
     );
   }
+
+  @override
+  bool isIdeographic(String text) => kanjiRegex.hasMatch(text);
+
+  @override
+  List<TermReadingPair> getTermReadingPairs(
+    String term, String reading, ProcessorOptions options) 
+      => matchFurigana(
+        term, reading,
+        convertToKatakana: options.japaneseGetTermReadingPairsConvertToKatakanaForFurigana
+      );
+
+  @override
+  List<String> findSentences(String text) => findSentencesRegexp(text);
+  
+
 }

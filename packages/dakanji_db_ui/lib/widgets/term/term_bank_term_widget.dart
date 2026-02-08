@@ -1,7 +1,9 @@
+import 'package:dakanji_db_core/database/dakanji_db.dart';
 import 'package:dakanji_db_core/database/term/term_bank_v3_entry.dart';
 import 'package:dakanji_util/widgets/conditional_parent_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:language_processing/japanese/furigana_matching.dart';
+import 'package:get_it/get_it.dart';
+import 'package:language_processing/language_processing.dart';
 
 
 class TermBankTermWidget extends StatefulWidget {
@@ -29,7 +31,7 @@ class TermBankTermWidget extends StatefulWidget {
 class _TermBankTermWidgetState extends State<TermBankTermWidget> {
 
   /// The terms and readings bundled as furigana pairs.
-  List<List<FuriganaPair>> termsAndReadings = [];
+  List<List<TermReadingPair>> termsAndReadings = [];
 
   TextStyle get readingTextStyle => const TextStyle(
     fontSize: 12,
@@ -44,8 +46,10 @@ class _TermBankTermWidgetState extends State<TermBankTermWidget> {
     super.initState();
     termsAndReadings = widget.entries
       .map((e) => (e.term, e.reading)).toSet()
-      .map((e) => matchFurigana(e.$1, e.$2, convertToKatakana: widget.useKatakanaForFurigana))
-      .toList();
+      .map((e) => GetIt.I<DaKanjiDB>().languageProcessor.getTermReadingPairs(
+        e.$1, e.$2, ProcessorOptions(
+          japaneseGetTermReadingPairsConvertToKatakanaForFurigana: widget.useKatakanaForFurigana
+      ))).toList();
   }
 
   Future getAudiosForTerms(List<TermBankV3Entry> entries) async {
@@ -75,20 +79,20 @@ class _TermBankTermWidgetState extends State<TermBankTermWidget> {
                       children: [
                         ConditionalParentWidget(
                           // if there is no term ...
-                          condition: pair.kanji.isEmpty,
+                          condition: pair.term.isEmpty,
                           conditionalBuilder: (child) {
                             // ... disable selection of reading
                             return SelectionContainer.disabled(child: child);
                           },
                           child: Text(
-                            pair.kanji.isNotEmpty && pair.reading.isNotEmpty
+                            pair.term.isNotEmpty && pair.reading.isNotEmpty
                               ? pair.reading
                               : "", // when there is no kanji, don't show reading 
                             style: readingTextStyle
                           )
                         ),
                         Text(
-                          pair.kanji.isNotEmpty ? pair.kanji : pair.reading,
+                          pair.term.isNotEmpty ? pair.term : pair.reading,
                           style: kanjiTextStyle
                         ),
                       ],
@@ -98,7 +102,7 @@ class _TermBankTermWidgetState extends State<TermBankTermWidget> {
                     children: [
                       InkWell(
                         onTap: () {
-                          print("Playing audio for term: ${termAndReading.map((e) => e.kanji.isNotEmpty ? e.kanji : e.reading).join()}");
+                          print("Playing audio for term: ${termAndReading.map((e) => e.term.isNotEmpty ? e.term : e.reading).join()}");
                         },
                         borderRadius: BorderRadius.circular(40),
                         child: Icon(

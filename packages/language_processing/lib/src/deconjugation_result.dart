@@ -1,4 +1,4 @@
-import 'package:language_processing/util/language_transformer.dart';
+import 'package:language_processing/src/japanese/yomitan_deconjugation/language_transformer.dart';
 
 /// Holds a single, complete deconjugation result.
 class DeconjugationResult {

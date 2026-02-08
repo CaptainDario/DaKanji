@@ -3,8 +3,7 @@ import 'dart:convert';
 import 'package:dakanji_db_core/parsing/yomitan/in_memory_cache/term/definition_parser.dart';
 import 'package:dakanji_db_core/parsing/yomitan/staging_db/db/staging_db.dart';
 import 'package:dakanji_db_core/parsing/yomitan/staging_db/parsers/yomitan_file_parser.dart';
-import 'package:language_processing/language_processor.dart';
-import 'package:language_processing/language_processor_options.dart';
+import 'package:language_processing/language_processing.dart';
 
 
 class TermBankV3Parser implements YomitanFileParser {

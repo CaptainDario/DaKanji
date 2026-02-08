@@ -2,7 +2,7 @@
 import 'dart:convert';
 
 import 'package:drift/drift.dart';
-import 'package:language_processing/language_processor_options.dart';
+import 'package:language_processing/language_processing.dart';
 import 'package:universal_io/io.dart';
 
 import '/database/dakanji_db.dart';

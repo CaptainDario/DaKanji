@@ -3,7 +3,7 @@ import 'package:dakanji_db_core/database/dakanji_db.dart';
 import 'package:dakanji_db_core/database/db_queries/dictionary_search/dictionary_search_params.dart';
 import 'package:dakanji_db_core/database/db_queries/dictionary_search/grouping_rules.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:language_processing/language_processor_options.dart';
+import 'package:language_processing/language_processing.dart';
 
 part 'search_profiles_entry.freezed.dart';
 part 'search_profiles_entry.g.dart';

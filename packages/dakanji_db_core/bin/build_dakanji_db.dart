@@ -1,19 +1,17 @@
 import 'dart:async';
 
 import 'package:dakanji_db_core/database/dakanji_db.dart';
+import 'package:dakanji_db_core/parsing/audio/in_memory_cache/audio_parser.dart' ;
 import 'package:dakanji_db_core/parsing/example_parser.dart';
 import 'package:dakanji_db_core/parsing/kanji_vg_parser.dart';
 import 'package:dakanji_db_core/parsing/radicals_parser.dart';
 import 'package:dakanji_db_core/parsing/tatoeba_parser.dart';
-import 'package:dakanji_db_core/parsing/yomitan/in_memory_cache/audio/audio_parser.dart' ;
 // ignore: unused_import
 import 'package:dakanji_db_core/parsing/yomitan_in_memory_cache_parser.dart' as cache_parser;
 // ignore: unused_import
 import 'package:dakanji_db_core/parsing/yomitan_staging_db_parser.dart' as staging_parser;
 import 'package:dakanji_db_shared/paths.dart';
-import 'package:language_processing/iso/iso_table.dart';
 import 'package:language_processing/language_processing.dart';
-import 'package:language_processing/language_processor.dart';
 import 'package:mecab_for_dart/mecab_dart.dart';
 import 'package:path/path.dart' as p;
 import 'package:universal_io/io.dart';
@@ -115,10 +113,10 @@ void main(List<String> args) async {
   print("Importing yomitan dicts...");
   await importYomitanDicts(db,
     [
-      //(kanjidic2InputPath, "KanjiDic2"),
+      (kanjidic2InputPath, "KanjiDic2"),
       (jpdb2_2InputPath, "JPDB 2.2"),
-      //(dictNameToPath[dictToUse]!(), dictToUse.name),
-      //?(includeExampleDictArg ? (exampleDictPath, "yomitan example dictionary"): null),
+      (dictNameToPath[dictToUse]!(), dictToUse.name),
+      ?(includeExampleDictArg ? (exampleDictPath, "yomitan example dictionary"): null),
     ],
     addStructuredContentJsonDefs,
   );

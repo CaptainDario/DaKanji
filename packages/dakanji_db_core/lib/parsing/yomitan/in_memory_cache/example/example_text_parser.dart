@@ -1,6 +1,5 @@
 
 import 'package:drift/drift.dart';
-import 'package:language_processing/japanese/sentence_finding.dart';
 
 import '/database/dakanji_db.dart';
 
@@ -12,7 +11,7 @@ Future parseExampleText(String exampleText, DaKanjiDB db, int indexId) async {
   List<ExampleTableCompanion> exampleComps = [];
 
   // split text into sentences
-  for (var sentence in findSentencesRegexp(exampleText)) {
+  for (var sentence in db.languageProcessor.findSentences(exampleText)) {
 
     // Parse sentence using mecab
     String tokenized = db.languageProcessor.getReadings(sentence);

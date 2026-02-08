@@ -1,7 +1,7 @@
 
 import 'package:dakanji_db_core/database/example/example_entry.dart';
 import 'package:dakanji_db_core/database/example/example_entry_translation.dart';
-import 'package:language_processing/iso/iso_table.dart';
+import 'package:language_processing/language_processing.dart';
 
 import '../dictionary_test_variables.dart';
 

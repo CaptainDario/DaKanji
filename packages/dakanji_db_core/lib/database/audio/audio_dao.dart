@@ -6,7 +6,7 @@ import "package:dakanji_db_core/database/audio/audio_tables.dart";
 import "package:dakanji_db_core/database/term/term_bank_v3_entry.dart";
 import "package:dakanji_db_core/database/term_meta/term_meta_bank_entry.dart";
 import "package:drift/drift.dart";
-import "package:language_processing/language_processor_options.dart";
+import 'package:language_processing/language_processing.dart';
 
 import "../dakanji_db.dart";
 

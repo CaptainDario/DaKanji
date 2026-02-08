@@ -14,7 +14,7 @@ import 'package:dakanji_db_ui_search_example/settings_localization.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:language_processing/japanese_processor.dart';
+import 'package:language_processing/language_processing.dart';
 import 'package:provider/provider.dart';
 
 import 'globals.dart';

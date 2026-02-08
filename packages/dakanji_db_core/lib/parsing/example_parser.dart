@@ -11,7 +11,7 @@ import 'package:dakanji_db_core/parsing/yomitan/in_memory_cache/example/example_
 import 'package:dakanji_db_core/parsing/yomitan/in_memory_cache/index/index_parser.dart';
 import 'package:drift/drift.dart';
 import 'package:drift/isolate.dart';
-import 'package:language_processing/language_processor.dart';
+import 'package:language_processing/language_processing.dart';
 
 import '/database/dakanji_db.dart';
 import 'yomitan/in_memory_cache/example/example_sentence_parser.dart';

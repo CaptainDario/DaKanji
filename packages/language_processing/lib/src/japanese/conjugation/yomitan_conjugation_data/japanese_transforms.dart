@@ -1,4 +1,6 @@
-import '../../../util/language_transforms.dart';
+import 'package:language_processing/src/japanese/yomitan_deconjugation/language_transforms.dart';
+
+
 
 // Helper classes to structure the transform data
 class I18nInfo {

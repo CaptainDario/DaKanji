@@ -12,8 +12,7 @@ import 'package:dakanji_db_core/parsing/yomitan/staging_db/parsers/term_bank_v3_
 import 'package:dakanji_db_core/parsing/yomitan/staging_db/parsers/term_meta_bank_v3_parser.dart';
 import 'package:dakanji_db_core/parsing/yomitan/staging_db/parsers/yomitan_file_parser.dart';
 import 'package:drift/native.dart';
-import 'package:language_processing/language_processor.dart';
-import 'package:language_processing/language_processor_options.dart';
+import 'package:language_processing/language_processing.dart';
 
 import 'worker_protocol.dart'; 
 

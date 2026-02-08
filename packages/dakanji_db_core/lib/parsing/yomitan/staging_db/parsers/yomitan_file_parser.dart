@@ -1,6 +1,5 @@
 import 'package:dakanji_db_core/parsing/yomitan/staging_db/db/staging_db.dart';
-import 'package:language_processing/language_processor.dart';
-import 'package:language_processing/language_processor_options.dart';
+import 'package:language_processing/language_processing.dart';
 
 
 

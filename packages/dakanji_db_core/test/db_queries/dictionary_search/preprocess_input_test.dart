@@ -1,5 +1,5 @@
+import 'package:collection/collection.dart';
 import 'package:language_processing/language_processing.dart';
-import 'package:language_processing/language_processor_options.dart';
 import 'package:test/test.dart';
 
 import 'preprocess_input_test_cases.dart';
@@ -25,7 +25,7 @@ void main() {
         expect(normalized, equals(expectedNormalizedTerm));
         final deconjugated = jp.deconjugateAll(normalized);
         expect(
-          deconjugated.map((e) => e.deconjugatedTerm).toList(),
+          deconjugated.flattened.map((e) => e.deconjugatedTerm).toList(),
           equals(expectedTermVariants)
         );
       });

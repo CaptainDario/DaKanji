@@ -6,7 +6,7 @@ import 'package:dakanji_db_core/database/dakanji_db.dart';
 import 'package:dakanji_db_core/database/db_queries/dictionary_search/dictionary_search_params.dart';
 import 'package:dakanji_db_shared/dakanji_db_shared.dart';
 import 'package:drift/drift.dart';
-import 'package:language_processing/language_processor_options.dart';
+import 'package:language_processing/src/language_processor_options.dart';
 import 'package:mecab_for_dart/mecab_dart.dart';
 import 'package:path/path.dart' as p;
 import 'package:test/test.dart';

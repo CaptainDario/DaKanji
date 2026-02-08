@@ -5,7 +5,7 @@ import 'dart:isolate';
 import 'package:archive/archive_io.dart';
 import 'package:dakanji_db_core/parsing/util/parsing_util.dart';
 import 'package:disjoint_set/disjoint_set.dart';
-import 'package:language_processing/iso/iso_table.dart'; 
+import 'package:language_processing/language_processing.dart';
 
 
 

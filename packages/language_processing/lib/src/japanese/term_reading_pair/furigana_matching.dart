@@ -1,42 +1,14 @@
 
 import 'package:kana_kit/kana_kit.dart';
+import 'package:language_processing/src/term_reading_pair.dart';
 
-/// Simple dataclass that combines a kanji and its reading 
-class FuriganaPair{
-
-  /// The kanji character(s)
-  String kanji;
-  /// The reading of `kanji` in kana
-  String reading;
-
-
-  FuriganaPair(this.kanji, this.reading);
-
-
-
-  bool isEmpty() => kanji.isEmpty && reading.isEmpty;
-
-  @override
-  String toString() => '($kanji, $reading)';
-
-  @override
-  bool operator ==(Object other) =>
-    identical(this, other) ||
-    other is FuriganaPair &&
-    runtimeType == other.runtimeType &&
-    kanji == other.kanji &&
-    reading == other.reading;
-
-  @override
-  int get hashCode => kanji.hashCode ^ reading.hashCode;
-}
-
-List<FuriganaPair> matchFurigana(String text, String reading, {bool convertToKatakana = false}) {
-  if (text.trim().isEmpty) return [FuriganaPair("", reading)];
-  if (reading.trim().isEmpty) return [FuriganaPair("", text)];
+List<TermReadingPair> matchFurigana(
+  String text, String reading, {bool convertToKatakana = false}) {
+    if (text.trim().isEmpty) return [TermReadingPair("", reading)];
+    if (reading.trim().isEmpty) return [TermReadingPair("", text)];
 
   const k = KanaKit();
-  List<FuriganaPair> result = [];
+  List<TermReadingPair> result = [];
   final kanjiRegex = RegExp(r'[\u4e00-\u9faf\u3005]');
 
   // 1. Handle conversions upfront so indices align perfectly
@@ -45,7 +17,7 @@ List<FuriganaPair> matchFurigana(String text, String reading, {bool convertToKat
     reading = k.toKatakana(reading);
   }
 
-  FuriganaPair currentPair = FuriganaPair("", "");
+  TermReadingPair currentPair = TermReadingPair("", "");
   int readingIndex = 0;
   int i = 0;
 
@@ -54,7 +26,7 @@ List<FuriganaPair> matchFurigana(String text, String reading, {bool convertToKat
 
     // CASE 1: Kanji -> Buffer it
     if (kanjiRegex.hasMatch(char)) {
-      currentPair.kanji += char;
+      currentPair.term += char;
       i++;
     } 
     // CASE 2: Kana / Non-Kanji -> Match against reading
@@ -66,7 +38,7 @@ List<FuriganaPair> matchFurigana(String text, String reading, {bool convertToKat
       int kanaIdx = readingHira.indexOf(charHira, readingIndex);
 
       // Edge Case: Ambiguous Double Vowel (e.g. "I-I-Kata")
-      if (kanaIdx == readingIndex && currentPair.kanji.isNotEmpty) {
+      if (kanaIdx == readingIndex && currentPair.term.isNotEmpty) {
          int nextIdx = readingHira.indexOf(charHira, readingIndex + 1);
          if (nextIdx != -1) kanaIdx = nextIdx;
       }
@@ -75,13 +47,13 @@ List<FuriganaPair> matchFurigana(String text, String reading, {bool convertToKat
         // A. Flush the buffered Kanji (if any)
         // Assign the reading skipped so far to the Kanji
         currentPair.reading = reading.substring(readingIndex, kanaIdx);
-        if (currentPair.kanji.isNotEmpty) {
+        if (currentPair.term.isNotEmpty) {
            result.add(currentPair);
         }
         
         // B. Prepare the Non-Kanji Pair
         // STRICT RULE: Kanji field must be empty
-        currentPair = FuriganaPair("", ""); 
+        currentPair = TermReadingPair("", ""); 
         readingIndex = kanaIdx;
 
         // C. Match the continuous Kana segment
@@ -99,7 +71,7 @@ List<FuriganaPair> matchFurigana(String text, String reading, {bool convertToKat
         
         // D. Add the Non-Kanji pair
         result.add(currentPair);
-        currentPair = FuriganaPair("", "");
+        currentPair = TermReadingPair("", "");
       } else {
         // Fallback: Non-matching char (symbols, etc)
         // Add to reading to keep Kanji field strict
@@ -110,13 +82,13 @@ List<FuriganaPair> matchFurigana(String text, String reading, {bool convertToKat
   }
 
   // Final Flush
-  if (currentPair.kanji.isNotEmpty || readingIndex < reading.length) {
+  if (currentPair.term.isNotEmpty || readingIndex < reading.length) {
     
     // If readings are left over, but NO Kanji to attach it to,
     // it means the input is mismatched
     // --> Return the entire original text and reading as one block.
-    if (currentPair.kanji.isEmpty && readingIndex < reading.length) {
-      return [FuriganaPair(text, reading)];
+    if (currentPair.term.isEmpty && readingIndex < reading.length) {
+      return [TermReadingPair(text, reading)];
     }
 
     currentPair.reading += reading.substring(readingIndex);

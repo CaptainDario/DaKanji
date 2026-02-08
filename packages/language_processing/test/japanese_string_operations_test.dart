@@ -1,6 +1,6 @@
 
 
-import 'package:language_processing/japanese/japanese_string_operations.dart';
+import 'package:language_processing/src/japanese/japanese_string_operations.dart';
 import 'package:test/test.dart';
 
 import 'japanese_string_operations_test_cases.dart';

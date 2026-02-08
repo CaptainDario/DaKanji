@@ -1,7 +1,7 @@
 
 import 'package:dakanji_db_shared/dakanji_db_shared.dart';
 import 'package:kana_kit/kana_kit.dart';
-import 'package:language_processing/japanese/deconjugation/mecab_deconjugate.dart';
+import 'package:language_processing/src/japanese/mecab_deconjugation/deconjugate.dart';
 import 'package:mecab_for_dart/mecab_dart.dart';
 import 'package:test/test.dart';
 

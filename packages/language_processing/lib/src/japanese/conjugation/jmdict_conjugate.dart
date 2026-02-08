@@ -5,8 +5,7 @@
 // this folder
 
 // Flutter imports:
-import 'package:language_processing/japanese/japanese_string_operations.dart';
-
+import 'package:language_processing/src/japanese/japanese_string_operations.dart';
 
 import 'jmdict_conjugation_data/conj.dart';
 import 'jmdict_conjugation_data/conjo.dart';

@@ -1,8 +1,9 @@
 import 'dart:convert';
 
-import 'package:language_processing/japanese_processor.dart';
-import 'package:language_processing/language_processor_options.dart';
-import 'package:language_processing/util/deconjugation_result.dart';
+import 'package:language_processing/src/deconjugation_result.dart';
+import 'package:language_processing/src/japanese/japanese_processor.dart';
+import 'package:language_processing/src/language_processor_options.dart';
+import 'package:language_processing/src/term_reading_pair.dart';
 
 
 
@@ -13,12 +14,11 @@ abstract class LanguageProcessor {
   const LanguageProcessor();
 
   factory LanguageProcessor.fromJson(Map<String, dynamic> json) {
-    final String type = json['type'] ?? 'japanese'; // Default or throw error
+    final String type = json['type'];
 
     switch (type) {
       case 'japanese':
         return JapaneseProcessor.fromJson(json);
-      // Add cases for other languages here (e.g., 'chinese')
       default:
         throw UnsupportedError('Unknown LanguageProcessor type: $type');
     }
@@ -40,9 +40,9 @@ abstract class LanguageProcessor {
 
   List<String> normalizeAll(List<String> terms, ProcessorOptions options);
 
-  List<DeconjugationResult> deconjugate(String term);
+  Set<DeconjugationResult> deconjugate(String term);
 
-  List<DeconjugationResult> deconjugateAll(List<String> terms);
+  List<Set<DeconjugationResult>> deconjugateAll(List<String> terms);
 
   /// Segments the given text and returns the segmented string, if 
   /// `segmentation != text` else returns null
@@ -60,5 +60,14 @@ abstract class LanguageProcessor {
     List<(String, String, int)> rules,
     List<String> forbiddenSequences
   });
+
+  /// Returns true if the string consists primarily of the language's 
+  /// specific ideographs (e.g., Kanji for JP, Hanzi for CN)
+  bool isIdeographic(String text);
+
+  List<TermReadingPair> getTermReadingPairs(
+    String term, String reading, ProcessorOptions options);
+
+  List<String> findSentences(String text);
 
 }

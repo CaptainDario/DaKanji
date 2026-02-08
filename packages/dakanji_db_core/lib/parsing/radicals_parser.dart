@@ -6,7 +6,7 @@ import 'package:dakanji_db_core/parsing/util/db_optimization.dart';
 import 'package:dakanji_db_core/parsing/util/parsing_util.dart';
 import 'package:drift/drift.dart';
 import 'package:drift/isolate.dart';
-import 'package:language_processing/language_processor.dart';
+import 'package:language_processing/language_processing.dart';
 
 import '/database/dakanji_db.dart';
 

@@ -15,7 +15,7 @@ import 'package:dakanji_db_core/parsing/yomitan/staging_db/workers/worker_entry.
 import 'package:dakanji_db_core/parsing/yomitan/staging_db/workers/worker_protocol.dart';
 import 'package:dakanji_db_core/util/memory_usage.dart';
 import 'package:drift/isolate.dart';
-import 'package:language_processing/language_processor.dart';
+import 'package:language_processing/language_processing.dart';
 import 'package:path/path.dart' as p;
 import 'package:universal_io/io.dart';
 

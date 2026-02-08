@@ -7,9 +7,7 @@ import 'package:dakanji_db_core/database/db_queries/dictionary_search/dictionary
 import 'package:dakanji_db_core/database/db_queries/dictionary_search/dictionary_search_result.dart';
 import 'package:drift/drift.dart';
 import 'package:drift/isolate.dart';
-import 'package:language_processing/language_processor.dart';
-// Note: You do not need to import specific processors like JapaneseProcessor here
-// because the static 'LanguageProcessor.fromJson' handles the types.
+import 'package:language_processing/language_processing.dart';
 
 class DaKanjiDbSearchManager {
   

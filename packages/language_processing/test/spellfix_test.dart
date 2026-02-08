@@ -1,5 +1,5 @@
-import 'package:language_processing/japanese/spellfix/forbidden_sequences.dart';
-import 'package:language_processing/japanese/spellfix/spellfix.dart';
+import 'package:language_processing/src/japanese/spellfix/forbidden_sequences.dart';
+import 'package:language_processing/src/japanese/spellfix/spellfix.dart';
 import 'package:test/test.dart';
 
 import 'spellfix_test_cases.dart';

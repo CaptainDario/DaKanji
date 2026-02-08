@@ -1,11 +1,10 @@
 import 'dart:convert';
 
+import 'package:collection/collection.dart';
 import 'package:dakanji_db_core/database/db_queries/dictionary_search/dictionary_search_context.dart';
 import 'package:dakanji_db_core/database/db_queries/dictionary_search/dictionary_search_params.dart';
-import 'package:language_processing/japanese/japanese_string_operations.dart';
-import 'package:language_processing/language_processor.dart';
-import 'package:language_processing/language_processor_options.dart';
-import 'package:language_processing/util/deconjugation_result.dart';
+import 'package:language_processing/language_processing.dart';
+
 
 /// Parses special argument syntax from raw input strings.
 /// 
@@ -118,7 +117,7 @@ List<({List<String> normalizedTerms, List<DeconjugationResult> termVariants})>
   return [
     (
       normalizedTerms: normalized,
-      termVariants: variants
+      termVariants: variants.flattened.toSet().toList()
     )
   ];
 }
@@ -132,6 +131,7 @@ String buildSearchInputJson({
   required List<String> terms,
   List<List<String>>? pos,
   List<List<String>>? tags,
+  required LanguageProcessor processor,
 }) {
   final mergedList = <List<dynamic>>[];
 
@@ -143,7 +143,7 @@ String buildSearchInputJson({
 
     int runPrefixSearch = 1; // currently not used, but may be useful later
     int onlyFirstTokenMatch =
-      (terms[i].length > 1 || kanjiRegex.hasMatch(terms[i])) ? 0 : 1;
+      (terms[i].length > 1 || processor.isIdeographic(terms[i])) ? 0 : 1;
 
     mergedList.add(
       [terms[i], runPrefixSearch, onlyFirstTokenMatch, pos?[i], tags?[i]]);

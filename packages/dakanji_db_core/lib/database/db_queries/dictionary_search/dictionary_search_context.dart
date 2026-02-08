@@ -1,4 +1,4 @@
-import 'package:language_processing/util/deconjugation_result.dart';
+import 'package:language_processing/language_processing.dart';
 
 
 

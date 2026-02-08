@@ -2,7 +2,7 @@
 import "dart:convert";
 
 import "package:drift/drift.dart";
-import 'package:language_processing/iso/iso_table.dart';
+import 'package:language_processing/language_processing.dart';
 
 import "/database/example/example_entry.dart";
 import "/database/example/example_tables.dart";

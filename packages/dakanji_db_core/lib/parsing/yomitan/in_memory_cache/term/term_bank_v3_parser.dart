@@ -6,7 +6,7 @@ import 'package:dakanji_db_core/parsing/yomitan/in_memory_cache/term/definition_
 import 'package:dakanji_db_core/parsing/yomitan/in_memory_cache/term/term_bank_v3_parser_context.dart';
 import 'package:drift/drift.dart';
 import 'package:kana_kit/kana_kit.dart';
-import 'package:language_processing/language_processor_options.dart';
+import 'package:language_processing/language_processing.dart';
 import 'package:universal_io/io.dart';
 
 import '/database/dakanji_db.dart';

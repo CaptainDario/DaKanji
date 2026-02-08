@@ -1,5 +1,5 @@
 import 'package:fullwidth_halfwidth_converter/fullwidth_halfwidth_converter.dart';
-import 'package:language_processing/japanese/japanese_string_operations.dart';
+import 'package:language_processing/src/japanese/japanese_string_operations.dart';
 
 
 

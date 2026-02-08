@@ -22,7 +22,7 @@ import 'package:dakanji_db_core/parsing/yomitan/in_memory_cache/term_meta/term_m
 import 'package:dakanji_db_core/parsing/yomitan/in_memory_cache/term_meta/term_meta_bank_v3_parser_context.dart';
 import 'package:dakanji_db_core/util/memory_usage.dart';
 import 'package:drift/isolate.dart';
-import 'package:language_processing/language_processor.dart';
+import 'package:language_processing/language_processing.dart';
 import 'package:path/path.dart' as p;
 
 import '/database/dakanji_db.dart';
