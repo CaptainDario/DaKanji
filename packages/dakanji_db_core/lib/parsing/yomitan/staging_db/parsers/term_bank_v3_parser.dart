@@ -1,8 +1,10 @@
 import 'dart:convert';
 
+import 'package:crypto/crypto.dart';
 import 'package:dakanji_db_core/parsing/staging_db/staging_db.dart';
 import 'package:dakanji_db_core/parsing/yomitan/in_memory_cache/term/definition_parser.dart';
 import 'package:dakanji_db_core/parsing/yomitan/staging_db/parsers/yomitan_file_parser.dart';
+import 'package:dakanji_db_core/util/data_converters/zlib_text_converter_io.dart';
 import 'package:language_processing/language_processing.dart';
 
 
@@ -28,6 +30,7 @@ class TermBankV3Parser implements YomitanFileParser {
     var ruleRows = <List<Object?>>[];
     
     const int batchSize = 1000;
+    const ZlibStringConverter zlib = ZlibStringConverter();
 
     for (final entry in jsonContent) {
       if (entry is! List) continue;
@@ -57,10 +60,17 @@ class TermBankV3Parser implements YomitanFileParser {
       String? readingNormalized = lp.normalize(reading, options).firstOrNull;
       if (readingNormalized == reading) readingNormalized = null;
 
+      // --- 2. Compression & Hashing (DONE HERE NOW) ---
+      final jsonString = jsonEncode(definitionBlock);
+      // Calculate Hash
+      final jsonHash = md5.convert(utf8.encode(jsonString)).toString();
+      // Compress immediately to bytes
+      final compressedBytes = zlib.toSql(jsonString);
+
       termRows.add([
         localId, term, reading, termNormalized, termTokens, 
         termTokensNormalized, readingNormalized, popularity,
-        sequence, jsonEncode(definitionBlock)
+        sequence, compressedBytes, jsonHash // Sending BYTES and HASH
       ]);
 
       // --- 3. Definitions ---
@@ -111,7 +121,8 @@ class TermBankV3Parser implements YomitanFileParser {
 
     await db.transaction(() async {
       if (termRows.isNotEmpty) {
-        final sql = 'INSERT INTO ${db.termStagingTable.actualTableName} (local_id, term, reading, term_normalized, term_tokens, term_tokens_normalized, reading_normalized, popularity, sequence_number, original_json) VALUES ${List.filled(termRows.length, placeholders(10)).join(', ')}';
+        // Updated SQL to include definition_json_hash
+        final sql = 'INSERT INTO ${db.termStagingTable.actualTableName} (local_id, term, reading, term_normalized, term_tokens, term_tokens_normalized, reading_normalized, popularity, sequence_number, original_json, definition_json_hash) VALUES ${List.filled(termRows.length, placeholders(11)).join(', ')}';
         await db.customStatement(sql, termRows.expand((i) => i).toList());
       }
 

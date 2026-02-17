@@ -13,7 +13,8 @@ class TermStagingTable extends Table {
   TextColumn get readingNormalized => text().nullable()();
   IntColumn get popularity => integer()();
   IntColumn get sequenceNumber => integer()();
-  BlobColumn get originalJson => blob().map(const ZlibStringConverter()).nullable()(); 
+  BlobColumn get originalJson => blob().map(const ZlibStringConverter()).nullable()();
+  TextColumn get definitionJsonHash => text().nullable()();
 }
 
 class TermDefinitionStagingTable extends Table {

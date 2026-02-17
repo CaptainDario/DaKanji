@@ -89,7 +89,7 @@ class DictionarySearchDao extends DatabaseAccessor<DaKanjiDB> with _$DictionaryS
     (s..reset()).start();
     final (allTermBankIds, sequenceMatches) = await _aggregateUniqueIdsAndSequenceNumbers(
       resultsRaw, sP.groupingRules);
-    if(printDebugInfo) print("Phase 2 (sequence lookup) completed in ${allTermBankIds.length}");
+    if(printDebugInfo) print("Phase 2 (sequence lookup) completed in ${s.elapsedMilliseconds}ms. Found ${sequenceMatches.length} sequence matches");
 
     // 3. Fetch details for ALL unique IDs found in any step
     (s..reset()).start();
@@ -272,8 +272,11 @@ class DictionarySearchDao extends DatabaseAccessor<DaKanjiDB> with _$DictionaryS
       indexesToInclude == null ? null : jsonEncode(indexesToInclude),
       useGlob ? 1 : 0,
       searchNormalized ? 1 : 0,
-      filterParams?.term, filterParams?.reading, filterParams?.definition,
-      limit, offset
+      filterParams?.term,
+      filterParams?.reading,
+      filterParams?.definition,
+      limit,
+      offset
     ).get();
   }
 }

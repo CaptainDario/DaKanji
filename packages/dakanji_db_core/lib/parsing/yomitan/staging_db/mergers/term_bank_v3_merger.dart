@@ -1,3 +1,4 @@
+// Dart imports:
 import 'package:dakanji_db_core/database/dakanji_db.dart';
 import 'package:drift/drift.dart';
 
@@ -16,11 +17,10 @@ class TermBankV3Merger implements StagingMerger {
   }) async {
     
     // Aggressive optimizations for the MAIN connection during merge
-    await targetDb.customStatement('PRAGMA cache_size = -200000;'); // Use 20MB cache
+    await targetDb.customStatement('PRAGMA cache_size = -200000;'); // Use 200MB cache
     await targetDb.customStatement('PRAGMA temp_store = MEMORY;'); // Temp tables in RAM
 
     final maxTermBankId = (await targetDb.termBankV3Dao.maxTermBankV3Id());
-    final maxJsonId = addJsonDefs ? (await targetDb.termBankV3Dao.maxTermBankV3DefinitionJsonId()) : 0;
 
     try {
       final tTerm = targetDb.termTable;
@@ -36,7 +36,7 @@ class TermBankV3Merger implements StagingMerger {
       final tjDefTag = targetDb.termBankV3XDefinitionTagTable;
       final tjRule = targetDb.termBankV3XRuleIdentifierTable;
 
-      // --- Drop Secondary Indexes ---
+      // --- 1. Drop Secondary Indexes (Speed up Write) ---
       final tablesToOptimize = [
         tMain.actualTableName,
         tjDef.actualTableName,
@@ -56,7 +56,6 @@ class TermBankV3Merger implements StagingMerger {
         for (final row in indexes) {
           final name = row.read<String>('name');
           final sql = row.read<String>('sql');
-          // Skip internal auto-indexes and explicit UNIQUE indexes
           if (!name.startsWith('sqlite_autoindex_') && 
               !sql.toUpperCase().contains('CREATE UNIQUE INDEX')) {
              droppedIndexes.add(sql);
@@ -65,25 +64,42 @@ class TermBankV3Merger implements StagingMerger {
         }
       }
 
-      // 1. Insert Strings (Resolved set-based)
+      // --- 2. Insert Basic Strings (Terms, Readings, Defs) ---
+      
+      // Terms (Unique)
       await targetDb.customStatement('''
-        INSERT OR IGNORE INTO ${tTerm.actualTableName} (${tTerm.term.name}, ${tTerm.termNormalized.name}, ${tTerm.termTokens.name}, ${tTerm.termTokensNormalized.name})
-        SELECT DISTINCT term, term_normalized, term_tokens, term_tokens_normalized 
+        INSERT OR IGNORE INTO ${tTerm.actualTableName} (${tTerm.term.name}, ${tTerm.termNormalized.name})
+        SELECT DISTINCT term, term_normalized
         FROM $workerAlias.term_staging_table
       ''');
 
+      // FTS Tokens (Contentless, only insertif tokens != term)
+      await targetDb.customStatement('''
+        INSERT INTO fts_tokens(rowid, tokens, tokens_normalized)
+        SELECT DISTINCT t.${tTerm.id.name}, s.term_tokens, s.term_tokens_normalized
+        FROM $workerAlias.term_staging_table s
+        JOIN ${tTerm.actualTableName} t ON t.${tTerm.term.name} = s.term
+        WHERE 
+          s.term_tokens IS NOT NULL 
+          AND s.term_tokens != s.term  -- <--- The Filter
+          AND NOT EXISTS (SELECT 1 FROM fts_tokens WHERE rowid = t.${tTerm.id.name})
+      ''');
+
+      // Readings
       await targetDb.customStatement('''
         INSERT OR IGNORE INTO ${tReading.actualTableName} (${tReading.reading.name}, ${tReading.readingNormalized.name})
         SELECT DISTINCT reading, reading_normalized 
         FROM $workerAlias.term_staging_table
       ''');
 
+      // Definitions (Simple)
       await targetDb.customStatement('''
         INSERT OR IGNORE INTO ${tDef.actualTableName} (${tDef.definition.name})
         SELECT DISTINCT definition 
         FROM $workerAlias.term_definition_staging_table
       ''');
       
+      // Tags
       await targetDb.customStatement('''
         INSERT OR IGNORE INTO ${tTag.actualTableName} (${tTag.indexId.name}, ${tTag.name.name}, ${tTag.category.name}, ${tTag.sortingOrder.name}, ${tTag.notes.name}, ${tTag.score.name})
         SELECT DISTINCT $indexId, tag_name, '', 0, '', 0 
@@ -94,22 +110,26 @@ class TermBankV3Merger implements StagingMerger {
         )
       ''');
 
+      // Rules
       await targetDb.customStatement('''
         INSERT OR IGNORE INTO ${tRule.actualTableName} (${tRule.ruleIdentifier.name})
         SELECT DISTINCT rule_id 
         FROM $workerAlias.term_rule_staging_table
       ''');
 
+      // --- 3. JSON Deduplication ---
       if (addJsonDefs) {
         await targetDb.customStatement('''
-          INSERT INTO ${tJson.actualTableName} (${tJson.id.name}, ${tJson.definitionJson.name})
-          SELECT $maxJsonId + local_id, original_json
-          FROM $workerAlias.term_staging_table
-          WHERE original_json IS NOT NULL
+          INSERT OR IGNORE INTO ${tJson.actualTableName} (${tJson.definitionJsonHash.name}, ${tJson.definitionJson.name})
+          SELECT definition_json_hash, original_json
+          FROM $workerAlias.term_staging_table 
+          WHERE original_json IS NOT NULL 
+          GROUP BY definition_json_hash
         ''');
       }
 
-      // --- Main Insert ---
+      // --- 4. Main Insert with Linking ---
+      // We join Staging -> Final using the HASH (Fast Index Lookup)
       await targetDb.customStatement('''
         INSERT INTO ${tMain.actualTableName} (
           ${tMain.id.name}, ${tMain.indexId.name}, ${tMain.termId.name}, ${tMain.readingId.name}, 
@@ -122,14 +142,17 @@ class TermBankV3Merger implements StagingMerger {
           r.${tReading.id.name},
           s.popularity,
           s.sequence_number,
-          ${addJsonDefs ? 'CASE WHEN s.original_json IS NOT NULL THEN $maxJsonId + s.local_id ELSE NULL END' : 'NULL'}
+          j.${tJson.id.name}
         FROM $workerAlias.term_staging_table s
         JOIN ${tTerm.actualTableName} t ON t.${tTerm.term.name} = s.term
         JOIN ${tReading.actualTableName} r ON r.${tReading.reading.name} = s.reading
+        -- Link using definition_json_hash
+        LEFT JOIN ${tJson.actualTableName} j ON j.${tJson.definitionJsonHash.name} = s.definition_json_hash
+        GROUP BY s.local_id  -- Ensure unique ID generation
         ORDER BY s.term
       ''');
 
-      // --- Junction Tables ---
+      // --- 5. Junction Tables ---
       await targetDb.customStatement('''
         INSERT INTO ${tjDef.actualTableName} (${tjDef.termBankId.name}, ${tjDef.definitionId.name})
         SELECT $maxTermBankId + s.term_local_id, d.id
@@ -164,7 +187,7 @@ class TermBankV3Merger implements StagingMerger {
         ORDER BY s.rowid
       ''');
 
-      // --- OPTIMIZATION END: Restore Indexes ---
+      // --- 6. Restore Secondary Indexes ---
       for (final sql in droppedIndexes) {
          try {
            await targetDb.customStatement(sql);
@@ -176,7 +199,7 @@ class TermBankV3Merger implements StagingMerger {
 
     }
     finally {
-      // Revert PRAGMA if needed, or rely on connection close
+      // Revert PRAGMA if needed
     }
   }
 }

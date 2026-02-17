@@ -82,13 +82,11 @@ void main() {
     await db.close();
   });
 
-  // The loop is now inside main, which is the standard way.
-  // The key is that `group()` is called within the main test scope.
+
   for (int i = 0; i < testCases.length; i++) {
     final subTestCases = testCases[i];
     final testCaseName = testCaseNames[i];
 
-    // This `group` call is now correctly discovered.
     group(testCaseName, () {
       for (int j=0; j < subTestCases.$1.length; j++) {
         final testCase = subTestCases.$1[j];

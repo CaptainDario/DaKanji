@@ -5662,468 +5662,6 @@ class KanjiMetaBankV3EntryView
   };
 }
 
-class SearchFts extends Table
-    with TableInfo<SearchFts, SearchFt>, VirtualTableInfo<SearchFts, SearchFt> {
-  @override
-  final GeneratedDatabase attachedDatabase;
-  final String? _alias;
-  SearchFts(this.attachedDatabase, [this._alias]);
-  static const VerificationMeta _sourceIdMeta = const VerificationMeta(
-    'sourceId',
-  );
-  late final GeneratedColumn<String> sourceId = GeneratedColumn<String>(
-    'source_id',
-    aliasedName,
-    false,
-    type: DriftSqlType.string,
-    requiredDuringInsert: true,
-    $customConstraints: '',
-  );
-  static const VerificationMeta _dataTypeIdMeta = const VerificationMeta(
-    'dataTypeId',
-  );
-  late final GeneratedColumn<String> dataTypeId = GeneratedColumn<String>(
-    'data_type_id',
-    aliasedName,
-    false,
-    type: DriftSqlType.string,
-    requiredDuringInsert: true,
-    $customConstraints: '',
-  );
-  static const VerificationMeta _textDataMeta = const VerificationMeta(
-    'textData',
-  );
-  late final GeneratedColumn<String> textData = GeneratedColumn<String>(
-    'text_data',
-    aliasedName,
-    false,
-    type: DriftSqlType.string,
-    requiredDuringInsert: true,
-    $customConstraints: '',
-  );
-  @override
-  List<GeneratedColumn> get $columns => [sourceId, dataTypeId, textData];
-  @override
-  String get aliasedName => _alias ?? actualTableName;
-  @override
-  String get actualTableName => $name;
-  static const String $name = 'search_fts';
-  @override
-  VerificationContext validateIntegrity(
-    Insertable<SearchFt> instance, {
-    bool isInserting = false,
-  }) {
-    final context = VerificationContext();
-    final data = instance.toColumns(true);
-    if (data.containsKey('source_id')) {
-      context.handle(
-        _sourceIdMeta,
-        sourceId.isAcceptableOrUnknown(data['source_id']!, _sourceIdMeta),
-      );
-    } else if (isInserting) {
-      context.missing(_sourceIdMeta);
-    }
-    if (data.containsKey('data_type_id')) {
-      context.handle(
-        _dataTypeIdMeta,
-        dataTypeId.isAcceptableOrUnknown(
-          data['data_type_id']!,
-          _dataTypeIdMeta,
-        ),
-      );
-    } else if (isInserting) {
-      context.missing(_dataTypeIdMeta);
-    }
-    if (data.containsKey('text_data')) {
-      context.handle(
-        _textDataMeta,
-        textData.isAcceptableOrUnknown(data['text_data']!, _textDataMeta),
-      );
-    } else if (isInserting) {
-      context.missing(_textDataMeta);
-    }
-    return context;
-  }
-
-  @override
-  Set<GeneratedColumn> get $primaryKey => const {};
-  @override
-  SearchFt map(Map<String, dynamic> data, {String? tablePrefix}) {
-    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return SearchFt(
-      sourceId: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}source_id'],
-      )!,
-      dataTypeId: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}data_type_id'],
-      )!,
-      textData: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}text_data'],
-      )!,
-    );
-  }
-
-  @override
-  SearchFts createAlias(String alias) {
-    return SearchFts(attachedDatabase, alias);
-  }
-
-  @override
-  bool get dontWriteConstraints => true;
-  @override
-  String get moduleAndArgs =>
-      'fts5(source_id UNINDEXED, data_type_id UNINDEXED, text_data, tokenize = \'unicode61\', prefix = \'2 3\')';
-}
-
-class SearchFt extends DataClass implements Insertable<SearchFt> {
-  final String sourceId;
-  final String dataTypeId;
-  final String textData;
-  const SearchFt({
-    required this.sourceId,
-    required this.dataTypeId,
-    required this.textData,
-  });
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    map['source_id'] = Variable<String>(sourceId);
-    map['data_type_id'] = Variable<String>(dataTypeId);
-    map['text_data'] = Variable<String>(textData);
-    return map;
-  }
-
-  SearchFtsCompanion toCompanion(bool nullToAbsent) {
-    return SearchFtsCompanion(
-      sourceId: Value(sourceId),
-      dataTypeId: Value(dataTypeId),
-      textData: Value(textData),
-    );
-  }
-
-  factory SearchFt.fromJson(
-    Map<String, dynamic> json, {
-    ValueSerializer? serializer,
-  }) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return SearchFt(
-      sourceId: serializer.fromJson<String>(json['source_id']),
-      dataTypeId: serializer.fromJson<String>(json['data_type_id']),
-      textData: serializer.fromJson<String>(json['text_data']),
-    );
-  }
-  @override
-  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return <String, dynamic>{
-      'source_id': serializer.toJson<String>(sourceId),
-      'data_type_id': serializer.toJson<String>(dataTypeId),
-      'text_data': serializer.toJson<String>(textData),
-    };
-  }
-
-  SearchFt copyWith({String? sourceId, String? dataTypeId, String? textData}) =>
-      SearchFt(
-        sourceId: sourceId ?? this.sourceId,
-        dataTypeId: dataTypeId ?? this.dataTypeId,
-        textData: textData ?? this.textData,
-      );
-  SearchFt copyWithCompanion(SearchFtsCompanion data) {
-    return SearchFt(
-      sourceId: data.sourceId.present ? data.sourceId.value : this.sourceId,
-      dataTypeId: data.dataTypeId.present
-          ? data.dataTypeId.value
-          : this.dataTypeId,
-      textData: data.textData.present ? data.textData.value : this.textData,
-    );
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('SearchFt(')
-          ..write('sourceId: $sourceId, ')
-          ..write('dataTypeId: $dataTypeId, ')
-          ..write('textData: $textData')
-          ..write(')'))
-        .toString();
-  }
-
-  @override
-  int get hashCode => Object.hash(sourceId, dataTypeId, textData);
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      (other is SearchFt &&
-          other.sourceId == this.sourceId &&
-          other.dataTypeId == this.dataTypeId &&
-          other.textData == this.textData);
-}
-
-class SearchFtsCompanion extends UpdateCompanion<SearchFt> {
-  final Value<String> sourceId;
-  final Value<String> dataTypeId;
-  final Value<String> textData;
-  final Value<int> rowid;
-  const SearchFtsCompanion({
-    this.sourceId = const Value.absent(),
-    this.dataTypeId = const Value.absent(),
-    this.textData = const Value.absent(),
-    this.rowid = const Value.absent(),
-  });
-  SearchFtsCompanion.insert({
-    required String sourceId,
-    required String dataTypeId,
-    required String textData,
-    this.rowid = const Value.absent(),
-  }) : sourceId = Value(sourceId),
-       dataTypeId = Value(dataTypeId),
-       textData = Value(textData);
-  static Insertable<SearchFt> custom({
-    Expression<String>? sourceId,
-    Expression<String>? dataTypeId,
-    Expression<String>? textData,
-    Expression<int>? rowid,
-  }) {
-    return RawValuesInsertable({
-      if (sourceId != null) 'source_id': sourceId,
-      if (dataTypeId != null) 'data_type_id': dataTypeId,
-      if (textData != null) 'text_data': textData,
-      if (rowid != null) 'rowid': rowid,
-    });
-  }
-
-  SearchFtsCompanion copyWith({
-    Value<String>? sourceId,
-    Value<String>? dataTypeId,
-    Value<String>? textData,
-    Value<int>? rowid,
-  }) {
-    return SearchFtsCompanion(
-      sourceId: sourceId ?? this.sourceId,
-      dataTypeId: dataTypeId ?? this.dataTypeId,
-      textData: textData ?? this.textData,
-      rowid: rowid ?? this.rowid,
-    );
-  }
-
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    if (sourceId.present) {
-      map['source_id'] = Variable<String>(sourceId.value);
-    }
-    if (dataTypeId.present) {
-      map['data_type_id'] = Variable<String>(dataTypeId.value);
-    }
-    if (textData.present) {
-      map['text_data'] = Variable<String>(textData.value);
-    }
-    if (rowid.present) {
-      map['rowid'] = Variable<int>(rowid.value);
-    }
-    return map;
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('SearchFtsCompanion(')
-          ..write('sourceId: $sourceId, ')
-          ..write('dataTypeId: $dataTypeId, ')
-          ..write('textData: $textData, ')
-          ..write('rowid: $rowid')
-          ..write(')'))
-        .toString();
-  }
-}
-
-class FtsDataTypes extends Table with TableInfo<FtsDataTypes, FtsDataType> {
-  @override
-  final GeneratedDatabase attachedDatabase;
-  final String? _alias;
-  FtsDataTypes(this.attachedDatabase, [this._alias]);
-  static const VerificationMeta _idMeta = const VerificationMeta('id');
-  late final GeneratedColumn<int> id = GeneratedColumn<int>(
-    'id',
-    aliasedName,
-    false,
-    type: DriftSqlType.int,
-    requiredDuringInsert: false,
-    $customConstraints: 'PRIMARY KEY',
-  );
-  static const VerificationMeta _nameMeta = const VerificationMeta('name');
-  late final GeneratedColumn<String> name = GeneratedColumn<String>(
-    'name',
-    aliasedName,
-    false,
-    type: DriftSqlType.string,
-    requiredDuringInsert: true,
-    $customConstraints: 'NOT NULL UNIQUE',
-  );
-  @override
-  List<GeneratedColumn> get $columns => [id, name];
-  @override
-  String get aliasedName => _alias ?? actualTableName;
-  @override
-  String get actualTableName => $name;
-  static const String $name = 'fts_data_types';
-  @override
-  VerificationContext validateIntegrity(
-    Insertable<FtsDataType> instance, {
-    bool isInserting = false,
-  }) {
-    final context = VerificationContext();
-    final data = instance.toColumns(true);
-    if (data.containsKey('id')) {
-      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
-    }
-    if (data.containsKey('name')) {
-      context.handle(
-        _nameMeta,
-        name.isAcceptableOrUnknown(data['name']!, _nameMeta),
-      );
-    } else if (isInserting) {
-      context.missing(_nameMeta);
-    }
-    return context;
-  }
-
-  @override
-  Set<GeneratedColumn> get $primaryKey => {id};
-  @override
-  FtsDataType map(Map<String, dynamic> data, {String? tablePrefix}) {
-    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return FtsDataType(
-      id: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}id'],
-      )!,
-      name: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}name'],
-      )!,
-    );
-  }
-
-  @override
-  FtsDataTypes createAlias(String alias) {
-    return FtsDataTypes(attachedDatabase, alias);
-  }
-
-  @override
-  bool get dontWriteConstraints => true;
-}
-
-class FtsDataType extends DataClass implements Insertable<FtsDataType> {
-  final int id;
-  final String name;
-  const FtsDataType({required this.id, required this.name});
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    map['id'] = Variable<int>(id);
-    map['name'] = Variable<String>(name);
-    return map;
-  }
-
-  FtsDataTypesCompanion toCompanion(bool nullToAbsent) {
-    return FtsDataTypesCompanion(id: Value(id), name: Value(name));
-  }
-
-  factory FtsDataType.fromJson(
-    Map<String, dynamic> json, {
-    ValueSerializer? serializer,
-  }) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return FtsDataType(
-      id: serializer.fromJson<int>(json['id']),
-      name: serializer.fromJson<String>(json['name']),
-    );
-  }
-  @override
-  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return <String, dynamic>{
-      'id': serializer.toJson<int>(id),
-      'name': serializer.toJson<String>(name),
-    };
-  }
-
-  FtsDataType copyWith({int? id, String? name}) =>
-      FtsDataType(id: id ?? this.id, name: name ?? this.name);
-  FtsDataType copyWithCompanion(FtsDataTypesCompanion data) {
-    return FtsDataType(
-      id: data.id.present ? data.id.value : this.id,
-      name: data.name.present ? data.name.value : this.name,
-    );
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('FtsDataType(')
-          ..write('id: $id, ')
-          ..write('name: $name')
-          ..write(')'))
-        .toString();
-  }
-
-  @override
-  int get hashCode => Object.hash(id, name);
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      (other is FtsDataType && other.id == this.id && other.name == this.name);
-}
-
-class FtsDataTypesCompanion extends UpdateCompanion<FtsDataType> {
-  final Value<int> id;
-  final Value<String> name;
-  const FtsDataTypesCompanion({
-    this.id = const Value.absent(),
-    this.name = const Value.absent(),
-  });
-  FtsDataTypesCompanion.insert({
-    this.id = const Value.absent(),
-    required String name,
-  }) : name = Value(name);
-  static Insertable<FtsDataType> custom({
-    Expression<int>? id,
-    Expression<String>? name,
-  }) {
-    return RawValuesInsertable({
-      if (id != null) 'id': id,
-      if (name != null) 'name': name,
-    });
-  }
-
-  FtsDataTypesCompanion copyWith({Value<int>? id, Value<String>? name}) {
-    return FtsDataTypesCompanion(id: id ?? this.id, name: name ?? this.name);
-  }
-
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    if (id.present) {
-      map['id'] = Variable<int>(id.value);
-    }
-    if (name.present) {
-      map['name'] = Variable<String>(name.value);
-    }
-    return map;
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('FtsDataTypesCompanion(')
-          ..write('id: $id, ')
-          ..write('name: $name')
-          ..write(')'))
-        .toString();
-  }
-}
-
 class $TermTableTable extends TermTable
     with TableInfo<$TermTableTable, TermTableData> {
   @override
@@ -6164,37 +5702,8 @@ class $TermTableTable extends TermTable
     type: DriftSqlType.string,
     requiredDuringInsert: false,
   );
-  static const VerificationMeta _termTokensMeta = const VerificationMeta(
-    'termTokens',
-  );
   @override
-  late final GeneratedColumn<String> termTokens = GeneratedColumn<String>(
-    'term_tokens',
-    aliasedName,
-    true,
-    type: DriftSqlType.string,
-    requiredDuringInsert: false,
-    defaultConstraints: GeneratedColumn.constraintIsAlways('UNIQUE'),
-  );
-  static const VerificationMeta _termTokensNormalizedMeta =
-      const VerificationMeta('termTokensNormalized');
-  @override
-  late final GeneratedColumn<String> termTokensNormalized =
-      GeneratedColumn<String>(
-        'term_tokens_normalized',
-        aliasedName,
-        true,
-        type: DriftSqlType.string,
-        requiredDuringInsert: false,
-      );
-  @override
-  List<GeneratedColumn> get $columns => [
-    id,
-    term,
-    termNormalized,
-    termTokens,
-    termTokensNormalized,
-  ];
+  List<GeneratedColumn> get $columns => [id, term, termNormalized];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -6227,21 +5736,6 @@ class $TermTableTable extends TermTable
         ),
       );
     }
-    if (data.containsKey('term_tokens')) {
-      context.handle(
-        _termTokensMeta,
-        termTokens.isAcceptableOrUnknown(data['term_tokens']!, _termTokensMeta),
-      );
-    }
-    if (data.containsKey('term_tokens_normalized')) {
-      context.handle(
-        _termTokensNormalizedMeta,
-        termTokensNormalized.isAcceptableOrUnknown(
-          data['term_tokens_normalized']!,
-          _termTokensNormalizedMeta,
-        ),
-      );
-    }
     return context;
   }
 
@@ -6263,14 +5757,6 @@ class $TermTableTable extends TermTable
         DriftSqlType.string,
         data['${effectivePrefix}term_normalized'],
       ),
-      termTokens: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}term_tokens'],
-      ),
-      termTokensNormalized: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}term_tokens_normalized'],
-      ),
     );
   }
 
@@ -6289,18 +5775,10 @@ class TermTableData extends DataClass implements Insertable<TermTableData> {
 
   /// the normalized form of the term (省エネ → 省えね)
   final String? termNormalized;
-
-  /// the term's tokens (space-separated) of this entry
-  final String? termTokens;
-
-  /// the normalized form of the term's tokens (space-separated) of this entry
-  final String? termTokensNormalized;
   const TermTableData({
     required this.id,
     required this.term,
     this.termNormalized,
-    this.termTokens,
-    this.termTokensNormalized,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
@@ -6309,12 +5787,6 @@ class TermTableData extends DataClass implements Insertable<TermTableData> {
     map['term'] = Variable<String>(term);
     if (!nullToAbsent || termNormalized != null) {
       map['term_normalized'] = Variable<String>(termNormalized);
-    }
-    if (!nullToAbsent || termTokens != null) {
-      map['term_tokens'] = Variable<String>(termTokens);
-    }
-    if (!nullToAbsent || termTokensNormalized != null) {
-      map['term_tokens_normalized'] = Variable<String>(termTokensNormalized);
     }
     return map;
   }
@@ -6326,12 +5798,6 @@ class TermTableData extends DataClass implements Insertable<TermTableData> {
       termNormalized: termNormalized == null && nullToAbsent
           ? const Value.absent()
           : Value(termNormalized),
-      termTokens: termTokens == null && nullToAbsent
-          ? const Value.absent()
-          : Value(termTokens),
-      termTokensNormalized: termTokensNormalized == null && nullToAbsent
-          ? const Value.absent()
-          : Value(termTokensNormalized),
     );
   }
 
@@ -6344,10 +5810,6 @@ class TermTableData extends DataClass implements Insertable<TermTableData> {
       id: serializer.fromJson<int>(json['id']),
       term: serializer.fromJson<String>(json['term']),
       termNormalized: serializer.fromJson<String?>(json['termNormalized']),
-      termTokens: serializer.fromJson<String?>(json['termTokens']),
-      termTokensNormalized: serializer.fromJson<String?>(
-        json['termTokensNormalized'],
-      ),
     );
   }
   @override
@@ -6357,8 +5819,6 @@ class TermTableData extends DataClass implements Insertable<TermTableData> {
       'id': serializer.toJson<int>(id),
       'term': serializer.toJson<String>(term),
       'termNormalized': serializer.toJson<String?>(termNormalized),
-      'termTokens': serializer.toJson<String?>(termTokens),
-      'termTokensNormalized': serializer.toJson<String?>(termTokensNormalized),
     };
   }
 
@@ -6366,18 +5826,12 @@ class TermTableData extends DataClass implements Insertable<TermTableData> {
     int? id,
     String? term,
     Value<String?> termNormalized = const Value.absent(),
-    Value<String?> termTokens = const Value.absent(),
-    Value<String?> termTokensNormalized = const Value.absent(),
   }) => TermTableData(
     id: id ?? this.id,
     term: term ?? this.term,
     termNormalized: termNormalized.present
         ? termNormalized.value
         : this.termNormalized,
-    termTokens: termTokens.present ? termTokens.value : this.termTokens,
-    termTokensNormalized: termTokensNormalized.present
-        ? termTokensNormalized.value
-        : this.termTokensNormalized,
   );
   TermTableData copyWithCompanion(TermTableCompanion data) {
     return TermTableData(
@@ -6386,12 +5840,6 @@ class TermTableData extends DataClass implements Insertable<TermTableData> {
       termNormalized: data.termNormalized.present
           ? data.termNormalized.value
           : this.termNormalized,
-      termTokens: data.termTokens.present
-          ? data.termTokens.value
-          : this.termTokens,
-      termTokensNormalized: data.termTokensNormalized.present
-          ? data.termTokensNormalized.value
-          : this.termTokensNormalized,
     );
   }
 
@@ -6400,61 +5848,45 @@ class TermTableData extends DataClass implements Insertable<TermTableData> {
     return (StringBuffer('TermTableData(')
           ..write('id: $id, ')
           ..write('term: $term, ')
-          ..write('termNormalized: $termNormalized, ')
-          ..write('termTokens: $termTokens, ')
-          ..write('termTokensNormalized: $termTokensNormalized')
+          ..write('termNormalized: $termNormalized')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode =>
-      Object.hash(id, term, termNormalized, termTokens, termTokensNormalized);
+  int get hashCode => Object.hash(id, term, termNormalized);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is TermTableData &&
           other.id == this.id &&
           other.term == this.term &&
-          other.termNormalized == this.termNormalized &&
-          other.termTokens == this.termTokens &&
-          other.termTokensNormalized == this.termTokensNormalized);
+          other.termNormalized == this.termNormalized);
 }
 
 class TermTableCompanion extends UpdateCompanion<TermTableData> {
   final Value<int> id;
   final Value<String> term;
   final Value<String?> termNormalized;
-  final Value<String?> termTokens;
-  final Value<String?> termTokensNormalized;
   const TermTableCompanion({
     this.id = const Value.absent(),
     this.term = const Value.absent(),
     this.termNormalized = const Value.absent(),
-    this.termTokens = const Value.absent(),
-    this.termTokensNormalized = const Value.absent(),
   });
   TermTableCompanion.insert({
     this.id = const Value.absent(),
     required String term,
     this.termNormalized = const Value.absent(),
-    this.termTokens = const Value.absent(),
-    this.termTokensNormalized = const Value.absent(),
   }) : term = Value(term);
   static Insertable<TermTableData> custom({
     Expression<int>? id,
     Expression<String>? term,
     Expression<String>? termNormalized,
-    Expression<String>? termTokens,
-    Expression<String>? termTokensNormalized,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
       if (term != null) 'term': term,
       if (termNormalized != null) 'term_normalized': termNormalized,
-      if (termTokens != null) 'term_tokens': termTokens,
-      if (termTokensNormalized != null)
-        'term_tokens_normalized': termTokensNormalized,
     });
   }
 
@@ -6462,15 +5894,11 @@ class TermTableCompanion extends UpdateCompanion<TermTableData> {
     Value<int>? id,
     Value<String>? term,
     Value<String?>? termNormalized,
-    Value<String?>? termTokens,
-    Value<String?>? termTokensNormalized,
   }) {
     return TermTableCompanion(
       id: id ?? this.id,
       term: term ?? this.term,
       termNormalized: termNormalized ?? this.termNormalized,
-      termTokens: termTokens ?? this.termTokens,
-      termTokensNormalized: termTokensNormalized ?? this.termTokensNormalized,
     );
   }
 
@@ -6486,14 +5914,6 @@ class TermTableCompanion extends UpdateCompanion<TermTableData> {
     if (termNormalized.present) {
       map['term_normalized'] = Variable<String>(termNormalized.value);
     }
-    if (termTokens.present) {
-      map['term_tokens'] = Variable<String>(termTokens.value);
-    }
-    if (termTokensNormalized.present) {
-      map['term_tokens_normalized'] = Variable<String>(
-        termTokensNormalized.value,
-      );
-    }
     return map;
   }
 
@@ -6502,9 +5922,872 @@ class TermTableCompanion extends UpdateCompanion<TermTableData> {
     return (StringBuffer('TermTableCompanion(')
           ..write('id: $id, ')
           ..write('term: $term, ')
+          ..write('termNormalized: $termNormalized')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class FtsTerms extends Table
+    with TableInfo<FtsTerms, FtsTerm>, VirtualTableInfo<FtsTerms, FtsTerm> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  FtsTerms(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _termMeta = const VerificationMeta('term');
+  late final GeneratedColumn<String> term = GeneratedColumn<String>(
+    'term',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    $customConstraints: '',
+  );
+  static const VerificationMeta _termNormalizedMeta = const VerificationMeta(
+    'termNormalized',
+  );
+  late final GeneratedColumn<String> termNormalized = GeneratedColumn<String>(
+    'term_normalized',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    $customConstraints: '',
+  );
+  @override
+  List<GeneratedColumn> get $columns => [term, termNormalized];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'fts_terms';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<FtsTerm> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('term')) {
+      context.handle(
+        _termMeta,
+        term.isAcceptableOrUnknown(data['term']!, _termMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_termMeta);
+    }
+    if (data.containsKey('term_normalized')) {
+      context.handle(
+        _termNormalizedMeta,
+        termNormalized.isAcceptableOrUnknown(
+          data['term_normalized']!,
+          _termNormalizedMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_termNormalizedMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => const {};
+  @override
+  FtsTerm map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return FtsTerm(
+      term: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}term'],
+      )!,
+      termNormalized: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}term_normalized'],
+      )!,
+    );
+  }
+
+  @override
+  FtsTerms createAlias(String alias) {
+    return FtsTerms(attachedDatabase, alias);
+  }
+
+  @override
+  bool get dontWriteConstraints => true;
+  @override
+  String get moduleAndArgs =>
+      'fts5(term, term_normalized, content=\'term_table\', content_rowid=\'id\', tokenize = \'unicode61\', prefix = \'2 3\')';
+}
+
+class FtsTerm extends DataClass implements Insertable<FtsTerm> {
+  final String term;
+  final String termNormalized;
+  const FtsTerm({required this.term, required this.termNormalized});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['term'] = Variable<String>(term);
+    map['term_normalized'] = Variable<String>(termNormalized);
+    return map;
+  }
+
+  FtsTermsCompanion toCompanion(bool nullToAbsent) {
+    return FtsTermsCompanion(
+      term: Value(term),
+      termNormalized: Value(termNormalized),
+    );
+  }
+
+  factory FtsTerm.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return FtsTerm(
+      term: serializer.fromJson<String>(json['term']),
+      termNormalized: serializer.fromJson<String>(json['term_normalized']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'term': serializer.toJson<String>(term),
+      'term_normalized': serializer.toJson<String>(termNormalized),
+    };
+  }
+
+  FtsTerm copyWith({String? term, String? termNormalized}) => FtsTerm(
+    term: term ?? this.term,
+    termNormalized: termNormalized ?? this.termNormalized,
+  );
+  FtsTerm copyWithCompanion(FtsTermsCompanion data) {
+    return FtsTerm(
+      term: data.term.present ? data.term.value : this.term,
+      termNormalized: data.termNormalized.present
+          ? data.termNormalized.value
+          : this.termNormalized,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('FtsTerm(')
+          ..write('term: $term, ')
+          ..write('termNormalized: $termNormalized')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(term, termNormalized);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is FtsTerm &&
+          other.term == this.term &&
+          other.termNormalized == this.termNormalized);
+}
+
+class FtsTermsCompanion extends UpdateCompanion<FtsTerm> {
+  final Value<String> term;
+  final Value<String> termNormalized;
+  final Value<int> rowid;
+  const FtsTermsCompanion({
+    this.term = const Value.absent(),
+    this.termNormalized = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  FtsTermsCompanion.insert({
+    required String term,
+    required String termNormalized,
+    this.rowid = const Value.absent(),
+  }) : term = Value(term),
+       termNormalized = Value(termNormalized);
+  static Insertable<FtsTerm> custom({
+    Expression<String>? term,
+    Expression<String>? termNormalized,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (term != null) 'term': term,
+      if (termNormalized != null) 'term_normalized': termNormalized,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  FtsTermsCompanion copyWith({
+    Value<String>? term,
+    Value<String>? termNormalized,
+    Value<int>? rowid,
+  }) {
+    return FtsTermsCompanion(
+      term: term ?? this.term,
+      termNormalized: termNormalized ?? this.termNormalized,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (term.present) {
+      map['term'] = Variable<String>(term.value);
+    }
+    if (termNormalized.present) {
+      map['term_normalized'] = Variable<String>(termNormalized.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('FtsTermsCompanion(')
+          ..write('term: $term, ')
           ..write('termNormalized: $termNormalized, ')
-          ..write('termTokens: $termTokens, ')
-          ..write('termTokensNormalized: $termTokensNormalized')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class FtsTokens extends Table
+    with TableInfo<FtsTokens, FtsToken>, VirtualTableInfo<FtsTokens, FtsToken> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  FtsTokens(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _tokensMeta = const VerificationMeta('tokens');
+  late final GeneratedColumn<String> tokens = GeneratedColumn<String>(
+    'tokens',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    $customConstraints: '',
+  );
+  static const VerificationMeta _tokensNormalizedMeta = const VerificationMeta(
+    'tokensNormalized',
+  );
+  late final GeneratedColumn<String> tokensNormalized = GeneratedColumn<String>(
+    'tokens_normalized',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    $customConstraints: '',
+  );
+  @override
+  List<GeneratedColumn> get $columns => [tokens, tokensNormalized];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'fts_tokens';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<FtsToken> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('tokens')) {
+      context.handle(
+        _tokensMeta,
+        tokens.isAcceptableOrUnknown(data['tokens']!, _tokensMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_tokensMeta);
+    }
+    if (data.containsKey('tokens_normalized')) {
+      context.handle(
+        _tokensNormalizedMeta,
+        tokensNormalized.isAcceptableOrUnknown(
+          data['tokens_normalized']!,
+          _tokensNormalizedMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_tokensNormalizedMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => const {};
+  @override
+  FtsToken map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return FtsToken(
+      tokens: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}tokens'],
+      )!,
+      tokensNormalized: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}tokens_normalized'],
+      )!,
+    );
+  }
+
+  @override
+  FtsTokens createAlias(String alias) {
+    return FtsTokens(attachedDatabase, alias);
+  }
+
+  @override
+  bool get dontWriteConstraints => true;
+  @override
+  String get moduleAndArgs =>
+      'fts5(tokens, tokens_normalized, content=\'\', tokenize = \'unicode61\', prefix = \'2 3\', contentless_delete=1)';
+}
+
+class FtsToken extends DataClass implements Insertable<FtsToken> {
+  final String tokens;
+  final String tokensNormalized;
+  const FtsToken({required this.tokens, required this.tokensNormalized});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['tokens'] = Variable<String>(tokens);
+    map['tokens_normalized'] = Variable<String>(tokensNormalized);
+    return map;
+  }
+
+  FtsTokensCompanion toCompanion(bool nullToAbsent) {
+    return FtsTokensCompanion(
+      tokens: Value(tokens),
+      tokensNormalized: Value(tokensNormalized),
+    );
+  }
+
+  factory FtsToken.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return FtsToken(
+      tokens: serializer.fromJson<String>(json['tokens']),
+      tokensNormalized: serializer.fromJson<String>(json['tokens_normalized']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'tokens': serializer.toJson<String>(tokens),
+      'tokens_normalized': serializer.toJson<String>(tokensNormalized),
+    };
+  }
+
+  FtsToken copyWith({String? tokens, String? tokensNormalized}) => FtsToken(
+    tokens: tokens ?? this.tokens,
+    tokensNormalized: tokensNormalized ?? this.tokensNormalized,
+  );
+  FtsToken copyWithCompanion(FtsTokensCompanion data) {
+    return FtsToken(
+      tokens: data.tokens.present ? data.tokens.value : this.tokens,
+      tokensNormalized: data.tokensNormalized.present
+          ? data.tokensNormalized.value
+          : this.tokensNormalized,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('FtsToken(')
+          ..write('tokens: $tokens, ')
+          ..write('tokensNormalized: $tokensNormalized')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(tokens, tokensNormalized);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is FtsToken &&
+          other.tokens == this.tokens &&
+          other.tokensNormalized == this.tokensNormalized);
+}
+
+class FtsTokensCompanion extends UpdateCompanion<FtsToken> {
+  final Value<String> tokens;
+  final Value<String> tokensNormalized;
+  final Value<int> rowid;
+  const FtsTokensCompanion({
+    this.tokens = const Value.absent(),
+    this.tokensNormalized = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  FtsTokensCompanion.insert({
+    required String tokens,
+    required String tokensNormalized,
+    this.rowid = const Value.absent(),
+  }) : tokens = Value(tokens),
+       tokensNormalized = Value(tokensNormalized);
+  static Insertable<FtsToken> custom({
+    Expression<String>? tokens,
+    Expression<String>? tokensNormalized,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (tokens != null) 'tokens': tokens,
+      if (tokensNormalized != null) 'tokens_normalized': tokensNormalized,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  FtsTokensCompanion copyWith({
+    Value<String>? tokens,
+    Value<String>? tokensNormalized,
+    Value<int>? rowid,
+  }) {
+    return FtsTokensCompanion(
+      tokens: tokens ?? this.tokens,
+      tokensNormalized: tokensNormalized ?? this.tokensNormalized,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (tokens.present) {
+      map['tokens'] = Variable<String>(tokens.value);
+    }
+    if (tokensNormalized.present) {
+      map['tokens_normalized'] = Variable<String>(tokensNormalized.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('FtsTokensCompanion(')
+          ..write('tokens: $tokens, ')
+          ..write('tokensNormalized: $tokensNormalized, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class FtsReadings extends Table
+    with
+        TableInfo<FtsReadings, FtsReading>,
+        VirtualTableInfo<FtsReadings, FtsReading> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  FtsReadings(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _readingMeta = const VerificationMeta(
+    'reading',
+  );
+  late final GeneratedColumn<String> reading = GeneratedColumn<String>(
+    'reading',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    $customConstraints: '',
+  );
+  static const VerificationMeta _readingNormalizedMeta = const VerificationMeta(
+    'readingNormalized',
+  );
+  late final GeneratedColumn<String> readingNormalized =
+      GeneratedColumn<String>(
+        'reading_normalized',
+        aliasedName,
+        false,
+        type: DriftSqlType.string,
+        requiredDuringInsert: true,
+        $customConstraints: '',
+      );
+  @override
+  List<GeneratedColumn> get $columns => [reading, readingNormalized];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'fts_readings';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<FtsReading> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('reading')) {
+      context.handle(
+        _readingMeta,
+        reading.isAcceptableOrUnknown(data['reading']!, _readingMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_readingMeta);
+    }
+    if (data.containsKey('reading_normalized')) {
+      context.handle(
+        _readingNormalizedMeta,
+        readingNormalized.isAcceptableOrUnknown(
+          data['reading_normalized']!,
+          _readingNormalizedMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_readingNormalizedMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => const {};
+  @override
+  FtsReading map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return FtsReading(
+      reading: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}reading'],
+      )!,
+      readingNormalized: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}reading_normalized'],
+      )!,
+    );
+  }
+
+  @override
+  FtsReadings createAlias(String alias) {
+    return FtsReadings(attachedDatabase, alias);
+  }
+
+  @override
+  bool get dontWriteConstraints => true;
+  @override
+  String get moduleAndArgs =>
+      'fts5(reading, reading_normalized, content=\'reading_table\', content_rowid=\'id\', tokenize = \'unicode61\', prefix = \'2 3\')';
+}
+
+class FtsReading extends DataClass implements Insertable<FtsReading> {
+  final String reading;
+  final String readingNormalized;
+  const FtsReading({required this.reading, required this.readingNormalized});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['reading'] = Variable<String>(reading);
+    map['reading_normalized'] = Variable<String>(readingNormalized);
+    return map;
+  }
+
+  FtsReadingsCompanion toCompanion(bool nullToAbsent) {
+    return FtsReadingsCompanion(
+      reading: Value(reading),
+      readingNormalized: Value(readingNormalized),
+    );
+  }
+
+  factory FtsReading.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return FtsReading(
+      reading: serializer.fromJson<String>(json['reading']),
+      readingNormalized: serializer.fromJson<String>(
+        json['reading_normalized'],
+      ),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'reading': serializer.toJson<String>(reading),
+      'reading_normalized': serializer.toJson<String>(readingNormalized),
+    };
+  }
+
+  FtsReading copyWith({String? reading, String? readingNormalized}) =>
+      FtsReading(
+        reading: reading ?? this.reading,
+        readingNormalized: readingNormalized ?? this.readingNormalized,
+      );
+  FtsReading copyWithCompanion(FtsReadingsCompanion data) {
+    return FtsReading(
+      reading: data.reading.present ? data.reading.value : this.reading,
+      readingNormalized: data.readingNormalized.present
+          ? data.readingNormalized.value
+          : this.readingNormalized,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('FtsReading(')
+          ..write('reading: $reading, ')
+          ..write('readingNormalized: $readingNormalized')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(reading, readingNormalized);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is FtsReading &&
+          other.reading == this.reading &&
+          other.readingNormalized == this.readingNormalized);
+}
+
+class FtsReadingsCompanion extends UpdateCompanion<FtsReading> {
+  final Value<String> reading;
+  final Value<String> readingNormalized;
+  final Value<int> rowid;
+  const FtsReadingsCompanion({
+    this.reading = const Value.absent(),
+    this.readingNormalized = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  FtsReadingsCompanion.insert({
+    required String reading,
+    required String readingNormalized,
+    this.rowid = const Value.absent(),
+  }) : reading = Value(reading),
+       readingNormalized = Value(readingNormalized);
+  static Insertable<FtsReading> custom({
+    Expression<String>? reading,
+    Expression<String>? readingNormalized,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (reading != null) 'reading': reading,
+      if (readingNormalized != null) 'reading_normalized': readingNormalized,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  FtsReadingsCompanion copyWith({
+    Value<String>? reading,
+    Value<String>? readingNormalized,
+    Value<int>? rowid,
+  }) {
+    return FtsReadingsCompanion(
+      reading: reading ?? this.reading,
+      readingNormalized: readingNormalized ?? this.readingNormalized,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (reading.present) {
+      map['reading'] = Variable<String>(reading.value);
+    }
+    if (readingNormalized.present) {
+      map['reading_normalized'] = Variable<String>(readingNormalized.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('FtsReadingsCompanion(')
+          ..write('reading: $reading, ')
+          ..write('readingNormalized: $readingNormalized, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class FtsDefinitions extends Table
+    with
+        TableInfo<FtsDefinitions, FtsDefinition>,
+        VirtualTableInfo<FtsDefinitions, FtsDefinition> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  FtsDefinitions(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _definitionMeta = const VerificationMeta(
+    'definition',
+  );
+  late final GeneratedColumn<String> definition = GeneratedColumn<String>(
+    'definition',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+    $customConstraints: '',
+  );
+  @override
+  List<GeneratedColumn> get $columns => [definition];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'fts_definitions';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<FtsDefinition> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('definition')) {
+      context.handle(
+        _definitionMeta,
+        definition.isAcceptableOrUnknown(data['definition']!, _definitionMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_definitionMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => const {};
+  @override
+  FtsDefinition map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return FtsDefinition(
+      definition: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}definition'],
+      )!,
+    );
+  }
+
+  @override
+  FtsDefinitions createAlias(String alias) {
+    return FtsDefinitions(attachedDatabase, alias);
+  }
+
+  @override
+  bool get dontWriteConstraints => true;
+  @override
+  String get moduleAndArgs =>
+      'fts5(definition, content=\'definition_table\', content_rowid=\'id\', tokenize = \'unicode61\', prefix = \'2 3\')';
+}
+
+class FtsDefinition extends DataClass implements Insertable<FtsDefinition> {
+  final String definition;
+  const FtsDefinition({required this.definition});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['definition'] = Variable<String>(definition);
+    return map;
+  }
+
+  FtsDefinitionsCompanion toCompanion(bool nullToAbsent) {
+    return FtsDefinitionsCompanion(definition: Value(definition));
+  }
+
+  factory FtsDefinition.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return FtsDefinition(
+      definition: serializer.fromJson<String>(json['definition']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'definition': serializer.toJson<String>(definition),
+    };
+  }
+
+  FtsDefinition copyWith({String? definition}) =>
+      FtsDefinition(definition: definition ?? this.definition);
+  FtsDefinition copyWithCompanion(FtsDefinitionsCompanion data) {
+    return FtsDefinition(
+      definition: data.definition.present
+          ? data.definition.value
+          : this.definition,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('FtsDefinition(')
+          ..write('definition: $definition')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => definition.hashCode;
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is FtsDefinition && other.definition == this.definition);
+}
+
+class FtsDefinitionsCompanion extends UpdateCompanion<FtsDefinition> {
+  final Value<String> definition;
+  final Value<int> rowid;
+  const FtsDefinitionsCompanion({
+    this.definition = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  FtsDefinitionsCompanion.insert({
+    required String definition,
+    this.rowid = const Value.absent(),
+  }) : definition = Value(definition);
+  static Insertable<FtsDefinition> custom({
+    Expression<String>? definition,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (definition != null) 'definition': definition,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  FtsDefinitionsCompanion copyWith({
+    Value<String>? definition,
+    Value<int>? rowid,
+  }) {
+    return FtsDefinitionsCompanion(
+      definition: definition ?? this.definition,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (definition.present) {
+      map['definition'] = Variable<String>(definition.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('FtsDefinitionsCompanion(')
+          ..write('definition: $definition, ')
+          ..write('rowid: $rowid')
           ..write(')'))
         .toString();
   }
@@ -6541,8 +6824,23 @@ class $TermBankV3DefinitionJsonTableTable extends TermBankV3DefinitionJsonTable
       ).withConverter<String>(
         $TermBankV3DefinitionJsonTableTable.$converterdefinitionJson,
       );
+  static const VerificationMeta _definitionJsonHashMeta =
+      const VerificationMeta('definitionJsonHash');
   @override
-  List<GeneratedColumn> get $columns => [id, definitionJson];
+  late final GeneratedColumn<String> definitionJsonHash =
+      GeneratedColumn<String>(
+        'definition_json_hash',
+        aliasedName,
+        false,
+        type: DriftSqlType.string,
+        requiredDuringInsert: true,
+      );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    definitionJson,
+    definitionJsonHash,
+  ];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -6557,6 +6855,17 @@ class $TermBankV3DefinitionJsonTableTable extends TermBankV3DefinitionJsonTable
     final data = instance.toColumns(true);
     if (data.containsKey('id')) {
       context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('definition_json_hash')) {
+      context.handle(
+        _definitionJsonHashMeta,
+        definitionJsonHash.isAcceptableOrUnknown(
+          data['definition_json_hash']!,
+          _definitionJsonHashMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_definitionJsonHashMeta);
     }
     return context;
   }
@@ -6582,6 +6891,10 @@ class $TermBankV3DefinitionJsonTableTable extends TermBankV3DefinitionJsonTable
               data['${effectivePrefix}definition_json'],
             )!,
           ),
+      definitionJsonHash: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}definition_json_hash'],
+      )!,
     );
   }
 
@@ -6601,9 +6914,13 @@ class TermBankV3DefinitionJsonTableData extends DataClass
 
   /// JSON representation of the term
   final String definitionJson;
+
+  /// hash of the JSON content, used for deduplication
+  final String definitionJsonHash;
   const TermBankV3DefinitionJsonTableData({
     required this.id,
     required this.definitionJson,
+    required this.definitionJsonHash,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
@@ -6616,6 +6933,7 @@ class TermBankV3DefinitionJsonTableData extends DataClass
         ),
       );
     }
+    map['definition_json_hash'] = Variable<String>(definitionJsonHash);
     return map;
   }
 
@@ -6623,6 +6941,7 @@ class TermBankV3DefinitionJsonTableData extends DataClass
     return TermBankV3DefinitionJsonTableCompanion(
       id: Value(id),
       definitionJson: Value(definitionJson),
+      definitionJsonHash: Value(definitionJsonHash),
     );
   }
 
@@ -6634,6 +6953,9 @@ class TermBankV3DefinitionJsonTableData extends DataClass
     return TermBankV3DefinitionJsonTableData(
       id: serializer.fromJson<int>(json['id']),
       definitionJson: serializer.fromJson<String>(json['definitionJson']),
+      definitionJsonHash: serializer.fromJson<String>(
+        json['definitionJsonHash'],
+      ),
     );
   }
   @override
@@ -6642,15 +6964,18 @@ class TermBankV3DefinitionJsonTableData extends DataClass
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
       'definitionJson': serializer.toJson<String>(definitionJson),
+      'definitionJsonHash': serializer.toJson<String>(definitionJsonHash),
     };
   }
 
   TermBankV3DefinitionJsonTableData copyWith({
     int? id,
     String? definitionJson,
+    String? definitionJsonHash,
   }) => TermBankV3DefinitionJsonTableData(
     id: id ?? this.id,
     definitionJson: definitionJson ?? this.definitionJson,
+    definitionJsonHash: definitionJsonHash ?? this.definitionJsonHash,
   );
   TermBankV3DefinitionJsonTableData copyWithCompanion(
     TermBankV3DefinitionJsonTableCompanion data,
@@ -6660,6 +6985,9 @@ class TermBankV3DefinitionJsonTableData extends DataClass
       definitionJson: data.definitionJson.present
           ? data.definitionJson.value
           : this.definitionJson,
+      definitionJsonHash: data.definitionJsonHash.present
+          ? data.definitionJsonHash.value
+          : this.definitionJsonHash,
     );
   }
 
@@ -6667,50 +6995,61 @@ class TermBankV3DefinitionJsonTableData extends DataClass
   String toString() {
     return (StringBuffer('TermBankV3DefinitionJsonTableData(')
           ..write('id: $id, ')
-          ..write('definitionJson: $definitionJson')
+          ..write('definitionJson: $definitionJson, ')
+          ..write('definitionJsonHash: $definitionJsonHash')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(id, definitionJson);
+  int get hashCode => Object.hash(id, definitionJson, definitionJsonHash);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is TermBankV3DefinitionJsonTableData &&
           other.id == this.id &&
-          other.definitionJson == this.definitionJson);
+          other.definitionJson == this.definitionJson &&
+          other.definitionJsonHash == this.definitionJsonHash);
 }
 
 class TermBankV3DefinitionJsonTableCompanion
     extends UpdateCompanion<TermBankV3DefinitionJsonTableData> {
   final Value<int> id;
   final Value<String> definitionJson;
+  final Value<String> definitionJsonHash;
   const TermBankV3DefinitionJsonTableCompanion({
     this.id = const Value.absent(),
     this.definitionJson = const Value.absent(),
+    this.definitionJsonHash = const Value.absent(),
   });
   TermBankV3DefinitionJsonTableCompanion.insert({
     this.id = const Value.absent(),
     required String definitionJson,
-  }) : definitionJson = Value(definitionJson);
+    required String definitionJsonHash,
+  }) : definitionJson = Value(definitionJson),
+       definitionJsonHash = Value(definitionJsonHash);
   static Insertable<TermBankV3DefinitionJsonTableData> custom({
     Expression<int>? id,
     Expression<Uint8List>? definitionJson,
+    Expression<String>? definitionJsonHash,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
       if (definitionJson != null) 'definition_json': definitionJson,
+      if (definitionJsonHash != null)
+        'definition_json_hash': definitionJsonHash,
     });
   }
 
   TermBankV3DefinitionJsonTableCompanion copyWith({
     Value<int>? id,
     Value<String>? definitionJson,
+    Value<String>? definitionJsonHash,
   }) {
     return TermBankV3DefinitionJsonTableCompanion(
       id: id ?? this.id,
       definitionJson: definitionJson ?? this.definitionJson,
+      definitionJsonHash: definitionJsonHash ?? this.definitionJsonHash,
     );
   }
 
@@ -6727,6 +7066,9 @@ class TermBankV3DefinitionJsonTableCompanion
         ),
       );
     }
+    if (definitionJsonHash.present) {
+      map['definition_json_hash'] = Variable<String>(definitionJsonHash.value);
+    }
     return map;
   }
 
@@ -6734,7 +7076,8 @@ class TermBankV3DefinitionJsonTableCompanion
   String toString() {
     return (StringBuffer('TermBankV3DefinitionJsonTableCompanion(')
           ..write('id: $id, ')
-          ..write('definitionJson: $definitionJson')
+          ..write('definitionJson: $definitionJson, ')
+          ..write('definitionJsonHash: $definitionJsonHash')
           ..write(')'))
         .toString();
   }
@@ -7284,8 +7627,18 @@ class $TermBankV3_X_DefinitionTableTable extends TermBankV3_X_DefinitionTable
       'REFERENCES term_bank_v3_table (id) ON DELETE CASCADE',
     ),
   );
+  static const VerificationMeta _rankMeta = const VerificationMeta('rank');
   @override
-  List<GeneratedColumn> get $columns => [id, definitionId, termBankId];
+  late final GeneratedColumn<int> rank = GeneratedColumn<int>(
+    'rank',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [id, definitionId, termBankId, rank];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -7323,6 +7676,12 @@ class $TermBankV3_X_DefinitionTableTable extends TermBankV3_X_DefinitionTable
     } else if (isInserting) {
       context.missing(_termBankIdMeta);
     }
+    if (data.containsKey('rank')) {
+      context.handle(
+        _rankMeta,
+        rank.isAcceptableOrUnknown(data['rank']!, _rankMeta),
+      );
+    }
     return context;
   }
 
@@ -7347,6 +7706,10 @@ class $TermBankV3_X_DefinitionTableTable extends TermBankV3_X_DefinitionTable
         DriftSqlType.int,
         data['${effectivePrefix}term_bank_id'],
       )!,
+      rank: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}rank'],
+      )!,
     );
   }
 
@@ -7366,10 +7729,15 @@ class TermBankV3_X_DefinitionTableData extends DataClass
 
   /// the id of the associated term in the term bank
   final int termBankId;
+
+  /// the rank of this definition as they are in the source dictionary
+  /// (lower is more important)
+  final int rank;
   const TermBankV3_X_DefinitionTableData({
     required this.id,
     required this.definitionId,
     required this.termBankId,
+    required this.rank,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
@@ -7377,6 +7745,7 @@ class TermBankV3_X_DefinitionTableData extends DataClass
     map['id'] = Variable<int>(id);
     map['definition_id'] = Variable<int>(definitionId);
     map['term_bank_id'] = Variable<int>(termBankId);
+    map['rank'] = Variable<int>(rank);
     return map;
   }
 
@@ -7385,6 +7754,7 @@ class TermBankV3_X_DefinitionTableData extends DataClass
       id: Value(id),
       definitionId: Value(definitionId),
       termBankId: Value(termBankId),
+      rank: Value(rank),
     );
   }
 
@@ -7397,6 +7767,7 @@ class TermBankV3_X_DefinitionTableData extends DataClass
       id: serializer.fromJson<int>(json['id']),
       definitionId: serializer.fromJson<int>(json['definitionId']),
       termBankId: serializer.fromJson<int>(json['termBankId']),
+      rank: serializer.fromJson<int>(json['rank']),
     );
   }
   @override
@@ -7406,6 +7777,7 @@ class TermBankV3_X_DefinitionTableData extends DataClass
       'id': serializer.toJson<int>(id),
       'definitionId': serializer.toJson<int>(definitionId),
       'termBankId': serializer.toJson<int>(termBankId),
+      'rank': serializer.toJson<int>(rank),
     };
   }
 
@@ -7413,10 +7785,12 @@ class TermBankV3_X_DefinitionTableData extends DataClass
     int? id,
     int? definitionId,
     int? termBankId,
+    int? rank,
   }) => TermBankV3_X_DefinitionTableData(
     id: id ?? this.id,
     definitionId: definitionId ?? this.definitionId,
     termBankId: termBankId ?? this.termBankId,
+    rank: rank ?? this.rank,
   );
   TermBankV3_X_DefinitionTableData copyWithCompanion(
     TermBankV3_X_DefinitionTableCompanion data,
@@ -7429,6 +7803,7 @@ class TermBankV3_X_DefinitionTableData extends DataClass
       termBankId: data.termBankId.present
           ? data.termBankId.value
           : this.termBankId,
+      rank: data.rank.present ? data.rank.value : this.rank,
     );
   }
 
@@ -7437,20 +7812,22 @@ class TermBankV3_X_DefinitionTableData extends DataClass
     return (StringBuffer('TermBankV3_X_DefinitionTableData(')
           ..write('id: $id, ')
           ..write('definitionId: $definitionId, ')
-          ..write('termBankId: $termBankId')
+          ..write('termBankId: $termBankId, ')
+          ..write('rank: $rank')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(id, definitionId, termBankId);
+  int get hashCode => Object.hash(id, definitionId, termBankId, rank);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is TermBankV3_X_DefinitionTableData &&
           other.id == this.id &&
           other.definitionId == this.definitionId &&
-          other.termBankId == this.termBankId);
+          other.termBankId == this.termBankId &&
+          other.rank == this.rank);
 }
 
 class TermBankV3_X_DefinitionTableCompanion
@@ -7458,26 +7835,31 @@ class TermBankV3_X_DefinitionTableCompanion
   final Value<int> id;
   final Value<int> definitionId;
   final Value<int> termBankId;
+  final Value<int> rank;
   const TermBankV3_X_DefinitionTableCompanion({
     this.id = const Value.absent(),
     this.definitionId = const Value.absent(),
     this.termBankId = const Value.absent(),
+    this.rank = const Value.absent(),
   });
   TermBankV3_X_DefinitionTableCompanion.insert({
     this.id = const Value.absent(),
     required int definitionId,
     required int termBankId,
+    this.rank = const Value.absent(),
   }) : definitionId = Value(definitionId),
        termBankId = Value(termBankId);
   static Insertable<TermBankV3_X_DefinitionTableData> custom({
     Expression<int>? id,
     Expression<int>? definitionId,
     Expression<int>? termBankId,
+    Expression<int>? rank,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
       if (definitionId != null) 'definition_id': definitionId,
       if (termBankId != null) 'term_bank_id': termBankId,
+      if (rank != null) 'rank': rank,
     });
   }
 
@@ -7485,11 +7867,13 @@ class TermBankV3_X_DefinitionTableCompanion
     Value<int>? id,
     Value<int>? definitionId,
     Value<int>? termBankId,
+    Value<int>? rank,
   }) {
     return TermBankV3_X_DefinitionTableCompanion(
       id: id ?? this.id,
       definitionId: definitionId ?? this.definitionId,
       termBankId: termBankId ?? this.termBankId,
+      rank: rank ?? this.rank,
     );
   }
 
@@ -7505,6 +7889,9 @@ class TermBankV3_X_DefinitionTableCompanion
     if (termBankId.present) {
       map['term_bank_id'] = Variable<int>(termBankId.value);
     }
+    if (rank.present) {
+      map['rank'] = Variable<int>(rank.value);
+    }
     return map;
   }
 
@@ -7513,7 +7900,8 @@ class TermBankV3_X_DefinitionTableCompanion
     return (StringBuffer('TermBankV3_X_DefinitionTableCompanion(')
           ..write('id: $id, ')
           ..write('definitionId: $definitionId, ')
-          ..write('termBankId: $termBankId')
+          ..write('termBankId: $termBankId, ')
+          ..write('rank: $rank')
           ..write(')'))
         .toString();
   }
@@ -18257,45 +18645,11 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
     'TagBankV3Table_name',
     'CREATE INDEX TagBankV3Table_name ON tag_bank_v3_table (name)',
   );
-  late final SearchFts searchFts = SearchFts(this);
-  late final FtsDataTypes ftsDataTypes = FtsDataTypes(this);
   late final $TermTableTable termTable = $TermTableTable(this);
-  late final Trigger termTableAi = Trigger(
-    'CREATE TRIGGER term_table_ai AFTER INSERT ON term_table BEGIN INSERT INTO search_fts (source_id, data_type_id, text_data) SELECT NEW.id, 1, NEW.term WHERE NEW.term IS NOT NULL;INSERT INTO search_fts (source_id, data_type_id, text_data) SELECT NEW.id, 2, NEW.term_tokens WHERE NEW.term_tokens IS NOT NULL;INSERT INTO search_fts (source_id, data_type_id, text_data) SELECT NEW.id, 3, IFNULL(NEW.term_normalized, NEW.term) WHERE IFNULL(NEW.term_normalized, NEW.term) IS NOT NULL;INSERT INTO search_fts (source_id, data_type_id, text_data) SELECT NEW.id, 4, NEW.term_tokens_normalized WHERE NEW.term_tokens_normalized IS NOT NULL;END',
-    'term_table_ai',
-  );
-  late final Trigger termTableAu = Trigger(
-    'CREATE TRIGGER term_table_au AFTER UPDATE ON term_table BEGIN DELETE FROM search_fts WHERE source_id = OLD.id AND data_type_id IN (1, 2, 3, 4);INSERT INTO search_fts (source_id, data_type_id, text_data) SELECT NEW.id, 1, NEW.term WHERE NEW.term IS NOT NULL;INSERT INTO search_fts (source_id, data_type_id, text_data) SELECT NEW.id, 2, NEW.term_tokens WHERE NEW.term_tokens IS NOT NULL;INSERT INTO search_fts (source_id, data_type_id, text_data) SELECT NEW.id, 3, NEW.term_normalized WHERE NEW.term_normalized IS NOT NULL;INSERT INTO search_fts (source_id, data_type_id, text_data) SELECT NEW.id, 4, NEW.term_tokens_normalized WHERE NEW.term_tokens_normalized IS NOT NULL;END',
-    'term_table_au',
-  );
-  late final Trigger termTableAd = Trigger(
-    'CREATE TRIGGER term_table_ad AFTER DELETE ON term_table BEGIN DELETE FROM search_fts WHERE source_id = OLD.id AND data_type_id IN (1, 2, 3, 4);END',
-    'term_table_ad',
-  );
-  late final Trigger readingTableAi = Trigger(
-    'CREATE TRIGGER reading_table_ai AFTER INSERT ON reading_table BEGIN INSERT INTO search_fts (source_id, data_type_id, text_data) SELECT NEW.id, 5, NEW.reading WHERE NEW.reading IS NOT NULL;INSERT INTO search_fts (source_id, data_type_id, text_data) SELECT NEW.id, 6, IFNULL(NEW.reading_normalized, NEW.reading) WHERE IFNULL(NEW.reading_normalized, NEW.reading) IS NOT NULL;END',
-    'reading_table_ai',
-  );
-  late final Trigger readingTableAu = Trigger(
-    'CREATE TRIGGER reading_table_au AFTER UPDATE ON reading_table BEGIN DELETE FROM search_fts WHERE source_id = OLD.id AND data_type_id IN (5, 6);INSERT INTO search_fts (source_id, data_type_id, text_data) SELECT NEW.id, 5, NEW.reading WHERE NEW.reading IS NOT NULL;INSERT INTO search_fts (source_id, data_type_id, text_data) SELECT NEW.id, 6, IFNULL(NEW.reading_normalized, NEW.reading) WHERE IFNULL(NEW.reading_normalized, NEW.reading) IS NOT NULL;END',
-    'reading_table_au',
-  );
-  late final Trigger readingTableAd = Trigger(
-    'CREATE TRIGGER reading_table_ad AFTER DELETE ON reading_table BEGIN DELETE FROM search_fts WHERE source_id = OLD.id AND data_type_id IN (5, 6);END',
-    'reading_table_ad',
-  );
-  late final Trigger definitionTableAi = Trigger(
-    'CREATE TRIGGER definition_table_ai AFTER INSERT ON definition_table BEGIN INSERT INTO search_fts (source_id, data_type_id, text_data) SELECT NEW.id, 7, NEW.definition WHERE NEW.definition IS NOT NULL;END',
-    'definition_table_ai',
-  );
-  late final Trigger definitionTableAu = Trigger(
-    'CREATE TRIGGER definition_table_au AFTER UPDATE ON definition_table BEGIN DELETE FROM search_fts WHERE source_id = OLD.id AND data_type_id = 7;INSERT INTO search_fts (source_id, data_type_id, text_data) SELECT NEW.id, 7, NEW.definition WHERE NEW.definition IS NOT NULL;END',
-    'definition_table_au',
-  );
-  late final Trigger definitionTableAd = Trigger(
-    'CREATE TRIGGER definition_table_ad AFTER DELETE ON definition_table BEGIN DELETE FROM search_fts WHERE source_id = OLD.id AND data_type_id = 7;END',
-    'definition_table_ad',
-  );
+  late final FtsTerms ftsTerms = FtsTerms(this);
+  late final FtsTokens ftsTokens = FtsTokens(this);
+  late final FtsReadings ftsReadings = FtsReadings(this);
+  late final FtsDefinitions ftsDefinitions = FtsDefinitions(this);
   late final $TermBankV3DefinitionJsonTableTable termBankV3DefinitionJsonTable =
       $TermBankV3DefinitionJsonTableTable(this);
   late final $TermBankV3TableTable termBankV3Table = $TermBankV3TableTable(
@@ -18397,6 +18751,10 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
   late final Index termBankV3TableSequenceNumberIndex = Index(
     'TermBankV3Table_sequenceNumberIndex',
     'CREATE INDEX TermBankV3Table_sequenceNumberIndex ON term_bank_v3_table (sequence_number)',
+  );
+  late final Index termBankV3TableIdxTermBankSeqLookup = Index(
+    'TermBankV3Table_idxTermBankSeqLookup',
+    'CREATE INDEX TermBankV3Table_idxTermBankSeqLookup ON term_bank_v3_table (index_id, sequence_number)',
   );
   late final TermMetaBankV3EntryView termMetaBankV3EntryView =
       TermMetaBankV3EntryView(this);
@@ -18708,14 +19066,6 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
     );
   }
 
-  Future<int> populdate_fts_data_types() {
-    return customInsert(
-      'INSERT OR IGNORE INTO fts_data_types (id, name) VALUES (1, \'term_full\'), (2, \'term_token\'), (3, \'term_full_normalized\'), (4, \'term_token_normalized\'), (5, \'reading_full\'), (6, \'reading_full_normalized\'), (7, \'definition\')',
-      variables: [],
-      updates: {ftsDataTypes},
-    );
-  }
-
   Selectable<DictionarySearchDriftFindTermBankEntriesResult>
   dictionary_search_drift_find_term_bank_entries(
     String searchInputs,
@@ -18729,7 +19079,7 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
     int offset,
   ) {
     return customSelect(
-      'WITH SearchTerms (input_index, term, should_prefix, allowed_rules, allowed_tags, fts_query) AS (SELECT "key" AS input_index, CAST(json_extract(value, \'\$[0]\') AS TEXT), CAST(json_extract(value, \'\$[1]\') AS INTEGER), CAST(json_extract(value, \'\$[3]\') AS TEXT), CAST(json_extract(value, \'\$[4]\') AS TEXT), CASE WHEN CAST(json_extract(value, \'\$[2]\') AS INTEGER) = 1 THEN \'^\' ELSE \'\' END || \'"\' || "REPLACE"(CAST(json_extract(value, \'\$[0]\') AS TEXT), \'"\', \'""\') || \'"\' || CASE WHEN CAST(json_extract(value, \'\$[1]\') AS INTEGER) = 1 THEN \' *\' ELSE \'\' END FROM json_each(?1)), IndexesToInclude (index_id) AS (SELECT value FROM json_each(?2)WHERE value IS NOT NULL), ActiveIndexes (id, current_sorting_order, enabled, frequency_mode) AS (SELECT id, current_sorting_order, enabled, frequency_mode FROM index_table WHERE(?2 IS NOT NULL AND id IN (SELECT index_id FROM IndexesToInclude))OR(?2 IS NULL AND enabled = 1)), SearchResults AS (SELECT SearchTerms.input_index AS input_index, SearchTerms.term AS search_term, SearchTerms.should_prefix AS should_prefix, SearchTerms.allowed_rules AS allowed_rules, SearchTerms.allowed_tags AS allowed_tags, SearchTerms.fts_query AS fts_query, search_fts.*, search_fts.rank FROM SearchTerms JOIN search_fts ON search_fts.text_data MATCH fts_query WHERE ?3 = 0 AND((data_type_id IN (1, 2, 5, 7) AND ?4 = 0)OR(data_type_id IN (3, 4, 6) AND ?4 = 1))UNION ALL SELECT SearchTerms.input_index AS input_index, SearchTerms.term AS search_term, SearchTerms.should_prefix AS should_prefix, SearchTerms.allowed_rules AS allowed_rules, SearchTerms.allowed_tags AS allowed_tags, SearchTerms.fts_query AS fts_query, search_fts.*, 0 AS rank FROM SearchTerms JOIN search_fts ON search_fts.text_data GLOB SearchTerms.term WHERE ?3 = 1 AND((data_type_id IN (1, 2, 5, 7) AND ?4 = 0)OR(data_type_id IN (3, 4, 6) AND ?4 = 1))), SearchResultMatchesClassified AS (SELECT SearchResults.*, CASE WHEN text_data = search_term THEN 1 WHEN text_data GLOB search_term || \'*\' THEN 2 ELSE 3 END AS match_type FROM SearchResults), SearchResultsDeduplicated AS (SELECT * FROM (SELECT SearchResultMatchesClassified.*, ROW_NUMBER()OVER (PARTITION BY source_id, CASE WHEN data_type_id IN (1, 2, 3, 4) THEN \'term\' WHEN data_type_id IN (5, 6) THEN \'reading\' ELSE \'def\' END ORDER BY match_type ASC, rank ASC, LENGTH(text_data) ASC RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW EXCLUDE NO OTHERS) AS rn FROM SearchResultMatchesClassified) WHERE rn = 1), SearchParameterCheck AS (SELECT term_bank_v3_table.id AS term_bank_id FROM term_bank_v3_table WHERE(?5 IS NULL OR EXISTS (SELECT 1 AS _c0 FROM search_fts WHERE source_id = term_bank_v3_table.term_id AND data_type_id IN (1, 2, 3, 4) AND text_data MATCH \'"\' || "REPLACE"(?5, \'"\', \'""\') || \'"\'))AND(?6 IS NULL OR EXISTS (SELECT 1 AS _c1 FROM search_fts WHERE source_id = term_bank_v3_table.reading_id AND data_type_id IN (5, 6) AND text_data MATCH \'"\' || "REPLACE"(?6, \'"\', \'""\') || \'"\'))AND(?7 IS NULL OR EXISTS (SELECT 1 AS _c2 FROM term_bank_v3_x_definition_table AS link JOIN search_fts AS def_fts ON link.definition_id = def_fts.source_id WHERE link.term_bank_id = term_bank_v3_table.id AND def_fts.data_type_id = 7 AND def_fts.text_data MATCH \'"\' || "REPLACE"(?7, \'"\', \'""\') || \'"\'))), TermBankMatches AS (SELECT SearchResultsDeduplicated.*, term_bank_v3_table.id AS term_bank_id, term_bank_v3_table.term_id AS term_id, term_bank_v3_table.reading_id AS reading_id, term_bank_v3_table.index_id, 1 AS match_column, term_bank_v3_table.sequence_number FROM SearchResultsDeduplicated JOIN term_bank_v3_table ON term_bank_v3_table.term_id = source_id AND data_type_id IN (1, 2, 3, 4) JOIN ActiveIndexes ON term_bank_v3_table.index_id = ActiveIndexes.id UNION ALL SELECT SearchResultsDeduplicated.*, term_bank_v3_table.id AS term_bank_id, term_bank_v3_table.term_id AS term_id, term_bank_v3_table.reading_id AS reading_id, term_bank_v3_table.index_id, 2 AS match_column, term_bank_v3_table.sequence_number FROM SearchResultsDeduplicated JOIN term_bank_v3_table ON term_bank_v3_table.reading_id = source_id AND data_type_id IN (5, 6) JOIN ActiveIndexes ON term_bank_v3_table.index_id = ActiveIndexes.id UNION ALL SELECT SearchResultsDeduplicated.*, term_bank_v3_x_definition_table.term_bank_id AS term_bank_id, term_bank_v3_table.term_id AS term_id, term_bank_v3_table.reading_id AS reading_id, term_bank_v3_table.index_id, 3 AS match_column, term_bank_v3_table.sequence_number FROM SearchResultsDeduplicated JOIN term_bank_v3_x_definition_table ON term_bank_v3_x_definition_table.definition_id = source_id JOIN term_bank_v3_table ON term_bank_v3_table.id = term_bank_v3_x_definition_table.term_bank_id AND data_type_id = 7 JOIN ActiveIndexes ON term_bank_v3_table.index_id = ActiveIndexes.id), TermBankMatchesFiltered AS (SELECT TBM.* FROM TermBankMatches AS TBM JOIN SearchParameterCheck ON SearchParameterCheck.term_bank_id = TBM.term_bank_id WHERE(TBM.allowed_tags IS NULL OR json_array_length(TBM.allowed_tags) = 0 OR EXISTS (SELECT 1 AS _c3 FROM term_bank_v3_x_tag_bank_table AS LinkTable JOIN tag_bank_v3_table AS TagTable ON LinkTable.tag_bank_id = TagTable.id JOIN json_each(TBM.allowed_tags)AS AllowedTag ON TagTable.name = AllowedTag.value WHERE LinkTable.term_bank_id = TBM.term_bank_id))AND(TBM.allowed_rules IS NULL OR json_array_length(TBM.allowed_rules) = 0 OR EXISTS (SELECT 1 AS _c4 FROM term_bank_v3_x_rule_identifier_table AS RuleLink JOIN term_bank_v3_rule_identifier_table AS RuleTable ON RuleLink.rule_identifier_id = RuleTable.id JOIN json_each(TBM.allowed_rules)AS AllowedRule ON RuleTable.rule_identifier = AllowedRule.value WHERE RuleLink.term_bank_id = TBM.term_bank_id))), FrequencyOverrideIsActive AS (SELECT 1 AS is_active FROM index_table WHERE current_frequency_dictionary = TRUE LIMIT 1), PopularityDictionary AS (SELECT term_meta_bank_v3_table.*, IT.frequency_mode AS op_frequency_mode FROM index_table AS IT JOIN term_meta_bank_v3_table ON term_meta_bank_v3_table.index_id = IT.id JOIN term_meta_bank_v3_type_table ON term_meta_bank_v3_table.type_id = term_meta_bank_v3_type_table.id WHERE IT.current_frequency_dictionary = TRUE AND term_meta_bank_v3_type_table.type = \'freq\') SELECT TBM.term_bank_id, TBM.search_term, TBM.rank AS fts5_rank, TBM.match_type, TBM.match_column, TBM.sequence_number, ActiveIndexes.id AS indexId, ActiveIndexes.current_sorting_order, CASE WHEN FrequencyOverrideIsActive.is_active = 1 THEN CASE WHEN OP.op_frequency_mode = \'rankBased\' THEN(OP.freq_value * -1)ELSE OP.freq_value END ELSE CASE WHEN ActiveIndexes.frequency_mode = \'rankBased\' THEN(TB3T.popularity * -1)ELSE TB3T.popularity END END AS finalPopularity, CASE WHEN TBM.match_column = 1 THEN TT.term WHEN TBM.match_column = 2 THEN RT.reading ELSE TBM.text_data END AS matchedText, LENGTH(CASE WHEN TBM.match_column = 1 THEN TT.term WHEN TBM.match_column = 2 THEN RT.reading ELSE TBM.text_data END) AS matchedTextLength FROM TermBankMatchesFiltered AS TBM JOIN ActiveIndexes ON TB3T.index_id = ActiveIndexes.id JOIN term_bank_v3_table AS TB3T ON TBM.term_bank_id = TB3T.id LEFT JOIN term_table AS TT ON TB3T.term_id = TT.id LEFT JOIN reading_table AS RT ON TB3T.reading_id = RT.id LEFT JOIN FrequencyOverrideIsActive ON 1 = 1 LEFT JOIN PopularityDictionary AS OP ON OP.term_id = TB3T.term_id ORDER BY TBM.input_index ASC, CASE WHEN FrequencyOverrideIsActive.is_active = 1 THEN 0 ELSE ActiveIndexes.current_sorting_order END, TBM.match_type, TBM.match_column, finalPopularity DESC, CASE WHEN FrequencyOverrideIsActive.is_active = 1 THEN ActiveIndexes.current_sorting_order ELSE 0 END, TBM.rank, LENGTH(matchedText), matchedText ASC LIMIT ?8 OFFSET ?9',
+      'WITH SearchTerms (input_index, term, should_prefix, allowed_rules, allowed_tags, fts_query) AS (SELECT "key" AS input_index, CAST(json_extract(value, \'\$[0]\') AS TEXT), CAST(json_extract(value, \'\$[1]\') AS INTEGER), CAST(json_extract(value, \'\$[3]\') AS TEXT), CAST(json_extract(value, \'\$[4]\') AS TEXT), CASE WHEN CAST(json_extract(value, \'\$[2]\') AS INTEGER) = 1 THEN \'^\' ELSE \'\' END || \'"\' || "REPLACE"(CAST(json_extract(value, \'\$[0]\') AS TEXT), \'"\', \'""\') || \'"\' || CASE WHEN CAST(json_extract(value, \'\$[1]\') AS INTEGER) = 1 THEN \' *\' ELSE \'\' END FROM json_each(?1)), IndexesToInclude (index_id) AS (SELECT value FROM json_each(?2)WHERE value IS NOT NULL), ActiveIndexes (id, current_sorting_order, enabled, frequency_mode) AS (SELECT id, current_sorting_order, enabled, frequency_mode FROM index_table WHERE(?2 IS NOT NULL AND id IN (SELECT index_id FROM IndexesToInclude))OR(?2 IS NULL AND enabled = 1)), SearchResults AS (SELECT SearchTerms.input_index, SearchTerms.term AS search_term, SearchTerms.should_prefix, SearchTerms.allowed_rules, SearchTerms.allowed_tags, SearchTerms.fts_query, T.id AS source_id, 1 AS data_type_id, T.term AS text_data, fts_terms.rank FROM SearchTerms JOIN fts_terms ON fts_terms.term MATCH SearchTerms.fts_query JOIN term_table AS T ON fts_terms."rowid" = T.id WHERE ?3 = 0 AND ?4 = 0 UNION ALL SELECT SearchTerms.input_index, SearchTerms.term AS search_term, SearchTerms.should_prefix, SearchTerms.allowed_rules, SearchTerms.allowed_tags, SearchTerms.fts_query, T.id AS source_id, 3 AS data_type_id, COALESCE(T.term_normalized, T.term) AS text_data, fts_terms.rank FROM SearchTerms JOIN fts_terms ON fts_terms MATCH SearchTerms.fts_query JOIN term_table AS T ON fts_terms."rowid" = T.id WHERE ?3 = 0 AND ?4 = 1 UNION ALL SELECT SearchTerms.input_index, SearchTerms.term AS search_term, SearchTerms.should_prefix, SearchTerms.allowed_rules, SearchTerms.allowed_tags, SearchTerms.fts_query, T.id AS source_id, 2 AS data_type_id, T.term AS text_data, fts_tokens.rank FROM SearchTerms JOIN fts_tokens ON fts_tokens.tokens MATCH SearchTerms.fts_query JOIN term_table AS T ON fts_tokens."rowid" = T.id WHERE ?3 = 0 AND ?4 = 0 UNION ALL SELECT SearchTerms.input_index, SearchTerms.term AS search_term, SearchTerms.should_prefix, SearchTerms.allowed_rules, SearchTerms.allowed_tags, SearchTerms.fts_query, T.id AS source_id, 4 AS data_type_id, COALESCE(T.term_normalized, T.term) AS text_data, fts_tokens.rank FROM SearchTerms JOIN fts_tokens ON fts_tokens MATCH SearchTerms.fts_query JOIN term_table AS T ON fts_tokens."rowid" = T.id WHERE ?3 = 0 AND ?4 = 1 UNION ALL SELECT SearchTerms.input_index, SearchTerms.term AS search_term, SearchTerms.should_prefix, SearchTerms.allowed_rules, SearchTerms.allowed_tags, SearchTerms.fts_query, R.id AS source_id, 5 AS data_type_id, R.reading AS text_data, fts_readings.rank FROM SearchTerms JOIN fts_readings ON fts_readings.reading MATCH SearchTerms.fts_query JOIN reading_table AS R ON fts_readings."rowid" = R.id WHERE ?3 = 0 AND ?4 = 0 UNION ALL SELECT SearchTerms.input_index, SearchTerms.term AS search_term, SearchTerms.should_prefix, SearchTerms.allowed_rules, SearchTerms.allowed_tags, SearchTerms.fts_query, R.id AS source_id, 6 AS data_type_id, COALESCE(R.reading_normalized, R.reading) AS text_data, fts_readings.rank FROM SearchTerms JOIN fts_readings ON fts_readings MATCH SearchTerms.fts_query JOIN reading_table AS R ON fts_readings."rowid" = R.id WHERE ?3 = 0 AND ?4 = 1 UNION ALL SELECT SearchTerms.input_index, SearchTerms.term AS search_term, SearchTerms.should_prefix, SearchTerms.allowed_rules, SearchTerms.allowed_tags, SearchTerms.fts_query, fts_definitions."rowid" AS source_id, 7 AS data_type_id, fts_definitions.definition AS text_data, fts_definitions.rank FROM SearchTerms JOIN fts_definitions ON fts_definitions.definition MATCH SearchTerms.fts_query WHERE ?3 = 0 AND ?4 = 0 UNION ALL SELECT SearchTerms.input_index, SearchTerms.term AS search_term, SearchTerms.should_prefix, SearchTerms.allowed_rules, SearchTerms.allowed_tags, SearchTerms.fts_query, T.id AS source_id,(CASE WHEN ?4 = 0 THEN 1 ELSE 3 END)AS data_type_id,(CASE WHEN ?4 = 0 THEN T.term ELSE COALESCE(T.term_normalized, T.term) END)AS text_data, 0 AS rank FROM SearchTerms,term_table AS T WHERE ?3 = 1 AND(CASE WHEN ?4 = 0 THEN T.term ELSE COALESCE(T.term_normalized, T.term) END)GLOB SearchTerms.term UNION ALL SELECT SearchTerms.input_index, SearchTerms.term AS search_term, SearchTerms.should_prefix, SearchTerms.allowed_rules, SearchTerms.allowed_tags, SearchTerms.fts_query, R.id AS source_id,(CASE WHEN ?4 = 0 THEN 5 ELSE 6 END)AS data_type_id,(CASE WHEN ?4 = 0 THEN R.reading ELSE COALESCE(R.reading_normalized, R.reading) END)AS text_data, 0 AS rank FROM SearchTerms,reading_table AS R WHERE ?3 = 1 AND(CASE WHEN ?4 = 0 THEN R.reading ELSE COALESCE(R.reading_normalized, R.reading) END)GLOB SearchTerms.term UNION ALL SELECT SearchTerms.input_index, SearchTerms.term AS search_term, SearchTerms.should_prefix, SearchTerms.allowed_rules, SearchTerms.allowed_tags, SearchTerms.fts_query, D.id AS source_id, 7 AS data_type_id, D.definition AS text_data, 0 AS rank FROM SearchTerms,definition_table AS D WHERE ?3 = 1 AND D.definition GLOB SearchTerms.term), SearchResultMatchesClassified AS (SELECT SearchResults.*, CASE WHEN text_data = search_term THEN 1 WHEN text_data GLOB search_term || \'*\' THEN 2 ELSE 3 END AS match_type FROM SearchResults), SearchResultsDeduplicated AS (SELECT * FROM (SELECT SearchResultMatchesClassified.*, ROW_NUMBER()OVER (PARTITION BY source_id, CASE WHEN data_type_id IN (1, 2, 3, 4) THEN \'term\' WHEN data_type_id IN (5, 6) THEN \'reading\' ELSE \'def\' END ORDER BY match_type ASC, rank ASC, LENGTH(text_data) ASC RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW EXCLUDE NO OTHERS) AS rn FROM SearchResultMatchesClassified) WHERE rn = 1), TermBankMatches AS (SELECT SearchResultsDeduplicated.*, term_bank_v3_table.id AS term_bank_id, term_bank_v3_table.term_id AS term_id, term_bank_v3_table.reading_id AS reading_id, term_bank_v3_table.index_id, 1 AS match_column, term_bank_v3_table.sequence_number FROM SearchResultsDeduplicated JOIN term_bank_v3_table ON term_bank_v3_table.term_id = source_id AND data_type_id IN (1, 2, 3, 4) JOIN ActiveIndexes ON term_bank_v3_table.index_id = ActiveIndexes.id UNION ALL SELECT SearchResultsDeduplicated.*, term_bank_v3_table.id AS term_bank_id, term_bank_v3_table.term_id AS term_id, term_bank_v3_table.reading_id AS reading_id, term_bank_v3_table.index_id, 2 AS match_column, term_bank_v3_table.sequence_number FROM SearchResultsDeduplicated JOIN term_bank_v3_table ON term_bank_v3_table.reading_id = source_id AND data_type_id IN (5, 6) JOIN ActiveIndexes ON term_bank_v3_table.index_id = ActiveIndexes.id UNION ALL SELECT SearchResultsDeduplicated.*, term_bank_v3_x_definition_table.term_bank_id AS term_bank_id, term_bank_v3_table.term_id AS term_id, term_bank_v3_table.reading_id AS reading_id, term_bank_v3_table.index_id, 3 AS match_column, term_bank_v3_table.sequence_number FROM SearchResultsDeduplicated JOIN term_bank_v3_x_definition_table ON term_bank_v3_x_definition_table.definition_id = source_id JOIN term_bank_v3_table ON term_bank_v3_table.id = term_bank_v3_x_definition_table.term_bank_id AND data_type_id = 7 JOIN ActiveIndexes ON term_bank_v3_table.index_id = ActiveIndexes.id), TermBankMatchesFiltered AS (SELECT TBM.* FROM TermBankMatches AS TBM WHERE(?5 IS NULL OR EXISTS (SELECT 1 AS _c0 FROM fts_terms WHERE "rowid" = TBM.term_id AND ?4 = 0 AND term MATCH \'"\' || "REPLACE"(?5, \'"\', \'""\') || \'"\' UNION ALL SELECT 1 FROM fts_terms WHERE "rowid" = TBM.term_id AND ?4 = 1 AND fts_terms MATCH \'"\' || "REPLACE"(?5, \'"\', \'""\') || \'"\'))AND(?6 IS NULL OR EXISTS (SELECT 1 AS _c1 FROM fts_readings WHERE "rowid" = TBM.reading_id AND ?4 = 0 AND reading MATCH \'"\' || "REPLACE"(?6, \'"\', \'""\') || \'"\' UNION ALL SELECT 1 FROM fts_readings WHERE "rowid" = TBM.reading_id AND ?4 = 1 AND fts_readings MATCH \'"\' || "REPLACE"(?6, \'"\', \'""\') || \'"\'))AND(?7 IS NULL OR EXISTS (SELECT 1 AS _c2 FROM term_bank_v3_x_definition_table AS link JOIN fts_definitions AS def_fts ON link.definition_id = def_fts."rowid" WHERE link.term_bank_id = TBM.term_bank_id AND def_fts.definition MATCH \'"\' || "REPLACE"(?7, \'"\', \'""\') || \'"\'))AND(TBM.allowed_tags IS NULL OR json_array_length(TBM.allowed_tags) = 0 OR EXISTS (SELECT 1 AS _c3 FROM term_bank_v3_x_tag_bank_table AS LinkTable JOIN tag_bank_v3_table AS TagTable ON LinkTable.tag_bank_id = TagTable.id JOIN json_each(TBM.allowed_tags)AS AllowedTag ON TagTable.name = AllowedTag.value WHERE LinkTable.term_bank_id = TBM.term_bank_id))AND(TBM.allowed_rules IS NULL OR json_array_length(TBM.allowed_rules) = 0 OR EXISTS (SELECT 1 AS _c4 FROM term_bank_v3_x_rule_identifier_table AS RuleLink JOIN term_bank_v3_rule_identifier_table AS RuleTable ON RuleLink.rule_identifier_id = RuleTable.id JOIN json_each(TBM.allowed_rules)AS AllowedRule ON RuleTable.rule_identifier = AllowedRule.value WHERE RuleLink.term_bank_id = TBM.term_bank_id))), FrequencyOverrideIsActive AS (SELECT 1 AS is_active FROM index_table WHERE current_frequency_dictionary = TRUE LIMIT 1), PopularityDictionary AS (SELECT term_meta_bank_v3_table.*, IT.frequency_mode AS op_frequency_mode FROM index_table AS IT JOIN term_meta_bank_v3_table ON term_meta_bank_v3_table.index_id = IT.id JOIN term_meta_bank_v3_type_table ON term_meta_bank_v3_table.type_id = term_meta_bank_v3_type_table.id WHERE IT.current_frequency_dictionary = TRUE AND term_meta_bank_v3_type_table.type = \'freq\') SELECT TBM.term_bank_id, TBM.search_term, TBM.rank AS fts5_rank, TBM.match_type, TBM.match_column, TBM.sequence_number, ActiveIndexes.id AS indexId, ActiveIndexes.current_sorting_order, CASE WHEN FrequencyOverrideIsActive.is_active = 1 THEN CASE WHEN OP.op_frequency_mode = \'rankBased\' THEN(OP.freq_value * -1)ELSE OP.freq_value END ELSE CASE WHEN ActiveIndexes.frequency_mode = \'rankBased\' THEN(TB3T.popularity * -1)ELSE TB3T.popularity END END AS finalPopularity, CASE WHEN TBM.match_column = 1 THEN TT.term WHEN TBM.match_column = 2 THEN RT.reading ELSE TBM.text_data END AS matchedText, LENGTH(CASE WHEN TBM.match_column = 1 THEN TT.term WHEN TBM.match_column = 2 THEN RT.reading ELSE TBM.text_data END) AS matchedTextLength FROM TermBankMatchesFiltered AS TBM JOIN ActiveIndexes ON TB3T.index_id = ActiveIndexes.id JOIN term_bank_v3_table AS TB3T ON TBM.term_bank_id = TB3T.id LEFT JOIN term_table AS TT ON TB3T.term_id = TT.id LEFT JOIN reading_table AS RT ON TB3T.reading_id = RT.id LEFT JOIN FrequencyOverrideIsActive ON 1 = 1 LEFT JOIN PopularityDictionary AS OP ON OP.term_id = TB3T.term_id ORDER BY TBM.input_index ASC, CASE WHEN FrequencyOverrideIsActive.is_active = 1 THEN 0 ELSE ActiveIndexes.current_sorting_order END, TBM.match_type, TBM.match_column, finalPopularity DESC, CASE WHEN FrequencyOverrideIsActive.is_active = 1 THEN ActiveIndexes.current_sorting_order ELSE 0 END, TBM.rank, LENGTH(matchedText), matchedText ASC LIMIT ?8 OFFSET ?9',
       variables: [
         Variable<String>(searchInputs),
         Variable<String>(indexesToInclude),
@@ -18743,7 +19093,13 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
       ],
       readsFrom: {
         indexTable,
-        searchFts,
+        termTable,
+        ftsTerms,
+        ftsTokens,
+        readingTable,
+        ftsReadings,
+        ftsDefinitions,
+        definitionTable,
         termBankV3Table,
         termBankV3XDefinitionTable,
         termBankV3XTagBankTable,
@@ -18752,8 +19108,6 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
         termBankV3RuleIdentifierTable,
         termMetaBankV3Table,
         termMetaBankV3TypeTable,
-        termTable,
-        readingTable,
       },
     ).map(
       (QueryRow row) => DictionarySearchDriftFindTermBankEntriesResult(
@@ -19112,18 +19466,11 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
     kanjiBankV3StatsTableStatTagIdIndex,
     tagBankV3TableIndexIdIndex,
     tagBankV3TableName,
-    searchFts,
-    ftsDataTypes,
     termTable,
-    termTableAi,
-    termTableAu,
-    termTableAd,
-    readingTableAi,
-    readingTableAu,
-    readingTableAd,
-    definitionTableAi,
-    definitionTableAu,
-    definitionTableAd,
+    ftsTerms,
+    ftsTokens,
+    ftsReadings,
+    ftsDefinitions,
     termBankV3DefinitionJsonTable,
     termBankV3Table,
     termBankV3XDefinitionTable,
@@ -19160,6 +19507,7 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
     termBankV3TableReadingIdIndex,
     termBankV3TableDefinitionJsonIdIndex,
     termBankV3TableSequenceNumberIndex,
+    termBankV3TableIdxTermBankSeqLookup,
     termMetaBankV3EntryView,
     termMetaBankV3TableIndexIdIndex,
     termMetaBankV3TableTermIdIndex,
@@ -19283,78 +19631,6 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
       result: [
         TableUpdate('kanji_bank_v3_stats_table', kind: UpdateKind.delete),
       ],
-    ),
-    WritePropagation(
-      on: TableUpdateQuery.onTableName(
-        'term_table',
-        limitUpdateKind: UpdateKind.insert,
-      ),
-      result: [TableUpdate('search_fts', kind: UpdateKind.insert)],
-    ),
-    WritePropagation(
-      on: TableUpdateQuery.onTableName(
-        'term_table',
-        limitUpdateKind: UpdateKind.update,
-      ),
-      result: [
-        TableUpdate('search_fts', kind: UpdateKind.delete),
-        TableUpdate('search_fts', kind: UpdateKind.insert),
-      ],
-    ),
-    WritePropagation(
-      on: TableUpdateQuery.onTableName(
-        'term_table',
-        limitUpdateKind: UpdateKind.delete,
-      ),
-      result: [TableUpdate('search_fts', kind: UpdateKind.delete)],
-    ),
-    WritePropagation(
-      on: TableUpdateQuery.onTableName(
-        'reading_table',
-        limitUpdateKind: UpdateKind.insert,
-      ),
-      result: [TableUpdate('search_fts', kind: UpdateKind.insert)],
-    ),
-    WritePropagation(
-      on: TableUpdateQuery.onTableName(
-        'reading_table',
-        limitUpdateKind: UpdateKind.update,
-      ),
-      result: [
-        TableUpdate('search_fts', kind: UpdateKind.delete),
-        TableUpdate('search_fts', kind: UpdateKind.insert),
-      ],
-    ),
-    WritePropagation(
-      on: TableUpdateQuery.onTableName(
-        'reading_table',
-        limitUpdateKind: UpdateKind.delete,
-      ),
-      result: [TableUpdate('search_fts', kind: UpdateKind.delete)],
-    ),
-    WritePropagation(
-      on: TableUpdateQuery.onTableName(
-        'definition_table',
-        limitUpdateKind: UpdateKind.insert,
-      ),
-      result: [TableUpdate('search_fts', kind: UpdateKind.insert)],
-    ),
-    WritePropagation(
-      on: TableUpdateQuery.onTableName(
-        'definition_table',
-        limitUpdateKind: UpdateKind.update,
-      ),
-      result: [
-        TableUpdate('search_fts', kind: UpdateKind.delete),
-        TableUpdate('search_fts', kind: UpdateKind.insert),
-      ],
-    ),
-    WritePropagation(
-      on: TableUpdateQuery.onTableName(
-        'definition_table',
-        limitUpdateKind: UpdateKind.delete,
-      ),
-      result: [TableUpdate('search_fts', kind: UpdateKind.delete)],
     ),
     WritePropagation(
       on: TableUpdateQuery.onTableName(
@@ -27673,292 +27949,17 @@ typedef $$KanjiMetaBankV3TableTableProcessedTableManager =
       KanjiMetaBankV3TableData,
       PrefetchHooks Function({bool indexId, bool kanjiId, bool typeId})
     >;
-typedef $SearchFtsCreateCompanionBuilder =
-    SearchFtsCompanion Function({
-      required String sourceId,
-      required String dataTypeId,
-      required String textData,
-      Value<int> rowid,
-    });
-typedef $SearchFtsUpdateCompanionBuilder =
-    SearchFtsCompanion Function({
-      Value<String> sourceId,
-      Value<String> dataTypeId,
-      Value<String> textData,
-      Value<int> rowid,
-    });
-
-class $SearchFtsFilterComposer extends Composer<_$DaKanjiDB, SearchFts> {
-  $SearchFtsFilterComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnFilters<String> get sourceId => $composableBuilder(
-    column: $table.sourceId,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<String> get dataTypeId => $composableBuilder(
-    column: $table.dataTypeId,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<String> get textData => $composableBuilder(
-    column: $table.textData,
-    builder: (column) => ColumnFilters(column),
-  );
-}
-
-class $SearchFtsOrderingComposer extends Composer<_$DaKanjiDB, SearchFts> {
-  $SearchFtsOrderingComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnOrderings<String> get sourceId => $composableBuilder(
-    column: $table.sourceId,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<String> get dataTypeId => $composableBuilder(
-    column: $table.dataTypeId,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<String> get textData => $composableBuilder(
-    column: $table.textData,
-    builder: (column) => ColumnOrderings(column),
-  );
-}
-
-class $SearchFtsAnnotationComposer extends Composer<_$DaKanjiDB, SearchFts> {
-  $SearchFtsAnnotationComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  GeneratedColumn<String> get sourceId =>
-      $composableBuilder(column: $table.sourceId, builder: (column) => column);
-
-  GeneratedColumn<String> get dataTypeId => $composableBuilder(
-    column: $table.dataTypeId,
-    builder: (column) => column,
-  );
-
-  GeneratedColumn<String> get textData =>
-      $composableBuilder(column: $table.textData, builder: (column) => column);
-}
-
-class $SearchFtsTableManager
-    extends
-        RootTableManager<
-          _$DaKanjiDB,
-          SearchFts,
-          SearchFt,
-          $SearchFtsFilterComposer,
-          $SearchFtsOrderingComposer,
-          $SearchFtsAnnotationComposer,
-          $SearchFtsCreateCompanionBuilder,
-          $SearchFtsUpdateCompanionBuilder,
-          (SearchFt, BaseReferences<_$DaKanjiDB, SearchFts, SearchFt>),
-          SearchFt,
-          PrefetchHooks Function()
-        > {
-  $SearchFtsTableManager(_$DaKanjiDB db, SearchFts table)
-    : super(
-        TableManagerState(
-          db: db,
-          table: table,
-          createFilteringComposer: () =>
-              $SearchFtsFilterComposer($db: db, $table: table),
-          createOrderingComposer: () =>
-              $SearchFtsOrderingComposer($db: db, $table: table),
-          createComputedFieldComposer: () =>
-              $SearchFtsAnnotationComposer($db: db, $table: table),
-          updateCompanionCallback:
-              ({
-                Value<String> sourceId = const Value.absent(),
-                Value<String> dataTypeId = const Value.absent(),
-                Value<String> textData = const Value.absent(),
-                Value<int> rowid = const Value.absent(),
-              }) => SearchFtsCompanion(
-                sourceId: sourceId,
-                dataTypeId: dataTypeId,
-                textData: textData,
-                rowid: rowid,
-              ),
-          createCompanionCallback:
-              ({
-                required String sourceId,
-                required String dataTypeId,
-                required String textData,
-                Value<int> rowid = const Value.absent(),
-              }) => SearchFtsCompanion.insert(
-                sourceId: sourceId,
-                dataTypeId: dataTypeId,
-                textData: textData,
-                rowid: rowid,
-              ),
-          withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
-              .toList(),
-          prefetchHooksCallback: null,
-        ),
-      );
-}
-
-typedef $SearchFtsProcessedTableManager =
-    ProcessedTableManager<
-      _$DaKanjiDB,
-      SearchFts,
-      SearchFt,
-      $SearchFtsFilterComposer,
-      $SearchFtsOrderingComposer,
-      $SearchFtsAnnotationComposer,
-      $SearchFtsCreateCompanionBuilder,
-      $SearchFtsUpdateCompanionBuilder,
-      (SearchFt, BaseReferences<_$DaKanjiDB, SearchFts, SearchFt>),
-      SearchFt,
-      PrefetchHooks Function()
-    >;
-typedef $FtsDataTypesCreateCompanionBuilder =
-    FtsDataTypesCompanion Function({Value<int> id, required String name});
-typedef $FtsDataTypesUpdateCompanionBuilder =
-    FtsDataTypesCompanion Function({Value<int> id, Value<String> name});
-
-class $FtsDataTypesFilterComposer extends Composer<_$DaKanjiDB, FtsDataTypes> {
-  $FtsDataTypesFilterComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnFilters<int> get id => $composableBuilder(
-    column: $table.id,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<String> get name => $composableBuilder(
-    column: $table.name,
-    builder: (column) => ColumnFilters(column),
-  );
-}
-
-class $FtsDataTypesOrderingComposer
-    extends Composer<_$DaKanjiDB, FtsDataTypes> {
-  $FtsDataTypesOrderingComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnOrderings<int> get id => $composableBuilder(
-    column: $table.id,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<String> get name => $composableBuilder(
-    column: $table.name,
-    builder: (column) => ColumnOrderings(column),
-  );
-}
-
-class $FtsDataTypesAnnotationComposer
-    extends Composer<_$DaKanjiDB, FtsDataTypes> {
-  $FtsDataTypesAnnotationComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  GeneratedColumn<int> get id =>
-      $composableBuilder(column: $table.id, builder: (column) => column);
-
-  GeneratedColumn<String> get name =>
-      $composableBuilder(column: $table.name, builder: (column) => column);
-}
-
-class $FtsDataTypesTableManager
-    extends
-        RootTableManager<
-          _$DaKanjiDB,
-          FtsDataTypes,
-          FtsDataType,
-          $FtsDataTypesFilterComposer,
-          $FtsDataTypesOrderingComposer,
-          $FtsDataTypesAnnotationComposer,
-          $FtsDataTypesCreateCompanionBuilder,
-          $FtsDataTypesUpdateCompanionBuilder,
-          (FtsDataType, BaseReferences<_$DaKanjiDB, FtsDataTypes, FtsDataType>),
-          FtsDataType,
-          PrefetchHooks Function()
-        > {
-  $FtsDataTypesTableManager(_$DaKanjiDB db, FtsDataTypes table)
-    : super(
-        TableManagerState(
-          db: db,
-          table: table,
-          createFilteringComposer: () =>
-              $FtsDataTypesFilterComposer($db: db, $table: table),
-          createOrderingComposer: () =>
-              $FtsDataTypesOrderingComposer($db: db, $table: table),
-          createComputedFieldComposer: () =>
-              $FtsDataTypesAnnotationComposer($db: db, $table: table),
-          updateCompanionCallback:
-              ({
-                Value<int> id = const Value.absent(),
-                Value<String> name = const Value.absent(),
-              }) => FtsDataTypesCompanion(id: id, name: name),
-          createCompanionCallback:
-              ({Value<int> id = const Value.absent(), required String name}) =>
-                  FtsDataTypesCompanion.insert(id: id, name: name),
-          withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
-              .toList(),
-          prefetchHooksCallback: null,
-        ),
-      );
-}
-
-typedef $FtsDataTypesProcessedTableManager =
-    ProcessedTableManager<
-      _$DaKanjiDB,
-      FtsDataTypes,
-      FtsDataType,
-      $FtsDataTypesFilterComposer,
-      $FtsDataTypesOrderingComposer,
-      $FtsDataTypesAnnotationComposer,
-      $FtsDataTypesCreateCompanionBuilder,
-      $FtsDataTypesUpdateCompanionBuilder,
-      (FtsDataType, BaseReferences<_$DaKanjiDB, FtsDataTypes, FtsDataType>),
-      FtsDataType,
-      PrefetchHooks Function()
-    >;
 typedef $$TermTableTableCreateCompanionBuilder =
     TermTableCompanion Function({
       Value<int> id,
       required String term,
       Value<String?> termNormalized,
-      Value<String?> termTokens,
-      Value<String?> termTokensNormalized,
     });
 typedef $$TermTableTableUpdateCompanionBuilder =
     TermTableCompanion Function({
       Value<int> id,
       Value<String> term,
       Value<String?> termNormalized,
-      Value<String?> termTokens,
-      Value<String?> termTokensNormalized,
     });
 
 final class $$TermTableTableReferences
@@ -28065,16 +28066,6 @@ class $$TermTableTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<String> get termTokens => $composableBuilder(
-    column: $table.termTokens,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<String> get termTokensNormalized => $composableBuilder(
-    column: $table.termTokensNormalized,
-    builder: (column) => ColumnFilters(column),
-  );
-
   Expression<bool> termBankV3TableRefs(
     Expression<bool> Function($$TermBankV3TableTableFilterComposer f) f,
   ) {
@@ -28175,16 +28166,6 @@ class $$TermTableTableOrderingComposer
     column: $table.termNormalized,
     builder: (column) => ColumnOrderings(column),
   );
-
-  ColumnOrderings<String> get termTokens => $composableBuilder(
-    column: $table.termTokens,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<String> get termTokensNormalized => $composableBuilder(
-    column: $table.termTokensNormalized,
-    builder: (column) => ColumnOrderings(column),
-  );
 }
 
 class $$TermTableTableAnnotationComposer
@@ -28204,16 +28185,6 @@ class $$TermTableTableAnnotationComposer
 
   GeneratedColumn<String> get termNormalized => $composableBuilder(
     column: $table.termNormalized,
-    builder: (column) => column,
-  );
-
-  GeneratedColumn<String> get termTokens => $composableBuilder(
-    column: $table.termTokens,
-    builder: (column) => column,
-  );
-
-  GeneratedColumn<String> get termTokensNormalized => $composableBuilder(
-    column: $table.termTokensNormalized,
     builder: (column) => column,
   );
 
@@ -28330,28 +28301,20 @@ class $$TermTableTableTableManager
                 Value<int> id = const Value.absent(),
                 Value<String> term = const Value.absent(),
                 Value<String?> termNormalized = const Value.absent(),
-                Value<String?> termTokens = const Value.absent(),
-                Value<String?> termTokensNormalized = const Value.absent(),
               }) => TermTableCompanion(
                 id: id,
                 term: term,
                 termNormalized: termNormalized,
-                termTokens: termTokens,
-                termTokensNormalized: termTokensNormalized,
               ),
           createCompanionCallback:
               ({
                 Value<int> id = const Value.absent(),
                 required String term,
                 Value<String?> termNormalized = const Value.absent(),
-                Value<String?> termTokens = const Value.absent(),
-                Value<String?> termTokensNormalized = const Value.absent(),
               }) => TermTableCompanion.insert(
                 id: id,
                 term: term,
                 termNormalized: termNormalized,
-                termTokens: termTokens,
-                termTokensNormalized: termTokensNormalized,
               ),
           withReferenceMapper: (p0) => p0
               .map(
@@ -28466,15 +28429,550 @@ typedef $$TermTableTableProcessedTableManager =
         bool audioTableXTermTableRefs,
       })
     >;
+typedef $FtsTermsCreateCompanionBuilder =
+    FtsTermsCompanion Function({
+      required String term,
+      required String termNormalized,
+      Value<int> rowid,
+    });
+typedef $FtsTermsUpdateCompanionBuilder =
+    FtsTermsCompanion Function({
+      Value<String> term,
+      Value<String> termNormalized,
+      Value<int> rowid,
+    });
+
+class $FtsTermsFilterComposer extends Composer<_$DaKanjiDB, FtsTerms> {
+  $FtsTermsFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get term => $composableBuilder(
+    column: $table.term,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get termNormalized => $composableBuilder(
+    column: $table.termNormalized,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $FtsTermsOrderingComposer extends Composer<_$DaKanjiDB, FtsTerms> {
+  $FtsTermsOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get term => $composableBuilder(
+    column: $table.term,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get termNormalized => $composableBuilder(
+    column: $table.termNormalized,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $FtsTermsAnnotationComposer extends Composer<_$DaKanjiDB, FtsTerms> {
+  $FtsTermsAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get term =>
+      $composableBuilder(column: $table.term, builder: (column) => column);
+
+  GeneratedColumn<String> get termNormalized => $composableBuilder(
+    column: $table.termNormalized,
+    builder: (column) => column,
+  );
+}
+
+class $FtsTermsTableManager
+    extends
+        RootTableManager<
+          _$DaKanjiDB,
+          FtsTerms,
+          FtsTerm,
+          $FtsTermsFilterComposer,
+          $FtsTermsOrderingComposer,
+          $FtsTermsAnnotationComposer,
+          $FtsTermsCreateCompanionBuilder,
+          $FtsTermsUpdateCompanionBuilder,
+          (FtsTerm, BaseReferences<_$DaKanjiDB, FtsTerms, FtsTerm>),
+          FtsTerm,
+          PrefetchHooks Function()
+        > {
+  $FtsTermsTableManager(_$DaKanjiDB db, FtsTerms table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $FtsTermsFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $FtsTermsOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $FtsTermsAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> term = const Value.absent(),
+                Value<String> termNormalized = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => FtsTermsCompanion(
+                term: term,
+                termNormalized: termNormalized,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String term,
+                required String termNormalized,
+                Value<int> rowid = const Value.absent(),
+              }) => FtsTermsCompanion.insert(
+                term: term,
+                termNormalized: termNormalized,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $FtsTermsProcessedTableManager =
+    ProcessedTableManager<
+      _$DaKanjiDB,
+      FtsTerms,
+      FtsTerm,
+      $FtsTermsFilterComposer,
+      $FtsTermsOrderingComposer,
+      $FtsTermsAnnotationComposer,
+      $FtsTermsCreateCompanionBuilder,
+      $FtsTermsUpdateCompanionBuilder,
+      (FtsTerm, BaseReferences<_$DaKanjiDB, FtsTerms, FtsTerm>),
+      FtsTerm,
+      PrefetchHooks Function()
+    >;
+typedef $FtsTokensCreateCompanionBuilder =
+    FtsTokensCompanion Function({
+      required String tokens,
+      required String tokensNormalized,
+      Value<int> rowid,
+    });
+typedef $FtsTokensUpdateCompanionBuilder =
+    FtsTokensCompanion Function({
+      Value<String> tokens,
+      Value<String> tokensNormalized,
+      Value<int> rowid,
+    });
+
+class $FtsTokensFilterComposer extends Composer<_$DaKanjiDB, FtsTokens> {
+  $FtsTokensFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get tokens => $composableBuilder(
+    column: $table.tokens,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get tokensNormalized => $composableBuilder(
+    column: $table.tokensNormalized,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $FtsTokensOrderingComposer extends Composer<_$DaKanjiDB, FtsTokens> {
+  $FtsTokensOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get tokens => $composableBuilder(
+    column: $table.tokens,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get tokensNormalized => $composableBuilder(
+    column: $table.tokensNormalized,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $FtsTokensAnnotationComposer extends Composer<_$DaKanjiDB, FtsTokens> {
+  $FtsTokensAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get tokens =>
+      $composableBuilder(column: $table.tokens, builder: (column) => column);
+
+  GeneratedColumn<String> get tokensNormalized => $composableBuilder(
+    column: $table.tokensNormalized,
+    builder: (column) => column,
+  );
+}
+
+class $FtsTokensTableManager
+    extends
+        RootTableManager<
+          _$DaKanjiDB,
+          FtsTokens,
+          FtsToken,
+          $FtsTokensFilterComposer,
+          $FtsTokensOrderingComposer,
+          $FtsTokensAnnotationComposer,
+          $FtsTokensCreateCompanionBuilder,
+          $FtsTokensUpdateCompanionBuilder,
+          (FtsToken, BaseReferences<_$DaKanjiDB, FtsTokens, FtsToken>),
+          FtsToken,
+          PrefetchHooks Function()
+        > {
+  $FtsTokensTableManager(_$DaKanjiDB db, FtsTokens table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $FtsTokensFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $FtsTokensOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $FtsTokensAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> tokens = const Value.absent(),
+                Value<String> tokensNormalized = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => FtsTokensCompanion(
+                tokens: tokens,
+                tokensNormalized: tokensNormalized,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String tokens,
+                required String tokensNormalized,
+                Value<int> rowid = const Value.absent(),
+              }) => FtsTokensCompanion.insert(
+                tokens: tokens,
+                tokensNormalized: tokensNormalized,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $FtsTokensProcessedTableManager =
+    ProcessedTableManager<
+      _$DaKanjiDB,
+      FtsTokens,
+      FtsToken,
+      $FtsTokensFilterComposer,
+      $FtsTokensOrderingComposer,
+      $FtsTokensAnnotationComposer,
+      $FtsTokensCreateCompanionBuilder,
+      $FtsTokensUpdateCompanionBuilder,
+      (FtsToken, BaseReferences<_$DaKanjiDB, FtsTokens, FtsToken>),
+      FtsToken,
+      PrefetchHooks Function()
+    >;
+typedef $FtsReadingsCreateCompanionBuilder =
+    FtsReadingsCompanion Function({
+      required String reading,
+      required String readingNormalized,
+      Value<int> rowid,
+    });
+typedef $FtsReadingsUpdateCompanionBuilder =
+    FtsReadingsCompanion Function({
+      Value<String> reading,
+      Value<String> readingNormalized,
+      Value<int> rowid,
+    });
+
+class $FtsReadingsFilterComposer extends Composer<_$DaKanjiDB, FtsReadings> {
+  $FtsReadingsFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get reading => $composableBuilder(
+    column: $table.reading,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get readingNormalized => $composableBuilder(
+    column: $table.readingNormalized,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $FtsReadingsOrderingComposer extends Composer<_$DaKanjiDB, FtsReadings> {
+  $FtsReadingsOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get reading => $composableBuilder(
+    column: $table.reading,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get readingNormalized => $composableBuilder(
+    column: $table.readingNormalized,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $FtsReadingsAnnotationComposer
+    extends Composer<_$DaKanjiDB, FtsReadings> {
+  $FtsReadingsAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get reading =>
+      $composableBuilder(column: $table.reading, builder: (column) => column);
+
+  GeneratedColumn<String> get readingNormalized => $composableBuilder(
+    column: $table.readingNormalized,
+    builder: (column) => column,
+  );
+}
+
+class $FtsReadingsTableManager
+    extends
+        RootTableManager<
+          _$DaKanjiDB,
+          FtsReadings,
+          FtsReading,
+          $FtsReadingsFilterComposer,
+          $FtsReadingsOrderingComposer,
+          $FtsReadingsAnnotationComposer,
+          $FtsReadingsCreateCompanionBuilder,
+          $FtsReadingsUpdateCompanionBuilder,
+          (FtsReading, BaseReferences<_$DaKanjiDB, FtsReadings, FtsReading>),
+          FtsReading,
+          PrefetchHooks Function()
+        > {
+  $FtsReadingsTableManager(_$DaKanjiDB db, FtsReadings table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $FtsReadingsFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $FtsReadingsOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $FtsReadingsAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> reading = const Value.absent(),
+                Value<String> readingNormalized = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => FtsReadingsCompanion(
+                reading: reading,
+                readingNormalized: readingNormalized,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String reading,
+                required String readingNormalized,
+                Value<int> rowid = const Value.absent(),
+              }) => FtsReadingsCompanion.insert(
+                reading: reading,
+                readingNormalized: readingNormalized,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $FtsReadingsProcessedTableManager =
+    ProcessedTableManager<
+      _$DaKanjiDB,
+      FtsReadings,
+      FtsReading,
+      $FtsReadingsFilterComposer,
+      $FtsReadingsOrderingComposer,
+      $FtsReadingsAnnotationComposer,
+      $FtsReadingsCreateCompanionBuilder,
+      $FtsReadingsUpdateCompanionBuilder,
+      (FtsReading, BaseReferences<_$DaKanjiDB, FtsReadings, FtsReading>),
+      FtsReading,
+      PrefetchHooks Function()
+    >;
+typedef $FtsDefinitionsCreateCompanionBuilder =
+    FtsDefinitionsCompanion Function({
+      required String definition,
+      Value<int> rowid,
+    });
+typedef $FtsDefinitionsUpdateCompanionBuilder =
+    FtsDefinitionsCompanion Function({
+      Value<String> definition,
+      Value<int> rowid,
+    });
+
+class $FtsDefinitionsFilterComposer
+    extends Composer<_$DaKanjiDB, FtsDefinitions> {
+  $FtsDefinitionsFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get definition => $composableBuilder(
+    column: $table.definition,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $FtsDefinitionsOrderingComposer
+    extends Composer<_$DaKanjiDB, FtsDefinitions> {
+  $FtsDefinitionsOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get definition => $composableBuilder(
+    column: $table.definition,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $FtsDefinitionsAnnotationComposer
+    extends Composer<_$DaKanjiDB, FtsDefinitions> {
+  $FtsDefinitionsAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get definition => $composableBuilder(
+    column: $table.definition,
+    builder: (column) => column,
+  );
+}
+
+class $FtsDefinitionsTableManager
+    extends
+        RootTableManager<
+          _$DaKanjiDB,
+          FtsDefinitions,
+          FtsDefinition,
+          $FtsDefinitionsFilterComposer,
+          $FtsDefinitionsOrderingComposer,
+          $FtsDefinitionsAnnotationComposer,
+          $FtsDefinitionsCreateCompanionBuilder,
+          $FtsDefinitionsUpdateCompanionBuilder,
+          (
+            FtsDefinition,
+            BaseReferences<_$DaKanjiDB, FtsDefinitions, FtsDefinition>,
+          ),
+          FtsDefinition,
+          PrefetchHooks Function()
+        > {
+  $FtsDefinitionsTableManager(_$DaKanjiDB db, FtsDefinitions table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $FtsDefinitionsFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $FtsDefinitionsOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $FtsDefinitionsAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> definition = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) =>
+                  FtsDefinitionsCompanion(definition: definition, rowid: rowid),
+          createCompanionCallback:
+              ({
+                required String definition,
+                Value<int> rowid = const Value.absent(),
+              }) => FtsDefinitionsCompanion.insert(
+                definition: definition,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $FtsDefinitionsProcessedTableManager =
+    ProcessedTableManager<
+      _$DaKanjiDB,
+      FtsDefinitions,
+      FtsDefinition,
+      $FtsDefinitionsFilterComposer,
+      $FtsDefinitionsOrderingComposer,
+      $FtsDefinitionsAnnotationComposer,
+      $FtsDefinitionsCreateCompanionBuilder,
+      $FtsDefinitionsUpdateCompanionBuilder,
+      (
+        FtsDefinition,
+        BaseReferences<_$DaKanjiDB, FtsDefinitions, FtsDefinition>,
+      ),
+      FtsDefinition,
+      PrefetchHooks Function()
+    >;
 typedef $$TermBankV3DefinitionJsonTableTableCreateCompanionBuilder =
     TermBankV3DefinitionJsonTableCompanion Function({
       Value<int> id,
       required String definitionJson,
+      required String definitionJsonHash,
     });
 typedef $$TermBankV3DefinitionJsonTableTableUpdateCompanionBuilder =
     TermBankV3DefinitionJsonTableCompanion Function({
       Value<int> id,
       Value<String> definitionJson,
+      Value<String> definitionJsonHash,
     });
 
 final class $$TermBankV3DefinitionJsonTableTableReferences
@@ -28534,6 +29032,11 @@ class $$TermBankV3DefinitionJsonTableTableFilterComposer
     builder: (column) => ColumnWithTypeConverterFilters(column),
   );
 
+  ColumnFilters<String> get definitionJsonHash => $composableBuilder(
+    column: $table.definitionJsonHash,
+    builder: (column) => ColumnFilters(column),
+  );
+
   Expression<bool> termBankV3TableRefs(
     Expression<bool> Function($$TermBankV3TableTableFilterComposer f) f,
   ) {
@@ -28578,6 +29081,11 @@ class $$TermBankV3DefinitionJsonTableTableOrderingComposer
     column: $table.definitionJson,
     builder: (column) => ColumnOrderings(column),
   );
+
+  ColumnOrderings<String> get definitionJsonHash => $composableBuilder(
+    column: $table.definitionJsonHash,
+    builder: (column) => ColumnOrderings(column),
+  );
 }
 
 class $$TermBankV3DefinitionJsonTableTableAnnotationComposer
@@ -28597,6 +29105,11 @@ class $$TermBankV3DefinitionJsonTableTableAnnotationComposer
         column: $table.definitionJson,
         builder: (column) => column,
       );
+
+  GeneratedColumn<String> get definitionJsonHash => $composableBuilder(
+    column: $table.definitionJsonHash,
+    builder: (column) => column,
+  );
 
   Expression<T> termBankV3TableRefs<T extends Object>(
     Expression<T> Function($$TermBankV3TableTableAnnotationComposer a) f,
@@ -28668,17 +29181,21 @@ class $$TermBankV3DefinitionJsonTableTableTableManager
               ({
                 Value<int> id = const Value.absent(),
                 Value<String> definitionJson = const Value.absent(),
+                Value<String> definitionJsonHash = const Value.absent(),
               }) => TermBankV3DefinitionJsonTableCompanion(
                 id: id,
                 definitionJson: definitionJson,
+                definitionJsonHash: definitionJsonHash,
               ),
           createCompanionCallback:
               ({
                 Value<int> id = const Value.absent(),
                 required String definitionJson,
+                required String definitionJsonHash,
               }) => TermBankV3DefinitionJsonTableCompanion.insert(
                 id: id,
                 definitionJson: definitionJson,
+                definitionJsonHash: definitionJsonHash,
               ),
           withReferenceMapper: (p0) => p0
               .map(
@@ -29856,12 +30373,14 @@ typedef $$TermBankV3_X_DefinitionTableTableCreateCompanionBuilder =
       Value<int> id,
       required int definitionId,
       required int termBankId,
+      Value<int> rank,
     });
 typedef $$TermBankV3_X_DefinitionTableTableUpdateCompanionBuilder =
     TermBankV3_X_DefinitionTableCompanion Function({
       Value<int> id,
       Value<int> definitionId,
       Value<int> termBankId,
+      Value<int> rank,
     });
 
 final class $$TermBankV3_X_DefinitionTableTableReferences
@@ -29936,6 +30455,11 @@ class $$TermBankV3_X_DefinitionTableTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
+  ColumnFilters<int> get rank => $composableBuilder(
+    column: $table.rank,
+    builder: (column) => ColumnFilters(column),
+  );
+
   $$DefinitionTableTableFilterComposer get definitionId {
     final $$DefinitionTableTableFilterComposer composer = $composerBuilder(
       composer: this,
@@ -29997,6 +30521,11 @@ class $$TermBankV3_X_DefinitionTableTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
+  ColumnOrderings<int> get rank => $composableBuilder(
+    column: $table.rank,
+    builder: (column) => ColumnOrderings(column),
+  );
+
   $$DefinitionTableTableOrderingComposer get definitionId {
     final $$DefinitionTableTableOrderingComposer composer = $composerBuilder(
       composer: this,
@@ -30055,6 +30584,9 @@ class $$TermBankV3_X_DefinitionTableTableAnnotationComposer
   });
   GeneratedColumn<int> get id =>
       $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<int> get rank =>
+      $composableBuilder(column: $table.rank, builder: (column) => column);
 
   $$DefinitionTableTableAnnotationComposer get definitionId {
     final $$DefinitionTableTableAnnotationComposer composer = $composerBuilder(
@@ -30148,20 +30680,24 @@ class $$TermBankV3_X_DefinitionTableTableTableManager
                 Value<int> id = const Value.absent(),
                 Value<int> definitionId = const Value.absent(),
                 Value<int> termBankId = const Value.absent(),
+                Value<int> rank = const Value.absent(),
               }) => TermBankV3_X_DefinitionTableCompanion(
                 id: id,
                 definitionId: definitionId,
                 termBankId: termBankId,
+                rank: rank,
               ),
           createCompanionCallback:
               ({
                 Value<int> id = const Value.absent(),
                 required int definitionId,
                 required int termBankId,
+                Value<int> rank = const Value.absent(),
               }) => TermBankV3_X_DefinitionTableCompanion.insert(
                 id: id,
                 definitionId: definitionId,
                 termBankId: termBankId,
+                rank: rank,
               ),
           withReferenceMapper: (p0) => p0
               .map(
@@ -40842,12 +41378,16 @@ class $DaKanjiDBManager {
       );
   $$KanjiMetaBankV3TableTableTableManager get kanjiMetaBankV3Table =>
       $$KanjiMetaBankV3TableTableTableManager(_db, _db.kanjiMetaBankV3Table);
-  $SearchFtsTableManager get searchFts =>
-      $SearchFtsTableManager(_db, _db.searchFts);
-  $FtsDataTypesTableManager get ftsDataTypes =>
-      $FtsDataTypesTableManager(_db, _db.ftsDataTypes);
   $$TermTableTableTableManager get termTable =>
       $$TermTableTableTableManager(_db, _db.termTable);
+  $FtsTermsTableManager get ftsTerms =>
+      $FtsTermsTableManager(_db, _db.ftsTerms);
+  $FtsTokensTableManager get ftsTokens =>
+      $FtsTokensTableManager(_db, _db.ftsTokens);
+  $FtsReadingsTableManager get ftsReadings =>
+      $FtsReadingsTableManager(_db, _db.ftsReadings);
+  $FtsDefinitionsTableManager get ftsDefinitions =>
+      $FtsDefinitionsTableManager(_db, _db.ftsDefinitions);
   $$TermBankV3DefinitionJsonTableTableTableManager
   get termBankV3DefinitionJsonTable =>
       $$TermBankV3DefinitionJsonTableTableTableManager(

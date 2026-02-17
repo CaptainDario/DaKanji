@@ -1,5 +1,6 @@
 import 'package:archive/archive_io.dart';
 import 'package:dakanji_db_core/database/dakanji_db.dart';
+import 'package:dakanji_db_core/parsing/util/db_optimization.dart';
 import 'package:dakanji_db_core/parsing/yomitan_staging_db_parser.dart';
 import 'package:dakanji_db_shared/dakanji_db_shared.dart';
 import 'package:path/path.dart' as p;
@@ -48,6 +49,7 @@ Future<void> partialInit(
   await for (final progress in parsingProgress) {
     print(progress);
   }
+  await optimizeDbAfterImport(db);
   print("Database setup and conversion took ${s.elapsedMilliseconds} ms.");
 
 }

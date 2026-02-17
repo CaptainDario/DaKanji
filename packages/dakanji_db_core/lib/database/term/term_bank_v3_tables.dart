@@ -14,6 +14,7 @@ import '/database/general_tables/term_tables.dart';
 @TableIndex(name: 'TermBankV3Table_readingIdIndex', columns: {#readingId})
 @TableIndex(name: 'TermBankV3Table_definitionJsonIdIndex', columns: {#definitionJsonId})
 @TableIndex(name: 'TermBankV3Table_sequenceNumberIndex', columns: {#sequenceNumber})
+@TableIndex(name: 'TermBankV3Table_idxTermBankSeqLookup', columns: {#indexId, #sequenceNumber})
 class TermBankV3Table extends Table {
 
   @override
@@ -57,6 +58,9 @@ class TermBankV3DefinitionJsonTable extends Table {
 
   /// JSON representation of the term
   BlobColumn get definitionJson => blob().map(const ZlibStringConverter())();
+
+  /// hash of the JSON content, used for deduplication
+  TextColumn get definitionJsonHash => text()();
 
 }
 

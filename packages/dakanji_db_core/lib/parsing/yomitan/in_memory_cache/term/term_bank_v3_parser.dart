@@ -81,12 +81,6 @@ Future parseTermBankV3(
         termNormalized: termNormalized!=term && termNormalized!=null
           ? Value(termNormalized)
           : const Value.absent(),
-        termTokens: termTokens != term && termTokens!=null
-          ? Value(termTokens)
-          : const Value.absent(),
-        termTokensNormalized: termTokensNormalized!=termTokens && termTokensNormalized!=null
-          ? Value(termTokensNormalized)
-          : const Value.absent(),
       ));
     }
 

@@ -490,6 +490,17 @@ class $TermStagingTableTable extends TermStagingTable
         type: DriftSqlType.blob,
         requiredDuringInsert: false,
       ).withConverter<String?>($TermStagingTableTable.$converteroriginalJsonn);
+  static const VerificationMeta _definitionJsonHashMeta =
+      const VerificationMeta('definitionJsonHash');
+  @override
+  late final GeneratedColumn<String> definitionJsonHash =
+      GeneratedColumn<String>(
+        'definition_json_hash',
+        aliasedName,
+        true,
+        type: DriftSqlType.string,
+        requiredDuringInsert: false,
+      );
   @override
   List<GeneratedColumn> get $columns => [
     localId,
@@ -502,6 +513,7 @@ class $TermStagingTableTable extends TermStagingTable
     popularity,
     sequenceNumber,
     originalJson,
+    definitionJsonHash,
   ];
   @override
   String get aliasedName => _alias ?? actualTableName;
@@ -589,6 +601,15 @@ class $TermStagingTableTable extends TermStagingTable
     } else if (isInserting) {
       context.missing(_sequenceNumberMeta);
     }
+    if (data.containsKey('definition_json_hash')) {
+      context.handle(
+        _definitionJsonHashMeta,
+        definitionJsonHash.isAcceptableOrUnknown(
+          data['definition_json_hash']!,
+          _definitionJsonHashMeta,
+        ),
+      );
+    }
     return context;
   }
 
@@ -640,6 +661,10 @@ class $TermStagingTableTable extends TermStagingTable
           data['${effectivePrefix}original_json'],
         ),
       ),
+      definitionJsonHash: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}definition_json_hash'],
+      ),
     );
   }
 
@@ -666,6 +691,7 @@ class TermStagingTableData extends DataClass
   final int popularity;
   final int sequenceNumber;
   final String? originalJson;
+  final String? definitionJsonHash;
   const TermStagingTableData({
     required this.localId,
     required this.term,
@@ -677,6 +703,7 @@ class TermStagingTableData extends DataClass
     required this.popularity,
     required this.sequenceNumber,
     this.originalJson,
+    this.definitionJsonHash,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
@@ -703,6 +730,9 @@ class TermStagingTableData extends DataClass
         $TermStagingTableTable.$converteroriginalJsonn.toSql(originalJson),
       );
     }
+    if (!nullToAbsent || definitionJsonHash != null) {
+      map['definition_json_hash'] = Variable<String>(definitionJsonHash);
+    }
     return map;
   }
 
@@ -728,6 +758,9 @@ class TermStagingTableData extends DataClass
       originalJson: originalJson == null && nullToAbsent
           ? const Value.absent()
           : Value(originalJson),
+      definitionJsonHash: definitionJsonHash == null && nullToAbsent
+          ? const Value.absent()
+          : Value(definitionJsonHash),
     );
   }
 
@@ -751,6 +784,9 @@ class TermStagingTableData extends DataClass
       popularity: serializer.fromJson<int>(json['popularity']),
       sequenceNumber: serializer.fromJson<int>(json['sequenceNumber']),
       originalJson: serializer.fromJson<String?>(json['originalJson']),
+      definitionJsonHash: serializer.fromJson<String?>(
+        json['definitionJsonHash'],
+      ),
     );
   }
   @override
@@ -767,6 +803,7 @@ class TermStagingTableData extends DataClass
       'popularity': serializer.toJson<int>(popularity),
       'sequenceNumber': serializer.toJson<int>(sequenceNumber),
       'originalJson': serializer.toJson<String?>(originalJson),
+      'definitionJsonHash': serializer.toJson<String?>(definitionJsonHash),
     };
   }
 
@@ -781,6 +818,7 @@ class TermStagingTableData extends DataClass
     int? popularity,
     int? sequenceNumber,
     Value<String?> originalJson = const Value.absent(),
+    Value<String?> definitionJsonHash = const Value.absent(),
   }) => TermStagingTableData(
     localId: localId ?? this.localId,
     term: term ?? this.term,
@@ -798,6 +836,9 @@ class TermStagingTableData extends DataClass
     popularity: popularity ?? this.popularity,
     sequenceNumber: sequenceNumber ?? this.sequenceNumber,
     originalJson: originalJson.present ? originalJson.value : this.originalJson,
+    definitionJsonHash: definitionJsonHash.present
+        ? definitionJsonHash.value
+        : this.definitionJsonHash,
   );
   TermStagingTableData copyWithCompanion(TermStagingTableCompanion data) {
     return TermStagingTableData(
@@ -825,6 +866,9 @@ class TermStagingTableData extends DataClass
       originalJson: data.originalJson.present
           ? data.originalJson.value
           : this.originalJson,
+      definitionJsonHash: data.definitionJsonHash.present
+          ? data.definitionJsonHash.value
+          : this.definitionJsonHash,
     );
   }
 
@@ -840,7 +884,8 @@ class TermStagingTableData extends DataClass
           ..write('readingNormalized: $readingNormalized, ')
           ..write('popularity: $popularity, ')
           ..write('sequenceNumber: $sequenceNumber, ')
-          ..write('originalJson: $originalJson')
+          ..write('originalJson: $originalJson, ')
+          ..write('definitionJsonHash: $definitionJsonHash')
           ..write(')'))
         .toString();
   }
@@ -857,6 +902,7 @@ class TermStagingTableData extends DataClass
     popularity,
     sequenceNumber,
     originalJson,
+    definitionJsonHash,
   );
   @override
   bool operator ==(Object other) =>
@@ -871,7 +917,8 @@ class TermStagingTableData extends DataClass
           other.readingNormalized == this.readingNormalized &&
           other.popularity == this.popularity &&
           other.sequenceNumber == this.sequenceNumber &&
-          other.originalJson == this.originalJson);
+          other.originalJson == this.originalJson &&
+          other.definitionJsonHash == this.definitionJsonHash);
 }
 
 class TermStagingTableCompanion extends UpdateCompanion<TermStagingTableData> {
@@ -885,6 +932,7 @@ class TermStagingTableCompanion extends UpdateCompanion<TermStagingTableData> {
   final Value<int> popularity;
   final Value<int> sequenceNumber;
   final Value<String?> originalJson;
+  final Value<String?> definitionJsonHash;
   const TermStagingTableCompanion({
     this.localId = const Value.absent(),
     this.term = const Value.absent(),
@@ -896,6 +944,7 @@ class TermStagingTableCompanion extends UpdateCompanion<TermStagingTableData> {
     this.popularity = const Value.absent(),
     this.sequenceNumber = const Value.absent(),
     this.originalJson = const Value.absent(),
+    this.definitionJsonHash = const Value.absent(),
   });
   TermStagingTableCompanion.insert({
     this.localId = const Value.absent(),
@@ -908,6 +957,7 @@ class TermStagingTableCompanion extends UpdateCompanion<TermStagingTableData> {
     required int popularity,
     required int sequenceNumber,
     this.originalJson = const Value.absent(),
+    this.definitionJsonHash = const Value.absent(),
   }) : term = Value(term),
        reading = Value(reading),
        popularity = Value(popularity),
@@ -923,6 +973,7 @@ class TermStagingTableCompanion extends UpdateCompanion<TermStagingTableData> {
     Expression<int>? popularity,
     Expression<int>? sequenceNumber,
     Expression<Uint8List>? originalJson,
+    Expression<String>? definitionJsonHash,
   }) {
     return RawValuesInsertable({
       if (localId != null) 'local_id': localId,
@@ -936,6 +987,8 @@ class TermStagingTableCompanion extends UpdateCompanion<TermStagingTableData> {
       if (popularity != null) 'popularity': popularity,
       if (sequenceNumber != null) 'sequence_number': sequenceNumber,
       if (originalJson != null) 'original_json': originalJson,
+      if (definitionJsonHash != null)
+        'definition_json_hash': definitionJsonHash,
     });
   }
 
@@ -950,6 +1003,7 @@ class TermStagingTableCompanion extends UpdateCompanion<TermStagingTableData> {
     Value<int>? popularity,
     Value<int>? sequenceNumber,
     Value<String?>? originalJson,
+    Value<String?>? definitionJsonHash,
   }) {
     return TermStagingTableCompanion(
       localId: localId ?? this.localId,
@@ -962,6 +1016,7 @@ class TermStagingTableCompanion extends UpdateCompanion<TermStagingTableData> {
       popularity: popularity ?? this.popularity,
       sequenceNumber: sequenceNumber ?? this.sequenceNumber,
       originalJson: originalJson ?? this.originalJson,
+      definitionJsonHash: definitionJsonHash ?? this.definitionJsonHash,
     );
   }
 
@@ -1004,6 +1059,9 @@ class TermStagingTableCompanion extends UpdateCompanion<TermStagingTableData> {
         ),
       );
     }
+    if (definitionJsonHash.present) {
+      map['definition_json_hash'] = Variable<String>(definitionJsonHash.value);
+    }
     return map;
   }
 
@@ -1019,7 +1077,8 @@ class TermStagingTableCompanion extends UpdateCompanion<TermStagingTableData> {
           ..write('readingNormalized: $readingNormalized, ')
           ..write('popularity: $popularity, ')
           ..write('sequenceNumber: $sequenceNumber, ')
-          ..write('originalJson: $originalJson')
+          ..write('originalJson: $originalJson, ')
+          ..write('definitionJsonHash: $definitionJsonHash')
           ..write(')'))
         .toString();
   }
@@ -6228,6 +6287,7 @@ typedef $$TermStagingTableTableCreateCompanionBuilder =
       required int popularity,
       required int sequenceNumber,
       Value<String?> originalJson,
+      Value<String?> definitionJsonHash,
     });
 typedef $$TermStagingTableTableUpdateCompanionBuilder =
     TermStagingTableCompanion Function({
@@ -6241,6 +6301,7 @@ typedef $$TermStagingTableTableUpdateCompanionBuilder =
       Value<int> popularity,
       Value<int> sequenceNumber,
       Value<String?> originalJson,
+      Value<String?> definitionJsonHash,
     });
 
 class $$TermStagingTableTableFilterComposer
@@ -6302,6 +6363,11 @@ class $$TermStagingTableTableFilterComposer
         column: $table.originalJson,
         builder: (column) => ColumnWithTypeConverterFilters(column),
       );
+
+  ColumnFilters<String> get definitionJsonHash => $composableBuilder(
+    column: $table.definitionJsonHash,
+    builder: (column) => ColumnFilters(column),
+  );
 }
 
 class $$TermStagingTableTableOrderingComposer
@@ -6362,6 +6428,11 @@ class $$TermStagingTableTableOrderingComposer
     column: $table.originalJson,
     builder: (column) => ColumnOrderings(column),
   );
+
+  ColumnOrderings<String> get definitionJsonHash => $composableBuilder(
+    column: $table.definitionJsonHash,
+    builder: (column) => ColumnOrderings(column),
+  );
 }
 
 class $$TermStagingTableTableAnnotationComposer
@@ -6417,6 +6488,11 @@ class $$TermStagingTableTableAnnotationComposer
         column: $table.originalJson,
         builder: (column) => column,
       );
+
+  GeneratedColumn<String> get definitionJsonHash => $composableBuilder(
+    column: $table.definitionJsonHash,
+    builder: (column) => column,
+  );
 }
 
 class $$TermStagingTableTableTableManager
@@ -6466,6 +6542,7 @@ class $$TermStagingTableTableTableManager
                 Value<int> popularity = const Value.absent(),
                 Value<int> sequenceNumber = const Value.absent(),
                 Value<String?> originalJson = const Value.absent(),
+                Value<String?> definitionJsonHash = const Value.absent(),
               }) => TermStagingTableCompanion(
                 localId: localId,
                 term: term,
@@ -6477,6 +6554,7 @@ class $$TermStagingTableTableTableManager
                 popularity: popularity,
                 sequenceNumber: sequenceNumber,
                 originalJson: originalJson,
+                definitionJsonHash: definitionJsonHash,
               ),
           createCompanionCallback:
               ({
@@ -6490,6 +6568,7 @@ class $$TermStagingTableTableTableManager
                 required int popularity,
                 required int sequenceNumber,
                 Value<String?> originalJson = const Value.absent(),
+                Value<String?> definitionJsonHash = const Value.absent(),
               }) => TermStagingTableCompanion.insert(
                 localId: localId,
                 term: term,
@@ -6501,6 +6580,7 @@ class $$TermStagingTableTableTableManager
                 popularity: popularity,
                 sequenceNumber: sequenceNumber,
                 originalJson: originalJson,
+                definitionJsonHash: definitionJsonHash,
               ),
           withReferenceMapper: (p0) => p0
               .map((e) => (e.readTable(table), BaseReferences(db, table, e)))

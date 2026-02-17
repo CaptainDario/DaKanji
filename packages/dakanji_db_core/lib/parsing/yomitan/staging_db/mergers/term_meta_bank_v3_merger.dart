@@ -64,13 +64,24 @@ class TermMetaBankV3Merger implements StagingMerger {
 
     try {
       // 1. Insert Dependencies (Term, Type, Reading, Tags)
-      //    We rely on the staging table having NLP columns populated by the parser.
       
-      // Terms
+      // Terms: ONLY insert term and normalized (Removed tokens)
       await targetDb.customStatement('''
-        INSERT OR IGNORE INTO ${tTerm.actualTableName} (${tTerm.term.name}, ${tTerm.termNormalized.name}, ${tTerm.termTokens.name}, ${tTerm.termTokensNormalized.name})
-        SELECT DISTINCT term, term_normalized, term_tokens, term_tokens_normalized 
+        INSERT OR IGNORE INTO ${tTerm.actualTableName} (${tTerm.term.name}, ${tTerm.termNormalized.name})
+        SELECT DISTINCT term, term_normalized
         FROM $workerAlias.term_meta_staging_table
+      ''');
+
+      // NEW: Manually populate the Contentless FTS Tokens table
+      // Matches logic in TermBankV3Merger
+      await targetDb.customStatement('''
+        INSERT INTO fts_tokens(rowid, tokens, tokens_normalized)
+        SELECT DISTINCT t.${tTerm.id.name}, s.term_tokens, s.term_tokens_normalized
+        FROM $workerAlias.term_meta_staging_table s
+        JOIN ${tTerm.actualTableName} t ON t.${tTerm.term.name} = s.term
+        WHERE 
+          (s.term_tokens IS NOT NULL OR s.term_tokens_normalized IS NOT NULL)
+          AND NOT EXISTS (SELECT 1 FROM fts_tokens WHERE rowid = t.${tTerm.id.name})
       ''');
 
       // Types (Modes)
