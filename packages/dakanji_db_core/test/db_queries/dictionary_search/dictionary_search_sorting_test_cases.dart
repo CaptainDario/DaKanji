@@ -98,4 +98,83 @@ List<DictionarySearchTestCase> sortingTestCases = [
       ],
     ),]
   ),
+
+  DictionarySearchTestCase(
+    description: 'Definition Rank Sort: Primary definitions (Rank 0) > Rank 2 > Rank 4 > Rank 5',
+    query: 'Game',
+    queryMatches: [
+      const ExpectedMatchGroup(
+        // All are "Exact Matches" because the Definition text "Game" == Query "Game"
+        exactMatches: [
+          // ---------------------------------------------------------
+          // Rank 0 Matches (Primary Definition is "Game")
+          // Sorted by internal ID (Tie)
+          // ---------------------------------------------------------
+          [ExpectedDictionaryMatch(
+            term: 'Sport', 
+            reading: 'sport', 
+            match: 'Game', 
+            definitions: ["Game"]
+          )],
+          [ExpectedDictionaryMatch(
+            term: 'Contest', 
+            reading: 'contest', 
+            match: 'Game', 
+            definitions: ["Game"]
+          )],
+          [ExpectedDictionaryMatch(
+            term: 'Match', 
+            reading: 'match', 
+            match: 'Game', 
+            definitions: ["Game"]
+          )],
+
+          // ---------------------------------------------------------
+          // Rank 2 Matches (3rd Definition is "Game")
+          // ---------------------------------------------------------
+          [ExpectedDictionaryMatch(
+            term: 'Fun', 
+            reading: 'fun', 
+            match: 'Game', 
+            definitions: ["Amusement", "Play", "Game"]
+          )],
+
+          // ---------------------------------------------------------
+          // Rank 4 Matches (5th Definition is "Game")
+          // ---------------------------------------------------------
+          [ExpectedDictionaryMatch(
+            term: 'Group', 
+            reading: 'group', 
+            match: 'Game', 
+            definitions: ["Cluster", "Batch", "Lot", "Set", "Game"]
+          )],
+
+          // ---------------------------------------------------------
+          // Rank 5 Match (6th Definition is "Game")
+          // ---------------------------------------------------------
+          [ExpectedDictionaryMatch(
+            term: 'Set', 
+            reading: 'set', 
+            match: 'Game', 
+            definitions: ["Collection", "Place", "Ready", "Go", "Just some filler", "Game"]
+          )],
+        ],
+        prefixMatches: [
+
+          [ExpectedDictionaryMatch(
+            term: 'Activity', 
+            reading: 'activity', 
+            match: 'Game (non exact match)', 
+            definitions: ["Action", "Movement", "Game (non exact match)"]
+          )],
+          [ExpectedDictionaryMatch(
+            term: 'Collection', 
+            reading: 'collection', 
+            match: 'Game (non exact match)', 
+            definitions: ["Gathering", "Assembly", "Heap", "Pile", "Game (non exact match)"]
+          )],
+        ]
+      ),
+    ]
+  ),
 ];
