@@ -91,7 +91,7 @@ void main(List<String> args) async {
     mecabTransferableState: MecabTransferableState(
       libmecabPath: mecabDynamicLibPath,
       mecabDictDirPath: mecabDicPath,
-      includeFeatures: true,
+      options: "",
     )
   );
 

@@ -53,6 +53,9 @@ class TermBankV3_X_DefinitionTable extends Table {
   /// the id of the associated term in the term bank
   IntColumn get termBankId => integer()
     .references(TermBankV3Table, #id, onDelete: KeyAction.cascade)();
+  /// the rank of this definition as they are in the source dictionary
+  /// (lower is more important)
+  IntColumn get rank => integer().withDefault(const Constant(0))();
 
 }
 

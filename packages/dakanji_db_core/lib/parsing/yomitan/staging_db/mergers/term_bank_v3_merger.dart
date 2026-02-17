@@ -129,7 +129,7 @@ class TermBankV3Merger implements StagingMerger {
       }
 
       // --- 4. Main Insert with Linking ---
-      // We join Staging -> Final using the HASH (Fast Index Lookup)
+      // join Staging -> Final using the HASH (Fast Index Lookup)
       await targetDb.customStatement('''
         INSERT INTO ${tMain.actualTableName} (
           ${tMain.id.name}, ${tMain.indexId.name}, ${tMain.termId.name}, ${tMain.readingId.name}, 
@@ -154,8 +154,15 @@ class TermBankV3Merger implements StagingMerger {
 
       // --- 5. Junction Tables ---
       await targetDb.customStatement('''
-        INSERT INTO ${tjDef.actualTableName} (${tjDef.termBankId.name}, ${tjDef.definitionId.name})
-        SELECT $maxTermBankId + s.term_local_id, d.id
+        INSERT INTO ${tjDef.actualTableName} (
+            ${tjDef.termBankId.name}, 
+            ${tjDef.definitionId.name}, 
+            ${tjDef.rank.name}
+        )
+        SELECT 
+            $maxTermBankId + s.term_local_id, 
+            d.id, 
+            s.rank -- Select the rank from staging
         FROM $workerAlias.term_definition_staging_table s
         JOIN ${tDef.actualTableName} d ON d.definition = s.definition
         ORDER BY s.rowid

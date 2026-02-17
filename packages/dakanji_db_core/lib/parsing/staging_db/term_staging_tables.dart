@@ -20,6 +20,7 @@ class TermStagingTable extends Table {
 class TermDefinitionStagingTable extends Table {
   IntColumn get termLocalId => integer()();
   TextColumn get definition => text()();
+  IntColumn get rank => integer()();
 }
 
 class TermTagStagingTable extends Table {

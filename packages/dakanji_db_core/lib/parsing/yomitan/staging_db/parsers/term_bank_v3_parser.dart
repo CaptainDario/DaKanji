@@ -76,9 +76,12 @@ class TermBankV3Parser implements YomitanFileParser {
       // --- 3. Definitions ---
       final parsedDefinitions = YomitanDefinitionParser.parse(definitionBlock);
       
+      // Initialize rank counter
+      int defRank = 0; 
       for (String parsedDefinition in parsedDefinitions.definitions) {
         String text = parsedDefinition.replaceAll(RegExp(r'[\s\u00A0]+'), ' ').trim();
-        defRows.add([localId, text]);
+        defRows.add([localId, text, defRank]); 
+        defRank++; 
       }
 
       // --- 4. Tags ---
@@ -127,7 +130,7 @@ class TermBankV3Parser implements YomitanFileParser {
       }
 
       if (defRows.isNotEmpty) {
-        final sql = 'INSERT INTO ${db.termDefinitionStagingTable.actualTableName} (term_local_id, definition) VALUES ${List.filled(defRows.length, placeholders(2)).join(', ')}';
+        final sql = 'INSERT INTO ${db.termDefinitionStagingTable.actualTableName} (term_local_id, definition, rank) VALUES ${List.filled(defRows.length, placeholders(3)).join(', ')}';
         await db.customStatement(sql, defRows.expand((i) => i).toList());
       }
 

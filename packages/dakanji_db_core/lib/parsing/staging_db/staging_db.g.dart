@@ -1116,8 +1116,17 @@ class $TermDefinitionStagingTableTable extends TermDefinitionStagingTable
     type: DriftSqlType.string,
     requiredDuringInsert: true,
   );
+  static const VerificationMeta _rankMeta = const VerificationMeta('rank');
   @override
-  List<GeneratedColumn> get $columns => [termLocalId, definition];
+  late final GeneratedColumn<int> rank = GeneratedColumn<int>(
+    'rank',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [termLocalId, definition, rank];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -1149,6 +1158,14 @@ class $TermDefinitionStagingTableTable extends TermDefinitionStagingTable
     } else if (isInserting) {
       context.missing(_definitionMeta);
     }
+    if (data.containsKey('rank')) {
+      context.handle(
+        _rankMeta,
+        rank.isAcceptableOrUnknown(data['rank']!, _rankMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_rankMeta);
+    }
     return context;
   }
 
@@ -1169,6 +1186,10 @@ class $TermDefinitionStagingTableTable extends TermDefinitionStagingTable
         DriftSqlType.string,
         data['${effectivePrefix}definition'],
       )!,
+      rank: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}rank'],
+      )!,
     );
   }
 
@@ -1182,15 +1203,18 @@ class TermDefinitionStagingTableData extends DataClass
     implements Insertable<TermDefinitionStagingTableData> {
   final int termLocalId;
   final String definition;
+  final int rank;
   const TermDefinitionStagingTableData({
     required this.termLocalId,
     required this.definition,
+    required this.rank,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['term_local_id'] = Variable<int>(termLocalId);
     map['definition'] = Variable<String>(definition);
+    map['rank'] = Variable<int>(rank);
     return map;
   }
 
@@ -1198,6 +1222,7 @@ class TermDefinitionStagingTableData extends DataClass
     return TermDefinitionStagingTableCompanion(
       termLocalId: Value(termLocalId),
       definition: Value(definition),
+      rank: Value(rank),
     );
   }
 
@@ -1209,6 +1234,7 @@ class TermDefinitionStagingTableData extends DataClass
     return TermDefinitionStagingTableData(
       termLocalId: serializer.fromJson<int>(json['termLocalId']),
       definition: serializer.fromJson<String>(json['definition']),
+      rank: serializer.fromJson<int>(json['rank']),
     );
   }
   @override
@@ -1217,15 +1243,18 @@ class TermDefinitionStagingTableData extends DataClass
     return <String, dynamic>{
       'termLocalId': serializer.toJson<int>(termLocalId),
       'definition': serializer.toJson<String>(definition),
+      'rank': serializer.toJson<int>(rank),
     };
   }
 
   TermDefinitionStagingTableData copyWith({
     int? termLocalId,
     String? definition,
+    int? rank,
   }) => TermDefinitionStagingTableData(
     termLocalId: termLocalId ?? this.termLocalId,
     definition: definition ?? this.definition,
+    rank: rank ?? this.rank,
   );
   TermDefinitionStagingTableData copyWithCompanion(
     TermDefinitionStagingTableCompanion data,
@@ -1237,6 +1266,7 @@ class TermDefinitionStagingTableData extends DataClass
       definition: data.definition.present
           ? data.definition.value
           : this.definition,
+      rank: data.rank.present ? data.rank.value : this.rank,
     );
   }
 
@@ -1244,45 +1274,53 @@ class TermDefinitionStagingTableData extends DataClass
   String toString() {
     return (StringBuffer('TermDefinitionStagingTableData(')
           ..write('termLocalId: $termLocalId, ')
-          ..write('definition: $definition')
+          ..write('definition: $definition, ')
+          ..write('rank: $rank')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(termLocalId, definition);
+  int get hashCode => Object.hash(termLocalId, definition, rank);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is TermDefinitionStagingTableData &&
           other.termLocalId == this.termLocalId &&
-          other.definition == this.definition);
+          other.definition == this.definition &&
+          other.rank == this.rank);
 }
 
 class TermDefinitionStagingTableCompanion
     extends UpdateCompanion<TermDefinitionStagingTableData> {
   final Value<int> termLocalId;
   final Value<String> definition;
+  final Value<int> rank;
   final Value<int> rowid;
   const TermDefinitionStagingTableCompanion({
     this.termLocalId = const Value.absent(),
     this.definition = const Value.absent(),
+    this.rank = const Value.absent(),
     this.rowid = const Value.absent(),
   });
   TermDefinitionStagingTableCompanion.insert({
     required int termLocalId,
     required String definition,
+    required int rank,
     this.rowid = const Value.absent(),
   }) : termLocalId = Value(termLocalId),
-       definition = Value(definition);
+       definition = Value(definition),
+       rank = Value(rank);
   static Insertable<TermDefinitionStagingTableData> custom({
     Expression<int>? termLocalId,
     Expression<String>? definition,
+    Expression<int>? rank,
     Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
       if (termLocalId != null) 'term_local_id': termLocalId,
       if (definition != null) 'definition': definition,
+      if (rank != null) 'rank': rank,
       if (rowid != null) 'rowid': rowid,
     });
   }
@@ -1290,11 +1328,13 @@ class TermDefinitionStagingTableCompanion
   TermDefinitionStagingTableCompanion copyWith({
     Value<int>? termLocalId,
     Value<String>? definition,
+    Value<int>? rank,
     Value<int>? rowid,
   }) {
     return TermDefinitionStagingTableCompanion(
       termLocalId: termLocalId ?? this.termLocalId,
       definition: definition ?? this.definition,
+      rank: rank ?? this.rank,
       rowid: rowid ?? this.rowid,
     );
   }
@@ -1308,6 +1348,9 @@ class TermDefinitionStagingTableCompanion
     if (definition.present) {
       map['definition'] = Variable<String>(definition.value);
     }
+    if (rank.present) {
+      map['rank'] = Variable<int>(rank.value);
+    }
     if (rowid.present) {
       map['rowid'] = Variable<int>(rowid.value);
     }
@@ -1319,6 +1362,7 @@ class TermDefinitionStagingTableCompanion
     return (StringBuffer('TermDefinitionStagingTableCompanion(')
           ..write('termLocalId: $termLocalId, ')
           ..write('definition: $definition, ')
+          ..write('rank: $rank, ')
           ..write('rowid: $rowid')
           ..write(')'))
         .toString();
@@ -6615,12 +6659,14 @@ typedef $$TermDefinitionStagingTableTableCreateCompanionBuilder =
     TermDefinitionStagingTableCompanion Function({
       required int termLocalId,
       required String definition,
+      required int rank,
       Value<int> rowid,
     });
 typedef $$TermDefinitionStagingTableTableUpdateCompanionBuilder =
     TermDefinitionStagingTableCompanion Function({
       Value<int> termLocalId,
       Value<String> definition,
+      Value<int> rank,
       Value<int> rowid,
     });
 
@@ -6640,6 +6686,11 @@ class $$TermDefinitionStagingTableTableFilterComposer
 
   ColumnFilters<String> get definition => $composableBuilder(
     column: $table.definition,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get rank => $composableBuilder(
+    column: $table.rank,
     builder: (column) => ColumnFilters(column),
   );
 }
@@ -6662,6 +6713,11 @@ class $$TermDefinitionStagingTableTableOrderingComposer
     column: $table.definition,
     builder: (column) => ColumnOrderings(column),
   );
+
+  ColumnOrderings<int> get rank => $composableBuilder(
+    column: $table.rank,
+    builder: (column) => ColumnOrderings(column),
+  );
 }
 
 class $$TermDefinitionStagingTableTableAnnotationComposer
@@ -6682,6 +6738,9 @@ class $$TermDefinitionStagingTableTableAnnotationComposer
     column: $table.definition,
     builder: (column) => column,
   );
+
+  GeneratedColumn<int> get rank =>
+      $composableBuilder(column: $table.rank, builder: (column) => column);
 }
 
 class $$TermDefinitionStagingTableTableTableManager
@@ -6732,20 +6791,24 @@ class $$TermDefinitionStagingTableTableTableManager
               ({
                 Value<int> termLocalId = const Value.absent(),
                 Value<String> definition = const Value.absent(),
+                Value<int> rank = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => TermDefinitionStagingTableCompanion(
                 termLocalId: termLocalId,
                 definition: definition,
+                rank: rank,
                 rowid: rowid,
               ),
           createCompanionCallback:
               ({
                 required int termLocalId,
                 required String definition,
+                required int rank,
                 Value<int> rowid = const Value.absent(),
               }) => TermDefinitionStagingTableCompanion.insert(
                 termLocalId: termLocalId,
                 definition: definition,
+                rank: rank,
                 rowid: rowid,
               ),
           withReferenceMapper: (p0) => p0

@@ -176,7 +176,7 @@ dictionary_search_drift_find_term_bank_entries(
 
             UNION ALL
 
-            -- 7. DEFINITIONS (FTS)
+            -- 7. DEFINITIONS
             SELECT
                 SearchTerms.input_index,
                 SearchTerms.term AS search_term,
@@ -256,7 +256,7 @@ dictionary_search_drift_find_term_bank_entries(
                 SearchResults.*,
                 CASE
                     WHEN text_data = search_term THEN 1
-                    WHEN text_data GLOB search_term || '*' THEN 2
+                    WHEN text_data LIKE search_term || '%' THEN 2
                     ELSE 3
                 END as match_type
             FROM SearchResults
@@ -278,15 +278,14 @@ dictionary_search_drift_find_term_bank_entries(
                                 ELSE 'def'
                             END
                         ORDER BY 
-                            match_type ASC,     -- Exact matches first
-                            rank ASC,           -- Better FTS rank
-                            LENGTH(text_data) ASC -- Shorter matches
+                            match_type ASC,        -- Exact matches first
+                            LENGTH(text_data) ASC, -- Shorter matches
+                            rank ASC               -- Better FTS rank
                     ) AS rn
                 FROM SearchResultMatchesClassified
             ) WHERE rn = 1
         ),
         
-        -- Join matches to Term Bank Table
         TermBankMatches as (
             SELECT
                 SearchResultsDeduplicated.*,  -- used for sorting by input order
@@ -295,7 +294,8 @@ dictionary_search_drift_find_term_bank_entries(
                 term_bank_v3_table.reading_id as reading_id,
                 term_bank_v3_table.index_id,
                 1 as match_column,
-                term_bank_v3_table.sequence_number
+                term_bank_v3_table.sequence_number,
+                0 as def_rank -- Dummy rank
             FROM SearchResultsDeduplicated 
             JOIN term_bank_v3_table
                 ON term_bank_v3_table.term_id = source_id
@@ -312,7 +312,8 @@ dictionary_search_drift_find_term_bank_entries(
                 term_bank_v3_table.reading_id as reading_id,
                 term_bank_v3_table.index_id,
                 2 as match_column,
-                term_bank_v3_table.sequence_number
+                term_bank_v3_table.sequence_number,
+                0 as def_rank -- Dummy rank
             FROM SearchResultsDeduplicated
             JOIN term_bank_v3_table
                 ON term_bank_v3_table.reading_id = source_id
@@ -329,7 +330,8 @@ dictionary_search_drift_find_term_bank_entries(
                 term_bank_v3_table.reading_id as reading_id,
                 term_bank_v3_table.index_id,
                 3 as match_column,
-                term_bank_v3_table.sequence_number
+                term_bank_v3_table.sequence_number,
+                term_bank_v3_x_definition_table.rank as def_rank -- Real rank
             FROM SearchResultsDeduplicated
             JOIN term_bank_v3_x_definition_table
                 ON term_bank_v3_x_definition_table.definition_id = source_id
@@ -340,12 +342,11 @@ dictionary_search_drift_find_term_bank_entries(
         ),
 
         -- Filter based on the specific Rules and Tags attached to each search term
-        -- OPTIMIZATION: Filter logic is inlined here to avoid full table scan in previous CTE
         TermBankMatchesFiltered AS (
             SELECT TBM.*
             FROM TermBankMatches AS TBM
             WHERE
-                -- PARAMETER CHECKS (Inlined for efficiency)
+                -- PARAMETER CHECKS
 
                 -- Check Term (Using TBM.term_id from the found result)
                 (:filterTerm IS NULL OR EXISTS (
@@ -497,8 +498,16 @@ dictionary_search_drift_find_term_bank_entries(
             THEN 0 
             ELSE ActiveIndexes.current_sorting_order 
         END,
+        -- sort by match type (exact > prefix > partial)
         TBM.match_type,
+        -- sort by matched column (term > reading > definition)
         TBM.match_column,
+        
+        -- Prioritize earlier definition matches
+        CASE 
+            WHEN TBM.match_column = 3 THEN TBM.def_rank 
+            ELSE 0 
+        END ASC,
         finalPopularity DESC,
         -- if frequency override is set, use user dictionary sort order
         CASE
@@ -506,8 +515,11 @@ dictionary_search_drift_find_term_bank_entries(
             THEN ActiveIndexes.current_sorting_order
             ELSE 0
         END,
+        -- sort by fts rank
         TBM.rank,
-        LENGTH(matchedText),
+        -- prioritize matches closer in length to the search term
+        LENGTH(matchedText) ASC,
+        -- sort by unicode characters 
         matchedText ASC
 
     LIMIT :limit OFFSET :offset;
