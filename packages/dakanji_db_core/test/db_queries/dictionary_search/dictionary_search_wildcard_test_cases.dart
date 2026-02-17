@@ -101,13 +101,32 @@ DictionarySearchTestCase(
       ],
     )],
   ),
-   DictionarySearchTestCase(
+  DictionarySearchTestCase(
     description: "GLOB [x-y] (Character Range)",
     query: '[a-c]',
     queryMatches: [const ExpectedMatchGroup(
       wildcardMatches: [
         // Matches 'a', but not 'asd' (length mismatch) or '石' (outside range)
         [ExpectedDictionaryMatch(term: 'a', reading: '', match: 'a', definitions: ["Letter from the Latin alphabet"])],
+      ],
+    )],
+  ),
+  DictionarySearchTestCase(
+    description: "GLOB search on definitions",
+    query: '?etter*',
+    queryMatches: [const ExpectedMatchGroup(
+      wildcardMatches: [
+        // should match only "Letter"
+        [ExpectedDictionaryMatch(term: 'a', reading: '', match: 'Letter from the Latin alphabet', definitions: ["Letter from the Latin alphabet"])],
+      ],
+    )],
+  ),
+  DictionarySearchTestCase(
+    description: "GLOB search on readings",
+    query: 'にほん?ん',
+    queryMatches: [const ExpectedMatchGroup(
+      wildcardMatches: [
+        [ExpectedDictionaryMatch(term: '日本人', reading: 'にほんじん', match: 'にほんじん', definitions: ["Japanese person"])],
       ],
     )],
   ),
