@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:dakanji_db_core/database/dakanji_db.dart';
-import 'package:dakanji_db_core/parsing/audio/in_memory_cache/audio_parser.dart' ;
+import 'package:dakanji_db_core/parsing/audio_parser.dart';
 import 'package:dakanji_db_core/parsing/example_parser.dart';
 import 'package:dakanji_db_core/parsing/kanji_vg_parser.dart';
 import 'package:dakanji_db_core/parsing/radicals_parser.dart';
@@ -268,7 +268,7 @@ Future importPronunciationData(DaKanjiDB db) async {
 
   Stopwatch s = Stopwatch()..start();
   final progress = await parseAudioDataSource(
-    audioDataSourceFile: audioInputZipPath,
+    dataSourcePath: audioInputZipPath,
     db: db,
     isDefaultDictionary: true
   );

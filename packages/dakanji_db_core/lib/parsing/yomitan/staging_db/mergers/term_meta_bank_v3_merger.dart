@@ -1,6 +1,5 @@
 import 'package:dakanji_db_core/database/dakanji_db.dart';
 import 'package:dakanji_db_core/parsing/yomitan/staging_db/mergers/staging_merger.dart';
-import 'package:drift/drift.dart';
 
 class TermMetaBankV3Merger implements StagingMerger {
   
@@ -11,10 +10,6 @@ class TermMetaBankV3Merger implements StagingMerger {
     required int indexId,
   }) async {
     
-    // Optimization setup (Cache/Temp Store)
-    await targetDb.customStatement('PRAGMA cache_size = -200000;');
-    await targetDb.customStatement('PRAGMA temp_store = MEMORY;');
-
     // Pre-fetch Max IDs
     final maxMetaId = await targetDb.termMetaBankV3Dao.maxTermMetaBankV3Id();
     final maxPitchId = await targetDb.termMetaBankV3Dao.maxTermMetaBankV3PitchId();
@@ -35,45 +30,15 @@ class TermMetaBankV3Merger implements StagingMerger {
     final tjIpa = targetDb.termMetaBankV3XIpaTable;
     final tjIpaTag = targetDb.termMetaBankV3IpaTableXTagBankV3Table;
 
-    // --- Drop Secondary Indexes for bulk insert speed ---
-    final tablesToOptimize = [
-      tMeta.actualTableName,
-      tPitch.actualTableName,
-      tIpa.actualTableName,
-      tjPitch.actualTableName,
-      tjPitchTag.actualTableName,
-      tjIpa.actualTableName,
-      tjIpaTag.actualTableName,
-    ];
-
-    final droppedIndexes = <String>[];
-    for (final table in tablesToOptimize) {
-      final indexes = await targetDb.customSelect(
-        "SELECT name, sql FROM sqlite_master WHERE type = 'index' AND tbl_name = ? AND sql IS NOT NULL",
-        variables: [Variable.withString(table)]
-      ).get();
-      for (final row in indexes) {
-        final name = row.read<String>('name');
-        final sql = row.read<String>('sql');
-        if (!name.startsWith('sqlite_autoindex_') && !sql.toUpperCase().contains('CREATE UNIQUE INDEX')) {
-           droppedIndexes.add(sql);
-           await targetDb.customStatement('DROP INDEX IF EXISTS "$name"');
-        }
-      }
-    }
-
     try {
-      // 1. Insert Dependencies (Term, Type, Reading, Tags)
-      
-      // Terms: ONLY insert term and normalized (Removed tokens)
+      // Terms: ONLY insert term and normalized
       await targetDb.customStatement('''
         INSERT OR IGNORE INTO ${tTerm.actualTableName} (${tTerm.term.name}, ${tTerm.termNormalized.name})
         SELECT DISTINCT term, term_normalized
         FROM $workerAlias.term_meta_staging_table
       ''');
 
-      // NEW: Manually populate the Contentless FTS Tokens table
-      // Matches logic in TermBankV3Merger
+      // Manually populate the Contentless FTS Tokens table
       await targetDb.customStatement('''
         INSERT INTO fts_tokens(rowid, tokens, tokens_normalized)
         SELECT DISTINCT t.${tTerm.id.name}, s.term_tokens, s.term_tokens_normalized
@@ -175,15 +140,8 @@ class TermMetaBankV3Merger implements StagingMerger {
         WHERE s.parent_type = 'ipa'
       ''');
 
-    } finally {
-      // Restore Indexes
-      for (final sql in droppedIndexes) {
-         try {
-           await targetDb.customStatement(sql);
-         } catch (e) {
-           print("Warning: Failed to restore index: $e");
-         }
-      }
+    }
+    finally {
     }
   }
 }

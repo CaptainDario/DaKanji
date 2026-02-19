@@ -2,9 +2,7 @@ import '/database/general_tables/term_tables.dart';
 import '/database/general_tables/reading_tables.dart';
 import '/database/general_tables/definition_tables.dart';
 
--- #############################################################################
--- SECTION 1: The FTS Table Definitions
--- #############################################################################
+
 
 -- 1. TERMS INDEX (External Content)
 -- Links directly to term_table. Stores NO text.

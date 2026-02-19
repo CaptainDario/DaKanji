@@ -12,7 +12,6 @@ class KanjiMetaBankV3Parser implements YomitanFileParser {
     StagingDatabase db,
     LanguageProcessor? lp,
     ProcessorOptions options,
-    bool saveJson,
     int startId,
   ) async {
     int localId = startId;

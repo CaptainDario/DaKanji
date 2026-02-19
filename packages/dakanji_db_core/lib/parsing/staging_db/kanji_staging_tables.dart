@@ -4,7 +4,6 @@ import 'package:drift/drift.dart';
 class KanjiStagingTable extends Table {
   IntColumn get localId => integer()();
   TextColumn get kanji => text()();
-  // We store the original JSON lists just in case, though we parse them out below
   TextColumn get originalOnyomi => text().nullable()();
   TextColumn get originalKunyomi => text().nullable()();
 }

@@ -1,4 +1,5 @@
 import 'package:dakanji_db_core/database/dakanji_db.dart';
+import 'package:dakanji_db_core/parsing/util/db_optimization.dart';
 import 'package:dakanji_db_core/parsing/yomitan/staging_db/mergers/kanji_bank_v3_merger.dart';
 import 'package:dakanji_db_core/parsing/yomitan/staging_db/mergers/kanji_meta_bank_v3_merger.dart';
 import 'package:dakanji_db_core/parsing/yomitan/staging_db/mergers/staging_merger.dart';
@@ -15,21 +16,17 @@ Future<void> mergeStagingDb({
   required DaKanjiDB db,
   required String workerDbPath,
   required int indexId,
-  required bool addJsonDefs,
 }) async {
   
   final workerAlias = 'worker_${DateTime.now().millisecondsSinceEpoch}';
   
-  // 1. Disable disk sync (Speed)
-  await db.customStatement('PRAGMA synchronous = OFF;');
-  // 2. Disable Foreign Keys (Speed - Trusts worker data structure)
-  await db.customStatement('PRAGMA foreign_keys = OFF;');
+  await optimizeTargetDbForMerge(db);
 
   await db.customStatement('ATTACH DATABASE ? AS $workerAlias', [workerDbPath]);
 
   final mergers = <StagingMerger>[
     TagBankMerger(),
-    TermBankV3Merger(addJsonDefs: addJsonDefs),
+    TermBankV3Merger(),
     TermMetaBankV3Merger(),
     KanjiBankV3Merger(),
     KanjiMetaBankV3Merger()
@@ -41,7 +38,7 @@ Future<void> mergeStagingDb({
         await merger.merge(
           targetDb: db, 
           workerAlias: workerAlias, 
-          indexId: indexId, 
+          indexId: indexId,
         );
       }
     });
@@ -52,9 +49,6 @@ Future<void> mergeStagingDb({
   }
   finally {
     await db.customStatement('DETACH DATABASE $workerAlias');
-    // Restore Foreign Keys
-    await db.customStatement('PRAGMA foreign_keys = ON;');
-    // Restore Synchronous
-    await db.customStatement('PRAGMA synchronous = NORMAL;');
+    await restoreTargetDbAfterMerge(db);
   }
 }

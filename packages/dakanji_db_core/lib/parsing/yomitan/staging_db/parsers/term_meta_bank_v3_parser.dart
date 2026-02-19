@@ -12,7 +12,6 @@ class TermMetaBankV3Parser implements YomitanFileParser {
     StagingDatabase db,
     LanguageProcessor? lp,
     ProcessorOptions options,
-    bool saveJson,
     int startId,
   ) async {
     if (lp == null) throw Exception("LanguageProcessor is required for parsing term_meta_bank");
@@ -40,7 +39,7 @@ class TermMetaBankV3Parser implements YomitanFileParser {
       final String mode = entry[1];
       final dynamic data = entry[2];
 
-      // --- NLP Processing (Term) ---
+      // --- Term processing ---
       String? termNormalized = lp.normalize(term, options).firstOrNull;
       if (termNormalized == term) termNormalized = null;
 

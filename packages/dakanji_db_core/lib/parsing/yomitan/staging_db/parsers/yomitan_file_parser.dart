@@ -13,7 +13,6 @@ abstract class YomitanFileParser {
   /// [db]: The database to write to.
   /// [lp]: Language processor (nullable).
   /// [options]: Normalization options.
-  /// [saveJson]: Whether to save the raw JSON.
   /// [startId]: The starting ID for this batch (for generating unique IDs).
   /// Returns the last used ID after processing, to be used as the next startId.
   Future<int> parseFileContent(
@@ -21,7 +20,6 @@ abstract class YomitanFileParser {
     StagingDatabase db,
     LanguageProcessor? lp,
     ProcessorOptions options,
-    bool saveJson,
     int startId,
   );
 }

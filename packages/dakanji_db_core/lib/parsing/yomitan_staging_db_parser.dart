@@ -1,32 +1,31 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:isolate';
+import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:archive/archive_io.dart';
 import 'package:dakanji_db_core/data/dictionary_types.dart';
 import 'package:dakanji_db_core/database/dakanji_db.dart';
 import 'package:dakanji_db_core/parsing/util/db_optimization.dart';
-// --- Existing Utilities ---
 import 'package:dakanji_db_core/parsing/yomitan/in_memory_cache/index/index_parser.dart';
 import 'package:dakanji_db_core/parsing/yomitan/in_memory_cache/media/media_importer.dart';
 import 'package:dakanji_db_core/parsing/yomitan/staging_db/mergers/staging_db_merging.dart';
 import 'package:dakanji_db_core/parsing/yomitan/staging_db/workers/worker_entry.dart';
 import 'package:dakanji_db_core/parsing/yomitan/staging_db/workers/worker_protocol.dart';
-import 'package:dakanji_db_core/util/memory_usage.dart';
 import 'package:drift/isolate.dart';
 import 'package:language_processing/language_processing.dart';
 import 'package:path/path.dart' as p;
 import 'package:universal_io/io.dart';
 
-
-
 const String indexFileNamingScheme = "index.json";
 const List<String> parallelHandledFiles = [
-  "term_bank", "kanji_bank", "tag_bank", 
-  "term_meta_bank", "kanji_meta_bank"
+  "term_bank",
+  "kanji_bank",
+  "tag_bank", 
+  "term_meta_bank",
+  "kanji_meta_bank"
 ];
-
 
 Future<Stream<String>> parseDictionaryDataSource({
   String? dataSourcePath,
@@ -34,8 +33,10 @@ Future<Stream<String>> parseDictionaryDataSource({
   required bool isDefaultDictionary,
   required DaKanjiDB db,
   required bool addStructuredContentJsonDefs,
+  Directory? tempDir,
 }) async {
   assert(dataSourcePath != null, "Parallel import requires a file path");
+  tempDir ??= Directory.systemTemp;
 
   final StreamController<String> controller = StreamController();
   final connection = await db.attachedDatabase.serializableConnection();
@@ -58,15 +59,12 @@ Future<Stream<String>> parseDictionaryDataSource({
     languageProcessorJson: lpJson,
     mainIsolateSendPort: receivePort.sendPort,
     inMemory: db.inMemory,
-    isDefaultDictionary: isDefaultDictionary
+    isDefaultDictionary: isDefaultDictionary,
+    tempDir: tempDir
   ));
 
   return controller.stream;
 }
-
-// -----------------------------------------------------------------------------
-// ORCHESTRATOR ISOLATE
-// -----------------------------------------------------------------------------
 
 Future<void> _orchestratorEntry(({
   String dataSourcePath,
@@ -75,12 +73,11 @@ Future<void> _orchestratorEntry(({
   String languageProcessorJson,
   SendPort mainIsolateSendPort,
   bool inMemory,
-  bool isDefaultDictionary
+  bool isDefaultDictionary,
+  Directory tempDir,
 }) params) async {
-
   final sendPort = params.mainIsolateSendPort;
-  
-  // 1. Setup DB (Lightweight Mode - No MeCab Init)
+
   final db = DaKanjiDB(
     executor: await params.dbConnection.connect(),
     inMemory: params.inMemory,
@@ -90,130 +87,154 @@ Future<void> _orchestratorEntry(({
   InputFileStream? zipStream;
 
   try {
+    // --- STEP 1: SCAN ---
     sendPort.send("Scanning dictionary structure...");
-    printMemoryUsage();
-
-    // 2. Open Zip (Headers Only)
     zipStream = InputFileStream(params.dataSourcePath);
-    final archiveHeaders = ZipDecoder().decodeStream(zipStream);
+    final archive = ZipDecoder().decodeStream(zipStream);
+    
+    int? indexId;
+    final parallelQueue = <String>[];
+    final mediaFiles = <({String filePath, Uint8List mediaContent, int indexId, int? insertId})>[];
 
-    // 3. Parse Index
-    final indexHeader = archiveHeaders.findFile(indexFileNamingScheme);
-    if (indexHeader == null) throw Exception("Invalid Dictionary: No index.json found.");
-
-    final indexContentStream = indexHeader.rawContent!.getStream(decompress: true);
-    final indexJson = utf8.decode(indexContentStream.toUint8List());
-    indexHeader.closeSync(); // Clear memory
-
-    final int indexId = await parseAndInsertIndex(
-      indexJson, db, DictionaryTypes.yomitan, params.isDefaultDictionary);
-
-    // 4. Sort Files
-    final parallelParseQueue = <String>[];
-    final mediaFilesToInsert = <({String filePath, Uint8List mediaContent, int indexId, int? insertId})>[];
-
-    for (final file in archiveHeaders.files) {
+    for (final file in archive.files) {
       final name = p.basename(file.name);
-      if (name == indexFileNamingScheme) continue;
-
+      if (name == indexFileNamingScheme) {
+        final indexJson = utf8.decode(file.rawContent!.getStream(decompress: true).toUint8List());
+        indexId = await parseAndInsertIndex(indexJson, db, DictionaryTypes.yomitan, params.isDefaultDictionary);
+        continue;
+      }
+      if (!file.isFile) continue;
       if (parallelHandledFiles.any((s) => name.contains(s))) {
-        parallelParseQueue.add(file.name);
+        parallelQueue.add(file.name);
       }
       else {
-        // Collect media files for standard import
-        final content = file.content as List<int>;
-        mediaFilesToInsert.add((
+        if (name.endsWith('.json')) print("DEBUG: Treating as media: $name"); // Trace unhandled files
+        mediaFiles.add((
           filePath: file.name,
-          mediaContent: Uint8List.fromList(content),
-          indexId: indexId,
+          mediaContent: Uint8List.fromList(file.content as List<int>),
+          indexId: 0,
           insertId: null
         ));
-        file.closeSync(); // Clear memory
+        file.closeSync();
       }
     }
 
-    // PARALLEL PARSING
-    if (parallelParseQueue.isNotEmpty) {
-      sendPort.send("Starting parallel import of ${parallelParseQueue.length} data files...");
-      
-      final tempDir = await Directory.systemTemp.createTemp('dakanji_pool_');
-      final workerDbPaths = <String>[];
-      final workerCompletions = <Future>[];
-      const int numWorkers = 2;
+    // --- STEP 2: STAGING ---
+    if (indexId == null) throw Exception("No index.json found.");
+    parallelQueue.sort((a, b) => a.compareTo(b));
 
-      for (int i = 0; i < numWorkers; i++) {
-        final workerDbPath = p.join(tempDir.path, 'worker_$i.db');
-        workerDbPaths.add(workerDbPath);
-        final completer = Completer<void>();
-        workerCompletions.add(completer.future);
+    final List<String> workerDbPaths = await _runGreedyParallelStaging(
+      params: params,
+      queue: parallelQueue,
+      sendPort: sendPort,
+    );
 
-        // Round-robin assignment
-        final myFiles = parallelParseQueue.where((f) => parallelParseQueue.indexOf(f) % numWorkers == i).toList();
+    // --- STEP 3: MERGING ---
+    await _mergeStagingData(
+      db: db,
+      workerDbPaths: workerDbPaths,
+      indexId: indexId,
+      sendPort: sendPort,
+    );
 
-        if (myFiles.isNotEmpty) {
-           _spawnWorker(
-             id: i,
-             zipPath: params.dataSourcePath,
-             dbPath: workerDbPath,
-             lpJson: params.languageProcessorJson,
-             files: myFiles,
-             saveJson: params.addFullJsonDefinitions,
-             completer: completer,
-             onStatus: (msg) => sendPort.send(msg)
-           );
-        }
-        else {
-          completer.complete();
-        }
-      }
-
-      await Future.wait(workerCompletions);
-      sendPort.send("Parallel parsing complete. Merging data...");
-
-      // MERGE STAGING DB
-      for (int i = 0; i < workerDbPaths.length; i++) {
-        final path = workerDbPaths[i];
-        final f = File(path);
-        if (await f.exists()) {
-          sendPort.send("Merging worker ${i + 1}/$numWorkers...");
-          await mergeStagingDb(
-            db: db,
-            workerDbPath: path,
-            indexId: indexId,
-            addJsonDefs: params.addFullJsonDefinitions
-          );
-          await f.delete();
-        }
-      }
-      
-      await tempDir.delete(recursive: true);
-    }
-
-    // IMPORT MEDIA (Using Existing Utility)
-    if (mediaFilesToInsert.isNotEmpty) {
-      sendPort.send("Importing ${mediaFilesToInsert.length} media files...");
-      
-      const batchSize = 50;
-      for (var i = 0; i < mediaFilesToInsert.length; i += batchSize) {
-        final end = (i + batchSize < mediaFilesToInsert.length) ? i + batchSize : mediaFilesToInsert.length;
-        await importMediaFiles(db, mediaFilesToInsert.sublist(i, end));
-      }
-    }
-
-    sendPort.send("Optimizing database...");
-    await optimizeDbAfterImport(db);
+    // --- STEP 4: MEDIA ---
+    final finalizedMedia = mediaFiles.map((m) => (
+      filePath: m.filePath, 
+      mediaContent: m.mediaContent, 
+      indexId: indexId!, 
+      insertId: m.insertId
+    )).toList();
+    await _finalizeImport(db, finalizedMedia, sendPort);
 
   } catch (e, stack) {
     print(stack);
     sendPort.send(e.toString());
   } finally {
     zipStream?.close();
-    db.close(); 
-    sendPort.send(null); // Signal End
+    db.close();
+    sendPort.send(null);
+  }
+}
+Future<List<String>> _runGreedyParallelStaging({
+  required dynamic params,
+  required List<String> queue,
+  required SendPort sendPort,
+}) async {
+  if (queue.isEmpty) return [];
+
+  sendPort.send("Importing ${queue.length} file(s)...");
+  final poolDir = await params.tempDir.createTemp('dakanji_pool_');
+  final workerDbPaths = <String>[];
+  final completions = <Future>[];
+  
+  final int numWorkers = min(
+    max(1, queue.where((f) => f.contains(RegExp("term_bank|term_meta_bank"))).length),
+    4
+  );
+
+  for (int i = 0; i < numWorkers; i++) {
+    final workerDbPath = p.join(poolDir.path, 'worker_$i.db');
+    workerDbPaths.add(workerDbPath);
+    final completer = Completer<void>();
+    completions.add(completer.future);
+
+    _spawnWorker(
+      id: i,
+      zipPath: params.dataSourcePath,
+      dbPath: workerDbPath,
+      lpJson: params.languageProcessorJson,
+      files: queue, 
+      saveJson: params.addFullJsonDefinitions,
+      completer: completer,
+      onStatus: (msg) => sendPort.send(msg)
+    );
+  }
+
+  await Future.wait(completions);
+  return workerDbPaths;
+}
+
+Future<void> _mergeStagingData({
+  required DaKanjiDB db,
+  required List<String> workerDbPaths,
+  required int indexId,
+  required SendPort sendPort,
+}) async {
+  if (workerDbPaths.isEmpty) return;
+
+  sendPort.send("Parsing complete. Merging data...");
+  
+  for (int i = 0; i < workerDbPaths.length; i++) {
+    final path = workerDbPaths[i];
+    if (await File(path).exists()) {
+      sendPort.send("Merging ${i + 1}/${workerDbPaths.length}...");
+      await mergeStagingDb(
+        db: db,
+        workerDbPath: path,
+        indexId: indexId,
+      );
+      await File(path).delete();
+    }
   }
 }
 
+Future<void> _finalizeImport(
+  DaKanjiDB db, 
+  List<({String filePath, Uint8List mediaContent, int indexId, int? insertId})> mediaFiles, 
+  SendPort sendPort
+) async {
+  if (mediaFiles.isNotEmpty) {
+    sendPort.send("Importing ${mediaFiles.length} media files...");
+    const batchSize = 50;
+    for (var i = 0; i < mediaFiles.length; i += batchSize) {
+      final end = min(i + batchSize, mediaFiles.length);
+      await importMediaFiles(db, mediaFiles.sublist(i, end));
+    }
+  }
 
+  sendPort.send("Optimizing database...");
+  await optimizeDbAfterImport(db);
+}
 
 Future<void> _spawnWorker({
   required int id,
@@ -226,11 +247,10 @@ Future<void> _spawnWorker({
   required Function(String) onStatus,
 }) async {
   final receivePort = ReceivePort();
-  // We use the workerEntry imported from 'worker/worker_entry.dart'
   await Isolate.spawn(workerEntry, receivePort.sendPort);
 
   SendPort? workerSendPort;
-  int completed = 0;
+  String? currentFileName;
 
   receivePort.listen((message) {
     if (message is SendPort) {
@@ -238,20 +258,31 @@ Future<void> _spawnWorker({
       workerSendPort!.send(MsgInit(zipPath, dbPath, lpJson, saveJson, receivePort.sendPort));
     } 
     else if (message is MsgReady) {
-      if (files.isNotEmpty) workerSendPort!.send(MsgProcessFile(files.removeAt(0)));
-      else workerSendPort!.send(MsgTerminate());
+      if (files.isNotEmpty) {
+        currentFileName = files.removeAt(0);
+        workerSendPort!.send(MsgProcessFile(currentFileName!));
+      } else {
+        workerSendPort!.send(MsgTerminate());
+      }
     }
     else if (message is MsgDone) {
-      completed++;
-      if (completed % 5 == 0) onStatus("Worker $id: Parsed $completed files...");
+      onStatus("Parsed: $currentFileName");
       
-      if (files.isNotEmpty) workerSendPort!.send(MsgProcessFile(files.removeAt(0)));
-      else workerSendPort!.send(MsgTerminate());
+      if (files.isNotEmpty) {
+        currentFileName = files.removeAt(0);
+        workerSendPort!.send(MsgProcessFile(currentFileName!));
+      } else {
+        workerSendPort!.send(MsgTerminate());
+      }
     }
     else if (message is MsgError) {
       print("Worker $id Error: ${message.error}");
-      if (files.isNotEmpty) workerSendPort!.send(MsgProcessFile(files.removeAt(0)));
-      else workerSendPort!.send(MsgTerminate());
+      if (files.isNotEmpty) {
+        currentFileName = files.removeAt(0);
+        workerSendPort!.send(MsgProcessFile(currentFileName!));
+      } else {
+        workerSendPort!.send(MsgTerminate());
+      }
     }
     else if (message == "CLOSED") {
       receivePort.close();

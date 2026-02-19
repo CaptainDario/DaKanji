@@ -13,7 +13,6 @@ class TagBankParser implements YomitanFileParser {
     StagingDatabase db,
     LanguageProcessor? lp,
     ProcessorOptions options,
-    bool saveJson,
     int startId,
   ) async {
     // Format: [tagName, category, order, notes, score]
@@ -48,7 +47,6 @@ class TagBankParser implements YomitanFileParser {
   Future<void> _flush(StagingDatabase db, List<List<Object?>> rows) async {
     final placeholders = rows.map((_) => '(?, ?, ?, ?, ?)').join(', ');
     
-    // Note: Ensure 'staging_tag_metadata_table' exists in your Staging DB schema!
     final sql = 'INSERT INTO ${db.tagStagingTable.actualTableName} (tag_name, category, sorting_order, notes, score) VALUES $placeholders';
     
     await db.customStatement(sql, rows.expand((i) => i).toList());

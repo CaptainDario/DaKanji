@@ -12,7 +12,6 @@ class KanjiBankV3Parser implements YomitanFileParser {
     StagingDatabase db,
     LanguageProcessor? lp,
     ProcessorOptions options,
-    bool saveJson,
     int startId,
   ) async {
     if (lp == null) throw Exception("LanguageProcessor required for kanji parser");

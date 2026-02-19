@@ -18,7 +18,6 @@ class TermBankV3Parser implements YomitanFileParser {
     StagingDatabase db,
     LanguageProcessor? lp,
     ProcessorOptions options,
-    bool saveJson,
     int startId,
   ) async {
     if (lp == null) throw Exception("LanguageProcessor is required for parsing term_bank");
@@ -60,17 +59,15 @@ class TermBankV3Parser implements YomitanFileParser {
       String? readingNormalized = lp.normalize(reading, options).firstOrNull;
       if (readingNormalized == reading) readingNormalized = null;
 
-      // --- 2. Compression & Hashing (DONE HERE NOW) ---
+      // --- 2. Compress & Hash the json definitions ---
       final jsonString = jsonEncode(definitionBlock);
-      // Calculate Hash
       final jsonHash = md5.convert(utf8.encode(jsonString)).toString();
-      // Compress immediately to bytes
       final compressedBytes = zlib.toSql(jsonString);
 
       termRows.add([
         localId, term, reading, termNormalized, termTokens, 
         termTokensNormalized, readingNormalized, popularity,
-        sequence, compressedBytes, jsonHash // Sending BYTES and HASH
+        sequence, compressedBytes, jsonHash
       ]);
 
       // --- 3. Definitions ---
@@ -124,7 +121,6 @@ class TermBankV3Parser implements YomitanFileParser {
 
     await db.transaction(() async {
       if (termRows.isNotEmpty) {
-        // Updated SQL to include definition_json_hash
         final sql = 'INSERT INTO ${db.termStagingTable.actualTableName} (local_id, term, reading, term_normalized, term_tokens, term_tokens_normalized, reading_normalized, popularity, sequence_number, original_json, definition_json_hash) VALUES ${List.filled(termRows.length, placeholders(11)).join(', ')}';
         await db.customStatement(sql, termRows.expand((i) => i).toList());
       }

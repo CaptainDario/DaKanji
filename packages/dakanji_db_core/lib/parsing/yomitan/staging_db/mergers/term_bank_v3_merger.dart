@@ -1,13 +1,11 @@
 // Dart imports:
 import 'package:dakanji_db_core/database/dakanji_db.dart';
-import 'package:drift/drift.dart';
 
 import 'staging_merger.dart';
 
 class TermBankV3Merger implements StagingMerger {
-  final bool addJsonDefs;
 
-  TermBankV3Merger({required this.addJsonDefs});
+  TermBankV3Merger();
 
   @override
   Future<void> merge({
@@ -15,10 +13,6 @@ class TermBankV3Merger implements StagingMerger {
     required String workerAlias,
     required int indexId,
   }) async {
-    
-    // Aggressive optimizations for the MAIN connection during merge
-    await targetDb.customStatement('PRAGMA cache_size = -200000;'); // Use 200MB cache
-    await targetDb.customStatement('PRAGMA temp_store = MEMORY;'); // Temp tables in RAM
 
     final maxTermBankId = (await targetDb.termBankV3Dao.maxTermBankV3Id());
 
@@ -36,35 +30,7 @@ class TermBankV3Merger implements StagingMerger {
       final tjDefTag = targetDb.termBankV3XDefinitionTagTable;
       final tjRule = targetDb.termBankV3XRuleIdentifierTable;
 
-      // --- 1. Drop Secondary Indexes (Speed up Write) ---
-      final tablesToOptimize = [
-        tMain.actualTableName,
-        tjDef.actualTableName,
-        tjTag.actualTableName,
-        tjDefTag.actualTableName,
-        tjRule.actualTableName,
-      ];
-      
-      final droppedIndexes = <String>[];
-      
-      for (final table in tablesToOptimize) {
-        final indexes = await targetDb.customSelect(
-          "SELECT name, sql FROM sqlite_master WHERE type = 'index' AND tbl_name = ? AND sql IS NOT NULL",
-          variables: [Variable.withString(table)]
-        ).get();
-        
-        for (final row in indexes) {
-          final name = row.read<String>('name');
-          final sql = row.read<String>('sql');
-          if (!name.startsWith('sqlite_autoindex_') && 
-              !sql.toUpperCase().contains('CREATE UNIQUE INDEX')) {
-             droppedIndexes.add(sql);
-             await targetDb.customStatement('DROP INDEX IF EXISTS "$name"');
-          }
-        }
-      }
-
-      // --- 2. Insert Basic Strings (Terms, Readings, Defs) ---
+      // --- Insert Basic Strings (Terms, Readings, Defs) ---
       
       // Terms (Unique)
       await targetDb.customStatement('''
@@ -117,18 +83,16 @@ class TermBankV3Merger implements StagingMerger {
         FROM $workerAlias.term_rule_staging_table
       ''');
 
-      // --- 3. JSON Deduplication ---
-      if (addJsonDefs) {
-        await targetDb.customStatement('''
-          INSERT OR IGNORE INTO ${tJson.actualTableName} (${tJson.definitionJsonHash.name}, ${tJson.definitionJson.name})
-          SELECT definition_json_hash, original_json
-          FROM $workerAlias.term_staging_table 
-          WHERE original_json IS NOT NULL 
-          GROUP BY definition_json_hash
-        ''');
-      }
+      // --- JSON Deduplication ---
+      await targetDb.customStatement('''
+        INSERT OR IGNORE INTO ${tJson.actualTableName} (${tJson.definitionJsonHash.name}, ${tJson.definitionJson.name})
+        SELECT definition_json_hash, original_json
+        FROM $workerAlias.term_staging_table 
+        WHERE original_json IS NOT NULL 
+        GROUP BY definition_json_hash
+      ''');
 
-      // --- 4. Main Insert with Linking ---
+      // --- Main Insert with Linking ---
       // join Staging -> Final using the HASH (Fast Index Lookup)
       await targetDb.customStatement('''
         INSERT INTO ${tMain.actualTableName} (
@@ -152,7 +116,7 @@ class TermBankV3Merger implements StagingMerger {
         ORDER BY s.term
       ''');
 
-      // --- 5. Junction Tables ---
+      // --- Junction Tables ---
       await targetDb.customStatement('''
         INSERT INTO ${tjDef.actualTableName} (
             ${tjDef.termBankId.name}, 
@@ -194,19 +158,10 @@ class TermBankV3Merger implements StagingMerger {
         ORDER BY s.rowid
       ''');
 
-      // --- 6. Restore Secondary Indexes ---
-      for (final sql in droppedIndexes) {
-         try {
-           await targetDb.customStatement(sql);
-         }
-         catch (e) {
-           print("Warning: Failed to restore index: $e");
-         }
-      }
-
     }
-    finally {
-      // Revert PRAGMA if needed
+    catch (e) {
+      print("Error during TermBankV3 merge: $e");
+      rethrow;
     }
   }
 }

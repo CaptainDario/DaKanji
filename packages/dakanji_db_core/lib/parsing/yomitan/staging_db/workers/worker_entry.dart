@@ -5,6 +5,7 @@ import 'dart:isolate';
 
 import 'package:archive/archive_io.dart';
 import 'package:dakanji_db_core/parsing/staging_db/staging_db.dart';
+import 'package:dakanji_db_core/parsing/util/db_optimization.dart';
 import 'package:dakanji_db_core/parsing/yomitan/staging_db/parsers/kanji_bank_v3_parser.dart';
 import 'package:dakanji_db_core/parsing/yomitan/staging_db/parsers/kanji_meta_bank_v3_parser.dart';
 import 'package:dakanji_db_core/parsing/yomitan/staging_db/parsers/tag_bank_v3_parser.dart';
@@ -46,9 +47,7 @@ Future<void> workerEntry(SendPort mainSendPort) async {
       db = StagingDatabase(NativeDatabase(File(message.dbPath)));
       
       // SQLite speed optimizations for bulk insert
-      await db.customStatement('PRAGMA synchronous = OFF;');
-      await db.customStatement('PRAGMA journal_mode = MEMORY;'); 
-      await db.customStatement('PRAGMA cache_size = -4000;'); 
+      await optimizeStagingDbForRawInsert(db);
 
       if (message.languageProcessorJson.isNotEmpty) {
         lp = LanguageProcessor.fromJsonString(message.languageProcessorJson);
@@ -83,9 +82,7 @@ Future<void> workerEntry(SendPort mainSendPort) async {
 
         if (jsonObject is List) {
           currentLocalId = await parser.parseFileContent(
-            jsonObject, db, lp, 
-            processorOptions!, saveJson, currentLocalId 
-          );
+            jsonObject, db, lp, processorOptions!, currentLocalId);
         }
 
         mainSendPort.send(MsgDone());

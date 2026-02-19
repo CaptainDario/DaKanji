@@ -8,10 +8,6 @@ class KanjiBankV3Merger implements StagingMerger {
     required String workerAlias,
     required int indexId,
   }) async {
-    
-    // Performance: Disable cache/journals for bulk ops
-    await targetDb.customStatement('PRAGMA cache_size = -200000;');
-    await targetDb.customStatement('PRAGMA temp_store = MEMORY;');
 
     // 1. Fetch IDs
     final maxKanjiBankId = await targetDb.kanjiBankV3Dao.maxKanjiId();
@@ -30,9 +26,7 @@ class KanjiBankV3Merger implements StagingMerger {
     final tjKunyomi = targetDb.kanjiBankV3XKunyomiReadingTable;
     final tjDef = targetDb.kanjiBankV3XDefinitionTable;
     final tjTag = targetDb.kanjiBankV3XTagBankV3Table;
-    
-    // REMOVED: tjStat (KanjiBankV3_X_KanjiBankV3StatsTable) is unused.
-
+  
     try {
       // --- 1. Insert Core Entities (Distinct) ---
       
@@ -71,8 +65,6 @@ class KanjiBankV3Merger implements StagingMerger {
       ''');
 
       // --- 2. Insert Main Kanji Bank Entry ---
-      // We initialize orders as empty JSON arrays '[]'. 
-      // The old parser did this via `Value(jsonEncode(pC.onyomisOrder))` etc.
       await targetDb.customStatement('''
         INSERT INTO ${tMain.actualTableName} (
           ${tMain.id.name}, ${tMain.indexId.name}, ${tMain.kanjiId.name}, 
@@ -127,7 +119,6 @@ class KanjiBankV3Merger implements StagingMerger {
       ''');
 
       // Stats Table (Direct Insert)
-      // Matches your schema: id, kanjiBankEntryId, statTagId, statValue
       await targetDb.customStatement('''
         INSERT INTO ${tStat.actualTableName} (${tStat.id.name}, ${tStat.kanjiBankEntryId.name}, ${tStat.statTagId.name}, ${tStat.statValue.name})
         SELECT 
@@ -139,8 +130,10 @@ class KanjiBankV3Merger implements StagingMerger {
         JOIN ${tTag.actualTableName} t ON t.name = s.tag_name AND t.index_id = $indexId
       ''');
 
-    } finally {
-      // Revert PRAGMA if needed, or rely on connection close
+    }
+    catch (e) {
+      print("Error merging Kanji Bank: $e");
+      rethrow;
     }
   }
 }

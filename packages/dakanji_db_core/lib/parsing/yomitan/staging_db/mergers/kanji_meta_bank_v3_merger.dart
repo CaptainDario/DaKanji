@@ -8,9 +8,6 @@ class KanjiMetaBankV3Merger implements StagingMerger {
     required String workerAlias,
     required int indexId,
   }) async {
-    
-    await targetDb.customStatement('PRAGMA cache_size = -200000;');
-    await targetDb.customStatement('PRAGMA temp_store = MEMORY;');
 
     final tKanji = targetDb.kanjiTable;
     final tType = targetDb.kanjiMetaBankV3TypeTable;
@@ -24,7 +21,7 @@ class KanjiMetaBankV3Merger implements StagingMerger {
       ''');
 
       // 2. Insert New Types (Manual ID Generation)
-      // Since 'id' is not AUTOINCREMENT in the schema, we must generate it.
+      // Since 'id' is not AUTOINCREMENT in the schema, must generate it.
       final currentMaxTypeId = await targetDb.kanjiMetaBankV3Dao.maxKanjiMetaBankV3TypeId();
       
       await targetDb.customStatement('''
@@ -40,7 +37,7 @@ class KanjiMetaBankV3Merger implements StagingMerger {
       ''');
 
       // 3. Insert Main Entries
-      // Note: The Main Table ID is auto-incrementing, so we don't need to manually set it
+      // Note: The Main Table ID is auto-incrementing, so no need to manually set it
       // unless we want to strictly preserve insertion order from staging.
       await targetDb.customStatement('''
         INSERT INTO ${tMain.actualTableName} (
@@ -58,8 +55,10 @@ class KanjiMetaBankV3Merger implements StagingMerger {
         JOIN ${tType.actualTableName} t ON t.${tType.type.name} = s.type
       ''');
 
-    } finally {
-      // Cleanup
+    }
+    catch (e) {
+      print("Error merging Kanji Meta Bank: $e");
+      rethrow;
     }
   }
 }

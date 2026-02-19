@@ -5441,6 +5441,39 @@ class $AudioStagingTableTable extends AudioStagingTable
     type: DriftSqlType.string,
     requiredDuringInsert: true,
   );
+  static const VerificationMeta _termNormalizedMeta = const VerificationMeta(
+    'termNormalized',
+  );
+  @override
+  late final GeneratedColumn<String> termNormalized = GeneratedColumn<String>(
+    'term_normalized',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _termTokensMeta = const VerificationMeta(
+    'termTokens',
+  );
+  @override
+  late final GeneratedColumn<String> termTokens = GeneratedColumn<String>(
+    'term_tokens',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _termTokensNormalizedMeta =
+      const VerificationMeta('termTokensNormalized');
+  @override
+  late final GeneratedColumn<String> termTokensNormalized =
+      GeneratedColumn<String>(
+        'term_tokens_normalized',
+        aliasedName,
+        true,
+        type: DriftSqlType.string,
+        requiredDuringInsert: false,
+      );
   static const VerificationMeta _readingMeta = const VerificationMeta(
     'reading',
   );
@@ -5452,6 +5485,18 @@ class $AudioStagingTableTable extends AudioStagingTable
     type: DriftSqlType.string,
     requiredDuringInsert: false,
   );
+  static const VerificationMeta _readingNormalizedMeta = const VerificationMeta(
+    'readingNormalized',
+  );
+  @override
+  late final GeneratedColumn<String> readingNormalized =
+      GeneratedColumn<String>(
+        'reading_normalized',
+        aliasedName,
+        true,
+        type: DriftSqlType.string,
+        requiredDuringInsert: false,
+      );
   static const VerificationMeta _pitchPatternMeta = const VerificationMeta(
     'pitchPattern',
   );
@@ -5478,7 +5523,11 @@ class $AudioStagingTableTable extends AudioStagingTable
   List<GeneratedColumn> get $columns => [
     localId,
     term,
+    termNormalized,
+    termTokens,
+    termTokensNormalized,
     reading,
+    readingNormalized,
     pitchPattern,
     originalFileName,
   ];
@@ -5508,10 +5557,43 @@ class $AudioStagingTableTable extends AudioStagingTable
     } else if (isInserting) {
       context.missing(_termMeta);
     }
+    if (data.containsKey('term_normalized')) {
+      context.handle(
+        _termNormalizedMeta,
+        termNormalized.isAcceptableOrUnknown(
+          data['term_normalized']!,
+          _termNormalizedMeta,
+        ),
+      );
+    }
+    if (data.containsKey('term_tokens')) {
+      context.handle(
+        _termTokensMeta,
+        termTokens.isAcceptableOrUnknown(data['term_tokens']!, _termTokensMeta),
+      );
+    }
+    if (data.containsKey('term_tokens_normalized')) {
+      context.handle(
+        _termTokensNormalizedMeta,
+        termTokensNormalized.isAcceptableOrUnknown(
+          data['term_tokens_normalized']!,
+          _termTokensNormalizedMeta,
+        ),
+      );
+    }
     if (data.containsKey('reading')) {
       context.handle(
         _readingMeta,
         reading.isAcceptableOrUnknown(data['reading']!, _readingMeta),
+      );
+    }
+    if (data.containsKey('reading_normalized')) {
+      context.handle(
+        _readingNormalizedMeta,
+        readingNormalized.isAcceptableOrUnknown(
+          data['reading_normalized']!,
+          _readingNormalizedMeta,
+        ),
       );
     }
     if (data.containsKey('pitch_pattern')) {
@@ -5551,9 +5633,25 @@ class $AudioStagingTableTable extends AudioStagingTable
         DriftSqlType.string,
         data['${effectivePrefix}term'],
       )!,
+      termNormalized: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}term_normalized'],
+      ),
+      termTokens: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}term_tokens'],
+      ),
+      termTokensNormalized: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}term_tokens_normalized'],
+      ),
       reading: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}reading'],
+      ),
+      readingNormalized: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}reading_normalized'],
       ),
       pitchPattern: attachedDatabase.typeMapping.read(
         DriftSqlType.int,
@@ -5574,15 +5672,40 @@ class $AudioStagingTableTable extends AudioStagingTable
 
 class AudioStagingTableData extends DataClass
     implements Insertable<AudioStagingTableData> {
+  /// Auto-incrementing local ID for the staging process
   final int localId;
+
+  /// The raw term string
   final String term;
+
+  /// The normalized term (e.g. converted to standard form)
+  final String? termNormalized;
+
+  /// Segmented/Tokenized version of the term
+  final String? termTokens;
+
+  /// Normalized version of the tokens
+  final String? termTokensNormalized;
+
+  /// The raw reading string
   final String? reading;
+
+  /// The normalized reading
+  final String? readingNormalized;
+
+  /// The pitch accent integer
   final int? pitchPattern;
+
+  /// The full file path from the source zip, used to link to the MediaStagingTable
   final String originalFileName;
   const AudioStagingTableData({
     required this.localId,
     required this.term,
+    this.termNormalized,
+    this.termTokens,
+    this.termTokensNormalized,
     this.reading,
+    this.readingNormalized,
     this.pitchPattern,
     required this.originalFileName,
   });
@@ -5591,8 +5714,20 @@ class AudioStagingTableData extends DataClass
     final map = <String, Expression>{};
     map['local_id'] = Variable<int>(localId);
     map['term'] = Variable<String>(term);
+    if (!nullToAbsent || termNormalized != null) {
+      map['term_normalized'] = Variable<String>(termNormalized);
+    }
+    if (!nullToAbsent || termTokens != null) {
+      map['term_tokens'] = Variable<String>(termTokens);
+    }
+    if (!nullToAbsent || termTokensNormalized != null) {
+      map['term_tokens_normalized'] = Variable<String>(termTokensNormalized);
+    }
     if (!nullToAbsent || reading != null) {
       map['reading'] = Variable<String>(reading);
+    }
+    if (!nullToAbsent || readingNormalized != null) {
+      map['reading_normalized'] = Variable<String>(readingNormalized);
     }
     if (!nullToAbsent || pitchPattern != null) {
       map['pitch_pattern'] = Variable<int>(pitchPattern);
@@ -5605,9 +5740,21 @@ class AudioStagingTableData extends DataClass
     return AudioStagingTableCompanion(
       localId: Value(localId),
       term: Value(term),
+      termNormalized: termNormalized == null && nullToAbsent
+          ? const Value.absent()
+          : Value(termNormalized),
+      termTokens: termTokens == null && nullToAbsent
+          ? const Value.absent()
+          : Value(termTokens),
+      termTokensNormalized: termTokensNormalized == null && nullToAbsent
+          ? const Value.absent()
+          : Value(termTokensNormalized),
       reading: reading == null && nullToAbsent
           ? const Value.absent()
           : Value(reading),
+      readingNormalized: readingNormalized == null && nullToAbsent
+          ? const Value.absent()
+          : Value(readingNormalized),
       pitchPattern: pitchPattern == null && nullToAbsent
           ? const Value.absent()
           : Value(pitchPattern),
@@ -5623,7 +5770,15 @@ class AudioStagingTableData extends DataClass
     return AudioStagingTableData(
       localId: serializer.fromJson<int>(json['localId']),
       term: serializer.fromJson<String>(json['term']),
+      termNormalized: serializer.fromJson<String?>(json['termNormalized']),
+      termTokens: serializer.fromJson<String?>(json['termTokens']),
+      termTokensNormalized: serializer.fromJson<String?>(
+        json['termTokensNormalized'],
+      ),
       reading: serializer.fromJson<String?>(json['reading']),
+      readingNormalized: serializer.fromJson<String?>(
+        json['readingNormalized'],
+      ),
       pitchPattern: serializer.fromJson<int?>(json['pitchPattern']),
       originalFileName: serializer.fromJson<String>(json['originalFileName']),
     );
@@ -5634,7 +5789,11 @@ class AudioStagingTableData extends DataClass
     return <String, dynamic>{
       'localId': serializer.toJson<int>(localId),
       'term': serializer.toJson<String>(term),
+      'termNormalized': serializer.toJson<String?>(termNormalized),
+      'termTokens': serializer.toJson<String?>(termTokens),
+      'termTokensNormalized': serializer.toJson<String?>(termTokensNormalized),
       'reading': serializer.toJson<String?>(reading),
+      'readingNormalized': serializer.toJson<String?>(readingNormalized),
       'pitchPattern': serializer.toJson<int?>(pitchPattern),
       'originalFileName': serializer.toJson<String>(originalFileName),
     };
@@ -5643,13 +5802,27 @@ class AudioStagingTableData extends DataClass
   AudioStagingTableData copyWith({
     int? localId,
     String? term,
+    Value<String?> termNormalized = const Value.absent(),
+    Value<String?> termTokens = const Value.absent(),
+    Value<String?> termTokensNormalized = const Value.absent(),
     Value<String?> reading = const Value.absent(),
+    Value<String?> readingNormalized = const Value.absent(),
     Value<int?> pitchPattern = const Value.absent(),
     String? originalFileName,
   }) => AudioStagingTableData(
     localId: localId ?? this.localId,
     term: term ?? this.term,
+    termNormalized: termNormalized.present
+        ? termNormalized.value
+        : this.termNormalized,
+    termTokens: termTokens.present ? termTokens.value : this.termTokens,
+    termTokensNormalized: termTokensNormalized.present
+        ? termTokensNormalized.value
+        : this.termTokensNormalized,
     reading: reading.present ? reading.value : this.reading,
+    readingNormalized: readingNormalized.present
+        ? readingNormalized.value
+        : this.readingNormalized,
     pitchPattern: pitchPattern.present ? pitchPattern.value : this.pitchPattern,
     originalFileName: originalFileName ?? this.originalFileName,
   );
@@ -5657,7 +5830,19 @@ class AudioStagingTableData extends DataClass
     return AudioStagingTableData(
       localId: data.localId.present ? data.localId.value : this.localId,
       term: data.term.present ? data.term.value : this.term,
+      termNormalized: data.termNormalized.present
+          ? data.termNormalized.value
+          : this.termNormalized,
+      termTokens: data.termTokens.present
+          ? data.termTokens.value
+          : this.termTokens,
+      termTokensNormalized: data.termTokensNormalized.present
+          ? data.termTokensNormalized.value
+          : this.termTokensNormalized,
       reading: data.reading.present ? data.reading.value : this.reading,
+      readingNormalized: data.readingNormalized.present
+          ? data.readingNormalized.value
+          : this.readingNormalized,
       pitchPattern: data.pitchPattern.present
           ? data.pitchPattern.value
           : this.pitchPattern,
@@ -5672,7 +5857,11 @@ class AudioStagingTableData extends DataClass
     return (StringBuffer('AudioStagingTableData(')
           ..write('localId: $localId, ')
           ..write('term: $term, ')
+          ..write('termNormalized: $termNormalized, ')
+          ..write('termTokens: $termTokens, ')
+          ..write('termTokensNormalized: $termTokensNormalized, ')
           ..write('reading: $reading, ')
+          ..write('readingNormalized: $readingNormalized, ')
           ..write('pitchPattern: $pitchPattern, ')
           ..write('originalFileName: $originalFileName')
           ..write(')'))
@@ -5680,15 +5869,28 @@ class AudioStagingTableData extends DataClass
   }
 
   @override
-  int get hashCode =>
-      Object.hash(localId, term, reading, pitchPattern, originalFileName);
+  int get hashCode => Object.hash(
+    localId,
+    term,
+    termNormalized,
+    termTokens,
+    termTokensNormalized,
+    reading,
+    readingNormalized,
+    pitchPattern,
+    originalFileName,
+  );
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is AudioStagingTableData &&
           other.localId == this.localId &&
           other.term == this.term &&
+          other.termNormalized == this.termNormalized &&
+          other.termTokens == this.termTokens &&
+          other.termTokensNormalized == this.termTokensNormalized &&
           other.reading == this.reading &&
+          other.readingNormalized == this.readingNormalized &&
           other.pitchPattern == this.pitchPattern &&
           other.originalFileName == this.originalFileName);
 }
@@ -5697,20 +5899,32 @@ class AudioStagingTableCompanion
     extends UpdateCompanion<AudioStagingTableData> {
   final Value<int> localId;
   final Value<String> term;
+  final Value<String?> termNormalized;
+  final Value<String?> termTokens;
+  final Value<String?> termTokensNormalized;
   final Value<String?> reading;
+  final Value<String?> readingNormalized;
   final Value<int?> pitchPattern;
   final Value<String> originalFileName;
   const AudioStagingTableCompanion({
     this.localId = const Value.absent(),
     this.term = const Value.absent(),
+    this.termNormalized = const Value.absent(),
+    this.termTokens = const Value.absent(),
+    this.termTokensNormalized = const Value.absent(),
     this.reading = const Value.absent(),
+    this.readingNormalized = const Value.absent(),
     this.pitchPattern = const Value.absent(),
     this.originalFileName = const Value.absent(),
   });
   AudioStagingTableCompanion.insert({
     this.localId = const Value.absent(),
     required String term,
+    this.termNormalized = const Value.absent(),
+    this.termTokens = const Value.absent(),
+    this.termTokensNormalized = const Value.absent(),
     this.reading = const Value.absent(),
+    this.readingNormalized = const Value.absent(),
     this.pitchPattern = const Value.absent(),
     required String originalFileName,
   }) : term = Value(term),
@@ -5718,14 +5932,23 @@ class AudioStagingTableCompanion
   static Insertable<AudioStagingTableData> custom({
     Expression<int>? localId,
     Expression<String>? term,
+    Expression<String>? termNormalized,
+    Expression<String>? termTokens,
+    Expression<String>? termTokensNormalized,
     Expression<String>? reading,
+    Expression<String>? readingNormalized,
     Expression<int>? pitchPattern,
     Expression<String>? originalFileName,
   }) {
     return RawValuesInsertable({
       if (localId != null) 'local_id': localId,
       if (term != null) 'term': term,
+      if (termNormalized != null) 'term_normalized': termNormalized,
+      if (termTokens != null) 'term_tokens': termTokens,
+      if (termTokensNormalized != null)
+        'term_tokens_normalized': termTokensNormalized,
       if (reading != null) 'reading': reading,
+      if (readingNormalized != null) 'reading_normalized': readingNormalized,
       if (pitchPattern != null) 'pitch_pattern': pitchPattern,
       if (originalFileName != null) 'original_file_name': originalFileName,
     });
@@ -5734,14 +5957,22 @@ class AudioStagingTableCompanion
   AudioStagingTableCompanion copyWith({
     Value<int>? localId,
     Value<String>? term,
+    Value<String?>? termNormalized,
+    Value<String?>? termTokens,
+    Value<String?>? termTokensNormalized,
     Value<String?>? reading,
+    Value<String?>? readingNormalized,
     Value<int?>? pitchPattern,
     Value<String>? originalFileName,
   }) {
     return AudioStagingTableCompanion(
       localId: localId ?? this.localId,
       term: term ?? this.term,
+      termNormalized: termNormalized ?? this.termNormalized,
+      termTokens: termTokens ?? this.termTokens,
+      termTokensNormalized: termTokensNormalized ?? this.termTokensNormalized,
       reading: reading ?? this.reading,
+      readingNormalized: readingNormalized ?? this.readingNormalized,
       pitchPattern: pitchPattern ?? this.pitchPattern,
       originalFileName: originalFileName ?? this.originalFileName,
     );
@@ -5756,8 +5987,22 @@ class AudioStagingTableCompanion
     if (term.present) {
       map['term'] = Variable<String>(term.value);
     }
+    if (termNormalized.present) {
+      map['term_normalized'] = Variable<String>(termNormalized.value);
+    }
+    if (termTokens.present) {
+      map['term_tokens'] = Variable<String>(termTokens.value);
+    }
+    if (termTokensNormalized.present) {
+      map['term_tokens_normalized'] = Variable<String>(
+        termTokensNormalized.value,
+      );
+    }
     if (reading.present) {
       map['reading'] = Variable<String>(reading.value);
+    }
+    if (readingNormalized.present) {
+      map['reading_normalized'] = Variable<String>(readingNormalized.value);
     }
     if (pitchPattern.present) {
       map['pitch_pattern'] = Variable<int>(pitchPattern.value);
@@ -5773,7 +6018,11 @@ class AudioStagingTableCompanion
     return (StringBuffer('AudioStagingTableCompanion(')
           ..write('localId: $localId, ')
           ..write('term: $term, ')
+          ..write('termNormalized: $termNormalized, ')
+          ..write('termTokens: $termTokens, ')
+          ..write('termTokensNormalized: $termTokensNormalized, ')
           ..write('reading: $reading, ')
+          ..write('readingNormalized: $readingNormalized, ')
           ..write('pitchPattern: $pitchPattern, ')
           ..write('originalFileName: $originalFileName')
           ..write(')'))
@@ -5813,6 +6062,28 @@ class $MediaStagingTableTable extends MediaStagingTable
     type: DriftSqlType.string,
     requiredDuringInsert: true,
   );
+  static const VerificationMeta _cleanPathMeta = const VerificationMeta(
+    'cleanPath',
+  );
+  @override
+  late final GeneratedColumn<String> cleanPath = GeneratedColumn<String>(
+    'clean_path',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _cleanNameMeta = const VerificationMeta(
+    'cleanName',
+  );
+  @override
+  late final GeneratedColumn<String> cleanName = GeneratedColumn<String>(
+    'clean_name',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
   static const VerificationMeta _contentMeta = const VerificationMeta(
     'content',
   );
@@ -5825,7 +6096,13 @@ class $MediaStagingTableTable extends MediaStagingTable
     requiredDuringInsert: true,
   );
   @override
-  List<GeneratedColumn> get $columns => [localId, fileName, content];
+  List<GeneratedColumn> get $columns => [
+    localId,
+    fileName,
+    cleanPath,
+    cleanName,
+    content,
+  ];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -5852,6 +6129,22 @@ class $MediaStagingTableTable extends MediaStagingTable
     } else if (isInserting) {
       context.missing(_fileNameMeta);
     }
+    if (data.containsKey('clean_path')) {
+      context.handle(
+        _cleanPathMeta,
+        cleanPath.isAcceptableOrUnknown(data['clean_path']!, _cleanPathMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_cleanPathMeta);
+    }
+    if (data.containsKey('clean_name')) {
+      context.handle(
+        _cleanNameMeta,
+        cleanName.isAcceptableOrUnknown(data['clean_name']!, _cleanNameMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_cleanNameMeta);
+    }
     if (data.containsKey('content')) {
       context.handle(
         _contentMeta,
@@ -5877,6 +6170,14 @@ class $MediaStagingTableTable extends MediaStagingTable
         DriftSqlType.string,
         data['${effectivePrefix}file_name'],
       )!,
+      cleanPath: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}clean_path'],
+      )!,
+      cleanName: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}clean_name'],
+      )!,
       content: attachedDatabase.typeMapping.read(
         DriftSqlType.blob,
         data['${effectivePrefix}content'],
@@ -5892,12 +6193,26 @@ class $MediaStagingTableTable extends MediaStagingTable
 
 class MediaStagingTableData extends DataClass
     implements Insertable<MediaStagingTableData> {
+  /// Auto-incrementing local ID
   final int localId;
+
+  /// The full original file path (e.g., "dir/file.mp3").
+  /// This serves as the Foreign Key link to AudioStagingTable.originalFileName.
   final String fileName;
+
+  /// The normalized directory path (e.g., "dir") ready for MediaTable.path
+  final String cleanPath;
+
+  /// The normalized file name (e.g., "file.mp3") ready for MediaTable.name
+  final String cleanName;
+
+  /// The raw binary content of the file
   final Uint8List content;
   const MediaStagingTableData({
     required this.localId,
     required this.fileName,
+    required this.cleanPath,
+    required this.cleanName,
     required this.content,
   });
   @override
@@ -5905,6 +6220,8 @@ class MediaStagingTableData extends DataClass
     final map = <String, Expression>{};
     map['local_id'] = Variable<int>(localId);
     map['file_name'] = Variable<String>(fileName);
+    map['clean_path'] = Variable<String>(cleanPath);
+    map['clean_name'] = Variable<String>(cleanName);
     map['content'] = Variable<Uint8List>(content);
     return map;
   }
@@ -5913,6 +6230,8 @@ class MediaStagingTableData extends DataClass
     return MediaStagingTableCompanion(
       localId: Value(localId),
       fileName: Value(fileName),
+      cleanPath: Value(cleanPath),
+      cleanName: Value(cleanName),
       content: Value(content),
     );
   }
@@ -5925,6 +6244,8 @@ class MediaStagingTableData extends DataClass
     return MediaStagingTableData(
       localId: serializer.fromJson<int>(json['localId']),
       fileName: serializer.fromJson<String>(json['fileName']),
+      cleanPath: serializer.fromJson<String>(json['cleanPath']),
+      cleanName: serializer.fromJson<String>(json['cleanName']),
       content: serializer.fromJson<Uint8List>(json['content']),
     );
   }
@@ -5934,6 +6255,8 @@ class MediaStagingTableData extends DataClass
     return <String, dynamic>{
       'localId': serializer.toJson<int>(localId),
       'fileName': serializer.toJson<String>(fileName),
+      'cleanPath': serializer.toJson<String>(cleanPath),
+      'cleanName': serializer.toJson<String>(cleanName),
       'content': serializer.toJson<Uint8List>(content),
     };
   }
@@ -5941,16 +6264,22 @@ class MediaStagingTableData extends DataClass
   MediaStagingTableData copyWith({
     int? localId,
     String? fileName,
+    String? cleanPath,
+    String? cleanName,
     Uint8List? content,
   }) => MediaStagingTableData(
     localId: localId ?? this.localId,
     fileName: fileName ?? this.fileName,
+    cleanPath: cleanPath ?? this.cleanPath,
+    cleanName: cleanName ?? this.cleanName,
     content: content ?? this.content,
   );
   MediaStagingTableData copyWithCompanion(MediaStagingTableCompanion data) {
     return MediaStagingTableData(
       localId: data.localId.present ? data.localId.value : this.localId,
       fileName: data.fileName.present ? data.fileName.value : this.fileName,
+      cleanPath: data.cleanPath.present ? data.cleanPath.value : this.cleanPath,
+      cleanName: data.cleanName.present ? data.cleanName.value : this.cleanName,
       content: data.content.present ? data.content.value : this.content,
     );
   }
@@ -5960,20 +6289,29 @@ class MediaStagingTableData extends DataClass
     return (StringBuffer('MediaStagingTableData(')
           ..write('localId: $localId, ')
           ..write('fileName: $fileName, ')
+          ..write('cleanPath: $cleanPath, ')
+          ..write('cleanName: $cleanName, ')
           ..write('content: $content')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode =>
-      Object.hash(localId, fileName, $driftBlobEquality.hash(content));
+  int get hashCode => Object.hash(
+    localId,
+    fileName,
+    cleanPath,
+    cleanName,
+    $driftBlobEquality.hash(content),
+  );
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is MediaStagingTableData &&
           other.localId == this.localId &&
           other.fileName == this.fileName &&
+          other.cleanPath == this.cleanPath &&
+          other.cleanName == this.cleanName &&
           $driftBlobEquality.equals(other.content, this.content));
 }
 
@@ -5981,26 +6319,38 @@ class MediaStagingTableCompanion
     extends UpdateCompanion<MediaStagingTableData> {
   final Value<int> localId;
   final Value<String> fileName;
+  final Value<String> cleanPath;
+  final Value<String> cleanName;
   final Value<Uint8List> content;
   const MediaStagingTableCompanion({
     this.localId = const Value.absent(),
     this.fileName = const Value.absent(),
+    this.cleanPath = const Value.absent(),
+    this.cleanName = const Value.absent(),
     this.content = const Value.absent(),
   });
   MediaStagingTableCompanion.insert({
     this.localId = const Value.absent(),
     required String fileName,
+    required String cleanPath,
+    required String cleanName,
     required Uint8List content,
   }) : fileName = Value(fileName),
+       cleanPath = Value(cleanPath),
+       cleanName = Value(cleanName),
        content = Value(content);
   static Insertable<MediaStagingTableData> custom({
     Expression<int>? localId,
     Expression<String>? fileName,
+    Expression<String>? cleanPath,
+    Expression<String>? cleanName,
     Expression<Uint8List>? content,
   }) {
     return RawValuesInsertable({
       if (localId != null) 'local_id': localId,
       if (fileName != null) 'file_name': fileName,
+      if (cleanPath != null) 'clean_path': cleanPath,
+      if (cleanName != null) 'clean_name': cleanName,
       if (content != null) 'content': content,
     });
   }
@@ -6008,11 +6358,15 @@ class MediaStagingTableCompanion
   MediaStagingTableCompanion copyWith({
     Value<int>? localId,
     Value<String>? fileName,
+    Value<String>? cleanPath,
+    Value<String>? cleanName,
     Value<Uint8List>? content,
   }) {
     return MediaStagingTableCompanion(
       localId: localId ?? this.localId,
       fileName: fileName ?? this.fileName,
+      cleanPath: cleanPath ?? this.cleanPath,
+      cleanName: cleanName ?? this.cleanName,
       content: content ?? this.content,
     );
   }
@@ -6026,6 +6380,12 @@ class MediaStagingTableCompanion
     if (fileName.present) {
       map['file_name'] = Variable<String>(fileName.value);
     }
+    if (cleanPath.present) {
+      map['clean_path'] = Variable<String>(cleanPath.value);
+    }
+    if (cleanName.present) {
+      map['clean_name'] = Variable<String>(cleanName.value);
+    }
     if (content.present) {
       map['content'] = Variable<Uint8List>(content.value);
     }
@@ -6037,6 +6397,8 @@ class MediaStagingTableCompanion
     return (StringBuffer('MediaStagingTableCompanion(')
           ..write('localId: $localId, ')
           ..write('fileName: $fileName, ')
+          ..write('cleanPath: $cleanPath, ')
+          ..write('cleanName: $cleanName, ')
           ..write('content: $content')
           ..write(')'))
         .toString();
@@ -9272,7 +9634,11 @@ typedef $$AudioStagingTableTableCreateCompanionBuilder =
     AudioStagingTableCompanion Function({
       Value<int> localId,
       required String term,
+      Value<String?> termNormalized,
+      Value<String?> termTokens,
+      Value<String?> termTokensNormalized,
       Value<String?> reading,
+      Value<String?> readingNormalized,
       Value<int?> pitchPattern,
       required String originalFileName,
     });
@@ -9280,7 +9646,11 @@ typedef $$AudioStagingTableTableUpdateCompanionBuilder =
     AudioStagingTableCompanion Function({
       Value<int> localId,
       Value<String> term,
+      Value<String?> termNormalized,
+      Value<String?> termTokens,
+      Value<String?> termTokensNormalized,
       Value<String?> reading,
+      Value<String?> readingNormalized,
       Value<int?> pitchPattern,
       Value<String> originalFileName,
     });
@@ -9304,8 +9674,28 @@ class $$AudioStagingTableTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
+  ColumnFilters<String> get termNormalized => $composableBuilder(
+    column: $table.termNormalized,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get termTokens => $composableBuilder(
+    column: $table.termTokens,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get termTokensNormalized => $composableBuilder(
+    column: $table.termTokensNormalized,
+    builder: (column) => ColumnFilters(column),
+  );
+
   ColumnFilters<String> get reading => $composableBuilder(
     column: $table.reading,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get readingNormalized => $composableBuilder(
+    column: $table.readingNormalized,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -9339,8 +9729,28 @@ class $$AudioStagingTableTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
+  ColumnOrderings<String> get termNormalized => $composableBuilder(
+    column: $table.termNormalized,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get termTokens => $composableBuilder(
+    column: $table.termTokens,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get termTokensNormalized => $composableBuilder(
+    column: $table.termTokensNormalized,
+    builder: (column) => ColumnOrderings(column),
+  );
+
   ColumnOrderings<String> get reading => $composableBuilder(
     column: $table.reading,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get readingNormalized => $composableBuilder(
+    column: $table.readingNormalized,
     builder: (column) => ColumnOrderings(column),
   );
 
@@ -9370,8 +9780,28 @@ class $$AudioStagingTableTableAnnotationComposer
   GeneratedColumn<String> get term =>
       $composableBuilder(column: $table.term, builder: (column) => column);
 
+  GeneratedColumn<String> get termNormalized => $composableBuilder(
+    column: $table.termNormalized,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get termTokens => $composableBuilder(
+    column: $table.termTokens,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get termTokensNormalized => $composableBuilder(
+    column: $table.termTokensNormalized,
+    builder: (column) => column,
+  );
+
   GeneratedColumn<String> get reading =>
       $composableBuilder(column: $table.reading, builder: (column) => column);
+
+  GeneratedColumn<String> get readingNormalized => $composableBuilder(
+    column: $table.readingNormalized,
+    builder: (column) => column,
+  );
 
   GeneratedColumn<int> get pitchPattern => $composableBuilder(
     column: $table.pitchPattern,
@@ -9426,13 +9856,21 @@ class $$AudioStagingTableTableTableManager
               ({
                 Value<int> localId = const Value.absent(),
                 Value<String> term = const Value.absent(),
+                Value<String?> termNormalized = const Value.absent(),
+                Value<String?> termTokens = const Value.absent(),
+                Value<String?> termTokensNormalized = const Value.absent(),
                 Value<String?> reading = const Value.absent(),
+                Value<String?> readingNormalized = const Value.absent(),
                 Value<int?> pitchPattern = const Value.absent(),
                 Value<String> originalFileName = const Value.absent(),
               }) => AudioStagingTableCompanion(
                 localId: localId,
                 term: term,
+                termNormalized: termNormalized,
+                termTokens: termTokens,
+                termTokensNormalized: termTokensNormalized,
                 reading: reading,
+                readingNormalized: readingNormalized,
                 pitchPattern: pitchPattern,
                 originalFileName: originalFileName,
               ),
@@ -9440,13 +9878,21 @@ class $$AudioStagingTableTableTableManager
               ({
                 Value<int> localId = const Value.absent(),
                 required String term,
+                Value<String?> termNormalized = const Value.absent(),
+                Value<String?> termTokens = const Value.absent(),
+                Value<String?> termTokensNormalized = const Value.absent(),
                 Value<String?> reading = const Value.absent(),
+                Value<String?> readingNormalized = const Value.absent(),
                 Value<int?> pitchPattern = const Value.absent(),
                 required String originalFileName,
               }) => AudioStagingTableCompanion.insert(
                 localId: localId,
                 term: term,
+                termNormalized: termNormalized,
+                termTokens: termTokens,
+                termTokensNormalized: termTokensNormalized,
                 reading: reading,
+                readingNormalized: readingNormalized,
                 pitchPattern: pitchPattern,
                 originalFileName: originalFileName,
               ),
@@ -9483,12 +9929,16 @@ typedef $$MediaStagingTableTableCreateCompanionBuilder =
     MediaStagingTableCompanion Function({
       Value<int> localId,
       required String fileName,
+      required String cleanPath,
+      required String cleanName,
       required Uint8List content,
     });
 typedef $$MediaStagingTableTableUpdateCompanionBuilder =
     MediaStagingTableCompanion Function({
       Value<int> localId,
       Value<String> fileName,
+      Value<String> cleanPath,
+      Value<String> cleanName,
       Value<Uint8List> content,
     });
 
@@ -9508,6 +9958,16 @@ class $$MediaStagingTableTableFilterComposer
 
   ColumnFilters<String> get fileName => $composableBuilder(
     column: $table.fileName,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get cleanPath => $composableBuilder(
+    column: $table.cleanPath,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get cleanName => $composableBuilder(
+    column: $table.cleanName,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -9536,6 +9996,16 @@ class $$MediaStagingTableTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
+  ColumnOrderings<String> get cleanPath => $composableBuilder(
+    column: $table.cleanPath,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get cleanName => $composableBuilder(
+    column: $table.cleanName,
+    builder: (column) => ColumnOrderings(column),
+  );
+
   ColumnOrderings<Uint8List> get content => $composableBuilder(
     column: $table.content,
     builder: (column) => ColumnOrderings(column),
@@ -9556,6 +10026,12 @@ class $$MediaStagingTableTableAnnotationComposer
 
   GeneratedColumn<String> get fileName =>
       $composableBuilder(column: $table.fileName, builder: (column) => column);
+
+  GeneratedColumn<String> get cleanPath =>
+      $composableBuilder(column: $table.cleanPath, builder: (column) => column);
+
+  GeneratedColumn<String> get cleanName =>
+      $composableBuilder(column: $table.cleanName, builder: (column) => column);
 
   GeneratedColumn<Uint8List> get content =>
       $composableBuilder(column: $table.content, builder: (column) => column);
@@ -9603,20 +10079,28 @@ class $$MediaStagingTableTableTableManager
               ({
                 Value<int> localId = const Value.absent(),
                 Value<String> fileName = const Value.absent(),
+                Value<String> cleanPath = const Value.absent(),
+                Value<String> cleanName = const Value.absent(),
                 Value<Uint8List> content = const Value.absent(),
               }) => MediaStagingTableCompanion(
                 localId: localId,
                 fileName: fileName,
+                cleanPath: cleanPath,
+                cleanName: cleanName,
                 content: content,
               ),
           createCompanionCallback:
               ({
                 Value<int> localId = const Value.absent(),
                 required String fileName,
+                required String cleanPath,
+                required String cleanName,
                 required Uint8List content,
               }) => MediaStagingTableCompanion.insert(
                 localId: localId,
                 fileName: fileName,
+                cleanPath: cleanPath,
+                cleanName: cleanName,
                 content: content,
               ),
           withReferenceMapper: (p0) => p0
