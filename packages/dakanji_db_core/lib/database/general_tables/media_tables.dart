@@ -13,7 +13,8 @@ class MediaTable extends Table {
   IntColumn get id => integer().autoIncrement()();
 
   /// The id of the dictionary this entry belongs to
-  IntColumn get indexId => integer().references(IndexTable, #id)();
+  IntColumn get indexId => integer()
+    .references(IndexTable, #id, onDelete: KeyAction.cascade)();
 
   /// the path of this data file as found in the original data source
   TextColumn get path => text()();

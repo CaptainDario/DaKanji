@@ -32,7 +32,6 @@ Future<Stream<String>> parseDictionaryDataSource({
   Uint8List? archiveBytes,
   required bool isDefaultDictionary,
   required DaKanjiDB db,
-  required bool addStructuredContentJsonDefs,
   Directory? tempDir,
 }) async {
   assert(dataSourcePath != null, "Parallel import requires a file path");
@@ -55,7 +54,6 @@ Future<Stream<String>> parseDictionaryDataSource({
   await Isolate.spawn(_orchestratorEntry, (
     dataSourcePath: dataSourcePath!,
     dbConnection: connection,
-    addFullJsonDefinitions: addStructuredContentJsonDefs,
     languageProcessorJson: lpJson,
     mainIsolateSendPort: receivePort.sendPort,
     inMemory: db.inMemory,
@@ -69,7 +67,6 @@ Future<Stream<String>> parseDictionaryDataSource({
 Future<void> _orchestratorEntry(({
   String dataSourcePath,
   DriftIsolate dbConnection,
-  bool addFullJsonDefinitions,
   String languageProcessorJson,
   SendPort mainIsolateSendPort,
   bool inMemory,
@@ -156,7 +153,15 @@ Future<void> _orchestratorEntry(({
   }
 }
 Future<List<String>> _runGreedyParallelStaging({
-  required dynamic params,
+  required ({
+    String dataSourcePath,
+    DriftIsolate dbConnection,
+    String languageProcessorJson,
+    SendPort mainIsolateSendPort,
+    bool inMemory,
+    bool isDefaultDictionary,
+    Directory tempDir,
+  }) params,
   required List<String> queue,
   required SendPort sendPort,
 }) async {
@@ -183,8 +188,7 @@ Future<List<String>> _runGreedyParallelStaging({
       zipPath: params.dataSourcePath,
       dbPath: workerDbPath,
       lpJson: params.languageProcessorJson,
-      files: queue, 
-      saveJson: params.addFullJsonDefinitions,
+      files: queue,
       completer: completer,
       onStatus: (msg) => sendPort.send(msg)
     );
@@ -242,7 +246,6 @@ Future<void> _spawnWorker({
   required String dbPath,
   required String lpJson,
   required List<String> files,
-  required bool saveJson,
   required Completer completer,
   required Function(String) onStatus,
 }) async {
@@ -255,7 +258,7 @@ Future<void> _spawnWorker({
   receivePort.listen((message) {
     if (message is SendPort) {
       workerSendPort = message;
-      workerSendPort!.send(MsgInit(zipPath, dbPath, lpJson, saveJson, receivePort.sendPort));
+      workerSendPort!.send(MsgInit(zipPath, dbPath, lpJson, receivePort.sendPort));
     } 
     else if (message is MsgReady) {
       if (files.isNotEmpty) {

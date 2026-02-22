@@ -29,7 +29,8 @@ class TermMetaBankV3_X_IpaTable extends Table {
   /// id of this relation
   IntColumn get id => integer().autoIncrement()();
   /// the id of the associated ipa entry
-  IntColumn get ipaId => integer().references(TermMetaBankV3IpaTable, #id)();
+  IntColumn get ipaId => integer()
+    .references(TermMetaBankV3IpaTable, #id)();
   /// the id of the associated term meta
   IntColumn get termMetaId => integer()
     .references(TermMetaBankV3Table, #id, onDelete: KeyAction.cascade)();
@@ -48,7 +49,8 @@ class TermMetaBankV3IpaTable_X_TagBankV3Table extends Table {
   IntColumn get ipaId => integer()
     .references(TermMetaBankV3IpaTable, #id, onDelete: KeyAction.cascade)();
   /// the id of the tag
-  IntColumn get tagId => integer().references(TagBankV3Table, #id)();
+  IntColumn get tagId => integer()
+    .references(TagBankV3Table, #id, onDelete: KeyAction.cascade)();
 
 }
 
@@ -64,6 +66,7 @@ class TermMetaBankV3PitchTable_X_TagBankV3Table extends Table {
   IntColumn get pitchId => integer()
     .references(TermMetaBankV3PitchTable, #id, onDelete: KeyAction.cascade)();
   /// the id of the tag
-  IntColumn get tagId => integer().references(TagBankV3Table, #id)();
+  IntColumn get tagId => integer()
+    .references(TagBankV3Table, #id, onDelete: KeyAction.cascade)();
 
 }

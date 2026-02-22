@@ -14,7 +14,8 @@ class KanjiMetaBankV3Table extends Table {
   IntColumn get id => integer().autoIncrement()();
 
   /// id of the dictionary this entry belongs to
-  IntColumn get indexId => integer().references(IndexTable, #id)();
+  IntColumn get indexId => integer()
+    .references(IndexTable, #id, onDelete: KeyAction.cascade)();
 
   /// the kanji this meta entry belongs to
   IntColumn get kanjiId => integer().references(KanjiTable, #id)();

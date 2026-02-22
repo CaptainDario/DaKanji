@@ -39,8 +39,6 @@ Future<void> workerEntry(SendPort mainSendPort) async {
     KanjiMetaBankV3Parser()
   ];
 
-  bool saveJson = false;
-
   await for (final message in receivePort) {
     
     if (message is MsgInit) {
@@ -55,7 +53,6 @@ Future<void> workerEntry(SendPort mainSendPort) async {
       }
       
       processorOptions = ProcessorOptions();
-      saveJson = message.saveOriginalJson;
 
       try {
         zipInputStream = InputFileStream(message.zipPath);

@@ -1,7 +1,7 @@
 
 import 'package:dakanji_db_core/database/dakanji_db.dart';
 import 'package:dakanji_db_core/database/db_queries/kanji_dictionary_search/kanji_dictionary_search_result.dart';
-import 'package:dakanji_db_core/parsing/yomitan_in_memory_cache_parser.dart';
+import 'package:dakanji_db_core/parsing/yomitan_staging_db_parser.dart';
 import 'package:dakanji_db_shared/paths.dart';
 import 'package:path/path.dart' as p;
 import 'package:test/test.dart';
@@ -76,9 +76,9 @@ void main() {
 Future<DaKanjiDB> setupFreshDB() async {
 
   // create the testing database (delete any existing database)
-  if (File(dakanjiDbPath).existsSync()) File(dakanjiDbPath).deleteSync();
+  if (File(dakanjiDbTestPath).existsSync()) File(dakanjiDbTestPath).deleteSync();
   DaKanjiDB db = DaKanjiDB(
-    dbPath: dakanjiDbPath, inMemory: true, languageProcessor: await japaneseProcessor);
+    dbPath: dakanjiDbTestPath, inMemory: true, languageProcessor: await japaneseProcessor);
 
   // import the yomitan test files
   Stopwatch s = Stopwatch()..start();
@@ -86,7 +86,6 @@ Future<DaKanjiDB> setupFreshDB() async {
   Stream<String> progress = await parseDictionaryDataSource(
     dataSourcePath: dataSourceZipPath,
     db: db,
-    addStructuredContentJsonDefs: false,
     isDefaultDictionary: false
   );
   await for (var line in progress) {

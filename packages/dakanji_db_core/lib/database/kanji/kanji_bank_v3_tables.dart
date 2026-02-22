@@ -18,7 +18,8 @@ class KanjiBankV3Table extends Table {
   IntColumn get id => integer()();
 
   /// The id of the dictionary this entry belongs to
-  IntColumn get indexId => integer().references(IndexTable, #id)();
+  IntColumn get indexId => integer()
+    .references(IndexTable, #id, onDelete: KeyAction.cascade)();
 
   /// id of the kanji character of this entry
   IntColumn get kanjiId => integer().references(KanjiTable, #id)();
@@ -57,6 +58,7 @@ class KanjiBankV3StatsTable extends Table {
   TextColumn get statValue => text()();
 
   /// `TagBankV3Table` entry that belongs to this entry
-  IntColumn get statTagId => integer().references(TagBankV3Table, #id)();
+  IntColumn get statTagId => integer()
+    .references(TagBankV3Table, #id)();
 
 }

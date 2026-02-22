@@ -34,14 +34,19 @@ class AudioBankMerger {
       // 2.1 Insert Tokens (FTS)
       await targetDb.customStatement('''
         INSERT INTO fts_tokens (rowid, tokens, tokens_normalized)
-        SELECT 
+        SELECT DISTINCT  -- <--- ADDED DISTINCT to prevent rowid crashes
           t.${tTerm.id.name}, 
           s.term_tokens, 
           s.term_tokens_normalized
         FROM $workerAlias.audio_staging_table s
         JOIN ${tTerm.actualTableName} t ON t.${tTerm.term.name} = s.term
-        WHERE s.term_tokens IS NOT NULL
-        AND t.${tTerm.id.name} NOT IN (SELECT rowid FROM fts_tokens)
+        WHERE 
+          s.term_tokens IS NOT NULL
+          AND trim(s.term_tokens) != ''
+          AND s.term_tokens != s.term
+          AND NOT EXISTS (
+            SELECT 1 FROM fts_tokens WHERE rowid = t.${tTerm.id.name}
+          )
       ''');
 
       // 3. Insert Readings

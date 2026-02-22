@@ -1492,7 +1492,7 @@ class $KanjiBankV3TableTable extends KanjiBankV3Table
     type: DriftSqlType.int,
     requiredDuringInsert: true,
     defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'REFERENCES index_table (id)',
+      'REFERENCES index_table (id) ON DELETE CASCADE',
     ),
   );
   static const VerificationMeta _kanjiIdMeta = const VerificationMeta(
@@ -2885,7 +2885,7 @@ class $TagBankV3TableTable extends TagBankV3Table
     type: DriftSqlType.int,
     requiredDuringInsert: true,
     defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'REFERENCES index_table (id)',
+      'REFERENCES index_table (id) ON DELETE CASCADE',
     ),
   );
   static const VerificationMeta _nameMeta = const VerificationMeta('name');
@@ -3352,7 +3352,7 @@ class $KanjiBankV3_X_TagBankV3TableTable extends KanjiBankV3_X_TagBankV3Table
     type: DriftSqlType.int,
     requiredDuringInsert: true,
     defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'REFERENCES tag_bank_v3_table (id)',
+      'REFERENCES tag_bank_v3_table (id) ON DELETE CASCADE',
     ),
   );
   static const VerificationMeta _kanjiIdMeta = const VerificationMeta(
@@ -5030,7 +5030,7 @@ class $KanjiMetaBankV3TableTable extends KanjiMetaBankV3Table
     type: DriftSqlType.int,
     requiredDuringInsert: true,
     defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'REFERENCES index_table (id)',
+      'REFERENCES index_table (id) ON DELETE CASCADE',
     ),
   );
   static const VerificationMeta _kanjiIdMeta = const VerificationMeta(
@@ -7109,7 +7109,7 @@ class $TermBankV3TableTable extends TermBankV3Table
     type: DriftSqlType.int,
     requiredDuringInsert: true,
     defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'REFERENCES index_table (id)',
+      'REFERENCES index_table (id) ON DELETE CASCADE',
     ),
   );
   static const VerificationMeta _termIdMeta = const VerificationMeta('termId');
@@ -7135,7 +7135,7 @@ class $TermBankV3TableTable extends TermBankV3Table
     type: DriftSqlType.int,
     requiredDuringInsert: false,
     defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'REFERENCES term_bank_v3_definition_json_table (id)',
+      'REFERENCES term_bank_v3_definition_json_table (id) ON DELETE CASCADE',
     ),
   );
   static const VerificationMeta _readingIdMeta = const VerificationMeta(
@@ -7610,7 +7610,7 @@ class $TermBankV3_X_DefinitionTableTable extends TermBankV3_X_DefinitionTable
     type: DriftSqlType.int,
     requiredDuringInsert: true,
     defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'REFERENCES definition_table (id)',
+      'REFERENCES definition_table (id) ON DELETE CASCADE',
     ),
   );
   static const VerificationMeta _termBankIdMeta = const VerificationMeta(
@@ -7941,7 +7941,7 @@ class $TermBankV3_X_TagBankTableTable extends TermBankV3_X_TagBankTable
     type: DriftSqlType.int,
     requiredDuringInsert: true,
     defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'REFERENCES tag_bank_v3_table (id)',
+      'REFERENCES tag_bank_v3_table (id) ON DELETE CASCADE',
     ),
   );
   static const VerificationMeta _termBankIdMeta = const VerificationMeta(
@@ -8447,7 +8447,7 @@ class $TermBankV3_X_RuleIdentifierTableTable
     type: DriftSqlType.int,
     requiredDuringInsert: true,
     defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'REFERENCES term_bank_v3_rule_identifier_table (id)',
+      'REFERENCES term_bank_v3_rule_identifier_table (id) ON DELETE CASCADE',
     ),
   );
   static const VerificationMeta _termBankIdMeta = const VerificationMeta(
@@ -8931,7 +8931,7 @@ class $TermMetaBankV3TableTable extends TermMetaBankV3Table
     type: DriftSqlType.int,
     requiredDuringInsert: true,
     defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'REFERENCES index_table (id)',
+      'REFERENCES index_table (id) ON DELETE CASCADE',
     ),
   );
   static const VerificationMeta _termIdMeta = const VerificationMeta('termId');
@@ -11079,7 +11079,7 @@ class $TermMetaBankV3PitchTable_X_TagBankV3TableTable
     type: DriftSqlType.int,
     requiredDuringInsert: true,
     defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'REFERENCES tag_bank_v3_table (id)',
+      'REFERENCES tag_bank_v3_table (id) ON DELETE CASCADE',
     ),
   );
   @override
@@ -11964,7 +11964,7 @@ class $TermMetaBankV3IpaTable_X_TagBankV3TableTable
     type: DriftSqlType.int,
     requiredDuringInsert: true,
     defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'REFERENCES tag_bank_v3_table (id)',
+      'REFERENCES tag_bank_v3_table (id) ON DELETE CASCADE',
     ),
   );
   @override
@@ -13229,7 +13229,7 @@ class $MediaTableTable extends MediaTable
     type: DriftSqlType.int,
     requiredDuringInsert: true,
     defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'REFERENCES index_table (id)',
+      'REFERENCES index_table (id) ON DELETE CASCADE',
     ),
   );
   static const VerificationMeta _pathMeta = const VerificationMeta('path');
@@ -13583,7 +13583,7 @@ class $AudioTableTable extends AudioTable
     type: DriftSqlType.int,
     requiredDuringInsert: true,
     defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'REFERENCES index_table (id)',
+      'REFERENCES index_table (id) ON DELETE CASCADE',
     ),
   );
   static const VerificationMeta _readingIdMeta = const VerificationMeta(
@@ -13963,7 +13963,7 @@ class $AudioTable_X_TermTableTable extends AudioTable_X_TermTable
     type: DriftSqlType.int,
     requiredDuringInsert: true,
     defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'REFERENCES audio_table (id)',
+      'REFERENCES audio_table (id) ON DELETE CASCADE',
     ),
   );
   static const VerificationMeta _termIdMeta = const VerificationMeta('termId');
@@ -13975,7 +13975,7 @@ class $AudioTable_X_TermTableTable extends AudioTable_X_TermTable
     type: DriftSqlType.int,
     requiredDuringInsert: true,
     defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'REFERENCES term_table (id)',
+      'REFERENCES term_table (id) ON DELETE CASCADE',
     ),
   );
   @override
@@ -15668,7 +15668,7 @@ class $ExampleTable_X_ExampleTranslationTableTable
     type: DriftSqlType.int,
     requiredDuringInsert: true,
     defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'REFERENCES example_table (id)',
+      'REFERENCES example_table (id) ON DELETE CASCADE',
     ),
   );
   static const VerificationMeta _translationIdMeta = const VerificationMeta(
@@ -15682,7 +15682,7 @@ class $ExampleTable_X_ExampleTranslationTableTable
     type: DriftSqlType.int,
     requiredDuringInsert: true,
     defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'REFERENCES example_translation_table (id)',
+      'REFERENCES example_translation_table (id) ON DELETE CASCADE',
     ),
   );
   @override
@@ -16355,7 +16355,7 @@ class $KanjiVGTableTable extends KanjiVGTable
     type: DriftSqlType.int,
     requiredDuringInsert: true,
     defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'REFERENCES kanji_table (id)',
+      'REFERENCES kanji_table (id) ON DELETE CASCADE',
     ),
   );
   @override
@@ -16616,7 +16616,7 @@ class $AudioSourceListTableTable extends AudioSourceListTable
     type: DriftSqlType.int,
     requiredDuringInsert: true,
     defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'REFERENCES index_table (id)',
+      'REFERENCES index_table (id) ON DELETE CASCADE',
     ),
   );
   static const VerificationMeta _nameMeta = const VerificationMeta('name');
@@ -17195,7 +17195,7 @@ class $Radical_X_KanjiRelationsTableTable extends Radical_X_KanjiRelationsTable
     type: DriftSqlType.int,
     requiredDuringInsert: true,
     defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'REFERENCES kanji_table (id)',
+      'REFERENCES kanji_table (id) ON DELETE CASCADE',
     ),
   );
   static const VerificationMeta _radicalIdMeta = const VerificationMeta(
@@ -17209,7 +17209,7 @@ class $Radical_X_KanjiRelationsTableTable extends Radical_X_KanjiRelationsTable
     type: DriftSqlType.int,
     requiredDuringInsert: true,
     defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'REFERENCES radicals_table (id)',
+      'REFERENCES radicals_table (id) ON DELETE CASCADE',
     ),
   );
   @override
@@ -19577,6 +19577,13 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
   StreamQueryUpdateRules get streamUpdateRules => const StreamQueryUpdateRules([
     WritePropagation(
       on: TableUpdateQuery.onTableName(
+        'index_table',
+        limitUpdateKind: UpdateKind.delete,
+      ),
+      result: [TableUpdate('kanji_bank_v3_table', kind: UpdateKind.delete)],
+    ),
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
         'kanji_bank_v3_table',
         limitUpdateKind: UpdateKind.delete,
       ),
@@ -19595,6 +19602,25 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
       result: [
         TableUpdate(
           'kanji_bank_v3_x_kunyomi_reading_table',
+          kind: UpdateKind.delete,
+        ),
+      ],
+    ),
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
+        'index_table',
+        limitUpdateKind: UpdateKind.delete,
+      ),
+      result: [TableUpdate('tag_bank_v3_table', kind: UpdateKind.delete)],
+    ),
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
+        'tag_bank_v3_table',
+        limitUpdateKind: UpdateKind.delete,
+      ),
+      result: [
+        TableUpdate(
+          'kanji_bank_v3_x_tag_bank_v3_table',
           kind: UpdateKind.delete,
         ),
       ],
@@ -19634,11 +19660,52 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
     ),
     WritePropagation(
       on: TableUpdateQuery.onTableName(
+        'index_table',
+        limitUpdateKind: UpdateKind.delete,
+      ),
+      result: [
+        TableUpdate('kanji_meta_bank_v3_table', kind: UpdateKind.delete),
+      ],
+    ),
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
+        'index_table',
+        limitUpdateKind: UpdateKind.delete,
+      ),
+      result: [TableUpdate('term_bank_v3_table', kind: UpdateKind.delete)],
+    ),
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
+        'term_bank_v3_definition_json_table',
+        limitUpdateKind: UpdateKind.delete,
+      ),
+      result: [TableUpdate('term_bank_v3_table', kind: UpdateKind.delete)],
+    ),
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
+        'definition_table',
+        limitUpdateKind: UpdateKind.delete,
+      ),
+      result: [
+        TableUpdate('term_bank_v3_x_definition_table', kind: UpdateKind.delete),
+      ],
+    ),
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
         'term_bank_v3_table',
         limitUpdateKind: UpdateKind.delete,
       ),
       result: [
         TableUpdate('term_bank_v3_x_definition_table', kind: UpdateKind.delete),
+      ],
+    ),
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
+        'tag_bank_v3_table',
+        limitUpdateKind: UpdateKind.delete,
+      ),
+      result: [
+        TableUpdate('term_bank_v3_x_tag_bank_table', kind: UpdateKind.delete),
       ],
     ),
     WritePropagation(
@@ -19652,6 +19719,18 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
     ),
     WritePropagation(
       on: TableUpdateQuery.onTableName(
+        'term_bank_v3_rule_identifier_table',
+        limitUpdateKind: UpdateKind.delete,
+      ),
+      result: [
+        TableUpdate(
+          'term_bank_v3_x_rule_identifier_table',
+          kind: UpdateKind.delete,
+        ),
+      ],
+    ),
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
         'term_bank_v3_table',
         limitUpdateKind: UpdateKind.delete,
       ),
@@ -19661,6 +19740,13 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
           kind: UpdateKind.delete,
         ),
       ],
+    ),
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
+        'index_table',
+        limitUpdateKind: UpdateKind.delete,
+      ),
+      result: [TableUpdate('term_meta_bank_v3_table', kind: UpdateKind.delete)],
     ),
     WritePropagation(
       on: TableUpdateQuery.onTableName(
@@ -19709,6 +19795,18 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
     ),
     WritePropagation(
       on: TableUpdateQuery.onTableName(
+        'tag_bank_v3_table',
+        limitUpdateKind: UpdateKind.delete,
+      ),
+      result: [
+        TableUpdate(
+          'term_meta_bank_v3_pitch_table_x_tag_bank_v3_table',
+          kind: UpdateKind.delete,
+        ),
+      ],
+    ),
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
         'term_meta_bank_v3_table',
         limitUpdateKind: UpdateKind.delete,
       ),
@@ -19719,6 +19817,18 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
     WritePropagation(
       on: TableUpdateQuery.onTableName(
         'term_meta_bank_v3_ipa_table',
+        limitUpdateKind: UpdateKind.delete,
+      ),
+      result: [
+        TableUpdate(
+          'term_meta_bank_v3_ipa_table_x_tag_bank_v3_table',
+          kind: UpdateKind.delete,
+        ),
+      ],
+    ),
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
+        'tag_bank_v3_table',
         limitUpdateKind: UpdateKind.delete,
       ),
       result: [
@@ -19742,6 +19852,20 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
     ),
     WritePropagation(
       on: TableUpdateQuery.onTableName(
+        'index_table',
+        limitUpdateKind: UpdateKind.delete,
+      ),
+      result: [TableUpdate('media_table', kind: UpdateKind.delete)],
+    ),
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
+        'index_table',
+        limitUpdateKind: UpdateKind.delete,
+      ),
+      result: [TableUpdate('audio_table', kind: UpdateKind.delete)],
+    ),
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
         'media_table',
         limitUpdateKind: UpdateKind.delete,
       ),
@@ -19749,10 +19873,52 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
     ),
     WritePropagation(
       on: TableUpdateQuery.onTableName(
+        'audio_table',
+        limitUpdateKind: UpdateKind.delete,
+      ),
+      result: [
+        TableUpdate('audio_table_x_term_table', kind: UpdateKind.delete),
+      ],
+    ),
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
+        'term_table',
+        limitUpdateKind: UpdateKind.delete,
+      ),
+      result: [
+        TableUpdate('audio_table_x_term_table', kind: UpdateKind.delete),
+      ],
+    ),
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
         'index_table',
         limitUpdateKind: UpdateKind.delete,
       ),
       result: [TableUpdate('example_table', kind: UpdateKind.delete)],
+    ),
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
+        'example_table',
+        limitUpdateKind: UpdateKind.delete,
+      ),
+      result: [
+        TableUpdate(
+          'example_table_x_example_translation_table',
+          kind: UpdateKind.delete,
+        ),
+      ],
+    ),
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
+        'example_translation_table',
+        limitUpdateKind: UpdateKind.delete,
+      ),
+      result: [
+        TableUpdate(
+          'example_table_x_example_translation_table',
+          kind: UpdateKind.delete,
+        ),
+      ],
     ),
     WritePropagation(
       on: TableUpdateQuery.onTableName(
@@ -19774,6 +19940,38 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
         limitUpdateKind: UpdateKind.update,
       ),
       result: [TableUpdate('example_fts', kind: UpdateKind.insert)],
+    ),
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
+        'kanji_table',
+        limitUpdateKind: UpdateKind.delete,
+      ),
+      result: [TableUpdate('kanji_v_g_table', kind: UpdateKind.delete)],
+    ),
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
+        'index_table',
+        limitUpdateKind: UpdateKind.delete,
+      ),
+      result: [TableUpdate('audio_source_list_table', kind: UpdateKind.delete)],
+    ),
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
+        'kanji_table',
+        limitUpdateKind: UpdateKind.delete,
+      ),
+      result: [
+        TableUpdate('radical_x_kanji_relations_table', kind: UpdateKind.delete),
+      ],
+    ),
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
+        'radicals_table',
+        limitUpdateKind: UpdateKind.delete,
+      ),
+      result: [
+        TableUpdate('radical_x_kanji_relations_table', kind: UpdateKind.delete),
+      ],
     ),
   ]);
 }

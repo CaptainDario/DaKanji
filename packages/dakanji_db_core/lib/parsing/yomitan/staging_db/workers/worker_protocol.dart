@@ -8,14 +8,12 @@ class MsgInit extends WorkerMessage {
   final String zipPath;
   final String dbPath;
   final String languageProcessorJson;
-  final bool saveOriginalJson;
   final SendPort replyPort;
 
   MsgInit(
     this.zipPath, 
     this.dbPath, 
-    this.languageProcessorJson, 
-    this.saveOriginalJson, 
+    this.languageProcessorJson,
     this.replyPort
   );
 }

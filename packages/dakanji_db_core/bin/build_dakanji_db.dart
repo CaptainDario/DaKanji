@@ -6,9 +6,6 @@ import 'package:dakanji_db_core/parsing/example_parser.dart';
 import 'package:dakanji_db_core/parsing/kanji_vg_parser.dart';
 import 'package:dakanji_db_core/parsing/radicals_parser.dart';
 import 'package:dakanji_db_core/parsing/tatoeba_parser.dart';
-// ignore: unused_import
-import 'package:dakanji_db_core/parsing/yomitan_in_memory_cache_parser.dart' as cache_parser;
-// ignore: unused_import
 import 'package:dakanji_db_core/parsing/yomitan_staging_db_parser.dart' as staging_parser;
 import 'package:dakanji_db_shared/paths.dart';
 import 'package:language_processing/language_processing.dart';
@@ -46,7 +43,6 @@ void main(List<String> args) async {
   bool downloadSourcesArg = args.contains('--download-sources');
   bool includeExampleDictArg = args.contains('--include-example-dict');
   bool includeTatoebaExamplesArg = args.contains('--convert-tatoeba');
-  bool addStructuredContentJsonDefs = args.contains('--add-structured-content-json-definitions');
 
   // check which dictionary to use 
   DictsToUse dictToUse = DictsToUse.jmdict;
@@ -83,20 +79,21 @@ void main(List<String> args) async {
   }
   
   // setup 
-  if(File(dakanjiDbPath).existsSync()) {
-    print("Deleting old database at $dakanjiDbPath");
-    File(dakanjiDbPath).deleteSync();
+  if(File(dakanjiDbFinalPath).existsSync()) {
+    print("Deleting old database at $dakanjiDbFinalPath");
+    File(dakanjiDbFinalPath).deleteSync();
   }
   LanguageProcessor languageProcessor = JapaneseProcessor(
     mecabTransferableState: MecabTransferableState(
-      libmecabPath: mecabDynamicLibPath,
       mecabDictDirPath: mecabDicPath,
-      options: "",
     )
   );
 
   DaKanjiDB db = DaKanjiDB(
-    dbPath: dakanjiDbPath, inMemory: false, languageProcessor: languageProcessor);
+    dbPath: dakanjiDbFinalPath,
+    inMemory: false,
+    languageProcessor: languageProcessor
+  );
 
   // add the default search profile
   await db.searchProfilesDao.createNewProfile(true);
@@ -118,7 +115,6 @@ void main(List<String> args) async {
       (dictNameToPath[dictToUse]!(), dictToUse.name),
       ?(includeExampleDictArg ? (exampleDictPath, "yomitan example dictionary"): null),
     ],
-    addStructuredContentJsonDefs,
   );
 
   if(includeTatoebaExamplesArg){
@@ -218,7 +214,6 @@ Future importRadicals(DaKanjiDB db) async {
 Future importYomitanDicts(
   DaKanjiDB db,
   List<(String path, String name)> inputs,
-  bool addStructuredContentJsonDefs,
 ) async {
 
   for (var i = 0; i < inputs.length; i++) {
@@ -227,12 +222,9 @@ Future importYomitanDicts(
     
     Stopwatch s = Stopwatch()..start();
     
-    final parse = staging_parser.parseDictionaryDataSource;
-    //final parse = cache_parser.parseDictionaryDataSource;
-    Stream<String> progress = await parse(
+    Stream<String> progress = await staging_parser.parseDictionaryDataSource(
       dataSourcePath:  inputs[i].$1,
       db: db,
-      addStructuredContentJsonDefs: addStructuredContentJsonDefs,
       isDefaultDictionary: true
     );
 

@@ -11,7 +11,8 @@ class TagBankV3Table extends Table {
   IntColumn get id => integer().autoIncrement()();
 
   /// The id of the dictionary this entry belongs to
-  IntColumn get indexId => integer().references(IndexTable, #id)();
+  IntColumn get indexId => integer()
+    .references(IndexTable, #id, onDelete: KeyAction.cascade)();
 
   /// Tag name.
   TextColumn get name => text()();

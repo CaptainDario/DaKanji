@@ -6,11 +6,8 @@ import 'package:universal_io/io.dart';
 ///
 /// Starts from the current directory and traverses up the file system.
 /// Throws a StateError if the root is not found.
-String findProjectRoot() {
+String findProjectRoot(String anchorFileName) {
   var dir = Directory.current;
-  
-  // The anchor file that identifies the project root.
-  const anchorFileName = '.dakanji_db_mono_repo_root';
 
   while (true) {
     // Check if the anchor file exists in the current directory.
@@ -34,21 +31,26 @@ String findProjectRoot() {
 }
 
 /// The root path of the DaKanji project.
-final String dakanjiDbProjectRoot = findProjectRoot();
+final String dakanjiDbProjectRoot = findProjectRoot(".mono_repo_root");
 
 /// the tmp path of the project
 final String tmpPath = p.joinAll([dakanjiDbProjectRoot, "tmp"]);
 
-/// the path where the dakanji database should be created and populated
-final dakanjiDbPath = p.joinAll([tmpPath, "dakanji.db"]);
+/// the path where all generated assets will be stored
+final String outPath = p.joinAll([dakanjiDbProjectRoot, "out"]);
+
 /// Path to the folder that contains data files
 final dataFilesPath = p.joinAll([dakanjiDbProjectRoot, "data"]);
+
+/// the path where the dakanji database should be created and populated for tests
+final dakanjiDbTestPath = p.joinAll([tmpPath, "dakanji.db"]);
+
+/// Path to the folder that contains the generated database files for release
+final dakanjiDbFinalPath = p.joinAll([outPath, "dakanji.db"]);
 
 // --- MECAB FILES ------------------------------------------------------------
 /// Path to the folder that contains the files for mecab
 final mecabFilesPath = p.joinAll([dakanjiDbProjectRoot, "mecab"]);
-/// Path to the mecab dynamic library
-final mecabDynamicLibPath = p.joinAll([mecabFilesPath, "mecab.dylib"]);
 /// Path to the mecab dictionary
 final mecabDicPath = p.joinAll([mecabFilesPath, "unidic"]);
 

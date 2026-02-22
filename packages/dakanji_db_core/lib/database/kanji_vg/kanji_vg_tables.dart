@@ -14,7 +14,8 @@ class KanjiVGTable extends Table {
   IntColumn get id => integer().autoIncrement()();
 
   /// The id of the kanji character in the `KanjiTable`
-  IntColumn get kanjiId => integer().references(KanjiTable, #id)();
+  IntColumn get kanjiId => integer()
+    .references(KanjiTable, #id, onDelete: KeyAction.cascade)();
 
   /// The svg data of this kanji
   BlobColumn get svg => blob().map(const ZlibStringConverter())();

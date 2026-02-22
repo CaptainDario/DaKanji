@@ -43,11 +43,11 @@ void main() {
 Future<DaKanjiDB> setupFreshDB() async {
 
   // create the testing database (delete any existing database)
-  if (File(dakanjiDbPath).existsSync()) File(dakanjiDbPath).deleteSync();
+  if (File(dakanjiDbTestPath).existsSync()) File(dakanjiDbTestPath).deleteSync();
 
   // setup 
   DaKanjiDB db = DaKanjiDB(
-    dbPath: dakanjiDbPath, inMemory: true, languageProcessor: await japaneseProcessor);
+    dbPath: dakanjiDbTestPath, inMemory: true, languageProcessor: await japaneseProcessor);
 
   // convert kanjivg database
   Stopwatch s = Stopwatch()..start();

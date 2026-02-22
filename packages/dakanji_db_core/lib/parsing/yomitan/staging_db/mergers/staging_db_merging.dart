@@ -49,6 +49,6 @@ Future<void> mergeStagingDb({
   }
   finally {
     await db.customStatement('DETACH DATABASE $workerAlias');
-    await restoreTargetDbAfterMerge(db);
+    await restoreTargetDbAfterMerge(  db);
   }
 }

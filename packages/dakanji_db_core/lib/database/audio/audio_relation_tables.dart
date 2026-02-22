@@ -15,9 +15,11 @@ class AudioTable_X_TermTable extends Table {
   IntColumn get id => integer().autoIncrement()();
 
   /// Link to the [AudioTable]
-  IntColumn get audioId => integer().references(AudioTable, #id)();
+  IntColumn get audioId => integer()
+    .references(AudioTable, #id, onDelete: KeyAction.cascade)();
 
   /// Link to the [TermTable]
-  IntColumn get termId => integer().references(TermTable, #id)();
+  IntColumn get termId => integer()
+    .references(TermTable, #id, onDelete: KeyAction.cascade)();
 
 }

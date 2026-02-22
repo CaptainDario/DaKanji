@@ -21,10 +21,10 @@ Future parseTermBankV3File(
   TermBankV3ParserContext pC,
   DaKanjiDB db,
   int dictId,
-  bool addFullJsonDefinitions) async {
+addFullJsonDefinitions) async {
 
   String termMetaBankJson = termMetaBankFile.readAsStringSync();
-  await parseTermBankV3(termMetaBankJson, pC, db, dictId, addFullJsonDefinitions);
+  await parseTermBankV3(termMetaBankJson, pC, db, dictId);
 
 }
 
@@ -34,7 +34,7 @@ Future parseTermBankV3(
   TermBankV3ParserContext pC,
   DaKanjiDB db,
   int indexId,
-  bool addFullJsonDefinitions) async {
+) async {
 
   // decode json
   Stopwatch s = Stopwatch()..start();
@@ -170,22 +170,20 @@ Future parseTermBankV3(
 
     // Optionally: add full definition json to DB
     int? jsonDefInsertId;
-    if(addFullJsonDefinitions) {
-      String jsonString = jsonEncode(jsonEntry[5]);
+    String jsonString = jsonEncode(jsonEntry[5]);
+    
+    // Check if we already have this JSON in our new cache
+    if (pC.allDefinitionJsons.containsKey(jsonString)) {
+      jsonDefInsertId = pC.allDefinitionJsons[jsonString]!;
+    } else {
+      // Increment max ID, add to cache, and add to insert list
+      jsonDefInsertId = ++pC.currentMaxDefinitionJsonId;
+      pC.allDefinitionJsons[jsonString] = jsonDefInsertId;
       
-      // Check if we already have this JSON in our new cache
-      if (pC.allDefinitionJsons.containsKey(jsonString)) {
-        jsonDefInsertId = pC.allDefinitionJsons[jsonString]!;
-      } else {
-        // Increment max ID, add to cache, and add to insert list
-        jsonDefInsertId = ++pC.currentMaxDefinitionJsonId;
-        pC.allDefinitionJsons[jsonString] = jsonDefInsertId;
-        
-        termBankDefJsonComps.add(TermBankV3DefinitionJsonTableCompanion(
-          id: Value(jsonDefInsertId),
-          definitionJson: Value(jsonString)
-        ));
-      }
+      termBankDefJsonComps.add(TermBankV3DefinitionJsonTableCompanion(
+        id: Value(jsonDefInsertId),
+        definitionJson: Value(jsonString)
+      ));
     }
 
     // create tag relations

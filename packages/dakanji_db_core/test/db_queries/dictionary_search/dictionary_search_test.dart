@@ -229,7 +229,7 @@ Future setupFreshDB() async {
 
   //if(File(dakanjiDbPath).existsSync()) File(dakanjiDbPath).deleteSync();
   DaKanjiDB db = DaKanjiDB(
-    dbPath: dakanjiDbPath, inMemory: true, languageProcessor: await japaneseProcessor);
+    dbPath: dakanjiDbTestPath, inMemory: true, languageProcessor: await japaneseProcessor);
 
   // emulate importing 5 dictionaries
   // take all data form the yomitan sample dictionary except term banks

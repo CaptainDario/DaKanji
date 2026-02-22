@@ -76,3 +76,17 @@ Future optimizeStagingDbForRawInsert(StagingDatabase db) async {
   // SQLite from constantly checking for other file locks.
   await db.customStatement('PRAGMA locking_mode = EXCLUSIVE;');
 }
+
+Future optimizeDbAfterDelete(DaKanjiDB db) async {
+  // 1. Optimize FTS5 Tables
+  await db.customStatement("INSERT INTO fts_terms(fts_terms) VALUES('optimize');");
+  await db.customStatement("INSERT INTO fts_readings(fts_readings) VALUES('optimize');");
+  await db.customStatement("INSERT INTO fts_definitions(fts_definitions) VALUES('optimize');");
+  await db.customStatement("INSERT INTO fts_tokens(fts_tokens) VALUES('optimize');");
+
+  // 2. Update Query Planner Statistics
+  await db.customStatement("ANALYZE;");
+
+  // 3. Reclaim Space
+  await db.customStatement("VACUUM;");
+}

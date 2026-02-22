@@ -87,9 +87,9 @@ Future<DaKanjiDB> setupFreshDB(
   String dataSourcePath, bool isDefaultDictionary) async {
 
   // create the testing database (delete any existing database)
-  if(File(dakanjiDbPath).existsSync()) File(dakanjiDbPath).deleteSync();
+  if(File(dakanjiDbTestPath).existsSync()) File(dakanjiDbTestPath).deleteSync();
   DaKanjiDB db = DaKanjiDB(
-    dbPath: dakanjiDbPath, inMemory: true, languageProcessor: await japaneseProcessor);
+    dbPath: dakanjiDbTestPath, inMemory: true, languageProcessor: await japaneseProcessor);
 
   // parse the test files
   Stopwatch s = Stopwatch()..start();

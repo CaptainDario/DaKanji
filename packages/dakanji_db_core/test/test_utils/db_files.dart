@@ -43,7 +43,6 @@ Future<void> partialInit(
   Stream<String> parsingProgress = await parseDictionaryDataSource(
     dataSourcePath: "${d.path}.zip",
     db: db,
-    addStructuredContentJsonDefs: false,
     isDefaultDictionary: isDefaultDictionary,
   );
   await for (final progress in parsingProgress) {

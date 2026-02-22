@@ -7,7 +7,8 @@ class AudioSourceListTable extends Table {
 
   IntColumn get id => integer().autoIncrement()();
 
-  IntColumn get indexId => integer().references(IndexTable, #id)();
+  IntColumn get indexId => integer()
+    .references(IndexTable, #id, onDelete: KeyAction.cascade)();
 
   /// The name of the audio source
   TextColumn get name => text().withLength(min: 1,)();

@@ -59,7 +59,6 @@ Future<Stream<String>> parseDictionaryDataSource({
   Uint8List? archiveBytes,
   required bool isDefaultDictionary,
   required DaKanjiDB db,
-  required bool addStructuredContentJsonDefs,
 }) async {
 
   assert(dataSourcePath != null);
@@ -86,7 +85,6 @@ Future<Stream<String>> parseDictionaryDataSource({
     dataSourcePath: dataSourcePath,
     archiveBytes: archiveBytes,
     dbConnection: connection,
-    addFullJsonDefinitions: addStructuredContentJsonDefs,
     languageProcessorJson: db.languageProcessor.toJsonString(),
     mainIsolateSendPort: receivePort.sendPort,
     inMemory: inMemory,
@@ -103,7 +101,6 @@ Future _parseDictionaryDataSource(({
   String? dataSourcePath,
   Uint8List? archiveBytes,
   DriftIsolate dbConnection,
-  bool addFullJsonDefinitions,
   String languageProcessorJson,
   SendPort mainIsolateSendPort,
   bool inMemory,
@@ -174,7 +171,6 @@ Future _parseDictionaryDataSource(({
             .nonNulls.firstOrNull,
           db: db,
           ind: indexEntry,
-          addFullJsonDefinitions: params.addFullJsonDefinitions,
         );
       }
       if(filesToInsert.length >= 50 || (progressCounter == noEntries && filesToInsert.isNotEmpty)) {
@@ -231,7 +227,6 @@ Future parseDictionaryFile({
   required ParserContext? importContext,
   required DaKanjiDB db,
   required IndexTableData ind,
-  required bool addFullJsonDefinitions,
 }) async {
   
   // create config to pass the different arguments to the functions
@@ -241,7 +236,7 @@ Future parseDictionaryFile({
     kanjiBankFileNamingScheme: () => parseKanjiBankV3(fileContent, importContext as KanjiBankV3ParserContext, db, ind.id),
     tagBankFileNamingScheme: () => parseTagBankv3(fileContent, db, ind.id),
     termMetaBankFileNamingScheme: () => parseTermMetaBankV3(fileContent, importContext as TermMetaBankV3ParserContext, db, ind.id),
-    termBankFileNamingScheme: () => parseTermBankV3(fileContent, importContext as TermBankV3ParserContext, db, ind.id, addFullJsonDefinitions),
+    termBankFileNamingScheme: () => parseTermBankV3(fileContent, importContext as TermBankV3ParserContext, db, ind.id),
   };
 
   final baseName = p.basename(filePath);

@@ -75,7 +75,7 @@ void main() async {
 Future<DaKanjiDB> setupFreshDB(int testCaseIndex) async {
 
   DaKanjiDB db = DaKanjiDB(
-    dbPath: dakanjiDbPath, inMemory: true, languageProcessor: await japaneseProcessor);
+    dbPath: dakanjiDbTestPath, inMemory: true, languageProcessor: await japaneseProcessor);
   db.clearDB();
   
   bool shouldIncludeFile(File file) =>

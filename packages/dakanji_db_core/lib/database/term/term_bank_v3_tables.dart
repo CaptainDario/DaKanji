@@ -24,13 +24,14 @@ class TermBankV3Table extends Table {
   IntColumn get id => integer()();
 
   /// The id of the dictionary this entry belongs to
-  IntColumn get indexId => integer().references(IndexTable, #id)();
+  IntColumn get indexId => integer().references(IndexTable, #id, onDelete: KeyAction.cascade)();
 
   /// The ID of the text for the term.
   IntColumn get termId => integer().references(TermTable, #id)();
 
   /// The ID of the JSON representation of the definition
-  IntColumn get definitionJsonId => integer().nullable().references(TermBankV3DefinitionJsonTable, #id)();
+  IntColumn get definitionJsonId => integer().nullable()
+    .references(TermBankV3DefinitionJsonTable, #id, onDelete: KeyAction.cascade)();
 
   /// ID reading of the term, or an empty string if the reading is the same as
   /// the term.

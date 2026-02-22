@@ -13,7 +13,7 @@ void main() async {
   
   // create the testing database (delete any existing database)
   DaKanjiDB db = DaKanjiDB(
-    dbPath: dakanjiDbPath, inMemory: true, languageProcessor: await japaneseProcessor);
+    dbPath: dakanjiDbTestPath, inMemory: true, languageProcessor: await japaneseProcessor);
   db.clearDB();
 
   // convert the test files
