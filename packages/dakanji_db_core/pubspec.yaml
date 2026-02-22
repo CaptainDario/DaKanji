@@ -13,6 +13,7 @@ dependencies:
   http: ^1.5.0
   drift: ^2.29.0
   sqlite3: ^2.9.4
+  sqlite3_native_assets: ^0.0.11
   archive: ^4.0.7
   tuple: ^2.0.2
   freezed_annotation: ^3.1.0
@@ -21,7 +22,7 @@ dependencies:
   json_annotation: 4.9.0
   universal_io: ^2.3.1
   collection: 1.19.1
-  mecab_for_dart: 2.0.1
+  mecab_for_dart: 2.0.2
   html: 0.15.6
   recase: 4.1.0
   disjoint_set: 1.0.0
@@ -41,5 +42,7 @@ dev_dependencies:
   lints: 6.0.0
   test: ^1.26.0
   json_serializable: ^6.11.1
-
-#dependency_overrides:
+  
+dependency_overrides:
+  hooks: 1.0.1
+  code_assets: 1.0.0
