@@ -9,7 +9,7 @@ environment:
 # Add regular dependencies here.
 dependencies:
   path: ^1.9.0
-  mecab_for_dart: 2.0.1
+  mecab_for_dart: 2.0.2
   kana_kit: ^2.1.1
   collection: ^1.19.1
   fullwidth_halfwidth_converter: ^1.2.0
