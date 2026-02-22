@@ -1,5 +1,5 @@
-import 'package:dakanji_sqlite_extensions/dakanji_sqlite_extensions.dart';
 import 'package:sqlite3/native_assets.dart';
+import 'package:sqlite_extensions/sqlite_extensions.dart';
 import 'package:test/test.dart';
 
 void main() async {
