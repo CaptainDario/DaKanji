@@ -1,24 +1,38 @@
 import 'dart:convert';
 
 /// Main entry point: Renders a list of Yomitan definitions to a portable HTML string.
-String renderDefinitions(List<dynamic> definitions) {
+/// 
+/// [compactMode] If true, and if ALL definitions are simple strings, they will
+/// be rendered as a single semicolon-separated line (mimicking Yomitan's compact glossary).
+String renderDefinitions(List<dynamic> definitions, {bool compactMode = false}) {
+  if (definitions.isEmpty) return '';
+
   final buffer = StringBuffer();
   final count = definitions.length;
 
-  // 1. Outer Container
-  // Yomitan Logic: If there is only 1 definition, no bullets (list-style: none).
-  // Otherwise, use circle bullets.
-  String listStyle = count == 1 ? 'none' : 'circle';
-  String padding = count == 1 ? '0' : '1.4em';
+  // --- Compact Mode Handling ---
+  // If the array ONLY contains plain strings, we can flatten it into a single line.
+  final isAllStrings = definitions.every((def) => def is String);
+  if (compactMode && isAllStrings) {
+    final joinedTexts = definitions.map((def) => _escapeHtml(def.toString())).join('; ');
+    
+    buffer.write('<ul class="dk-list" data-count="$count" style="list-style-type: none; padding-left: 0; margin: 0;">');
+    buffer.write('<li class="dk-item"><span class="dk-content">$joinedTexts</span></li>');
+    buffer.write('</ul>');
+    return buffer.toString();
+  }
+
+  // --- Standard Layout Handling ---
+  // Single definitions get no bullets. Multiple definitions get circle bullets.
+  final listStyle = count == 1 ? 'none' : 'circle';
+  final padding = count == 1 ? '0' : '1.4em';
 
   buffer.write(
-      '<ul class="gloss-list" data-count="$count" style="list-style-type: $listStyle; padding-left: $padding; margin: 0;">');
+      '<ul class="dk-list" data-count="$count" style="list-style-type: $listStyle; padding-left: $padding; margin: 0;">');
 
   for (var def in definitions) {
-    // Determine if we should force-hide the bullet for this specific item.
-    // This prevents double-bullets when the content itself is a list (ul/ol).
+    // Prevent double-bullets if the inner structured content is already a block-level list container.
     bool suppressBullet = false;
-
     if (def is Map && def['type'] == 'structured-content') {
       final content = def['content'];
       if (content is Map && ['ul', 'ol', 'table', 'div'].contains(content['tag'])) {
@@ -31,15 +45,15 @@ String renderDefinitions(List<dynamic> definitions) {
       itemStyle += ' list-style-type: none;';
     }
 
-    // 2. List Item
-    buffer.write('<li class="gloss-item" style="$itemStyle">');
-    
-    // 3. Content Wrapper
-    buffer.write('<span class="gloss-content">');
+    buffer.write('<li class="dk-item" style="$itemStyle">');
+    buffer.write('<span class="dk-content">');
 
+    // 1. Raw string definition
     if (def is String) {
       buffer.write(_escapeHtml(def));
-    } else if (def is Map) {
+    } 
+    // 2. Structured Content / Image / Text Object
+    else if (def is Map) {
       final type = def['type'];
 
       if (type == 'structured-content') {
@@ -49,6 +63,19 @@ String renderDefinitions(List<dynamic> definitions) {
       } else if (type == 'text') {
         buffer.write(_escapeHtml(def['text']?.toString() ?? ""));
       }
+    } 
+    // 3. Deinflection Array: ["term", ["rule1", "rule2"]]
+    else if (def is List) {
+      if (def.length >= 2 && def[0] is String && def[1] is List) {
+        final term = _escapeHtml(def[0].toString());
+        final rules = (def[1] as List).map((e) => _escapeHtml(e.toString())).join(', ');
+        
+        buffer.write('<span class="dk-sc-deinflection">');
+        buffer.write('$term &rarr; <span style="font-size: 0.9em; color: var(--text-color-light);">($rules)</span>');
+        buffer.write('</span>');
+      } else {
+        buffer.write(_escapeHtml(def.toString()));
+      }
     }
 
     buffer.write('</span>');
@@ -56,47 +83,46 @@ String renderDefinitions(List<dynamic> definitions) {
   }
 
   buffer.write('</ul>');
-  return buffer.toString();
+  
+  String ret = buffer.toString();
+  ret = ret.replaceAll("\n", "<br/>");
+
+  return ret;
 }
 
-/// Recursively renders a node from the "structured-content" tree.
+/// Recursively parses the structured content AST and dispatches to specific renderers.
 String _renderNode(dynamic node) {
   if (node == null) return '';
-
-  if (node is String) {
-    return _escapeHtml(node);
-  }
-
+  if (node is String) return _escapeHtml(node);
+  
   if (node is List) {
     return node.map((child) => _renderNode(child)).join('');
   }
 
-  if (node is Map) {
-    if (node.containsKey('tag')) {
-      final String tag = node['tag'];
+  if (node is Map && node.containsKey('tag')) {
+    final String tag = node['tag'];
 
-      // Dispatch to specific renderers
-      if (tag == 'ul' || tag == 'ol') return _renderList(node);
-      if (tag == 'a') return _renderLink(node);
-      if (tag == 'img') return _renderInlineImage(node);
-      if (tag == 'table') {
-        return '<div class="gloss-sc-table-container">${_renderElement(node)}</div>';
-      }
-      if (tag == 'br') return '<br>';
-
-      return _renderElement(node);
+    if (tag == 'ul' || tag == 'ol') return _renderList(node);
+    if (tag == 'a') return _renderLink(node);
+    if (tag == 'img') return _renderInlineImage(node);
+    if (tag == 'table') {
+      // Wrap tables in a scrollable container for mobile-friendliness
+      return '<div class="dk-sc-table-container">${_renderElement(node)}</div>';
     }
+    if (tag == 'br') return '<br>';
+
+    return _renderElement(node);
   }
 
   return '';
 }
 
-/// Renders generic elements
+/// Renders generic HTML elements (span, div, table, tbody, etc.) dynamically.
 String _renderElement(Map node) {
   final tag = node['tag'];
   final buffer = StringBuffer();
 
-  buffer.write('<$tag class="gloss-sc-$tag"');
+  buffer.write('<$tag class="dk-sc-$tag"');
   _renderAttributes(node, buffer);
   _renderStyles(node, buffer);
   _renderDataAttributes(node, buffer);
@@ -115,18 +141,18 @@ String _renderElement(Map node) {
   return buffer.toString();
 }
 
-/// Renders lists (ul/ol) with specific padding to match Yomitan layout
+/// Renders ordered/unordered lists. Applies a default left padding to ensure
+/// nested lists indent properly, matching Yomitan's visual hierarchy.
 String _renderList(Map node) {
   final tag = node['tag'];
   final buffer = StringBuffer();
   
-  // Default padding to ensure nested lists look correct
-  String defaultStyles = 'padding-left: 1.4em;';
+  const defaultStyles = 'padding-left: 1.4em;';
 
-  buffer.write('<$tag class="gloss-sc-$tag"');
+  buffer.write('<$tag class="dk-sc-$tag"');
   _renderAttributes(node, buffer);
   
-  // Merge default padding with any incoming styles
+  // Merge default padding with any schema-provided styles
   if (node.containsKey('style') && node['style'] is Map) {
     String css = _mapToCss(node['style']);
     buffer.write(' style="$defaultStyles $css"');
@@ -145,47 +171,47 @@ String _renderList(Map node) {
   return buffer.toString();
 }
 
-/// Renders anchor tags
+/// Renders anchor tags and identifies whether they are external links or
+/// internal dictionary routes (which start with '?').
 String _renderLink(Map node) {
   final buffer = StringBuffer();
   final href = node['href']?.toString() ?? '';
   final isInternal = href.startsWith('?');
 
-  buffer.write('<a class="gloss-link"');
+  buffer.write('<a class="dk-link"');
   _renderAttributes(node, buffer);
   buffer.write(' data-external="${!isInternal}"');
   _renderStyles(node, buffer);
   buffer.write('>');
 
-  buffer.write('<span class="gloss-link-text">');
+  buffer.write('<span class="dk-link-text">');
   if (node.containsKey('content')) {
     buffer.write(_renderNode(node['content']));
   }
   buffer.write('</span>');
 
   if (!isInternal) {
-    // Unicode arrow for external links
-    buffer.write('<span class="gloss-link-external-icon icon" style="font-size:0.8em; margin-left:0.2em;">&#x2197;</span>');
+    buffer.write('<span class="dk-link-external-icon icon" style="font-size:0.8em; margin-left:0.2em;">&#x2197;</span>');
   }
 
   buffer.write('</a>');
   return buffer.toString();
 }
 
-/// Renders root-level images (with caption support)
+/// Renders top-level images utilizing HTML5 `<figure>` and `<figcaption>` 
+/// to bind descriptions cleanly to the image.
 String _renderRootImage(Map node) {
   final sb = StringBuffer();
   final hasDescription = node.containsKey('description') &&
       node['description'] != null &&
       node['description'].toString().isNotEmpty;
 
-  // Use <figure> to keep image and caption together
   if (hasDescription) sb.write('<figure style="margin:0; display:inline-block;">');
 
   sb.write(_renderInlineImage(node));
 
   if (hasDescription) {
-    sb.write('<figcaption class="gloss-image-description" style="font-size:0.9em; color:#666;">');
+    sb.write('<figcaption class="dk-sc-image-description" style="font-size:0.9em; color:#666;">');
     sb.write(_escapeHtml(node['description']));
     sb.write('</figcaption>');
   }
@@ -194,10 +220,8 @@ String _renderRootImage(Map node) {
   return sb.toString();
 }
 
-/// Renders inline images as standard <img> tags for Flutter compatibility.
-/// 
-/// Note: This simplifies the "collapsible" structure (which uses <a> wrappers)
-/// into a standard <img> tag so it renders reliably in widgets like flutter_widget_from_html.
+/// Renders inline images. Bypasses Yomitan's complex nested span/canvas DOM
+/// in favor of a standard `<img>` tag optimized for `flutter_widget_from_html`.
 String _renderInlineImage(Map node) {
   final buffer = StringBuffer();
   
@@ -205,30 +229,27 @@ String _renderInlineImage(Map node) {
   final height = node['preferredHeight'] ?? node['height'];
   final sizeUnits = node['sizeUnits'] ?? 'px';
 
-  buffer.write('<img class="gloss-image"');
+  buffer.write('<img class="dk-sc-image"');
 
   if (node.containsKey('path')) {
     buffer.write(' src="${_escapeAttribute(node['path'])}"');
   }
 
-  // Handle Dimensions
+  // Handle Dimensions based on units
   if (sizeUnits == 'em') {
-    // For EM units, we use inline styles
     String style = '';
     if (width != null) style += 'width: ${width}em; ';
     if (height != null) style += 'height: ${height}em; ';
     if (style.isNotEmpty) buffer.write(' style="$style"');
   } else {
-    // For pixels, attributes are safer for older parsers
     if (width != null) buffer.write(' width="$width"');
     if (height != null) buffer.write(' height="$height"');
   }
 
-  // Fallback Alt Text
   String altText = node['alt'] ?? node['description'] ?? '';
   if (altText.isNotEmpty) buffer.write(' alt="${_escapeAttribute(altText)}"');
 
-  // Handle Styles
+  // Handle Styles and specific image appearances (e.g. monochrome filtering)
   Map<String, dynamic> styles = {};
   if (node.containsKey('style') && node['style'] is Map) {
     styles.addAll(Map<String, dynamic>.from(node['style']));
@@ -241,7 +262,7 @@ String _renderInlineImage(Map node) {
      buffer.write(' style="${_mapToCss(styles)}"');
   }
 
-  // Pass collapsed state as data attribute so you can handle it in Flutter if desired
+  // Preserve collapsible behavior states for Flutter widget hooks
   if (node['collapsed'] == true) buffer.write(' data-collapsed="true"');
   if (node['collapsible'] == true) buffer.write(' data-collapsible="true"');
 
@@ -249,7 +270,7 @@ String _renderInlineImage(Map node) {
   return buffer.toString();
 }
 
-// --- Helpers ---
+// --- Attribute Helpers ---
 
 void _renderAttributes(Map node, StringBuffer buffer) {
   const attrMap = {
@@ -287,6 +308,8 @@ void _renderDataAttributes(Map node, StringBuffer buffer) {
   }
 }
 
+/// Maps Yomitan's camelCase style properties to standard kebab-case CSS.
+/// Automatically injects `em` units for numerical layout properties.
 String _mapToCss(Map styleMap) {
   if (styleMap.isEmpty) return '';
 

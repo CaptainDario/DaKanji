@@ -59,7 +59,6 @@ class _TermBankDefinitionWidgetState extends State<TermBankDefinitionWidget> {
     structuredContentHtmlString = inlineFragmentSync(
       html: structuredContentHtmlString,
       css: getStructuredContentCss(darkMode: true));
-    structuredContentHtmlString = structuredContentHtmlString.replaceAll("\n", "<br/>");
 
     return structuredContentHtmlString;
   }
