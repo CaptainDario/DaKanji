@@ -162,7 +162,7 @@ packages:
     source: hosted
     version: "1.1.2"
   code_assets:
-    dependency: transitive
+    dependency: "direct overridden"
     description:
       name: code_assets
       sha256: "83ccdaa064c980b5596c35dd64a8d3ecc68620174ab9b90b6343b753aa721687"
@@ -435,7 +435,7 @@ packages:
     source: hosted
     version: "2.3.2"
   hooks:
-    dependency: transitive
+    dependency: "direct overridden"
     description:
       name: hooks
       sha256: "7a08a0d684cb3b8fb604b78455d5d352f502b68079f7b80b831c62220ab0a4f6"
@@ -587,10 +587,10 @@ packages:
     dependency: transitive
     description:
       name: mecab_for_dart
-      sha256: "3bdeb269cbc2661b011d9143578e939a25a658e225735919c5834192683d8813"
+      sha256: "10aee9bb5d0c2850b811984e4f64ac5bf402337b39aadf3891d54db0659088c5"
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.1"
+    version: "2.0.2"
   meta:
     dependency: transitive
     description:
@@ -924,6 +924,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.9.4"
+  sqlite3_native_assets:
+    dependency: transitive
+    description:
+      name: sqlite3_native_assets
+      sha256: "60ffeb86d875af891b53a93ae42cd7dc9ab8af77d5904e7c92ac3787782c8925"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.11"
   sqlparser:
     dependency: transitive
     description:

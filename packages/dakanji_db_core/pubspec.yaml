@@ -30,7 +30,7 @@ dependencies:
   language_processing:
   fullwidth_halfwidth_converter: 1.2.0
   crypto: ^3.0.2
-  dakanji_sqlite_extensions:
+  sqlite_extensions:
   dakanji_db_shared:
 
 dev_dependencies:

@@ -17,5 +17,5 @@ workspace:
   - packages/dakanji_db_ui/examples/search
   - packages/css_inline_flutter
   - packages/dakanji_db_shared
-  - packages/dakanji_sqlite_extensions
+  - packages/sqlite_extensions
   - packages/language_processing

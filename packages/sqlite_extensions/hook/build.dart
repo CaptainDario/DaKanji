@@ -19,7 +19,6 @@ void main(List<String> args) async {
     // Add the code asset to the build output.
     for (var extensionName in extensionNames) {
       output.assets.code.add(
-        // "package:dakanji_db_core/
         CodeAsset(
           package: input.packageName,
           name: 'extensions/sqlite_${extensionName}_extension.dart',

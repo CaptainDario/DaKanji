@@ -1,5 +1,5 @@
-name: dakanji_sqlite_extensions
-description: SQLite extensions for DaKanji
+name: sqlite_extensions
+description: SQLite extensions bundled using native assets
 version: 1.0.0
 resolution: workspace
 
