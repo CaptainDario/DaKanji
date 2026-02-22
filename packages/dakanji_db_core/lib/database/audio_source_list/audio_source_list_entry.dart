@@ -26,7 +26,6 @@ class AudioSourceListEntry with _$AudioSourceListEntry {
       uri = uri.trim();
     }
 
-
   factory AudioSourceListEntry.fromJson(Map<String, Object?> json)
     => _$AudioSourceListEntryFromJson(json);
 

@@ -5,6 +5,7 @@ import 'package:dakanji_db_core/data/frequency_mode.dart'; // neccessary for dri
 import 'package:dakanji_db_core/database/audio/audio_dao.dart';
 import 'package:dakanji_db_core/database/audio/audio_relation_tables.dart';
 import 'package:dakanji_db_core/database/audio/audio_tables.dart';
+import 'package:dakanji_db_core/database/audio_source_list/audio_source_list_dao.dart';
 import 'package:dakanji_db_core/database/dakanji_db_dao.dart';
 import 'package:dakanji_db_core/database/db_queries/dictionary_search_dao.dart';
 import 'package:dakanji_db_core/database/db_queries/kanji_search_dao.dart';
@@ -49,12 +50,12 @@ import 'package:dakanji_db_core/delete/deletion_dao.dart';
 import 'package:dakanji_db_core/util/data_converters/sort_order_converter.dart'; // neccessary for drift generator
 import 'package:dakanji_db_core/util/data_converters/sql_json_converter.dart';   // neccessary for drift generator
 import 'package:dakanji_db_core/util/data_converters/zlib_text_converter_io.dart'; // neccessary for drift generator
-import 'package:dakanji_sqlite_extensions/dakanji_sqlite_extensions.dart';
 import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
 import 'package:language_processing/language_processing.dart';
-import 'package:sqlite3/native_assets.dart';
 import 'package:sqlite3/sqlite3.dart';
+import 'package:sqlite3_native_assets/sqlite3_native_assets.dart';
+import 'package:sqlite_extensions/sqlite_extensions.dart';
 import 'package:universal_io/io.dart';
 
 import 'audio_source_list/audio_source_list_tables.dart';
@@ -68,6 +69,8 @@ part 'dakanji_db.g.dart';
     DefinitionTable, TermBankV3DefinitionJsonTable, LanguageCodeTable,
 
     AudioTable, AudioTable_X_TermTable,
+
+    AudioSourceListTable,
 
     RadicalsTable, Radical_X_KanjiRelationsTable,
     KanjiVGTable,
@@ -104,7 +107,7 @@ part 'dakanji_db.g.dart';
   daos: [
     DaKanjiDBDao,
     KanjiDao, TermDao, ReadingDao, DefinitionDao, LanguageCodeDao,
-    AudioDao, MediaDao,
+    AudioDao, AudioSourceListDao, MediaDao,
     RadicalDao, KanjiVGDao,
     IndexDao, TagBankV3Dao,
     SearchProfilesDao,

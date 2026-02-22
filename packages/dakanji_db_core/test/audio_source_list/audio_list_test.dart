@@ -28,10 +28,11 @@ void main() async {
 
 }
 
-/// tests the termBankV3 import of the sample database from the yomitan dictionary
 Future testAudio(DaKanjiDB db) async {
-  // Check some kanji bank queries
+  
+  final results = await db.audioSourceListDao.getAllAudioSources();
+
   for (int i = 0; i < audioListTestCases.length; i++) {
-    // TODO 
+    expect(results.contains(audioListTestCases[i]), true);
   }
 }

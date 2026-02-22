@@ -18982,6 +18982,9 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
     this as DaKanjiDB,
   );
   late final AudioDao audioDao = AudioDao(this as DaKanjiDB);
+  late final AudioSourceListDao audioSourceListDao = AudioSourceListDao(
+    this as DaKanjiDB,
+  );
   late final MediaDao mediaDao = MediaDao(this as DaKanjiDB);
   late final RadicalDao radicalDao = RadicalDao(this as DaKanjiDB);
   late final KanjiVGDao kanjiVGDao = KanjiVGDao(this as DaKanjiDB);
