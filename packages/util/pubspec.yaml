@@ -1,4 +1,4 @@
-name: dakanji_util
+name: util
 description: "Package that contains utility widgets and functions for all packages related to DaKanji."
 version: 0.0.1
 resolution: workspace

@@ -13,7 +13,7 @@ dependencies:
 
   css_inline_flutter:
   da_db_shared:
-  dakanji_util:
+  util:
   dakanji_db_core:
   language_processing:
   

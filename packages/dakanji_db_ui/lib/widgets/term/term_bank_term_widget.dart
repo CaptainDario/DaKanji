@@ -1,6 +1,6 @@
 import 'package:dakanji_db_core/database/dakanji_db.dart';
 import 'package:dakanji_db_core/database/term/term_bank_v3_entry.dart';
-import 'package:dakanji_util/widgets/conditional_parent_widget.dart';
+import 'package:util/widgets/conditional_parent_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:language_processing/language_processing.dart';

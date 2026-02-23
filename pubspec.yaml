@@ -14,7 +14,7 @@ workspace:
   - packages/dakanji_db_ui/examples/search
 
   # Dart packages
-  - packages/dakanji_util
+  - packages/util
   - packages/dakanji_db_core
   - packages/dakanji_db_ui
   - packages/da_db_shared

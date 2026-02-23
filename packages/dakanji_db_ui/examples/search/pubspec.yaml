@@ -11,7 +11,7 @@ dependencies:
   flutter:
     sdk: flutter
 
-  dakanji_util:
+  util:
   dakanji_db_ui:
   dakanji_db_core:
   da_db_shared:
