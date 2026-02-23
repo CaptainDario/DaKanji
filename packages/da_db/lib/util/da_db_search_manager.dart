@@ -12,7 +12,7 @@ import 'package:language_processing/language_processing.dart';
 class DaDbSearchManager {
   
   // -- Configuration --
-  final DaKanjiDB daKanjiDB;
+  final DaDb db;
   final int debounceMilliseconds;
   final bool debug;
   final int targetIdleWorkers;
@@ -33,7 +33,7 @@ class DaDbSearchManager {
   int _currentSearchId = 0;
 
   DaDbSearchManager({
-    required this.daKanjiDB,
+    required this.db,
     this.debounceMilliseconds = 333,
     this.debug = false,
     this.targetIdleWorkers = 2,
@@ -173,16 +173,16 @@ class DaDbSearchManager {
 
     try {
       // --- INTEGRATION POINT: Capture Processor State ---
-      final processorState = daKanjiDB.languageProcessor.toJson();
+      final processorState = db.languageProcessor.toJson();
       
-      final driftIsolate = await daKanjiDB.attachedDatabase.serializableConnection();
+      final driftIsolate = await db.attachedDatabase.serializableConnection();
 
       final isolate = await Isolate.spawn(
         _workerEntry,
         _InitMessage(
           handshakeSendPort: handshakePort.sendPort,
           dbConnection: driftIsolate,
-          inMemory: daKanjiDB.inMemory,
+          inMemory: db.inMemory,
           processorState: processorState, // Pass state to isolate
         ),
         debugName: "SearchWorker",
@@ -227,7 +227,7 @@ class DaDbSearchManager {
     }
 
     final QueryExecutor executor = await init.dbConnection.connect();
-    final DaKanjiDB db = DaKanjiDB(
+    final DaDb db = DaDb(
       executor: executor,
       inMemory: init.inMemory,
       languageProcessor: processor // Pass the local, initialized processor

@@ -7,31 +7,31 @@ import 'package:da_db_ui/widgets/settings/search_profile_settings_info_widgets.d
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
-class DaKanjiDbDictionaryManagementCard extends StatefulWidget {
+class DictionaryManagementCard extends StatefulWidget {
   
   final IndexEntry entry;
 
   final int index;
   
-  const DaKanjiDbDictionaryManagementCard({
+  const DictionaryManagementCard({
     super.key,
     required this.entry,
     required this.index,
   });
 
   @override
-  State<DaKanjiDbDictionaryManagementCard> createState() => _DaKanjiDbDictionaryManagementCardState();
+  State<DictionaryManagementCard> createState() => _DictionaryManagementCardState();
 }
 
-class _DaKanjiDbDictionaryManagementCardState extends State<DaKanjiDbDictionaryManagementCard> {
+class _DictionaryManagementCardState extends State<DictionaryManagementCard> {
 
   bool isExpanded = false;
 
   @override
   Widget build(BuildContext context) {
 
-    var db = GetIt.I<DaKanjiDB>();
-    var loc = GetIt.I<DakanjiDbLocalization>();
+    var db = GetIt.I<DaDb>();
+    var loc = GetIt.I<DaDbLocalization>();
 
     return Card(
       elevation: 2,
@@ -93,7 +93,7 @@ class _DaKanjiDbDictionaryManagementCardState extends State<DaKanjiDbDictionaryM
             ),
             child: SingleChildScrollView(
               primary: false,
-              child: DaKanjiDbDictionaryManagementDetailsTable(widget.entry,),
+              child: DictionaryManagementDetailsTable(widget.entry,),
             ),
           ),
           SizedBox(height: 8),
@@ -118,7 +118,7 @@ class _DaKanjiDbDictionaryManagementCardState extends State<DaKanjiDbDictionaryM
                           child: Center(
                             child: Material(
                               color: Colors.transparent,
-                              child: DaKanjiDbDictionaryUpdatePopup(widget.entry),
+                              child: DictionaryUpdatePopup(widget.entry),
                             ),
                           ),
                         );

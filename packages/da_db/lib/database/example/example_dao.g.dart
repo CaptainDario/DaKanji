@@ -3,7 +3,7 @@
 part of 'example_dao.dart';
 
 // ignore_for_file: type=lint
-mixin _$ExampleDaoMixin on DatabaseAccessor<DaKanjiDB> {
+mixin _$ExampleDaoMixin on DatabaseAccessor<DaDb> {
   $IndexTableTable get indexTable => attachedDatabase.indexTable;
   $ExampleTableTable get exampleTable => attachedDatabase.exampleTable;
   $LanguageCodeTableTable get languageCodeTable =>

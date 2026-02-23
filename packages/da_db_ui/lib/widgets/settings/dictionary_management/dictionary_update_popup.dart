@@ -3,12 +3,12 @@ import 'package:da_db/util/check_dict_updates.dart';
 import 'package:flutter/material.dart';
 
 
-class DaKanjiDbDictionaryUpdatePopup extends StatefulWidget {
+class DictionaryUpdatePopup extends StatefulWidget {
 
   /// The dictionary to check for updates
   final IndexEntry entry;
 
-  const DaKanjiDbDictionaryUpdatePopup(
+  const DictionaryUpdatePopup(
     this.entry,
     {
       super.key,
@@ -16,10 +16,10 @@ class DaKanjiDbDictionaryUpdatePopup extends StatefulWidget {
   );
 
   @override
-  State<DaKanjiDbDictionaryUpdatePopup> createState() => _DaKanjiDbDictionaryUpdatePopupState();
+  State<DictionaryUpdatePopup> createState() => _DictionaryUpdatePopupState();
 }
 
-class _DaKanjiDbDictionaryUpdatePopupState extends State<DaKanjiDbDictionaryUpdatePopup> {
+class _DictionaryUpdatePopupState extends State<DictionaryUpdatePopup> {
 
   late final Future<bool> checkForUpdatesFuture;
 

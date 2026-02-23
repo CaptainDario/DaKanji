@@ -30,7 +30,7 @@ void main() async {
 
     group('Term Bank V3 test cases: $testCaseIndex', () {
 
-      late DaKanjiDB db;
+      late DaDb db;
       setUpAll(() async {
         db = await setupFreshDB(testCaseIndex+1);
       });
@@ -72,10 +72,10 @@ void main() async {
 
 }
 
-Future<DaKanjiDB> setupFreshDB(int testCaseIndex) async {
+Future<DaDb> setupFreshDB(int testCaseIndex) async {
 
-  DaKanjiDB db = DaKanjiDB(
-    dbPath: dakanjiDbTestPath, inMemory: true, languageProcessor: await japaneseProcessor);
+  DaDb db = DaDb(
+    dbPath: daDbTestPath, inMemory: true, languageProcessor: await japaneseProcessor);
   db.clearDB();
   
   bool shouldIncludeFile(File file) =>

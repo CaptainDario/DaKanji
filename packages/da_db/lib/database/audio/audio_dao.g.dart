@@ -3,7 +3,7 @@
 part of 'audio_dao.dart';
 
 // ignore_for_file: type=lint
-mixin _$AudioDaoMixin on DatabaseAccessor<DaKanjiDB> {
+mixin _$AudioDaoMixin on DatabaseAccessor<DaDb> {
   $IndexTableTable get indexTable => attachedDatabase.indexTable;
   $ReadingTableTable get readingTable => attachedDatabase.readingTable;
   $MediaTableTable get mediaTable => attachedDatabase.mediaTable;

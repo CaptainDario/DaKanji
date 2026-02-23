@@ -14,7 +14,7 @@ import 'package:provider/provider.dart';
 class DictionarySearchResultWidget extends StatefulWidget {
 
   final DictionarySearchResult result;
-  final DakanjiDbLocalization localization;
+  final DaDbLocalization localization;
   final Function(DictionaryMatch match)? onTap;
 
   const DictionarySearchResultWidget({
@@ -36,7 +36,7 @@ class _DictionarySearchResultWidgetState extends State<DictionarySearchResultWid
   @override
   void initState() {
     super.initState();
-    _profilesStream = GetIt.I<DaKanjiDB>().searchProfilesDao.watchActiveProfile();
+    _profilesStream = GetIt.I<DaDb>().searchProfilesDao.watchActiveProfile();
   }
 
   bool _isExpanded(String key) => !_collapsedSections.contains(key);

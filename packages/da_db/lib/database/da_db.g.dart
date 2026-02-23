@@ -744,7 +744,7 @@ class IndexTableData extends DataClass implements Insertable<IndexTableData> {
   /// id of this entry
   final int id;
 
-  /// Whether this is a dictionary included with DaKanji by default or not
+  /// Whether this is a dictionary included with the db by default or not
   final bool isDefaultDictionary;
 
   /// Whether this dictionary is enabled or not
@@ -1963,7 +1963,7 @@ class IndexEntryAsJsonView
     implements HasResultSet {
   final String? _alias;
   @override
-  final _$DaKanjiDB attachedDatabase;
+  final _$DaDb attachedDatabase;
   IndexEntryAsJsonView(this.attachedDatabase, [this._alias]);
   @override
   List<GeneratedColumn> get $columns => [id, indexEntry];
@@ -3646,7 +3646,7 @@ class TagBankV3AsJsonView
     implements HasResultSet {
   final String? _alias;
   @override
-  final _$DaKanjiDB attachedDatabase;
+  final _$DaDb attachedDatabase;
   TagBankV3AsJsonView(this.attachedDatabase, [this._alias]);
   @override
   List<GeneratedColumn> get $columns => [tagId, tagJson];
@@ -4646,7 +4646,7 @@ class KanjiBankV3EntryView
     implements HasResultSet {
   final String? _alias;
   @override
-  final _$DaKanjiDB attachedDatabase;
+  final _$DaDb attachedDatabase;
   KanjiBankV3EntryView(this.attachedDatabase, [this._alias]);
   @override
   List<GeneratedColumn> get $columns => [
@@ -5543,7 +5543,7 @@ class KanjiMetaBankV3EntryView
     implements HasResultSet {
   final String? _alias;
   @override
-  final _$DaKanjiDB attachedDatabase;
+  final _$DaDb attachedDatabase;
   KanjiMetaBankV3EntryView(this.attachedDatabase, [this._alias]);
   @override
   List<GeneratedColumn> get $columns => [
@@ -9460,7 +9460,7 @@ class TermBankV3DefinitionsJsonView
     implements HasResultSet {
   final String? _alias;
   @override
-  final _$DaKanjiDB attachedDatabase;
+  final _$DaDb attachedDatabase;
   TermBankV3DefinitionsJsonView(this.attachedDatabase, [this._alias]);
   @override
   List<GeneratedColumn> get $columns => [termBankId, definition, sortKey];
@@ -9871,7 +9871,7 @@ class TermBankV3DefTagsJsonView
     implements HasResultSet {
   final String? _alias;
   @override
-  final _$DaKanjiDB attachedDatabase;
+  final _$DaDb attachedDatabase;
   TermBankV3DefTagsJsonView(this.attachedDatabase, [this._alias]);
   @override
   List<GeneratedColumn> get $columns => [termBankId, tagJson];
@@ -9988,7 +9988,7 @@ class TermBankV3RulesJsonView
     implements HasResultSet {
   final String? _alias;
   @override
-  final _$DaKanjiDB attachedDatabase;
+  final _$DaDb attachedDatabase;
   TermBankV3RulesJsonView(this.attachedDatabase, [this._alias]);
   @override
   List<GeneratedColumn> get $columns => [termBankId, ruleIdentifier];
@@ -10102,7 +10102,7 @@ class TermBankV3TagsJsonView
     implements HasResultSet {
   final String? _alias;
   @override
-  final _$DaKanjiDB attachedDatabase;
+  final _$DaDb attachedDatabase;
   TermBankV3TagsJsonView(this.attachedDatabase, [this._alias]);
   @override
   List<GeneratedColumn> get $columns => [termBankId, tagJson];
@@ -10291,7 +10291,7 @@ class TermMetaBankV3BaseView
     implements HasResultSet {
   final String? _alias;
   @override
-  final _$DaKanjiDB attachedDatabase;
+  final _$DaDb attachedDatabase;
   TermMetaBankV3BaseView(this.attachedDatabase, [this._alias]);
   @override
   List<GeneratedColumn> get $columns => [
@@ -11374,7 +11374,7 @@ class TermMetaBankV3PitchesJsonView
     implements HasResultSet {
   final String? _alias;
   @override
-  final _$DaKanjiDB attachedDatabase;
+  final _$DaDb attachedDatabase;
   TermMetaBankV3PitchesJsonView(this.attachedDatabase, [this._alias]);
   @override
   List<GeneratedColumn> get $columns => [termMetaId, pitches];
@@ -12252,7 +12252,7 @@ class TermMetaBankV3IpasJsonView
     implements HasResultSet {
   final String? _alias;
   @override
-  final _$DaKanjiDB attachedDatabase;
+  final _$DaDb attachedDatabase;
   TermMetaBankV3IpasJsonView(this.attachedDatabase, [this._alias]);
   @override
   List<GeneratedColumn> get $columns => [termMetaId, ipas];
@@ -12464,7 +12464,7 @@ class TermBankV3EntryView
     implements HasResultSet {
   final String? _alias;
   @override
-  final _$DaKanjiDB attachedDatabase;
+  final _$DaDb attachedDatabase;
   TermBankV3EntryView(this.attachedDatabase, [this._alias]);
   @override
   List<GeneratedColumn> get $columns => [
@@ -12771,7 +12771,7 @@ class TermMetaBankV3EntryView
     implements HasResultSet {
   final String? _alias;
   @override
-  final _$DaKanjiDB attachedDatabase;
+  final _$DaDb attachedDatabase;
   TermMetaBankV3EntryView(this.attachedDatabase, [this._alias]);
   @override
   List<GeneratedColumn> get $columns => [
@@ -14326,7 +14326,7 @@ class AudioEntryView extends ViewInfo<AudioEntryView, AudioEntryViewData>
     implements HasResultSet {
   final String? _alias;
   @override
-  final _$DaKanjiDB attachedDatabase;
+  final _$DaDb attachedDatabase;
   AudioEntryView(this.attachedDatabase, [this._alias]);
   @override
   List<GeneratedColumn> get $columns => [
@@ -16021,7 +16021,7 @@ class ExampleEntryView extends ViewInfo<ExampleEntryView, ExampleEntryViewData>
     implements HasResultSet {
   final String? _alias;
   @override
-  final _$DaKanjiDB attachedDatabase;
+  final _$DaDb attachedDatabase;
   ExampleEntryView(this.attachedDatabase, [this._alias]);
   @override
   List<GeneratedColumn> get $columns => [
@@ -17494,7 +17494,7 @@ class $SearchProfilesTableTable extends SearchProfilesTable
   );
   @override
   late final GeneratedColumnWithTypeConverter<
-    List<(DakanjiDbSearchResult1stSortOrder, bool)>,
+    List<(SearchResult1stSortOrder, bool)>,
     String
   >
   firstSortOrder =
@@ -17504,12 +17504,12 @@ class $SearchProfilesTableTable extends SearchProfilesTable
         false,
         type: DriftSqlType.string,
         requiredDuringInsert: true,
-      ).withConverter<List<(DakanjiDbSearchResult1stSortOrder, bool)>>(
+      ).withConverter<List<(SearchResult1stSortOrder, bool)>>(
         $SearchProfilesTableTable.$converterfirstSortOrder,
       );
   @override
   late final GeneratedColumnWithTypeConverter<
-    List<(DakanjiDbSearchResult2ndSortOrder, bool)>,
+    List<(SearchResult2ndSortOrder, bool)>,
     String
   >
   secondSortOrder =
@@ -17519,7 +17519,7 @@ class $SearchProfilesTableTable extends SearchProfilesTable
         false,
         type: DriftSqlType.string,
         requiredDuringInsert: true,
-      ).withConverter<List<(DakanjiDbSearchResult2ndSortOrder, bool)>>(
+      ).withConverter<List<(SearchResult2ndSortOrder, bool)>>(
         $SearchProfilesTableTable.$convertersecondSortOrder,
       );
   static const VerificationMeta _normalizeSearchConvertsRomajiToHiraganaMeta =
@@ -17940,9 +17940,9 @@ class $SearchProfilesTableTable extends SearchProfilesTable
     return $SearchProfilesTableTable(attachedDatabase, alias);
   }
 
-  static TypeConverter<List<(DakanjiDbSearchResult1stSortOrder, bool)>, String>
+  static TypeConverter<List<(SearchResult1stSortOrder, bool)>, String>
   $converterfirstSortOrder = const FirstSortOrderConverter();
-  static TypeConverter<List<(DakanjiDbSearchResult2ndSortOrder, bool)>, String>
+  static TypeConverter<List<(SearchResult2ndSortOrder, bool)>, String>
   $convertersecondSortOrder = const SecondSortOrderConverter();
   static TypeConverter<Object?, String> $convertergroupingRules =
       const JsonConverter();
@@ -17956,14 +17956,14 @@ class SearchProfilesTableData extends DataClass
   final int sortOrder;
 
   /// 1st level sort order for search results.
-  /// If an entry of [DaKanjiDbSearch1stSortOrder] is not included here, it
+  /// If an entry of [SearchResult1stSortOrder] is not included here, it
   /// will not be searched for.
-  final List<(DakanjiDbSearchResult1stSortOrder, bool)> firstSortOrder;
+  final List<(SearchResult1stSortOrder, bool)> firstSortOrder;
 
   /// 2nd level sort order for search results.
-  /// If an entry of [DakanjiDbSearchResult2ndSortOrder] is not included here, it
+  /// If an entry of [SearchResult2ndSortOrder] is not included here, it
   /// will not be searched for.
-  final List<(DakanjiDbSearchResult2ndSortOrder, bool)> secondSortOrder;
+  final List<(SearchResult2ndSortOrder, bool)> secondSortOrder;
 
   /// Whether to convert romaji to hiragana in normalized searches.
   final bool normalizeSearchConvertsRomajiToHiragana;
@@ -18109,11 +18109,11 @@ class SearchProfilesTableData extends DataClass
       isActiveProfile: serializer.fromJson<bool>(json['isActiveProfile']),
       sortOrder: serializer.fromJson<int>(json['sortOrder']),
       firstSortOrder: serializer
-          .fromJson<List<(DakanjiDbSearchResult1stSortOrder, bool)>>(
+          .fromJson<List<(SearchResult1stSortOrder, bool)>>(
             json['firstSortOrder'],
           ),
       secondSortOrder: serializer
-          .fromJson<List<(DakanjiDbSearchResult2ndSortOrder, bool)>>(
+          .fromJson<List<(SearchResult2ndSortOrder, bool)>>(
             json['secondSortOrder'],
           ),
       normalizeSearchConvertsRomajiToHiragana: serializer.fromJson<bool>(
@@ -18151,13 +18151,9 @@ class SearchProfilesTableData extends DataClass
       'isActiveProfile': serializer.toJson<bool>(isActiveProfile),
       'sortOrder': serializer.toJson<int>(sortOrder),
       'firstSortOrder': serializer
-          .toJson<List<(DakanjiDbSearchResult1stSortOrder, bool)>>(
-            firstSortOrder,
-          ),
+          .toJson<List<(SearchResult1stSortOrder, bool)>>(firstSortOrder),
       'secondSortOrder': serializer
-          .toJson<List<(DakanjiDbSearchResult2ndSortOrder, bool)>>(
-            secondSortOrder,
-          ),
+          .toJson<List<(SearchResult2ndSortOrder, bool)>>(secondSortOrder),
       'normalizeSearchConvertsRomajiToHiragana': serializer.toJson<bool>(
         normalizeSearchConvertsRomajiToHiragana,
       ),
@@ -18184,8 +18180,8 @@ class SearchProfilesTableData extends DataClass
     String? name,
     bool? isActiveProfile,
     int? sortOrder,
-    List<(DakanjiDbSearchResult1stSortOrder, bool)>? firstSortOrder,
-    List<(DakanjiDbSearchResult2ndSortOrder, bool)>? secondSortOrder,
+    List<(SearchResult1stSortOrder, bool)>? firstSortOrder,
+    List<(SearchResult2ndSortOrder, bool)>? secondSortOrder,
     bool? normalizeSearchConvertsRomajiToHiragana,
     Value<Object?> groupingRules = const Value.absent(),
     bool? showSearchResultSeparationHeaders,
@@ -18366,8 +18362,8 @@ class SearchProfilesTableCompanion
   final Value<String> name;
   final Value<bool> isActiveProfile;
   final Value<int> sortOrder;
-  final Value<List<(DakanjiDbSearchResult1stSortOrder, bool)>> firstSortOrder;
-  final Value<List<(DakanjiDbSearchResult2ndSortOrder, bool)>> secondSortOrder;
+  final Value<List<(SearchResult1stSortOrder, bool)>> firstSortOrder;
+  final Value<List<(SearchResult2ndSortOrder, bool)>> secondSortOrder;
   final Value<bool> normalizeSearchConvertsRomajiToHiragana;
   final Value<Object?> groupingRules;
   final Value<bool> showSearchResultSeparationHeaders;
@@ -18405,8 +18401,8 @@ class SearchProfilesTableCompanion
     this.name = const Value.absent(),
     this.isActiveProfile = const Value.absent(),
     required int sortOrder,
-    required List<(DakanjiDbSearchResult1stSortOrder, bool)> firstSortOrder,
-    required List<(DakanjiDbSearchResult2ndSortOrder, bool)> secondSortOrder,
+    required List<(SearchResult1stSortOrder, bool)> firstSortOrder,
+    required List<(SearchResult2ndSortOrder, bool)> secondSortOrder,
     this.normalizeSearchConvertsRomajiToHiragana = const Value.absent(),
     required Object? groupingRules,
     this.showSearchResultSeparationHeaders = const Value.absent(),
@@ -18479,8 +18475,8 @@ class SearchProfilesTableCompanion
     Value<String>? name,
     Value<bool>? isActiveProfile,
     Value<int>? sortOrder,
-    Value<List<(DakanjiDbSearchResult1stSortOrder, bool)>>? firstSortOrder,
-    Value<List<(DakanjiDbSearchResult2ndSortOrder, bool)>>? secondSortOrder,
+    Value<List<(SearchResult1stSortOrder, bool)>>? firstSortOrder,
+    Value<List<(SearchResult2ndSortOrder, bool)>>? secondSortOrder,
     Value<bool>? normalizeSearchConvertsRomajiToHiragana,
     Value<Object?>? groupingRules,
     Value<bool>? showSearchResultSeparationHeaders,
@@ -18640,9 +18636,9 @@ class SearchProfilesTableCompanion
   }
 }
 
-abstract class _$DaKanjiDB extends GeneratedDatabase {
-  _$DaKanjiDB(QueryExecutor e) : super(e);
-  $DaKanjiDBManager get managers => $DaKanjiDBManager(this);
+abstract class _$DaDb extends GeneratedDatabase {
+  _$DaDb(QueryExecutor e) : super(e);
+  $DaDbManager get managers => $DaDbManager(this);
   late final $KanjiTableTable kanjiTable = $KanjiTableTable(this);
   late final $IndexTableTable indexTable = $IndexTableTable(this);
   late final $KanjiBankV3TableTable kanjiBankV3Table = $KanjiBankV3TableTable(
@@ -19036,40 +19032,38 @@ abstract class _$DaKanjiDB extends GeneratedDatabase {
     'Radical_X_KanjiRelationsTable_radicalIdIndex',
     'CREATE INDEX Radical_X_KanjiRelationsTable_radicalIdIndex ON radical_x_kanji_relations_table (radical_id)',
   );
-  late final DaKanjiDBDao daKanjiDBDao = DaKanjiDBDao(this as DaKanjiDB);
-  late final KanjiDao kanjiDao = KanjiDao(this as DaKanjiDB);
-  late final TermDao termDao = TermDao(this as DaKanjiDB);
-  late final ReadingDao readingDao = ReadingDao(this as DaKanjiDB);
-  late final DefinitionDao definitionDao = DefinitionDao(this as DaKanjiDB);
-  late final LanguageCodeDao languageCodeDao = LanguageCodeDao(
-    this as DaKanjiDB,
-  );
-  late final AudioDao audioDao = AudioDao(this as DaKanjiDB);
+  late final DaDbDao daDbDao = DaDbDao(this as DaDb);
+  late final KanjiDao kanjiDao = KanjiDao(this as DaDb);
+  late final TermDao termDao = TermDao(this as DaDb);
+  late final ReadingDao readingDao = ReadingDao(this as DaDb);
+  late final DefinitionDao definitionDao = DefinitionDao(this as DaDb);
+  late final LanguageCodeDao languageCodeDao = LanguageCodeDao(this as DaDb);
+  late final AudioDao audioDao = AudioDao(this as DaDb);
   late final AudioSourceListDao audioSourceListDao = AudioSourceListDao(
-    this as DaKanjiDB,
+    this as DaDb,
   );
-  late final MediaDao mediaDao = MediaDao(this as DaKanjiDB);
-  late final RadicalDao radicalDao = RadicalDao(this as DaKanjiDB);
-  late final KanjiVGDao kanjiVGDao = KanjiVGDao(this as DaKanjiDB);
-  late final IndexDao indexDao = IndexDao(this as DaKanjiDB);
-  late final TagBankV3Dao tagBankV3Dao = TagBankV3Dao(this as DaKanjiDB);
+  late final MediaDao mediaDao = MediaDao(this as DaDb);
+  late final RadicalDao radicalDao = RadicalDao(this as DaDb);
+  late final KanjiVGDao kanjiVGDao = KanjiVGDao(this as DaDb);
+  late final IndexDao indexDao = IndexDao(this as DaDb);
+  late final TagBankV3Dao tagBankV3Dao = TagBankV3Dao(this as DaDb);
   late final SearchProfilesDao searchProfilesDao = SearchProfilesDao(
-    this as DaKanjiDB,
+    this as DaDb,
   );
-  late final KanjiBankV3Dao kanjiBankV3Dao = KanjiBankV3Dao(this as DaKanjiDB);
+  late final KanjiBankV3Dao kanjiBankV3Dao = KanjiBankV3Dao(this as DaDb);
   late final KanjiMetaBankV3Dao kanjiMetaBankV3Dao = KanjiMetaBankV3Dao(
-    this as DaKanjiDB,
+    this as DaDb,
   );
-  late final TermBankV3Dao termBankV3Dao = TermBankV3Dao(this as DaKanjiDB);
+  late final TermBankV3Dao termBankV3Dao = TermBankV3Dao(this as DaDb);
   late final TermMetaBankV3Dao termMetaBankV3Dao = TermMetaBankV3Dao(
-    this as DaKanjiDB,
+    this as DaDb,
   );
-  late final ExampleDao exampleDao = ExampleDao(this as DaKanjiDB);
+  late final ExampleDao exampleDao = ExampleDao(this as DaDb);
   late final DictionarySearchDao dictionarySearchDao = DictionarySearchDao(
-    this as DaKanjiDB,
+    this as DaDb,
   );
-  late final KanjiSearchDao kanjiSearchDao = KanjiSearchDao(this as DaKanjiDB);
-  late final DeletionDao deletionDao = DeletionDao(this as DaKanjiDB);
+  late final KanjiSearchDao kanjiSearchDao = KanjiSearchDao(this as DaDb);
+  late final DeletionDao deletionDao = DeletionDao(this as DaDb);
   Selectable<int> kanji_dictionary_find_kanji_bank_entries_drift(
     String? indexesToInclude,
     List<String> kanjis,
@@ -20048,11 +20042,11 @@ typedef $$KanjiTableTableUpdateCompanionBuilder =
     KanjiTableCompanion Function({Value<int> id, Value<String> kanji});
 
 final class $$KanjiTableTableReferences
-    extends BaseReferences<_$DaKanjiDB, $KanjiTableTable, KanjiTableData> {
+    extends BaseReferences<_$DaDb, $KanjiTableTable, KanjiTableData> {
   $$KanjiTableTableReferences(super.$_db, super.$_table, super.$_typedResult);
 
   static MultiTypedResultKey<$KanjiBankV3TableTable, List<KanjiBankV3TableData>>
-  _kanjiBankV3TableRefsTable(_$DaKanjiDB db) => MultiTypedResultKey.fromTable(
+  _kanjiBankV3TableRefsTable(_$DaDb db) => MultiTypedResultKey.fromTable(
     db.kanjiBankV3Table,
     aliasName: $_aliasNameGenerator(
       db.kanjiTable.id,
@@ -20078,14 +20072,13 @@ final class $$KanjiTableTableReferences
     $KanjiMetaBankV3TableTable,
     List<KanjiMetaBankV3TableData>
   >
-  _kanjiMetaBankV3TableRefsTable(_$DaKanjiDB db) =>
-      MultiTypedResultKey.fromTable(
-        db.kanjiMetaBankV3Table,
-        aliasName: $_aliasNameGenerator(
-          db.kanjiTable.id,
-          db.kanjiMetaBankV3Table.kanjiId,
-        ),
-      );
+  _kanjiMetaBankV3TableRefsTable(_$DaDb db) => MultiTypedResultKey.fromTable(
+    db.kanjiMetaBankV3Table,
+    aliasName: $_aliasNameGenerator(
+      db.kanjiTable.id,
+      db.kanjiMetaBankV3Table.kanjiId,
+    ),
+  );
 
   $$KanjiMetaBankV3TableTableProcessedTableManager
   get kanjiMetaBankV3TableRefs {
@@ -20103,7 +20096,7 @@ final class $$KanjiTableTableReferences
   }
 
   static MultiTypedResultKey<$KanjiVGTableTable, List<KanjiVGTableData>>
-  _kanjiVGTableRefsTable(_$DaKanjiDB db) => MultiTypedResultKey.fromTable(
+  _kanjiVGTableRefsTable(_$DaDb db) => MultiTypedResultKey.fromTable(
     db.kanjiVGTable,
     aliasName: $_aliasNameGenerator(db.kanjiTable.id, db.kanjiVGTable.kanjiId),
   );
@@ -20124,7 +20117,7 @@ final class $$KanjiTableTableReferences
     $Radical_X_KanjiRelationsTableTable,
     List<Radical_X_KanjiRelationsTableData>
   >
-  _radicalXKanjiRelationsTableRefsTable(_$DaKanjiDB db) =>
+  _radicalXKanjiRelationsTableRefsTable(_$DaDb db) =>
       MultiTypedResultKey.fromTable(
         db.radicalXKanjiRelationsTable,
         aliasName: $_aliasNameGenerator(
@@ -20150,7 +20143,7 @@ final class $$KanjiTableTableReferences
 }
 
 class $$KanjiTableTableFilterComposer
-    extends Composer<_$DaKanjiDB, $KanjiTableTable> {
+    extends Composer<_$DaDb, $KanjiTableTable> {
   $$KanjiTableTableFilterComposer({
     required super.$db,
     required super.$table,
@@ -20274,7 +20267,7 @@ class $$KanjiTableTableFilterComposer
 }
 
 class $$KanjiTableTableOrderingComposer
-    extends Composer<_$DaKanjiDB, $KanjiTableTable> {
+    extends Composer<_$DaDb, $KanjiTableTable> {
   $$KanjiTableTableOrderingComposer({
     required super.$db,
     required super.$table,
@@ -20294,7 +20287,7 @@ class $$KanjiTableTableOrderingComposer
 }
 
 class $$KanjiTableTableAnnotationComposer
-    extends Composer<_$DaKanjiDB, $KanjiTableTable> {
+    extends Composer<_$DaDb, $KanjiTableTable> {
   $$KanjiTableTableAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -20417,7 +20410,7 @@ class $$KanjiTableTableAnnotationComposer
 class $$KanjiTableTableTableManager
     extends
         RootTableManager<
-          _$DaKanjiDB,
+          _$DaDb,
           $KanjiTableTable,
           KanjiTableData,
           $$KanjiTableTableFilterComposer,
@@ -20434,7 +20427,7 @@ class $$KanjiTableTableTableManager
             bool radicalXKanjiRelationsTableRefs,
           })
         > {
-  $$KanjiTableTableTableManager(_$DaKanjiDB db, $KanjiTableTable table)
+  $$KanjiTableTableTableManager(_$DaDb db, $KanjiTableTable table)
     : super(
         TableManagerState(
           db: db,
@@ -20574,7 +20567,7 @@ class $$KanjiTableTableTableManager
 
 typedef $$KanjiTableTableProcessedTableManager =
     ProcessedTableManager<
-      _$DaKanjiDB,
+      _$DaDb,
       $KanjiTableTable,
       KanjiTableData,
       $$KanjiTableTableFilterComposer,
@@ -20641,11 +20634,11 @@ typedef $$IndexTableTableUpdateCompanionBuilder =
     });
 
 final class $$IndexTableTableReferences
-    extends BaseReferences<_$DaKanjiDB, $IndexTableTable, IndexTableData> {
+    extends BaseReferences<_$DaDb, $IndexTableTable, IndexTableData> {
   $$IndexTableTableReferences(super.$_db, super.$_table, super.$_typedResult);
 
   static MultiTypedResultKey<$KanjiBankV3TableTable, List<KanjiBankV3TableData>>
-  _kanjiBankV3TableRefsTable(_$DaKanjiDB db) => MultiTypedResultKey.fromTable(
+  _kanjiBankV3TableRefsTable(_$DaDb db) => MultiTypedResultKey.fromTable(
     db.kanjiBankV3Table,
     aliasName: $_aliasNameGenerator(
       db.indexTable.id,
@@ -20668,7 +20661,7 @@ final class $$IndexTableTableReferences
   }
 
   static MultiTypedResultKey<$TagBankV3TableTable, List<TagBankV3TableData>>
-  _tagBankV3TableRefsTable(_$DaKanjiDB db) => MultiTypedResultKey.fromTable(
+  _tagBankV3TableRefsTable(_$DaDb db) => MultiTypedResultKey.fromTable(
     db.tagBankV3Table,
     aliasName: $_aliasNameGenerator(
       db.indexTable.id,
@@ -20692,14 +20685,13 @@ final class $$IndexTableTableReferences
     $KanjiMetaBankV3TableTable,
     List<KanjiMetaBankV3TableData>
   >
-  _kanjiMetaBankV3TableRefsTable(_$DaKanjiDB db) =>
-      MultiTypedResultKey.fromTable(
-        db.kanjiMetaBankV3Table,
-        aliasName: $_aliasNameGenerator(
-          db.indexTable.id,
-          db.kanjiMetaBankV3Table.indexId,
-        ),
-      );
+  _kanjiMetaBankV3TableRefsTable(_$DaDb db) => MultiTypedResultKey.fromTable(
+    db.kanjiMetaBankV3Table,
+    aliasName: $_aliasNameGenerator(
+      db.indexTable.id,
+      db.kanjiMetaBankV3Table.indexId,
+    ),
+  );
 
   $$KanjiMetaBankV3TableTableProcessedTableManager
   get kanjiMetaBankV3TableRefs {
@@ -20717,7 +20709,7 @@ final class $$IndexTableTableReferences
   }
 
   static MultiTypedResultKey<$TermBankV3TableTable, List<TermBankV3TableData>>
-  _termBankV3TableRefsTable(_$DaKanjiDB db) => MultiTypedResultKey.fromTable(
+  _termBankV3TableRefsTable(_$DaDb db) => MultiTypedResultKey.fromTable(
     db.termBankV3Table,
     aliasName: $_aliasNameGenerator(
       db.indexTable.id,
@@ -20743,14 +20735,13 @@ final class $$IndexTableTableReferences
     $TermMetaBankV3TableTable,
     List<TermMetaBankV3TableData>
   >
-  _termMetaBankV3TableRefsTable(_$DaKanjiDB db) =>
-      MultiTypedResultKey.fromTable(
-        db.termMetaBankV3Table,
-        aliasName: $_aliasNameGenerator(
-          db.indexTable.id,
-          db.termMetaBankV3Table.indexId,
-        ),
-      );
+  _termMetaBankV3TableRefsTable(_$DaDb db) => MultiTypedResultKey.fromTable(
+    db.termMetaBankV3Table,
+    aliasName: $_aliasNameGenerator(
+      db.indexTable.id,
+      db.termMetaBankV3Table.indexId,
+    ),
+  );
 
   $$TermMetaBankV3TableTableProcessedTableManager get termMetaBankV3TableRefs {
     final manager = $$TermMetaBankV3TableTableTableManager(
@@ -20767,7 +20758,7 @@ final class $$IndexTableTableReferences
   }
 
   static MultiTypedResultKey<$MediaTableTable, List<MediaTableData>>
-  _mediaTableRefsTable(_$DaKanjiDB db) => MultiTypedResultKey.fromTable(
+  _mediaTableRefsTable(_$DaDb db) => MultiTypedResultKey.fromTable(
     db.mediaTable,
     aliasName: $_aliasNameGenerator(db.indexTable.id, db.mediaTable.indexId),
   );
@@ -20785,7 +20776,7 @@ final class $$IndexTableTableReferences
   }
 
   static MultiTypedResultKey<$AudioTableTable, List<AudioTableData>>
-  _audioTableRefsTable(_$DaKanjiDB db) => MultiTypedResultKey.fromTable(
+  _audioTableRefsTable(_$DaDb db) => MultiTypedResultKey.fromTable(
     db.audioTable,
     aliasName: $_aliasNameGenerator(db.indexTable.id, db.audioTable.indexId),
   );
@@ -20803,7 +20794,7 @@ final class $$IndexTableTableReferences
   }
 
   static MultiTypedResultKey<$ExampleTableTable, List<ExampleTableData>>
-  _exampleTableRefsTable(_$DaKanjiDB db) => MultiTypedResultKey.fromTable(
+  _exampleTableRefsTable(_$DaDb db) => MultiTypedResultKey.fromTable(
     db.exampleTable,
     aliasName: $_aliasNameGenerator(db.indexTable.id, db.exampleTable.indexId),
   );
@@ -20824,14 +20815,13 @@ final class $$IndexTableTableReferences
     $AudioSourceListTableTable,
     List<AudioSourceListTableData>
   >
-  _audioSourceListTableRefsTable(_$DaKanjiDB db) =>
-      MultiTypedResultKey.fromTable(
-        db.audioSourceListTable,
-        aliasName: $_aliasNameGenerator(
-          db.indexTable.id,
-          db.audioSourceListTable.indexId,
-        ),
-      );
+  _audioSourceListTableRefsTable(_$DaDb db) => MultiTypedResultKey.fromTable(
+    db.audioSourceListTable,
+    aliasName: $_aliasNameGenerator(
+      db.indexTable.id,
+      db.audioSourceListTable.indexId,
+    ),
+  );
 
   $$AudioSourceListTableTableProcessedTableManager
   get audioSourceListTableRefs {
@@ -20850,7 +20840,7 @@ final class $$IndexTableTableReferences
 }
 
 class $$IndexTableTableFilterComposer
-    extends Composer<_$DaKanjiDB, $IndexTableTable> {
+    extends Composer<_$DaDb, $IndexTableTable> {
   $$IndexTableTableFilterComposer({
     required super.$db,
     required super.$table,
@@ -21192,7 +21182,7 @@ class $$IndexTableTableFilterComposer
 }
 
 class $$IndexTableTableOrderingComposer
-    extends Composer<_$DaKanjiDB, $IndexTableTable> {
+    extends Composer<_$DaDb, $IndexTableTable> {
   $$IndexTableTableOrderingComposer({
     required super.$db,
     required super.$table,
@@ -21307,7 +21297,7 @@ class $$IndexTableTableOrderingComposer
 }
 
 class $$IndexTableTableAnnotationComposer
-    extends Composer<_$DaKanjiDB, $IndexTableTable> {
+    extends Composer<_$DaDb, $IndexTableTable> {
   $$IndexTableTableAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -21634,7 +21624,7 @@ class $$IndexTableTableAnnotationComposer
 class $$IndexTableTableTableManager
     extends
         RootTableManager<
-          _$DaKanjiDB,
+          _$DaDb,
           $IndexTableTable,
           IndexTableData,
           $$IndexTableTableFilterComposer,
@@ -21656,7 +21646,7 @@ class $$IndexTableTableTableManager
             bool audioSourceListTableRefs,
           })
         > {
-  $$IndexTableTableTableManager(_$DaKanjiDB db, $IndexTableTable table)
+  $$IndexTableTableTableManager(_$DaDb db, $IndexTableTable table)
     : super(
         TableManagerState(
           db: db,
@@ -21994,7 +21984,7 @@ class $$IndexTableTableTableManager
 
 typedef $$IndexTableTableProcessedTableManager =
     ProcessedTableManager<
-      _$DaKanjiDB,
+      _$DaDb,
       $IndexTableTable,
       IndexTableData,
       $$IndexTableTableFilterComposer,
@@ -22037,21 +22027,16 @@ typedef $$KanjiBankV3TableTableUpdateCompanionBuilder =
 
 final class $$KanjiBankV3TableTableReferences
     extends
-        BaseReferences<
-          _$DaKanjiDB,
-          $KanjiBankV3TableTable,
-          KanjiBankV3TableData
-        > {
+        BaseReferences<_$DaDb, $KanjiBankV3TableTable, KanjiBankV3TableData> {
   $$KanjiBankV3TableTableReferences(
     super.$_db,
     super.$_table,
     super.$_typedResult,
   );
 
-  static $IndexTableTable _indexIdTable(_$DaKanjiDB db) =>
-      db.indexTable.createAlias(
-        $_aliasNameGenerator(db.kanjiBankV3Table.indexId, db.indexTable.id),
-      );
+  static $IndexTableTable _indexIdTable(_$DaDb db) => db.indexTable.createAlias(
+    $_aliasNameGenerator(db.kanjiBankV3Table.indexId, db.indexTable.id),
+  );
 
   $$IndexTableTableProcessedTableManager get indexId {
     final $_column = $_itemColumn<int>('index_id')!;
@@ -22067,10 +22052,9 @@ final class $$KanjiBankV3TableTableReferences
     );
   }
 
-  static $KanjiTableTable _kanjiIdTable(_$DaKanjiDB db) =>
-      db.kanjiTable.createAlias(
-        $_aliasNameGenerator(db.kanjiBankV3Table.kanjiId, db.kanjiTable.id),
-      );
+  static $KanjiTableTable _kanjiIdTable(_$DaDb db) => db.kanjiTable.createAlias(
+    $_aliasNameGenerator(db.kanjiBankV3Table.kanjiId, db.kanjiTable.id),
+  );
 
   $$KanjiTableTableProcessedTableManager get kanjiId {
     final $_column = $_itemColumn<int>('kanji_id')!;
@@ -22090,7 +22074,7 @@ final class $$KanjiBankV3TableTableReferences
     $KanjiBankV3_X_OnyomiReadingTableTable,
     List<KanjiBankV3_X_OnyomiReadingTableData>
   >
-  _kanjiBankV3XOnyomiReadingTableRefsTable(_$DaKanjiDB db) =>
+  _kanjiBankV3XOnyomiReadingTableRefsTable(_$DaDb db) =>
       MultiTypedResultKey.fromTable(
         db.kanjiBankV3XOnyomiReadingTable,
         aliasName: $_aliasNameGenerator(
@@ -22118,7 +22102,7 @@ final class $$KanjiBankV3TableTableReferences
     $KanjiBankV3_X_KunyomiReadingTableTable,
     List<KanjiBankV3_X_KunyomiReadingTableData>
   >
-  _kanjiBankV3XKunyomiReadingTableRefsTable(_$DaKanjiDB db) =>
+  _kanjiBankV3XKunyomiReadingTableRefsTable(_$DaDb db) =>
       MultiTypedResultKey.fromTable(
         db.kanjiBankV3XKunyomiReadingTable,
         aliasName: $_aliasNameGenerator(
@@ -22146,7 +22130,7 @@ final class $$KanjiBankV3TableTableReferences
     $KanjiBankV3_X_TagBankV3TableTable,
     List<KanjiBankV3_X_TagBankV3TableData>
   >
-  _kanjiBankV3XTagBankV3TableRefsTable(_$DaKanjiDB db) =>
+  _kanjiBankV3XTagBankV3TableRefsTable(_$DaDb db) =>
       MultiTypedResultKey.fromTable(
         db.kanjiBankV3XTagBankV3Table,
         aliasName: $_aliasNameGenerator(
@@ -22174,7 +22158,7 @@ final class $$KanjiBankV3TableTableReferences
     $KanjiBankV3_X_DefinitionTableTable,
     List<KanjiBankV3_X_DefinitionTableData>
   >
-  _kanjiBankV3XDefinitionTableRefsTable(_$DaKanjiDB db) =>
+  _kanjiBankV3XDefinitionTableRefsTable(_$DaDb db) =>
       MultiTypedResultKey.fromTable(
         db.kanjiBankV3XDefinitionTable,
         aliasName: $_aliasNameGenerator(
@@ -22202,14 +22186,13 @@ final class $$KanjiBankV3TableTableReferences
     $KanjiBankV3StatsTableTable,
     List<KanjiBankV3StatsTableData>
   >
-  _kanjiBankV3StatsTableRefsTable(_$DaKanjiDB db) =>
-      MultiTypedResultKey.fromTable(
-        db.kanjiBankV3StatsTable,
-        aliasName: $_aliasNameGenerator(
-          db.kanjiBankV3Table.id,
-          db.kanjiBankV3StatsTable.kanjiBankEntryId,
-        ),
-      );
+  _kanjiBankV3StatsTableRefsTable(_$DaDb db) => MultiTypedResultKey.fromTable(
+    db.kanjiBankV3StatsTable,
+    aliasName: $_aliasNameGenerator(
+      db.kanjiBankV3Table.id,
+      db.kanjiBankV3StatsTable.kanjiBankEntryId,
+    ),
+  );
 
   $$KanjiBankV3StatsTableTableProcessedTableManager
   get kanjiBankV3StatsTableRefs {
@@ -22230,7 +22213,7 @@ final class $$KanjiBankV3TableTableReferences
     $KanjiBankV3_X_KanjiBankV3StatsTableTable,
     List<KanjiBankV3_X_KanjiBankV3StatsTableData>
   >
-  _kanjiBankV3XKanjiBankV3StatsTableRefsTable(_$DaKanjiDB db) =>
+  _kanjiBankV3XKanjiBankV3StatsTableRefsTable(_$DaDb db) =>
       MultiTypedResultKey.fromTable(
         db.kanjiBankV3XKanjiBankV3StatsTable,
         aliasName: $_aliasNameGenerator(
@@ -22256,7 +22239,7 @@ final class $$KanjiBankV3TableTableReferences
 }
 
 class $$KanjiBankV3TableTableFilterComposer
-    extends Composer<_$DaKanjiDB, $KanjiBankV3TableTable> {
+    extends Composer<_$DaDb, $KanjiBankV3TableTable> {
   $$KanjiBankV3TableTableFilterComposer({
     required super.$db,
     required super.$table,
@@ -22506,7 +22489,7 @@ class $$KanjiBankV3TableTableFilterComposer
 }
 
 class $$KanjiBankV3TableTableOrderingComposer
-    extends Composer<_$DaKanjiDB, $KanjiBankV3TableTable> {
+    extends Composer<_$DaDb, $KanjiBankV3TableTable> {
   $$KanjiBankV3TableTableOrderingComposer({
     required super.$db,
     required super.$table,
@@ -22582,7 +22565,7 @@ class $$KanjiBankV3TableTableOrderingComposer
 }
 
 class $$KanjiBankV3TableTableAnnotationComposer
-    extends Composer<_$DaKanjiDB, $KanjiBankV3TableTable> {
+    extends Composer<_$DaDb, $KanjiBankV3TableTable> {
   $$KanjiBankV3TableTableAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -22832,7 +22815,7 @@ class $$KanjiBankV3TableTableAnnotationComposer
 class $$KanjiBankV3TableTableTableManager
     extends
         RootTableManager<
-          _$DaKanjiDB,
+          _$DaDb,
           $KanjiBankV3TableTable,
           KanjiBankV3TableData,
           $$KanjiBankV3TableTableFilterComposer,
@@ -22853,10 +22836,8 @@ class $$KanjiBankV3TableTableTableManager
             bool kanjiBankV3XKanjiBankV3StatsTableRefs,
           })
         > {
-  $$KanjiBankV3TableTableTableManager(
-    _$DaKanjiDB db,
-    $KanjiBankV3TableTable table,
-  ) : super(
+  $$KanjiBankV3TableTableTableManager(_$DaDb db, $KanjiBankV3TableTable table)
+    : super(
         TableManagerState(
           db: db,
           table: table,
@@ -23119,7 +23100,7 @@ class $$KanjiBankV3TableTableTableManager
 
 typedef $$KanjiBankV3TableTableProcessedTableManager =
     ProcessedTableManager<
-      _$DaKanjiDB,
+      _$DaDb,
       $KanjiBankV3TableTable,
       KanjiBankV3TableData,
       $$KanjiBankV3TableTableFilterComposer,
@@ -23154,14 +23135,14 @@ typedef $$ReadingTableTableUpdateCompanionBuilder =
     });
 
 final class $$ReadingTableTableReferences
-    extends BaseReferences<_$DaKanjiDB, $ReadingTableTable, ReadingTableData> {
+    extends BaseReferences<_$DaDb, $ReadingTableTable, ReadingTableData> {
   $$ReadingTableTableReferences(super.$_db, super.$_table, super.$_typedResult);
 
   static MultiTypedResultKey<
     $KanjiBankV3_X_OnyomiReadingTableTable,
     List<KanjiBankV3_X_OnyomiReadingTableData>
   >
-  _kanjiBankV3XOnyomiReadingTableRefsTable(_$DaKanjiDB db) =>
+  _kanjiBankV3XOnyomiReadingTableRefsTable(_$DaDb db) =>
       MultiTypedResultKey.fromTable(
         db.kanjiBankV3XOnyomiReadingTable,
         aliasName: $_aliasNameGenerator(
@@ -23189,7 +23170,7 @@ final class $$ReadingTableTableReferences
     $KanjiBankV3_X_KunyomiReadingTableTable,
     List<KanjiBankV3_X_KunyomiReadingTableData>
   >
-  _kanjiBankV3XKunyomiReadingTableRefsTable(_$DaKanjiDB db) =>
+  _kanjiBankV3XKunyomiReadingTableRefsTable(_$DaDb db) =>
       MultiTypedResultKey.fromTable(
         db.kanjiBankV3XKunyomiReadingTable,
         aliasName: $_aliasNameGenerator(
@@ -23214,7 +23195,7 @@ final class $$ReadingTableTableReferences
   }
 
   static MultiTypedResultKey<$TermBankV3TableTable, List<TermBankV3TableData>>
-  _termBankV3TableRefsTable(_$DaKanjiDB db) => MultiTypedResultKey.fromTable(
+  _termBankV3TableRefsTable(_$DaDb db) => MultiTypedResultKey.fromTable(
     db.termBankV3Table,
     aliasName: $_aliasNameGenerator(
       db.readingTable.id,
@@ -23240,14 +23221,13 @@ final class $$ReadingTableTableReferences
     $TermMetaBankV3TableTable,
     List<TermMetaBankV3TableData>
   >
-  _termMetaBankV3TableRefsTable(_$DaKanjiDB db) =>
-      MultiTypedResultKey.fromTable(
-        db.termMetaBankV3Table,
-        aliasName: $_aliasNameGenerator(
-          db.readingTable.id,
-          db.termMetaBankV3Table.readingId,
-        ),
-      );
+  _termMetaBankV3TableRefsTable(_$DaDb db) => MultiTypedResultKey.fromTable(
+    db.termMetaBankV3Table,
+    aliasName: $_aliasNameGenerator(
+      db.readingTable.id,
+      db.termMetaBankV3Table.readingId,
+    ),
+  );
 
   $$TermMetaBankV3TableTableProcessedTableManager get termMetaBankV3TableRefs {
     final manager = $$TermMetaBankV3TableTableTableManager(
@@ -23264,7 +23244,7 @@ final class $$ReadingTableTableReferences
   }
 
   static MultiTypedResultKey<$AudioTableTable, List<AudioTableData>>
-  _audioTableRefsTable(_$DaKanjiDB db) => MultiTypedResultKey.fromTable(
+  _audioTableRefsTable(_$DaDb db) => MultiTypedResultKey.fromTable(
     db.audioTable,
     aliasName: $_aliasNameGenerator(
       db.readingTable.id,
@@ -23286,7 +23266,7 @@ final class $$ReadingTableTableReferences
 }
 
 class $$ReadingTableTableFilterComposer
-    extends Composer<_$DaKanjiDB, $ReadingTableTable> {
+    extends Composer<_$DaDb, $ReadingTableTable> {
   $$ReadingTableTableFilterComposer({
     required super.$db,
     required super.$table,
@@ -23444,7 +23424,7 @@ class $$ReadingTableTableFilterComposer
 }
 
 class $$ReadingTableTableOrderingComposer
-    extends Composer<_$DaKanjiDB, $ReadingTableTable> {
+    extends Composer<_$DaDb, $ReadingTableTable> {
   $$ReadingTableTableOrderingComposer({
     required super.$db,
     required super.$table,
@@ -23469,7 +23449,7 @@ class $$ReadingTableTableOrderingComposer
 }
 
 class $$ReadingTableTableAnnotationComposer
-    extends Composer<_$DaKanjiDB, $ReadingTableTable> {
+    extends Composer<_$DaDb, $ReadingTableTable> {
   $$ReadingTableTableAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -23626,7 +23606,7 @@ class $$ReadingTableTableAnnotationComposer
 class $$ReadingTableTableTableManager
     extends
         RootTableManager<
-          _$DaKanjiDB,
+          _$DaDb,
           $ReadingTableTable,
           ReadingTableData,
           $$ReadingTableTableFilterComposer,
@@ -23644,7 +23624,7 @@ class $$ReadingTableTableTableManager
             bool audioTableRefs,
           })
         > {
-  $$ReadingTableTableTableManager(_$DaKanjiDB db, $ReadingTableTable table)
+  $$ReadingTableTableTableManager(_$DaDb db, $ReadingTableTable table)
     : super(
         TableManagerState(
           db: db,
@@ -23820,7 +23800,7 @@ class $$ReadingTableTableTableManager
 
 typedef $$ReadingTableTableProcessedTableManager =
     ProcessedTableManager<
-      _$DaKanjiDB,
+      _$DaDb,
       $ReadingTableTable,
       ReadingTableData,
       $$ReadingTableTableFilterComposer,
@@ -23854,7 +23834,7 @@ typedef $$KanjiBankV3_X_OnyomiReadingTableTableUpdateCompanionBuilder =
 final class $$KanjiBankV3_X_OnyomiReadingTableTableReferences
     extends
         BaseReferences<
-          _$DaKanjiDB,
+          _$DaDb,
           $KanjiBankV3_X_OnyomiReadingTableTable,
           KanjiBankV3_X_OnyomiReadingTableData
         > {
@@ -23864,7 +23844,7 @@ final class $$KanjiBankV3_X_OnyomiReadingTableTableReferences
     super.$_typedResult,
   );
 
-  static $ReadingTableTable _onyomiReadingIdTable(_$DaKanjiDB db) =>
+  static $ReadingTableTable _onyomiReadingIdTable(_$DaDb db) =>
       db.readingTable.createAlias(
         $_aliasNameGenerator(
           db.kanjiBankV3XOnyomiReadingTable.onyomiReadingId,
@@ -23886,7 +23866,7 @@ final class $$KanjiBankV3_X_OnyomiReadingTableTableReferences
     );
   }
 
-  static $KanjiBankV3TableTable _kanjiIdTable(_$DaKanjiDB db) =>
+  static $KanjiBankV3TableTable _kanjiIdTable(_$DaDb db) =>
       db.kanjiBankV3Table.createAlias(
         $_aliasNameGenerator(
           db.kanjiBankV3XOnyomiReadingTable.kanjiId,
@@ -23910,7 +23890,7 @@ final class $$KanjiBankV3_X_OnyomiReadingTableTableReferences
 }
 
 class $$KanjiBankV3_X_OnyomiReadingTableTableFilterComposer
-    extends Composer<_$DaKanjiDB, $KanjiBankV3_X_OnyomiReadingTableTable> {
+    extends Composer<_$DaDb, $KanjiBankV3_X_OnyomiReadingTableTable> {
   $$KanjiBankV3_X_OnyomiReadingTableTableFilterComposer({
     required super.$db,
     required super.$table,
@@ -23971,7 +23951,7 @@ class $$KanjiBankV3_X_OnyomiReadingTableTableFilterComposer
 }
 
 class $$KanjiBankV3_X_OnyomiReadingTableTableOrderingComposer
-    extends Composer<_$DaKanjiDB, $KanjiBankV3_X_OnyomiReadingTableTable> {
+    extends Composer<_$DaDb, $KanjiBankV3_X_OnyomiReadingTableTable> {
   $$KanjiBankV3_X_OnyomiReadingTableTableOrderingComposer({
     required super.$db,
     required super.$table,
@@ -24032,7 +24012,7 @@ class $$KanjiBankV3_X_OnyomiReadingTableTableOrderingComposer
 }
 
 class $$KanjiBankV3_X_OnyomiReadingTableTableAnnotationComposer
-    extends Composer<_$DaKanjiDB, $KanjiBankV3_X_OnyomiReadingTableTable> {
+    extends Composer<_$DaDb, $KanjiBankV3_X_OnyomiReadingTableTable> {
   $$KanjiBankV3_X_OnyomiReadingTableTableAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -24093,7 +24073,7 @@ class $$KanjiBankV3_X_OnyomiReadingTableTableAnnotationComposer
 class $$KanjiBankV3_X_OnyomiReadingTableTableTableManager
     extends
         RootTableManager<
-          _$DaKanjiDB,
+          _$DaDb,
           $KanjiBankV3_X_OnyomiReadingTableTable,
           KanjiBankV3_X_OnyomiReadingTableData,
           $$KanjiBankV3_X_OnyomiReadingTableTableFilterComposer,
@@ -24109,7 +24089,7 @@ class $$KanjiBankV3_X_OnyomiReadingTableTableTableManager
           PrefetchHooks Function({bool onyomiReadingId, bool kanjiId})
         > {
   $$KanjiBankV3_X_OnyomiReadingTableTableTableManager(
-    _$DaKanjiDB db,
+    _$DaDb db,
     $KanjiBankV3_X_OnyomiReadingTableTable table,
   ) : super(
         TableManagerState(
@@ -24226,7 +24206,7 @@ class $$KanjiBankV3_X_OnyomiReadingTableTableTableManager
 
 typedef $$KanjiBankV3_X_OnyomiReadingTableTableProcessedTableManager =
     ProcessedTableManager<
-      _$DaKanjiDB,
+      _$DaDb,
       $KanjiBankV3_X_OnyomiReadingTableTable,
       KanjiBankV3_X_OnyomiReadingTableData,
       $$KanjiBankV3_X_OnyomiReadingTableTableFilterComposer,
@@ -24257,7 +24237,7 @@ typedef $$KanjiBankV3_X_KunyomiReadingTableTableUpdateCompanionBuilder =
 final class $$KanjiBankV3_X_KunyomiReadingTableTableReferences
     extends
         BaseReferences<
-          _$DaKanjiDB,
+          _$DaDb,
           $KanjiBankV3_X_KunyomiReadingTableTable,
           KanjiBankV3_X_KunyomiReadingTableData
         > {
@@ -24267,7 +24247,7 @@ final class $$KanjiBankV3_X_KunyomiReadingTableTableReferences
     super.$_typedResult,
   );
 
-  static $ReadingTableTable _kunyomiReadingIdTable(_$DaKanjiDB db) =>
+  static $ReadingTableTable _kunyomiReadingIdTable(_$DaDb db) =>
       db.readingTable.createAlias(
         $_aliasNameGenerator(
           db.kanjiBankV3XKunyomiReadingTable.kunyomiReadingId,
@@ -24289,7 +24269,7 @@ final class $$KanjiBankV3_X_KunyomiReadingTableTableReferences
     );
   }
 
-  static $KanjiBankV3TableTable _kanjiIdTable(_$DaKanjiDB db) =>
+  static $KanjiBankV3TableTable _kanjiIdTable(_$DaDb db) =>
       db.kanjiBankV3Table.createAlias(
         $_aliasNameGenerator(
           db.kanjiBankV3XKunyomiReadingTable.kanjiId,
@@ -24313,7 +24293,7 @@ final class $$KanjiBankV3_X_KunyomiReadingTableTableReferences
 }
 
 class $$KanjiBankV3_X_KunyomiReadingTableTableFilterComposer
-    extends Composer<_$DaKanjiDB, $KanjiBankV3_X_KunyomiReadingTableTable> {
+    extends Composer<_$DaDb, $KanjiBankV3_X_KunyomiReadingTableTable> {
   $$KanjiBankV3_X_KunyomiReadingTableTableFilterComposer({
     required super.$db,
     required super.$table,
@@ -24374,7 +24354,7 @@ class $$KanjiBankV3_X_KunyomiReadingTableTableFilterComposer
 }
 
 class $$KanjiBankV3_X_KunyomiReadingTableTableOrderingComposer
-    extends Composer<_$DaKanjiDB, $KanjiBankV3_X_KunyomiReadingTableTable> {
+    extends Composer<_$DaDb, $KanjiBankV3_X_KunyomiReadingTableTable> {
   $$KanjiBankV3_X_KunyomiReadingTableTableOrderingComposer({
     required super.$db,
     required super.$table,
@@ -24435,7 +24415,7 @@ class $$KanjiBankV3_X_KunyomiReadingTableTableOrderingComposer
 }
 
 class $$KanjiBankV3_X_KunyomiReadingTableTableAnnotationComposer
-    extends Composer<_$DaKanjiDB, $KanjiBankV3_X_KunyomiReadingTableTable> {
+    extends Composer<_$DaDb, $KanjiBankV3_X_KunyomiReadingTableTable> {
   $$KanjiBankV3_X_KunyomiReadingTableTableAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -24496,7 +24476,7 @@ class $$KanjiBankV3_X_KunyomiReadingTableTableAnnotationComposer
 class $$KanjiBankV3_X_KunyomiReadingTableTableTableManager
     extends
         RootTableManager<
-          _$DaKanjiDB,
+          _$DaDb,
           $KanjiBankV3_X_KunyomiReadingTableTable,
           KanjiBankV3_X_KunyomiReadingTableData,
           $$KanjiBankV3_X_KunyomiReadingTableTableFilterComposer,
@@ -24512,7 +24492,7 @@ class $$KanjiBankV3_X_KunyomiReadingTableTableTableManager
           PrefetchHooks Function({bool kunyomiReadingId, bool kanjiId})
         > {
   $$KanjiBankV3_X_KunyomiReadingTableTableTableManager(
-    _$DaKanjiDB db,
+    _$DaDb db,
     $KanjiBankV3_X_KunyomiReadingTableTable table,
   ) : super(
         TableManagerState(
@@ -24629,7 +24609,7 @@ class $$KanjiBankV3_X_KunyomiReadingTableTableTableManager
 
 typedef $$KanjiBankV3_X_KunyomiReadingTableTableProcessedTableManager =
     ProcessedTableManager<
-      _$DaKanjiDB,
+      _$DaDb,
       $KanjiBankV3_X_KunyomiReadingTableTable,
       KanjiBankV3_X_KunyomiReadingTableData,
       $$KanjiBankV3_X_KunyomiReadingTableTableFilterComposer,
@@ -24666,18 +24646,16 @@ typedef $$TagBankV3TableTableUpdateCompanionBuilder =
     });
 
 final class $$TagBankV3TableTableReferences
-    extends
-        BaseReferences<_$DaKanjiDB, $TagBankV3TableTable, TagBankV3TableData> {
+    extends BaseReferences<_$DaDb, $TagBankV3TableTable, TagBankV3TableData> {
   $$TagBankV3TableTableReferences(
     super.$_db,
     super.$_table,
     super.$_typedResult,
   );
 
-  static $IndexTableTable _indexIdTable(_$DaKanjiDB db) =>
-      db.indexTable.createAlias(
-        $_aliasNameGenerator(db.tagBankV3Table.indexId, db.indexTable.id),
-      );
+  static $IndexTableTable _indexIdTable(_$DaDb db) => db.indexTable.createAlias(
+    $_aliasNameGenerator(db.tagBankV3Table.indexId, db.indexTable.id),
+  );
 
   $$IndexTableTableProcessedTableManager get indexId {
     final $_column = $_itemColumn<int>('index_id')!;
@@ -24697,7 +24675,7 @@ final class $$TagBankV3TableTableReferences
     $KanjiBankV3_X_TagBankV3TableTable,
     List<KanjiBankV3_X_TagBankV3TableData>
   >
-  _kanjiBankV3XTagBankV3TableRefsTable(_$DaKanjiDB db) =>
+  _kanjiBankV3XTagBankV3TableRefsTable(_$DaDb db) =>
       MultiTypedResultKey.fromTable(
         db.kanjiBankV3XTagBankV3Table,
         aliasName: $_aliasNameGenerator(
@@ -24725,14 +24703,13 @@ final class $$TagBankV3TableTableReferences
     $KanjiBankV3StatsTableTable,
     List<KanjiBankV3StatsTableData>
   >
-  _kanjiBankV3StatsTableRefsTable(_$DaKanjiDB db) =>
-      MultiTypedResultKey.fromTable(
-        db.kanjiBankV3StatsTable,
-        aliasName: $_aliasNameGenerator(
-          db.tagBankV3Table.id,
-          db.kanjiBankV3StatsTable.statTagId,
-        ),
-      );
+  _kanjiBankV3StatsTableRefsTable(_$DaDb db) => MultiTypedResultKey.fromTable(
+    db.kanjiBankV3StatsTable,
+    aliasName: $_aliasNameGenerator(
+      db.tagBankV3Table.id,
+      db.kanjiBankV3StatsTable.statTagId,
+    ),
+  );
 
   $$KanjiBankV3StatsTableTableProcessedTableManager
   get kanjiBankV3StatsTableRefs {
@@ -24753,14 +24730,13 @@ final class $$TagBankV3TableTableReferences
     $TermBankV3_X_TagBankTableTable,
     List<TermBankV3_X_TagBankTableData>
   >
-  _termBankV3XTagBankTableRefsTable(_$DaKanjiDB db) =>
-      MultiTypedResultKey.fromTable(
-        db.termBankV3XTagBankTable,
-        aliasName: $_aliasNameGenerator(
-          db.tagBankV3Table.id,
-          db.termBankV3XTagBankTable.tagBankId,
-        ),
-      );
+  _termBankV3XTagBankTableRefsTable(_$DaDb db) => MultiTypedResultKey.fromTable(
+    db.termBankV3XTagBankTable,
+    aliasName: $_aliasNameGenerator(
+      db.tagBankV3Table.id,
+      db.termBankV3XTagBankTable.tagBankId,
+    ),
+  );
 
   $$TermBankV3_X_TagBankTableTableProcessedTableManager
   get termBankV3XTagBankTableRefs {
@@ -24781,7 +24757,7 @@ final class $$TagBankV3TableTableReferences
     $TermBankV3_X_DefinitionTagTableTable,
     List<TermBankV3_X_DefinitionTagTableData>
   >
-  _termBankV3XDefinitionTagTableRefsTable(_$DaKanjiDB db) =>
+  _termBankV3XDefinitionTagTableRefsTable(_$DaDb db) =>
       MultiTypedResultKey.fromTable(
         db.termBankV3XDefinitionTagTable,
         aliasName: $_aliasNameGenerator(
@@ -24809,7 +24785,7 @@ final class $$TagBankV3TableTableReferences
     $TermMetaBankV3PitchTable_X_TagBankV3TableTable,
     List<TermMetaBankV3PitchTable_X_TagBankV3TableData>
   >
-  _termMetaBankV3PitchTableXTagBankV3TableRefsTable(_$DaKanjiDB db) =>
+  _termMetaBankV3PitchTableXTagBankV3TableRefsTable(_$DaDb db) =>
       MultiTypedResultKey.fromTable(
         db.termMetaBankV3PitchTableXTagBankV3Table,
         aliasName: $_aliasNameGenerator(
@@ -24838,7 +24814,7 @@ final class $$TagBankV3TableTableReferences
     $TermMetaBankV3IpaTable_X_TagBankV3TableTable,
     List<TermMetaBankV3IpaTable_X_TagBankV3TableData>
   >
-  _termMetaBankV3IpaTableXTagBankV3TableRefsTable(_$DaKanjiDB db) =>
+  _termMetaBankV3IpaTableXTagBankV3TableRefsTable(_$DaDb db) =>
       MultiTypedResultKey.fromTable(
         db.termMetaBankV3IpaTableXTagBankV3Table,
         aliasName: $_aliasNameGenerator(
@@ -24864,7 +24840,7 @@ final class $$TagBankV3TableTableReferences
 }
 
 class $$TagBankV3TableTableFilterComposer
-    extends Composer<_$DaKanjiDB, $TagBankV3TableTable> {
+    extends Composer<_$DaDb, $TagBankV3TableTable> {
   $$TagBankV3TableTableFilterComposer({
     required super.$db,
     required super.$table,
@@ -25096,7 +25072,7 @@ class $$TagBankV3TableTableFilterComposer
 }
 
 class $$TagBankV3TableTableOrderingComposer
-    extends Composer<_$DaKanjiDB, $TagBankV3TableTable> {
+    extends Composer<_$DaDb, $TagBankV3TableTable> {
   $$TagBankV3TableTableOrderingComposer({
     required super.$db,
     required super.$table,
@@ -25159,7 +25135,7 @@ class $$TagBankV3TableTableOrderingComposer
 }
 
 class $$TagBankV3TableTableAnnotationComposer
-    extends Composer<_$DaKanjiDB, $TagBankV3TableTable> {
+    extends Composer<_$DaDb, $TagBankV3TableTable> {
   $$TagBankV3TableTableAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -25385,7 +25361,7 @@ class $$TagBankV3TableTableAnnotationComposer
 class $$TagBankV3TableTableTableManager
     extends
         RootTableManager<
-          _$DaKanjiDB,
+          _$DaDb,
           $TagBankV3TableTable,
           TagBankV3TableData,
           $$TagBankV3TableTableFilterComposer,
@@ -25405,7 +25381,7 @@ class $$TagBankV3TableTableTableManager
             bool termMetaBankV3IpaTableXTagBankV3TableRefs,
           })
         > {
-  $$TagBankV3TableTableTableManager(_$DaKanjiDB db, $TagBankV3TableTable table)
+  $$TagBankV3TableTableTableManager(_$DaDb db, $TagBankV3TableTable table)
     : super(
         TableManagerState(
           db: db,
@@ -25660,7 +25636,7 @@ class $$TagBankV3TableTableTableManager
 
 typedef $$TagBankV3TableTableProcessedTableManager =
     ProcessedTableManager<
-      _$DaKanjiDB,
+      _$DaDb,
       $TagBankV3TableTable,
       TagBankV3TableData,
       $$TagBankV3TableTableFilterComposer,
@@ -25696,7 +25672,7 @@ typedef $$KanjiBankV3_X_TagBankV3TableTableUpdateCompanionBuilder =
 final class $$KanjiBankV3_X_TagBankV3TableTableReferences
     extends
         BaseReferences<
-          _$DaKanjiDB,
+          _$DaDb,
           $KanjiBankV3_X_TagBankV3TableTable,
           KanjiBankV3_X_TagBankV3TableData
         > {
@@ -25706,7 +25682,7 @@ final class $$KanjiBankV3_X_TagBankV3TableTableReferences
     super.$_typedResult,
   );
 
-  static $TagBankV3TableTable _tagIdTable(_$DaKanjiDB db) =>
+  static $TagBankV3TableTable _tagIdTable(_$DaDb db) =>
       db.tagBankV3Table.createAlias(
         $_aliasNameGenerator(
           db.kanjiBankV3XTagBankV3Table.tagId,
@@ -25728,7 +25704,7 @@ final class $$KanjiBankV3_X_TagBankV3TableTableReferences
     );
   }
 
-  static $KanjiBankV3TableTable _kanjiIdTable(_$DaKanjiDB db) =>
+  static $KanjiBankV3TableTable _kanjiIdTable(_$DaDb db) =>
       db.kanjiBankV3Table.createAlias(
         $_aliasNameGenerator(
           db.kanjiBankV3XTagBankV3Table.kanjiId,
@@ -25752,7 +25728,7 @@ final class $$KanjiBankV3_X_TagBankV3TableTableReferences
 }
 
 class $$KanjiBankV3_X_TagBankV3TableTableFilterComposer
-    extends Composer<_$DaKanjiDB, $KanjiBankV3_X_TagBankV3TableTable> {
+    extends Composer<_$DaDb, $KanjiBankV3_X_TagBankV3TableTable> {
   $$KanjiBankV3_X_TagBankV3TableTableFilterComposer({
     required super.$db,
     required super.$table,
@@ -25813,7 +25789,7 @@ class $$KanjiBankV3_X_TagBankV3TableTableFilterComposer
 }
 
 class $$KanjiBankV3_X_TagBankV3TableTableOrderingComposer
-    extends Composer<_$DaKanjiDB, $KanjiBankV3_X_TagBankV3TableTable> {
+    extends Composer<_$DaDb, $KanjiBankV3_X_TagBankV3TableTable> {
   $$KanjiBankV3_X_TagBankV3TableTableOrderingComposer({
     required super.$db,
     required super.$table,
@@ -25874,7 +25850,7 @@ class $$KanjiBankV3_X_TagBankV3TableTableOrderingComposer
 }
 
 class $$KanjiBankV3_X_TagBankV3TableTableAnnotationComposer
-    extends Composer<_$DaKanjiDB, $KanjiBankV3_X_TagBankV3TableTable> {
+    extends Composer<_$DaDb, $KanjiBankV3_X_TagBankV3TableTable> {
   $$KanjiBankV3_X_TagBankV3TableTableAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -25935,7 +25911,7 @@ class $$KanjiBankV3_X_TagBankV3TableTableAnnotationComposer
 class $$KanjiBankV3_X_TagBankV3TableTableTableManager
     extends
         RootTableManager<
-          _$DaKanjiDB,
+          _$DaDb,
           $KanjiBankV3_X_TagBankV3TableTable,
           KanjiBankV3_X_TagBankV3TableData,
           $$KanjiBankV3_X_TagBankV3TableTableFilterComposer,
@@ -25951,7 +25927,7 @@ class $$KanjiBankV3_X_TagBankV3TableTableTableManager
           PrefetchHooks Function({bool tagId, bool kanjiId})
         > {
   $$KanjiBankV3_X_TagBankV3TableTableTableManager(
-    _$DaKanjiDB db,
+    _$DaDb db,
     $KanjiBankV3_X_TagBankV3TableTable table,
   ) : super(
         TableManagerState(
@@ -26064,7 +26040,7 @@ class $$KanjiBankV3_X_TagBankV3TableTableTableManager
 
 typedef $$KanjiBankV3_X_TagBankV3TableTableProcessedTableManager =
     ProcessedTableManager<
-      _$DaKanjiDB,
+      _$DaDb,
       $KanjiBankV3_X_TagBankV3TableTable,
       KanjiBankV3_X_TagBankV3TableData,
       $$KanjiBankV3_X_TagBankV3TableTableFilterComposer,
@@ -26091,12 +26067,7 @@ typedef $$DefinitionTableTableUpdateCompanionBuilder =
     });
 
 final class $$DefinitionTableTableReferences
-    extends
-        BaseReferences<
-          _$DaKanjiDB,
-          $DefinitionTableTable,
-          DefinitionTableData
-        > {
+    extends BaseReferences<_$DaDb, $DefinitionTableTable, DefinitionTableData> {
   $$DefinitionTableTableReferences(
     super.$_db,
     super.$_table,
@@ -26107,7 +26078,7 @@ final class $$DefinitionTableTableReferences
     $KanjiBankV3_X_DefinitionTableTable,
     List<KanjiBankV3_X_DefinitionTableData>
   >
-  _kanjiBankV3XDefinitionTableRefsTable(_$DaKanjiDB db) =>
+  _kanjiBankV3XDefinitionTableRefsTable(_$DaDb db) =>
       MultiTypedResultKey.fromTable(
         db.kanjiBankV3XDefinitionTable,
         aliasName: $_aliasNameGenerator(
@@ -26135,7 +26106,7 @@ final class $$DefinitionTableTableReferences
     $TermBankV3_X_DefinitionTableTable,
     List<TermBankV3_X_DefinitionTableData>
   >
-  _termBankV3XDefinitionTableRefsTable(_$DaKanjiDB db) =>
+  _termBankV3XDefinitionTableRefsTable(_$DaDb db) =>
       MultiTypedResultKey.fromTable(
         db.termBankV3XDefinitionTable,
         aliasName: $_aliasNameGenerator(
@@ -26161,7 +26132,7 @@ final class $$DefinitionTableTableReferences
 }
 
 class $$DefinitionTableTableFilterComposer
-    extends Composer<_$DaKanjiDB, $DefinitionTableTable> {
+    extends Composer<_$DaDb, $DefinitionTableTable> {
   $$DefinitionTableTableFilterComposer({
     required super.$db,
     required super.$table,
@@ -26239,7 +26210,7 @@ class $$DefinitionTableTableFilterComposer
 }
 
 class $$DefinitionTableTableOrderingComposer
-    extends Composer<_$DaKanjiDB, $DefinitionTableTable> {
+    extends Composer<_$DaDb, $DefinitionTableTable> {
   $$DefinitionTableTableOrderingComposer({
     required super.$db,
     required super.$table,
@@ -26259,7 +26230,7 @@ class $$DefinitionTableTableOrderingComposer
 }
 
 class $$DefinitionTableTableAnnotationComposer
-    extends Composer<_$DaKanjiDB, $DefinitionTableTable> {
+    extends Composer<_$DaDb, $DefinitionTableTable> {
   $$DefinitionTableTableAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -26337,7 +26308,7 @@ class $$DefinitionTableTableAnnotationComposer
 class $$DefinitionTableTableTableManager
     extends
         RootTableManager<
-          _$DaKanjiDB,
+          _$DaDb,
           $DefinitionTableTable,
           DefinitionTableData,
           $$DefinitionTableTableFilterComposer,
@@ -26352,10 +26323,8 @@ class $$DefinitionTableTableTableManager
             bool termBankV3XDefinitionTableRefs,
           })
         > {
-  $$DefinitionTableTableTableManager(
-    _$DaKanjiDB db,
-    $DefinitionTableTable table,
-  ) : super(
+  $$DefinitionTableTableTableManager(_$DaDb db, $DefinitionTableTable table)
+    : super(
         TableManagerState(
           db: db,
           table: table,
@@ -26454,7 +26423,7 @@ class $$DefinitionTableTableTableManager
 
 typedef $$DefinitionTableTableProcessedTableManager =
     ProcessedTableManager<
-      _$DaKanjiDB,
+      _$DaDb,
       $DefinitionTableTable,
       DefinitionTableData,
       $$DefinitionTableTableFilterComposer,
@@ -26485,7 +26454,7 @@ typedef $$KanjiBankV3_X_DefinitionTableTableUpdateCompanionBuilder =
 final class $$KanjiBankV3_X_DefinitionTableTableReferences
     extends
         BaseReferences<
-          _$DaKanjiDB,
+          _$DaDb,
           $KanjiBankV3_X_DefinitionTableTable,
           KanjiBankV3_X_DefinitionTableData
         > {
@@ -26495,7 +26464,7 @@ final class $$KanjiBankV3_X_DefinitionTableTableReferences
     super.$_typedResult,
   );
 
-  static $DefinitionTableTable _definitionIdTable(_$DaKanjiDB db) =>
+  static $DefinitionTableTable _definitionIdTable(_$DaDb db) =>
       db.definitionTable.createAlias(
         $_aliasNameGenerator(
           db.kanjiBankV3XDefinitionTable.definitionId,
@@ -26517,7 +26486,7 @@ final class $$KanjiBankV3_X_DefinitionTableTableReferences
     );
   }
 
-  static $KanjiBankV3TableTable _kanjiIdTable(_$DaKanjiDB db) =>
+  static $KanjiBankV3TableTable _kanjiIdTable(_$DaDb db) =>
       db.kanjiBankV3Table.createAlias(
         $_aliasNameGenerator(
           db.kanjiBankV3XDefinitionTable.kanjiId,
@@ -26541,7 +26510,7 @@ final class $$KanjiBankV3_X_DefinitionTableTableReferences
 }
 
 class $$KanjiBankV3_X_DefinitionTableTableFilterComposer
-    extends Composer<_$DaKanjiDB, $KanjiBankV3_X_DefinitionTableTable> {
+    extends Composer<_$DaDb, $KanjiBankV3_X_DefinitionTableTable> {
   $$KanjiBankV3_X_DefinitionTableTableFilterComposer({
     required super.$db,
     required super.$table,
@@ -26602,7 +26571,7 @@ class $$KanjiBankV3_X_DefinitionTableTableFilterComposer
 }
 
 class $$KanjiBankV3_X_DefinitionTableTableOrderingComposer
-    extends Composer<_$DaKanjiDB, $KanjiBankV3_X_DefinitionTableTable> {
+    extends Composer<_$DaDb, $KanjiBankV3_X_DefinitionTableTable> {
   $$KanjiBankV3_X_DefinitionTableTableOrderingComposer({
     required super.$db,
     required super.$table,
@@ -26663,7 +26632,7 @@ class $$KanjiBankV3_X_DefinitionTableTableOrderingComposer
 }
 
 class $$KanjiBankV3_X_DefinitionTableTableAnnotationComposer
-    extends Composer<_$DaKanjiDB, $KanjiBankV3_X_DefinitionTableTable> {
+    extends Composer<_$DaDb, $KanjiBankV3_X_DefinitionTableTable> {
   $$KanjiBankV3_X_DefinitionTableTableAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -26724,7 +26693,7 @@ class $$KanjiBankV3_X_DefinitionTableTableAnnotationComposer
 class $$KanjiBankV3_X_DefinitionTableTableTableManager
     extends
         RootTableManager<
-          _$DaKanjiDB,
+          _$DaDb,
           $KanjiBankV3_X_DefinitionTableTable,
           KanjiBankV3_X_DefinitionTableData,
           $$KanjiBankV3_X_DefinitionTableTableFilterComposer,
@@ -26740,7 +26709,7 @@ class $$KanjiBankV3_X_DefinitionTableTableTableManager
           PrefetchHooks Function({bool definitionId, bool kanjiId})
         > {
   $$KanjiBankV3_X_DefinitionTableTableTableManager(
-    _$DaKanjiDB db,
+    _$DaDb db,
     $KanjiBankV3_X_DefinitionTableTable table,
   ) : super(
         TableManagerState(
@@ -26853,7 +26822,7 @@ class $$KanjiBankV3_X_DefinitionTableTableTableManager
 
 typedef $$KanjiBankV3_X_DefinitionTableTableProcessedTableManager =
     ProcessedTableManager<
-      _$DaKanjiDB,
+      _$DaDb,
       $KanjiBankV3_X_DefinitionTableTable,
       KanjiBankV3_X_DefinitionTableData,
       $$KanjiBankV3_X_DefinitionTableTableFilterComposer,
@@ -26886,7 +26855,7 @@ typedef $$KanjiBankV3StatsTableTableUpdateCompanionBuilder =
 final class $$KanjiBankV3StatsTableTableReferences
     extends
         BaseReferences<
-          _$DaKanjiDB,
+          _$DaDb,
           $KanjiBankV3StatsTableTable,
           KanjiBankV3StatsTableData
         > {
@@ -26896,7 +26865,7 @@ final class $$KanjiBankV3StatsTableTableReferences
     super.$_typedResult,
   );
 
-  static $KanjiBankV3TableTable _kanjiBankEntryIdTable(_$DaKanjiDB db) =>
+  static $KanjiBankV3TableTable _kanjiBankEntryIdTable(_$DaDb db) =>
       db.kanjiBankV3Table.createAlias(
         $_aliasNameGenerator(
           db.kanjiBankV3StatsTable.kanjiBankEntryId,
@@ -26918,7 +26887,7 @@ final class $$KanjiBankV3StatsTableTableReferences
     );
   }
 
-  static $TagBankV3TableTable _statTagIdTable(_$DaKanjiDB db) =>
+  static $TagBankV3TableTable _statTagIdTable(_$DaDb db) =>
       db.tagBankV3Table.createAlias(
         $_aliasNameGenerator(
           db.kanjiBankV3StatsTable.statTagId,
@@ -26944,7 +26913,7 @@ final class $$KanjiBankV3StatsTableTableReferences
     $KanjiBankV3_X_KanjiBankV3StatsTableTable,
     List<KanjiBankV3_X_KanjiBankV3StatsTableData>
   >
-  _kanjiBankV3XKanjiBankV3StatsTableRefsTable(_$DaKanjiDB db) =>
+  _kanjiBankV3XKanjiBankV3StatsTableRefsTable(_$DaDb db) =>
       MultiTypedResultKey.fromTable(
         db.kanjiBankV3XKanjiBankV3StatsTable,
         aliasName: $_aliasNameGenerator(
@@ -26970,7 +26939,7 @@ final class $$KanjiBankV3StatsTableTableReferences
 }
 
 class $$KanjiBankV3StatsTableTableFilterComposer
-    extends Composer<_$DaKanjiDB, $KanjiBankV3StatsTableTable> {
+    extends Composer<_$DaDb, $KanjiBankV3StatsTableTable> {
   $$KanjiBankV3StatsTableTableFilterComposer({
     required super.$db,
     required super.$table,
@@ -27065,7 +27034,7 @@ class $$KanjiBankV3StatsTableTableFilterComposer
 }
 
 class $$KanjiBankV3StatsTableTableOrderingComposer
-    extends Composer<_$DaKanjiDB, $KanjiBankV3StatsTableTable> {
+    extends Composer<_$DaDb, $KanjiBankV3StatsTableTable> {
   $$KanjiBankV3StatsTableTableOrderingComposer({
     required super.$db,
     required super.$table,
@@ -27131,7 +27100,7 @@ class $$KanjiBankV3StatsTableTableOrderingComposer
 }
 
 class $$KanjiBankV3StatsTableTableAnnotationComposer
-    extends Composer<_$DaKanjiDB, $KanjiBankV3StatsTableTable> {
+    extends Composer<_$DaDb, $KanjiBankV3StatsTableTable> {
   $$KanjiBankV3StatsTableTableAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -27224,7 +27193,7 @@ class $$KanjiBankV3StatsTableTableAnnotationComposer
 class $$KanjiBankV3StatsTableTableTableManager
     extends
         RootTableManager<
-          _$DaKanjiDB,
+          _$DaDb,
           $KanjiBankV3StatsTableTable,
           KanjiBankV3StatsTableData,
           $$KanjiBankV3StatsTableTableFilterComposer,
@@ -27241,7 +27210,7 @@ class $$KanjiBankV3StatsTableTableTableManager
           })
         > {
   $$KanjiBankV3StatsTableTableTableManager(
-    _$DaKanjiDB db,
+    _$DaDb db,
     $KanjiBankV3StatsTableTable table,
   ) : super(
         TableManagerState(
@@ -27391,7 +27360,7 @@ class $$KanjiBankV3StatsTableTableTableManager
 
 typedef $$KanjiBankV3StatsTableTableProcessedTableManager =
     ProcessedTableManager<
-      _$DaKanjiDB,
+      _$DaDb,
       $KanjiBankV3StatsTableTable,
       KanjiBankV3StatsTableData,
       $$KanjiBankV3StatsTableTableFilterComposer,
@@ -27421,7 +27390,7 @@ typedef $$KanjiMetaBankV3TypeTableTableUpdateCompanionBuilder =
 final class $$KanjiMetaBankV3TypeTableTableReferences
     extends
         BaseReferences<
-          _$DaKanjiDB,
+          _$DaDb,
           $KanjiMetaBankV3TypeTableTable,
           KanjiMetaBankV3TypeTableData
         > {
@@ -27435,14 +27404,13 @@ final class $$KanjiMetaBankV3TypeTableTableReferences
     $KanjiMetaBankV3TableTable,
     List<KanjiMetaBankV3TableData>
   >
-  _kanjiMetaBankV3TableRefsTable(_$DaKanjiDB db) =>
-      MultiTypedResultKey.fromTable(
-        db.kanjiMetaBankV3Table,
-        aliasName: $_aliasNameGenerator(
-          db.kanjiMetaBankV3TypeTable.id,
-          db.kanjiMetaBankV3Table.typeId,
-        ),
-      );
+  _kanjiMetaBankV3TableRefsTable(_$DaDb db) => MultiTypedResultKey.fromTable(
+    db.kanjiMetaBankV3Table,
+    aliasName: $_aliasNameGenerator(
+      db.kanjiMetaBankV3TypeTable.id,
+      db.kanjiMetaBankV3Table.typeId,
+    ),
+  );
 
   $$KanjiMetaBankV3TableTableProcessedTableManager
   get kanjiMetaBankV3TableRefs {
@@ -27461,7 +27429,7 @@ final class $$KanjiMetaBankV3TypeTableTableReferences
 }
 
 class $$KanjiMetaBankV3TypeTableTableFilterComposer
-    extends Composer<_$DaKanjiDB, $KanjiMetaBankV3TypeTableTable> {
+    extends Composer<_$DaDb, $KanjiMetaBankV3TypeTableTable> {
   $$KanjiMetaBankV3TypeTableTableFilterComposer({
     required super.$db,
     required super.$table,
@@ -27506,7 +27474,7 @@ class $$KanjiMetaBankV3TypeTableTableFilterComposer
 }
 
 class $$KanjiMetaBankV3TypeTableTableOrderingComposer
-    extends Composer<_$DaKanjiDB, $KanjiMetaBankV3TypeTableTable> {
+    extends Composer<_$DaDb, $KanjiMetaBankV3TypeTableTable> {
   $$KanjiMetaBankV3TypeTableTableOrderingComposer({
     required super.$db,
     required super.$table,
@@ -27526,7 +27494,7 @@ class $$KanjiMetaBankV3TypeTableTableOrderingComposer
 }
 
 class $$KanjiMetaBankV3TypeTableTableAnnotationComposer
-    extends Composer<_$DaKanjiDB, $KanjiMetaBankV3TypeTableTable> {
+    extends Composer<_$DaDb, $KanjiMetaBankV3TypeTableTable> {
   $$KanjiMetaBankV3TypeTableTableAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -27570,7 +27538,7 @@ class $$KanjiMetaBankV3TypeTableTableAnnotationComposer
 class $$KanjiMetaBankV3TypeTableTableTableManager
     extends
         RootTableManager<
-          _$DaKanjiDB,
+          _$DaDb,
           $KanjiMetaBankV3TypeTableTable,
           KanjiMetaBankV3TypeTableData,
           $$KanjiMetaBankV3TypeTableTableFilterComposer,
@@ -27586,7 +27554,7 @@ class $$KanjiMetaBankV3TypeTableTableTableManager
           PrefetchHooks Function({bool kanjiMetaBankV3TableRefs})
         > {
   $$KanjiMetaBankV3TypeTableTableTableManager(
-    _$DaKanjiDB db,
+    _$DaDb db,
     $KanjiMetaBankV3TypeTableTable table,
   ) : super(
         TableManagerState(
@@ -27661,7 +27629,7 @@ class $$KanjiMetaBankV3TypeTableTableTableManager
 
 typedef $$KanjiMetaBankV3TypeTableTableProcessedTableManager =
     ProcessedTableManager<
-      _$DaKanjiDB,
+      _$DaDb,
       $KanjiMetaBankV3TypeTableTable,
       KanjiMetaBankV3TypeTableData,
       $$KanjiMetaBankV3TypeTableTableFilterComposer,
@@ -27695,7 +27663,7 @@ typedef $$KanjiMetaBankV3TableTableUpdateCompanionBuilder =
 final class $$KanjiMetaBankV3TableTableReferences
     extends
         BaseReferences<
-          _$DaKanjiDB,
+          _$DaDb,
           $KanjiMetaBankV3TableTable,
           KanjiMetaBankV3TableData
         > {
@@ -27705,10 +27673,9 @@ final class $$KanjiMetaBankV3TableTableReferences
     super.$_typedResult,
   );
 
-  static $IndexTableTable _indexIdTable(_$DaKanjiDB db) =>
-      db.indexTable.createAlias(
-        $_aliasNameGenerator(db.kanjiMetaBankV3Table.indexId, db.indexTable.id),
-      );
+  static $IndexTableTable _indexIdTable(_$DaDb db) => db.indexTable.createAlias(
+    $_aliasNameGenerator(db.kanjiMetaBankV3Table.indexId, db.indexTable.id),
+  );
 
   $$IndexTableTableProcessedTableManager get indexId {
     final $_column = $_itemColumn<int>('index_id')!;
@@ -27724,10 +27691,9 @@ final class $$KanjiMetaBankV3TableTableReferences
     );
   }
 
-  static $KanjiTableTable _kanjiIdTable(_$DaKanjiDB db) =>
-      db.kanjiTable.createAlias(
-        $_aliasNameGenerator(db.kanjiMetaBankV3Table.kanjiId, db.kanjiTable.id),
-      );
+  static $KanjiTableTable _kanjiIdTable(_$DaDb db) => db.kanjiTable.createAlias(
+    $_aliasNameGenerator(db.kanjiMetaBankV3Table.kanjiId, db.kanjiTable.id),
+  );
 
   $$KanjiTableTableProcessedTableManager get kanjiId {
     final $_column = $_itemColumn<int>('kanji_id')!;
@@ -27743,7 +27709,7 @@ final class $$KanjiMetaBankV3TableTableReferences
     );
   }
 
-  static $KanjiMetaBankV3TypeTableTable _typeIdTable(_$DaKanjiDB db) =>
+  static $KanjiMetaBankV3TypeTableTable _typeIdTable(_$DaDb db) =>
       db.kanjiMetaBankV3TypeTable.createAlias(
         $_aliasNameGenerator(
           db.kanjiMetaBankV3Table.typeId,
@@ -27767,7 +27733,7 @@ final class $$KanjiMetaBankV3TableTableReferences
 }
 
 class $$KanjiMetaBankV3TableTableFilterComposer
-    extends Composer<_$DaKanjiDB, $KanjiMetaBankV3TableTable> {
+    extends Composer<_$DaDb, $KanjiMetaBankV3TableTable> {
   $$KanjiMetaBankV3TableTableFilterComposer({
     required super.$db,
     required super.$table,
@@ -27862,7 +27828,7 @@ class $$KanjiMetaBankV3TableTableFilterComposer
 }
 
 class $$KanjiMetaBankV3TableTableOrderingComposer
-    extends Composer<_$DaKanjiDB, $KanjiMetaBankV3TableTable> {
+    extends Composer<_$DaDb, $KanjiMetaBankV3TableTable> {
   $$KanjiMetaBankV3TableTableOrderingComposer({
     required super.$db,
     required super.$table,
@@ -27957,7 +27923,7 @@ class $$KanjiMetaBankV3TableTableOrderingComposer
 }
 
 class $$KanjiMetaBankV3TableTableAnnotationComposer
-    extends Composer<_$DaKanjiDB, $KanjiMetaBankV3TableTable> {
+    extends Composer<_$DaDb, $KanjiMetaBankV3TableTable> {
   $$KanjiMetaBankV3TableTableAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -28050,7 +28016,7 @@ class $$KanjiMetaBankV3TableTableAnnotationComposer
 class $$KanjiMetaBankV3TableTableTableManager
     extends
         RootTableManager<
-          _$DaKanjiDB,
+          _$DaDb,
           $KanjiMetaBankV3TableTable,
           KanjiMetaBankV3TableData,
           $$KanjiMetaBankV3TableTableFilterComposer,
@@ -28063,7 +28029,7 @@ class $$KanjiMetaBankV3TableTableTableManager
           PrefetchHooks Function({bool indexId, bool kanjiId, bool typeId})
         > {
   $$KanjiMetaBankV3TableTableTableManager(
-    _$DaKanjiDB db,
+    _$DaDb db,
     $KanjiMetaBankV3TableTable table,
   ) : super(
         TableManagerState(
@@ -28201,7 +28167,7 @@ class $$KanjiMetaBankV3TableTableTableManager
 
 typedef $$KanjiMetaBankV3TableTableProcessedTableManager =
     ProcessedTableManager<
-      _$DaKanjiDB,
+      _$DaDb,
       $KanjiMetaBankV3TableTable,
       KanjiMetaBankV3TableData,
       $$KanjiMetaBankV3TableTableFilterComposer,
@@ -28227,11 +28193,11 @@ typedef $$TermTableTableUpdateCompanionBuilder =
     });
 
 final class $$TermTableTableReferences
-    extends BaseReferences<_$DaKanjiDB, $TermTableTable, TermTableData> {
+    extends BaseReferences<_$DaDb, $TermTableTable, TermTableData> {
   $$TermTableTableReferences(super.$_db, super.$_table, super.$_typedResult);
 
   static MultiTypedResultKey<$TermBankV3TableTable, List<TermBankV3TableData>>
-  _termBankV3TableRefsTable(_$DaKanjiDB db) => MultiTypedResultKey.fromTable(
+  _termBankV3TableRefsTable(_$DaDb db) => MultiTypedResultKey.fromTable(
     db.termBankV3Table,
     aliasName: $_aliasNameGenerator(db.termTable.id, db.termBankV3Table.termId),
   );
@@ -28254,14 +28220,13 @@ final class $$TermTableTableReferences
     $TermMetaBankV3TableTable,
     List<TermMetaBankV3TableData>
   >
-  _termMetaBankV3TableRefsTable(_$DaKanjiDB db) =>
-      MultiTypedResultKey.fromTable(
-        db.termMetaBankV3Table,
-        aliasName: $_aliasNameGenerator(
-          db.termTable.id,
-          db.termMetaBankV3Table.termId,
-        ),
-      );
+  _termMetaBankV3TableRefsTable(_$DaDb db) => MultiTypedResultKey.fromTable(
+    db.termMetaBankV3Table,
+    aliasName: $_aliasNameGenerator(
+      db.termTable.id,
+      db.termMetaBankV3Table.termId,
+    ),
+  );
 
   $$TermMetaBankV3TableTableProcessedTableManager get termMetaBankV3TableRefs {
     final manager = $$TermMetaBankV3TableTableTableManager(
@@ -28281,14 +28246,13 @@ final class $$TermTableTableReferences
     $AudioTable_X_TermTableTable,
     List<AudioTable_X_TermTableData>
   >
-  _audioTableXTermTableRefsTable(_$DaKanjiDB db) =>
-      MultiTypedResultKey.fromTable(
-        db.audioTableXTermTable,
-        aliasName: $_aliasNameGenerator(
-          db.termTable.id,
-          db.audioTableXTermTable.termId,
-        ),
-      );
+  _audioTableXTermTableRefsTable(_$DaDb db) => MultiTypedResultKey.fromTable(
+    db.audioTableXTermTable,
+    aliasName: $_aliasNameGenerator(
+      db.termTable.id,
+      db.audioTableXTermTable.termId,
+    ),
+  );
 
   $$AudioTable_X_TermTableTableProcessedTableManager
   get audioTableXTermTableRefs {
@@ -28306,8 +28270,7 @@ final class $$TermTableTableReferences
   }
 }
 
-class $$TermTableTableFilterComposer
-    extends Composer<_$DaKanjiDB, $TermTableTable> {
+class $$TermTableTableFilterComposer extends Composer<_$DaDb, $TermTableTable> {
   $$TermTableTableFilterComposer({
     required super.$db,
     required super.$table,
@@ -28408,7 +28371,7 @@ class $$TermTableTableFilterComposer
 }
 
 class $$TermTableTableOrderingComposer
-    extends Composer<_$DaKanjiDB, $TermTableTable> {
+    extends Composer<_$DaDb, $TermTableTable> {
   $$TermTableTableOrderingComposer({
     required super.$db,
     required super.$table,
@@ -28433,7 +28396,7 @@ class $$TermTableTableOrderingComposer
 }
 
 class $$TermTableTableAnnotationComposer
-    extends Composer<_$DaKanjiDB, $TermTableTable> {
+    extends Composer<_$DaDb, $TermTableTable> {
   $$TermTableTableAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -28533,7 +28496,7 @@ class $$TermTableTableAnnotationComposer
 class $$TermTableTableTableManager
     extends
         RootTableManager<
-          _$DaKanjiDB,
+          _$DaDb,
           $TermTableTable,
           TermTableData,
           $$TermTableTableFilterComposer,
@@ -28549,7 +28512,7 @@ class $$TermTableTableTableManager
             bool audioTableXTermTableRefs,
           })
         > {
-  $$TermTableTableTableManager(_$DaKanjiDB db, $TermTableTable table)
+  $$TermTableTableTableManager(_$DaDb db, $TermTableTable table)
     : super(
         TableManagerState(
           db: db,
@@ -28677,7 +28640,7 @@ class $$TermTableTableTableManager
 
 typedef $$TermTableTableProcessedTableManager =
     ProcessedTableManager<
-      _$DaKanjiDB,
+      _$DaDb,
       $TermTableTable,
       TermTableData,
       $$TermTableTableFilterComposer,
@@ -28706,7 +28669,7 @@ typedef $FtsTermsUpdateCompanionBuilder =
       Value<int> rowid,
     });
 
-class $FtsTermsFilterComposer extends Composer<_$DaKanjiDB, FtsTerms> {
+class $FtsTermsFilterComposer extends Composer<_$DaDb, FtsTerms> {
   $FtsTermsFilterComposer({
     required super.$db,
     required super.$table,
@@ -28725,7 +28688,7 @@ class $FtsTermsFilterComposer extends Composer<_$DaKanjiDB, FtsTerms> {
   );
 }
 
-class $FtsTermsOrderingComposer extends Composer<_$DaKanjiDB, FtsTerms> {
+class $FtsTermsOrderingComposer extends Composer<_$DaDb, FtsTerms> {
   $FtsTermsOrderingComposer({
     required super.$db,
     required super.$table,
@@ -28744,7 +28707,7 @@ class $FtsTermsOrderingComposer extends Composer<_$DaKanjiDB, FtsTerms> {
   );
 }
 
-class $FtsTermsAnnotationComposer extends Composer<_$DaKanjiDB, FtsTerms> {
+class $FtsTermsAnnotationComposer extends Composer<_$DaDb, FtsTerms> {
   $FtsTermsAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -28764,7 +28727,7 @@ class $FtsTermsAnnotationComposer extends Composer<_$DaKanjiDB, FtsTerms> {
 class $FtsTermsTableManager
     extends
         RootTableManager<
-          _$DaKanjiDB,
+          _$DaDb,
           FtsTerms,
           FtsTerm,
           $FtsTermsFilterComposer,
@@ -28772,11 +28735,11 @@ class $FtsTermsTableManager
           $FtsTermsAnnotationComposer,
           $FtsTermsCreateCompanionBuilder,
           $FtsTermsUpdateCompanionBuilder,
-          (FtsTerm, BaseReferences<_$DaKanjiDB, FtsTerms, FtsTerm>),
+          (FtsTerm, BaseReferences<_$DaDb, FtsTerms, FtsTerm>),
           FtsTerm,
           PrefetchHooks Function()
         > {
-  $FtsTermsTableManager(_$DaKanjiDB db, FtsTerms table)
+  $FtsTermsTableManager(_$DaDb db, FtsTerms table)
     : super(
         TableManagerState(
           db: db,
@@ -28817,7 +28780,7 @@ class $FtsTermsTableManager
 
 typedef $FtsTermsProcessedTableManager =
     ProcessedTableManager<
-      _$DaKanjiDB,
+      _$DaDb,
       FtsTerms,
       FtsTerm,
       $FtsTermsFilterComposer,
@@ -28825,7 +28788,7 @@ typedef $FtsTermsProcessedTableManager =
       $FtsTermsAnnotationComposer,
       $FtsTermsCreateCompanionBuilder,
       $FtsTermsUpdateCompanionBuilder,
-      (FtsTerm, BaseReferences<_$DaKanjiDB, FtsTerms, FtsTerm>),
+      (FtsTerm, BaseReferences<_$DaDb, FtsTerms, FtsTerm>),
       FtsTerm,
       PrefetchHooks Function()
     >;
@@ -28842,7 +28805,7 @@ typedef $FtsTokensUpdateCompanionBuilder =
       Value<int> rowid,
     });
 
-class $FtsTokensFilterComposer extends Composer<_$DaKanjiDB, FtsTokens> {
+class $FtsTokensFilterComposer extends Composer<_$DaDb, FtsTokens> {
   $FtsTokensFilterComposer({
     required super.$db,
     required super.$table,
@@ -28861,7 +28824,7 @@ class $FtsTokensFilterComposer extends Composer<_$DaKanjiDB, FtsTokens> {
   );
 }
 
-class $FtsTokensOrderingComposer extends Composer<_$DaKanjiDB, FtsTokens> {
+class $FtsTokensOrderingComposer extends Composer<_$DaDb, FtsTokens> {
   $FtsTokensOrderingComposer({
     required super.$db,
     required super.$table,
@@ -28880,7 +28843,7 @@ class $FtsTokensOrderingComposer extends Composer<_$DaKanjiDB, FtsTokens> {
   );
 }
 
-class $FtsTokensAnnotationComposer extends Composer<_$DaKanjiDB, FtsTokens> {
+class $FtsTokensAnnotationComposer extends Composer<_$DaDb, FtsTokens> {
   $FtsTokensAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -28900,7 +28863,7 @@ class $FtsTokensAnnotationComposer extends Composer<_$DaKanjiDB, FtsTokens> {
 class $FtsTokensTableManager
     extends
         RootTableManager<
-          _$DaKanjiDB,
+          _$DaDb,
           FtsTokens,
           FtsToken,
           $FtsTokensFilterComposer,
@@ -28908,11 +28871,11 @@ class $FtsTokensTableManager
           $FtsTokensAnnotationComposer,
           $FtsTokensCreateCompanionBuilder,
           $FtsTokensUpdateCompanionBuilder,
-          (FtsToken, BaseReferences<_$DaKanjiDB, FtsTokens, FtsToken>),
+          (FtsToken, BaseReferences<_$DaDb, FtsTokens, FtsToken>),
           FtsToken,
           PrefetchHooks Function()
         > {
-  $FtsTokensTableManager(_$DaKanjiDB db, FtsTokens table)
+  $FtsTokensTableManager(_$DaDb db, FtsTokens table)
     : super(
         TableManagerState(
           db: db,
@@ -28953,7 +28916,7 @@ class $FtsTokensTableManager
 
 typedef $FtsTokensProcessedTableManager =
     ProcessedTableManager<
-      _$DaKanjiDB,
+      _$DaDb,
       FtsTokens,
       FtsToken,
       $FtsTokensFilterComposer,
@@ -28961,7 +28924,7 @@ typedef $FtsTokensProcessedTableManager =
       $FtsTokensAnnotationComposer,
       $FtsTokensCreateCompanionBuilder,
       $FtsTokensUpdateCompanionBuilder,
-      (FtsToken, BaseReferences<_$DaKanjiDB, FtsTokens, FtsToken>),
+      (FtsToken, BaseReferences<_$DaDb, FtsTokens, FtsToken>),
       FtsToken,
       PrefetchHooks Function()
     >;
@@ -28978,7 +28941,7 @@ typedef $FtsReadingsUpdateCompanionBuilder =
       Value<int> rowid,
     });
 
-class $FtsReadingsFilterComposer extends Composer<_$DaKanjiDB, FtsReadings> {
+class $FtsReadingsFilterComposer extends Composer<_$DaDb, FtsReadings> {
   $FtsReadingsFilterComposer({
     required super.$db,
     required super.$table,
@@ -28997,7 +28960,7 @@ class $FtsReadingsFilterComposer extends Composer<_$DaKanjiDB, FtsReadings> {
   );
 }
 
-class $FtsReadingsOrderingComposer extends Composer<_$DaKanjiDB, FtsReadings> {
+class $FtsReadingsOrderingComposer extends Composer<_$DaDb, FtsReadings> {
   $FtsReadingsOrderingComposer({
     required super.$db,
     required super.$table,
@@ -29016,8 +28979,7 @@ class $FtsReadingsOrderingComposer extends Composer<_$DaKanjiDB, FtsReadings> {
   );
 }
 
-class $FtsReadingsAnnotationComposer
-    extends Composer<_$DaKanjiDB, FtsReadings> {
+class $FtsReadingsAnnotationComposer extends Composer<_$DaDb, FtsReadings> {
   $FtsReadingsAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -29037,7 +28999,7 @@ class $FtsReadingsAnnotationComposer
 class $FtsReadingsTableManager
     extends
         RootTableManager<
-          _$DaKanjiDB,
+          _$DaDb,
           FtsReadings,
           FtsReading,
           $FtsReadingsFilterComposer,
@@ -29045,11 +29007,11 @@ class $FtsReadingsTableManager
           $FtsReadingsAnnotationComposer,
           $FtsReadingsCreateCompanionBuilder,
           $FtsReadingsUpdateCompanionBuilder,
-          (FtsReading, BaseReferences<_$DaKanjiDB, FtsReadings, FtsReading>),
+          (FtsReading, BaseReferences<_$DaDb, FtsReadings, FtsReading>),
           FtsReading,
           PrefetchHooks Function()
         > {
-  $FtsReadingsTableManager(_$DaKanjiDB db, FtsReadings table)
+  $FtsReadingsTableManager(_$DaDb db, FtsReadings table)
     : super(
         TableManagerState(
           db: db,
@@ -29090,7 +29052,7 @@ class $FtsReadingsTableManager
 
 typedef $FtsReadingsProcessedTableManager =
     ProcessedTableManager<
-      _$DaKanjiDB,
+      _$DaDb,
       FtsReadings,
       FtsReading,
       $FtsReadingsFilterComposer,
@@ -29098,7 +29060,7 @@ typedef $FtsReadingsProcessedTableManager =
       $FtsReadingsAnnotationComposer,
       $FtsReadingsCreateCompanionBuilder,
       $FtsReadingsUpdateCompanionBuilder,
-      (FtsReading, BaseReferences<_$DaKanjiDB, FtsReadings, FtsReading>),
+      (FtsReading, BaseReferences<_$DaDb, FtsReadings, FtsReading>),
       FtsReading,
       PrefetchHooks Function()
     >;
@@ -29113,8 +29075,7 @@ typedef $FtsDefinitionsUpdateCompanionBuilder =
       Value<int> rowid,
     });
 
-class $FtsDefinitionsFilterComposer
-    extends Composer<_$DaKanjiDB, FtsDefinitions> {
+class $FtsDefinitionsFilterComposer extends Composer<_$DaDb, FtsDefinitions> {
   $FtsDefinitionsFilterComposer({
     required super.$db,
     required super.$table,
@@ -29128,8 +29089,7 @@ class $FtsDefinitionsFilterComposer
   );
 }
 
-class $FtsDefinitionsOrderingComposer
-    extends Composer<_$DaKanjiDB, FtsDefinitions> {
+class $FtsDefinitionsOrderingComposer extends Composer<_$DaDb, FtsDefinitions> {
   $FtsDefinitionsOrderingComposer({
     required super.$db,
     required super.$table,
@@ -29144,7 +29104,7 @@ class $FtsDefinitionsOrderingComposer
 }
 
 class $FtsDefinitionsAnnotationComposer
-    extends Composer<_$DaKanjiDB, FtsDefinitions> {
+    extends Composer<_$DaDb, FtsDefinitions> {
   $FtsDefinitionsAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -29161,7 +29121,7 @@ class $FtsDefinitionsAnnotationComposer
 class $FtsDefinitionsTableManager
     extends
         RootTableManager<
-          _$DaKanjiDB,
+          _$DaDb,
           FtsDefinitions,
           FtsDefinition,
           $FtsDefinitionsFilterComposer,
@@ -29171,12 +29131,12 @@ class $FtsDefinitionsTableManager
           $FtsDefinitionsUpdateCompanionBuilder,
           (
             FtsDefinition,
-            BaseReferences<_$DaKanjiDB, FtsDefinitions, FtsDefinition>,
+            BaseReferences<_$DaDb, FtsDefinitions, FtsDefinition>,
           ),
           FtsDefinition,
           PrefetchHooks Function()
         > {
-  $FtsDefinitionsTableManager(_$DaKanjiDB db, FtsDefinitions table)
+  $FtsDefinitionsTableManager(_$DaDb db, FtsDefinitions table)
     : super(
         TableManagerState(
           db: db,
@@ -29211,7 +29171,7 @@ class $FtsDefinitionsTableManager
 
 typedef $FtsDefinitionsProcessedTableManager =
     ProcessedTableManager<
-      _$DaKanjiDB,
+      _$DaDb,
       FtsDefinitions,
       FtsDefinition,
       $FtsDefinitionsFilterComposer,
@@ -29219,10 +29179,7 @@ typedef $FtsDefinitionsProcessedTableManager =
       $FtsDefinitionsAnnotationComposer,
       $FtsDefinitionsCreateCompanionBuilder,
       $FtsDefinitionsUpdateCompanionBuilder,
-      (
-        FtsDefinition,
-        BaseReferences<_$DaKanjiDB, FtsDefinitions, FtsDefinition>,
-      ),
+      (FtsDefinition, BaseReferences<_$DaDb, FtsDefinitions, FtsDefinition>),
       FtsDefinition,
       PrefetchHooks Function()
     >;
@@ -29242,7 +29199,7 @@ typedef $$TermBankV3DefinitionJsonTableTableUpdateCompanionBuilder =
 final class $$TermBankV3DefinitionJsonTableTableReferences
     extends
         BaseReferences<
-          _$DaKanjiDB,
+          _$DaDb,
           $TermBankV3DefinitionJsonTableTable,
           TermBankV3DefinitionJsonTableData
         > {
@@ -29253,7 +29210,7 @@ final class $$TermBankV3DefinitionJsonTableTableReferences
   );
 
   static MultiTypedResultKey<$TermBankV3TableTable, List<TermBankV3TableData>>
-  _termBankV3TableRefsTable(_$DaKanjiDB db) => MultiTypedResultKey.fromTable(
+  _termBankV3TableRefsTable(_$DaDb db) => MultiTypedResultKey.fromTable(
     db.termBankV3Table,
     aliasName: $_aliasNameGenerator(
       db.termBankV3DefinitionJsonTable.id,
@@ -29277,7 +29234,7 @@ final class $$TermBankV3DefinitionJsonTableTableReferences
 }
 
 class $$TermBankV3DefinitionJsonTableTableFilterComposer
-    extends Composer<_$DaKanjiDB, $TermBankV3DefinitionJsonTableTable> {
+    extends Composer<_$DaDb, $TermBankV3DefinitionJsonTableTable> {
   $$TermBankV3DefinitionJsonTableTableFilterComposer({
     required super.$db,
     required super.$table,
@@ -29328,7 +29285,7 @@ class $$TermBankV3DefinitionJsonTableTableFilterComposer
 }
 
 class $$TermBankV3DefinitionJsonTableTableOrderingComposer
-    extends Composer<_$DaKanjiDB, $TermBankV3DefinitionJsonTableTable> {
+    extends Composer<_$DaDb, $TermBankV3DefinitionJsonTableTable> {
   $$TermBankV3DefinitionJsonTableTableOrderingComposer({
     required super.$db,
     required super.$table,
@@ -29353,7 +29310,7 @@ class $$TermBankV3DefinitionJsonTableTableOrderingComposer
 }
 
 class $$TermBankV3DefinitionJsonTableTableAnnotationComposer
-    extends Composer<_$DaKanjiDB, $TermBankV3DefinitionJsonTableTable> {
+    extends Composer<_$DaDb, $TermBankV3DefinitionJsonTableTable> {
   $$TermBankV3DefinitionJsonTableTableAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -29404,7 +29361,7 @@ class $$TermBankV3DefinitionJsonTableTableAnnotationComposer
 class $$TermBankV3DefinitionJsonTableTableTableManager
     extends
         RootTableManager<
-          _$DaKanjiDB,
+          _$DaDb,
           $TermBankV3DefinitionJsonTableTable,
           TermBankV3DefinitionJsonTableData,
           $$TermBankV3DefinitionJsonTableTableFilterComposer,
@@ -29420,7 +29377,7 @@ class $$TermBankV3DefinitionJsonTableTableTableManager
           PrefetchHooks Function({bool termBankV3TableRefs})
         > {
   $$TermBankV3DefinitionJsonTableTableTableManager(
-    _$DaKanjiDB db,
+    _$DaDb db,
     $TermBankV3DefinitionJsonTableTable table,
   ) : super(
         TableManagerState(
@@ -29510,7 +29467,7 @@ class $$TermBankV3DefinitionJsonTableTableTableManager
 
 typedef $$TermBankV3DefinitionJsonTableTableProcessedTableManager =
     ProcessedTableManager<
-      _$DaKanjiDB,
+      _$DaDb,
       $TermBankV3DefinitionJsonTableTable,
       TermBankV3DefinitionJsonTableData,
       $$TermBankV3DefinitionJsonTableTableFilterComposer,
@@ -29547,22 +29504,16 @@ typedef $$TermBankV3TableTableUpdateCompanionBuilder =
     });
 
 final class $$TermBankV3TableTableReferences
-    extends
-        BaseReferences<
-          _$DaKanjiDB,
-          $TermBankV3TableTable,
-          TermBankV3TableData
-        > {
+    extends BaseReferences<_$DaDb, $TermBankV3TableTable, TermBankV3TableData> {
   $$TermBankV3TableTableReferences(
     super.$_db,
     super.$_table,
     super.$_typedResult,
   );
 
-  static $IndexTableTable _indexIdTable(_$DaKanjiDB db) =>
-      db.indexTable.createAlias(
-        $_aliasNameGenerator(db.termBankV3Table.indexId, db.indexTable.id),
-      );
+  static $IndexTableTable _indexIdTable(_$DaDb db) => db.indexTable.createAlias(
+    $_aliasNameGenerator(db.termBankV3Table.indexId, db.indexTable.id),
+  );
 
   $$IndexTableTableProcessedTableManager get indexId {
     final $_column = $_itemColumn<int>('index_id')!;
@@ -29578,10 +29529,9 @@ final class $$TermBankV3TableTableReferences
     );
   }
 
-  static $TermTableTable _termIdTable(_$DaKanjiDB db) =>
-      db.termTable.createAlias(
-        $_aliasNameGenerator(db.termBankV3Table.termId, db.termTable.id),
-      );
+  static $TermTableTable _termIdTable(_$DaDb db) => db.termTable.createAlias(
+    $_aliasNameGenerator(db.termBankV3Table.termId, db.termTable.id),
+  );
 
   $$TermTableTableProcessedTableManager get termId {
     final $_column = $_itemColumn<int>('term_id')!;
@@ -29598,7 +29548,7 @@ final class $$TermBankV3TableTableReferences
   }
 
   static $TermBankV3DefinitionJsonTableTable _definitionJsonIdTable(
-    _$DaKanjiDB db,
+    _$DaDb db,
   ) => db.termBankV3DefinitionJsonTable.createAlias(
     $_aliasNameGenerator(
       db.termBankV3Table.definitionJsonId,
@@ -29621,7 +29571,7 @@ final class $$TermBankV3TableTableReferences
     );
   }
 
-  static $ReadingTableTable _readingIdTable(_$DaKanjiDB db) =>
+  static $ReadingTableTable _readingIdTable(_$DaDb db) =>
       db.readingTable.createAlias(
         $_aliasNameGenerator(db.termBankV3Table.readingId, db.readingTable.id),
       );
@@ -29644,7 +29594,7 @@ final class $$TermBankV3TableTableReferences
     $TermBankV3_X_DefinitionTableTable,
     List<TermBankV3_X_DefinitionTableData>
   >
-  _termBankV3XDefinitionTableRefsTable(_$DaKanjiDB db) =>
+  _termBankV3XDefinitionTableRefsTable(_$DaDb db) =>
       MultiTypedResultKey.fromTable(
         db.termBankV3XDefinitionTable,
         aliasName: $_aliasNameGenerator(
@@ -29672,14 +29622,13 @@ final class $$TermBankV3TableTableReferences
     $TermBankV3_X_TagBankTableTable,
     List<TermBankV3_X_TagBankTableData>
   >
-  _termBankV3XTagBankTableRefsTable(_$DaKanjiDB db) =>
-      MultiTypedResultKey.fromTable(
-        db.termBankV3XTagBankTable,
-        aliasName: $_aliasNameGenerator(
-          db.termBankV3Table.id,
-          db.termBankV3XTagBankTable.termBankId,
-        ),
-      );
+  _termBankV3XTagBankTableRefsTable(_$DaDb db) => MultiTypedResultKey.fromTable(
+    db.termBankV3XTagBankTable,
+    aliasName: $_aliasNameGenerator(
+      db.termBankV3Table.id,
+      db.termBankV3XTagBankTable.termBankId,
+    ),
+  );
 
   $$TermBankV3_X_TagBankTableTableProcessedTableManager
   get termBankV3XTagBankTableRefs {
@@ -29700,7 +29649,7 @@ final class $$TermBankV3TableTableReferences
     $TermBankV3_X_RuleIdentifierTableTable,
     List<TermBankV3_X_RuleIdentifierTableData>
   >
-  _termBankV3XRuleIdentifierTableRefsTable(_$DaKanjiDB db) =>
+  _termBankV3XRuleIdentifierTableRefsTable(_$DaDb db) =>
       MultiTypedResultKey.fromTable(
         db.termBankV3XRuleIdentifierTable,
         aliasName: $_aliasNameGenerator(
@@ -29728,7 +29677,7 @@ final class $$TermBankV3TableTableReferences
     $TermBankV3_X_DefinitionTagTableTable,
     List<TermBankV3_X_DefinitionTagTableData>
   >
-  _termBankV3XDefinitionTagTableRefsTable(_$DaKanjiDB db) =>
+  _termBankV3XDefinitionTagTableRefsTable(_$DaDb db) =>
       MultiTypedResultKey.fromTable(
         db.termBankV3XDefinitionTagTable,
         aliasName: $_aliasNameGenerator(
@@ -29754,7 +29703,7 @@ final class $$TermBankV3TableTableReferences
 }
 
 class $$TermBankV3TableTableFilterComposer
-    extends Composer<_$DaKanjiDB, $TermBankV3TableTable> {
+    extends Composer<_$DaDb, $TermBankV3TableTable> {
   $$TermBankV3TableTableFilterComposer({
     required super.$db,
     required super.$table,
@@ -29986,7 +29935,7 @@ class $$TermBankV3TableTableFilterComposer
 }
 
 class $$TermBankV3TableTableOrderingComposer
-    extends Composer<_$DaKanjiDB, $TermBankV3TableTable> {
+    extends Composer<_$DaDb, $TermBankV3TableTable> {
   $$TermBankV3TableTableOrderingComposer({
     required super.$db,
     required super.$table,
@@ -30104,7 +30053,7 @@ class $$TermBankV3TableTableOrderingComposer
 }
 
 class $$TermBankV3TableTableAnnotationComposer
-    extends Composer<_$DaKanjiDB, $TermBankV3TableTable> {
+    extends Composer<_$DaDb, $TermBankV3TableTable> {
   $$TermBankV3TableTableAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -30336,7 +30285,7 @@ class $$TermBankV3TableTableAnnotationComposer
 class $$TermBankV3TableTableTableManager
     extends
         RootTableManager<
-          _$DaKanjiDB,
+          _$DaDb,
           $TermBankV3TableTable,
           TermBankV3TableData,
           $$TermBankV3TableTableFilterComposer,
@@ -30357,10 +30306,8 @@ class $$TermBankV3TableTableTableManager
             bool termBankV3XDefinitionTagTableRefs,
           })
         > {
-  $$TermBankV3TableTableTableManager(
-    _$DaKanjiDB db,
-    $TermBankV3TableTable table,
-  ) : super(
+  $$TermBankV3TableTableTableManager(_$DaDb db, $TermBankV3TableTable table)
+    : super(
         TableManagerState(
           db: db,
           table: table,
@@ -30611,7 +30558,7 @@ class $$TermBankV3TableTableTableManager
 
 typedef $$TermBankV3TableTableProcessedTableManager =
     ProcessedTableManager<
-      _$DaKanjiDB,
+      _$DaDb,
       $TermBankV3TableTable,
       TermBankV3TableData,
       $$TermBankV3TableTableFilterComposer,
@@ -30650,7 +30597,7 @@ typedef $$TermBankV3_X_DefinitionTableTableUpdateCompanionBuilder =
 final class $$TermBankV3_X_DefinitionTableTableReferences
     extends
         BaseReferences<
-          _$DaKanjiDB,
+          _$DaDb,
           $TermBankV3_X_DefinitionTableTable,
           TermBankV3_X_DefinitionTableData
         > {
@@ -30660,7 +30607,7 @@ final class $$TermBankV3_X_DefinitionTableTableReferences
     super.$_typedResult,
   );
 
-  static $DefinitionTableTable _definitionIdTable(_$DaKanjiDB db) =>
+  static $DefinitionTableTable _definitionIdTable(_$DaDb db) =>
       db.definitionTable.createAlias(
         $_aliasNameGenerator(
           db.termBankV3XDefinitionTable.definitionId,
@@ -30682,7 +30629,7 @@ final class $$TermBankV3_X_DefinitionTableTableReferences
     );
   }
 
-  static $TermBankV3TableTable _termBankIdTable(_$DaKanjiDB db) =>
+  static $TermBankV3TableTable _termBankIdTable(_$DaDb db) =>
       db.termBankV3Table.createAlias(
         $_aliasNameGenerator(
           db.termBankV3XDefinitionTable.termBankId,
@@ -30706,7 +30653,7 @@ final class $$TermBankV3_X_DefinitionTableTableReferences
 }
 
 class $$TermBankV3_X_DefinitionTableTableFilterComposer
-    extends Composer<_$DaKanjiDB, $TermBankV3_X_DefinitionTableTable> {
+    extends Composer<_$DaDb, $TermBankV3_X_DefinitionTableTable> {
   $$TermBankV3_X_DefinitionTableTableFilterComposer({
     required super.$db,
     required super.$table,
@@ -30772,7 +30719,7 @@ class $$TermBankV3_X_DefinitionTableTableFilterComposer
 }
 
 class $$TermBankV3_X_DefinitionTableTableOrderingComposer
-    extends Composer<_$DaKanjiDB, $TermBankV3_X_DefinitionTableTable> {
+    extends Composer<_$DaDb, $TermBankV3_X_DefinitionTableTable> {
   $$TermBankV3_X_DefinitionTableTableOrderingComposer({
     required super.$db,
     required super.$table,
@@ -30838,7 +30785,7 @@ class $$TermBankV3_X_DefinitionTableTableOrderingComposer
 }
 
 class $$TermBankV3_X_DefinitionTableTableAnnotationComposer
-    extends Composer<_$DaKanjiDB, $TermBankV3_X_DefinitionTableTable> {
+    extends Composer<_$DaDb, $TermBankV3_X_DefinitionTableTable> {
   $$TermBankV3_X_DefinitionTableTableAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -30902,7 +30849,7 @@ class $$TermBankV3_X_DefinitionTableTableAnnotationComposer
 class $$TermBankV3_X_DefinitionTableTableTableManager
     extends
         RootTableManager<
-          _$DaKanjiDB,
+          _$DaDb,
           $TermBankV3_X_DefinitionTableTable,
           TermBankV3_X_DefinitionTableData,
           $$TermBankV3_X_DefinitionTableTableFilterComposer,
@@ -30918,7 +30865,7 @@ class $$TermBankV3_X_DefinitionTableTableTableManager
           PrefetchHooks Function({bool definitionId, bool termBankId})
         > {
   $$TermBankV3_X_DefinitionTableTableTableManager(
-    _$DaKanjiDB db,
+    _$DaDb db,
     $TermBankV3_X_DefinitionTableTable table,
   ) : super(
         TableManagerState(
@@ -31035,7 +30982,7 @@ class $$TermBankV3_X_DefinitionTableTableTableManager
 
 typedef $$TermBankV3_X_DefinitionTableTableProcessedTableManager =
     ProcessedTableManager<
-      _$DaKanjiDB,
+      _$DaDb,
       $TermBankV3_X_DefinitionTableTable,
       TermBankV3_X_DefinitionTableData,
       $$TermBankV3_X_DefinitionTableTableFilterComposer,
@@ -31066,7 +31013,7 @@ typedef $$TermBankV3_X_TagBankTableTableUpdateCompanionBuilder =
 final class $$TermBankV3_X_TagBankTableTableReferences
     extends
         BaseReferences<
-          _$DaKanjiDB,
+          _$DaDb,
           $TermBankV3_X_TagBankTableTable,
           TermBankV3_X_TagBankTableData
         > {
@@ -31076,7 +31023,7 @@ final class $$TermBankV3_X_TagBankTableTableReferences
     super.$_typedResult,
   );
 
-  static $TagBankV3TableTable _tagBankIdTable(_$DaKanjiDB db) =>
+  static $TagBankV3TableTable _tagBankIdTable(_$DaDb db) =>
       db.tagBankV3Table.createAlias(
         $_aliasNameGenerator(
           db.termBankV3XTagBankTable.tagBankId,
@@ -31098,7 +31045,7 @@ final class $$TermBankV3_X_TagBankTableTableReferences
     );
   }
 
-  static $TermBankV3TableTable _termBankIdTable(_$DaKanjiDB db) =>
+  static $TermBankV3TableTable _termBankIdTable(_$DaDb db) =>
       db.termBankV3Table.createAlias(
         $_aliasNameGenerator(
           db.termBankV3XTagBankTable.termBankId,
@@ -31122,7 +31069,7 @@ final class $$TermBankV3_X_TagBankTableTableReferences
 }
 
 class $$TermBankV3_X_TagBankTableTableFilterComposer
-    extends Composer<_$DaKanjiDB, $TermBankV3_X_TagBankTableTable> {
+    extends Composer<_$DaDb, $TermBankV3_X_TagBankTableTable> {
   $$TermBankV3_X_TagBankTableTableFilterComposer({
     required super.$db,
     required super.$table,
@@ -31183,7 +31130,7 @@ class $$TermBankV3_X_TagBankTableTableFilterComposer
 }
 
 class $$TermBankV3_X_TagBankTableTableOrderingComposer
-    extends Composer<_$DaKanjiDB, $TermBankV3_X_TagBankTableTable> {
+    extends Composer<_$DaDb, $TermBankV3_X_TagBankTableTable> {
   $$TermBankV3_X_TagBankTableTableOrderingComposer({
     required super.$db,
     required super.$table,
@@ -31244,7 +31191,7 @@ class $$TermBankV3_X_TagBankTableTableOrderingComposer
 }
 
 class $$TermBankV3_X_TagBankTableTableAnnotationComposer
-    extends Composer<_$DaKanjiDB, $TermBankV3_X_TagBankTableTable> {
+    extends Composer<_$DaDb, $TermBankV3_X_TagBankTableTable> {
   $$TermBankV3_X_TagBankTableTableAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -31305,7 +31252,7 @@ class $$TermBankV3_X_TagBankTableTableAnnotationComposer
 class $$TermBankV3_X_TagBankTableTableTableManager
     extends
         RootTableManager<
-          _$DaKanjiDB,
+          _$DaDb,
           $TermBankV3_X_TagBankTableTable,
           TermBankV3_X_TagBankTableData,
           $$TermBankV3_X_TagBankTableTableFilterComposer,
@@ -31321,7 +31268,7 @@ class $$TermBankV3_X_TagBankTableTableTableManager
           PrefetchHooks Function({bool tagBankId, bool termBankId})
         > {
   $$TermBankV3_X_TagBankTableTableTableManager(
-    _$DaKanjiDB db,
+    _$DaDb db,
     $TermBankV3_X_TagBankTableTable table,
   ) : super(
         TableManagerState(
@@ -31434,7 +31381,7 @@ class $$TermBankV3_X_TagBankTableTableTableManager
 
 typedef $$TermBankV3_X_TagBankTableTableProcessedTableManager =
     ProcessedTableManager<
-      _$DaKanjiDB,
+      _$DaDb,
       $TermBankV3_X_TagBankTableTable,
       TermBankV3_X_TagBankTableData,
       $$TermBankV3_X_TagBankTableTableFilterComposer,
@@ -31463,7 +31410,7 @@ typedef $$TermBankV3RuleIdentifierTableTableUpdateCompanionBuilder =
 final class $$TermBankV3RuleIdentifierTableTableReferences
     extends
         BaseReferences<
-          _$DaKanjiDB,
+          _$DaDb,
           $TermBankV3RuleIdentifierTableTable,
           TermBankV3RuleIdentifierTableData
         > {
@@ -31477,7 +31424,7 @@ final class $$TermBankV3RuleIdentifierTableTableReferences
     $TermBankV3_X_RuleIdentifierTableTable,
     List<TermBankV3_X_RuleIdentifierTableData>
   >
-  _termBankV3XRuleIdentifierTableRefsTable(_$DaKanjiDB db) =>
+  _termBankV3XRuleIdentifierTableRefsTable(_$DaDb db) =>
       MultiTypedResultKey.fromTable(
         db.termBankV3XRuleIdentifierTable,
         aliasName: $_aliasNameGenerator(
@@ -31503,7 +31450,7 @@ final class $$TermBankV3RuleIdentifierTableTableReferences
 }
 
 class $$TermBankV3RuleIdentifierTableTableFilterComposer
-    extends Composer<_$DaKanjiDB, $TermBankV3RuleIdentifierTableTable> {
+    extends Composer<_$DaDb, $TermBankV3RuleIdentifierTableTable> {
   $$TermBankV3RuleIdentifierTableTableFilterComposer({
     required super.$db,
     required super.$table,
@@ -31552,7 +31499,7 @@ class $$TermBankV3RuleIdentifierTableTableFilterComposer
 }
 
 class $$TermBankV3RuleIdentifierTableTableOrderingComposer
-    extends Composer<_$DaKanjiDB, $TermBankV3RuleIdentifierTableTable> {
+    extends Composer<_$DaDb, $TermBankV3RuleIdentifierTableTable> {
   $$TermBankV3RuleIdentifierTableTableOrderingComposer({
     required super.$db,
     required super.$table,
@@ -31572,7 +31519,7 @@ class $$TermBankV3RuleIdentifierTableTableOrderingComposer
 }
 
 class $$TermBankV3RuleIdentifierTableTableAnnotationComposer
-    extends Composer<_$DaKanjiDB, $TermBankV3RuleIdentifierTableTable> {
+    extends Composer<_$DaDb, $TermBankV3RuleIdentifierTableTable> {
   $$TermBankV3RuleIdentifierTableTableAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -31621,7 +31568,7 @@ class $$TermBankV3RuleIdentifierTableTableAnnotationComposer
 class $$TermBankV3RuleIdentifierTableTableTableManager
     extends
         RootTableManager<
-          _$DaKanjiDB,
+          _$DaDb,
           $TermBankV3RuleIdentifierTableTable,
           TermBankV3RuleIdentifierTableData,
           $$TermBankV3RuleIdentifierTableTableFilterComposer,
@@ -31637,7 +31584,7 @@ class $$TermBankV3RuleIdentifierTableTableTableManager
           PrefetchHooks Function({bool termBankV3XRuleIdentifierTableRefs})
         > {
   $$TermBankV3RuleIdentifierTableTableTableManager(
-    _$DaKanjiDB db,
+    _$DaDb db,
     $TermBankV3RuleIdentifierTableTable table,
   ) : super(
         TableManagerState(
@@ -31725,7 +31672,7 @@ class $$TermBankV3RuleIdentifierTableTableTableManager
 
 typedef $$TermBankV3RuleIdentifierTableTableProcessedTableManager =
     ProcessedTableManager<
-      _$DaKanjiDB,
+      _$DaDb,
       $TermBankV3RuleIdentifierTableTable,
       TermBankV3RuleIdentifierTableData,
       $$TermBankV3RuleIdentifierTableTableFilterComposer,
@@ -31756,7 +31703,7 @@ typedef $$TermBankV3_X_RuleIdentifierTableTableUpdateCompanionBuilder =
 final class $$TermBankV3_X_RuleIdentifierTableTableReferences
     extends
         BaseReferences<
-          _$DaKanjiDB,
+          _$DaDb,
           $TermBankV3_X_RuleIdentifierTableTable,
           TermBankV3_X_RuleIdentifierTableData
         > {
@@ -31767,7 +31714,7 @@ final class $$TermBankV3_X_RuleIdentifierTableTableReferences
   );
 
   static $TermBankV3RuleIdentifierTableTable _ruleIdentifierIdTable(
-    _$DaKanjiDB db,
+    _$DaDb db,
   ) => db.termBankV3RuleIdentifierTable.createAlias(
     $_aliasNameGenerator(
       db.termBankV3XRuleIdentifierTable.ruleIdentifierId,
@@ -31790,7 +31737,7 @@ final class $$TermBankV3_X_RuleIdentifierTableTableReferences
     );
   }
 
-  static $TermBankV3TableTable _termBankIdTable(_$DaKanjiDB db) =>
+  static $TermBankV3TableTable _termBankIdTable(_$DaDb db) =>
       db.termBankV3Table.createAlias(
         $_aliasNameGenerator(
           db.termBankV3XRuleIdentifierTable.termBankId,
@@ -31814,7 +31761,7 @@ final class $$TermBankV3_X_RuleIdentifierTableTableReferences
 }
 
 class $$TermBankV3_X_RuleIdentifierTableTableFilterComposer
-    extends Composer<_$DaKanjiDB, $TermBankV3_X_RuleIdentifierTableTable> {
+    extends Composer<_$DaDb, $TermBankV3_X_RuleIdentifierTableTable> {
   $$TermBankV3_X_RuleIdentifierTableTableFilterComposer({
     required super.$db,
     required super.$table,
@@ -31876,7 +31823,7 @@ class $$TermBankV3_X_RuleIdentifierTableTableFilterComposer
 }
 
 class $$TermBankV3_X_RuleIdentifierTableTableOrderingComposer
-    extends Composer<_$DaKanjiDB, $TermBankV3_X_RuleIdentifierTableTable> {
+    extends Composer<_$DaDb, $TermBankV3_X_RuleIdentifierTableTable> {
   $$TermBankV3_X_RuleIdentifierTableTableOrderingComposer({
     required super.$db,
     required super.$table,
@@ -31938,7 +31885,7 @@ class $$TermBankV3_X_RuleIdentifierTableTableOrderingComposer
 }
 
 class $$TermBankV3_X_RuleIdentifierTableTableAnnotationComposer
-    extends Composer<_$DaKanjiDB, $TermBankV3_X_RuleIdentifierTableTable> {
+    extends Composer<_$DaDb, $TermBankV3_X_RuleIdentifierTableTable> {
   $$TermBankV3_X_RuleIdentifierTableTableAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -32000,7 +31947,7 @@ class $$TermBankV3_X_RuleIdentifierTableTableAnnotationComposer
 class $$TermBankV3_X_RuleIdentifierTableTableTableManager
     extends
         RootTableManager<
-          _$DaKanjiDB,
+          _$DaDb,
           $TermBankV3_X_RuleIdentifierTableTable,
           TermBankV3_X_RuleIdentifierTableData,
           $$TermBankV3_X_RuleIdentifierTableTableFilterComposer,
@@ -32016,7 +31963,7 @@ class $$TermBankV3_X_RuleIdentifierTableTableTableManager
           PrefetchHooks Function({bool ruleIdentifierId, bool termBankId})
         > {
   $$TermBankV3_X_RuleIdentifierTableTableTableManager(
-    _$DaKanjiDB db,
+    _$DaDb db,
     $TermBankV3_X_RuleIdentifierTableTable table,
   ) : super(
         TableManagerState(
@@ -32133,7 +32080,7 @@ class $$TermBankV3_X_RuleIdentifierTableTableTableManager
 
 typedef $$TermBankV3_X_RuleIdentifierTableTableProcessedTableManager =
     ProcessedTableManager<
-      _$DaKanjiDB,
+      _$DaDb,
       $TermBankV3_X_RuleIdentifierTableTable,
       TermBankV3_X_RuleIdentifierTableData,
       $$TermBankV3_X_RuleIdentifierTableTableFilterComposer,
@@ -32162,7 +32109,7 @@ typedef $$TermMetaBankV3TypeTableTableUpdateCompanionBuilder =
 final class $$TermMetaBankV3TypeTableTableReferences
     extends
         BaseReferences<
-          _$DaKanjiDB,
+          _$DaDb,
           $TermMetaBankV3TypeTableTable,
           TermMetaBankV3TypeTableData
         > {
@@ -32176,14 +32123,13 @@ final class $$TermMetaBankV3TypeTableTableReferences
     $TermMetaBankV3TableTable,
     List<TermMetaBankV3TableData>
   >
-  _termMetaBankV3TableRefsTable(_$DaKanjiDB db) =>
-      MultiTypedResultKey.fromTable(
-        db.termMetaBankV3Table,
-        aliasName: $_aliasNameGenerator(
-          db.termMetaBankV3TypeTable.id,
-          db.termMetaBankV3Table.typeId,
-        ),
-      );
+  _termMetaBankV3TableRefsTable(_$DaDb db) => MultiTypedResultKey.fromTable(
+    db.termMetaBankV3Table,
+    aliasName: $_aliasNameGenerator(
+      db.termMetaBankV3TypeTable.id,
+      db.termMetaBankV3Table.typeId,
+    ),
+  );
 
   $$TermMetaBankV3TableTableProcessedTableManager get termMetaBankV3TableRefs {
     final manager = $$TermMetaBankV3TableTableTableManager(
@@ -32201,7 +32147,7 @@ final class $$TermMetaBankV3TypeTableTableReferences
 }
 
 class $$TermMetaBankV3TypeTableTableFilterComposer
-    extends Composer<_$DaKanjiDB, $TermMetaBankV3TypeTableTable> {
+    extends Composer<_$DaDb, $TermMetaBankV3TypeTableTable> {
   $$TermMetaBankV3TypeTableTableFilterComposer({
     required super.$db,
     required super.$table,
@@ -32246,7 +32192,7 @@ class $$TermMetaBankV3TypeTableTableFilterComposer
 }
 
 class $$TermMetaBankV3TypeTableTableOrderingComposer
-    extends Composer<_$DaKanjiDB, $TermMetaBankV3TypeTableTable> {
+    extends Composer<_$DaDb, $TermMetaBankV3TypeTableTable> {
   $$TermMetaBankV3TypeTableTableOrderingComposer({
     required super.$db,
     required super.$table,
@@ -32266,7 +32212,7 @@ class $$TermMetaBankV3TypeTableTableOrderingComposer
 }
 
 class $$TermMetaBankV3TypeTableTableAnnotationComposer
-    extends Composer<_$DaKanjiDB, $TermMetaBankV3TypeTableTable> {
+    extends Composer<_$DaDb, $TermMetaBankV3TypeTableTable> {
   $$TermMetaBankV3TypeTableTableAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -32310,7 +32256,7 @@ class $$TermMetaBankV3TypeTableTableAnnotationComposer
 class $$TermMetaBankV3TypeTableTableTableManager
     extends
         RootTableManager<
-          _$DaKanjiDB,
+          _$DaDb,
           $TermMetaBankV3TypeTableTable,
           TermMetaBankV3TypeTableData,
           $$TermMetaBankV3TypeTableTableFilterComposer,
@@ -32326,7 +32272,7 @@ class $$TermMetaBankV3TypeTableTableTableManager
           PrefetchHooks Function({bool termMetaBankV3TableRefs})
         > {
   $$TermMetaBankV3TypeTableTableTableManager(
-    _$DaKanjiDB db,
+    _$DaDb db,
     $TermMetaBankV3TypeTableTable table,
   ) : super(
         TableManagerState(
@@ -32401,7 +32347,7 @@ class $$TermMetaBankV3TypeTableTableTableManager
 
 typedef $$TermMetaBankV3TypeTableTableProcessedTableManager =
     ProcessedTableManager<
-      _$DaKanjiDB,
+      _$DaDb,
       $TermMetaBankV3TypeTableTable,
       TermMetaBankV3TypeTableData,
       $$TermMetaBankV3TypeTableTableFilterComposer,
@@ -32437,7 +32383,7 @@ typedef $$TermMetaBankV3TableTableUpdateCompanionBuilder =
 final class $$TermMetaBankV3TableTableReferences
     extends
         BaseReferences<
-          _$DaKanjiDB,
+          _$DaDb,
           $TermMetaBankV3TableTable,
           TermMetaBankV3TableData
         > {
@@ -32447,10 +32393,9 @@ final class $$TermMetaBankV3TableTableReferences
     super.$_typedResult,
   );
 
-  static $IndexTableTable _indexIdTable(_$DaKanjiDB db) =>
-      db.indexTable.createAlias(
-        $_aliasNameGenerator(db.termMetaBankV3Table.indexId, db.indexTable.id),
-      );
+  static $IndexTableTable _indexIdTable(_$DaDb db) => db.indexTable.createAlias(
+    $_aliasNameGenerator(db.termMetaBankV3Table.indexId, db.indexTable.id),
+  );
 
   $$IndexTableTableProcessedTableManager get indexId {
     final $_column = $_itemColumn<int>('index_id')!;
@@ -32466,10 +32411,9 @@ final class $$TermMetaBankV3TableTableReferences
     );
   }
 
-  static $TermTableTable _termIdTable(_$DaKanjiDB db) =>
-      db.termTable.createAlias(
-        $_aliasNameGenerator(db.termMetaBankV3Table.termId, db.termTable.id),
-      );
+  static $TermTableTable _termIdTable(_$DaDb db) => db.termTable.createAlias(
+    $_aliasNameGenerator(db.termMetaBankV3Table.termId, db.termTable.id),
+  );
 
   $$TermTableTableProcessedTableManager get termId {
     final $_column = $_itemColumn<int>('term_id')!;
@@ -32485,7 +32429,7 @@ final class $$TermMetaBankV3TableTableReferences
     );
   }
 
-  static $ReadingTableTable _readingIdTable(_$DaKanjiDB db) =>
+  static $ReadingTableTable _readingIdTable(_$DaDb db) =>
       db.readingTable.createAlias(
         $_aliasNameGenerator(
           db.termMetaBankV3Table.readingId,
@@ -32507,7 +32451,7 @@ final class $$TermMetaBankV3TableTableReferences
     );
   }
 
-  static $TermMetaBankV3TypeTableTable _typeIdTable(_$DaKanjiDB db) =>
+  static $TermMetaBankV3TypeTableTable _typeIdTable(_$DaDb db) =>
       db.termMetaBankV3TypeTable.createAlias(
         $_aliasNameGenerator(
           db.termMetaBankV3Table.typeId,
@@ -32533,7 +32477,7 @@ final class $$TermMetaBankV3TableTableReferences
     $TermMetaBankV3_X_PitchTableTable,
     List<TermMetaBankV3_X_PitchTableData>
   >
-  _termMetaBankV3XPitchTableRefsTable(_$DaKanjiDB db) =>
+  _termMetaBankV3XPitchTableRefsTable(_$DaDb db) =>
       MultiTypedResultKey.fromTable(
         db.termMetaBankV3XPitchTable,
         aliasName: $_aliasNameGenerator(
@@ -32561,14 +32505,13 @@ final class $$TermMetaBankV3TableTableReferences
     $TermMetaBankV3_X_IpaTableTable,
     List<TermMetaBankV3_X_IpaTableData>
   >
-  _termMetaBankV3XIpaTableRefsTable(_$DaKanjiDB db) =>
-      MultiTypedResultKey.fromTable(
-        db.termMetaBankV3XIpaTable,
-        aliasName: $_aliasNameGenerator(
-          db.termMetaBankV3Table.id,
-          db.termMetaBankV3XIpaTable.termMetaId,
-        ),
-      );
+  _termMetaBankV3XIpaTableRefsTable(_$DaDb db) => MultiTypedResultKey.fromTable(
+    db.termMetaBankV3XIpaTable,
+    aliasName: $_aliasNameGenerator(
+      db.termMetaBankV3Table.id,
+      db.termMetaBankV3XIpaTable.termMetaId,
+    ),
+  );
 
   $$TermMetaBankV3_X_IpaTableTableProcessedTableManager
   get termMetaBankV3XIpaTableRefs {
@@ -32587,7 +32530,7 @@ final class $$TermMetaBankV3TableTableReferences
 }
 
 class $$TermMetaBankV3TableTableFilterComposer
-    extends Composer<_$DaKanjiDB, $TermMetaBankV3TableTable> {
+    extends Composer<_$DaDb, $TermMetaBankV3TableTable> {
   $$TermMetaBankV3TableTableFilterComposer({
     required super.$db,
     required super.$table,
@@ -32761,7 +32704,7 @@ class $$TermMetaBankV3TableTableFilterComposer
 }
 
 class $$TermMetaBankV3TableTableOrderingComposer
-    extends Composer<_$DaKanjiDB, $TermMetaBankV3TableTable> {
+    extends Composer<_$DaDb, $TermMetaBankV3TableTable> {
   $$TermMetaBankV3TableTableOrderingComposer({
     required super.$db,
     required super.$table,
@@ -32879,7 +32822,7 @@ class $$TermMetaBankV3TableTableOrderingComposer
 }
 
 class $$TermMetaBankV3TableTableAnnotationComposer
-    extends Composer<_$DaKanjiDB, $TermMetaBankV3TableTable> {
+    extends Composer<_$DaDb, $TermMetaBankV3TableTable> {
   $$TermMetaBankV3TableTableAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -33051,7 +32994,7 @@ class $$TermMetaBankV3TableTableAnnotationComposer
 class $$TermMetaBankV3TableTableTableManager
     extends
         RootTableManager<
-          _$DaKanjiDB,
+          _$DaDb,
           $TermMetaBankV3TableTable,
           TermMetaBankV3TableData,
           $$TermMetaBankV3TableTableFilterComposer,
@@ -33071,7 +33014,7 @@ class $$TermMetaBankV3TableTableTableManager
           })
         > {
   $$TermMetaBankV3TableTableTableManager(
-    _$DaKanjiDB db,
+    _$DaDb db,
     $TermMetaBankV3TableTable table,
   ) : super(
         TableManagerState(
@@ -33282,7 +33225,7 @@ class $$TermMetaBankV3TableTableTableManager
 
 typedef $$TermMetaBankV3TableTableProcessedTableManager =
     ProcessedTableManager<
-      _$DaKanjiDB,
+      _$DaDb,
       $TermMetaBankV3TableTable,
       TermMetaBankV3TableData,
       $$TermMetaBankV3TableTableFilterComposer,
@@ -33317,7 +33260,7 @@ typedef $$TermBankV3_X_DefinitionTagTableTableUpdateCompanionBuilder =
 final class $$TermBankV3_X_DefinitionTagTableTableReferences
     extends
         BaseReferences<
-          _$DaKanjiDB,
+          _$DaDb,
           $TermBankV3_X_DefinitionTagTableTable,
           TermBankV3_X_DefinitionTagTableData
         > {
@@ -33327,7 +33270,7 @@ final class $$TermBankV3_X_DefinitionTagTableTableReferences
     super.$_typedResult,
   );
 
-  static $TagBankV3TableTable _definitionTagIdTable(_$DaKanjiDB db) =>
+  static $TagBankV3TableTable _definitionTagIdTable(_$DaDb db) =>
       db.tagBankV3Table.createAlias(
         $_aliasNameGenerator(
           db.termBankV3XDefinitionTagTable.definitionTagId,
@@ -33349,7 +33292,7 @@ final class $$TermBankV3_X_DefinitionTagTableTableReferences
     );
   }
 
-  static $TermBankV3TableTable _termBankIdTable(_$DaKanjiDB db) =>
+  static $TermBankV3TableTable _termBankIdTable(_$DaDb db) =>
       db.termBankV3Table.createAlias(
         $_aliasNameGenerator(
           db.termBankV3XDefinitionTagTable.termBankId,
@@ -33373,7 +33316,7 @@ final class $$TermBankV3_X_DefinitionTagTableTableReferences
 }
 
 class $$TermBankV3_X_DefinitionTagTableTableFilterComposer
-    extends Composer<_$DaKanjiDB, $TermBankV3_X_DefinitionTagTableTable> {
+    extends Composer<_$DaDb, $TermBankV3_X_DefinitionTagTableTable> {
   $$TermBankV3_X_DefinitionTagTableTableFilterComposer({
     required super.$db,
     required super.$table,
@@ -33434,7 +33377,7 @@ class $$TermBankV3_X_DefinitionTagTableTableFilterComposer
 }
 
 class $$TermBankV3_X_DefinitionTagTableTableOrderingComposer
-    extends Composer<_$DaKanjiDB, $TermBankV3_X_DefinitionTagTableTable> {
+    extends Composer<_$DaDb, $TermBankV3_X_DefinitionTagTableTable> {
   $$TermBankV3_X_DefinitionTagTableTableOrderingComposer({
     required super.$db,
     required super.$table,
@@ -33495,7 +33438,7 @@ class $$TermBankV3_X_DefinitionTagTableTableOrderingComposer
 }
 
 class $$TermBankV3_X_DefinitionTagTableTableAnnotationComposer
-    extends Composer<_$DaKanjiDB, $TermBankV3_X_DefinitionTagTableTable> {
+    extends Composer<_$DaDb, $TermBankV3_X_DefinitionTagTableTable> {
   $$TermBankV3_X_DefinitionTagTableTableAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -33556,7 +33499,7 @@ class $$TermBankV3_X_DefinitionTagTableTableAnnotationComposer
 class $$TermBankV3_X_DefinitionTagTableTableTableManager
     extends
         RootTableManager<
-          _$DaKanjiDB,
+          _$DaDb,
           $TermBankV3_X_DefinitionTagTableTable,
           TermBankV3_X_DefinitionTagTableData,
           $$TermBankV3_X_DefinitionTagTableTableFilterComposer,
@@ -33572,7 +33515,7 @@ class $$TermBankV3_X_DefinitionTagTableTableTableManager
           PrefetchHooks Function({bool definitionTagId, bool termBankId})
         > {
   $$TermBankV3_X_DefinitionTagTableTableTableManager(
-    _$DaKanjiDB db,
+    _$DaDb db,
     $TermBankV3_X_DefinitionTagTableTable table,
   ) : super(
         TableManagerState(
@@ -33689,7 +33632,7 @@ class $$TermBankV3_X_DefinitionTagTableTableTableManager
 
 typedef $$TermBankV3_X_DefinitionTagTableTableProcessedTableManager =
     ProcessedTableManager<
-      _$DaKanjiDB,
+      _$DaDb,
       $TermBankV3_X_DefinitionTagTableTable,
       TermBankV3_X_DefinitionTagTableData,
       $$TermBankV3_X_DefinitionTagTableTableFilterComposer,
@@ -33722,7 +33665,7 @@ typedef $$TermMetaBankV3PitchTableTableUpdateCompanionBuilder =
 final class $$TermMetaBankV3PitchTableTableReferences
     extends
         BaseReferences<
-          _$DaKanjiDB,
+          _$DaDb,
           $TermMetaBankV3PitchTableTable,
           TermMetaBankV3PitchTableData
         > {
@@ -33736,7 +33679,7 @@ final class $$TermMetaBankV3PitchTableTableReferences
     $TermMetaBankV3_X_PitchTableTable,
     List<TermMetaBankV3_X_PitchTableData>
   >
-  _termMetaBankV3XPitchTableRefsTable(_$DaKanjiDB db) =>
+  _termMetaBankV3XPitchTableRefsTable(_$DaDb db) =>
       MultiTypedResultKey.fromTable(
         db.termMetaBankV3XPitchTable,
         aliasName: $_aliasNameGenerator(
@@ -33764,7 +33707,7 @@ final class $$TermMetaBankV3PitchTableTableReferences
     $TermMetaBankV3PitchTable_X_TagBankV3TableTable,
     List<TermMetaBankV3PitchTable_X_TagBankV3TableData>
   >
-  _termMetaBankV3PitchTableXTagBankV3TableRefsTable(_$DaKanjiDB db) =>
+  _termMetaBankV3PitchTableXTagBankV3TableRefsTable(_$DaDb db) =>
       MultiTypedResultKey.fromTable(
         db.termMetaBankV3PitchTableXTagBankV3Table,
         aliasName: $_aliasNameGenerator(
@@ -33791,7 +33734,7 @@ final class $$TermMetaBankV3PitchTableTableReferences
 }
 
 class $$TermMetaBankV3PitchTableTableFilterComposer
-    extends Composer<_$DaKanjiDB, $TermMetaBankV3PitchTableTable> {
+    extends Composer<_$DaDb, $TermMetaBankV3PitchTableTable> {
   $$TermMetaBankV3PitchTableTableFilterComposer({
     required super.$db,
     required super.$table,
@@ -33879,7 +33822,7 @@ class $$TermMetaBankV3PitchTableTableFilterComposer
 }
 
 class $$TermMetaBankV3PitchTableTableOrderingComposer
-    extends Composer<_$DaKanjiDB, $TermMetaBankV3PitchTableTable> {
+    extends Composer<_$DaDb, $TermMetaBankV3PitchTableTable> {
   $$TermMetaBankV3PitchTableTableOrderingComposer({
     required super.$db,
     required super.$table,
@@ -33909,7 +33852,7 @@ class $$TermMetaBankV3PitchTableTableOrderingComposer
 }
 
 class $$TermMetaBankV3PitchTableTableAnnotationComposer
-    extends Composer<_$DaKanjiDB, $TermMetaBankV3PitchTableTable> {
+    extends Composer<_$DaDb, $TermMetaBankV3PitchTableTable> {
   $$TermMetaBankV3PitchTableTableAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -33992,7 +33935,7 @@ class $$TermMetaBankV3PitchTableTableAnnotationComposer
 class $$TermMetaBankV3PitchTableTableTableManager
     extends
         RootTableManager<
-          _$DaKanjiDB,
+          _$DaDb,
           $TermMetaBankV3PitchTableTable,
           TermMetaBankV3PitchTableData,
           $$TermMetaBankV3PitchTableTableFilterComposer,
@@ -34011,7 +33954,7 @@ class $$TermMetaBankV3PitchTableTableTableManager
           })
         > {
   $$TermMetaBankV3PitchTableTableTableManager(
-    _$DaKanjiDB db,
+    _$DaDb db,
     $TermMetaBankV3PitchTableTable table,
   ) : super(
         TableManagerState(
@@ -34135,7 +34078,7 @@ class $$TermMetaBankV3PitchTableTableTableManager
 
 typedef $$TermMetaBankV3PitchTableTableProcessedTableManager =
     ProcessedTableManager<
-      _$DaKanjiDB,
+      _$DaDb,
       $TermMetaBankV3PitchTableTable,
       TermMetaBankV3PitchTableData,
       $$TermMetaBankV3PitchTableTableFilterComposer,
@@ -34166,7 +34109,7 @@ typedef $$TermMetaBankV3_X_PitchTableTableUpdateCompanionBuilder =
 final class $$TermMetaBankV3_X_PitchTableTableReferences
     extends
         BaseReferences<
-          _$DaKanjiDB,
+          _$DaDb,
           $TermMetaBankV3_X_PitchTableTable,
           TermMetaBankV3_X_PitchTableData
         > {
@@ -34176,7 +34119,7 @@ final class $$TermMetaBankV3_X_PitchTableTableReferences
     super.$_typedResult,
   );
 
-  static $TermMetaBankV3PitchTableTable _pitchIdTable(_$DaKanjiDB db) =>
+  static $TermMetaBankV3PitchTableTable _pitchIdTable(_$DaDb db) =>
       db.termMetaBankV3PitchTable.createAlias(
         $_aliasNameGenerator(
           db.termMetaBankV3XPitchTable.pitchId,
@@ -34198,7 +34141,7 @@ final class $$TermMetaBankV3_X_PitchTableTableReferences
     );
   }
 
-  static $TermMetaBankV3TableTable _termMetaIdTable(_$DaKanjiDB db) =>
+  static $TermMetaBankV3TableTable _termMetaIdTable(_$DaDb db) =>
       db.termMetaBankV3Table.createAlias(
         $_aliasNameGenerator(
           db.termMetaBankV3XPitchTable.termMetaId,
@@ -34222,7 +34165,7 @@ final class $$TermMetaBankV3_X_PitchTableTableReferences
 }
 
 class $$TermMetaBankV3_X_PitchTableTableFilterComposer
-    extends Composer<_$DaKanjiDB, $TermMetaBankV3_X_PitchTableTable> {
+    extends Composer<_$DaDb, $TermMetaBankV3_X_PitchTableTable> {
   $$TermMetaBankV3_X_PitchTableTableFilterComposer({
     required super.$db,
     required super.$table,
@@ -34284,7 +34227,7 @@ class $$TermMetaBankV3_X_PitchTableTableFilterComposer
 }
 
 class $$TermMetaBankV3_X_PitchTableTableOrderingComposer
-    extends Composer<_$DaKanjiDB, $TermMetaBankV3_X_PitchTableTable> {
+    extends Composer<_$DaDb, $TermMetaBankV3_X_PitchTableTable> {
   $$TermMetaBankV3_X_PitchTableTableOrderingComposer({
     required super.$db,
     required super.$table,
@@ -34347,7 +34290,7 @@ class $$TermMetaBankV3_X_PitchTableTableOrderingComposer
 }
 
 class $$TermMetaBankV3_X_PitchTableTableAnnotationComposer
-    extends Composer<_$DaKanjiDB, $TermMetaBankV3_X_PitchTableTable> {
+    extends Composer<_$DaDb, $TermMetaBankV3_X_PitchTableTable> {
   $$TermMetaBankV3_X_PitchTableTableAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -34410,7 +34353,7 @@ class $$TermMetaBankV3_X_PitchTableTableAnnotationComposer
 class $$TermMetaBankV3_X_PitchTableTableTableManager
     extends
         RootTableManager<
-          _$DaKanjiDB,
+          _$DaDb,
           $TermMetaBankV3_X_PitchTableTable,
           TermMetaBankV3_X_PitchTableData,
           $$TermMetaBankV3_X_PitchTableTableFilterComposer,
@@ -34426,7 +34369,7 @@ class $$TermMetaBankV3_X_PitchTableTableTableManager
           PrefetchHooks Function({bool pitchId, bool termMetaId})
         > {
   $$TermMetaBankV3_X_PitchTableTableTableManager(
-    _$DaKanjiDB db,
+    _$DaDb db,
     $TermMetaBankV3_X_PitchTableTable table,
   ) : super(
         TableManagerState(
@@ -34539,7 +34482,7 @@ class $$TermMetaBankV3_X_PitchTableTableTableManager
 
 typedef $$TermMetaBankV3_X_PitchTableTableProcessedTableManager =
     ProcessedTableManager<
-      _$DaKanjiDB,
+      _$DaDb,
       $TermMetaBankV3_X_PitchTableTable,
       TermMetaBankV3_X_PitchTableData,
       $$TermMetaBankV3_X_PitchTableTableFilterComposer,
@@ -34570,7 +34513,7 @@ typedef $$TermMetaBankV3PitchTable_X_TagBankV3TableTableUpdateCompanionBuilder =
 final class $$TermMetaBankV3PitchTable_X_TagBankV3TableTableReferences
     extends
         BaseReferences<
-          _$DaKanjiDB,
+          _$DaDb,
           $TermMetaBankV3PitchTable_X_TagBankV3TableTable,
           TermMetaBankV3PitchTable_X_TagBankV3TableData
         > {
@@ -34580,7 +34523,7 @@ final class $$TermMetaBankV3PitchTable_X_TagBankV3TableTableReferences
     super.$_typedResult,
   );
 
-  static $TermMetaBankV3PitchTableTable _pitchIdTable(_$DaKanjiDB db) =>
+  static $TermMetaBankV3PitchTableTable _pitchIdTable(_$DaDb db) =>
       db.termMetaBankV3PitchTable.createAlias(
         $_aliasNameGenerator(
           db.termMetaBankV3PitchTableXTagBankV3Table.pitchId,
@@ -34602,7 +34545,7 @@ final class $$TermMetaBankV3PitchTable_X_TagBankV3TableTableReferences
     );
   }
 
-  static $TagBankV3TableTable _tagIdTable(_$DaKanjiDB db) =>
+  static $TagBankV3TableTable _tagIdTable(_$DaDb db) =>
       db.tagBankV3Table.createAlias(
         $_aliasNameGenerator(
           db.termMetaBankV3PitchTableXTagBankV3Table.tagId,
@@ -34626,8 +34569,7 @@ final class $$TermMetaBankV3PitchTable_X_TagBankV3TableTableReferences
 }
 
 class $$TermMetaBankV3PitchTable_X_TagBankV3TableTableFilterComposer
-    extends
-        Composer<_$DaKanjiDB, $TermMetaBankV3PitchTable_X_TagBankV3TableTable> {
+    extends Composer<_$DaDb, $TermMetaBankV3PitchTable_X_TagBankV3TableTable> {
   $$TermMetaBankV3PitchTable_X_TagBankV3TableTableFilterComposer({
     required super.$db,
     required super.$table,
@@ -34689,8 +34631,7 @@ class $$TermMetaBankV3PitchTable_X_TagBankV3TableTableFilterComposer
 }
 
 class $$TermMetaBankV3PitchTable_X_TagBankV3TableTableOrderingComposer
-    extends
-        Composer<_$DaKanjiDB, $TermMetaBankV3PitchTable_X_TagBankV3TableTable> {
+    extends Composer<_$DaDb, $TermMetaBankV3PitchTable_X_TagBankV3TableTable> {
   $$TermMetaBankV3PitchTable_X_TagBankV3TableTableOrderingComposer({
     required super.$db,
     required super.$table,
@@ -34752,8 +34693,7 @@ class $$TermMetaBankV3PitchTable_X_TagBankV3TableTableOrderingComposer
 }
 
 class $$TermMetaBankV3PitchTable_X_TagBankV3TableTableAnnotationComposer
-    extends
-        Composer<_$DaKanjiDB, $TermMetaBankV3PitchTable_X_TagBankV3TableTable> {
+    extends Composer<_$DaDb, $TermMetaBankV3PitchTable_X_TagBankV3TableTable> {
   $$TermMetaBankV3PitchTable_X_TagBankV3TableTableAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -34815,7 +34755,7 @@ class $$TermMetaBankV3PitchTable_X_TagBankV3TableTableAnnotationComposer
 class $$TermMetaBankV3PitchTable_X_TagBankV3TableTableTableManager
     extends
         RootTableManager<
-          _$DaKanjiDB,
+          _$DaDb,
           $TermMetaBankV3PitchTable_X_TagBankV3TableTable,
           TermMetaBankV3PitchTable_X_TagBankV3TableData,
           $$TermMetaBankV3PitchTable_X_TagBankV3TableTableFilterComposer,
@@ -34831,7 +34771,7 @@ class $$TermMetaBankV3PitchTable_X_TagBankV3TableTableTableManager
           PrefetchHooks Function({bool pitchId, bool tagId})
         > {
   $$TermMetaBankV3PitchTable_X_TagBankV3TableTableTableManager(
-    _$DaKanjiDB db,
+    _$DaDb db,
     $TermMetaBankV3PitchTable_X_TagBankV3TableTable table,
   ) : super(
         TableManagerState(
@@ -34948,7 +34888,7 @@ class $$TermMetaBankV3PitchTable_X_TagBankV3TableTableTableManager
 
 typedef $$TermMetaBankV3PitchTable_X_TagBankV3TableTableProcessedTableManager =
     ProcessedTableManager<
-      _$DaKanjiDB,
+      _$DaDb,
       $TermMetaBankV3PitchTable_X_TagBankV3TableTable,
       TermMetaBankV3PitchTable_X_TagBankV3TableData,
       $$TermMetaBankV3PitchTable_X_TagBankV3TableTableFilterComposer,
@@ -34977,7 +34917,7 @@ typedef $$TermMetaBankV3IpaTableTableUpdateCompanionBuilder =
 final class $$TermMetaBankV3IpaTableTableReferences
     extends
         BaseReferences<
-          _$DaKanjiDB,
+          _$DaDb,
           $TermMetaBankV3IpaTableTable,
           TermMetaBankV3IpaTableData
         > {
@@ -34991,14 +34931,13 @@ final class $$TermMetaBankV3IpaTableTableReferences
     $TermMetaBankV3_X_IpaTableTable,
     List<TermMetaBankV3_X_IpaTableData>
   >
-  _termMetaBankV3XIpaTableRefsTable(_$DaKanjiDB db) =>
-      MultiTypedResultKey.fromTable(
-        db.termMetaBankV3XIpaTable,
-        aliasName: $_aliasNameGenerator(
-          db.termMetaBankV3IpaTable.id,
-          db.termMetaBankV3XIpaTable.ipaId,
-        ),
-      );
+  _termMetaBankV3XIpaTableRefsTable(_$DaDb db) => MultiTypedResultKey.fromTable(
+    db.termMetaBankV3XIpaTable,
+    aliasName: $_aliasNameGenerator(
+      db.termMetaBankV3IpaTable.id,
+      db.termMetaBankV3XIpaTable.ipaId,
+    ),
+  );
 
   $$TermMetaBankV3_X_IpaTableTableProcessedTableManager
   get termMetaBankV3XIpaTableRefs {
@@ -35019,7 +34958,7 @@ final class $$TermMetaBankV3IpaTableTableReferences
     $TermMetaBankV3IpaTable_X_TagBankV3TableTable,
     List<TermMetaBankV3IpaTable_X_TagBankV3TableData>
   >
-  _termMetaBankV3IpaTableXTagBankV3TableRefsTable(_$DaKanjiDB db) =>
+  _termMetaBankV3IpaTableXTagBankV3TableRefsTable(_$DaDb db) =>
       MultiTypedResultKey.fromTable(
         db.termMetaBankV3IpaTableXTagBankV3Table,
         aliasName: $_aliasNameGenerator(
@@ -35045,7 +34984,7 @@ final class $$TermMetaBankV3IpaTableTableReferences
 }
 
 class $$TermMetaBankV3IpaTableTableFilterComposer
-    extends Composer<_$DaKanjiDB, $TermMetaBankV3IpaTableTable> {
+    extends Composer<_$DaDb, $TermMetaBankV3IpaTableTable> {
   $$TermMetaBankV3IpaTableTableFilterComposer({
     required super.$db,
     required super.$table,
@@ -35121,7 +35060,7 @@ class $$TermMetaBankV3IpaTableTableFilterComposer
 }
 
 class $$TermMetaBankV3IpaTableTableOrderingComposer
-    extends Composer<_$DaKanjiDB, $TermMetaBankV3IpaTableTable> {
+    extends Composer<_$DaDb, $TermMetaBankV3IpaTableTable> {
   $$TermMetaBankV3IpaTableTableOrderingComposer({
     required super.$db,
     required super.$table,
@@ -35141,7 +35080,7 @@ class $$TermMetaBankV3IpaTableTableOrderingComposer
 }
 
 class $$TermMetaBankV3IpaTableTableAnnotationComposer
-    extends Composer<_$DaKanjiDB, $TermMetaBankV3IpaTableTable> {
+    extends Composer<_$DaDb, $TermMetaBankV3IpaTableTable> {
   $$TermMetaBankV3IpaTableTableAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -35216,7 +35155,7 @@ class $$TermMetaBankV3IpaTableTableAnnotationComposer
 class $$TermMetaBankV3IpaTableTableTableManager
     extends
         RootTableManager<
-          _$DaKanjiDB,
+          _$DaDb,
           $TermMetaBankV3IpaTableTable,
           TermMetaBankV3IpaTableData,
           $$TermMetaBankV3IpaTableTableFilterComposer,
@@ -35232,7 +35171,7 @@ class $$TermMetaBankV3IpaTableTableTableManager
           })
         > {
   $$TermMetaBankV3IpaTableTableTableManager(
-    _$DaKanjiDB db,
+    _$DaDb db,
     $TermMetaBankV3IpaTableTable table,
   ) : super(
         TableManagerState(
@@ -35339,7 +35278,7 @@ class $$TermMetaBankV3IpaTableTableTableManager
 
 typedef $$TermMetaBankV3IpaTableTableProcessedTableManager =
     ProcessedTableManager<
-      _$DaKanjiDB,
+      _$DaDb,
       $TermMetaBankV3IpaTableTable,
       TermMetaBankV3IpaTableData,
       $$TermMetaBankV3IpaTableTableFilterComposer,
@@ -35370,7 +35309,7 @@ typedef $$TermMetaBankV3_X_IpaTableTableUpdateCompanionBuilder =
 final class $$TermMetaBankV3_X_IpaTableTableReferences
     extends
         BaseReferences<
-          _$DaKanjiDB,
+          _$DaDb,
           $TermMetaBankV3_X_IpaTableTable,
           TermMetaBankV3_X_IpaTableData
         > {
@@ -35380,7 +35319,7 @@ final class $$TermMetaBankV3_X_IpaTableTableReferences
     super.$_typedResult,
   );
 
-  static $TermMetaBankV3IpaTableTable _ipaIdTable(_$DaKanjiDB db) =>
+  static $TermMetaBankV3IpaTableTable _ipaIdTable(_$DaDb db) =>
       db.termMetaBankV3IpaTable.createAlias(
         $_aliasNameGenerator(
           db.termMetaBankV3XIpaTable.ipaId,
@@ -35402,7 +35341,7 @@ final class $$TermMetaBankV3_X_IpaTableTableReferences
     );
   }
 
-  static $TermMetaBankV3TableTable _termMetaIdTable(_$DaKanjiDB db) =>
+  static $TermMetaBankV3TableTable _termMetaIdTable(_$DaDb db) =>
       db.termMetaBankV3Table.createAlias(
         $_aliasNameGenerator(
           db.termMetaBankV3XIpaTable.termMetaId,
@@ -35426,7 +35365,7 @@ final class $$TermMetaBankV3_X_IpaTableTableReferences
 }
 
 class $$TermMetaBankV3_X_IpaTableTableFilterComposer
-    extends Composer<_$DaKanjiDB, $TermMetaBankV3_X_IpaTableTable> {
+    extends Composer<_$DaDb, $TermMetaBankV3_X_IpaTableTable> {
   $$TermMetaBankV3_X_IpaTableTableFilterComposer({
     required super.$db,
     required super.$table,
@@ -35488,7 +35427,7 @@ class $$TermMetaBankV3_X_IpaTableTableFilterComposer
 }
 
 class $$TermMetaBankV3_X_IpaTableTableOrderingComposer
-    extends Composer<_$DaKanjiDB, $TermMetaBankV3_X_IpaTableTable> {
+    extends Composer<_$DaDb, $TermMetaBankV3_X_IpaTableTable> {
   $$TermMetaBankV3_X_IpaTableTableOrderingComposer({
     required super.$db,
     required super.$table,
@@ -35551,7 +35490,7 @@ class $$TermMetaBankV3_X_IpaTableTableOrderingComposer
 }
 
 class $$TermMetaBankV3_X_IpaTableTableAnnotationComposer
-    extends Composer<_$DaKanjiDB, $TermMetaBankV3_X_IpaTableTable> {
+    extends Composer<_$DaDb, $TermMetaBankV3_X_IpaTableTable> {
   $$TermMetaBankV3_X_IpaTableTableAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -35614,7 +35553,7 @@ class $$TermMetaBankV3_X_IpaTableTableAnnotationComposer
 class $$TermMetaBankV3_X_IpaTableTableTableManager
     extends
         RootTableManager<
-          _$DaKanjiDB,
+          _$DaDb,
           $TermMetaBankV3_X_IpaTableTable,
           TermMetaBankV3_X_IpaTableData,
           $$TermMetaBankV3_X_IpaTableTableFilterComposer,
@@ -35630,7 +35569,7 @@ class $$TermMetaBankV3_X_IpaTableTableTableManager
           PrefetchHooks Function({bool ipaId, bool termMetaId})
         > {
   $$TermMetaBankV3_X_IpaTableTableTableManager(
-    _$DaKanjiDB db,
+    _$DaDb db,
     $TermMetaBankV3_X_IpaTableTable table,
   ) : super(
         TableManagerState(
@@ -35743,7 +35682,7 @@ class $$TermMetaBankV3_X_IpaTableTableTableManager
 
 typedef $$TermMetaBankV3_X_IpaTableTableProcessedTableManager =
     ProcessedTableManager<
-      _$DaKanjiDB,
+      _$DaDb,
       $TermMetaBankV3_X_IpaTableTable,
       TermMetaBankV3_X_IpaTableData,
       $$TermMetaBankV3_X_IpaTableTableFilterComposer,
@@ -35774,7 +35713,7 @@ typedef $$TermMetaBankV3IpaTable_X_TagBankV3TableTableUpdateCompanionBuilder =
 final class $$TermMetaBankV3IpaTable_X_TagBankV3TableTableReferences
     extends
         BaseReferences<
-          _$DaKanjiDB,
+          _$DaDb,
           $TermMetaBankV3IpaTable_X_TagBankV3TableTable,
           TermMetaBankV3IpaTable_X_TagBankV3TableData
         > {
@@ -35784,7 +35723,7 @@ final class $$TermMetaBankV3IpaTable_X_TagBankV3TableTableReferences
     super.$_typedResult,
   );
 
-  static $TermMetaBankV3IpaTableTable _ipaIdTable(_$DaKanjiDB db) =>
+  static $TermMetaBankV3IpaTableTable _ipaIdTable(_$DaDb db) =>
       db.termMetaBankV3IpaTable.createAlias(
         $_aliasNameGenerator(
           db.termMetaBankV3IpaTableXTagBankV3Table.ipaId,
@@ -35806,7 +35745,7 @@ final class $$TermMetaBankV3IpaTable_X_TagBankV3TableTableReferences
     );
   }
 
-  static $TagBankV3TableTable _tagIdTable(_$DaKanjiDB db) =>
+  static $TagBankV3TableTable _tagIdTable(_$DaDb db) =>
       db.tagBankV3Table.createAlias(
         $_aliasNameGenerator(
           db.termMetaBankV3IpaTableXTagBankV3Table.tagId,
@@ -35830,8 +35769,7 @@ final class $$TermMetaBankV3IpaTable_X_TagBankV3TableTableReferences
 }
 
 class $$TermMetaBankV3IpaTable_X_TagBankV3TableTableFilterComposer
-    extends
-        Composer<_$DaKanjiDB, $TermMetaBankV3IpaTable_X_TagBankV3TableTable> {
+    extends Composer<_$DaDb, $TermMetaBankV3IpaTable_X_TagBankV3TableTable> {
   $$TermMetaBankV3IpaTable_X_TagBankV3TableTableFilterComposer({
     required super.$db,
     required super.$table,
@@ -35893,8 +35831,7 @@ class $$TermMetaBankV3IpaTable_X_TagBankV3TableTableFilterComposer
 }
 
 class $$TermMetaBankV3IpaTable_X_TagBankV3TableTableOrderingComposer
-    extends
-        Composer<_$DaKanjiDB, $TermMetaBankV3IpaTable_X_TagBankV3TableTable> {
+    extends Composer<_$DaDb, $TermMetaBankV3IpaTable_X_TagBankV3TableTable> {
   $$TermMetaBankV3IpaTable_X_TagBankV3TableTableOrderingComposer({
     required super.$db,
     required super.$table,
@@ -35956,8 +35893,7 @@ class $$TermMetaBankV3IpaTable_X_TagBankV3TableTableOrderingComposer
 }
 
 class $$TermMetaBankV3IpaTable_X_TagBankV3TableTableAnnotationComposer
-    extends
-        Composer<_$DaKanjiDB, $TermMetaBankV3IpaTable_X_TagBankV3TableTable> {
+    extends Composer<_$DaDb, $TermMetaBankV3IpaTable_X_TagBankV3TableTable> {
   $$TermMetaBankV3IpaTable_X_TagBankV3TableTableAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -36019,7 +35955,7 @@ class $$TermMetaBankV3IpaTable_X_TagBankV3TableTableAnnotationComposer
 class $$TermMetaBankV3IpaTable_X_TagBankV3TableTableTableManager
     extends
         RootTableManager<
-          _$DaKanjiDB,
+          _$DaDb,
           $TermMetaBankV3IpaTable_X_TagBankV3TableTable,
           TermMetaBankV3IpaTable_X_TagBankV3TableData,
           $$TermMetaBankV3IpaTable_X_TagBankV3TableTableFilterComposer,
@@ -36035,7 +35971,7 @@ class $$TermMetaBankV3IpaTable_X_TagBankV3TableTableTableManager
           PrefetchHooks Function({bool ipaId, bool tagId})
         > {
   $$TermMetaBankV3IpaTable_X_TagBankV3TableTableTableManager(
-    _$DaKanjiDB db,
+    _$DaDb db,
     $TermMetaBankV3IpaTable_X_TagBankV3TableTable table,
   ) : super(
         TableManagerState(
@@ -36152,7 +36088,7 @@ class $$TermMetaBankV3IpaTable_X_TagBankV3TableTableTableManager
 
 typedef $$TermMetaBankV3IpaTable_X_TagBankV3TableTableProcessedTableManager =
     ProcessedTableManager<
-      _$DaKanjiDB,
+      _$DaDb,
       $TermMetaBankV3IpaTable_X_TagBankV3TableTable,
       TermMetaBankV3IpaTable_X_TagBankV3TableData,
       $$TermMetaBankV3IpaTable_X_TagBankV3TableTableFilterComposer,
@@ -36183,7 +36119,7 @@ typedef $$KanjiBankV3_X_KanjiBankV3StatsTableTableUpdateCompanionBuilder =
 final class $$KanjiBankV3_X_KanjiBankV3StatsTableTableReferences
     extends
         BaseReferences<
-          _$DaKanjiDB,
+          _$DaDb,
           $KanjiBankV3_X_KanjiBankV3StatsTableTable,
           KanjiBankV3_X_KanjiBankV3StatsTableData
         > {
@@ -36193,7 +36129,7 @@ final class $$KanjiBankV3_X_KanjiBankV3StatsTableTableReferences
     super.$_typedResult,
   );
 
-  static $KanjiBankV3StatsTableTable _statIdTable(_$DaKanjiDB db) =>
+  static $KanjiBankV3StatsTableTable _statIdTable(_$DaDb db) =>
       db.kanjiBankV3StatsTable.createAlias(
         $_aliasNameGenerator(
           db.kanjiBankV3XKanjiBankV3StatsTable.statId,
@@ -36215,7 +36151,7 @@ final class $$KanjiBankV3_X_KanjiBankV3StatsTableTableReferences
     );
   }
 
-  static $KanjiBankV3TableTable _kanjiIdTable(_$DaKanjiDB db) =>
+  static $KanjiBankV3TableTable _kanjiIdTable(_$DaDb db) =>
       db.kanjiBankV3Table.createAlias(
         $_aliasNameGenerator(
           db.kanjiBankV3XKanjiBankV3StatsTable.kanjiId,
@@ -36239,7 +36175,7 @@ final class $$KanjiBankV3_X_KanjiBankV3StatsTableTableReferences
 }
 
 class $$KanjiBankV3_X_KanjiBankV3StatsTableTableFilterComposer
-    extends Composer<_$DaKanjiDB, $KanjiBankV3_X_KanjiBankV3StatsTableTable> {
+    extends Composer<_$DaDb, $KanjiBankV3_X_KanjiBankV3StatsTableTable> {
   $$KanjiBankV3_X_KanjiBankV3StatsTableTableFilterComposer({
     required super.$db,
     required super.$table,
@@ -36301,7 +36237,7 @@ class $$KanjiBankV3_X_KanjiBankV3StatsTableTableFilterComposer
 }
 
 class $$KanjiBankV3_X_KanjiBankV3StatsTableTableOrderingComposer
-    extends Composer<_$DaKanjiDB, $KanjiBankV3_X_KanjiBankV3StatsTableTable> {
+    extends Composer<_$DaDb, $KanjiBankV3_X_KanjiBankV3StatsTableTable> {
   $$KanjiBankV3_X_KanjiBankV3StatsTableTableOrderingComposer({
     required super.$db,
     required super.$table,
@@ -36363,7 +36299,7 @@ class $$KanjiBankV3_X_KanjiBankV3StatsTableTableOrderingComposer
 }
 
 class $$KanjiBankV3_X_KanjiBankV3StatsTableTableAnnotationComposer
-    extends Composer<_$DaKanjiDB, $KanjiBankV3_X_KanjiBankV3StatsTableTable> {
+    extends Composer<_$DaDb, $KanjiBankV3_X_KanjiBankV3StatsTableTable> {
   $$KanjiBankV3_X_KanjiBankV3StatsTableTableAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -36425,7 +36361,7 @@ class $$KanjiBankV3_X_KanjiBankV3StatsTableTableAnnotationComposer
 class $$KanjiBankV3_X_KanjiBankV3StatsTableTableTableManager
     extends
         RootTableManager<
-          _$DaKanjiDB,
+          _$DaDb,
           $KanjiBankV3_X_KanjiBankV3StatsTableTable,
           KanjiBankV3_X_KanjiBankV3StatsTableData,
           $$KanjiBankV3_X_KanjiBankV3StatsTableTableFilterComposer,
@@ -36441,7 +36377,7 @@ class $$KanjiBankV3_X_KanjiBankV3StatsTableTableTableManager
           PrefetchHooks Function({bool statId, bool kanjiId})
         > {
   $$KanjiBankV3_X_KanjiBankV3StatsTableTableTableManager(
-    _$DaKanjiDB db,
+    _$DaDb db,
     $KanjiBankV3_X_KanjiBankV3StatsTableTable table,
   ) : super(
         TableManagerState(
@@ -36558,7 +36494,7 @@ class $$KanjiBankV3_X_KanjiBankV3StatsTableTableTableManager
 
 typedef $$KanjiBankV3_X_KanjiBankV3StatsTableTableProcessedTableManager =
     ProcessedTableManager<
-      _$DaKanjiDB,
+      _$DaDb,
       $KanjiBankV3_X_KanjiBankV3StatsTableTable,
       KanjiBankV3_X_KanjiBankV3StatsTableData,
       $$KanjiBankV3_X_KanjiBankV3StatsTableTableFilterComposer,
@@ -36591,13 +36527,12 @@ typedef $$MediaTableTableUpdateCompanionBuilder =
     });
 
 final class $$MediaTableTableReferences
-    extends BaseReferences<_$DaKanjiDB, $MediaTableTable, MediaTableData> {
+    extends BaseReferences<_$DaDb, $MediaTableTable, MediaTableData> {
   $$MediaTableTableReferences(super.$_db, super.$_table, super.$_typedResult);
 
-  static $IndexTableTable _indexIdTable(_$DaKanjiDB db) =>
-      db.indexTable.createAlias(
-        $_aliasNameGenerator(db.mediaTable.indexId, db.indexTable.id),
-      );
+  static $IndexTableTable _indexIdTable(_$DaDb db) => db.indexTable.createAlias(
+    $_aliasNameGenerator(db.mediaTable.indexId, db.indexTable.id),
+  );
 
   $$IndexTableTableProcessedTableManager get indexId {
     final $_column = $_itemColumn<int>('index_id')!;
@@ -36614,7 +36549,7 @@ final class $$MediaTableTableReferences
   }
 
   static MultiTypedResultKey<$AudioTableTable, List<AudioTableData>>
-  _audioTableRefsTable(_$DaKanjiDB db) => MultiTypedResultKey.fromTable(
+  _audioTableRefsTable(_$DaDb db) => MultiTypedResultKey.fromTable(
     db.audioTable,
     aliasName: $_aliasNameGenerator(db.mediaTable.id, db.audioTable.mediaId),
   );
@@ -36633,7 +36568,7 @@ final class $$MediaTableTableReferences
 }
 
 class $$MediaTableTableFilterComposer
-    extends Composer<_$DaKanjiDB, $MediaTableTable> {
+    extends Composer<_$DaDb, $MediaTableTable> {
   $$MediaTableTableFilterComposer({
     required super.$db,
     required super.$table,
@@ -36711,7 +36646,7 @@ class $$MediaTableTableFilterComposer
 }
 
 class $$MediaTableTableOrderingComposer
-    extends Composer<_$DaKanjiDB, $MediaTableTable> {
+    extends Composer<_$DaDb, $MediaTableTable> {
   $$MediaTableTableOrderingComposer({
     required super.$db,
     required super.$table,
@@ -36764,7 +36699,7 @@ class $$MediaTableTableOrderingComposer
 }
 
 class $$MediaTableTableAnnotationComposer
-    extends Composer<_$DaKanjiDB, $MediaTableTable> {
+    extends Composer<_$DaDb, $MediaTableTable> {
   $$MediaTableTableAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -36836,7 +36771,7 @@ class $$MediaTableTableAnnotationComposer
 class $$MediaTableTableTableManager
     extends
         RootTableManager<
-          _$DaKanjiDB,
+          _$DaDb,
           $MediaTableTable,
           MediaTableData,
           $$MediaTableTableFilterComposer,
@@ -36848,7 +36783,7 @@ class $$MediaTableTableTableManager
           MediaTableData,
           PrefetchHooks Function({bool indexId, bool audioTableRefs})
         > {
-  $$MediaTableTableTableManager(_$DaKanjiDB db, $MediaTableTable table)
+  $$MediaTableTableTableManager(_$DaDb db, $MediaTableTable table)
     : super(
         TableManagerState(
           db: db,
@@ -36962,7 +36897,7 @@ class $$MediaTableTableTableManager
 
 typedef $$MediaTableTableProcessedTableManager =
     ProcessedTableManager<
-      _$DaKanjiDB,
+      _$DaDb,
       $MediaTableTable,
       MediaTableData,
       $$MediaTableTableFilterComposer,
@@ -36992,13 +36927,12 @@ typedef $$AudioTableTableUpdateCompanionBuilder =
     });
 
 final class $$AudioTableTableReferences
-    extends BaseReferences<_$DaKanjiDB, $AudioTableTable, AudioTableData> {
+    extends BaseReferences<_$DaDb, $AudioTableTable, AudioTableData> {
   $$AudioTableTableReferences(super.$_db, super.$_table, super.$_typedResult);
 
-  static $IndexTableTable _indexIdTable(_$DaKanjiDB db) =>
-      db.indexTable.createAlias(
-        $_aliasNameGenerator(db.audioTable.indexId, db.indexTable.id),
-      );
+  static $IndexTableTable _indexIdTable(_$DaDb db) => db.indexTable.createAlias(
+    $_aliasNameGenerator(db.audioTable.indexId, db.indexTable.id),
+  );
 
   $$IndexTableTableProcessedTableManager get indexId {
     final $_column = $_itemColumn<int>('index_id')!;
@@ -37014,7 +36948,7 @@ final class $$AudioTableTableReferences
     );
   }
 
-  static $ReadingTableTable _readingIdTable(_$DaKanjiDB db) =>
+  static $ReadingTableTable _readingIdTable(_$DaDb db) =>
       db.readingTable.createAlias(
         $_aliasNameGenerator(db.audioTable.readingId, db.readingTable.id),
       );
@@ -37033,10 +36967,9 @@ final class $$AudioTableTableReferences
     );
   }
 
-  static $MediaTableTable _mediaIdTable(_$DaKanjiDB db) =>
-      db.mediaTable.createAlias(
-        $_aliasNameGenerator(db.audioTable.mediaId, db.mediaTable.id),
-      );
+  static $MediaTableTable _mediaIdTable(_$DaDb db) => db.mediaTable.createAlias(
+    $_aliasNameGenerator(db.audioTable.mediaId, db.mediaTable.id),
+  );
 
   $$MediaTableTableProcessedTableManager get mediaId {
     final $_column = $_itemColumn<int>('media_id')!;
@@ -37056,14 +36989,13 @@ final class $$AudioTableTableReferences
     $AudioTable_X_TermTableTable,
     List<AudioTable_X_TermTableData>
   >
-  _audioTableXTermTableRefsTable(_$DaKanjiDB db) =>
-      MultiTypedResultKey.fromTable(
-        db.audioTableXTermTable,
-        aliasName: $_aliasNameGenerator(
-          db.audioTable.id,
-          db.audioTableXTermTable.audioId,
-        ),
-      );
+  _audioTableXTermTableRefsTable(_$DaDb db) => MultiTypedResultKey.fromTable(
+    db.audioTableXTermTable,
+    aliasName: $_aliasNameGenerator(
+      db.audioTable.id,
+      db.audioTableXTermTable.audioId,
+    ),
+  );
 
   $$AudioTable_X_TermTableTableProcessedTableManager
   get audioTableXTermTableRefs {
@@ -37082,7 +37014,7 @@ final class $$AudioTableTableReferences
 }
 
 class $$AudioTableTableFilterComposer
-    extends Composer<_$DaKanjiDB, $AudioTableTable> {
+    extends Composer<_$DaDb, $AudioTableTable> {
   $$AudioTableTableFilterComposer({
     required super.$db,
     required super.$table,
@@ -37197,7 +37129,7 @@ class $$AudioTableTableFilterComposer
 }
 
 class $$AudioTableTableOrderingComposer
-    extends Composer<_$DaKanjiDB, $AudioTableTable> {
+    extends Composer<_$DaDb, $AudioTableTable> {
   $$AudioTableTableOrderingComposer({
     required super.$db,
     required super.$table,
@@ -37286,7 +37218,7 @@ class $$AudioTableTableOrderingComposer
 }
 
 class $$AudioTableTableAnnotationComposer
-    extends Composer<_$DaKanjiDB, $AudioTableTable> {
+    extends Composer<_$DaDb, $AudioTableTable> {
   $$AudioTableTableAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -37401,7 +37333,7 @@ class $$AudioTableTableAnnotationComposer
 class $$AudioTableTableTableManager
     extends
         RootTableManager<
-          _$DaKanjiDB,
+          _$DaDb,
           $AudioTableTable,
           AudioTableData,
           $$AudioTableTableFilterComposer,
@@ -37418,7 +37350,7 @@ class $$AudioTableTableTableManager
             bool audioTableXTermTableRefs,
           })
         > {
-  $$AudioTableTableTableManager(_$DaKanjiDB db, $AudioTableTable table)
+  $$AudioTableTableTableManager(_$DaDb db, $AudioTableTable table)
     : super(
         TableManagerState(
           db: db,
@@ -37571,7 +37503,7 @@ class $$AudioTableTableTableManager
 
 typedef $$AudioTableTableProcessedTableManager =
     ProcessedTableManager<
-      _$DaKanjiDB,
+      _$DaDb,
       $AudioTableTable,
       AudioTableData,
       $$AudioTableTableFilterComposer,
@@ -37604,7 +37536,7 @@ typedef $$AudioTable_X_TermTableTableUpdateCompanionBuilder =
 final class $$AudioTable_X_TermTableTableReferences
     extends
         BaseReferences<
-          _$DaKanjiDB,
+          _$DaDb,
           $AudioTable_X_TermTableTable,
           AudioTable_X_TermTableData
         > {
@@ -37614,10 +37546,9 @@ final class $$AudioTable_X_TermTableTableReferences
     super.$_typedResult,
   );
 
-  static $AudioTableTable _audioIdTable(_$DaKanjiDB db) =>
-      db.audioTable.createAlias(
-        $_aliasNameGenerator(db.audioTableXTermTable.audioId, db.audioTable.id),
-      );
+  static $AudioTableTable _audioIdTable(_$DaDb db) => db.audioTable.createAlias(
+    $_aliasNameGenerator(db.audioTableXTermTable.audioId, db.audioTable.id),
+  );
 
   $$AudioTableTableProcessedTableManager get audioId {
     final $_column = $_itemColumn<int>('audio_id')!;
@@ -37633,10 +37564,9 @@ final class $$AudioTable_X_TermTableTableReferences
     );
   }
 
-  static $TermTableTable _termIdTable(_$DaKanjiDB db) =>
-      db.termTable.createAlias(
-        $_aliasNameGenerator(db.audioTableXTermTable.termId, db.termTable.id),
-      );
+  static $TermTableTable _termIdTable(_$DaDb db) => db.termTable.createAlias(
+    $_aliasNameGenerator(db.audioTableXTermTable.termId, db.termTable.id),
+  );
 
   $$TermTableTableProcessedTableManager get termId {
     final $_column = $_itemColumn<int>('term_id')!;
@@ -37654,7 +37584,7 @@ final class $$AudioTable_X_TermTableTableReferences
 }
 
 class $$AudioTable_X_TermTableTableFilterComposer
-    extends Composer<_$DaKanjiDB, $AudioTable_X_TermTableTable> {
+    extends Composer<_$DaDb, $AudioTable_X_TermTableTable> {
   $$AudioTable_X_TermTableTableFilterComposer({
     required super.$db,
     required super.$table,
@@ -37715,7 +37645,7 @@ class $$AudioTable_X_TermTableTableFilterComposer
 }
 
 class $$AudioTable_X_TermTableTableOrderingComposer
-    extends Composer<_$DaKanjiDB, $AudioTable_X_TermTableTable> {
+    extends Composer<_$DaDb, $AudioTable_X_TermTableTable> {
   $$AudioTable_X_TermTableTableOrderingComposer({
     required super.$db,
     required super.$table,
@@ -37776,7 +37706,7 @@ class $$AudioTable_X_TermTableTableOrderingComposer
 }
 
 class $$AudioTable_X_TermTableTableAnnotationComposer
-    extends Composer<_$DaKanjiDB, $AudioTable_X_TermTableTable> {
+    extends Composer<_$DaDb, $AudioTable_X_TermTableTable> {
   $$AudioTable_X_TermTableTableAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -37837,7 +37767,7 @@ class $$AudioTable_X_TermTableTableAnnotationComposer
 class $$AudioTable_X_TermTableTableTableManager
     extends
         RootTableManager<
-          _$DaKanjiDB,
+          _$DaDb,
           $AudioTable_X_TermTableTable,
           AudioTable_X_TermTableData,
           $$AudioTable_X_TermTableTableFilterComposer,
@@ -37850,7 +37780,7 @@ class $$AudioTable_X_TermTableTableTableManager
           PrefetchHooks Function({bool audioId, bool termId})
         > {
   $$AudioTable_X_TermTableTableTableManager(
-    _$DaKanjiDB db,
+    _$DaDb db,
     $AudioTable_X_TermTableTable table,
   ) : super(
         TableManagerState(
@@ -37963,7 +37893,7 @@ class $$AudioTable_X_TermTableTableTableManager
 
 typedef $$AudioTable_X_TermTableTableProcessedTableManager =
     ProcessedTableManager<
-      _$DaKanjiDB,
+      _$DaDb,
       $AudioTable_X_TermTableTable,
       AudioTable_X_TermTableData,
       $$AudioTable_X_TermTableTableFilterComposer,
@@ -37993,7 +37923,7 @@ typedef $HiraganaSpellfixCostUpdateCompanionBuilder =
     });
 
 class $HiraganaSpellfixCostFilterComposer
-    extends Composer<_$DaKanjiDB, HiraganaSpellfixCost> {
+    extends Composer<_$DaDb, HiraganaSpellfixCost> {
   $HiraganaSpellfixCostFilterComposer({
     required super.$db,
     required super.$table,
@@ -38023,7 +37953,7 @@ class $HiraganaSpellfixCostFilterComposer
 }
 
 class $HiraganaSpellfixCostOrderingComposer
-    extends Composer<_$DaKanjiDB, HiraganaSpellfixCost> {
+    extends Composer<_$DaDb, HiraganaSpellfixCost> {
   $HiraganaSpellfixCostOrderingComposer({
     required super.$db,
     required super.$table,
@@ -38053,7 +37983,7 @@ class $HiraganaSpellfixCostOrderingComposer
 }
 
 class $HiraganaSpellfixCostAnnotationComposer
-    extends Composer<_$DaKanjiDB, HiraganaSpellfixCost> {
+    extends Composer<_$DaDb, HiraganaSpellfixCost> {
   $HiraganaSpellfixCostAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -38077,7 +38007,7 @@ class $HiraganaSpellfixCostAnnotationComposer
 class $HiraganaSpellfixCostTableManager
     extends
         RootTableManager<
-          _$DaKanjiDB,
+          _$DaDb,
           HiraganaSpellfixCost,
           HiraganaSpellfixCostData,
           $HiraganaSpellfixCostFilterComposer,
@@ -38088,7 +38018,7 @@ class $HiraganaSpellfixCostTableManager
           (
             HiraganaSpellfixCostData,
             BaseReferences<
-              _$DaKanjiDB,
+              _$DaDb,
               HiraganaSpellfixCost,
               HiraganaSpellfixCostData
             >,
@@ -38096,7 +38026,7 @@ class $HiraganaSpellfixCostTableManager
           HiraganaSpellfixCostData,
           PrefetchHooks Function()
         > {
-  $HiraganaSpellfixCostTableManager(_$DaKanjiDB db, HiraganaSpellfixCost table)
+  $HiraganaSpellfixCostTableManager(_$DaDb db, HiraganaSpellfixCost table)
     : super(
         TableManagerState(
           db: db,
@@ -38145,7 +38075,7 @@ class $HiraganaSpellfixCostTableManager
 
 typedef $HiraganaSpellfixCostProcessedTableManager =
     ProcessedTableManager<
-      _$DaKanjiDB,
+      _$DaDb,
       HiraganaSpellfixCost,
       HiraganaSpellfixCostData,
       $HiraganaSpellfixCostFilterComposer,
@@ -38155,11 +38085,7 @@ typedef $HiraganaSpellfixCostProcessedTableManager =
       $HiraganaSpellfixCostUpdateCompanionBuilder,
       (
         HiraganaSpellfixCostData,
-        BaseReferences<
-          _$DaKanjiDB,
-          HiraganaSpellfixCost,
-          HiraganaSpellfixCostData
-        >,
+        BaseReferences<_$DaDb, HiraganaSpellfixCost, HiraganaSpellfixCostData>,
       ),
       HiraganaSpellfixCostData,
       PrefetchHooks Function()
@@ -38180,13 +38106,12 @@ typedef $$ExampleTableTableUpdateCompanionBuilder =
     });
 
 final class $$ExampleTableTableReferences
-    extends BaseReferences<_$DaKanjiDB, $ExampleTableTable, ExampleTableData> {
+    extends BaseReferences<_$DaDb, $ExampleTableTable, ExampleTableData> {
   $$ExampleTableTableReferences(super.$_db, super.$_table, super.$_typedResult);
 
-  static $IndexTableTable _indexIdTable(_$DaKanjiDB db) =>
-      db.indexTable.createAlias(
-        $_aliasNameGenerator(db.exampleTable.indexId, db.indexTable.id),
-      );
+  static $IndexTableTable _indexIdTable(_$DaDb db) => db.indexTable.createAlias(
+    $_aliasNameGenerator(db.exampleTable.indexId, db.indexTable.id),
+  );
 
   $$IndexTableTableProcessedTableManager get indexId {
     final $_column = $_itemColumn<int>('index_id')!;
@@ -38206,7 +38131,7 @@ final class $$ExampleTableTableReferences
     $ExampleTable_X_ExampleTranslationTableTable,
     List<ExampleTable_X_ExampleTranslationTableData>
   >
-  _exampleTableXExampleTranslationTableRefsTable(_$DaKanjiDB db) =>
+  _exampleTableXExampleTranslationTableRefsTable(_$DaDb db) =>
       MultiTypedResultKey.fromTable(
         db.exampleTableXExampleTranslationTable,
         aliasName: $_aliasNameGenerator(
@@ -38232,7 +38157,7 @@ final class $$ExampleTableTableReferences
 }
 
 class $$ExampleTableTableFilterComposer
-    extends Composer<_$DaKanjiDB, $ExampleTableTable> {
+    extends Composer<_$DaDb, $ExampleTableTable> {
   $$ExampleTableTableFilterComposer({
     required super.$db,
     required super.$table,
@@ -38309,7 +38234,7 @@ class $$ExampleTableTableFilterComposer
 }
 
 class $$ExampleTableTableOrderingComposer
-    extends Composer<_$DaKanjiDB, $ExampleTableTable> {
+    extends Composer<_$DaDb, $ExampleTableTable> {
   $$ExampleTableTableOrderingComposer({
     required super.$db,
     required super.$table,
@@ -38357,7 +38282,7 @@ class $$ExampleTableTableOrderingComposer
 }
 
 class $$ExampleTableTableAnnotationComposer
-    extends Composer<_$DaKanjiDB, $ExampleTableTable> {
+    extends Composer<_$DaDb, $ExampleTableTable> {
   $$ExampleTableTableAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -38434,7 +38359,7 @@ class $$ExampleTableTableAnnotationComposer
 class $$ExampleTableTableTableManager
     extends
         RootTableManager<
-          _$DaKanjiDB,
+          _$DaDb,
           $ExampleTableTable,
           ExampleTableData,
           $$ExampleTableTableFilterComposer,
@@ -38449,7 +38374,7 @@ class $$ExampleTableTableTableManager
             bool exampleTableXExampleTranslationTableRefs,
           })
         > {
-  $$ExampleTableTableTableManager(_$DaKanjiDB db, $ExampleTableTable table)
+  $$ExampleTableTableTableManager(_$DaDb db, $ExampleTableTable table)
     : super(
         TableManagerState(
           db: db,
@@ -38572,7 +38497,7 @@ class $$ExampleTableTableTableManager
 
 typedef $$ExampleTableTableProcessedTableManager =
     ProcessedTableManager<
-      _$DaKanjiDB,
+      _$DaDb,
       $ExampleTableTable,
       ExampleTableData,
       $$ExampleTableTableFilterComposer,
@@ -38600,11 +38525,7 @@ typedef $$LanguageCodeTableTableUpdateCompanionBuilder =
 
 final class $$LanguageCodeTableTableReferences
     extends
-        BaseReferences<
-          _$DaKanjiDB,
-          $LanguageCodeTableTable,
-          LanguageCodeTableData
-        > {
+        BaseReferences<_$DaDb, $LanguageCodeTableTable, LanguageCodeTableData> {
   $$LanguageCodeTableTableReferences(
     super.$_db,
     super.$_table,
@@ -38615,14 +38536,13 @@ final class $$LanguageCodeTableTableReferences
     $ExampleTranslationTableTable,
     List<ExampleTranslationTableData>
   >
-  _exampleTranslationTableRefsTable(_$DaKanjiDB db) =>
-      MultiTypedResultKey.fromTable(
-        db.exampleTranslationTable,
-        aliasName: $_aliasNameGenerator(
-          db.languageCodeTable.id,
-          db.exampleTranslationTable.languageCodeId,
-        ),
-      );
+  _exampleTranslationTableRefsTable(_$DaDb db) => MultiTypedResultKey.fromTable(
+    db.exampleTranslationTable,
+    aliasName: $_aliasNameGenerator(
+      db.languageCodeTable.id,
+      db.exampleTranslationTable.languageCodeId,
+    ),
+  );
 
   $$ExampleTranslationTableTableProcessedTableManager
   get exampleTranslationTableRefs {
@@ -38641,7 +38561,7 @@ final class $$LanguageCodeTableTableReferences
 }
 
 class $$LanguageCodeTableTableFilterComposer
-    extends Composer<_$DaKanjiDB, $LanguageCodeTableTable> {
+    extends Composer<_$DaDb, $LanguageCodeTableTable> {
   $$LanguageCodeTableTableFilterComposer({
     required super.$db,
     required super.$table,
@@ -38687,7 +38607,7 @@ class $$LanguageCodeTableTableFilterComposer
 }
 
 class $$LanguageCodeTableTableOrderingComposer
-    extends Composer<_$DaKanjiDB, $LanguageCodeTableTable> {
+    extends Composer<_$DaDb, $LanguageCodeTableTable> {
   $$LanguageCodeTableTableOrderingComposer({
     required super.$db,
     required super.$table,
@@ -38707,7 +38627,7 @@ class $$LanguageCodeTableTableOrderingComposer
 }
 
 class $$LanguageCodeTableTableAnnotationComposer
-    extends Composer<_$DaKanjiDB, $LanguageCodeTableTable> {
+    extends Composer<_$DaDb, $LanguageCodeTableTable> {
   $$LanguageCodeTableTableAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -38754,7 +38674,7 @@ class $$LanguageCodeTableTableAnnotationComposer
 class $$LanguageCodeTableTableTableManager
     extends
         RootTableManager<
-          _$DaKanjiDB,
+          _$DaDb,
           $LanguageCodeTableTable,
           LanguageCodeTableData,
           $$LanguageCodeTableTableFilterComposer,
@@ -38766,10 +38686,8 @@ class $$LanguageCodeTableTableTableManager
           LanguageCodeTableData,
           PrefetchHooks Function({bool exampleTranslationTableRefs})
         > {
-  $$LanguageCodeTableTableTableManager(
-    _$DaKanjiDB db,
-    $LanguageCodeTableTable table,
-  ) : super(
+  $$LanguageCodeTableTableTableManager(_$DaDb db, $LanguageCodeTableTable table)
+    : super(
         TableManagerState(
           db: db,
           table: table,
@@ -38846,7 +38764,7 @@ class $$LanguageCodeTableTableTableManager
 
 typedef $$LanguageCodeTableTableProcessedTableManager =
     ProcessedTableManager<
-      _$DaKanjiDB,
+      _$DaDb,
       $LanguageCodeTableTable,
       LanguageCodeTableData,
       $$LanguageCodeTableTableFilterComposer,
@@ -38874,7 +38792,7 @@ typedef $$ExampleTranslationTableTableUpdateCompanionBuilder =
 final class $$ExampleTranslationTableTableReferences
     extends
         BaseReferences<
-          _$DaKanjiDB,
+          _$DaDb,
           $ExampleTranslationTableTable,
           ExampleTranslationTableData
         > {
@@ -38884,7 +38802,7 @@ final class $$ExampleTranslationTableTableReferences
     super.$_typedResult,
   );
 
-  static $LanguageCodeTableTable _languageCodeIdTable(_$DaKanjiDB db) =>
+  static $LanguageCodeTableTable _languageCodeIdTable(_$DaDb db) =>
       db.languageCodeTable.createAlias(
         $_aliasNameGenerator(
           db.exampleTranslationTable.languageCodeId,
@@ -38910,7 +38828,7 @@ final class $$ExampleTranslationTableTableReferences
     $ExampleTable_X_ExampleTranslationTableTable,
     List<ExampleTable_X_ExampleTranslationTableData>
   >
-  _exampleTableXExampleTranslationTableRefsTable(_$DaKanjiDB db) =>
+  _exampleTableXExampleTranslationTableRefsTable(_$DaDb db) =>
       MultiTypedResultKey.fromTable(
         db.exampleTableXExampleTranslationTable,
         aliasName: $_aliasNameGenerator(
@@ -38936,7 +38854,7 @@ final class $$ExampleTranslationTableTableReferences
 }
 
 class $$ExampleTranslationTableTableFilterComposer
-    extends Composer<_$DaKanjiDB, $ExampleTranslationTableTable> {
+    extends Composer<_$DaDb, $ExampleTranslationTableTable> {
   $$ExampleTranslationTableTableFilterComposer({
     required super.$db,
     required super.$table,
@@ -39008,7 +38926,7 @@ class $$ExampleTranslationTableTableFilterComposer
 }
 
 class $$ExampleTranslationTableTableOrderingComposer
-    extends Composer<_$DaKanjiDB, $ExampleTranslationTableTable> {
+    extends Composer<_$DaDb, $ExampleTranslationTableTable> {
   $$ExampleTranslationTableTableOrderingComposer({
     required super.$db,
     required super.$table,
@@ -39051,7 +38969,7 @@ class $$ExampleTranslationTableTableOrderingComposer
 }
 
 class $$ExampleTranslationTableTableAnnotationComposer
-    extends Composer<_$DaKanjiDB, $ExampleTranslationTableTable> {
+    extends Composer<_$DaDb, $ExampleTranslationTableTable> {
   $$ExampleTranslationTableTableAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -39124,7 +39042,7 @@ class $$ExampleTranslationTableTableAnnotationComposer
 class $$ExampleTranslationTableTableTableManager
     extends
         RootTableManager<
-          _$DaKanjiDB,
+          _$DaDb,
           $ExampleTranslationTableTable,
           ExampleTranslationTableData,
           $$ExampleTranslationTableTableFilterComposer,
@@ -39143,7 +39061,7 @@ class $$ExampleTranslationTableTableTableManager
           })
         > {
   $$ExampleTranslationTableTableTableManager(
-    _$DaKanjiDB db,
+    _$DaDb db,
     $ExampleTranslationTableTable table,
   ) : super(
         TableManagerState(
@@ -39273,7 +39191,7 @@ class $$ExampleTranslationTableTableTableManager
 
 typedef $$ExampleTranslationTableTableProcessedTableManager =
     ProcessedTableManager<
-      _$DaKanjiDB,
+      _$DaDb,
       $ExampleTranslationTableTable,
       ExampleTranslationTableData,
       $$ExampleTranslationTableTableFilterComposer,
@@ -39304,7 +39222,7 @@ typedef $$ExampleTable_X_ExampleTranslationTableTableUpdateCompanionBuilder =
 final class $$ExampleTable_X_ExampleTranslationTableTableReferences
     extends
         BaseReferences<
-          _$DaKanjiDB,
+          _$DaDb,
           $ExampleTable_X_ExampleTranslationTableTable,
           ExampleTable_X_ExampleTranslationTableData
         > {
@@ -39314,7 +39232,7 @@ final class $$ExampleTable_X_ExampleTranslationTableTableReferences
     super.$_typedResult,
   );
 
-  static $ExampleTableTable _exampleIdTable(_$DaKanjiDB db) =>
+  static $ExampleTableTable _exampleIdTable(_$DaDb db) =>
       db.exampleTable.createAlias(
         $_aliasNameGenerator(
           db.exampleTableXExampleTranslationTable.exampleId,
@@ -39336,7 +39254,7 @@ final class $$ExampleTable_X_ExampleTranslationTableTableReferences
     );
   }
 
-  static $ExampleTranslationTableTable _translationIdTable(_$DaKanjiDB db) =>
+  static $ExampleTranslationTableTable _translationIdTable(_$DaDb db) =>
       db.exampleTranslationTable.createAlias(
         $_aliasNameGenerator(
           db.exampleTableXExampleTranslationTable.translationId,
@@ -39360,8 +39278,7 @@ final class $$ExampleTable_X_ExampleTranslationTableTableReferences
 }
 
 class $$ExampleTable_X_ExampleTranslationTableTableFilterComposer
-    extends
-        Composer<_$DaKanjiDB, $ExampleTable_X_ExampleTranslationTableTable> {
+    extends Composer<_$DaDb, $ExampleTable_X_ExampleTranslationTableTable> {
   $$ExampleTable_X_ExampleTranslationTableTableFilterComposer({
     required super.$db,
     required super.$table,
@@ -39423,8 +39340,7 @@ class $$ExampleTable_X_ExampleTranslationTableTableFilterComposer
 }
 
 class $$ExampleTable_X_ExampleTranslationTableTableOrderingComposer
-    extends
-        Composer<_$DaKanjiDB, $ExampleTable_X_ExampleTranslationTableTable> {
+    extends Composer<_$DaDb, $ExampleTable_X_ExampleTranslationTableTable> {
   $$ExampleTable_X_ExampleTranslationTableTableOrderingComposer({
     required super.$db,
     required super.$table,
@@ -39486,8 +39402,7 @@ class $$ExampleTable_X_ExampleTranslationTableTableOrderingComposer
 }
 
 class $$ExampleTable_X_ExampleTranslationTableTableAnnotationComposer
-    extends
-        Composer<_$DaKanjiDB, $ExampleTable_X_ExampleTranslationTableTable> {
+    extends Composer<_$DaDb, $ExampleTable_X_ExampleTranslationTableTable> {
   $$ExampleTable_X_ExampleTranslationTableTableAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -39549,7 +39464,7 @@ class $$ExampleTable_X_ExampleTranslationTableTableAnnotationComposer
 class $$ExampleTable_X_ExampleTranslationTableTableTableManager
     extends
         RootTableManager<
-          _$DaKanjiDB,
+          _$DaDb,
           $ExampleTable_X_ExampleTranslationTableTable,
           ExampleTable_X_ExampleTranslationTableData,
           $$ExampleTable_X_ExampleTranslationTableTableFilterComposer,
@@ -39565,7 +39480,7 @@ class $$ExampleTable_X_ExampleTranslationTableTableTableManager
           PrefetchHooks Function({bool exampleId, bool translationId})
         > {
   $$ExampleTable_X_ExampleTranslationTableTableTableManager(
-    _$DaKanjiDB db,
+    _$DaDb db,
     $ExampleTable_X_ExampleTranslationTableTable table,
   ) : super(
         TableManagerState(
@@ -39682,7 +39597,7 @@ class $$ExampleTable_X_ExampleTranslationTableTableTableManager
 
 typedef $$ExampleTable_X_ExampleTranslationTableTableProcessedTableManager =
     ProcessedTableManager<
-      _$DaKanjiDB,
+      _$DaDb,
       $ExampleTable_X_ExampleTranslationTableTable,
       ExampleTable_X_ExampleTranslationTableData,
       $$ExampleTable_X_ExampleTranslationTableTableFilterComposer,
@@ -39708,7 +39623,7 @@ typedef $ExampleFtsUpdateCompanionBuilder =
       Value<int> rowid,
     });
 
-class $ExampleFtsFilterComposer extends Composer<_$DaKanjiDB, ExampleFts> {
+class $ExampleFtsFilterComposer extends Composer<_$DaDb, ExampleFts> {
   $ExampleFtsFilterComposer({
     required super.$db,
     required super.$table,
@@ -39722,7 +39637,7 @@ class $ExampleFtsFilterComposer extends Composer<_$DaKanjiDB, ExampleFts> {
   );
 }
 
-class $ExampleFtsOrderingComposer extends Composer<_$DaKanjiDB, ExampleFts> {
+class $ExampleFtsOrderingComposer extends Composer<_$DaDb, ExampleFts> {
   $ExampleFtsOrderingComposer({
     required super.$db,
     required super.$table,
@@ -39736,7 +39651,7 @@ class $ExampleFtsOrderingComposer extends Composer<_$DaKanjiDB, ExampleFts> {
   );
 }
 
-class $ExampleFtsAnnotationComposer extends Composer<_$DaKanjiDB, ExampleFts> {
+class $ExampleFtsAnnotationComposer extends Composer<_$DaDb, ExampleFts> {
   $ExampleFtsAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -39753,7 +39668,7 @@ class $ExampleFtsAnnotationComposer extends Composer<_$DaKanjiDB, ExampleFts> {
 class $ExampleFtsTableManager
     extends
         RootTableManager<
-          _$DaKanjiDB,
+          _$DaDb,
           ExampleFts,
           ExampleFt,
           $ExampleFtsFilterComposer,
@@ -39761,11 +39676,11 @@ class $ExampleFtsTableManager
           $ExampleFtsAnnotationComposer,
           $ExampleFtsCreateCompanionBuilder,
           $ExampleFtsUpdateCompanionBuilder,
-          (ExampleFt, BaseReferences<_$DaKanjiDB, ExampleFts, ExampleFt>),
+          (ExampleFt, BaseReferences<_$DaDb, ExampleFts, ExampleFt>),
           ExampleFt,
           PrefetchHooks Function()
         > {
-  $ExampleFtsTableManager(_$DaKanjiDB db, ExampleFts table)
+  $ExampleFtsTableManager(_$DaDb db, ExampleFts table)
     : super(
         TableManagerState(
           db: db,
@@ -39802,7 +39717,7 @@ class $ExampleFtsTableManager
 
 typedef $ExampleFtsProcessedTableManager =
     ProcessedTableManager<
-      _$DaKanjiDB,
+      _$DaDb,
       ExampleFts,
       ExampleFt,
       $ExampleFtsFilterComposer,
@@ -39810,7 +39725,7 @@ typedef $ExampleFtsProcessedTableManager =
       $ExampleFtsAnnotationComposer,
       $ExampleFtsCreateCompanionBuilder,
       $ExampleFtsUpdateCompanionBuilder,
-      (ExampleFt, BaseReferences<_$DaKanjiDB, ExampleFts, ExampleFt>),
+      (ExampleFt, BaseReferences<_$DaDb, ExampleFts, ExampleFt>),
       ExampleFt,
       PrefetchHooks Function()
     >;
@@ -39828,13 +39743,12 @@ typedef $$KanjiVGTableTableUpdateCompanionBuilder =
     });
 
 final class $$KanjiVGTableTableReferences
-    extends BaseReferences<_$DaKanjiDB, $KanjiVGTableTable, KanjiVGTableData> {
+    extends BaseReferences<_$DaDb, $KanjiVGTableTable, KanjiVGTableData> {
   $$KanjiVGTableTableReferences(super.$_db, super.$_table, super.$_typedResult);
 
-  static $KanjiTableTable _kanjiIdTable(_$DaKanjiDB db) =>
-      db.kanjiTable.createAlias(
-        $_aliasNameGenerator(db.kanjiVGTable.kanjiId, db.kanjiTable.id),
-      );
+  static $KanjiTableTable _kanjiIdTable(_$DaDb db) => db.kanjiTable.createAlias(
+    $_aliasNameGenerator(db.kanjiVGTable.kanjiId, db.kanjiTable.id),
+  );
 
   $$KanjiTableTableProcessedTableManager get kanjiId {
     final $_column = $_itemColumn<int>('kanji_id')!;
@@ -39852,7 +39766,7 @@ final class $$KanjiVGTableTableReferences
 }
 
 class $$KanjiVGTableTableFilterComposer
-    extends Composer<_$DaKanjiDB, $KanjiVGTableTable> {
+    extends Composer<_$DaDb, $KanjiVGTableTable> {
   $$KanjiVGTableTableFilterComposer({
     required super.$db,
     required super.$table,
@@ -39896,7 +39810,7 @@ class $$KanjiVGTableTableFilterComposer
 }
 
 class $$KanjiVGTableTableOrderingComposer
-    extends Composer<_$DaKanjiDB, $KanjiVGTableTable> {
+    extends Composer<_$DaDb, $KanjiVGTableTable> {
   $$KanjiVGTableTableOrderingComposer({
     required super.$db,
     required super.$table,
@@ -39939,7 +39853,7 @@ class $$KanjiVGTableTableOrderingComposer
 }
 
 class $$KanjiVGTableTableAnnotationComposer
-    extends Composer<_$DaKanjiDB, $KanjiVGTableTable> {
+    extends Composer<_$DaDb, $KanjiVGTableTable> {
   $$KanjiVGTableTableAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -39980,7 +39894,7 @@ class $$KanjiVGTableTableAnnotationComposer
 class $$KanjiVGTableTableTableManager
     extends
         RootTableManager<
-          _$DaKanjiDB,
+          _$DaDb,
           $KanjiVGTableTable,
           KanjiVGTableData,
           $$KanjiVGTableTableFilterComposer,
@@ -39992,7 +39906,7 @@ class $$KanjiVGTableTableTableManager
           KanjiVGTableData,
           PrefetchHooks Function({bool kanjiId})
         > {
-  $$KanjiVGTableTableTableManager(_$DaKanjiDB db, $KanjiVGTableTable table)
+  $$KanjiVGTableTableTableManager(_$DaDb db, $KanjiVGTableTable table)
     : super(
         TableManagerState(
           db: db,
@@ -40074,7 +39988,7 @@ class $$KanjiVGTableTableTableManager
 
 typedef $$KanjiVGTableTableProcessedTableManager =
     ProcessedTableManager<
-      _$DaKanjiDB,
+      _$DaDb,
       $KanjiVGTableTable,
       KanjiVGTableData,
       $$KanjiVGTableTableFilterComposer,
@@ -40104,7 +40018,7 @@ typedef $$AudioSourceListTableTableUpdateCompanionBuilder =
 final class $$AudioSourceListTableTableReferences
     extends
         BaseReferences<
-          _$DaKanjiDB,
+          _$DaDb,
           $AudioSourceListTableTable,
           AudioSourceListTableData
         > {
@@ -40114,10 +40028,9 @@ final class $$AudioSourceListTableTableReferences
     super.$_typedResult,
   );
 
-  static $IndexTableTable _indexIdTable(_$DaKanjiDB db) =>
-      db.indexTable.createAlias(
-        $_aliasNameGenerator(db.audioSourceListTable.indexId, db.indexTable.id),
-      );
+  static $IndexTableTable _indexIdTable(_$DaDb db) => db.indexTable.createAlias(
+    $_aliasNameGenerator(db.audioSourceListTable.indexId, db.indexTable.id),
+  );
 
   $$IndexTableTableProcessedTableManager get indexId {
     final $_column = $_itemColumn<int>('index_id')!;
@@ -40135,7 +40048,7 @@ final class $$AudioSourceListTableTableReferences
 }
 
 class $$AudioSourceListTableTableFilterComposer
-    extends Composer<_$DaKanjiDB, $AudioSourceListTableTable> {
+    extends Composer<_$DaDb, $AudioSourceListTableTable> {
   $$AudioSourceListTableTableFilterComposer({
     required super.$db,
     required super.$table,
@@ -40183,7 +40096,7 @@ class $$AudioSourceListTableTableFilterComposer
 }
 
 class $$AudioSourceListTableTableOrderingComposer
-    extends Composer<_$DaKanjiDB, $AudioSourceListTableTable> {
+    extends Composer<_$DaDb, $AudioSourceListTableTable> {
   $$AudioSourceListTableTableOrderingComposer({
     required super.$db,
     required super.$table,
@@ -40231,7 +40144,7 @@ class $$AudioSourceListTableTableOrderingComposer
 }
 
 class $$AudioSourceListTableTableAnnotationComposer
-    extends Composer<_$DaKanjiDB, $AudioSourceListTableTable> {
+    extends Composer<_$DaDb, $AudioSourceListTableTable> {
   $$AudioSourceListTableTableAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -40275,7 +40188,7 @@ class $$AudioSourceListTableTableAnnotationComposer
 class $$AudioSourceListTableTableTableManager
     extends
         RootTableManager<
-          _$DaKanjiDB,
+          _$DaDb,
           $AudioSourceListTableTable,
           AudioSourceListTableData,
           $$AudioSourceListTableTableFilterComposer,
@@ -40288,7 +40201,7 @@ class $$AudioSourceListTableTableTableManager
           PrefetchHooks Function({bool indexId})
         > {
   $$AudioSourceListTableTableTableManager(
-    _$DaKanjiDB db,
+    _$DaDb db,
     $AudioSourceListTableTable table,
   ) : super(
         TableManagerState(
@@ -40387,7 +40300,7 @@ class $$AudioSourceListTableTableTableManager
 
 typedef $$AudioSourceListTableTableProcessedTableManager =
     ProcessedTableManager<
-      _$DaKanjiDB,
+      _$DaDb,
       $AudioSourceListTableTable,
       AudioSourceListTableData,
       $$AudioSourceListTableTableFilterComposer,
@@ -40413,8 +40326,7 @@ typedef $$RadicalsTableTableUpdateCompanionBuilder =
     });
 
 final class $$RadicalsTableTableReferences
-    extends
-        BaseReferences<_$DaKanjiDB, $RadicalsTableTable, RadicalsTableData> {
+    extends BaseReferences<_$DaDb, $RadicalsTableTable, RadicalsTableData> {
   $$RadicalsTableTableReferences(
     super.$_db,
     super.$_table,
@@ -40425,7 +40337,7 @@ final class $$RadicalsTableTableReferences
     $Radical_X_KanjiRelationsTableTable,
     List<Radical_X_KanjiRelationsTableData>
   >
-  _radicalXKanjiRelationsTableRefsTable(_$DaKanjiDB db) =>
+  _radicalXKanjiRelationsTableRefsTable(_$DaDb db) =>
       MultiTypedResultKey.fromTable(
         db.radicalXKanjiRelationsTable,
         aliasName: $_aliasNameGenerator(
@@ -40451,7 +40363,7 @@ final class $$RadicalsTableTableReferences
 }
 
 class $$RadicalsTableTableFilterComposer
-    extends Composer<_$DaKanjiDB, $RadicalsTableTable> {
+    extends Composer<_$DaDb, $RadicalsTableTable> {
   $$RadicalsTableTableFilterComposer({
     required super.$db,
     required super.$table,
@@ -40505,7 +40417,7 @@ class $$RadicalsTableTableFilterComposer
 }
 
 class $$RadicalsTableTableOrderingComposer
-    extends Composer<_$DaKanjiDB, $RadicalsTableTable> {
+    extends Composer<_$DaDb, $RadicalsTableTable> {
   $$RadicalsTableTableOrderingComposer({
     required super.$db,
     required super.$table,
@@ -40530,7 +40442,7 @@ class $$RadicalsTableTableOrderingComposer
 }
 
 class $$RadicalsTableTableAnnotationComposer
-    extends Composer<_$DaKanjiDB, $RadicalsTableTable> {
+    extends Composer<_$DaDb, $RadicalsTableTable> {
   $$RadicalsTableTableAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -40582,7 +40494,7 @@ class $$RadicalsTableTableAnnotationComposer
 class $$RadicalsTableTableTableManager
     extends
         RootTableManager<
-          _$DaKanjiDB,
+          _$DaDb,
           $RadicalsTableTable,
           RadicalsTableData,
           $$RadicalsTableTableFilterComposer,
@@ -40594,7 +40506,7 @@ class $$RadicalsTableTableTableManager
           RadicalsTableData,
           PrefetchHooks Function({bool radicalXKanjiRelationsTableRefs})
         > {
-  $$RadicalsTableTableTableManager(_$DaKanjiDB db, $RadicalsTableTable table)
+  $$RadicalsTableTableTableManager(_$DaDb db, $RadicalsTableTable table)
     : super(
         TableManagerState(
           db: db,
@@ -40672,7 +40584,7 @@ class $$RadicalsTableTableTableManager
 
 typedef $$RadicalsTableTableProcessedTableManager =
     ProcessedTableManager<
-      _$DaKanjiDB,
+      _$DaDb,
       $RadicalsTableTable,
       RadicalsTableData,
       $$RadicalsTableTableFilterComposer,
@@ -40700,7 +40612,7 @@ typedef $$Radical_X_KanjiRelationsTableTableUpdateCompanionBuilder =
 final class $$Radical_X_KanjiRelationsTableTableReferences
     extends
         BaseReferences<
-          _$DaKanjiDB,
+          _$DaDb,
           $Radical_X_KanjiRelationsTableTable,
           Radical_X_KanjiRelationsTableData
         > {
@@ -40710,13 +40622,12 @@ final class $$Radical_X_KanjiRelationsTableTableReferences
     super.$_typedResult,
   );
 
-  static $KanjiTableTable _kanjiIdTable(_$DaKanjiDB db) =>
-      db.kanjiTable.createAlias(
-        $_aliasNameGenerator(
-          db.radicalXKanjiRelationsTable.kanjiId,
-          db.kanjiTable.id,
-        ),
-      );
+  static $KanjiTableTable _kanjiIdTable(_$DaDb db) => db.kanjiTable.createAlias(
+    $_aliasNameGenerator(
+      db.radicalXKanjiRelationsTable.kanjiId,
+      db.kanjiTable.id,
+    ),
+  );
 
   $$KanjiTableTableProcessedTableManager get kanjiId {
     final $_column = $_itemColumn<int>('kanji_id')!;
@@ -40732,7 +40643,7 @@ final class $$Radical_X_KanjiRelationsTableTableReferences
     );
   }
 
-  static $RadicalsTableTable _radicalIdTable(_$DaKanjiDB db) =>
+  static $RadicalsTableTable _radicalIdTable(_$DaDb db) =>
       db.radicalsTable.createAlias(
         $_aliasNameGenerator(
           db.radicalXKanjiRelationsTable.radicalId,
@@ -40756,7 +40667,7 @@ final class $$Radical_X_KanjiRelationsTableTableReferences
 }
 
 class $$Radical_X_KanjiRelationsTableTableFilterComposer
-    extends Composer<_$DaKanjiDB, $Radical_X_KanjiRelationsTableTable> {
+    extends Composer<_$DaDb, $Radical_X_KanjiRelationsTableTable> {
   $$Radical_X_KanjiRelationsTableTableFilterComposer({
     required super.$db,
     required super.$table,
@@ -40817,7 +40728,7 @@ class $$Radical_X_KanjiRelationsTableTableFilterComposer
 }
 
 class $$Radical_X_KanjiRelationsTableTableOrderingComposer
-    extends Composer<_$DaKanjiDB, $Radical_X_KanjiRelationsTableTable> {
+    extends Composer<_$DaDb, $Radical_X_KanjiRelationsTableTable> {
   $$Radical_X_KanjiRelationsTableTableOrderingComposer({
     required super.$db,
     required super.$table,
@@ -40878,7 +40789,7 @@ class $$Radical_X_KanjiRelationsTableTableOrderingComposer
 }
 
 class $$Radical_X_KanjiRelationsTableTableAnnotationComposer
-    extends Composer<_$DaKanjiDB, $Radical_X_KanjiRelationsTableTable> {
+    extends Composer<_$DaDb, $Radical_X_KanjiRelationsTableTable> {
   $$Radical_X_KanjiRelationsTableTableAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -40939,7 +40850,7 @@ class $$Radical_X_KanjiRelationsTableTableAnnotationComposer
 class $$Radical_X_KanjiRelationsTableTableTableManager
     extends
         RootTableManager<
-          _$DaKanjiDB,
+          _$DaDb,
           $Radical_X_KanjiRelationsTableTable,
           Radical_X_KanjiRelationsTableData,
           $$Radical_X_KanjiRelationsTableTableFilterComposer,
@@ -40955,7 +40866,7 @@ class $$Radical_X_KanjiRelationsTableTableTableManager
           PrefetchHooks Function({bool kanjiId, bool radicalId})
         > {
   $$Radical_X_KanjiRelationsTableTableTableManager(
-    _$DaKanjiDB db,
+    _$DaDb db,
     $Radical_X_KanjiRelationsTableTable table,
   ) : super(
         TableManagerState(
@@ -41068,7 +40979,7 @@ class $$Radical_X_KanjiRelationsTableTableTableManager
 
 typedef $$Radical_X_KanjiRelationsTableTableProcessedTableManager =
     ProcessedTableManager<
-      _$DaKanjiDB,
+      _$DaDb,
       $Radical_X_KanjiRelationsTableTable,
       Radical_X_KanjiRelationsTableData,
       $$Radical_X_KanjiRelationsTableTableFilterComposer,
@@ -41089,8 +41000,8 @@ typedef $$SearchProfilesTableTableCreateCompanionBuilder =
       Value<String> name,
       Value<bool> isActiveProfile,
       required int sortOrder,
-      required List<(DakanjiDbSearchResult1stSortOrder, bool)> firstSortOrder,
-      required List<(DakanjiDbSearchResult2ndSortOrder, bool)> secondSortOrder,
+      required List<(SearchResult1stSortOrder, bool)> firstSortOrder,
+      required List<(SearchResult2ndSortOrder, bool)> secondSortOrder,
       Value<bool> normalizeSearchConvertsRomajiToHiragana,
       required Object? groupingRules,
       Value<bool> showSearchResultSeparationHeaders,
@@ -41110,8 +41021,8 @@ typedef $$SearchProfilesTableTableUpdateCompanionBuilder =
       Value<String> name,
       Value<bool> isActiveProfile,
       Value<int> sortOrder,
-      Value<List<(DakanjiDbSearchResult1stSortOrder, bool)>> firstSortOrder,
-      Value<List<(DakanjiDbSearchResult2ndSortOrder, bool)>> secondSortOrder,
+      Value<List<(SearchResult1stSortOrder, bool)>> firstSortOrder,
+      Value<List<(SearchResult2ndSortOrder, bool)>> secondSortOrder,
       Value<bool> normalizeSearchConvertsRomajiToHiragana,
       Value<Object?> groupingRules,
       Value<bool> showSearchResultSeparationHeaders,
@@ -41127,7 +41038,7 @@ typedef $$SearchProfilesTableTableUpdateCompanionBuilder =
     });
 
 class $$SearchProfilesTableTableFilterComposer
-    extends Composer<_$DaKanjiDB, $SearchProfilesTableTable> {
+    extends Composer<_$DaDb, $SearchProfilesTableTable> {
   $$SearchProfilesTableTableFilterComposer({
     required super.$db,
     required super.$table,
@@ -41156,8 +41067,8 @@ class $$SearchProfilesTableTableFilterComposer
   );
 
   ColumnWithTypeConverterFilters<
-    List<(DakanjiDbSearchResult1stSortOrder, bool)>,
-    List<(DakanjiDbSearchResult1stSortOrder, bool)>,
+    List<(SearchResult1stSortOrder, bool)>,
+    List<(SearchResult1stSortOrder, bool)>,
     String
   >
   get firstSortOrder => $composableBuilder(
@@ -41166,8 +41077,8 @@ class $$SearchProfilesTableTableFilterComposer
   );
 
   ColumnWithTypeConverterFilters<
-    List<(DakanjiDbSearchResult2ndSortOrder, bool)>,
-    List<(DakanjiDbSearchResult2ndSortOrder, bool)>,
+    List<(SearchResult2ndSortOrder, bool)>,
+    List<(SearchResult2ndSortOrder, bool)>,
     String
   >
   get secondSortOrder => $composableBuilder(
@@ -41240,7 +41151,7 @@ class $$SearchProfilesTableTableFilterComposer
 }
 
 class $$SearchProfilesTableTableOrderingComposer
-    extends Composer<_$DaKanjiDB, $SearchProfilesTableTable> {
+    extends Composer<_$DaDb, $SearchProfilesTableTable> {
   $$SearchProfilesTableTableOrderingComposer({
     required super.$db,
     required super.$table,
@@ -41343,7 +41254,7 @@ class $$SearchProfilesTableTableOrderingComposer
 }
 
 class $$SearchProfilesTableTableAnnotationComposer
-    extends Composer<_$DaKanjiDB, $SearchProfilesTableTable> {
+    extends Composer<_$DaDb, $SearchProfilesTableTable> {
   $$SearchProfilesTableTableAnnotationComposer({
     required super.$db,
     required super.$table,
@@ -41366,7 +41277,7 @@ class $$SearchProfilesTableTableAnnotationComposer
       $composableBuilder(column: $table.sortOrder, builder: (column) => column);
 
   GeneratedColumnWithTypeConverter<
-    List<(DakanjiDbSearchResult1stSortOrder, bool)>,
+    List<(SearchResult1stSortOrder, bool)>,
     String
   >
   get firstSortOrder => $composableBuilder(
@@ -41375,7 +41286,7 @@ class $$SearchProfilesTableTableAnnotationComposer
   );
 
   GeneratedColumnWithTypeConverter<
-    List<(DakanjiDbSearchResult2ndSortOrder, bool)>,
+    List<(SearchResult2ndSortOrder, bool)>,
     String
   >
   get secondSortOrder => $composableBuilder(
@@ -41449,7 +41360,7 @@ class $$SearchProfilesTableTableAnnotationComposer
 class $$SearchProfilesTableTableTableManager
     extends
         RootTableManager<
-          _$DaKanjiDB,
+          _$DaDb,
           $SearchProfilesTableTable,
           SearchProfilesTableData,
           $$SearchProfilesTableTableFilterComposer,
@@ -41460,7 +41371,7 @@ class $$SearchProfilesTableTableTableManager
           (
             SearchProfilesTableData,
             BaseReferences<
-              _$DaKanjiDB,
+              _$DaDb,
               $SearchProfilesTableTable,
               SearchProfilesTableData
             >,
@@ -41469,7 +41380,7 @@ class $$SearchProfilesTableTableTableManager
           PrefetchHooks Function()
         > {
   $$SearchProfilesTableTableTableManager(
-    _$DaKanjiDB db,
+    _$DaDb db,
     $SearchProfilesTableTable table,
   ) : super(
         TableManagerState(
@@ -41493,11 +41404,9 @@ class $$SearchProfilesTableTableTableManager
                 Value<String> name = const Value.absent(),
                 Value<bool> isActiveProfile = const Value.absent(),
                 Value<int> sortOrder = const Value.absent(),
-                Value<List<(DakanjiDbSearchResult1stSortOrder, bool)>>
-                    firstSortOrder =
+                Value<List<(SearchResult1stSortOrder, bool)>> firstSortOrder =
                     const Value.absent(),
-                Value<List<(DakanjiDbSearchResult2ndSortOrder, bool)>>
-                    secondSortOrder =
+                Value<List<(SearchResult2ndSortOrder, bool)>> secondSortOrder =
                     const Value.absent(),
                 Value<bool> normalizeSearchConvertsRomajiToHiragana =
                     const Value.absent(),
@@ -41543,10 +41452,8 @@ class $$SearchProfilesTableTableTableManager
                 Value<String> name = const Value.absent(),
                 Value<bool> isActiveProfile = const Value.absent(),
                 required int sortOrder,
-                required List<(DakanjiDbSearchResult1stSortOrder, bool)>
-                firstSortOrder,
-                required List<(DakanjiDbSearchResult2ndSortOrder, bool)>
-                secondSortOrder,
+                required List<(SearchResult1stSortOrder, bool)> firstSortOrder,
+                required List<(SearchResult2ndSortOrder, bool)> secondSortOrder,
                 Value<bool> normalizeSearchConvertsRomajiToHiragana =
                     const Value.absent(),
                 required Object? groupingRules,
@@ -41595,7 +41502,7 @@ class $$SearchProfilesTableTableTableManager
 
 typedef $$SearchProfilesTableTableProcessedTableManager =
     ProcessedTableManager<
-      _$DaKanjiDB,
+      _$DaDb,
       $SearchProfilesTableTable,
       SearchProfilesTableData,
       $$SearchProfilesTableTableFilterComposer,
@@ -41606,7 +41513,7 @@ typedef $$SearchProfilesTableTableProcessedTableManager =
       (
         SearchProfilesTableData,
         BaseReferences<
-          _$DaKanjiDB,
+          _$DaDb,
           $SearchProfilesTableTable,
           SearchProfilesTableData
         >,
@@ -41615,9 +41522,9 @@ typedef $$SearchProfilesTableTableProcessedTableManager =
       PrefetchHooks Function()
     >;
 
-class $DaKanjiDBManager {
-  final _$DaKanjiDB _db;
-  $DaKanjiDBManager(this._db);
+class $DaDbManager {
+  final _$DaDb _db;
+  $DaDbManager(this._db);
   $$KanjiTableTableTableManager get kanjiTable =>
       $$KanjiTableTableTableManager(_db, _db.kanjiTable);
   $$IndexTableTableTableManager get indexTable =>

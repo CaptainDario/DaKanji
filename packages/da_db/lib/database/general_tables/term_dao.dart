@@ -12,7 +12,7 @@ part 'term_dao.g.dart';
 @DriftAccessor(tables: [
   TermTable
 ])
-class TermDao extends DatabaseAccessor<DaKanjiDB> with _$TermDaoMixin {
+class TermDao extends DatabaseAccessor<DaDb> with _$TermDaoMixin {
   
   // this constructor is required so that the main database can create an
   // instance of this object.

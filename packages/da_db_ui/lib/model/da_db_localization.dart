@@ -1,6 +1,6 @@
-class DakanjiDbLocalization {
+class DaDbLocalization {
 
-  DakanjiDbLocalization({
+  DaDbLocalization({
 
     // --- SEARCH UI ---
     required this.noResultsFound,

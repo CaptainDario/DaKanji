@@ -12,7 +12,7 @@ part 'search_profiles_dao.g.dart';
 @DriftAccessor(tables: [
   SearchProfilesTable
 ])
-class SearchProfilesDao extends DatabaseAccessor<DaKanjiDB> with _$SearchProfilesDaoMixin {
+class SearchProfilesDao extends DatabaseAccessor<DaDb> with _$SearchProfilesDaoMixin {
   
   SearchProfilesDao(super.db);
 

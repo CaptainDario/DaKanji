@@ -3,7 +3,7 @@
 part of 'term_meta_bank_v3_dao.dart';
 
 // ignore_for_file: type=lint
-mixin _$TermMetaBankV3DaoMixin on DatabaseAccessor<DaKanjiDB> {
+mixin _$TermMetaBankV3DaoMixin on DatabaseAccessor<DaDb> {
   $TermTableTable get termTable => attachedDatabase.termTable;
   $ReadingTableTable get readingTable => attachedDatabase.readingTable;
   $IndexTableTable get indexTable => attachedDatabase.indexTable;

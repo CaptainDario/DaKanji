@@ -31,7 +31,7 @@ Future<Stream<String>> parseDictionaryDataSource({
   String? dataSourcePath,
   Uint8List? archiveBytes,
   required bool isDefaultDictionary,
-  required DaKanjiDB db,
+  required DaDb db,
   Directory? tempDir,
 }) async {
   assert(dataSourcePath != null, "Parallel import requires a file path");
@@ -75,7 +75,7 @@ Future<void> _orchestratorEntry(({
 }) params) async {
   final sendPort = params.mainIsolateSendPort;
 
-  final db = DaKanjiDB(
+  final db = DaDb(
     executor: await params.dbConnection.connect(),
     inMemory: params.inMemory,
     languageProcessor: LanguageProcessor.fromJsonString(params.languageProcessorJson)
@@ -168,7 +168,7 @@ Future<List<String>> _runGreedyParallelStaging({
   if (queue.isEmpty) return [];
 
   sendPort.send("Importing ${queue.length} file(s)...");
-  final poolDir = await params.tempDir.createTemp('dakanji_pool_');
+  final poolDir = await params.tempDir.createTemp('da_db_pool_');
   final workerDbPaths = <String>[];
   final completions = <Future>[];
   
@@ -199,7 +199,7 @@ Future<List<String>> _runGreedyParallelStaging({
 }
 
 Future<void> _mergeStagingData({
-  required DaKanjiDB db,
+  required DaDb db,
   required List<String> workerDbPaths,
   required int indexId,
   required SendPort sendPort,
@@ -223,7 +223,7 @@ Future<void> _mergeStagingData({
 }
 
 Future<void> _finalizeImport(
-  DaKanjiDB db, 
+  DaDb db, 
   List<({String filePath, Uint8List mediaContent, int indexId, int? insertId})> mediaFiles, 
   SendPort sendPort
 ) async {

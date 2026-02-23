@@ -47,7 +47,7 @@ void main() async {
   for (int l=0; l < tests.length; l++) {
     group("Test importing audios from Audio Format: ${tests[l].format}", () {
 
-      late DaKanjiDB db;
+      late DaDb db;
       setUpAll(() async{
         db = await setupFreshDB(tests[l].dataSource, false);
       },);
@@ -83,13 +83,13 @@ void main() async {
 
 }
 
-Future<DaKanjiDB> setupFreshDB(
+Future<DaDb> setupFreshDB(
   String dataSourcePath, bool isDefaultDictionary) async {
 
   // create the testing database (delete any existing database)
-  if(File(dakanjiDbTestPath).existsSync()) File(dakanjiDbTestPath).deleteSync();
-  DaKanjiDB db = DaKanjiDB(
-    dbPath: dakanjiDbTestPath, inMemory: true, languageProcessor: await japaneseProcessor);
+  if(File(daDbTestPath).existsSync()) File(daDbTestPath).deleteSync();
+  DaDb db = DaDb(
+    dbPath: daDbTestPath, inMemory: true, languageProcessor: await japaneseProcessor);
 
   // parse the test files
   Stopwatch s = Stopwatch()..start();

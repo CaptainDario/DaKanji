@@ -6,7 +6,7 @@ import 'package:unorm_dart/unorm_dart.dart' as unorm;
 
 
 Future importMediaFiles(
-  DaKanjiDB db,
+  DaDb db,
   List<({String filePath, Uint8List mediaContent, int indexId, int? insertId})> files
 ) async {
 

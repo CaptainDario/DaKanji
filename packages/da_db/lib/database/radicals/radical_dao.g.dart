@@ -3,7 +3,7 @@
 part of 'radical_dao.dart';
 
 // ignore_for_file: type=lint
-mixin _$RadicalDaoMixin on DatabaseAccessor<DaKanjiDB> {
+mixin _$RadicalDaoMixin on DatabaseAccessor<DaDb> {
   $RadicalsTableTable get radicalsTable => attachedDatabase.radicalsTable;
   $KanjiTableTable get kanjiTable => attachedDatabase.kanjiTable;
   $Radical_X_KanjiRelationsTableTable get radicalXKanjiRelationsTable =>

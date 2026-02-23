@@ -55,7 +55,7 @@ class TermBankV3ParserContext extends ParserContext{
     required this.allTags,
   });
 
-  static Future<TermBankV3ParserContext> create(DaKanjiDB db, int indexId) async {
+  static Future<TermBankV3ParserContext> create(DaDb db, int indexId) async {
 
     return TermBankV3ParserContext._(
       allTerms: { for (var e in await db.termDao.getAllTerms()) e.term : e.id },

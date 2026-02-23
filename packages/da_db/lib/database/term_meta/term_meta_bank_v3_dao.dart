@@ -22,7 +22,7 @@ part 'term_meta_bank_v3_dao.g.dart';
     TermMetaBankV3PitchTable, TermMetaBankV3_X_PitchTable, TermMetaBankV3IpaTable_X_TagBankV3Table,
     TermMetaBankV3IpaTable, TermMetaBankV3_X_IpaTable, TermMetaBankV3PitchTable_X_TagBankV3Table
 ])
-class TermMetaBankV3Dao extends DatabaseAccessor<DaKanjiDB> with _$TermMetaBankV3DaoMixin {
+class TermMetaBankV3Dao extends DatabaseAccessor<DaDb> with _$TermMetaBankV3DaoMixin {
   
   // this constructor is required so that the main database can create an instance
   // of this object.

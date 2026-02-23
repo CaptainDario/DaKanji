@@ -26,7 +26,7 @@ class _SearchProfileSettingsWidgetState extends State<SearchProfileSettingsWidge
   @override
   Widget build(BuildContext context) {
 
-    final loc = GetIt.I<DakanjiDbLocalization>();
+    final loc = GetIt.I<DaDbLocalization>();
 
     return Column(
       mainAxisAlignment: .start,
@@ -80,14 +80,14 @@ You can also toggle specific dictionaries off to hide them without deleting them
 Custom dictionaries can be imported to further expand your library.
 """
         ),
-        DaKanjiDbDictionaryManagementWidget(),
+        DictionaryManagementWidget(),
     
         SearchProfileSettingsHeading(loc.displayHeader),
         SearchProfileSettingsToggleListTile(
           title: loc.showSeparatorsTitle,
           subtitle: loc.showSeparatorsSubtitle,
           value: context.watch<SearchProfilesEntry>().showSearchResultSeparationHeaders,
-          onChanged: (v) => GetIt.I<DaKanjiDB>().searchProfilesDao.updateProfile(
+          onChanged: (v) => GetIt.I<DaDb>().searchProfilesDao.updateProfile(
             context.read<SearchProfilesEntry>().copyWith(showSearchResultSeparationHeaders: v)
           )
         ),
@@ -96,7 +96,7 @@ Custom dictionaries can be imported to further expand your library.
           title: "Show Kanji Entries",
           subtitle: "Should Kanji entries be shown in search results when searching for single characters",
           value: context.watch<SearchProfilesEntry>().showKanjiEntriesInSearchResults,
-          onChanged: (v) => GetIt.I<DaKanjiDB>().searchProfilesDao.updateProfile(
+          onChanged: (v) => GetIt.I<DaDb>().searchProfilesDao.updateProfile(
             context.read<SearchProfilesEntry>().copyWith(showKanjiEntriesInSearchResults: v)
           )
         ),
@@ -104,7 +104,7 @@ Custom dictionaries can be imported to further expand your library.
           title: loc.showTagsTitle,
           subtitle: loc.showTagsSubtitle,
           value: context.watch<SearchProfilesEntry>().showTags,
-          onChanged: (v) => GetIt.I<DaKanjiDB>().searchProfilesDao.updateProfile(
+          onChanged: (v) => GetIt.I<DaDb>().searchProfilesDao.updateProfile(
             context.read<SearchProfilesEntry>().copyWith(showTags: v)
           )
         ),
@@ -112,7 +112,7 @@ Custom dictionaries can be imported to further expand your library.
           title: loc.showMetaEntriesTitle,
           subtitle: loc.showMetaEntriesSubtitle,
           value: context.watch<SearchProfilesEntry>().showMetaEntries,
-          onChanged: (v) => GetIt.I<DaKanjiDB>().searchProfilesDao.updateProfile(
+          onChanged: (v) => GetIt.I<DaDb>().searchProfilesDao.updateProfile(
             context.read<SearchProfilesEntry>().copyWith(showMetaEntries: v)
           )
         ),
@@ -121,7 +121,7 @@ Custom dictionaries can be imported to further expand your library.
           title: "Use compact mode for definitions",
           subtitle: "Writes simple text definitions in one line instead of multiple lines.",
           value: context.watch<SearchProfilesEntry>().definitionsCompactMode,
-          onChanged: (v) => GetIt.I<DaKanjiDB>().searchProfilesDao.updateProfile(
+          onChanged: (v) => GetIt.I<DaDb>().searchProfilesDao.updateProfile(
             context.read<SearchProfilesEntry>().copyWith(definitionsCompactMode: v)
           )
         ),
@@ -130,7 +130,7 @@ Custom dictionaries can be imported to further expand your library.
           title: loc.useCompactDefinitionsTitle,
           subtitle: loc.useCompactDefinitionsSubtitle,
           value: context.watch<SearchProfilesEntry>().definitionsMaxHeight > 0,
-          onChanged: (v) => GetIt.I<DaKanjiDB>().searchProfilesDao.updateProfile(
+          onChanged: (v) => GetIt.I<DaDb>().searchProfilesDao.updateProfile(
             context.read<SearchProfilesEntry>().copyWith(definitionsMaxHeight: v ? 60.0 : 0.0)
           )
         ),
@@ -139,7 +139,7 @@ Custom dictionaries can be imported to further expand your library.
           title: loc.useKatakanaForFuriganaTitle,
           subtitle: "Should katakana be used for furigana readings regardless of the defined reading",
           value: context.watch<SearchProfilesEntry>().useKatakanaForFurigana,
-          onChanged: (v) => GetIt.I<DaKanjiDB>().searchProfilesDao.updateProfile(
+          onChanged: (v) => GetIt.I<DaDb>().searchProfilesDao.updateProfile(
             context.read<SearchProfilesEntry>().copyWith(useKatakanaForFurigana: v)
           )
         ),
@@ -148,7 +148,7 @@ Custom dictionaries can be imported to further expand your library.
           title: "Flexible Search Converts Romaji",
           subtitle: "Should romaji input also be converted to hiragana for flexible search matching",
           value: context.watch<SearchProfilesEntry>().normalizeSearchConvertsRomajiToHiragana,
-          onChanged: (v) => GetIt.I<DaKanjiDB>().searchProfilesDao.updateProfile(
+          onChanged: (v) => GetIt.I<DaDb>().searchProfilesDao.updateProfile(
             context.read<SearchProfilesEntry>().copyWith(normalizeSearchConvertsRomajiToHiragana: v)
           )
         ),

@@ -66,8 +66,8 @@ Map<String, String> kanjiCodeLookup = {
 
 
 /// Converts the radk and krad file at the given paths and adds them to the
-/// given DaKanji db
-Future addRadicalsToDB(String radkPath, String kradPath, DaKanjiDB db) async {
+/// given DaDb db
+Future addRadicalsToDB(String radkPath, String kradPath, DaDb db) async {
 
   final connection = await db.attachedDatabase.serializableConnection();
   final processorJson = db.languageProcessor.toJsonString();
@@ -92,16 +92,16 @@ Future _addRadicalsToDB(
 ) async {
 
   // reconnect to the database
-  final db = DaKanjiDB(
+  final db = DaDb(
     executor: await dbConnection.connect(),
     inMemory: inMemory,
     languageProcessor: LanguageProcessor.fromJsonString(languageProcessorJson)
   );
 
   // load radical files
-  Map radkMap = jsonDecode(utf8.decode(dakanjiDBDataSourceIterator(
+  Map radkMap = jsonDecode(utf8.decode(daDbDataSourceIterator(
     archivePath: radkPath).first.fileContent))["radicals"];
-  Map kradMap = jsonDecode(utf8.decode(dakanjiDBDataSourceIterator(
+  Map kradMap = jsonDecode(utf8.decode(daDbDataSourceIterator(
     archivePath: kradPath).first.fileContent))["kanji"];
 
   // get all entries that are currently in the kanji db

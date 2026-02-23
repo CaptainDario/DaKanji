@@ -20,7 +20,7 @@ class KanjiMetaBankV3ParserContext extends ParserContext {
     required this.maxKanjiId
 });
 
-  static Future<KanjiMetaBankV3ParserContext> create(DaKanjiDB db) async {
+  static Future<KanjiMetaBankV3ParserContext> create(DaDb db) async {
     return KanjiMetaBankV3ParserContext._(
       typesInDB: { for (var e in await db.kanjiMetaBankV3Dao.getAllTypes()) e.type : e.id },
       kanjisInDB: { for (var e in await db.kanjiDao.getAllKanjis()) e.kanji : e.id },

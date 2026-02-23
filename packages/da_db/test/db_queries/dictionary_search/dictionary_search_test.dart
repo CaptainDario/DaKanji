@@ -73,7 +73,7 @@ final List<String> testCaseNames = [
 String currentTestCase = "";
 void main() {
   // Define db here so it's accessible to setUpAll and tearDownAll
-  late DaKanjiDB db;
+  late DaDb db;
 
   setUpAll(() async {
     db = await setupFreshDB();
@@ -227,9 +227,9 @@ void main() {
 
 Future setupFreshDB() async {
 
-  //if(File(dakanjiDbPath).existsSync()) File(dakanjiDbPath).deleteSync();
-  DaKanjiDB db = DaKanjiDB(
-    dbPath: dakanjiDbTestPath, inMemory: true, languageProcessor: await japaneseProcessor);
+  if(File(daDbTestPath).existsSync()) File(daDbTestPath).deleteSync();
+  DaDb db = DaDb(
+    dbPath: daDbTestPath, inMemory: true, languageProcessor: await japaneseProcessor);
 
   // emulate importing 5 dictionaries
   // take all data form the yomitan sample dictionary except term banks

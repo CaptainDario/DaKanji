@@ -14,7 +14,7 @@ part 'tag_bank_v3_dao.g.dart';
 @DriftAccessor(tables: [
     TagBankV3Table
 ])
-class TagBankV3Dao extends DatabaseAccessor<DaKanjiDB> with _$TagBankV3DaoMixin {
+class TagBankV3Dao extends DatabaseAccessor<DaDb> with _$TagBankV3DaoMixin {
   
   // this constructor is required so that the main database can create an instance
   // of this object.

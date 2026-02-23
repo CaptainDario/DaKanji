@@ -3,7 +3,7 @@
 part of 'language_code_dao.dart';
 
 // ignore_for_file: type=lint
-mixin _$LanguageCodeDaoMixin on DatabaseAccessor<DaKanjiDB> {
+mixin _$LanguageCodeDaoMixin on DatabaseAccessor<DaDb> {
   $LanguageCodeTableTable get languageCodeTable =>
       attachedDatabase.languageCodeTable;
   LanguageCodeDaoManager get managers => LanguageCodeDaoManager(this);

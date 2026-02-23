@@ -9,7 +9,7 @@ part 'deletion_dao.g.dart';
 
 // Dao class that contains all queries related to the `KanjiTable`
 @DriftAccessor()
-class DeletionDao extends DatabaseAccessor<DaKanjiDB> with _$DeletionDaoMixin {
+class DeletionDao extends DatabaseAccessor<DaDb> with _$DeletionDaoMixin {
   
   DeletionDao(super.db);
 
@@ -54,7 +54,7 @@ class DeletionDao extends DatabaseAccessor<DaKanjiDB> with _$DeletionDaoMixin {
 
   /// Utility function to perform garbage collection on shared tables after a
   /// dictionary deletion.
-  Future<void> garbageCollectSharedTables(DaKanjiDB db) async {
+  Future<void> garbageCollectSharedTables(DaDb db) async {
 
     final queries = [
 

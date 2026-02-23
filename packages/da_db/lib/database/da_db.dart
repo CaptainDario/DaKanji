@@ -105,7 +105,7 @@ part 'da_db.g.dart';
     ExampleTable_X_ExampleTranslationTable,
   ],
   daos: [
-    DaKanjiDBDao,
+    DaDbDao,
     KanjiDao, TermDao, ReadingDao, DefinitionDao, LanguageCodeDao,
     AudioDao, AudioSourceListDao, MediaDao,
     RadicalDao, KanjiVGDao,
@@ -146,13 +146,13 @@ part 'da_db.g.dart';
     'db_queries/kanji_dictionary_search/kanji_dictionary_search_queries.drift',
   }
 )
-class DaKanjiDB extends _$DaKanjiDB {
+class DaDb extends _$DaDb {
 
   bool inMemory;
 
   LanguageProcessor languageProcessor;
 
-  DaKanjiDB({
+  DaDb({
     this.dbPath,
     QueryExecutor? executor,
     required this.inMemory,

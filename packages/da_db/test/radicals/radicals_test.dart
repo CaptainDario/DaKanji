@@ -11,7 +11,7 @@ import 'radicals_test_cases.dart';
 void main() async {
 
   Stopwatch s = Stopwatch();
-  late DaKanjiDB db;
+  late DaDb db;
    setUpAll(() async {
      db = await setupFreshDB();
    });
@@ -54,12 +54,12 @@ void main() async {
 
 }
 
-Future<DaKanjiDB> setupFreshDB() async {
+Future<DaDb> setupFreshDB() async {
 
   // setup 
-  if(File(dakanjiDbTestPath).existsSync()) File(dakanjiDbTestPath).deleteSync();
-  DaKanjiDB db = DaKanjiDB(
-    dbPath: dakanjiDbTestPath, inMemory: true, languageProcessor: await japaneseProcessor);
+  if(File(daDbTestPath).existsSync()) File(daDbTestPath).deleteSync();
+  DaDb db = DaDb(
+    dbPath: daDbTestPath, inMemory: true, languageProcessor: await japaneseProcessor);
 
   // convert krad / radk file
   Stopwatch s = Stopwatch()..start();

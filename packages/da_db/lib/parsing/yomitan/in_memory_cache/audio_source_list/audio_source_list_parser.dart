@@ -6,8 +6,8 @@ import 'package:universal_io/io.dart';
 import '/database/da_db.dart';
 
 
-/// parses the given json's contents and adds it to the given [DaKanjiDB]
-Future parseAudioFile(File kanjiBankV3JsonFile, DaKanjiDB db, int dictId) async {
+/// parses the given json's contents and adds it to the given [DaDb]
+Future parseAudioFile(File kanjiBankV3JsonFile, DaDb db, int dictId) async {
 
   String jsonString = kanjiBankV3JsonFile.readAsStringSync();
 
@@ -15,8 +15,8 @@ Future parseAudioFile(File kanjiBankV3JsonFile, DaKanjiDB db, int dictId) async 
 
 }
 
-/// parses the given json's contents and adds it to the given [DaKanjiDB]
-Future parseAudio(String kanjiBankV3Json, DaKanjiDB db, int indexId) async {
+/// parses the given json's contents and adds it to the given [DaDb]
+Future parseAudio(String kanjiBankV3Json, DaDb db, int indexId) async {
 
   // read and decode the json
   List jsonList = jsonDecode(kanjiBankV3Json)["audioSources"];
@@ -44,6 +44,6 @@ Future parseAudio(String kanjiBankV3Json, DaKanjiDB db, int indexId) async {
     batch.insertAll(db.audioSourceListTable, audioEntries);
 
   });
-  print("Adding to DaKanjiDB took ${s.elapsedMilliseconds}ms");
+  print("Adding to DaDb took ${s.elapsedMilliseconds}ms");
 
 }

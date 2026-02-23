@@ -3,7 +3,7 @@
 part of 'media_dao.dart';
 
 // ignore_for_file: type=lint
-mixin _$MediaDaoMixin on DatabaseAccessor<DaKanjiDB> {
+mixin _$MediaDaoMixin on DatabaseAccessor<DaDb> {
   $IndexTableTable get indexTable => attachedDatabase.indexTable;
   $MediaTableTable get mediaTable => attachedDatabase.mediaTable;
   MediaDaoManager get managers => MediaDaoManager(this);

@@ -31,7 +31,7 @@ class _SearchProfileSettingsDialogState extends State<SearchProfileSettingsDialo
       padding: const EdgeInsets.symmetric(vertical: 20),
       child: SingleChildScrollView(
         child: StreamBuilder<SearchProfilesEntry>(
-          stream: GetIt.I<DaKanjiDB>().searchProfilesDao.watchActiveProfile(),
+          stream: GetIt.I<DaDb>().searchProfilesDao.watchActiveProfile(),
           builder: (context, builder) {
             return SearchProfileSettingsWidget();
           }

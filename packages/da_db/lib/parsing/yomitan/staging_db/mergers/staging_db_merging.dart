@@ -13,7 +13,7 @@ import 'package:da_db/parsing/yomitan/staging_db/mergers/term_meta_bank_v3_merge
 /// The [indexId] is assigned to all merged entries to link them to the correct
 /// dictionary.
 Future<void> mergeStagingDb({
-  required DaKanjiDB db,
+  required DaDb db,
   required String workerDbPath,
   required int indexId,
 }) async {

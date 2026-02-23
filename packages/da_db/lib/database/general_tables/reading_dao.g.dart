@@ -3,7 +3,7 @@
 part of 'reading_dao.dart';
 
 // ignore_for_file: type=lint
-mixin _$ReadingDaoMixin on DatabaseAccessor<DaKanjiDB> {
+mixin _$ReadingDaoMixin on DatabaseAccessor<DaDb> {
   $ReadingTableTable get readingTable => attachedDatabase.readingTable;
   ReadingDaoManager get managers => ReadingDaoManager(this);
 }

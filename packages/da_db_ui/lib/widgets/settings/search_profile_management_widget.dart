@@ -17,7 +17,7 @@ class _SearchProfileManagementWidgetState extends State<SearchProfileManagementW
 
   @override
   Widget build(BuildContext context) {
-    var db = GetIt.I<DaKanjiDB>();
+    var db = GetIt.I<DaDb>();
 
     return StreamBuilder<List<SearchProfilesEntry>>(
       stream: db.searchProfilesDao.watchAllProfiles(),
@@ -55,7 +55,7 @@ class _SearchProfileManagementWidgetState extends State<SearchProfileManagementW
   }
 
   Widget _buildProfileCard(BuildContext context, SearchProfilesEntry profile, int index) {
-    final db = GetIt.I<DaKanjiDB>();
+    final db = GetIt.I<DaDb>();
     final theme = Theme.of(context);
     final isActive = profile.isActiveProfile;
 
@@ -113,7 +113,7 @@ class _SearchProfileManagementWidgetState extends State<SearchProfileManagementW
     );
   }
 
-  Future<void> _handleDelete(BuildContext context, SearchProfilesEntry profile, DaKanjiDB db) async {
+  Future<void> _handleDelete(BuildContext context, SearchProfilesEntry profile, DaDb db) async {
     final confirm = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
@@ -170,7 +170,7 @@ class _SearchProfileManagementWidgetState extends State<SearchProfileManagementW
           TextButton(
             onPressed: () async {
               if (controller.text.isNotEmpty) {
-                final db = GetIt.I<DaKanjiDB>();
+                final db = GetIt.I<DaDb>();
                 await db.searchProfilesDao.updateProfile(
                   profile.copyWith(name: controller.text)
                 );

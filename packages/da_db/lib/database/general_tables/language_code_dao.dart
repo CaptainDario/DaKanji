@@ -12,7 +12,7 @@ part 'language_code_dao.g.dart';
 @DriftAccessor(tables: [
   LanguageCodeTable
 ])
-class LanguageCodeDao extends DatabaseAccessor<DaKanjiDB> with _$LanguageCodeDaoMixin {
+class LanguageCodeDao extends DatabaseAccessor<DaDb> with _$LanguageCodeDaoMixin {
   
   // this constructor is required so that the main database can create an instance
   // of this object.

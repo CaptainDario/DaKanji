@@ -46,23 +46,23 @@ class _MyAppState extends State<MyApp> {
     final path = await copyDbFromAssetsToFS();
     
     localDbPath = path;
-    final daKanjiDB = DaKanjiDB(
+    final db = DaDb(
       dbPath: localDbPath,
       inMemory: false,
       languageProcessor: JapaneseProcessor()
     );
-    GetIt.I.registerSingleton<DaKanjiDB>(daKanjiDB);
+    GetIt.I.registerSingleton<DaDb>(db);
 
     // --- Initialize the Search Isolate ---
     final searchManager = DaDbSearchManager(
-      daKanjiDB: daKanjiDB,
+      db: db,
       debug: !kReleaseMode,
     );
     GetIt.I.registerSingleton<DaDbSearchManager>(searchManager);
-    GetIt.I.registerSingleton<DakanjiDbLocalization>(dakanjiDbLocalization);
+    GetIt.I.registerSingleton<DaDbLocalization>(dakanjiDbLocalization);
 
     final List<IndexEntry> enabledIndexes =
-        await daKanjiDB.indexDao.getAllEnabledIndexes();
+        await db.indexDao.getAllEnabledIndexes();
     for (final index in enabledIndexes) {
       debugPrint("Enabled index: ${index.title} (ID: ${index.id})");
     }
@@ -121,7 +121,7 @@ class _MyAppState extends State<MyApp> {
 
         // Dependencies are ready, wrap the app in the StreamProvider
         return StreamProvider<SearchProfilesEntry>(
-          create: (_) => GetIt.I<DaKanjiDB>().searchProfilesDao.watchActiveProfile(),
+          create: (_) => GetIt.I<DaDb>().searchProfilesDao.watchActiveProfile(),
           initialData: SearchProfilesEntry(),
           child: MaterialApp(
             title: title,
@@ -194,7 +194,7 @@ class _MyHomePageState extends State<MyHomePage> {
               // Re-run search with new settings if there is text
               if (searchController.text.isNotEmpty) {
                 searchManager.searchImmediate(
-                  (await GetIt.I<DaKanjiDB>().searchProfilesDao.getActiveProfile())
+                  (await GetIt.I<DaDb>().searchProfilesDao.getActiveProfile())
                     .toDictionarySearchParams(searchInput: searchController.text),
                   onResult: (result) {
                       if(mounted) setState(() => lastSearchResult = result);
@@ -228,7 +228,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
                         // Delegate to Isolate
                         searchManager.search(
-                          (await GetIt.I<DaKanjiDB>().searchProfilesDao.getActiveProfile())
+                          (await GetIt.I<DaDb>().searchProfilesDao.getActiveProfile())
                             .toDictionarySearchParams(searchInput: value,),
                           onResult: (result) {
                             if (!mounted) return;
@@ -259,7 +259,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
                         // Use immediate search for dropdowns
                         searchManager.searchImmediate(
-                          (await GetIt.I<DaKanjiDB>().searchProfilesDao.getActiveProfile())
+                          (await GetIt.I<DaDb>().searchProfilesDao.getActiveProfile())
                             .toDictionarySearchParams(searchInput: term),
                           onResult: (result) {
                             if (!mounted) return;
@@ -280,7 +280,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: DictionarySearchResultWidget(
                   result: lastSearchResult!,
                   // Localization is registered in GetIt now
-                  localization: GetIt.I<DakanjiDbLocalization>(),
+                  localization: GetIt.I<DaDbLocalization>(),
                 ),
               ),
           ],

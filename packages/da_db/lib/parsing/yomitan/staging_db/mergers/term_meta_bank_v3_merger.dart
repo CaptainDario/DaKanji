@@ -5,7 +5,7 @@ class TermMetaBankV3Merger implements StagingMerger {
   
   @override
   Future<void> merge({
-    required DaKanjiDB targetDb,
+    required DaDb targetDb,
     required String workerAlias,
     required int indexId,
   }) async {

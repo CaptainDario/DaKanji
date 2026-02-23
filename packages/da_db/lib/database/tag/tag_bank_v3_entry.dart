@@ -10,7 +10,7 @@ part 'tag_bank_v3_entry.g.dart';
 
 @Freezed()
 
-/// Class representing one stat of a tag entry of DaKanjiDB
+/// Class representing one stat of a tag entry of DaDb
 abstract class TagBankV3Entry with _$TagBankV3Entry {
 
   const TagBankV3Entry._();

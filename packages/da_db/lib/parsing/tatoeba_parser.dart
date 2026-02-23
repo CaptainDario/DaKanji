@@ -9,7 +9,7 @@ import 'package:language_processing/language_processing.dart';
 
 
 
-/// Converts the Tatoeba files from the input directory to the DaKanji DB
+/// Converts the Tatoeba files from the input directory to the [DaDb]
 /// example sentence format by parsing the `sentences.csv` and `links.csv` files
 /// in the `input_directory`
 Future<void> convertTatoebaDataSource(

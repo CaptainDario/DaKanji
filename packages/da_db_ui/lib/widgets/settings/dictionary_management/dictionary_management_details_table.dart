@@ -2,11 +2,11 @@ import 'package:da_db/database/index/index_table_entry.dart';
 import 'package:flutter/material.dart';
 
 
-class DaKanjiDbDictionaryManagementDetailsTable extends StatelessWidget {
+class DictionaryManagementDetailsTable extends StatelessWidget {
 
   final IndexEntry dict;
 
-  const DaKanjiDbDictionaryManagementDetailsTable(
+  const DictionaryManagementDetailsTable(
     this.dict,
     {
       super.key,

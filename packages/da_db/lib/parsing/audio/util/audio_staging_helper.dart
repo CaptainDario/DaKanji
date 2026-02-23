@@ -7,7 +7,7 @@ import 'package:unorm_dart/unorm_dart.dart' as unorm;
 
 class AudioStagingHelper {
   final StagingDatabase stagingDb;
-  final DaKanjiDB mainDb;
+  final DaDb mainDb;
   final Function(String) onStatus;
 
   final List<AudioStagingTableCompanion> _audioRows = [];

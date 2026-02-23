@@ -89,7 +89,7 @@ void main(List<String> args) async {
     )
   );
 
-  DaKanjiDB db = DaKanjiDB(
+  DaDb db = DaDb(
     dbPath: dakanjiDbFinalPath,
     inMemory: false,
     languageProcessor: languageProcessor
@@ -192,8 +192,8 @@ Future downloadSources(DictsToUse dictToUse, bool downloadTatoeba) async {
 
 }
 
-/// parses KanjiVG and adds it to the given [DaKanjiDB]
-Future importKanjiVG(DaKanjiDB db) async {
+/// parses KanjiVG and adds it to the given [DaDb]
+Future importKanjiVG(DaDb db) async {
 
   Stopwatch s = Stopwatch()..start();
   await addKanjiVGToDB(kanjiVGInputPath, db);
@@ -201,8 +201,8 @@ Future importKanjiVG(DaKanjiDB db) async {
 
 }
 
-/// parses Radicals and adds it to the given [DaKanjiDB]
-Future importRadicals(DaKanjiDB db) async {
+/// parses Radicals and adds it to the given [DaDb]
+Future importRadicals(DaDb db) async {
 
   Stopwatch s = Stopwatch()..start();
   await addRadicalsToDB(radkInputPath, kradInputPath, db);
@@ -210,9 +210,9 @@ Future importRadicals(DaKanjiDB db) async {
 
 }
 
-/// parses the kanjidic2 and adds it to the given [DaKanjiDB]
+/// parses the kanjidic2 and adds it to the given [DaDb]
 Future importYomitanDicts(
-  DaKanjiDB db,
+  DaDb db,
   List<(String path, String name)> inputs,
 ) async {
 
@@ -237,8 +237,8 @@ Future importYomitanDicts(
 
 }
 
-/// parses tatoeba and adds it to the given [DaKanjiDB]
-Future importTatoebaExamples(DaKanjiDB db) async {
+/// parses tatoeba and adds it to the given [DaDb]
+Future importTatoebaExamples(DaDb db) async {
 
   Stopwatch s = Stopwatch()..start();
   final progress = await parseExampleDataSource(
@@ -255,8 +255,8 @@ Future importTatoebaExamples(DaKanjiDB db) async {
 
 }
 
-/// Import the audio data into the given [DaKanjiDB]
-Future importPronunciationData(DaKanjiDB db) async {
+/// Import the audio data into the given [DaDb]
+Future importPronunciationData(DaDb db) async {
 
   Stopwatch s = Stopwatch()..start();
   final progress = await parseAudioDataSource(

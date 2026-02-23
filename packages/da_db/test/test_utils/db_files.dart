@@ -12,7 +12,7 @@ import 'package:universal_io/io.dart';
 /// location including only desired files (determined by shouldIncludeFile) and
 /// then initializes the database with only those files.
 Future<void> partialInit(
-  DaKanjiDB db,
+  DaDb db,
   bool Function(File) shouldIncludeFile,
   String folderName,
   {

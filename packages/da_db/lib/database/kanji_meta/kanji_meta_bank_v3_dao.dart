@@ -15,7 +15,7 @@ part 'kanji_meta_bank_v3_dao.g.dart';
 @DriftAccessor(tables: [
     KanjiMetaBankV3Table,
 ])
-class KanjiMetaBankV3Dao extends DatabaseAccessor<DaKanjiDB> with _$KanjiMetaBankV3DaoMixin {
+class KanjiMetaBankV3Dao extends DatabaseAccessor<DaDb> with _$KanjiMetaBankV3DaoMixin {
   
   // this constructor is required so that the main database can create an instance
   // of this object.

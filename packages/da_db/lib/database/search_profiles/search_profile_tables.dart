@@ -15,12 +15,12 @@ class SearchProfilesTable extends Table {
   // --- Settings Columns ---
 
   /// 1st level sort order for search results.
-  /// If an entry of [DaKanjiDbSearch1stSortOrder] is not included here, it
+  /// If an entry of [SearchResult1stSortOrder] is not included here, it
   /// will not be searched for.
   TextColumn get firstSortOrder => text().map(const FirstSortOrderConverter())();
 
   /// 2nd level sort order for search results.
-  /// If an entry of [DakanjiDbSearchResult2ndSortOrder] is not included here, it
+  /// If an entry of [SearchResult2ndSortOrder] is not included here, it
   /// will not be searched for.
   TextColumn get secondSortOrder => text().map(const SecondSortOrderConverter())();
 

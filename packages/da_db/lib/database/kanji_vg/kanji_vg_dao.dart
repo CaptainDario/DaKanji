@@ -14,7 +14,7 @@ part 'kanji_vg_dao.g.dart';
 @DriftAccessor(tables: [
   KanjiVGTable
 ])
-class KanjiVGDao extends DatabaseAccessor<DaKanjiDB> with _$KanjiVGDaoMixin {
+class KanjiVGDao extends DatabaseAccessor<DaDb> with _$KanjiVGDaoMixin {
   
   // this constructor is required so that the main database can create an instance
   // of this object.

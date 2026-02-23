@@ -8,7 +8,7 @@ import "../da_db.dart";
 part "kanji_search_dao.g.dart";
 
 @DriftAccessor()
-class KanjiSearchDao extends DatabaseAccessor<DaKanjiDB> with _$KanjiSearchDaoMixin {
+class KanjiSearchDao extends DatabaseAccessor<DaDb> with _$KanjiSearchDaoMixin {
   
   KanjiSearchDao(super.db);
   

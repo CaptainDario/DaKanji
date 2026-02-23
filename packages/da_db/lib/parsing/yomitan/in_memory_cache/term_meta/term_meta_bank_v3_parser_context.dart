@@ -40,7 +40,7 @@ class TermMetaBankV3ParserContext extends ParserContext {
     required this.currentMaxIpaId,
   });
 
-  static Future<TermMetaBankV3ParserContext> create(DaKanjiDB db, int indexId) async {
+  static Future<TermMetaBankV3ParserContext> create(DaDb db, int indexId) async {
     return TermMetaBankV3ParserContext._(
       
       allTerms: { for (var e in await db.termDao.getAllTerms()) e.term : e.id },

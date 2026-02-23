@@ -12,12 +12,12 @@ import 'package:provider/provider.dart';
 
 /// A card representing a single grouping rule
 /// 
-/// Note: This REQUIRES a [DaKanjiDbSettings] provider in the widget tree.
+/// Note: This REQUIRES a [SearchProfilesEntry] provider in the widget tree.
 class SearchProfileSettingsGroupingRuleCard extends StatefulWidget {
 
   final int i;
 
-  final DakanjiDbLocalization localization;
+  final DaDbLocalization localization;
 
   const SearchProfileSettingsGroupingRuleCard(
     this.i,
@@ -38,7 +38,7 @@ class _SearchProfileSettingsGroupingRuleCardState extends State<SearchProfileSet
     _allAvaibleIndexes(bool onlySequenced) async {
 
     List<IndexEntry> allIndexes =
-      await GetIt.I<DaKanjiDB>().indexDao.getAllIndexes();
+      await GetIt.I<DaDb>().indexDao.getAllIndexes();
 
     return allIndexes.nonNulls
       .where((index) => index.dictionaryType == DictionaryTypes.yomitan
@@ -82,7 +82,7 @@ class _SearchProfileSettingsGroupingRuleCardState extends State<SearchProfileSet
     newRules[index] = newRule;
 
     // 2. Update global settings
-    GetIt.I<DaKanjiDB>().searchProfilesDao.updateProfile(
+    GetIt.I<DaDb>().searchProfilesDao.updateProfile(
       context.read<SearchProfilesEntry>().copyWith(groupingRules: newRules)
     );
   }
@@ -94,7 +94,7 @@ class _SearchProfileSettingsGroupingRuleCardState extends State<SearchProfileSet
     final newRules = List<DictionaryGroupingRule>.from(currentRules)
       ..removeAt(index);
 
-    GetIt.I<DaKanjiDB>().searchProfilesDao.updateProfile(
+    GetIt.I<DaDb>().searchProfilesDao.updateProfile(
       context.read<SearchProfilesEntry>().copyWith(groupingRules: newRules)
     );
   }
@@ -105,7 +105,7 @@ class _SearchProfileSettingsGroupingRuleCardState extends State<SearchProfileSet
     var rules = context.read<SearchProfilesEntry>().groupingRules;
     int i = widget.i;
     var rule = rules[i];
-    DakanjiDbLocalization loc = widget.localization;
+    DaDbLocalization loc = widget.localization;
 
     return Card(
       child: Padding(
@@ -290,7 +290,7 @@ class _SearchProfileSettingsGroupingRuleCardState extends State<SearchProfileSet
 class RuleTypeRow extends TableRow {
   RuleTypeRow({
     required DictionaryGroupingRule rule,
-    required DakanjiDbLocalization loc,
+    required DaDbLocalization loc,
     required ValueChanged<String?> onChanged,
   }) : super(
           children: [
@@ -309,7 +309,7 @@ class RuleTypeRow extends TableRow {
 class SourceSelectorRow extends TableRow {
   SourceSelectorRow({
     required SequenceGroupingRule rule,
-    required DakanjiDbLocalization loc,
+    required DaDbLocalization loc,
     required Future<List<({IndexEntry index, IndexGroupingUsage usage})>> availableIndexesFuture,
     required ValueChanged<int?> onChanged,
   }) : super(
@@ -337,7 +337,7 @@ class SourceSelectorRow extends TableRow {
 class TargetSelectorRow extends TableRow {
   TargetSelectorRow({
     required DictionaryGroupingRule rule,
-    required DakanjiDbLocalization loc,
+    required DaDbLocalization loc,
     required VoidCallback onSelectPressed,
   }) : super(
           children: [

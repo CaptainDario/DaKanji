@@ -6,8 +6,8 @@ import 'package:universal_io/io.dart';
 
 import '/database/da_db.dart';
 
-/// parses the given json's contents and adds it to the given [DaKanjiDB]
-Future parseTagBankV3File(File tagJsonFile, DaKanjiDB db, int dictId) async {
+/// parses the given json's contents and adds it to the given [DaDb]
+Future parseTagBankV3File(File tagJsonFile, DaDb db, int dictId) async {
 
   // read and decode the json
   String jsonString = tagJsonFile.readAsStringSync();
@@ -16,8 +16,8 @@ Future parseTagBankV3File(File tagJsonFile, DaKanjiDB db, int dictId) async {
 
 }
 
-/// parses the given json's contents and adds it to the given [DaKanjiDB]
-Future parseTagBankv3(String json, DaKanjiDB db, int dictId) async {
+/// parses the given json's contents and adds it to the given [DaDb]
+Future parseTagBankv3(String json, DaDb db, int dictId) async {
 
   // Parse the given string
   List jsonList = jsonDecode(json);

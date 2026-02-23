@@ -22,7 +22,7 @@ part 'kanji_bank_v3_dao.g.dart';
     KanjiBankV3StatsTable, KanjiBankV3_X_KanjiBankV3StatsTable,
   ],
 )
-class KanjiBankV3Dao extends DatabaseAccessor<DaKanjiDB> with _$KanjiBankV3DaoMixin {
+class KanjiBankV3Dao extends DatabaseAccessor<DaDb> with _$KanjiBankV3DaoMixin {
   
   // this constructor is required so that the main database can create an instance
   // of this object.

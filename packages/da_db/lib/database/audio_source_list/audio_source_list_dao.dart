@@ -12,7 +12,7 @@ part 'audio_source_list_dao.g.dart';
 @DriftAccessor(tables: [
   AudioSourceListTable
 ])
-class AudioSourceListDao extends DatabaseAccessor<DaKanjiDB> with _$AudioSourceListDaoMixin {
+class AudioSourceListDao extends DatabaseAccessor<DaDb> with _$AudioSourceListDaoMixin {
   
   // this constructor is required so that the main database can create an instance
   // of this object.

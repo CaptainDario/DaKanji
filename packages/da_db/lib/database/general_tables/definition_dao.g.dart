@@ -3,7 +3,7 @@
 part of 'definition_dao.dart';
 
 // ignore_for_file: type=lint
-mixin _$DefinitionDaoMixin on DatabaseAccessor<DaKanjiDB> {
+mixin _$DefinitionDaoMixin on DatabaseAccessor<DaDb> {
   $DefinitionTableTable get definitionTable => attachedDatabase.definitionTable;
   DefinitionDaoManager get managers => DefinitionDaoManager(this);
 }

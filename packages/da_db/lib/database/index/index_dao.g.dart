@@ -3,7 +3,7 @@
 part of 'index_dao.dart';
 
 // ignore_for_file: type=lint
-mixin _$IndexDaoMixin on DatabaseAccessor<DaKanjiDB> {
+mixin _$IndexDaoMixin on DatabaseAccessor<DaDb> {
   $IndexTableTable get indexTable => attachedDatabase.indexTable;
   IndexDaoManager get managers => IndexDaoManager(this);
 }

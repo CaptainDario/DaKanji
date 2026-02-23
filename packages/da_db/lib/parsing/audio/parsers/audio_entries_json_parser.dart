@@ -15,7 +15,7 @@ class AudioEntriesJsonParser {
     Iterable<({String filePath, Uint8List fileContent})> dataSources,
     String jsonString,
     StagingDatabase stagingDb,
-    DaKanjiDB mainDb,
+    DaDb mainDb,
     Function(String) onStatus,
   ) async {
     

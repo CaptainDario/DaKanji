@@ -4,7 +4,7 @@ import 'package:drift/drift.dart';
 
 
 /// Deletes all entries in the radicals and radical- kanji relation tables
-Future deleteRadicals(DaKanjiDB db) async {
+Future deleteRadicals(DaDb db) async {
 
   await db.transaction(() async {
 

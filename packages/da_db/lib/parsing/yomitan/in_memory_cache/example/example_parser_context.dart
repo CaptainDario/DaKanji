@@ -18,7 +18,7 @@ class ExampleParserContext {
     this.maxLanguageCodeId
   );
 
-  static Future<ExampleParserContext> create(DaKanjiDB db) async {
+  static Future<ExampleParserContext> create(DaDb db) async {
     return ExampleParserContext._(
       { for (var e in await db.languageCodeDao.getAllLanguageCodes()) e.languageCode : e.id },
       await db.exampleDao.maxExampleId(),

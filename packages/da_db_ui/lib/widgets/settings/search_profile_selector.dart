@@ -8,7 +8,7 @@ class SearchProfileSelector extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dao = GetIt.I<DaKanjiDB>().searchProfilesDao;
+    final dao = GetIt.I<DaDb>().searchProfilesDao;
 
     return StreamBuilder<List<SearchProfilesEntry>>(
       stream: dao.watchAllProfiles(),

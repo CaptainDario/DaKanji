@@ -31,26 +31,26 @@ String findProjectRoot(String anchorFileName) {
 }
 
 /// The root path of the DaKanji project.
-final String dakanjiDbProjectRoot = findProjectRoot(".mono_repo_root");
+final String monoRepoRoot = findProjectRoot(".mono_repo_root");
 
 /// the tmp path of the project
-final String tmpPath = p.joinAll([dakanjiDbProjectRoot, "tmp"]);
+final String tmpPath = p.joinAll([monoRepoRoot, "tmp"]);
 
 /// the path where all generated assets will be stored
-final String outPath = p.joinAll([dakanjiDbProjectRoot, "out"]);
+final String outPath = p.joinAll([monoRepoRoot, "out"]);
 
 /// Path to the folder that contains data files
-final dataFilesPath = p.joinAll([dakanjiDbProjectRoot, "data"]);
+final dataFilesPath = p.joinAll([monoRepoRoot, "data"]);
 
-/// the path where the dakanji database should be created and populated for tests
-final dakanjiDbTestPath = p.joinAll([tmpPath, "dakanji.db"]);
+/// the path where the database should be created and populated for tests
+final daDbTestPath = p.joinAll([tmpPath, "da.db"]);
 
 /// Path to the folder that contains the generated database files for release
 final dakanjiDbFinalPath = p.joinAll([outPath, "dakanji.db"]);
 
 // --- MECAB FILES ------------------------------------------------------------
 /// Path to the folder that contains the files for mecab
-final mecabFilesPath = p.joinAll([dakanjiDbProjectRoot, "mecab"]);
+final mecabFilesPath = p.joinAll([monoRepoRoot, "mecab"]);
 /// Path to the mecab dictionary
 final mecabDicPath = p.joinAll([mecabFilesPath, "unidic"]);
 
@@ -148,4 +148,4 @@ String get tatoebaInputZipPath => p.join(dakanjiDBInputFilesPath, "tatoeba_conve
 String get audioInputZipPath => p.join(dakanjiDBInputFilesPath, "japanese-vocabulary-pronunciation-audio-master-mp3.zip");
 
 /// path to the tests folder
-final coreTestsPath = p.joinAll([dakanjiDbProjectRoot, "packages", "da_db", "test"]);
+final coreTestsPath = p.joinAll([monoRepoRoot, "packages", "da_db", "test"]);

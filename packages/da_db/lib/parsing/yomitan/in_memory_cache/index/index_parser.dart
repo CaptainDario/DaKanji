@@ -8,10 +8,10 @@ import 'package:universal_io/io.dart';
 
 import '/database/da_db.dart';
 
-/// parses the given json's contents and adds it to the given [DaKanjiDB]
+/// parses the given json's contents and adds it to the given [DaDb]
 Future<int> parseAndInsertIndexFile(
   File indexJsonPath,
-  DaKanjiDB db, 
+  DaDb db, 
   DictionaryTypes dictionaryType,
   bool isDefaultDictionary,
 ) async {
@@ -21,10 +21,10 @@ Future<int> parseAndInsertIndexFile(
 
 }
 
-/// parses the given json's contents and adds it to the given [DaKanjiDB]
+/// parses the given json's contents and adds it to the given [DaDb]
 Future<int> parseAndInsertIndex(
   String indexJson,
-  DaKanjiDB db,
+  DaDb db,
   DictionaryTypes dictionaryType,
   bool isDefaultDictionary,
 ) async {

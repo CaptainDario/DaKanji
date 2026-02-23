@@ -12,7 +12,7 @@ part 'reading_dao.g.dart';
 @DriftAccessor(tables: [
   ReadingTable
 ])
-class ReadingDao extends DatabaseAccessor<DaKanjiDB> with _$ReadingDaoMixin {
+class ReadingDao extends DatabaseAccessor<DaDb> with _$ReadingDaoMixin {
   
   // this constructor is required so that the main database can create an instance
   // of this object.

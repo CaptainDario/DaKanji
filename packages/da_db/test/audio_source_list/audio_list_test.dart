@@ -12,8 +12,8 @@ import 'audio_list_test_cases.dart';
 void main() async {
   
   // create the testing database (delete any existing database)
-  DaKanjiDB db = DaKanjiDB(
-    dbPath: dakanjiDbTestPath, inMemory: true, languageProcessor: await japaneseProcessor);
+  DaDb db = DaDb(
+    dbPath: daDbTestPath, inMemory: true, languageProcessor: await japaneseProcessor);
   db.clearDB();
 
   // convert the test files
@@ -28,7 +28,7 @@ void main() async {
 
 }
 
-Future testAudio(DaKanjiDB db) async {
+Future testAudio(DaDb db) async {
   
   final results = await db.audioSourceListDao.getAllAudioSources();
 

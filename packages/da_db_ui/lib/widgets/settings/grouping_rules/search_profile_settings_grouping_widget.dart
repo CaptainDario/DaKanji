@@ -52,7 +52,7 @@ class _SearchProfileSettingsGroupingWidgetState extends State<SearchProfileSetti
   @override
   Widget build(BuildContext context) {
 
-    var loc = GetIt.I<DakanjiDbLocalization>();
+    var loc = GetIt.I<DaDbLocalization>();
     var settings = context.watch<SearchProfilesEntry>();
     var rules = settings.groupingRules;
 
@@ -72,7 +72,7 @@ class _SearchProfileSettingsGroupingWidgetState extends State<SearchProfileSetti
         SearchProfileSearchProfileCardAddButton(
           loc.addRule,
           onPressed: () {
-            GetIt.I<DaKanjiDB>().searchProfilesDao.updateProfile(
+            GetIt.I<DaDb>().searchProfilesDao.updateProfile(
               settings.copyWith(
                 groupingRules: [...rules, NoGroupingRule()]
               )

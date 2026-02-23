@@ -4,8 +4,8 @@ import 'package:drift/drift.dart';
 import '/database/da_db.dart';
 
 
-/// parses the given file's contents and adds it to the given [DaKanjiDB]
-Future parseExampleText(String exampleText, DaKanjiDB db, int indexId) async {
+/// parses the given file's contents and adds it to the given [DaDb]
+Future parseExampleText(String exampleText, DaDb db, int indexId) async {
 
   /// list of examples to add
   List<ExampleTableCompanion> exampleComps = [];

@@ -15,11 +15,11 @@ import '/database/da_db.dart';
 /// Debug printing
 bool d = true;
 
-/// Parses the given TermMetaBank and adds it to the given [DaKanjiDB]
+/// Parses the given TermMetaBank and adds it to the given [DaDb]
 Future parseTermBankV3File(
   File termMetaBankFile,
   TermBankV3ParserContext pC,
-  DaKanjiDB db,
+  DaDb db,
   int dictId,
 addFullJsonDefinitions) async {
 
@@ -28,11 +28,11 @@ addFullJsonDefinitions) async {
 
 }
 
-/// Parses the given TermMetaBank and adds it to the given [DaKanjiDB]
+/// Parses the given TermMetaBank and adds it to the given [DaDb]
 Future parseTermBankV3(
   String termMetaBankJson,
   TermBankV3ParserContext pC,
-  DaKanjiDB db,
+  DaDb db,
   int indexId,
 ) async {
 

@@ -23,7 +23,7 @@ import 'audio/parsers/audio_index_json_parser.dart';
 Future<Stream<String>> parseAudioDataSource({
   required String dataSourcePath,
   required bool isDefaultDictionary,
-  required DaKanjiDB db,
+  required DaDb db,
 }) async {
   final controller = StreamController<String>();
   final connection = await db.attachedDatabase.serializableConnection();
@@ -65,7 +65,7 @@ Future<void> _audioOrchestratorEntry(({
 }) params) async {
   final sendPort = params.mainIsolateSendPort;
 
-  final db = DaKanjiDB(
+  final db = DaDb(
     executor: await params.dbConnection.connect(),
     inMemory: params.inMemory,
     languageProcessor: LanguageProcessor.fromJsonString(params.languageProcessorJson),
@@ -85,7 +85,7 @@ Future<void> _audioOrchestratorEntry(({
     final int indexId = await _initializeAudioIndex(archiveHeaders, db, params.isDefaultDictionary);
 
     // 2. Prepare Staging Environment
-    tempDir = await Directory.systemTemp.createTemp('dakanji_audio_');
+    tempDir = await Directory.systemTemp.createTemp('da_db_audio_');
     final String stagingDbPath = p.join(tempDir.path, 'audio_staging.db');
     stagingDb = StagingDatabase(NativeDatabase(File(stagingDbPath)));
 
@@ -125,7 +125,7 @@ Future<void> _audioOrchestratorEntry(({
 
 // --- Helper Functions ---
 
-Future<int> _initializeAudioIndex(Archive archive, DaKanjiDB db, bool isDefault) async {
+Future<int> _initializeAudioIndex(Archive archive, DaDb db, bool isDefault) async {
   final indexHeader = archive.findFile("yomitan_index.json");
   if (indexHeader == null) {
     throw Exception("Invalid Audio Dict: No yomitan_index.json found.");
@@ -138,7 +138,7 @@ Future<int> _initializeAudioIndex(Archive archive, DaKanjiDB db, bool isDefault)
 Future<void> _runAudioStaging({
   required Archive archive,
   required StagingDatabase stagingDb,
-  required DaKanjiDB db,
+  required DaDb db,
   required SendPort sendPort,
 }) async {
   sendPort.send("Parsing metadata to staging database...");
@@ -170,7 +170,7 @@ Future<void> _runAudioStaging({
 }
 
 Future<void> _mergeAudioStagingData({
-  required DaKanjiDB db,
+  required DaDb db,
   required String stagingDbPath,
   required int indexId,
   required SendPort sendPort,

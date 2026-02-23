@@ -11,7 +11,7 @@ class SearchProfileSettingsFrequencyDictionaryDropdown extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final indexDao = GetIt.I<DaKanjiDB>().indexDao;
+    final indexDao = GetIt.I<DaDb>().indexDao;
 
     return StreamBuilder<List<IndexEntry>>(
       stream: indexDao.watchAllIndexes(),

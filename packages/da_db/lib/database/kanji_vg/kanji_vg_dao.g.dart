@@ -3,7 +3,7 @@
 part of 'kanji_vg_dao.dart';
 
 // ignore_for_file: type=lint
-mixin _$KanjiVGDaoMixin on DatabaseAccessor<DaKanjiDB> {
+mixin _$KanjiVGDaoMixin on DatabaseAccessor<DaDb> {
   $KanjiTableTable get kanjiTable => attachedDatabase.kanjiTable;
   $KanjiVGTableTable get kanjiVGTable => attachedDatabase.kanjiVGTable;
   KanjiVGDaoManager get managers => KanjiVGDaoManager(this);

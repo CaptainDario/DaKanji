@@ -48,14 +48,14 @@ class _SearchProfileSettingsSearchResultSortOrderState extends State<SearchProfi
   void _updateSettingsList(List<(dynamic, bool)> newList) {
     if (widget.firstSortOrder) {
       // Cast the list so Freezed accepts it
-      GetIt.I<DaKanjiDB>().searchProfilesDao.updateProfile(
+      GetIt.I<DaDb>().searchProfilesDao.updateProfile(
         context.read<SearchProfilesEntry>().copyWith(
           firstSortOrder: newList.cast<(SearchResult1stSortOrder, bool)>().toList(),
         ),
       );
     }
     else {
-      GetIt.I<DaKanjiDB>().searchProfilesDao.updateProfile(
+      GetIt.I<DaDb>().searchProfilesDao.updateProfile(
         context.read<SearchProfilesEntry>().copyWith(
           secondSortOrder: newList.cast<(SearchResult2ndSortOrder, bool)>().toList(),
         ),

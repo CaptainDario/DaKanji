@@ -11,7 +11,7 @@ import '../dictionary_test_variables.dart'; // Adjust imports as needed
 import '../test_utils/db_files.dart';
 
 void main() {
-  late DaKanjiDB db;
+  late DaDb db;
   
   // Zipped paths for the tiny text dicts
   late String zipDict1; // Tiny Dict A (Shares "猫")
@@ -25,13 +25,13 @@ void main() {
   
 
   setUpAll(() async {
-    if (File(dakanjiDbTestPath).existsSync()) {
-      print("Deleting existing database file at $dakanjiDbTestPath...");
-      File(dakanjiDbTestPath).deleteSync();
+    if (File(daDbTestPath).existsSync()) {
+      print("Deleting existing database file at $daDbTestPath...");
+      File(daDbTestPath).deleteSync();
     }
 
-    db = DaKanjiDB(
-      dbPath: dakanjiDbTestPath,
+    db = DaDb(
+      dbPath: daDbTestPath,
       inMemory: false,
       languageProcessor: await japaneseProcessor,
     );
@@ -172,7 +172,7 @@ void main() {
 // --- Helper Functions ---
 
 /// Imports a dictionary from a zip path
-Future<void> _importDictionary(DaKanjiDB db, String zipPath, DictionaryTypes t) async {
+Future<void> _importDictionary(DaDb db, String zipPath, DictionaryTypes t) async {
 
   late var parse;
   if(t == DictionaryTypes.audio) {
@@ -196,7 +196,7 @@ Future<void> _importDictionary(DaKanjiDB db, String zipPath, DictionaryTypes t) 
 }
 
 /// Executes the deletion stream and prints progress
-Future<void> _runDeletion(DaKanjiDB db, int indexId) async {
+Future<void> _runDeletion(DaDb db, int indexId) async {
   final stream = db.deletionDao.deleteDictionary(indexId);
   await for (final message in stream) {
     print("  -> $message");
@@ -204,7 +204,7 @@ Future<void> _runDeletion(DaKanjiDB db, int indexId) async {
 }
 
 /// A highly strict, dynamic assertion that ensures EVERY defined table in the DB is empty.
-Future<void> _assertAbsoluteDatabaseEmptiness(DaKanjiDB db) async {
+Future<void> _assertAbsoluteDatabaseEmptiness(DaDb db) async {
   // db.allTables contains every table defined in your Drift schema!
   for (final table in db.allTables) {
     final tableName = table.actualTableName;

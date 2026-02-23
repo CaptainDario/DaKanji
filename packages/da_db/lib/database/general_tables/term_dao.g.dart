@@ -3,7 +3,7 @@
 part of 'term_dao.dart';
 
 // ignore_for_file: type=lint
-mixin _$TermDaoMixin on DatabaseAccessor<DaKanjiDB> {
+mixin _$TermDaoMixin on DatabaseAccessor<DaDb> {
   $TermTableTable get termTable => attachedDatabase.termTable;
   TermDaoManager get managers => TermDaoManager(this);
 }

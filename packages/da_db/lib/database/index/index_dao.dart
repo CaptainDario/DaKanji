@@ -11,7 +11,7 @@ part 'index_dao.g.dart';
 
 /// Class that contains all queries for the dictionary index table
 @DriftAccessor(tables: [IndexTable])
-class IndexDao extends DatabaseAccessor<DaKanjiDB> with _$IndexDaoMixin {
+class IndexDao extends DatabaseAccessor<DaDb> with _$IndexDaoMixin {
   
   // this constructor is required so that the main database can create an
   // instance of this object.

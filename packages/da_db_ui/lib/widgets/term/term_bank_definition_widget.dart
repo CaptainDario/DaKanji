@@ -47,7 +47,7 @@ class _TermBankDefinitionWidgetState extends State<TermBankDefinitionWidget> {
   /// Returns the final HTML string.
   Future<String> renderDefinition() async {
 
-    String indexCss = await GetIt.I<DaKanjiDB>().mediaDao.getCssFromIndex(widget.indexId);
+    String indexCss = await GetIt.I<DaDb>().mediaDao.getCssFromIndex(widget.indexId);
     
     String structuredContentHtmlString = renderDefinitions(
       widget.definitions, compactMode: widget.compactMode);
@@ -86,7 +86,7 @@ class _TermBankDefinitionWidgetState extends State<TermBankDefinitionWidget> {
             // Use a custom factory to handle local assets.
             factoryBuilder: () => CustomHtmlToWidgetFactory(
               widget.indexId,
-              GetIt.I<DaKanjiDB>(),
+              GetIt.I<DaDb>(),
             ),
             // Handle taps on internal dictionary links.
             onTapUrl: widget.onTapUrl,

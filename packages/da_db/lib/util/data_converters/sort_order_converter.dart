@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:da_db/data/search_result_sort_order.dart';
 import 'package:drift/drift.dart';
 
-/// Converter for: List<(DakanjiDbSearchResult1stSortOrder, bool)>
+/// Converter for: List<(SearchResult1stSortOrder, bool)>
 class FirstSortOrderConverter extends TypeConverter<List<(SearchResult1stSortOrder, bool)>, String> {
   const FirstSortOrderConverter();
 
@@ -27,7 +27,7 @@ class FirstSortOrderConverter extends TypeConverter<List<(SearchResult1stSortOrd
   }
 }
 
-/// Converter for: List<(DakanjiDbSearchResult2ndSortOrder, bool)>
+/// Converter for: List<(SearchResult2ndSortOrder, bool)>
 class SecondSortOrderConverter extends TypeConverter<List<(SearchResult2ndSortOrder, bool)>, String> {
   const SecondSortOrderConverter();
 

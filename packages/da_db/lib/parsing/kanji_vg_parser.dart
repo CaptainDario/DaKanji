@@ -11,11 +11,11 @@ import 'package:language_processing/language_processing.dart';
 import '/database/da_db.dart';
 
 /// Converts the KanjiVG data source at the given path and adds it to the given
-/// [DaKanjiDB].
+/// [DaDb].
 /// 
 /// [dataSourcePath] Path to the folder containing the KanjiVG SVG files
 /// can either be a folder or a zip file
-Future<void> addKanjiVGToDB(String dataSourcePath, DaKanjiDB db) async {
+Future<void> addKanjiVGToDB(String dataSourcePath, DaDb db) async {
 
   final connection = await db.attachedDatabase.serializableConnection();
 
@@ -35,7 +35,7 @@ Future<void> _addKanjiVGToDB(
 ) async {
 
   // reconnect to the database
-  final db = DaKanjiDB(
+  final db = DaDb(
     executor: await dbConnection.connect(),
     inMemory: inMemory,
     // is not used in this context
@@ -46,7 +46,7 @@ Future<void> _addKanjiVGToDB(
 
   // convert kanji vg to map
   Map<String, String> kanjiVGMap = {};
-  Iterable<({String filePath, Uint8List fileContent})> dataSources = dakanjiDBDataSourceIterator(archivePath: dataSourcePath);
+  Iterable<({String filePath, Uint8List fileContent})> dataSources = daDbDataSourceIterator(archivePath: dataSourcePath);
   for (final ({String filePath, Uint8List fileContent}) data in dataSources) {
     final (kanji, svg) = parseKanjiVGFile(utf8.decode(data.fileContent));
     kanjiVGMap[kanji] = svg;

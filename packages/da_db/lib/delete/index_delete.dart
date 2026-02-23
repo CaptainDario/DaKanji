@@ -2,7 +2,7 @@ import 'package:da_db/database/da_db.dart';
 
 
 
-Future deleteIndex(DaKanjiDB db, int indexId) async {
+Future deleteIndex(DaDb db, int indexId) async {
 
   // Start a transaction to ensure all deletions are atomic
   await db.transaction(() async {

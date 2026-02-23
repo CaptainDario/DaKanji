@@ -11,8 +11,8 @@ import 'kanji_bank_v3_parser_context.dart';
 
 
 
-/// parses the given json's contents and adds it to the given [DaKanjiDB]
-Future parseKanjiBankV3File(File kanjiBankV3JsonFile, KanjiBankV3ParserContext pC, DaKanjiDB db, int indexId) async {
+/// parses the given json's contents and adds it to the given [DaDb]
+Future parseKanjiBankV3File(File kanjiBankV3JsonFile, KanjiBankV3ParserContext pC, DaDb db, int indexId) async {
 
   String jsonString = kanjiBankV3JsonFile.readAsStringSync();
 
@@ -20,8 +20,8 @@ Future parseKanjiBankV3File(File kanjiBankV3JsonFile, KanjiBankV3ParserContext p
 
 }
 
-/// parses the given json's contents and adds it to the given [DaKanjiDB]
-Future parseKanjiBankV3(String kanjiBankV3Json, KanjiBankV3ParserContext pC, DaKanjiDB db, int indexId) async {
+/// parses the given json's contents and adds it to the given [DaDb]
+Future parseKanjiBankV3(String kanjiBankV3Json, KanjiBankV3ParserContext pC, DaDb db, int indexId) async {
 
   // assure that the insert data is empty
   pC.clearInsertLists();
@@ -75,14 +75,14 @@ Future parseKanjiBankV3(String kanjiBankV3Json, KanjiBankV3ParserContext pC, DaK
     batch.insertAll(db.kanjiBankV3XKanjiBankV3StatsTable, pC.statValueRelCompanions,);
 
   });
-  print("Adding to DaKanjiDB took ${s.elapsedMilliseconds}ms");
+  print("Adding to DaDb took ${s.elapsedMilliseconds}ms");
 
 }
 
 /// Parses the given `jsonKanji` from a kanji_bank dictionary
 /// 
 /// Caution: the results are store in the given `refs`
-Future<int> parseKanji(String jsonKanji, KanjiBankV3ParserContext pC, DaKanjiDB db) async {
+Future<int> parseKanji(String jsonKanji, KanjiBankV3ParserContext pC, DaDb db) async {
 
   int? insertId = pC.kanjisInDB[jsonKanji];
 
@@ -101,7 +101,7 @@ Future<int> parseKanji(String jsonKanji, KanjiBankV3ParserContext pC, DaKanjiDB 
 /// Parses the given `jsonOnyomis` from a kanji_bank dictionary
 /// 
 /// Caution: the results are store in the given `refs`
-Future<void> parseOnyomi(String jsonOnyomi, KanjiBankV3ParserContext pC, DaKanjiDB db) async {
+Future<void> parseOnyomi(String jsonOnyomi, KanjiBankV3ParserContext pC, DaDb db) async {
 
   pC.onyomisOrder = [];
 
@@ -137,7 +137,7 @@ Future<void> parseOnyomi(String jsonOnyomi, KanjiBankV3ParserContext pC, DaKanji
 /// Parses the given `jsonKunyomis` from a kanji_bank dictionary
 /// 
 /// Caution: the results are store in the given `refs`
-Future<void> parseKunyomi(String jsonKunyomi, KanjiBankV3ParserContext pC, DaKanjiDB db) async {
+Future<void> parseKunyomi(String jsonKunyomi, KanjiBankV3ParserContext pC, DaDb db) async {
 
   pC.kunyomisOrder = [];
 
@@ -172,7 +172,7 @@ Future<void> parseKunyomi(String jsonKunyomi, KanjiBankV3ParserContext pC, DaKan
 /// Parses the given `jsonTag` from a kanji_bank dictionary
 /// 
 /// Caution: the results are store in the given `refs`
-Future<void> parseTag(String jsonTag, KanjiBankV3ParserContext pC, DaKanjiDB db) async {
+Future<void> parseTag(String jsonTag, KanjiBankV3ParserContext pC, DaDb db) async {
 
   if(jsonTag != ""){
     List<String> tags = jsonTag.toString().split(" ");
@@ -191,7 +191,7 @@ Future<void> parseTag(String jsonTag, KanjiBankV3ParserContext pC, DaKanjiDB db)
 /// Parses the given `definitions` from a kanji_bank dictionary
 /// 
 /// Caution: the results are store in the given `refs`
-Future<void> parseDefinition(List<String> definitions, KanjiBankV3ParserContext pC, DaKanjiDB db) async {
+Future<void> parseDefinition(List<String> definitions, KanjiBankV3ParserContext pC, DaDb db) async {
   
   pC.definitionsOrder = [];
   if(definitions.isNotEmpty){
@@ -219,7 +219,7 @@ Future<void> parseDefinition(List<String> definitions, KanjiBankV3ParserContext 
 /// Parses the given `stats` from a kanji_bank dictionary
 /// 
 /// Caution: the results are store in the given `refs`
-Future<void> parseStats(Map<String, String> stats, KanjiBankV3ParserContext pC, DaKanjiDB db) async {
+Future<void> parseStats(Map<String, String> stats, KanjiBankV3ParserContext pC, DaDb db) async {
 
   if(stats.isNotEmpty){
 

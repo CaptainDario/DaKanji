@@ -14,7 +14,7 @@ import 'example_sentences_test_cases.dart';
 
 void main() {
   
-  late DaKanjiDB db;
+  late DaDb db;
   setUpAll(() async {
     db = await setupFreshDB();
   });
@@ -50,11 +50,11 @@ void main() {
 
 }
 
-Future<DaKanjiDB> setupFreshDB() async {
+Future<DaDb> setupFreshDB() async {
 
   // create the testing database (delete any existing database)
-  DaKanjiDB db = DaKanjiDB(
-    dbPath: dakanjiDbTestPath, inMemory: true, languageProcessor: await japaneseProcessor);
+  DaDb db = DaDb(
+    dbPath: daDbTestPath, inMemory: true, languageProcessor: await japaneseProcessor);
   db.clearDB();
 
   // convert the test files

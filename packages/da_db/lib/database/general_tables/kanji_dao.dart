@@ -12,7 +12,7 @@ part 'kanji_dao.g.dart';
 @DriftAccessor(tables: [
   KanjiTable
 ])
-class KanjiDao extends DatabaseAccessor<DaKanjiDB> with _$KanjiDaoMixin {
+class KanjiDao extends DatabaseAccessor<DaDb> with _$KanjiDaoMixin {
   
   // this constructor is required so that the main database can create an instance
   // of this object.

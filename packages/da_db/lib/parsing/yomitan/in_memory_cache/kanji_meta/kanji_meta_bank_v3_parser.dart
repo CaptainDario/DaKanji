@@ -7,16 +7,16 @@ import 'package:universal_io/io.dart';
 
 import '/database/da_db.dart';
 
-/// Parses the given KanjiMetaBank and adds it to the given [DaKanjiDB]
-Future parseKanjiMetaBankV3File(File kanjiMetaBankFile, KanjiMetaBankV3ParserContext pC, DaKanjiDB db, int dictId) async {
+/// Parses the given KanjiMetaBank and adds it to the given [DaDb]
+Future parseKanjiMetaBankV3File(File kanjiMetaBankFile, KanjiMetaBankV3ParserContext pC, DaDb db, int dictId) async {
 
   String kanjiMetaBankJson = kanjiMetaBankFile.readAsStringSync();
   await parseKanjiMetaBankV3(kanjiMetaBankJson, pC, db, dictId);
 
 }
 
-/// Parses the given KanjiMetaBank and adds it to the given [DaKanjiDB]
-Future parseKanjiMetaBankV3(String kanjiMetaBankJson, KanjiMetaBankV3ParserContext pC, DaKanjiDB db, int dictId) async {
+/// Parses the given KanjiMetaBank and adds it to the given [DaDb]
+Future parseKanjiMetaBankV3(String kanjiMetaBankJson, KanjiMetaBankV3ParserContext pC, DaDb db, int dictId) async {
 
   // decode json
   List jsonList = jsonDecode(kanjiMetaBankJson);

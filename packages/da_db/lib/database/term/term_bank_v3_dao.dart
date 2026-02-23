@@ -20,7 +20,7 @@ part 'term_bank_v3_dao.g.dart';
     TagBankV3Table
   ],
 )
-class TermBankV3Dao extends DatabaseAccessor<DaKanjiDB> with _$TermBankV3DaoMixin {
+class TermBankV3Dao extends DatabaseAccessor<DaDb> with _$TermBankV3DaoMixin {
   
   
   TermBankV3Dao(super.db);

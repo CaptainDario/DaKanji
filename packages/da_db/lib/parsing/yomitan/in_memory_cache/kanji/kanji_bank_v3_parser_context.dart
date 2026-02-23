@@ -77,7 +77,7 @@ class KanjiBankV3ParserContext extends ParserContext {
     required this.maxStatsId,
   });
 
-  static Future<KanjiBankV3ParserContext> create(DaKanjiDB db, int indexId) async {
+  static Future<KanjiBankV3ParserContext> create(DaDb db, int indexId) async {
 
     return KanjiBankV3ParserContext._(
 

@@ -4,7 +4,7 @@ import 'package:da_db/parsing/yomitan/staging_db/mergers/staging_merger.dart';
 class KanjiMetaBankV3Merger implements StagingMerger {
   @override
   Future<void> merge({
-    required DaKanjiDB targetDb,
+    required DaDb targetDb,
     required String workerAlias,
     required int indexId,
   }) async {

@@ -11,7 +11,7 @@ import '/database/da_db.dart';
 
 Future parseExampleSentences(
   List<String> exampleSentenceJsonString,
-  DaKanjiDB db,
+  DaDb db,
   int indexId,
   ExampleParserContext context
 ) async {

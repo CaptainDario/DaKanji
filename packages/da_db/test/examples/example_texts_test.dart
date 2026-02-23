@@ -17,7 +17,7 @@ void main() async {
 
   print(coreTestsPath);
   
-  late DaKanjiDB db;
+  late DaDb db;
   setUpAll(() async {
     db = await setupFreshDB();
   });
@@ -53,12 +53,12 @@ void main() async {
 
 }
 
-Future<DaKanjiDB> setupFreshDB() async {
+Future<DaDb> setupFreshDB() async {
 
   // create the testing database (delete any existing database)
-  if(File(dakanjiDbTestPath).existsSync()) File(dakanjiDbTestPath).deleteSync();
-  DaKanjiDB db = DaKanjiDB(
-    dbPath: dakanjiDbTestPath, inMemory: true, languageProcessor: await japaneseProcessor);
+  if(File(daDbTestPath).existsSync()) File(daDbTestPath).deleteSync();
+  DaDb db = DaDb(
+    dbPath: daDbTestPath, inMemory: true, languageProcessor: await japaneseProcessor);
 
   // convert the test files
   Stopwatch s = Stopwatch()..start();

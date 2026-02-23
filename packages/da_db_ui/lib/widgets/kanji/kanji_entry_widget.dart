@@ -81,8 +81,8 @@ class _KanjiEntryWidgetState extends State<KanjiEntryWidget> {
               Row(
                 children: [
                   // kanji
-                  // TODO when migrating to DaKanji keep a text version of the kanji
-                  // to allow for selection/copying
+                  // TODO when migrating to DaLangApp keep a text version of the kanji
+                  //      to allow for selection/copying
                   Expanded(
                     child: Align(
                       alignment: .center,

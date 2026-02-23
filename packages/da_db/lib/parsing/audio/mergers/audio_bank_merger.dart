@@ -3,7 +3,7 @@ import 'package:da_db/database/da_db.dart';
 class AudioBankMerger {
   
   Future<void> merge({
-    required DaKanjiDB targetDb,
+    required DaDb targetDb,
     required String workerAlias,
     required int indexId,
   }) async {

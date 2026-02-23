@@ -2,7 +2,7 @@ import 'package:da_db_ui/model/da_db_localization.dart';
 
 
 
-DakanjiDbLocalization dakanjiDbLocalization = DakanjiDbLocalization(
+DaDbLocalization dakanjiDbLocalization = DaDbLocalization(
 
   /// --- SEARCH UI ---
   noResultsFound: noResultsFound,

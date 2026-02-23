@@ -18,7 +18,7 @@ part 'example_dao.g.dart';
     ExampleTable, ExampleTranslationTable
   ],
 )
-class ExampleDao extends DatabaseAccessor<DaKanjiDB> with _$ExampleDaoMixin {
+class ExampleDao extends DatabaseAccessor<DaDb> with _$ExampleDaoMixin {
   
   ExampleDao(super.db);
 

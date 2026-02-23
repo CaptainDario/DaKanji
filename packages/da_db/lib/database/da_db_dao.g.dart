@@ -3,11 +3,11 @@
 part of 'da_db_dao.dart';
 
 // ignore_for_file: type=lint
-mixin _$DaKanjiDBDaoMixin on DatabaseAccessor<DaKanjiDB> {
-  DaKanjiDBDaoManager get managers => DaKanjiDBDaoManager(this);
+mixin _$DaDbDaoMixin on DatabaseAccessor<DaDb> {
+  DaDbDaoManager get managers => DaDbDaoManager(this);
 }
 
-class DaKanjiDBDaoManager {
-  final _$DaKanjiDBDaoMixin _db;
-  DaKanjiDBDaoManager(this._db);
+class DaDbDaoManager {
+  final _$DaDbDaoMixin _db;
+  DaDbDaoManager(this._db);
 }

@@ -22,7 +22,7 @@ Future optimizeDbAfterImport(GeneratedDatabase db) async {
 
 }
 
-Future optimizeTargetDbForMerge(DaKanjiDB db) async {
+Future optimizeTargetDbForMerge(DaDb db) async {
   
   // Disable synchronous mode for faster inserts
   await db.customStatement('PRAGMA synchronous = OFF;');
@@ -36,7 +36,7 @@ Future optimizeTargetDbForMerge(DaKanjiDB db) async {
   await db.customStatement('PRAGMA mmap_size = 30000000000;');
 }
 
-Future<void> restoreTargetDbAfterMerge(DaKanjiDB db) async {
+Future<void> restoreTargetDbAfterMerge(DaDb db) async {
   // Re-enable safety: Ensure data is actually flushed to disk
   await db.customStatement('PRAGMA synchronous = NORMAL;');
   
@@ -77,7 +77,7 @@ Future optimizeStagingDbForRawInsert(StagingDatabase db) async {
   await db.customStatement('PRAGMA locking_mode = EXCLUSIVE;');
 }
 
-Future optimizeDbAfterDelete(DaKanjiDB db) async {
+Future optimizeDbAfterDelete(DaDb db) async {
   // 1. Optimize FTS5 Tables
   await db.customStatement("INSERT INTO fts_terms(fts_terms) VALUES('optimize');");
   await db.customStatement("INSERT INTO fts_readings(fts_readings) VALUES('optimize');");

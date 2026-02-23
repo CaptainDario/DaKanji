@@ -8,7 +8,7 @@ part 'kanji_bank_v3_entry_stat.g.dart';
 
 
 @Freezed()
-/// Class representing one stat of a kanji entry of DaKanjiDB
+/// Class representing one stat of a kanji entry of DaDb
 abstract class KanjiBankV3EntryStat with _$KanjiBankV3EntryStat {
 
   const factory KanjiBankV3EntryStat(

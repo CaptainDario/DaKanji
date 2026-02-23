@@ -10,7 +10,7 @@ class CustomHtmlToWidgetFactory extends WidgetFactory {
   final int indexId;
 
   /// The database instance to fetch media from
-  final DaKanjiDB db;
+  final DaDb db;
 
   CustomHtmlToWidgetFactory(this.indexId, this.db);
 

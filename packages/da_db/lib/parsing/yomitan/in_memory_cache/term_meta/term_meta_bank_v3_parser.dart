@@ -8,11 +8,11 @@ import 'package:universal_io/io.dart';
 
 import '/database/da_db.dart';
 
-/// Parses the given TermMetaBank and adds it to the given [DaKanjiDB]
+/// Parses the given TermMetaBank and adds it to the given [DaDb]
 Future parseTermMetaBankV3File(
   File termMetaBankFile,
   TermMetaBankV3ParserContext pC,
-  DaKanjiDB db,
+  DaDb db,
   int indexId,
 ) async {
 
@@ -21,11 +21,11 @@ Future parseTermMetaBankV3File(
 
 }
 
-/// Parses the given TermMetaBank and adds it to the given [DaKanjiDB]
+/// Parses the given TermMetaBank and adds it to the given [DaDb]
 Future parseTermMetaBankV3(
   String termMetaBankJson,
   TermMetaBankV3ParserContext pC,
-  DaKanjiDB db,
+  DaDb db,
   int indexId,
 ) async {
 

@@ -7,22 +7,22 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:reorderables/reorderables.dart';
 
-class DaKanjiDbDictionaryManagementWidget extends StatefulWidget {
+class DictionaryManagementWidget extends StatefulWidget {
 
-  const DaKanjiDbDictionaryManagementWidget({super.key});
+  const DictionaryManagementWidget({super.key});
 
   @override
-  State<DaKanjiDbDictionaryManagementWidget> createState() =>
-      _DaKanjiDbDictionaryManagementWidgetState();
+  State<DictionaryManagementWidget> createState() =>
+      _DictionaryManagementWidgetState();
 }
 
-class _DaKanjiDbDictionaryManagementWidgetState
-    extends State<DaKanjiDbDictionaryManagementWidget> {
+class _DictionaryManagementWidgetState
+    extends State<DictionaryManagementWidget> {
   @override
   Widget build(BuildContext context) {
 
-    var db = GetIt.I<DaKanjiDB>();
-    var loc = GetIt.I<DakanjiDbLocalization>();
+    var db = GetIt.I<DaDb>();
+    var loc = GetIt.I<DaDbLocalization>();
 
     return StreamBuilder<List<IndexEntry>>(
       stream: db.indexDao.watchAllIndexes(),
@@ -43,7 +43,7 @@ class _DaKanjiDbDictionaryManagementWidgetState
               },
               children: [
                 for (int i = 0; i < dictsInOrder.length; i++) 
-                  DaKanjiDbDictionaryManagementCard(
+                  DictionaryManagementCard(
                     entry: dictsInOrder[i],
                     index: i,
                     key: ValueKey(dictsInOrder[i].id),
@@ -77,7 +77,7 @@ class _DaKanjiDbDictionaryManagementWidgetState
     ids.insert(newIndex, movedId);
 
     // Update DB: The new list index becomes the sorting order
-    await GetIt.I<DaKanjiDB>().indexDao.setSortingOrders(
+    await GetIt.I<DaDb>().indexDao.setSortingOrders(
       ids, 
       List.generate(ids.length, (i) => i + 1),
     );

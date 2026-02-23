@@ -18,7 +18,7 @@ class IndexEntry with _$IndexEntry {
   @override
   final int id;
 
-  /// Whether this is a dictionary included with DaKanji by default or not
+  /// Whether this is a dictionary included with the db by default or not
   @override
   @BoolAsIntConverter()
   final bool isDefaultDictionary;

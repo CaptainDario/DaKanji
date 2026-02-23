@@ -10,7 +10,7 @@ import 'kanji_vg_test_cases.dart';
 
 void main() {
 
-  late DaKanjiDB db;
+  late DaDb db;
    setUpAll(() async {
      db = await setupFreshDB();
    });
@@ -40,14 +40,14 @@ void main() {
 
 }
 
-Future<DaKanjiDB> setupFreshDB() async {
+Future<DaDb> setupFreshDB() async {
 
   // create the testing database (delete any existing database)
-  if (File(dakanjiDbTestPath).existsSync()) File(dakanjiDbTestPath).deleteSync();
+  if (File(daDbTestPath).existsSync()) File(daDbTestPath).deleteSync();
 
   // setup 
-  DaKanjiDB db = DaKanjiDB(
-    dbPath: dakanjiDbTestPath, inMemory: true, languageProcessor: await japaneseProcessor);
+  DaDb db = DaDb(
+    dbPath: daDbTestPath, inMemory: true, languageProcessor: await japaneseProcessor);
 
   // convert kanjivg database
   Stopwatch s = Stopwatch()..start();

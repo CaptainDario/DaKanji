@@ -13,7 +13,7 @@ class AudioFileNameParser {
   Future<void> parse(
     Iterable<({String filePath, Uint8List fileContent})> dataSources,
     StagingDatabase stagingDb,
-    DaKanjiDB mainDb,
+    DaDb mainDb,
     Function(String) onStatus,
   ) async {
     // helper for parsing json and inserting into staging

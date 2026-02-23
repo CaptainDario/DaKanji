@@ -9,7 +9,7 @@ abstract class StagingMerger {
   /// Merges the specific data type (e.g. Terms, Kanji) from the worker DB.
   Future<void> merge({
     /// database to merge into
-    required DaKanjiDB targetDb,
+    required DaDb targetDb,
     /// The alias of the attached worker DB (e.g. 'worker_1')
     required String workerAlias,
     /// The indexId (dictionary) to assign to all merged entries

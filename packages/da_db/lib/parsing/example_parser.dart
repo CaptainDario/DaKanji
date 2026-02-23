@@ -16,11 +16,11 @@ import 'package:language_processing/language_processing.dart';
 import '/database/da_db.dart';
 import 'yomitan/in_memory_cache/example/example_sentence_parser.dart';
 
-/// Parses the given dakanji example folder
+/// Parses the given DaDb example folder
 Future<Stream<String>> parseExampleDataSource(
   {
     required String examplesZipPath,
-    required  DaKanjiDB db,
+    required  DaDb db,
     required bool isDefaultDictionary
   }
 ) async {
@@ -65,7 +65,7 @@ Future _parseExampleDataSource(({
   bool isDefaultDictionary
 }) params) async {
 
-  final db = DaKanjiDB(
+  final db = DaDb(
     executor: await params.dbConnection.connect(),
     inMemory: params.inMemory,
     languageProcessor: LanguageProcessor.fromJsonString(params.languageProcessorJson)
@@ -73,7 +73,7 @@ Future _parseExampleDataSource(({
 
   try {
     Iterable<({String filePath, Uint8List fileContent})> dataSources =
-      dakanjiDBDataSourceIterator(
+      daDbDataSourceIterator(
         archivePath: params.examplesZipPath, fileOrder: ["yomitan_index.json"]);
 
     final indexFile = dataSources.first;

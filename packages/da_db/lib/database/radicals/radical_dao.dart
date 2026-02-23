@@ -12,7 +12,7 @@ part 'radical_dao.g.dart';
 @DriftAccessor(tables: [
   RadicalsTable, Radical_X_KanjiRelationsTable
 ])
-class RadicalDao extends DatabaseAccessor<DaKanjiDB> with _$RadicalDaoMixin {
+class RadicalDao extends DatabaseAccessor<DaDb> with _$RadicalDaoMixin {
   
   // this constructor is required so that the main database can create an instance
   // of this object.

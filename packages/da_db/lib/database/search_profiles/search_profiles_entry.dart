@@ -32,7 +32,7 @@ abstract class SearchProfilesEntry with _$SearchProfilesEntry {
     int sortOrder,
 
     /// 1st level sort order for search results.
-    /// If an entry of [DaKanjiDbSearch1stSortOrder] is not included here, it
+    /// If an entry of [SearchResult1stSortOrder] is not included here, it
     /// will not be searched for.
     /// 
     /// Default is:

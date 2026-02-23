@@ -13,7 +13,7 @@ import "../da_db.dart";
 part "dictionary_search_dao.g.dart";
 
 @DriftAccessor()
-class DictionarySearchDao extends DatabaseAccessor<DaKanjiDB> with _$DictionarySearchDaoMixin {
+class DictionarySearchDao extends DatabaseAccessor<DaDb> with _$DictionarySearchDaoMixin {
   
   DictionarySearchDao(super.db);
 

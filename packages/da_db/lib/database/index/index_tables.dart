@@ -8,7 +8,7 @@ class IndexTable extends Table {
 
   /// id of this entry
   IntColumn get id => integer().autoIncrement()();
-  /// Whether this is a dictionary included with DaKanji by default or not
+  /// Whether this is a dictionary included with the db by default or not
   BoolColumn get isDefaultDictionary => boolean()();
   /// Whether this dictionary is enabled or not
   BoolColumn get enabled => boolean().withDefault(const Constant(true))();

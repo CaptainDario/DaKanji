@@ -6,11 +6,11 @@ part 'da_db_dao.g.dart';
 
 // Dao class that contains all queries related to the `KanjiTable`
 @DriftAccessor()
-class DaKanjiDBDao extends DatabaseAccessor<DaKanjiDB> with _$DaKanjiDBDaoMixin {
+class DaDbDao extends DatabaseAccessor<DaDb> with _$DaDbDaoMixin {
   
   // this constructor is required so that the main database can create an instance
   // of this object.
-  DaKanjiDBDao(super.db);
+  DaDbDao(super.db);
 
 
   

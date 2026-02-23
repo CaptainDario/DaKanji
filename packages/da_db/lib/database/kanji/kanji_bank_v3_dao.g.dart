@@ -3,7 +3,7 @@
 part of 'kanji_bank_v3_dao.dart';
 
 // ignore_for_file: type=lint
-mixin _$KanjiBankV3DaoMixin on DatabaseAccessor<DaKanjiDB> {
+mixin _$KanjiBankV3DaoMixin on DatabaseAccessor<DaDb> {
   $IndexTableTable get indexTable => attachedDatabase.indexTable;
   $KanjiTableTable get kanjiTable => attachedDatabase.kanjiTable;
   $KanjiBankV3TableTable get kanjiBankV3Table =>

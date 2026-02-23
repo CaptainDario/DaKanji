@@ -3,7 +3,7 @@
 part of 'deletion_dao.dart';
 
 // ignore_for_file: type=lint
-mixin _$DeletionDaoMixin on DatabaseAccessor<DaKanjiDB> {
+mixin _$DeletionDaoMixin on DatabaseAccessor<DaDb> {
   DeletionDaoManager get managers => DeletionDaoManager(this);
 }
 

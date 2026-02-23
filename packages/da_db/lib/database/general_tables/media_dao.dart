@@ -15,7 +15,7 @@ part 'media_dao.g.dart';
 @DriftAccessor(tables: [
   MediaTable
 ])
-class MediaDao extends DatabaseAccessor<DaKanjiDB> with _$MediaDaoMixin {
+class MediaDao extends DatabaseAccessor<DaDb> with _$MediaDaoMixin {
   
   // this constructor is required so that the main database can create an instance
   // of this object.

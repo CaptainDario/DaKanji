@@ -58,7 +58,7 @@ Future<Stream<String>> parseDictionaryDataSource({
   String? dataSourcePath,
   Uint8List? archiveBytes,
   required bool isDefaultDictionary,
-  required DaKanjiDB db,
+  required DaDb db,
 }) async {
 
   assert(dataSourcePath != null);
@@ -107,7 +107,7 @@ Future _parseDictionaryDataSource(({
   bool isDefaultDictionary
 }) params) async {
 
-  final db = DaKanjiDB(
+  final db = DaDb(
     executor: await params.dbConnection.connect(),
     inMemory: params.inMemory,
     languageProcessor: LanguageProcessor.fromJsonString(params.languageProcessorJson)
@@ -116,7 +116,7 @@ Future _parseDictionaryDataSource(({
   printMemoryUsage();
 
   try {
-    Iterable<({String filePath, Uint8List fileContent})> dataSources = dakanjiDBDataSourceIterator(
+    Iterable<({String filePath, Uint8List fileContent})> dataSources = daDbDataSourceIterator(
       archivePath: params.dataSourcePath,
       fileOrder: [indexFileNamingScheme, tagBankFileNamingScheme],
     );
@@ -225,7 +225,7 @@ Future parseDictionaryFile({
   required String filePath,
   required String fileContent,
   required ParserContext? importContext,
-  required DaKanjiDB db,
+  required DaDb db,
   required IndexTableData ind,
 }) async {
   

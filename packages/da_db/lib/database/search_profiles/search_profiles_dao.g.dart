@@ -3,7 +3,7 @@
 part of 'search_profiles_dao.dart';
 
 // ignore_for_file: type=lint
-mixin _$SearchProfilesDaoMixin on DatabaseAccessor<DaKanjiDB> {
+mixin _$SearchProfilesDaoMixin on DatabaseAccessor<DaDb> {
   $SearchProfilesTableTable get searchProfilesTable =>
       attachedDatabase.searchProfilesTable;
   SearchProfilesDaoManager get managers => SearchProfilesDaoManager(this);
