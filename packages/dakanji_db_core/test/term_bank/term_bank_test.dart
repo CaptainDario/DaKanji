@@ -3,7 +3,7 @@ import 'dart:io';
 
 import 'package:dakanji_db_core/database/dakanji_db.dart';
 import 'package:dakanji_db_core/database/term/term_bank_v3_entry.dart';
-import 'package:dakanji_db_shared/paths.dart';
+import 'package:da_db_shared/paths.dart';
 import 'package:path/path.dart' as p;
 import 'package:test/test.dart';
 

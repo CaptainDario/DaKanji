@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:dakanji_db_core/database/dakanji_db.dart';
 import 'package:dakanji_db_core/parsing/kanji_vg_parser.dart';
-import 'package:dakanji_db_shared/dakanji_db_shared.dart';
+import 'package:da_db_shared/da_db_shared.dart';
 import 'package:test/test.dart';
 
 import '../dictionary_test_variables.dart';

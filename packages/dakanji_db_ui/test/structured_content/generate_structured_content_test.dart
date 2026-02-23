@@ -3,7 +3,7 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:dakanji_db_shared/dakanji_db_shared.dart';
+import 'package:da_db_shared/da_db_shared.dart';
 import 'package:dakanji_db_ui/widgets/term/structured_content/structured_content_to_html.dart';
 import 'package:path/path.dart' as p;
 import 'package:test/test.dart';

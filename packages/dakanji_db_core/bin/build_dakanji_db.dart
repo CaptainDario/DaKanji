@@ -7,7 +7,7 @@ import 'package:dakanji_db_core/parsing/kanji_vg_parser.dart';
 import 'package:dakanji_db_core/parsing/radicals_parser.dart';
 import 'package:dakanji_db_core/parsing/tatoeba_parser.dart';
 import 'package:dakanji_db_core/parsing/yomitan_staging_db_parser.dart' as staging_parser;
-import 'package:dakanji_db_shared/paths.dart';
+import 'package:da_db_shared/paths.dart';
 import 'package:language_processing/language_processing.dart';
 import 'package:mecab_for_dart/mecab_dart.dart';
 import 'package:path/path.dart' as p;

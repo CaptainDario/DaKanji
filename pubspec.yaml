@@ -9,13 +9,18 @@ environment:
 
 workspace:
 
+  # Flutter apps
   #- apps/dakanji_db_example
+  - packages/dakanji_db_ui/examples/search
 
+  # Dart packages
   - packages/dakanji_util
   - packages/dakanji_db_core
   - packages/dakanji_db_ui
-  - packages/dakanji_db_ui/examples/search
-  - packages/css_inline_flutter
-  - packages/dakanji_db_shared
+  - packages/da_db_shared
+
   - packages/sqlite_extensions
   - packages/language_processing
+
+  # Flutter packages
+  - packages/css_inline_flutter

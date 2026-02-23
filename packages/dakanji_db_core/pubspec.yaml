@@ -32,7 +32,7 @@ dependencies:
   fullwidth_halfwidth_converter: 1.2.0
   crypto: ^3.0.2
   sqlite_extensions:
-  dakanji_db_shared:
+  da_db_shared:
 
 dev_dependencies:
   drift_dev: ^2.31.0

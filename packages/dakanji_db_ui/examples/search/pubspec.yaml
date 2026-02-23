@@ -14,7 +14,7 @@ dependencies:
   dakanji_util:
   dakanji_db_ui:
   dakanji_db_core:
-  dakanji_db_shared:
+  da_db_shared:
   css_inline_flutter:
   language_processing:
   

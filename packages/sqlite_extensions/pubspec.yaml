@@ -13,7 +13,7 @@ dependencies:
   universal_io: ^2.2.2
   hooks: ^1.0.1
   code_assets: ^1.0.0
-  dakanji_db_shared:
+  da_db_shared:
 
 dev_dependencies:
   lints: ^6.0.0

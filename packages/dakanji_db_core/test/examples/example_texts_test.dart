@@ -3,7 +3,7 @@ import 'dart:io';
 
 import 'package:dakanji_db_core/database/dakanji_db.dart';
 import 'package:dakanji_db_core/parsing/example_parser.dart';
-import 'package:dakanji_db_shared/paths.dart';
+import 'package:da_db_shared/paths.dart';
 import 'package:language_processing/language_processing.dart';
 import 'package:test/test.dart';
 

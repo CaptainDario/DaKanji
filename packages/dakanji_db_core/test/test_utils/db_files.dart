@@ -2,7 +2,7 @@ import 'package:archive/archive_io.dart';
 import 'package:dakanji_db_core/database/dakanji_db.dart';
 import 'package:dakanji_db_core/parsing/util/db_optimization.dart';
 import 'package:dakanji_db_core/parsing/yomitan_staging_db_parser.dart';
-import 'package:dakanji_db_shared/dakanji_db_shared.dart';
+import 'package:da_db_shared/da_db_shared.dart';
 import 'package:path/path.dart' as p;
 import 'package:universal_io/io.dart';
 

@@ -1,4 +1,4 @@
-name: dakanji_db_shared
+name: da_db_shared
 description: Some utilities for the DaKanji database shared across its packages
 version: 1.0.0
 resolution: workspace
