@@ -1,0 +1,111 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Example Sentence Bank",
+  "description": "Schema for a chunked dictionary example sentence file",
+  "type": "array",
+  "items": {
+    "$ref": "#/definitions/Sentence"
+  },
+  "definitions": {
+    "Sentence": {
+      "type": "object",
+      "properties": {
+        "groupId": {
+          "type": "string",
+          "description": "ID matchable across dictionaries (e.g., a Tatoeba sentence ID). Can be string or integer depending on your upstream source."
+        },
+        "sentence": {
+          "type": "string",
+          "description": "The complete, raw sentence string."
+        },
+        "tokens": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Token"
+          },
+          "description": "Tokenized components and optional readings for rendering furigana/pinyin."
+        },
+        "lang": {
+          "type": "string",
+          "description": "ISO 639 language code (e.g., 'ja', 'en', 'es')."
+        },
+        "difficultyFloat": {
+          "type": "number",
+          "description": "Numeric difficulty score for backend sorting/filtering."
+        },
+        "difficultyString": {
+          "type": "string",
+          "description": "Display-friendly difficulty string (e.g., 'JLPT N3', 'B1 Intermediate')."
+        },
+        "audios": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Audio"
+          },
+          "description": "List of available audio pronunciations."
+        },
+        "quality": {
+          "type": "number",
+          "description": "Overall quality score or confidence metric of the sentence."
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "List of tags (e.g., 'slang', 'idiom', 'formal')."
+        },
+        "stats": {
+          "type": "object",
+          "additionalProperties": true,
+          "description": "Arbitrary key-value pairs for dataset-specific stats without polluting the core schema."
+        },
+        "source": {
+          "type": "string",
+          "description": "Origin dataset, author, or copyright info (e.g., 'Tatoeba')."
+        }
+      },
+      "required": ["groupId", "sentence", "lang"]
+    },
+    "Token": {
+      "type": "object",
+      "properties": {
+        "text": {
+          "type": "string",
+          "description": "The surface text of the token."
+        },
+        "reading": {
+          "type": "string",
+          "description": "Optional reading (e.g., hiragana for kanji)."
+        }
+      },
+      "required": ["text"]
+    },
+    "Audio": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "description": "Local path to the audio file."
+        },
+        "speaker": {
+          "type": "string",
+          "description": "e.g., 'native', 'tts'."
+        },
+        "accent": {
+          "type": "string",
+          "description": "e.g., 'US', 'UK', 'Kansai'."
+        },
+        "quality": {
+          "type": "number",
+          "description": "Audio quality metric."
+        },
+        "notes": {
+          "type": "string",
+          "description": "Any additional notes about this specific recording."
+        }
+      },
+      "required": ["path"]
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Audio Index Format",
+  "description": "Schema for index.json audio mappings",
+  "type": "object",
+  "properties": {
+    "headwords": {
+      "type": "object",
+      "description": "Maps a headword (term) to an array of audio filenames.",
+      "additionalProperties": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      }
+    },
+    "files": {
+      "type": "object",
+      "description": "Maps an audio filename to its reading and pitch metadata.",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "kana_reading": {
+            "type": "string",
+            "description": "The pronunciation of the term."
+          },
+          "pitch_number": {
+            "type": "string",
+            "description": "Pitch accent pattern, provided as a string (parsed to int in Dart)."
+          }
+        }
+      }
+    }
+  },
+  "required": ["headwords", "files"]
+}
