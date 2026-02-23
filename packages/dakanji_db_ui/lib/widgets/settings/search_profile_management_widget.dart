@@ -117,15 +117,19 @@ class _SearchProfileManagementWidgetState extends State<SearchProfileManagementW
     final confirm = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
+        // TODO: Localization
         title: const Text("Delete Profile?"),
+        // TODO: Localization
         content: Text("Are you sure you want to delete '${profile.name}'?"),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx, false),
+            // TODO: Localization
             child: const Text("Cancel"),
           ),
           TextButton(
             onPressed: () => Navigator.pop(ctx, true),
+            // TODO: Localization
             child: const Text("Delete", style: TextStyle(color: Colors.red)),
           ),
         ],
@@ -136,6 +140,7 @@ class _SearchProfileManagementWidgetState extends State<SearchProfileManagementW
       final success = await db.searchProfilesDao.deleteProfile(profile.id);
       if (!success && context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
+          // TODO: Localization
           const SnackBar(content: Text("Cannot delete the only remaining profile.")),
         );
       }
@@ -148,15 +153,18 @@ class _SearchProfileManagementWidgetState extends State<SearchProfileManagementW
     await showDialog(
       context: context,
       builder: (context) => AlertDialog(
+        // TODO: Localization
         title: const Text("Rename Profile"),
         content: TextField(
           controller: controller,
+          // TODO: Localization
           decoration: const InputDecoration(labelText: "Profile Name"),
           autofocus: true,
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
+            // TODO: Localization
             child: const Text("Cancel"),
           ),
           TextButton(
@@ -169,6 +177,7 @@ class _SearchProfileManagementWidgetState extends State<SearchProfileManagementW
                 if (context.mounted) Navigator.pop(context);
               }
             },
+            // TODO: Localization
             child: const Text("Save"),
           ),
         ],

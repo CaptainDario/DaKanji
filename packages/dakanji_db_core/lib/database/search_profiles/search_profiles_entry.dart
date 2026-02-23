@@ -95,6 +95,10 @@ abstract class SearchProfilesEntry with _$SearchProfilesEntry {
     @Default(60.0)
     double definitionsMaxHeight,
 
+    /// Should non-Structured-Content definitions be placed in one line
+    @Default(true)
+    bool definitionsCompactMode,
+
     /// Whether to use katakana for furigana instead of hiragana.
     @Default(false)
     bool useKatakanaForFurigana,
@@ -189,6 +193,7 @@ abstract class SearchProfilesEntry with _$SearchProfilesEntry {
       showKanjiEntriesInSearchResults: showKanjiEntriesInSearchResults,
       showTags: showTags,
       showMetaEntries: showMetaEntries,
+      definitionsCompactMode: definitionsCompactMode,
       definitionsMaxHeight: definitionsMaxHeight,
       useKatakanaForFurigana: useKatakanaForFurigana,
       spellfixMaxResults: spellfixMaxResults,
@@ -215,6 +220,7 @@ abstract class SearchProfilesEntry with _$SearchProfilesEntry {
       showTags: data.showTags,
       showMetaEntries: data.showMetaEntries,
       definitionsMaxHeight: data.definitionsMaxHeight,
+      definitionsCompactMode: data.definitionsCompactMode,
       useKatakanaForFurigana: data.useKatakanaForFurigana,
       spellfixMaxResults: data.spellfixMaxResults,
       spellfixMaxCost: data.spellfixMaxCost,

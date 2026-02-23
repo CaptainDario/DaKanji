@@ -194,15 +194,34 @@ class _DefinitionWalker {
   String _extractText(dynamic node) {
     if (node == null) return '';
     if (node is String) return node;
+    
+    // 1. Keep join('') so inline Japanese characters don't get split by spaces
     if (node is List) return node.map(_extractText).join('');
+    
     if (node is Map) {
-      // Removing Ruby text (<rt>) is standard practice
-      if (node['tag'] == 'rt') return ''; 
+      final tag = node['tag'];
       
-      // Use alt text for images
-      if (node['tag'] == 'img') return node['alt'] ?? '';
+      // Removing Ruby text (<rt>) and pronunciation text (<rp>)
+      if (tag == 'rt' || tag == 'rp') return ''; 
+      
+      // 2. Grab all possible searchable text from images (alt, description, title)
+      if (tag == 'img') {
+        return [node['alt'], node['description'], node['title']]
+            .where((e) => e != null && e.toString().isNotEmpty)
+            .join(' ');
+      }
 
-      if (node.containsKey('content')) return _extractText(node['content']);
+      String contentText = '';
+      if (node.containsKey('content')) {
+        contentText = _extractText(node['content']);
+      }
+
+      // 3. Inject a space ONLY for block-level tags so distinct paragraphs/items don't glue together
+      if (['div', 'p', 'li', 'br', 'td', 'th'].contains(tag)) {
+        return '$contentText '; 
+      }
+
+      return contentText;
     }
     return '';
   }

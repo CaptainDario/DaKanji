@@ -44,8 +44,11 @@ class SearchProfilesTable extends Table {
   /// Whether to show meta entries in [DictionaryMatchWidget]s.
   BoolColumn get showMetaEntries => boolean().withDefault(const Constant(true))();
 
-  /// Maximum height for compact definitions.
+  /// Maximum height for definitions in search results.
   RealColumn get definitionsMaxHeight => real().withDefault(const Constant(60.0))();
+
+  /// Should non-Structured-Content definitions be placed in one line
+  BoolColumn get definitionsCompactMode => boolean().withDefault(const Constant(true))();
 
   /// Whether to use katakana for furigana instead of hiragana.
   BoolColumn get useKatakanaForFurigana => boolean().withDefault(const Constant(false))();

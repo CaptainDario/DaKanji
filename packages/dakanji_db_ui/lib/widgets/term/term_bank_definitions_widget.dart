@@ -15,6 +15,9 @@ class TermBankDefinitionsWidget extends StatefulWidget {
   /// Max height for the definitions section. 0 = unlimited.
   final double definitionsMaxHeight;
 
+  /// Whether to render in compact mode (term bank entries in one line)
+  final bool compactMode;
+
   /// Callback that is called when a URL is tapped.
   /// Should return true if the URL was handled.
   final FutureOr<bool> Function(String url)? onTapUrl;
@@ -23,6 +26,7 @@ class TermBankDefinitionsWidget extends StatefulWidget {
     this.entries,
     {
       this.definitionsMaxHeight = 0,
+      this.compactMode = false,
       this.onTapUrl,
       super.key
     }
@@ -106,6 +110,7 @@ class _TermBankDefinitionsWidgetState extends State<TermBankDefinitionsWidget> {
                   definitions: entriesToShow[i].structuredContentDefinitions,
                   indexId: entriesToShow[i].indexEntry.id,
                   onTapUrl: widget.onTapUrl,
+                  compactMode: widget.compactMode,
                 ),
                 if(i != entriesToShow.length - 1)
                   const SizedBox(height: 4,),

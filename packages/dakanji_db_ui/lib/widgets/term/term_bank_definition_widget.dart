@@ -20,6 +20,9 @@ class TermBankDefinitionWidget extends StatefulWidget {
   /// The id of the index this definition belongs to
   final int indexId;
 
+  /// Whether to render in compact mode (term bank entries in one line)
+  final bool compactMode;
+
   /// Callback that is called when a URL is tapped.
   /// Should return true if the URL was handled.
   final FutureOr<bool> Function(String url)? onTapUrl;
@@ -28,6 +31,7 @@ class TermBankDefinitionWidget extends StatefulWidget {
     super.key,
     required this.definitions,
     required this.indexId,
+    this.compactMode = false,
     this.onTapUrl,
   });
 
@@ -37,28 +41,20 @@ class TermBankDefinitionWidget extends StatefulWidget {
 
 class _TermBankDefinitionWidgetState extends State<TermBankDefinitionWidget> {
 
-  String indexCss = "";
-
-  Future<bool> getCss() async {
-    
-    indexCss = await GetIt.I<DaKanjiDB>().mediaDao.getCssFromIndex(widget.indexId);
-
-    return true;
-
-  }
 
   /// Convert the structured content JSON into a standard HTML string and inline
   /// CSS from the index and the global CSS.
   /// Returns the final HTML string.
-  String renderDefinition() {
+  Future<String> renderDefinition() async {
+
+    String indexCss = await GetIt.I<DaKanjiDB>().mediaDao.getCssFromIndex(widget.indexId);
     
-    String structuredContentHtmlString = renderDefinitions(widget.definitions);
+    String structuredContentHtmlString = renderDefinitions(
+      widget.definitions, compactMode: widget.compactMode);
     structuredContentHtmlString = inlineFragmentSync(
-      html: structuredContentHtmlString,
-      css: indexCss);
+      html: structuredContentHtmlString, css: indexCss);
     structuredContentHtmlString = inlineFragmentSync(
-      html: structuredContentHtmlString,
-      css: getStructuredContentCss(darkMode: true));
+      html: structuredContentHtmlString, css: getStructuredContentCss(darkMode: true));
 
     return structuredContentHtmlString;
   }
@@ -68,13 +64,22 @@ class _TermBankDefinitionWidgetState extends State<TermBankDefinitionWidget> {
   Widget build(BuildContext context) {
   
     return FutureBuilder(
-      future: getCss(),
+      future: renderDefinition(),
       builder: (context, asyncSnapshot) {
 
+        if (!asyncSnapshot.hasData || asyncSnapshot.data == null) {
+          return SizedBox();
+        } 
+        else if (asyncSnapshot.hasError) {
+          return Text('Error rendering definition: ${asyncSnapshot.error}');
+        } 
+        
+
         return SmartHtmlSelection(
+          // TOOD: correct selection
           onTextSelected: (text) => print(text),
           child: HtmlWidget(
-            renderDefinition(),
+            asyncSnapshot.data!,
             textStyle: const TextStyle(
               overflow: TextOverflow.ellipsis,
             ),

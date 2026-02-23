@@ -116,7 +116,15 @@ Custom dictionaries can be imported to further expand your library.
             context.read<SearchProfilesEntry>().copyWith(showMetaEntries: v)
           )
         ),
-
+        // TODO: localization
+        SearchProfileSettingsToggleListTile(
+          title: "Use compact mode for definitions",
+          subtitle: "Writes simple text definitions in one line instead of multiple lines.",
+          value: context.watch<SearchProfilesEntry>().definitionsCompactMode,
+          onChanged: (v) => GetIt.I<DaKanjiDB>().searchProfilesDao.updateProfile(
+            context.read<SearchProfilesEntry>().copyWith(definitionsCompactMode: v)
+          )
+        ),
         // TODO: switch to spinningbox and use the set value directly
         SearchProfileSettingsToggleListTile(
           title: loc.useCompactDefinitionsTitle,

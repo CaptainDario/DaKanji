@@ -17620,6 +17620,21 @@ class $SearchProfilesTableTable extends SearchProfilesTable
         requiredDuringInsert: false,
         defaultValue: const Constant(60.0),
       );
+  static const VerificationMeta _definitionsCompactModeMeta =
+      const VerificationMeta('definitionsCompactMode');
+  @override
+  late final GeneratedColumn<bool> definitionsCompactMode =
+      GeneratedColumn<bool>(
+        'definitions_compact_mode',
+        aliasedName,
+        false,
+        type: DriftSqlType.bool,
+        requiredDuringInsert: false,
+        defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'CHECK ("definitions_compact_mode" IN (0, 1))',
+        ),
+        defaultValue: const Constant(true),
+      );
   static const VerificationMeta _useKatakanaForFuriganaMeta =
       const VerificationMeta('useKatakanaForFurigana');
   @override
@@ -17685,6 +17700,7 @@ class $SearchProfilesTableTable extends SearchProfilesTable
     showTags,
     showMetaEntries,
     definitionsMaxHeight,
+    definitionsCompactMode,
     useKatakanaForFurigana,
     spellfixMaxResults,
     spellfixMaxCost,
@@ -17776,6 +17792,15 @@ class $SearchProfilesTableTable extends SearchProfilesTable
         definitionsMaxHeight.isAcceptableOrUnknown(
           data['definitions_max_height']!,
           _definitionsMaxHeightMeta,
+        ),
+      );
+    }
+    if (data.containsKey('definitions_compact_mode')) {
+      context.handle(
+        _definitionsCompactModeMeta,
+        definitionsCompactMode.isAcceptableOrUnknown(
+          data['definitions_compact_mode']!,
+          _definitionsCompactModeMeta,
         ),
       );
     }
@@ -17887,6 +17912,10 @@ class $SearchProfilesTableTable extends SearchProfilesTable
         DriftSqlType.double,
         data['${effectivePrefix}definitions_max_height'],
       )!,
+      definitionsCompactMode: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}definitions_compact_mode'],
+      )!,
       useKatakanaForFurigana: attachedDatabase.typeMapping.read(
         DriftSqlType.bool,
         data['${effectivePrefix}use_katakana_for_furigana'],
@@ -17956,8 +17985,11 @@ class SearchProfilesTableData extends DataClass
   /// Whether to show meta entries in [DictionaryMatchWidget]s.
   final bool showMetaEntries;
 
-  /// Maximum height for compact definitions.
+  /// Maximum height for definitions in search results.
   final double definitionsMaxHeight;
+
+  /// Should non-Structured-Content definitions be placed in one line
+  final bool definitionsCompactMode;
 
   /// Whether to use katakana for furigana instead of hiragana.
   final bool useKatakanaForFurigana;
@@ -17985,6 +18017,7 @@ class SearchProfilesTableData extends DataClass
     required this.showTags,
     required this.showMetaEntries,
     required this.definitionsMaxHeight,
+    required this.definitionsCompactMode,
     required this.useKatakanaForFurigana,
     required this.spellfixMaxResults,
     required this.spellfixMaxCost,
@@ -18028,6 +18061,7 @@ class SearchProfilesTableData extends DataClass
     map['show_tags'] = Variable<bool>(showTags);
     map['show_meta_entries'] = Variable<bool>(showMetaEntries);
     map['definitions_max_height'] = Variable<double>(definitionsMaxHeight);
+    map['definitions_compact_mode'] = Variable<bool>(definitionsCompactMode);
     map['use_katakana_for_furigana'] = Variable<bool>(useKatakanaForFurigana);
     map['spellfix_max_results'] = Variable<int>(spellfixMaxResults);
     map['spellfix_max_cost'] = Variable<int>(spellfixMaxCost);
@@ -18056,6 +18090,7 @@ class SearchProfilesTableData extends DataClass
       showTags: Value(showTags),
       showMetaEntries: Value(showMetaEntries),
       definitionsMaxHeight: Value(definitionsMaxHeight),
+      definitionsCompactMode: Value(definitionsCompactMode),
       useKatakanaForFurigana: Value(useKatakanaForFurigana),
       spellfixMaxResults: Value(spellfixMaxResults),
       spellfixMaxCost: Value(spellfixMaxCost),
@@ -18096,6 +18131,9 @@ class SearchProfilesTableData extends DataClass
       definitionsMaxHeight: serializer.fromJson<double>(
         json['definitionsMaxHeight'],
       ),
+      definitionsCompactMode: serializer.fromJson<bool>(
+        json['definitionsCompactMode'],
+      ),
       useKatakanaForFurigana: serializer.fromJson<bool>(
         json['useKatakanaForFurigana'],
       ),
@@ -18133,6 +18171,7 @@ class SearchProfilesTableData extends DataClass
       'showTags': serializer.toJson<bool>(showTags),
       'showMetaEntries': serializer.toJson<bool>(showMetaEntries),
       'definitionsMaxHeight': serializer.toJson<double>(definitionsMaxHeight),
+      'definitionsCompactMode': serializer.toJson<bool>(definitionsCompactMode),
       'useKatakanaForFurigana': serializer.toJson<bool>(useKatakanaForFurigana),
       'spellfixMaxResults': serializer.toJson<int>(spellfixMaxResults),
       'spellfixMaxCost': serializer.toJson<int>(spellfixMaxCost),
@@ -18154,6 +18193,7 @@ class SearchProfilesTableData extends DataClass
     bool? showTags,
     bool? showMetaEntries,
     double? definitionsMaxHeight,
+    bool? definitionsCompactMode,
     bool? useKatakanaForFurigana,
     int? spellfixMaxResults,
     int? spellfixMaxCost,
@@ -18179,6 +18219,8 @@ class SearchProfilesTableData extends DataClass
     showTags: showTags ?? this.showTags,
     showMetaEntries: showMetaEntries ?? this.showMetaEntries,
     definitionsMaxHeight: definitionsMaxHeight ?? this.definitionsMaxHeight,
+    definitionsCompactMode:
+        definitionsCompactMode ?? this.definitionsCompactMode,
     useKatakanaForFurigana:
         useKatakanaForFurigana ?? this.useKatakanaForFurigana,
     spellfixMaxResults: spellfixMaxResults ?? this.spellfixMaxResults,
@@ -18221,6 +18263,9 @@ class SearchProfilesTableData extends DataClass
       definitionsMaxHeight: data.definitionsMaxHeight.present
           ? data.definitionsMaxHeight.value
           : this.definitionsMaxHeight,
+      definitionsCompactMode: data.definitionsCompactMode.present
+          ? data.definitionsCompactMode.value
+          : this.definitionsCompactMode,
       useKatakanaForFurigana: data.useKatakanaForFurigana.present
           ? data.useKatakanaForFurigana.value
           : this.useKatakanaForFurigana,
@@ -18258,6 +18303,7 @@ class SearchProfilesTableData extends DataClass
           ..write('showTags: $showTags, ')
           ..write('showMetaEntries: $showMetaEntries, ')
           ..write('definitionsMaxHeight: $definitionsMaxHeight, ')
+          ..write('definitionsCompactMode: $definitionsCompactMode, ')
           ..write('useKatakanaForFurigana: $useKatakanaForFurigana, ')
           ..write('spellfixMaxResults: $spellfixMaxResults, ')
           ..write('spellfixMaxCost: $spellfixMaxCost, ')
@@ -18281,6 +18327,7 @@ class SearchProfilesTableData extends DataClass
     showTags,
     showMetaEntries,
     definitionsMaxHeight,
+    definitionsCompactMode,
     useKatakanaForFurigana,
     spellfixMaxResults,
     spellfixMaxCost,
@@ -18306,6 +18353,7 @@ class SearchProfilesTableData extends DataClass
           other.showTags == this.showTags &&
           other.showMetaEntries == this.showMetaEntries &&
           other.definitionsMaxHeight == this.definitionsMaxHeight &&
+          other.definitionsCompactMode == this.definitionsCompactMode &&
           other.useKatakanaForFurigana == this.useKatakanaForFurigana &&
           other.spellfixMaxResults == this.spellfixMaxResults &&
           other.spellfixMaxCost == this.spellfixMaxCost &&
@@ -18327,6 +18375,7 @@ class SearchProfilesTableCompanion
   final Value<bool> showTags;
   final Value<bool> showMetaEntries;
   final Value<double> definitionsMaxHeight;
+  final Value<bool> definitionsCompactMode;
   final Value<bool> useKatakanaForFurigana;
   final Value<int> spellfixMaxResults;
   final Value<int> spellfixMaxCost;
@@ -18345,6 +18394,7 @@ class SearchProfilesTableCompanion
     this.showTags = const Value.absent(),
     this.showMetaEntries = const Value.absent(),
     this.definitionsMaxHeight = const Value.absent(),
+    this.definitionsCompactMode = const Value.absent(),
     this.useKatakanaForFurigana = const Value.absent(),
     this.spellfixMaxResults = const Value.absent(),
     this.spellfixMaxCost = const Value.absent(),
@@ -18364,6 +18414,7 @@ class SearchProfilesTableCompanion
     this.showTags = const Value.absent(),
     this.showMetaEntries = const Value.absent(),
     this.definitionsMaxHeight = const Value.absent(),
+    this.definitionsCompactMode = const Value.absent(),
     this.useKatakanaForFurigana = const Value.absent(),
     this.spellfixMaxResults = const Value.absent(),
     this.spellfixMaxCost = const Value.absent(),
@@ -18386,6 +18437,7 @@ class SearchProfilesTableCompanion
     Expression<bool>? showTags,
     Expression<bool>? showMetaEntries,
     Expression<double>? definitionsMaxHeight,
+    Expression<bool>? definitionsCompactMode,
     Expression<bool>? useKatakanaForFurigana,
     Expression<int>? spellfixMaxResults,
     Expression<int>? spellfixMaxCost,
@@ -18411,6 +18463,8 @@ class SearchProfilesTableCompanion
       if (showMetaEntries != null) 'show_meta_entries': showMetaEntries,
       if (definitionsMaxHeight != null)
         'definitions_max_height': definitionsMaxHeight,
+      if (definitionsCompactMode != null)
+        'definitions_compact_mode': definitionsCompactMode,
       if (useKatakanaForFurigana != null)
         'use_katakana_for_furigana': useKatakanaForFurigana,
       if (spellfixMaxResults != null)
@@ -18434,6 +18488,7 @@ class SearchProfilesTableCompanion
     Value<bool>? showTags,
     Value<bool>? showMetaEntries,
     Value<double>? definitionsMaxHeight,
+    Value<bool>? definitionsCompactMode,
     Value<bool>? useKatakanaForFurigana,
     Value<int>? spellfixMaxResults,
     Value<int>? spellfixMaxCost,
@@ -18459,6 +18514,8 @@ class SearchProfilesTableCompanion
       showTags: showTags ?? this.showTags,
       showMetaEntries: showMetaEntries ?? this.showMetaEntries,
       definitionsMaxHeight: definitionsMaxHeight ?? this.definitionsMaxHeight,
+      definitionsCompactMode:
+          definitionsCompactMode ?? this.definitionsCompactMode,
       useKatakanaForFurigana:
           useKatakanaForFurigana ?? this.useKatakanaForFurigana,
       spellfixMaxResults: spellfixMaxResults ?? this.spellfixMaxResults,
@@ -18529,6 +18586,11 @@ class SearchProfilesTableCompanion
         definitionsMaxHeight.value,
       );
     }
+    if (definitionsCompactMode.present) {
+      map['definitions_compact_mode'] = Variable<bool>(
+        definitionsCompactMode.value,
+      );
+    }
     if (useKatakanaForFurigana.present) {
       map['use_katakana_for_furigana'] = Variable<bool>(
         useKatakanaForFurigana.value,
@@ -18568,6 +18630,7 @@ class SearchProfilesTableCompanion
           ..write('showTags: $showTags, ')
           ..write('showMetaEntries: $showMetaEntries, ')
           ..write('definitionsMaxHeight: $definitionsMaxHeight, ')
+          ..write('definitionsCompactMode: $definitionsCompactMode, ')
           ..write('useKatakanaForFurigana: $useKatakanaForFurigana, ')
           ..write('spellfixMaxResults: $spellfixMaxResults, ')
           ..write('spellfixMaxCost: $spellfixMaxCost, ')
@@ -41035,6 +41098,7 @@ typedef $$SearchProfilesTableTableCreateCompanionBuilder =
       Value<bool> showTags,
       Value<bool> showMetaEntries,
       Value<double> definitionsMaxHeight,
+      Value<bool> definitionsCompactMode,
       Value<bool> useKatakanaForFurigana,
       Value<int> spellfixMaxResults,
       Value<int> spellfixMaxCost,
@@ -41055,6 +41119,7 @@ typedef $$SearchProfilesTableTableUpdateCompanionBuilder =
       Value<bool> showTags,
       Value<bool> showMetaEntries,
       Value<double> definitionsMaxHeight,
+      Value<bool> definitionsCompactMode,
       Value<bool> useKatakanaForFurigana,
       Value<int> spellfixMaxResults,
       Value<int> spellfixMaxCost,
@@ -41145,6 +41210,11 @@ class $$SearchProfilesTableTableFilterComposer
 
   ColumnFilters<double> get definitionsMaxHeight => $composableBuilder(
     column: $table.definitionsMaxHeight,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get definitionsCompactMode => $composableBuilder(
+    column: $table.definitionsCompactMode,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -41243,6 +41313,11 @@ class $$SearchProfilesTableTableOrderingComposer
 
   ColumnOrderings<double> get definitionsMaxHeight => $composableBuilder(
     column: $table.definitionsMaxHeight,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get definitionsCompactMode => $composableBuilder(
+    column: $table.definitionsCompactMode,
     builder: (column) => ColumnOrderings(column),
   );
 
@@ -41345,6 +41420,11 @@ class $$SearchProfilesTableTableAnnotationComposer
     builder: (column) => column,
   );
 
+  GeneratedColumn<bool> get definitionsCompactMode => $composableBuilder(
+    column: $table.definitionsCompactMode,
+    builder: (column) => column,
+  );
+
   GeneratedColumn<bool> get useKatakanaForFurigana => $composableBuilder(
     column: $table.useKatakanaForFurigana,
     builder: (column) => column,
@@ -41429,6 +41509,7 @@ class $$SearchProfilesTableTableTableManager
                 Value<bool> showTags = const Value.absent(),
                 Value<bool> showMetaEntries = const Value.absent(),
                 Value<double> definitionsMaxHeight = const Value.absent(),
+                Value<bool> definitionsCompactMode = const Value.absent(),
                 Value<bool> useKatakanaForFurigana = const Value.absent(),
                 Value<int> spellfixMaxResults = const Value.absent(),
                 Value<int> spellfixMaxCost = const Value.absent(),
@@ -41450,6 +41531,7 @@ class $$SearchProfilesTableTableTableManager
                 showTags: showTags,
                 showMetaEntries: showMetaEntries,
                 definitionsMaxHeight: definitionsMaxHeight,
+                definitionsCompactMode: definitionsCompactMode,
                 useKatakanaForFurigana: useKatakanaForFurigana,
                 spellfixMaxResults: spellfixMaxResults,
                 spellfixMaxCost: spellfixMaxCost,
@@ -41475,6 +41557,7 @@ class $$SearchProfilesTableTableTableManager
                 Value<bool> showTags = const Value.absent(),
                 Value<bool> showMetaEntries = const Value.absent(),
                 Value<double> definitionsMaxHeight = const Value.absent(),
+                Value<bool> definitionsCompactMode = const Value.absent(),
                 Value<bool> useKatakanaForFurigana = const Value.absent(),
                 Value<int> spellfixMaxResults = const Value.absent(),
                 Value<int> spellfixMaxCost = const Value.absent(),
@@ -41496,6 +41579,7 @@ class $$SearchProfilesTableTableTableManager
                 showTags: showTags,
                 showMetaEntries: showMetaEntries,
                 definitionsMaxHeight: definitionsMaxHeight,
+                definitionsCompactMode: definitionsCompactMode,
                 useKatakanaForFurigana: useKatakanaForFurigana,
                 spellfixMaxResults: spellfixMaxResults,
                 spellfixMaxCost: spellfixMaxCost,

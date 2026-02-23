@@ -109,7 +109,7 @@ String showTagsSubtitle = "Shows tags such as 'common' in search results";
 String showMetaEntriesTitle = "Show Meta Entries";
 String showMetaEntriesSubtitle = "Shows Meta entries such as frequency in search results";
 
-String useCompactDefinitionsTitle = "Use Compact Definitions";
+String useCompactDefinitionsTitle = "Limit Definition Height";
 String useCompactDefinitionsSubtitle = "Limits the height of definitions in search results";
 
 String useKatakanaForFuriganaTitle = "Use Katakana for Furigana";

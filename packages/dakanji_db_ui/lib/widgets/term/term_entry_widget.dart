@@ -30,6 +30,9 @@ class TermEntryWidget extends StatelessWidget {
   /// Whether to show audio playback buttons.
   final bool showAudioPlaybackButtons;
 
+  /// Whether to render in compact mode (term bank entries and definitions in one line)
+  final bool compactMode;
+
   /// Callback that is called when this widget is tapped.
   final Function(DictionaryMatch match)? onTap;
 
@@ -45,6 +48,7 @@ class TermEntryWidget extends StatelessWidget {
       this.definitionsMaxHeight = 0,
       this.useKatakanaForFurigana = false,
       this.showAudioPlaybackButtons = false,
+      this.compactMode = false,
       this.onTap,
       this.onUrlTap,
       super.key
@@ -90,6 +94,7 @@ class TermEntryWidget extends StatelessWidget {
                   TermBankDefinitionsWidget(
                     match.entries,
                     definitionsMaxHeight: definitionsMaxHeight,
+                    compactMode: compactMode,
                     onTapUrl: onUrlTap,
                   ),
                 ],

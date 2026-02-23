@@ -72,6 +72,7 @@ _SearchProfilesEntry _$SearchProfilesEntryFromJson(Map<String, dynamic> json) =>
       showMetaEntries: json['showMetaEntries'] as bool? ?? true,
       definitionsMaxHeight:
           (json['definitionsMaxHeight'] as num?)?.toDouble() ?? 60.0,
+      definitionsCompactMode: json['definitionsCompactMode'] as bool? ?? true,
       useKatakanaForFurigana: json['useKatakanaForFurigana'] as bool? ?? false,
       spellfixMaxResults: (json['spellfixMaxResults'] as num?)?.toInt() ?? 20,
       spellfixMaxCost: (json['spellfixMaxCost'] as num?)?.toInt() ?? 10,
@@ -110,6 +111,7 @@ Map<String, dynamic> _$SearchProfilesEntryToJson(
   'showTags': instance.showTags,
   'showMetaEntries': instance.showMetaEntries,
   'definitionsMaxHeight': instance.definitionsMaxHeight,
+  'definitionsCompactMode': instance.definitionsCompactMode,
   'useKatakanaForFurigana': instance.useKatakanaForFurigana,
   'spellfixMaxResults': instance.spellfixMaxResults,
   'spellfixMaxCost': instance.spellfixMaxCost,
