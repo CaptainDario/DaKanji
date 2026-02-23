@@ -7,3 +7,6 @@ hook/**
 
 bin/benchmarking/**
 bin/build/**
+
+data/dakanji_db_input_files/**
+!data/dakanji_db_input_files/.gitkeep
