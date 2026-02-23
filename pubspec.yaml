@@ -1,5 +1,5 @@
 
-name: dakanji_db_workspace
+name: da_db_workspace
 publish_to: none
 
 
@@ -10,13 +10,13 @@ environment:
 workspace:
 
   # Flutter apps
-  #- apps/dakanji_db_example
-  - packages/dakanji_db_ui/examples/search
+  #- apps/da_db_example
+  - packages/da_db_ui/examples/search
 
   # Dart packages
   - packages/util
-  - packages/dakanji_db_core
-  - packages/dakanji_db_ui
+  - packages/da_db
+  - packages/da_db_ui
   - packages/da_db_shared
 
   - packages/sqlite_extensions

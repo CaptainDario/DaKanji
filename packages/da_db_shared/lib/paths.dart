@@ -82,7 +82,7 @@ final devExampleAudioEntriesFormatPath = p.joinAll([devExampleAudioPath, "entrie
 
 // --- DAKANJI DB FILES -------------------------------------------------------
 /// Path to the folder that contains the input files for creating DaKanji DB
-final dakanjiDBInputFilesPath = p.joinAll([dataFilesPath, "dakanji_db_input_files"]);
+final dakanjiDBInputFilesPath = p.joinAll([dataFilesPath, "da_db_input_files"]);
 
 
 /// JMdict input zip file name
@@ -148,4 +148,4 @@ String get tatoebaInputZipPath => p.join(dakanjiDBInputFilesPath, "tatoeba_conve
 String get audioInputZipPath => p.join(dakanjiDBInputFilesPath, "japanese-vocabulary-pronunciation-audio-master-mp3.zip");
 
 /// path to the tests folder
-final coreTestsPath = p.joinAll([dakanjiDbProjectRoot, "packages", "dakanji_db_core", "test"]);
+final coreTestsPath = p.joinAll([dakanjiDbProjectRoot, "packages", "da_db", "test"]);

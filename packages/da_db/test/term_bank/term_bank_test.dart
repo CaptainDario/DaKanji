@@ -1,0 +1,89 @@
+
+import 'dart:io';
+
+import 'package:da_db/database/da_db.dart';
+import 'package:da_db/database/term/term_bank_v3_entry.dart';
+import 'package:da_db_shared/paths.dart';
+import 'package:path/path.dart' as p;
+import 'package:test/test.dart';
+
+import '../dictionary_test_variables.dart';
+import '../test_utils/db_files.dart';
+import '../test_utils/ignore_database_generated_data.dart';
+import 'term_bank_test_cases_1.dart';
+import 'term_bank_test_cases_2.dart';
+import 'term_bank_v3_entry_matcher.dart';
+
+
+final List<(List<String>, List<List<TermBankV3Entry>>)> testCases = [
+  (termBankTestCases1, termBankTestCaseExpectations1),
+  (termBankTestCases2, termBankTestCaseExpectations2)
+];
+
+
+void main() async {
+
+  // Group all related term bank tests together.
+  for (var testCaseIndex = 0; testCaseIndex < testCases.length; testCaseIndex++) {
+    final termBankTestCases = testCases[testCaseIndex].$1;
+    final termBankTestCaseExpectations = testCases[testCaseIndex].$2;
+
+    group('Term Bank V3 test cases: $testCaseIndex', () {
+
+      late DaKanjiDB db;
+      setUpAll(() async {
+        db = await setupFreshDB(testCaseIndex+1);
+      });
+      tearDownAll(() async {
+        await db.close();
+      });
+
+      // Loop through the test cases and dynamically create a test for each one.
+      for (int i = 0; i < termBankTestCases.length; i++) {
+        final testCase = termBankTestCases[i];
+        final expected = termBankTestCaseExpectations[i];
+
+        test('Search for "$testCase" should return correct entries', () async {
+          // Perform the database search
+          final result = (await db.termBankV3Dao.search(testCase))
+            .map((e) => termBankV3EntryIgnoreDatabaseGeneratedData(e)).toList(); 
+          print("result: $result");
+          print("expectation: $expected");
+
+          // 1. First, check if the number of results is correct.
+          expect(
+            result.length,
+            expected.length,
+            reason: "For search term '$testCase', expected ${expected.length} result(s) but found ${result.length}.",
+          );
+
+          // 2. If counts match, compare the content of each entry.
+          expect(
+            result,
+            unorderedEquals(
+              expected.map((e) => matchesTermBankEntry(e)).toList(),
+            ),
+            reason: "The entries for '$testCase' did not match the expected data.",
+          );
+        });
+      }
+    });
+  }
+
+}
+
+Future<DaKanjiDB> setupFreshDB(int testCaseIndex) async {
+
+  DaKanjiDB db = DaKanjiDB(
+    dbPath: dakanjiDbTestPath, inMemory: true, languageProcessor: await japaneseProcessor);
+  db.clearDB();
+  
+  bool shouldIncludeFile(File file) =>
+    (p.basename(file.path) == "term_bank_$testCaseIndex.json" ||
+    !p.basename(file.path).contains("term_bank"));
+  await partialInit(db, shouldIncludeFile, "term_bank_test",
+    isDefaultDictionary: false); 
+
+  return db;
+
+}

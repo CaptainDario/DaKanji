@@ -1,0 +1,229 @@
+import 'package:da_db/data/frequency_mode.dart';
+import 'package:da_db/database/db_queries/dictionary_search/grouping_rules.dart';
+import 'package:da_db/database/term_meta/term_meta_bank_entry.dart';
+
+
+
+/// Defines a single, comprehensive test case that can assert against the different
+/// categories of results from a `DictionaryLookupResult`.
+class DictionarySearchTestCase {
+  final String description;
+  final String query;
+  final List<int>? indexesToInclude;
+  final List<DictionaryGroupingRule> groupingRules;
+  final bool useOnlyEnabledDictionaries;
+  final bool useOnlyDefaultDictionaries;
+  final FrequencyMode? frequencyModeOverride;
+
+  /// Expected results from the original, unmodified query.
+  final List<ExpectedMatchGroup> queryMatches;
+
+  /// Expected results from the Romaji-to-Hiragana converted query.
+  final List<ExpectedMatchGroup> normalizedQueryMatchGroups;
+
+  /// Expected results from de-conjugated or other normalized query variants.
+  final List<ExpectedMatchGroup> queryVariantMatches;
+
+  /// Expected results from fuzzy matching.
+  final List<ExpectedMatchGroup> fuzzyMatches;
+
+  const DictionarySearchTestCase({
+    required this.description,
+    required this.query,
+    this.indexesToInclude,
+    this.groupingRules = const [],
+    this.useOnlyEnabledDictionaries = false,
+    this.useOnlyDefaultDictionaries = false,
+    this.frequencyModeOverride,
+    this.queryMatches = const [],
+    this.normalizedQueryMatchGroups = const [],
+    this.queryVariantMatches = const [],
+    this.fuzzyMatches = const [],
+  });
+
+  @override
+  String toString() {
+    final buffer = StringBuffer();
+    const sectionIndent = '  '; // Two spaces
+
+    // --- Header ---
+    buffer.writeln('\n--- 📖 Dictionary Search Expectation ---');
+    buffer.writeln('Search Term: $query');
+
+    // --- 1. Original Query Matches ---
+    if (queryMatches.isNotEmpty) {
+      buffer.writeln('\n▼ Matches for Original Query');
+      for (var i = 0; i < queryMatches.length; i++) {
+        buffer.writeln('$sectionIndent- Variant ${i + 1}:');
+        // Add extra indentation for the content of each variant
+        buffer.write(
+            queryMatches[i].toFormattedString(indent: '$sectionIndent  '));
+      }
+    }
+
+    // --- 2. Hiragana Query Matches ---
+    final nonEmptyNormalized =
+        normalizedQueryMatchGroups.where((v) => !v.isEmpty).toList();
+    if (nonEmptyNormalized.isNotEmpty) {
+      buffer.writeln(
+          '\n▼ Matches for Normalized queries (${nonEmptyNormalized.length})');
+      for (var i = 0; i < nonEmptyNormalized.length; i++) {
+        buffer.writeln('$sectionIndent- Variant ${i + 1}:');
+        // Add extra indentation for the content of each variant
+        buffer.write(
+            nonEmptyNormalized[i].toFormattedString(indent: '$sectionIndent  '));
+      }
+    }
+
+    // --- 3. De-conjugated / Variant Matches ---
+    final nonEmptyVariants =
+        queryVariantMatches.where((v) => !v.isEmpty).toList();
+        
+    if (nonEmptyVariants.isNotEmpty) {
+      buffer.writeln(
+          '\n▼ Matches for De-conjugated Variants (${nonEmptyVariants.length})');
+      for (var i = 0; i < nonEmptyVariants.length; i++) {
+        buffer.writeln('$sectionIndent- Variant ${i + 1}:');
+        // Add extra indentation for the content of each variant
+        buffer.write(
+            nonEmptyVariants[i].toFormattedString(indent: '$sectionIndent  '));
+      }
+    }
+
+    // --- 4. Fuzzy Matches ---
+    final nonEmptyFuzzy = fuzzyMatches.where((f) => !f.isEmpty).toList();
+    if (nonEmptyFuzzy.isNotEmpty) {
+      buffer.writeln(
+          '\n▼ Fuzzy Matches (${nonEmptyFuzzy.length})');
+      for (var i = 0; i < nonEmptyFuzzy.length; i++) {
+        buffer.writeln('$sectionIndent- Variant ${i + 1}:');
+        // Add extra indentation for the content of each variant
+        buffer.write(
+            nonEmptyFuzzy[i].toFormattedString(indent: '$sectionIndent  '));
+      }
+    }
+
+    // --- No Matches Check ---
+    if (queryMatches.isEmpty &&
+        nonEmptyNormalized.isEmpty &&
+        nonEmptyVariants.isEmpty) {
+      buffer.writeln("\n<No matches found anywhere>");
+    }
+
+    // --- Footer ---
+    buffer.writeln('\n------------------------------------');
+    return buffer.toString();
+  }
+}
+
+/// A container for the expected results of a single search query form,
+/// categorized by match type. This structure mirrors the `SearchMatchGroup` class.
+class ExpectedMatchGroup {
+
+  final List<List<ExpectedDictionaryMatch>> exactMatches;
+  final List<List<ExpectedDictionaryMatch>> prefixMatches;
+  final List<List<ExpectedDictionaryMatch>> tokenMatches;
+  final List<List<ExpectedDictionaryMatch>> wildcardMatches;
+
+  const ExpectedMatchGroup({
+    this.exactMatches = const [],
+    this.prefixMatches = const [],
+    this.tokenMatches = const [],
+    this.wildcardMatches = const [],
+  });
+
+  bool get isEmpty =>
+      exactMatches.isEmpty &&
+      prefixMatches.isEmpty &&
+      tokenMatches.isEmpty &&
+      wildcardMatches.isEmpty;
+
+  /// Formats this entire group with indentation.
+  String toFormattedString({String indent = ''}) {
+    final buffer = StringBuffer();
+    
+
+    _printSection('Exact Matches', exactMatches, buffer, indent: indent);
+    _printSection('Prefix Matches', prefixMatches, buffer, indent: indent);
+    _printSection('Token Matches', tokenMatches, buffer, indent: indent);
+    _printSection('Wildcard Matches', wildcardMatches, buffer, indent: indent);
+
+    return buffer.toString();
+  }
+
+  void _printSection(
+    String title,
+    List<List<ExpectedDictionaryMatch>> groups,
+    StringBuffer buffer,
+    {String indent = ''}
+  ) {
+    if (groups.isEmpty) return;
+
+    final nextIndent = '$indent  '; // e.g., "  "
+
+    final totalMatches = groups.fold<int>(0, (sum, group) => sum + group.length);
+    buffer.writeln('$indent▶ $title ($totalMatches):'); // e.g., "▶ Exact Matches (3):"
+
+    for (var i = 0; i < groups.length; i++) {
+      final group = groups[i];
+      buffer.writeln('$nextIndent- Group:'); 
+      // Indent the entries *inside* the group
+      final groupIndent = '$nextIndent  '; // e.g., "    "
+
+      for (final match in group) {
+        buffer.writeln(match.toFormattedString(indent: groupIndent));
+      }
+    }
+  }
+
+  @override
+  String toString() => toFormattedString();
+}
+
+/// Represents an expected grouped search match, containing multiple entries
+/// that got grouped by term+reading or sequence number.
+class ExpectedGroupedDictionaryMatch {
+  final String match;
+  final List<ExpectedDictionaryMatch> entries;
+  const ExpectedGroupedDictionaryMatch({
+    required this.match,
+    required this.entries,
+  });
+}
+
+/// Represents an expected search result, including the matched text.
+class ExpectedDictionaryMatch {
+  final String term;
+  final String reading;
+  final List<String> definitions;
+  /// The text that was matched
+  final String match;
+
+  final List<TermMetaBankV3Entry> metas;
+
+  const ExpectedDictionaryMatch({
+    required this.term,
+    required this.reading,
+    required this.definitions,
+    required this.match,
+    this.metas = const [],
+  });
+
+  /// Formats this result with indentation.
+  String toFormattedString({String indent = ''}) {
+    final buffer = StringBuffer();
+    // E.g., 食べる [たべる] (Matched: "食べる")
+    buffer.writeln('$indent$term [$reading] (Matched: "$match")');
+    
+    // E.g.,   1. to eat
+    for (var i = 0; i < definitions.length; i++) {
+      buffer.writeln('$indent  ${i + 1}. ${definitions[i]}');
+    }
+    // Trim the final newline so the caller can use writeln()
+    return buffer.toString().trimRight();
+  }
+
+  @override
+  String toString() => toFormattedString();
+}
+

@@ -14,14 +14,14 @@ tmp/**
 .venv/
 
 # ignore tmp schema
-dakanji_db_schema/schema.pdf
+da_db_schema/schema.pdf
 
 # code counter
 .VSCodeCounter/**
 
 # ignore files that are converted from non yomitan dicts
-data/dakanji_db_input_files/**
-!data/dakanji_db_input_files/.gitkeep
+data/da_db_input_files/**
+!data/da_db_input_files/.gitkeep
 
 # ignore files to run mecab in pure dart
 mecab/**

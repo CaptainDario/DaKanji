@@ -1,0 +1,35 @@
+// This list should contain the search term that corresponds to the expectations above.
+import 'package:da_db/database/term/term_bank_v3_entry.dart';
+
+import '../dictionary_test_variables.dart';
+
+final int dictId = 1;
+
+final termBankTestCases2 = [
+  '発条',
+];
+
+final termBankTestCaseExpectations2 = [
+  // Test case for "発条"
+  [
+    TermBankV3Entry(
+      id: 0,
+      indexEntry: testDictionaryIndexEntry,
+      term: '発条',
+      reading: 'ばね',
+      definitionTags: [],
+      ruleIdentifiers: [],
+      popularity: 0,
+      definitions: [
+        'spring',
+        'spring (in one\'s legs)',
+        'bounce',
+        'springboard',
+        'impetus',
+      ],
+      structuredContentDefinitions: [],
+      sequenceNumber: 1099490,
+      tags: [],
+    ),
+  ],
+];

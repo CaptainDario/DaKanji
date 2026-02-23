@@ -1,0 +1,28 @@
+
+import 'package:da_db/database/index/index_tables.dart';
+import 'package:drift/drift.dart';
+
+
+
+/// Contains media files included in dictionaries, such as audio files
+@TableIndex(name: 'MediaTable_indexIdIndex', columns: {#indexId})
+@TableIndex(name: 'MediaTable_path', columns: {#path})
+class MediaTable extends Table {
+  
+  /// id of this entry
+  IntColumn get id => integer().autoIncrement()();
+
+  /// The id of the dictionary this entry belongs to
+  IntColumn get indexId => integer()
+    .references(IndexTable, #id, onDelete: KeyAction.cascade)();
+
+  /// the path of this data file as found in the original data source
+  TextColumn get path => text()();
+
+  /// The name of this file
+  TextColumn get name => text().withLength(min: 1)();
+
+  /// The actual data of the file
+  BlobColumn get data => blob()();
+
+}
