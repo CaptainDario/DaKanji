@@ -6,6 +6,9 @@ import 'package:drift/drift.dart';
 @TableIndex(name: 'TagBankV3Table_indexIdIndex', columns: {#indexId})
 @TableIndex(name: 'TagBankV3Table_name', columns: {#name})
 class TagBankV3Table extends Table {
+
+  @override
+  List<Set<Column>> get uniqueKeys => [{name, indexId}];
   
   /// id of this entry
   IntColumn get id => integer().autoIncrement()();
