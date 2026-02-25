@@ -29,57 +29,60 @@ class _DefinitionWalker {
   final forms = <TermForm>[];
   final references = <String>[]; 
   
-  // Walker state (needs to be persistent across the recursive walk)
+  // Walker state
   String? pendingSentence;
+  bool _foundSemanticContent = false;
 
   _DefinitionWalker(this._input);
 
+  // 1. The all-important cleaner! Replaces double/triple spaces with a single space and trims.
+  String _cleanStr(String input) => input.replaceAll(RegExp(r'\s+'), ' ').trim();
+
   ParsedDefinitions execute() {
-    // 3. Iterate through top-level definition items
     for (var item in _input) {
       if (item is String) {
-        definitions.add(item);
+        definitions.add(_cleanStr(item));
       } 
       else if (item is Map) {
         final type = item['type'];
         
         if (type == 'text' && item['text'] != null) {
-          definitions.add(item['text']);
+          definitions.add(_cleanStr(item['text'].toString()));
         } 
         else if (type == 'image') {
            final desc = item['description'] as String?;
-           definitions.add(desc ?? '[Image]');
+           definitions.add(_cleanStr(desc ?? '[Image]'));
         } 
         else if (type == 'structured-content') {
-           // Track count before walking to see if semantic tags (like 'glossary') added definitions
-           final int startCount = definitions.length;
-           
+           _foundSemanticContent = false;
            _walk(item['content']);
 
-           // If _walk found no semantic definitions, the entire block is the definition
-           if (definitions.length == startCount) {
-             definitions.add(_extractText(item['content']));
+           // Only fallback if we didn't find ANY mapped content
+           if (!_foundSemanticContent) {
+             final fallbackText = _cleanStr(_extractText(item['content']));
+             if (fallbackText.isNotEmpty) {
+               definitions.add(fallbackText);
+             }
            }
         }
       }
-      // Handle "Deinflection" schema: [uninflected term, [inflection rules]]
       else if (item is List) {
-        if (item.length == 2 && item[0] is String && item[1] is List) {
+        if (item.length >= 2 && item[0] is String && item[1] is List) {
            final uninflectedTerm = item[0] as String;
            final rules = (item[1] as List).join(', ');
-           definitions.add('$uninflectedTerm → $rules');
+           definitions.add(_cleanStr('$uninflectedTerm → $rules'));
         } else {
-           definitions.add(_extractText(item));
+           definitions.add(_cleanStr(_extractText(item)));
         }
       }
     }
 
     return ParsedDefinitions(
-      definitions: definitions,
-      posTags: posTags.toSet().toList(),
+      definitions: definitions.where((e) => e.isNotEmpty).toList(),
+      posTags: posTags.where((e) => e.isNotEmpty).toSet().toList(),
       examples: examples,
       forms: forms,
-      references: references,
+      references: references.where((e) => e.isNotEmpty).toList(),
     );
   }
 
@@ -88,53 +91,60 @@ class _DefinitionWalker {
       final data = node['data'] as Map?;
       final content = node['content'];
 
-      // 1. Definitions (Explicit glossary content)
-      if (data != null && data['content'] == 'glossary') {
-        if (content is List) {
-          for (var item in content) definitions.add(_extractText(item));
-        } else {
-           definitions.add(_extractText(content));
+      if (data != null) {
+        // 1. Definitions
+        if (data['content'] == 'glossary') {
+          _foundSemanticContent = true;
+          if (content is List) {
+            for (var item in content) definitions.add(_cleanStr(_extractText(item)));
+          } else {
+             definitions.add(_cleanStr(_extractText(content)));
+          }
         }
-      }
-      // 2. Redirects
-      else if (data != null && data['content'] == 'redirect-glossary') {
-        final refText = _extractText(content);
-        if (!references.contains(refText)) {
-          references.add(refText);
+        // 2. Redirects
+        else if (data['content'] == 'redirect-glossary') {
+          _foundSemanticContent = true;
+          final refText = _cleanStr(_extractText(content));
+          if (refText.isNotEmpty && !references.contains(refText)) {
+            references.add(refText);
+          }
         }
-      }
-      // 3. XRefs (Skip "See Also" links as per original logic)
-      else if (data != null && (data['content'] == 'xref' || data['content'] == 'xref-glossary')) {
-         return; 
-      }
-      // 4. POS
-      else if (data != null && data.containsKey('code')) {
-        posTags.add(_extractText(node));
-      }
-      // 5. Examples
-      else if (data != null && data['content'] == 'example-sentence-a') {
-        pendingSentence = _extractText(node);
-      }
-      else if (data != null && data['content'] == 'example-sentence-b') {
-        if (pendingSentence != null) {
-           examples.add(ExampleSentence(pendingSentence!, _extractText(node)));
-           pendingSentence = null;
+        // 3. XRefs
+        else if (data['content'] == 'xref' || data['content'] == 'xref-glossary') {
+          _foundSemanticContent = true; 
         }
-      }
-      // 6. Forms Table
-      if (data != null && data['content'] == 'forms') {
-        Map<String, dynamic>? tableNode;
-        if (content is List) {
-           final found = content.firstWhere((e) => e is Map && e['tag'] == 'table', orElse: () => null);
-           if (found != null) tableNode = (found as Map).cast<String, dynamic>();
-        } else if (content is Map && content['tag'] == 'table') {
-           tableNode = content.cast<String, dynamic>();
+        // 4. POS
+        else if (data.containsKey('code')) {
+          posTags.add(_cleanStr(_extractText(node)));
         }
+        // 5. Examples
+        else if (data['content'] == 'example-sentence-a') {
+          _foundSemanticContent = true;
+          pendingSentence = _cleanStr(_extractText(node));
+        }
+        else if (data['content'] == 'example-sentence-b') {
+          _foundSemanticContent = true;
+          if (pendingSentence != null) {
+             examples.add(ExampleSentence(pendingSentence!, _cleanStr(_extractText(node))));
+             pendingSentence = null;
+          }
+        }
+        // 6. Forms Table
+        else if (data['content'] == 'forms') {
+          _foundSemanticContent = true;
+          Map<String, dynamic>? tableNode;
+          if (content is List) {
+             final found = content.firstWhere((e) => e is Map && e['tag'] == 'table', orElse: () => null);
+             if (found != null) tableNode = (found as Map).cast<String, dynamic>();
+          } else if (content is Map && content['tag'] == 'table') {
+             tableNode = content.cast<String, dynamic>();
+          }
 
-        if (tableNode != null) {
-          forms.addAll(_parseFormsTable(tableNode));
+          if (tableNode != null) {
+            forms.addAll(_parseFormsTable(tableNode));
+          }
+          return; 
         }
-        return; 
       }
 
       if (content != null) _walk(content);
@@ -163,23 +173,22 @@ class _DefinitionWalker {
     final rows = findRows(tableNode['content']);
     if (rows.isEmpty || rows[0]['content'] == null) return [];
 
-    // Row 0: Kanji Headers
+    // Clean headers
     final headerRow = rows[0]['content'] as List<dynamic>;
-    final kanjiHeaders = headerRow.map(_extractText).toList();
+    final kanjiHeaders = headerRow.map((e) => _cleanStr(_extractText(e))).toList();
 
-    // Row 1+: Readings vs Forms
     for (int i = 1; i < rows.length; i++) {
       final cells = rows[i]['content'] as List<dynamic>?;
       if (cells == null || cells.isEmpty) continue;
 
-      // Col 0: Reading Header
-      final readingHeader = _extractText(cells[0]);
+      // Clean reading header
+      final readingHeader = _cleanStr(_extractText(cells[0]));
 
-      // Match data cells to headers
       for (int k = 1; k < cells.length; k++) {
         if (k >= kanjiHeaders.length) break;
         
-        final status = _extractText(cells[k]);
+        // Clean status
+        final status = _cleanStr(_extractText(cells[k]));
         
         forms.add(TermForm(
           kanjiHeaders[k], 
@@ -195,20 +204,21 @@ class _DefinitionWalker {
     if (node == null) return '';
     if (node is String) return node;
     
-    // 1. Keep join('') so inline Japanese characters don't get split by spaces
+    // Keep join('') so inline Japanese characters don't get split
     if (node is List) return node.map(_extractText).join('');
     
     if (node is Map) {
       final tag = node['tag'];
       
-      // Removing Ruby text (<rt>) and pronunciation text (<rp>)
+      // Remove Ruby and Pronunciation tags
       if (tag == 'rt' || tag == 'rp') return ''; 
       
-      // 2. Grab all possible searchable text from images (alt, description, title)
+      // Extract image text and pad
       if (tag == 'img') {
-        return [node['alt'], node['description'], node['title']]
+        final imgText = [node['alt'], node['description'], node['title']]
             .where((e) => e != null && e.toString().isNotEmpty)
             .join(' ');
+        return ' $imgText '; 
       }
 
       String contentText = '';
@@ -216,9 +226,14 @@ class _DefinitionWalker {
         contentText = _extractText(node['content']);
       }
 
-      // 3. Inject a space ONLY for block-level tags so distinct paragraphs/items don't glue together
-      if (['div', 'p', 'li', 'br', 'td', 'th'].contains(tag)) {
-        return '$contentText '; 
+      // Inject spaces around block-level elements
+      final blockTags = [
+        'div', 'p', 'li', 'br', 'td', 'th', 'tr', 'table', 'ul', 'ol',
+        'blockquote', 'dl', 'dt', 'dd', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'
+      ];
+      
+      if (blockTags.contains(tag)) {
+        return ' $contentText '; 
       }
 
       return contentText;

@@ -10,7 +10,7 @@ final List<ParsedDefinitions> testExpectations = [
 
   // Index 1: test_case_2.json
   ParsedDefinitions(
-    definitions: [],
+    definitions: ["囲みを破る → redirected from 圍みを破る"],
     references: ["⟶囲みを破る"], 
   ),
 
@@ -93,6 +93,25 @@ final List<ParsedDefinitions> testExpectations = [
       "to travel (movement of vehicles)",
       "to hurry to",
       "to retreat (from battle); to take flight"
+    ], 
+  ),
+
+  ParsedDefinitions(
+    definitions: [
+      "漢字 Apple Banana"
+    ], 
+  ),
+  
+  ParsedDefinitions(
+    definitions: [
+      "A cute cat",
+      "Dog A good boy"
+    ], 
+  ),
+  
+  ParsedDefinitions(
+    definitions: [
+      "An explicit text object definition."
     ], 
   ),
 ];
