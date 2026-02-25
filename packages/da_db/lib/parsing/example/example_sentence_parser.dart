@@ -1,7 +1,7 @@
 
 import 'dart:convert';
 
-import 'package:da_db/parsing/yomitan/in_memory_cache/example/example_parser_context.dart';
+import 'package:da_db/parsing/example/example_parser_context.dart';
 import 'package:drift/drift.dart';
 import 'package:language_processing/language_processing.dart';
 
