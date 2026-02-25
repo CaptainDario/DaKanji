@@ -37,7 +37,7 @@ void main() {
     );
 
     // Setup paths based on your global dataFilesPath tree
-    final testDataDir = p.joinAll([dataFilesPath, "deletion_test_data"]);
+    final testDataDir = p.joinAll([daDbDataFilesPath, "deletion_test_data"]);
     
     zipDict1 = await createTmpZip(Directory(p.joinAll([testDataDir, "yomitan_1"])));
     zipDict2 = await createTmpZip(Directory(p.joinAll([testDataDir, "yomitan_2"])));

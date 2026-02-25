@@ -97,8 +97,8 @@ Future<DaDb> setupFreshDB() async {
   s = Stopwatch()..start();
   await partialInit(db, (File f) => true, "term_search_test",
     otherFilesToCopy: [
-      File(p.join(dataFilesPath, "testing_db", "kanji_bank_1.json")),
-      File(p.join(dataFilesPath, "testing_db", "kanji_meta_bank_1.json")),
+      File(p.join(daDbDataFilesPath, "testing_db", "kanji_bank_1.json")),
+      File(p.join(daDbDataFilesPath, "testing_db", "kanji_meta_bank_1.json")),
     ],
     isDefaultDictionary: true
   );
