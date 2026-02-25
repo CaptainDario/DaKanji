@@ -8,5 +8,11 @@ hook/**
 bin/benchmarking/**
 bin/build/**
 
-data/da_db_input_files/**
+data/dakanji_db_input_files/**
 !data/da_db_input_files/.gitkeep
+
+out/**
+!out/.gitignore
+
+tmp/**
+!tmp/.gitignore
