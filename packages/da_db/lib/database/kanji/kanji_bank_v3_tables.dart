@@ -54,11 +54,11 @@ class KanjiBankV3StatsTable extends Table {
   IntColumn get kanjiBankEntryId => integer()
     .references(KanjiBankV3Table, #id, onDelete: KeyAction.cascade)();
 
-  /// The value of this entrie's stat
-  TextColumn get statValue => text()();
-
   /// `TagBankV3Table` entry that belongs to this entry
   IntColumn get statTagId => integer()
     .references(TagBankV3Table, #id)();
 
+  /// The value of this entrie's stat
+  TextColumn get statValue => text()();
+  
 }
