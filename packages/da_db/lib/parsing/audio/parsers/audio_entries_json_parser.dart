@@ -1,6 +1,6 @@
 import 'dart:convert';
-import 'dart:typed_data';
 
+import 'package:archive/archive_io.dart';
 import 'package:da_db/database/da_db.dart';
 import 'package:da_db/parsing/audio/util/audio_staging_helper.dart';
 import 'package:da_db/parsing/staging_db/staging_db.dart';
@@ -12,7 +12,7 @@ class AudioEntriesJsonParser {
 
   /// Parses audio data source in format 3 (entries.json)
   Future<void> parse(
-    Iterable<({String filePath, Uint8List fileContent})> dataSources,
+    Iterable<ArchiveFile> dataSources,
     String jsonString,
     StagingDatabase stagingDb,
     DaDb mainDb,
@@ -50,11 +50,11 @@ class AudioEntriesJsonParser {
 
     for (final dataSource in dataSources) {
       if (++i % 50 == 0) {
-        onStatus("Processing audio source file: ${dataSource.filePath} $i/$noEntries");
+        onStatus("Processing audio source file: ${dataSource.name} $i/$noEntries");
       }
       
       // Lookup Key
-      String filePath = p.basename(dataSource.filePath);
+      String filePath = p.basename(dataSource.name);
       
       if (!fileData.containsKey(filePath)) {
         
@@ -62,8 +62,8 @@ class AudioEntriesJsonParser {
             terms: [], // No terms
             reading: null,
             pitchPattern: null,
-            originalFilePath: dataSource.filePath,
-            fileContent: dataSource.fileContent,
+            originalFilePath: dataSource.name,
+            fileContent: dataSource.content,
          );
          continue;
       }
@@ -75,8 +75,8 @@ class AudioEntriesJsonParser {
         terms: entry.term,
         reading: entry.reading,
         pitchPattern: entry.pitchPattern,
-        originalFilePath: dataSource.filePath,
-        fileContent: dataSource.fileContent,
+        originalFilePath: dataSource.name,
+        fileContent: dataSource.content,
       );
     }
 

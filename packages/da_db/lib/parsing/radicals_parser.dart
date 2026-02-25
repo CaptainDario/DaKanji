@@ -100,9 +100,9 @@ Future _addRadicalsToDB(
 
   // load radical files
   Map radkMap = jsonDecode(utf8.decode(daDbDataSourceIterator(
-    archivePath: radkPath).first.fileContent))["radicals"];
+    archivePath: radkPath).first.content))["radicals"];
   Map kradMap = jsonDecode(utf8.decode(daDbDataSourceIterator(
-    archivePath: kradPath).first.fileContent))["kanji"];
+    archivePath: kradPath).first.content))["kanji"];
 
   // get all entries that are currently in the kanji db
   final kanjis = { for (var e in await db.kanjiDao.getAllKanjis()) e.kanji : e.id };

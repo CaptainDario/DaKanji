@@ -3,11 +3,13 @@ import 'dart:convert';
 import 'dart:isolate';
 
 import 'package:archive/archive_io.dart';
+import 'package:collection/collection.dart';
 import 'package:da_db/data/dictionary_types.dart';
 import 'package:da_db/database/da_db.dart';
 import 'package:da_db/parsing/audio/mergers/audio_bank_merger.dart';
 import 'package:da_db/parsing/staging_db/staging_db.dart';
 import 'package:da_db/parsing/util/db_optimization.dart';
+import 'package:da_db/parsing/util/parsing_util.dart';
 import 'package:da_db/parsing/yomitan/in_memory_cache/index/index_parser.dart';
 import 'package:drift/isolate.dart';
 import 'package:drift/native.dart';
@@ -71,33 +73,47 @@ Future<void> _audioOrchestratorEntry(({
     languageProcessor: LanguageProcessor.fromJsonString(params.languageProcessorJson),
   );
 
-  InputFileStream? zipStream;
   Directory? tempDir;
   StagingDatabase? stagingDb;
 
   try {
     sendPort.send("Scanning audio dictionary structure...");
     await db.languageProcessor.init();
-    zipStream = InputFileStream(params.dataSourcePath);
-    final archiveHeaders = ZipDecoder().decodeStream(zipStream);
 
-    // 1. Setup Index (Reusing the Yomitan pattern)
-    final int indexId = await _initializeAudioIndex(archiveHeaders, db, params.isDefaultDictionary);
+    // 1. Get all file handles lazily
+    final allFiles = daDbDataSourceIterator(
+      archivePath: params.dataSourcePath, 
+      fileOrder: ["yomitan_index.json"]
+    ).toList(); // Safe: only stores ArchiveFile pointers, not content
 
-    // 2. Prepare Staging Environment
+    // 2. Setup Index
+    final indexFile = allFiles.firstWhereOrNull((f) => f.name == "yomitan_index.json");
+    if (indexFile == null) throw Exception("No yomitan_index.json found.");
+    
+    final int indexId = await parseAndInsertIndex(
+      utf8.decode(indexFile.readBytes()!), 
+      db, 
+      DictionaryTypes.audio, 
+      params.isDefaultDictionary
+    );
+
+    // 3. Prepare Staging Environment
     tempDir = await Directory.systemTemp.createTemp('da_db_audio_');
     final String stagingDbPath = p.join(tempDir.path, 'audio_staging.db');
     stagingDb = StagingDatabase(NativeDatabase(File(stagingDbPath)));
 
-    // 3. Stage Metadata
+    // 4. Stage Metadata
+    // Filter out the index file and pass the rest to the staging logic
+    final contentFiles = allFiles.where((f) => f.name != "yomitan_index.json").toList();
+    
     await _runAudioStaging(
-      archive: archiveHeaders,
+      contentFiles: contentFiles,
       stagingDb: stagingDb,
       db: db,
       sendPort: sendPort,
     );
 
-    // 4. SQL-based Merge
+    // 5. SQL-based Merge
     await _mergeAudioStagingData(
       db: db,
       stagingDbPath: stagingDbPath,
@@ -105,14 +121,12 @@ Future<void> _audioOrchestratorEntry(({
       sendPort: sendPort,
     );
 
-    // 5. Finalize
     sendPort.send("Optimizing database...");
     await optimizeDbAfterImport(db);
 
   } catch (e, stack) {
     sendPort.send("Error: $e\n$stack");
   } finally {
-    zipStream?.close();
     await stagingDb?.close();
     if (tempDir != null && await tempDir.exists()) {
       await tempDir.delete(recursive: true);
@@ -125,47 +139,32 @@ Future<void> _audioOrchestratorEntry(({
 
 // --- Helper Functions ---
 
-Future<int> _initializeAudioIndex(Archive archive, DaDb db, bool isDefault) async {
-  final indexHeader = archive.findFile("yomitan_index.json");
-  if (indexHeader == null) {
-    throw Exception("Invalid Audio Dict: No yomitan_index.json found.");
-  }
-
-  final indexJson = utf8.decode(indexHeader.rawContent!.getStream(decompress: true).toUint8List());
-  return await parseAndInsertIndex(indexJson, db, DictionaryTypes.audio, isDefault);
-}
-
 Future<void> _runAudioStaging({
-  required Archive archive,
+  required List<ArchiveFile> contentFiles,
   required StagingDatabase stagingDb,
   required DaDb db,
   required SendPort sendPort,
 }) async {
   sendPort.send("Parsing metadata to staging database...");
 
-  final contentDataSources = archive.files
-      .where((f) => p.basename(f.name) != "yomitan_index.json" && f.isFile)
-      .map((f) => (filePath: f.name, fileContent: f.content))
-      .toList();
+  if (contentFiles.isEmpty) return;
 
-  if (contentDataSources.isEmpty) return;
-
-  // Determine format via helper
-  final indexJsonEntry = contentDataSources.where((f) => p.basename(f.filePath) == "index.json").firstOrNull;
-  final entriesJsonEntry = contentDataSources.where((f) => p.basename(f.filePath) == "entries.json").firstOrNull;
+  // Detect format using handles (No bytes loaded yet!)
+  final indexJsonEntry = contentFiles.firstWhereOrNull((f) => p.basename(f.name) == "index.json");
+  final entriesJsonEntry = contentFiles.firstWhereOrNull((f) => p.basename(f.name) == "entries.json");
 
   if (indexJsonEntry != null) {
-    final jsonStr = utf8.decode(indexJsonEntry.fileContent);
-    final audioFiles = contentDataSources.where((f) => f != indexJsonEntry);
+    final jsonStr = utf8.decode(indexJsonEntry.readBytes()!);
+    final audioFiles = contentFiles.where((f) => f != indexJsonEntry).toList();
     await AudioIndexJsonParser().parse(audioFiles, jsonStr, stagingDb, db, (msg) => sendPort.send(msg));
   } 
   else if (entriesJsonEntry != null) {
-    final jsonStr = utf8.decode(entriesJsonEntry.fileContent);
-    final audioFiles = contentDataSources.where((f) => f != entriesJsonEntry);
+    final jsonStr = utf8.decode(entriesJsonEntry.readBytes()!);
+    final audioFiles = contentFiles.where((f) => f != entriesJsonEntry).toList();
     await AudioEntriesJsonParser().parse(audioFiles, jsonStr, stagingDb, db, (msg) => sendPort.send(msg));
   } 
   else {
-    await AudioFileNameParser().parse(contentDataSources, stagingDb, db, (msg) => sendPort.send(msg));
+    await AudioFileNameParser().parse(contentFiles, stagingDb, db, (msg) => sendPort.send(msg));
   }
 }
 

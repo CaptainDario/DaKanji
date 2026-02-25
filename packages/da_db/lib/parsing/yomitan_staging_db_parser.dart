@@ -8,6 +8,7 @@ import 'package:archive/archive_io.dart';
 import 'package:da_db/data/dictionary_types.dart';
 import 'package:da_db/database/da_db.dart';
 import 'package:da_db/parsing/util/db_optimization.dart';
+import 'package:da_db/parsing/util/parsing_util.dart';
 import 'package:da_db/parsing/yomitan/in_memory_cache/index/index_parser.dart';
 import 'package:da_db/parsing/yomitan/in_memory_cache/media/media_importer.dart';
 import 'package:da_db/parsing/yomitan/staging_db/mergers/staging_db_merging.dart';
@@ -86,14 +87,16 @@ Future<void> _orchestratorEntry(({
   try {
     // --- STEP 1: SCAN ---
     sendPort.send("Scanning dictionary structure...");
-    zipStream = InputFileStream(params.dataSourcePath);
-    final archive = ZipDecoder().decodeStream(zipStream);
+    final allFiles = daDbDataSourceIterator(
+      archivePath: params.dataSourcePath, 
+      fileOrder: [indexFileNamingScheme]
+    ).toList();
     
     int? indexId;
     final parallelQueue = <String>[];
-    final mediaFiles = <({String filePath, Uint8List mediaContent, int indexId, int? insertId})>[];
+    final mediaQueue = <({ArchiveFile file, int indexId, int? insertId})>[];
 
-    for (final file in archive.files) {
+    for (final file in allFiles) {
       final name = p.basename(file.name);
       if (name == indexFileNamingScheme) {
         final indexJson = utf8.decode(file.rawContent!.getStream(decompress: true).toUint8List());
@@ -106,9 +109,8 @@ Future<void> _orchestratorEntry(({
       }
       else {
         if (name.endsWith('.json')) print("DEBUG: Treating as media: $name"); // Trace unhandled files
-        mediaFiles.add((
-          filePath: file.name,
-          mediaContent: Uint8List.fromList(file.content as List<int>),
+        mediaQueue.add((
+          file: file,
           indexId: 0,
           insertId: null
         ));
@@ -135,13 +137,7 @@ Future<void> _orchestratorEntry(({
     );
 
     // --- STEP 4: MEDIA ---
-    final finalizedMedia = mediaFiles.map((m) => (
-      filePath: m.filePath, 
-      mediaContent: m.mediaContent, 
-      indexId: indexId!, 
-      insertId: m.insertId
-    )).toList();
-    await _finalizeImport(db, finalizedMedia, sendPort);
+    await _finalizeImport(db, mediaQueue, sendPort);
 
   } catch (e, stack) {
     print(stack);
@@ -224,12 +220,12 @@ Future<void> _mergeStagingData({
 
 Future<void> _finalizeImport(
   DaDb db, 
-  List<({String filePath, Uint8List mediaContent, int indexId, int? insertId})> mediaFiles, 
+  List<({ArchiveFile file, int indexId, int? insertId})> mediaFiles, 
   SendPort sendPort
 ) async {
   if (mediaFiles.isNotEmpty) {
     sendPort.send("Importing ${mediaFiles.length} media files...");
-    const batchSize = 50;
+    const batchSize = 200;
     for (var i = 0; i < mediaFiles.length; i += batchSize) {
       final end = min(i + batchSize, mediaFiles.length);
       await importMediaFiles(db, mediaFiles.sublist(i, end));

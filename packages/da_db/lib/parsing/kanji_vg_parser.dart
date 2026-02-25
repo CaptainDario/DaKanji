@@ -2,6 +2,7 @@
 import 'dart:convert';
 import 'dart:isolate';
 
+import 'package:archive/archive_io.dart';
 import 'package:da_db/parsing/util/db_optimization.dart';
 import 'package:da_db/parsing/util/parsing_util.dart';
 import 'package:drift/drift.dart';
@@ -46,9 +47,9 @@ Future<void> _addKanjiVGToDB(
 
   // convert kanji vg to map
   Map<String, String> kanjiVGMap = {};
-  Iterable<({String filePath, Uint8List fileContent})> dataSources = daDbDataSourceIterator(archivePath: dataSourcePath);
-  for (final ({String filePath, Uint8List fileContent}) data in dataSources) {
-    final (kanji, svg) = parseKanjiVGFile(utf8.decode(data.fileContent));
+  Iterable<ArchiveFile> dataSources = daDbDataSourceIterator(archivePath: dataSourcePath);
+  for (ArchiveFile file in dataSources) {
+    final (kanji, svg) = parseKanjiVGFile(utf8.decode(file.content));
     kanjiVGMap[kanji] = svg;
   }
 

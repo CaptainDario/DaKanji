@@ -46,7 +46,7 @@ Stream<String> getStringStreamFromTarBz2File(File file) {
 /// be processed. The name can be a RegExp pattern that will be matched. If the
 /// list is short than the number of files in the archive the unspecified files
 /// are processed in the order they are read.
-Iterable<({String filePath, Uint8List fileContent})> daDbDataSourceIterator(
+Iterable<ArchiveFile> daDbDataSourceIterator(
   {
     String? archivePath,
     Uint8List? archiveBytes,
@@ -71,7 +71,7 @@ Iterable<({String filePath, Uint8List fileContent})> daDbDataSourceIterator(
     ); 
   }
   finally {
-    inputStream.close();  
+    //inputStream.close();  
   }
 
 }
@@ -86,7 +86,7 @@ Iterable<({String filePath, Uint8List fileContent})> daDbDataSourceIterator(
 /// 
 /// [filesToExclude] can be used to exclude specific files from being
 /// processed (it also can be a regex pattern).
-Iterable<({String filePath, Uint8List fileContent})> _archiveIteratorStreamed(
+Iterable<ArchiveFile> _archiveIteratorStreamed(
   Archive archive,
   {
     List<String> fileOrder=const [],
@@ -115,18 +115,15 @@ Iterable<({String filePath, Uint8List fileContent})> _archiveIteratorStreamed(
 
     // Iterate over the files for which an order was specified
     for (ArchiveFile matchedFile in matchedFiles) {
-      final content = matchedFile.readBytes()!;
       processedFiles.add(matchedFile.name);
-      yield (filePath: matchedFile.name, fileContent: content); 
+      yield matchedFile;
     }
   }
 
   // iterate over the remaining files
   for (final entity in cleanedFiles.sorted((a, b) => a.name.compareTo(b.name))) {
     if (entity.isFile && !processedFiles.contains(entity.name)) {
-      // get the file's content
-      final content = entity.readBytes()!;
-      yield (filePath: entity.name, fileContent: content);
+      yield entity;
     }
   }
 }

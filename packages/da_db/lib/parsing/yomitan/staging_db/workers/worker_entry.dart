@@ -3,9 +3,10 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:isolate';
 
-import 'package:archive/archive_io.dart';
+import 'package:collection/collection.dart';
 import 'package:da_db/parsing/staging_db/staging_db.dart';
 import 'package:da_db/parsing/util/db_optimization.dart';
+import 'package:da_db/parsing/util/parsing_util.dart';
 import 'package:da_db/parsing/yomitan/staging_db/parsers/kanji_bank_v3_parser.dart';
 import 'package:da_db/parsing/yomitan/staging_db/parsers/kanji_meta_bank_v3_parser.dart';
 import 'package:da_db/parsing/yomitan/staging_db/parsers/tag_bank_v3_parser.dart';
@@ -26,8 +27,7 @@ Future<void> workerEntry(SendPort mainSendPort) async {
   LanguageProcessor? lp;
   ProcessorOptions? processorOptions;
   
-  InputFileStream? zipInputStream;
-  Archive? archiveHeaders; 
+  String? _zipPath;
   
   int currentLocalId = 0; 
 
@@ -54,15 +54,8 @@ Future<void> workerEntry(SendPort mainSendPort) async {
       
       processorOptions = ProcessorOptions();
 
-      try {
-        zipInputStream = InputFileStream(message.zipPath);
-        archiveHeaders = ZipDecoder().decodeStream(zipInputStream);
-        message.replyPort.send(MsgReady(receivePort.sendPort));
-      }
-      catch (e) {
-        message.replyPort.send(MsgError("Failed to open zip: $e"));
-        continue;
-      }
+      _zipPath = message.zipPath;
+      message.replyPort.send(MsgReady(receivePort.sendPort));
     }
     
     else if (message is MsgProcessFile) {
@@ -74,19 +67,24 @@ Future<void> workerEntry(SendPort mainSendPort) async {
           orElse: () => throw Exception("No parser found for ${message.fileName}")
         );
 
-        final fileHeader = archiveHeaders!.findFile(message.fileName)!;
-        final jsonObject = jsonDecode(utf8.decode(fileHeader.content));
+        final fileHandle = daDbDataSourceIterator(archivePath: _zipPath)
+          .firstWhereOrNull((f) => f.name == message.fileName);
+
+        if (fileHandle == null) throw Exception("File not found");
+
+        // Lazy load the content only now
+        final bytes = fileHandle.readBytes()!; 
+        final jsonObject = jsonDecode(utf8.decode(bytes));
 
         if (jsonObject is List) {
           currentLocalId = await parser.parseFileContent(
             jsonObject, db, lp, processorOptions!, currentLocalId);
         }
-
         mainSendPort.send(MsgDone());
 
       }
       catch (e, s) {
-        print("Error processing ${message.fileName}: $e");
+        print("Error processing ${message.fileName}: $e, \n$s");
         mainSendPort.send(MsgError("Error in ${message.fileName}: $e"));
       }
     }
@@ -98,7 +96,6 @@ Future<void> workerEntry(SendPort mainSendPort) async {
       }
       
       lp?.close();
-      zipInputStream?.close(); 
       
       mainSendPort.send("CLOSED");
       receivePort.close();

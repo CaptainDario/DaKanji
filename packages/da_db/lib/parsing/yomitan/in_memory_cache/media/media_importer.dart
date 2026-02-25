@@ -1,3 +1,4 @@
+import 'package:archive/archive_io.dart';
 import 'package:da_db/database/da_db.dart';
 import 'package:drift/drift.dart';
 import 'package:path/path.dart' as p;
@@ -7,15 +8,15 @@ import 'package:unorm_dart/unorm_dart.dart' as unorm;
 
 Future importMediaFiles(
   DaDb db,
-  List<({String filePath, Uint8List mediaContent, int indexId, int? insertId})> files
+  List<({ArchiveFile file, int indexId, int? insertId})> files
 ) async {
 
   List<MediaTableCompanion> companions = [];
 
   for (var file in files) {
     // get raw paths
-    String name = p.basename(file.filePath);
-    String path = p.dirname(file.filePath);
+    String name = p.basename(file.file.name);
+    String path = p.dirname(file.file.name);
     
     // Normalize path and name to NFC
     String cleanName = unorm.nfc(name); 
@@ -26,7 +27,7 @@ Future importMediaFiles(
       indexId: Value(file.indexId),
       path: Value(cleanPath),
       name: Value(cleanName),
-      data: Value(file.mediaContent),
+      data: Value(file.file.content),
     ));
   }
 

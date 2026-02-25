@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'dart:isolate';
 import 'dart:typed_data';
 
+import 'package:archive/archive_io.dart';
 import 'package:da_db/data/dictionary_types.dart';
 import 'package:da_db/parsing/util/db_optimization.dart';
 import 'package:da_db/parsing/util/import_context.dart';
@@ -116,7 +117,7 @@ Future _parseDictionaryDataSource(({
   printMemoryUsage();
 
   try {
-    Iterable<({String filePath, Uint8List fileContent})> dataSources = daDbDataSourceIterator(
+    Iterable<ArchiveFile> dataSources = daDbDataSourceIterator(
       archivePath: params.dataSourcePath,
       fileOrder: [indexFileNamingScheme, tagBankFileNamingScheme],
     );
@@ -124,7 +125,7 @@ Future _parseDictionaryDataSource(({
     // parse the index file -> get dict index
     final indexFile = dataSources.first;
     int indexId = await parseAndInsertIndex(
-      utf8.decode(indexFile.fileContent), db, DictionaryTypes.yomitan, params.isDefaultDictionary);
+      utf8.decode(indexFile.content), db, DictionaryTypes.yomitan, params.isDefaultDictionary);
     final IndexTableData indexEntry = (await db.indexDao.getById(indexId))!;
 
     // create import context for parsing
@@ -136,37 +137,37 @@ Future _parseDictionaryDataSource(({
     // parse the rest of the files (first tag bank, then the rest in sorted order)
     int progressCounter = 0;
     final int noEntries = dataSources.length;
-    List<({String filePath, Uint8List mediaContent, int indexId, int? insertId})> filesToInsert = [];
-    for (final ({String filePath, Uint8List fileContent}) data in dataSources) {
+    List<({ArchiveFile file, int indexId, int? insertId})> filesToInsert = [];
+    for (ArchiveFile data in dataSources) {
 
       progressCounter++;
-      params.mainIsolateSendPort.send("Parsing ${data.filePath} ($progressCounter/$noEntries) ...");
+      params.mainIsolateSendPort.send("Parsing ${data.name} ($progressCounter/$noEntries) ...");
       printMemoryUsage();
 
-      if(p.basename(data.filePath).contains(indexFileNamingScheme)) continue; // skip index file (already parsed)
-      if(!validDictionaryFiles.any((scheme) => p.basename(data.filePath).contains(scheme))){
-        params.mainIsolateSendPort.send("Copying ${data.filePath} to DB ...");
-        filesToInsert.add((filePath: data.filePath, mediaContent: data.fileContent,
-          indexId: indexId, insertId: null));
+      if(p.basename(data.name).contains(indexFileNamingScheme)) continue; // skip index file (already parsed)
+      if(!validDictionaryFiles.any((scheme) => p.basename(data.name).contains(scheme))){
+        params.mainIsolateSendPort.send("Copying ${data.name} to DB ...");
+        filesToInsert.add((
+          file: data, indexId: indexId, insertId: null));
       }
       else {
         // manage import contexts
         termImportContext = await manageImportContext(
-          termImportContext, data.filePath, termBankFileNamingScheme,
+          termImportContext, data.name, termBankFileNamingScheme,
           () => TermBankV3ParserContext.create(db, indexId));
         termMetaImportContext = await manageImportContext(
-          termMetaImportContext, data.filePath, termMetaBankFileNamingScheme,
+          termMetaImportContext, data.name, termMetaBankFileNamingScheme,
           () => TermMetaBankV3ParserContext.create(db, indexId));
         kanjiImportContext = await manageImportContext(
-          kanjiImportContext, data.filePath, kanjiBankFileNamingScheme,
+          kanjiImportContext, data.name, kanjiBankFileNamingScheme,
           () => KanjiBankV3ParserContext.create(db, indexId));
         kanjiMetaImportContext = await manageImportContext(
-          kanjiMetaImportContext, data.filePath, kanjiMetaBankFileNamingScheme,
+          kanjiMetaImportContext, data.name, kanjiMetaBankFileNamingScheme,
           () => KanjiMetaBankV3ParserContext.create(db));
           
         await parseDictionaryFile(
-          filePath: data.filePath,
-          fileContent: utf8.decode(data.fileContent),
+          filePath: data.name,
+          fileContent: utf8.decode(data.content),
           importContext: [termImportContext, termMetaImportContext, kanjiImportContext, kanjiMetaImportContext]
             .nonNulls.firstOrNull,
           db: db,
