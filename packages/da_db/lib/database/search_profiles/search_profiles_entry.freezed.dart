@@ -19,7 +19,7 @@ mixin _$SearchProfilesEntry {
  int get id;/// The name of the profile.
  String get name;/// Whether this profile is the active profile.
  bool get isActiveProfile; int get sortOrder;/// 1st level sort order for search results.
-/// If an entry of [DaKanjiDbSearch1stSortOrder] is not included here, it
+/// If an entry of [SearchResult1stSortOrder] is not included here, it
 /// will not be searched for.
 /// 
 /// Default is:
@@ -273,7 +273,7 @@ class _SearchProfilesEntry extends SearchProfilesEntry {
 @override@JsonKey() final  bool isActiveProfile;
 @override@JsonKey() final  int sortOrder;
 /// 1st level sort order for search results.
-/// If an entry of [DaKanjiDbSearch1stSortOrder] is not included here, it
+/// If an entry of [SearchResult1stSortOrder] is not included here, it
 /// will not be searched for.
 /// 
 /// Default is:
@@ -283,7 +283,7 @@ class _SearchProfilesEntry extends SearchProfilesEntry {
 /// - spellfixMatch
  final  List<(SearchResult1stSortOrder, bool)> _firstSortOrder;
 /// 1st level sort order for search results.
-/// If an entry of [DaKanjiDbSearch1stSortOrder] is not included here, it
+/// If an entry of [SearchResult1stSortOrder] is not included here, it
 /// will not be searched for.
 /// 
 /// Default is:
