@@ -4,35 +4,19 @@ import '/database/general_tables/language_code_table.dart';
 import '/database/example/example_fts5_table.drift';
 import '/database/example/example_views.drift';
 
-example_fts_search_drift:
-    SELECT
-        EDV.id,
-        EDV.indexEntry,
-        EDV.example_sentence,
-        '[' || COALESCE(GROUP_CONCAT(DISTINCT
-            -- Only create the JSON object if the translation is not NULL
-            CASE
-                WHEN EDV.example_translation IS NOT NULL THEN json_object(
-                    'translation', EDV.example_translation,
-                    'languageCode', EDV.language_code
-                )
-            END
-        ), '') || ']' AS translations
-    FROM
-        example_entry_view AS EDV
-    INNER JOIN example_fts AS FTS
-        ON FTS.rowid = EDV.id
-    WHERE
-        example_fts MATCH :query
-            AND 
-        (
-            (LENGTH(:languageCodes) <= 2)
-                OR
-            (EDV.language_code IN (SELECT value FROM json_each(:languageCodes)))
-                OR
-            EDV.translation_id IS NULL
-        )
-
-    GROUP BY
-        EDV.id
+-- Phase 1: Fast ID search
+searchExampleIds:
+    SELECT e.id 
+    FROM fts_example_tokens AS fts
+        INNER JOIN example_table AS e ON e.example_sentence_id = fts.rowid
+        INNER JOIN language_code_table AS l ON l.id = e.language_code_id
+    WHERE fts_example_tokens MATCH '"' || :query || '"'
+        AND l.language_code IN :languages
+    ORDER BY bm25(fts_example_tokens)
     LIMIT :limit OFFSET :offset;
+
+
+-- Phase 2: Rich data hydration
+getExamplesByIds:
+    SELECT * FROM example_entry_view 
+    WHERE id IN :ids;

@@ -1,62 +1,81 @@
-
 import 'dart:convert';
 
+import 'package:da_db/database/da_db.dart';
 import 'package:da_db/database/index/index_table_entry.dart';
+import 'package:da_db/database/stats/stat_entry.dart';
+import 'package:da_db/database/tag/tag_bank_v3_entry.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '/database/da_db.dart';
-import '/database/example/example_entry_translation.dart';
+import 'example_audio_entry.dart';
 
 part 'example_entry.freezed.dart';
 part 'example_entry.g.dart';
 
-
-
 @Freezed()
 @JsonSerializable()
-/// Class representing one example sentence and its translations of the database
 class ExampleEntry with _$ExampleEntry {
 
-  /// The id of this entry in the example table
   @override
-  int id;
-
-  /// The id of the dictionary this entry belongs to
+  final int id;
   @override
   final IndexEntry indexEntry;
-
-  /// The example sentence
   @override
-  final String example;
-
-  /// The translations of the example
+  final int groupId;
   @override
-  final List<ExampleEntryTranslation> translations;
+  final String languageCode;
+  @override
+  final String sentence;
+  @override
+  final String? reading;
+  @override
+  final List<TagBankV3Entry> tags;
+  @override
+  final List<StatEntry> stats;
+  @override
+  final List<ExampleAudioEntry> audios;
 
   ExampleEntry({
     required this.id,
     required this.indexEntry,
-    required this.example,
-    required this.translations,
+    required this.groupId,
+    required this.languageCode,
+    required this.sentence,
+    required this.reading,
+    this.tags = const [],
+    this.stats = const [],
+    this.audios = const [],
   }) {
-    translations.sort((a, b) => a.languageCode.compareTo(b.languageCode));
+    // Now you can sort exactly like you did in TermBankV3Entry!
+    tags.sort((a, b) => a.compareTo(b));
+    stats.sort((a, b) => a.statName.compareTo(b.statName));
+    audios.sort((a, b) => a.name.compareTo(b.name));
   }
 
-  factory ExampleEntry.fromJson(dynamic json)
-    => _$ExampleEntryFromJson(json);
+  factory ExampleEntry.fromJson(Map<String, dynamic> json) =>
+      _$ExampleEntryFromJson(json);
 
-  factory ExampleEntry.fromExampleFtsSearchSql(ExampleFtsSearchDriftResult r){
+  factory ExampleEntry.fromViewData(ExampleEntryViewData r) {
+    
+    final List<dynamic> rawTags = jsonDecode(r.tagsJson);
+    final List<dynamic> rawStats = jsonDecode(r.statsJson);
+    final List<dynamic> rawAudios = jsonDecode(r.audiosJson);
 
     return ExampleEntry(
       id: r.id,
-      indexEntry: IndexEntry.fromJson(jsonDecode(r.indexEntry)),
-      example: r.exampleSentence,
-      translations: List.from(jsonDecode(r.translations)).map((e) => 
-        ExampleEntryTranslation.fromJson(e)  
-      ).toList()
+      indexEntry: IndexEntry.fromJson(jsonDecode(r.index)),
+      groupId: r.groupId,
+      languageCode: r.languageCode,
+      sentence: r.exampleSentence,
+      reading: r.exampleSentenceReading,
+      tags: rawTags
+        .map((t) => TagBankV3Entry.fromJson(t as Map<String, dynamic>))
+        .toList(),
+      stats: rawStats
+        .map((s) => StatEntry.fromJson(s as Map<String, dynamic>))
+        .toList(),
+      audios: rawAudios
+        .map((a) => ExampleAudioEntry.fromJson(a as Map<String, dynamic>))
+        .toList(),
     );
   }
-
-  Map<String, Object?> toJson() => _$ExampleEntryToJson(this);
-
 }

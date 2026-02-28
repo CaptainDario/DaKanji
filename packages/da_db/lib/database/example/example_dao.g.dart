@@ -5,11 +5,13 @@ part of 'example_dao.dart';
 // ignore_for_file: type=lint
 mixin _$ExampleDaoMixin on DatabaseAccessor<DaDb> {
   $IndexTableTable get indexTable => attachedDatabase.indexTable;
-  $ExampleTableTable get exampleTable => attachedDatabase.exampleTable;
+  $ExampleSentenceTableTable get exampleSentenceTable =>
+      attachedDatabase.exampleSentenceTable;
   $LanguageCodeTableTable get languageCodeTable =>
       attachedDatabase.languageCodeTable;
-  $ExampleTranslationTableTable get exampleTranslationTable =>
-      attachedDatabase.exampleTranslationTable;
+  $ExampleTableTable get exampleTable => attachedDatabase.exampleTable;
+  $ExampleAudioTableTable get exampleAudioTable =>
+      attachedDatabase.exampleAudioTable;
   ExampleDaoManager get managers => ExampleDaoManager(this);
 }
 
@@ -18,16 +20,21 @@ class ExampleDaoManager {
   ExampleDaoManager(this._db);
   $$IndexTableTableTableManager get indexTable =>
       $$IndexTableTableTableManager(_db.attachedDatabase, _db.indexTable);
-  $$ExampleTableTableTableManager get exampleTable =>
-      $$ExampleTableTableTableManager(_db.attachedDatabase, _db.exampleTable);
+  $$ExampleSentenceTableTableTableManager get exampleSentenceTable =>
+      $$ExampleSentenceTableTableTableManager(
+        _db.attachedDatabase,
+        _db.exampleSentenceTable,
+      );
   $$LanguageCodeTableTableTableManager get languageCodeTable =>
       $$LanguageCodeTableTableTableManager(
         _db.attachedDatabase,
         _db.languageCodeTable,
       );
-  $$ExampleTranslationTableTableTableManager get exampleTranslationTable =>
-      $$ExampleTranslationTableTableTableManager(
+  $$ExampleTableTableTableManager get exampleTable =>
+      $$ExampleTableTableTableManager(_db.attachedDatabase, _db.exampleTable);
+  $$ExampleAudioTableTableTableManager get exampleAudioTable =>
+      $$ExampleAudioTableTableTableManager(
         _db.attachedDatabase,
-        _db.exampleTranslationTable,
+        _db.exampleAudioTable,
       );
 }

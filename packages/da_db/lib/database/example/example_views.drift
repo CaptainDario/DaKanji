@@ -2,26 +2,105 @@ import 'example_tables.dart';
 import 'example_relation_tables.dart';
 import '/database/index/index_views.drift';
 import '/database/general_tables/language_code_table.dart';
+import '/database/general_tables/term_tables.dart';
+import '/database/tag/tag_bank_v3_tables.dart';
+import '/database/stats/stat_tables.dart';
 import 'example_fts5_table.drift';
 
-CREATE VIEW IF NOT EXISTS example_entry_view AS
+CREATE VIEW example_entry_view AS
+    SELECT 
+    -- 1. Core Metadata
+    e.id,
+    e.group_id,
+    
+    -- 2. The pre-built Index JSON string
+    iv.index_entry AS "index", 
+    
+    -- 3. Sentence Data
+    s.example_sentence,
+    s.example_sentence_reading,
+    l.language_code,
 
-    SELECT
-        ET.id,
-        IT.index_entry as indexEntry,
-        ET.example_sentence,
-        ETT.example_translation,
-        LCT.language_code,
-        ETT.id AS translation_id
-    FROM
-        example_table AS ET
-    JOIN index_entry_as_json_view AS IT
-        ON IT.id = ET.index_id
-    LEFT JOIN example_table_x_example_translation_table AS ETRT
-        ON ETRT.example_id = ET.id
-    LEFT JOIN example_translation_table AS ETT
-        ON ETRT.translation_id = ETT.id
-    LEFT JOIN language_code_table AS LCT
-        ON LCT.id = ETT.language_code_id
-    ;
+    -- 4. Aggregated Tags Array
+    (SELECT json_group_array(
+        json_object(
+            'id', t.id,
+            -- Inject the full index entry as a JSON object so the converter can parse it
+            'indexEntry', json(iv.index_entry), 
+            'name', t.name,
+            'category', t.category,
+            'sortingOrder', t.sorting_order,
+            'notes', t.notes,
+            'score', t.score
+        )
+    )
+    FROM example_table_x_tag_bank_table ext
+        INNER JOIN tag_bank_v3_table t ON t.id = ext.tag_bank_id
+    WHERE ext.example_id = e.id) AS tags_json,
 
+    -- 5. Aggregated Stats Array
+    (SELECT json_group_array(
+        json_object(
+            'statName', sn.name,
+            'displayName', sdn.name,
+            'value', st.value,
+            'displayValue', st.display_value
+        )
+    )
+    FROM example_table_x_stat_table ext
+        INNER JOIN stat_table st ON st.id = ext.stat_table_id
+        INNER JOIN stat_name_table sn ON sn.id = st.stat_name_id
+        LEFT JOIN stat_name_table sdn ON sdn.id = st.stat_display_name_id
+    WHERE ext.example_id = e.id) AS stats_json,
+
+    -- 6. Aggregated Audio Array
+    (SELECT json_group_array(
+        json_object(
+            'path', a.path,
+            'name', a.name,
+            
+            -- Nested Audio Tags
+            'tags', (
+                SELECT json_group_array(
+                    json_object(
+                        'id', atag.id,
+                        -- Inject the full index entry here as well!
+                        'indexEntry', json(iv.index_entry),
+                        'name', atag.name,
+                        'category', atag.category,
+                        'sortingOrder', atag.sorting_order,
+                        'notes', atag.notes,
+                        'score', atag.score
+                    )
+                )
+                FROM example_audio_table_x_tag_bank_table axt
+                    INNER JOIN tag_bank_v3_table atag ON atag.id = axt.tag_bank_id
+                WHERE axt.audio_id = a.id
+            ),
+            
+            -- Nested Audio Stats
+            'stats', (
+                SELECT json_group_array(
+                    json_object(
+                        'statName', asn.name,
+                        'displayName', asdn.name,
+                        'value', ast.value,
+                        'displayValue', ast.display_value
+                    )
+                )
+                FROM example_audio_table_x_stat_table axst
+                    INNER JOIN stat_table ast ON ast.id = axst.stat_table_id
+                    INNER JOIN stat_name_table asn ON asn.id = ast.stat_name_id
+                    LEFT JOIN stat_name_table asdn ON asdn.id = ast.stat_display_name_id
+                WHERE axst.audio_id = a.id
+            )
+        )
+    )
+    FROM example_table_x_example_audio_table exa
+        INNER JOIN example_audio_table a ON a.id = exa.audio_id
+    WHERE exa.example_id = e.id) AS audios_json
+
+    FROM example_table e
+        INNER JOIN example_sentence_table s ON s.id = e.example_sentence_id
+        INNER JOIN language_code_table l ON l.id = e.language_code_id
+        INNER JOIN index_entry_as_json_view iv ON iv.id = e.index_id;

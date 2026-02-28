@@ -1,6 +1,4 @@
 
-import "dart:convert";
-
 import "package:drift/drift.dart";
 import 'package:language_processing/language_processing.dart';
 
@@ -15,7 +13,8 @@ part 'example_dao.g.dart';
 // Dao class that contains all queries related to the `ExampleTable`
 @DriftAccessor(
   tables: [
-    ExampleTable, ExampleTranslationTable
+    ExampleTable, ExampleSentenceTable,
+    ExampleAudioTable,
   ],
 )
 class ExampleDao extends DatabaseAccessor<DaDb> with _$ExampleDaoMixin {
@@ -24,23 +23,34 @@ class ExampleDao extends DatabaseAccessor<DaDb> with _$ExampleDaoMixin {
 
   Future<List<ExampleEntry>> searchExamples(
     String query,
-    List<Iso639_3> languages,
+    List<Iso639_3> languages, 
     {
-      int limit=-1,
-      int offset=0
-    }) async {
+      int limit = -1,
+      int offset = 0,
+    }
+  ) async {
+    final langCodes = languages.map((l) => l.name).toList();
 
-    // check laguages are set and parse 
-    List<String> langs = languages.map((e) => e.name,).toList();
+    // Phase 1: Search IDs (Quotes are handled in the .drift file)
+    final matchingIds = await db.searchExampleIds(
+      query, 
+      langCodes, 
+      limit, 
+      offset
+    ).get();
 
-    final ftsResults = (await db.example_fts_search_drift(
-      query, jsonEncode(langs), limit, offset).get());
-    List<ExampleEntry> entries = ftsResults.map((e) => 
-      ExampleEntry.fromExampleFtsSearchSql(e)
-    ).toList();
+    if (matchingIds.isEmpty) return [];
 
-    return entries;
+    // Phase 2: Fetch and Hydrate
+    final viewRows = await db.getExamplesByIds(matchingIds).get();
 
+    // Sort back to FTS rank
+    final rowMap = {for (final row in viewRows) row.id: row};
+    
+    return matchingIds
+      .where((id) => rowMap.containsKey(id))
+      .map((id) => ExampleEntry.fromViewData(rowMap[id]!))
+      .toList();
   }
 
   // ---------------------------------------------------------------------------
@@ -56,52 +66,28 @@ class ExampleDao extends DatabaseAccessor<DaDb> with _$ExampleDaoMixin {
 
   }
 
-  /// Get all example sentences from `sentences` and their ids
-  ///
-  /// Used for checking duplicates before inserting new examples
-  Future<Map<String, int>> getExampleIdMap(Set<String> sentences) async {
-    final query = select(exampleTable)
-      ..where((t) => t.exampleSentence.isIn(sentences));
-    final results = await query.get();
-    return {for (var row in results) row.exampleSentence: row.id};
-  }
-
-
-  /// Returns a Map of {(text, langId): id} for all existing translations
-  Future<Map<({String text, int langId}), int>> getTranslationIdMap(
-      Set<({String text, int langId})> translations) async {
+  /// Get the maximum id of the [exampleSentenceTable]
+  Future<int> maxExampleSentenceId() async {
     
-    if (translations.isEmpty) return {};
-
-    final conditions = translations.map((t) {
-      return (exampleTranslationTable.exampleTranslation.equals(t.text) &
-          exampleTranslationTable.languageCodeId.equals(t.langId));
-    });
-    Expression<bool> expression = conditions.reduce((a, b) => a | b);
-    final query = select(exampleTranslationTable)..where((t) => expression);
-    final results = await query.get();
-
-    return {
-      for (var row in results)
-        (text: row.exampleTranslation, langId: row.languageCodeId): row.id
-    };
-  }
-
-  /// Get the maximum id of the [ExampleTranslationTable]
-  Future<int> maxExampleTranslationId() async {
-    
-    final query = await (selectOnly(exampleTranslationTable)
-        ..addColumns([exampleTranslationTable.id.max()]))
+    final query = await (selectOnly(exampleSentenceTable)
+        ..addColumns([exampleSentenceTable.id.max()]))
       .getSingle();
 
     // Extract the max ID value, defaulting to 0 if null
-    return query.read(exampleTranslationTable.id.max()) ?? 0;
+    return query.read(exampleSentenceTable.id.max()) ?? 0;
 
   }
 
-  /// Get all example translations
-  Future<List<ExampleTranslationTableData>> getAllExampleTranslations() async {
-    return await select(exampleTranslationTable).get();
+  /// Get the maximum id of the [exampleAudioTable]
+  Future<int> maxExampleAudioTableId() async {
+    
+    final query = await (selectOnly(exampleAudioTable)
+        ..addColumns([exampleAudioTable.id.max()]))
+      .getSingle();
+
+    // Extract the max ID value, defaulting to 0 if null
+    return query.read(exampleAudioTable.id.max()) ?? 0;
+
   }
 
 }

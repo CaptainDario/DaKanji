@@ -1,7 +1,7 @@
 
 import 'package:da_db/data/dictionary_types.dart';
 import 'package:da_db/data/frequency_mode.dart'; // neccessary for drift generator
-import 'package:da_db/data/search_result_sort_order.dart'; // neccessary for drift generator
+import 'package:da_db/data/search_result_sort_order.dart';
 import 'package:da_db/database/audio/audio_dao.dart';
 import 'package:da_db/database/audio/audio_relation_tables.dart';
 import 'package:da_db/database/audio/audio_tables.dart';
@@ -38,6 +38,7 @@ import 'package:da_db/database/radicals/radical_relation_tables.dart';
 import 'package:da_db/database/radicals/radical_tables.dart';
 import 'package:da_db/database/search_profiles/search_profile_tables.dart';
 import 'package:da_db/database/search_profiles/search_profiles_dao.dart';
+import 'package:da_db/database/stats/stat_tables.dart';
 import 'package:da_db/database/tag/tag_bank_v3_dao.dart';
 import 'package:da_db/database/tag/tag_bank_v3_tables.dart';
 import 'package:da_db/database/term/term_bank_v3_dao.dart';
@@ -47,7 +48,7 @@ import 'package:da_db/database/term_meta/term_meta_bank_relation_tables.dart';
 import 'package:da_db/database/term_meta/term_meta_bank_v3_dao.dart';
 import 'package:da_db/database/term_meta/term_meta_bank_v3_tables.dart';
 import 'package:da_db/delete/deletion_dao.dart';
-import 'package:da_db/util/data_converters/sort_order_converter.dart'; // neccessary for drift generator
+import 'package:da_db/util/data_converters/sort_order_converter.dart';
 import 'package:da_db/util/data_converters/sql_json_converter.dart';   // neccessary for drift generator
 import 'package:da_db/util/data_converters/zlib_text_converter_io.dart'; // neccessary for drift generator
 import 'package:drift/drift.dart';
@@ -100,9 +101,15 @@ part 'da_db.g.dart';
     TermMetaBankV3IpaTable, TermMetaBankV3_X_IpaTable, 
     TermMetaBankV3PitchTable_X_TagBankV3Table,
 
-    ExampleTable,
-    ExampleTranslationTable,
-    ExampleTable_X_ExampleTranslationTable,
+    TagBankV3Table,
+
+    StatNameTable, StatTable, 
+
+    ExampleTable, ExampleSentenceTable, ExampleAudioTable,
+
+    ExampleTable_X_ExampleAudioTable, ExampleSentenceTable_X_TermTable,
+    ExampleTable_X_StatTable, ExampleAudioTable_X_StatTable,
+    ExampleTable_X_TagBankTable, ExampleAudioTable_X_TagBankTable
   ],
   daos: [
     DaDbDao,

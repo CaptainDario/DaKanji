@@ -9,16 +9,36 @@ part of 'example_entry.dart';
 ExampleEntry _$ExampleEntryFromJson(Map<String, dynamic> json) => ExampleEntry(
   id: (json['id'] as num).toInt(),
   indexEntry: IndexEntry.fromJson(json['indexEntry'] as Map<String, dynamic>),
-  example: json['example'] as String,
-  translations: (json['translations'] as List<dynamic>)
-      .map((e) => ExampleEntryTranslation.fromJson(e as Map<String, dynamic>))
-      .toList(),
+  groupId: (json['groupId'] as num).toInt(),
+  languageCode: json['languageCode'] as String,
+  sentence: json['sentence'] as String,
+  reading: json['reading'] as String?,
+  tags:
+      (json['tags'] as List<dynamic>?)
+          ?.map((e) => TagBankV3Entry.fromJson(e as Map<String, dynamic>))
+          .toList() ??
+      const [],
+  stats:
+      (json['stats'] as List<dynamic>?)
+          ?.map((e) => StatEntry.fromJson(e as Map<String, dynamic>))
+          .toList() ??
+      const [],
+  audios:
+      (json['audios'] as List<dynamic>?)
+          ?.map((e) => ExampleAudioEntry.fromJson(e as Map<String, dynamic>))
+          .toList() ??
+      const [],
 );
 
 Map<String, dynamic> _$ExampleEntryToJson(ExampleEntry instance) =>
     <String, dynamic>{
       'id': instance.id,
       'indexEntry': instance.indexEntry,
-      'example': instance.example,
-      'translations': instance.translations,
+      'groupId': instance.groupId,
+      'languageCode': instance.languageCode,
+      'sentence': instance.sentence,
+      'reading': instance.reading,
+      'tags': instance.tags,
+      'stats': instance.stats,
+      'audios': instance.audios,
     };

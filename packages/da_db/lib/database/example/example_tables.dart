@@ -8,6 +8,7 @@ import '/database/general_tables/language_code_table.dart';
 
 /// Contains the example sentences
 @TableIndex(name: 'ExampleTable_indexIdIndex', columns: {#indexId})
+@TableIndex(name: 'ExampleSentencesTable_languageCodeIdIndex', columns: {#languageCodeId})
 class ExampleTable extends Table {
   
   /// id of this entry
@@ -18,25 +19,43 @@ class ExampleTable extends Table {
     onDelete: KeyAction.cascade
   )();
 
-  /// the example of this entry
-  TextColumn get exampleSentence => text().unique()();
-  
-  /// the example of this entry tokenized
-  TextColumn get exampleSentenceTokenized => text()();
+  /// The id of the group this entry belongs to. Can be used to group example
+  /// sentences of the same entry together
+  IntColumn get groupId => integer()();
+
+
+  IntColumn get exampleSentenceId => integer()
+    .references(ExampleSentenceTable, #id)();
+
+  /// The id of the language code (iso 639 2T) of this translation
+  IntColumn get languageCodeId => integer().references(LanguageCodeTable, #id)();
 
 }
 
-/// Contains the example sentences' translations
-@TableIndex(name: 'ExampleTranslationTable_languageCodeIdIndex', columns: {#languageCodeId})
-class ExampleTranslationTable extends Table {
+/// Contains the actual example sentences
+class ExampleSentenceTable extends Table {
   
   /// id of this entry
   IntColumn get id => integer().autoIncrement()();
 
   /// the example of this entry
-  TextColumn get exampleTranslation => text()();
+  TextColumn get exampleSentence => text()();
 
-  /// The id of the language code (iso 639 2T) of this translation
-  IntColumn get languageCodeId => integer().references(LanguageCodeTable, #id)();
+  /// the example's reading
+  TextColumn get exampleSentenceReading => text().nullable()();
+
+}
+
+/// Contains the audio data for example sentences
+class ExampleAudioTable extends Table {
+  
+  /// id of this entry
+  IntColumn get id => integer().autoIncrement()();
+
+  /// the path to the audio file
+  TextColumn get path => text()();
+
+  /// the name of this audio
+  TextColumn get name => text()();
 
 }

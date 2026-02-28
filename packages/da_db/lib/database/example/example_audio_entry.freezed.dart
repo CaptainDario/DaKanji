@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'example_entry_translation.dart';
+part of 'example_audio_entry.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -13,40 +13,40 @@ part of 'example_entry_translation.dart';
 T _$identity<T>(T value) => value;
 
 /// @nodoc
-mixin _$ExampleEntryTranslation {
+mixin _$ExampleAudioEntry {
 
- String get translation; String get languageCode;
-/// Create a copy of ExampleEntryTranslation
+ String get path; String get name; List<TagBankV3Entry> get tags; List<StatEntry> get stats;
+/// Create a copy of ExampleAudioEntry
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-$ExampleEntryTranslationCopyWith<ExampleEntryTranslation> get copyWith => _$ExampleEntryTranslationCopyWithImpl<ExampleEntryTranslation>(this as ExampleEntryTranslation, _$identity);
+$ExampleAudioEntryCopyWith<ExampleAudioEntry> get copyWith => _$ExampleAudioEntryCopyWithImpl<ExampleAudioEntry>(this as ExampleAudioEntry, _$identity);
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ExampleEntryTranslation&&(identical(other.translation, translation) || other.translation == translation)&&(identical(other.languageCode, languageCode) || other.languageCode == languageCode));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ExampleAudioEntry&&(identical(other.path, path) || other.path == path)&&(identical(other.name, name) || other.name == name)&&const DeepCollectionEquality().equals(other.tags, tags)&&const DeepCollectionEquality().equals(other.stats, stats));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,translation,languageCode);
+int get hashCode => Object.hash(runtimeType,path,name,const DeepCollectionEquality().hash(tags),const DeepCollectionEquality().hash(stats));
 
 @override
 String toString() {
-  return 'ExampleEntryTranslation(translation: $translation, languageCode: $languageCode)';
+  return 'ExampleAudioEntry(path: $path, name: $name, tags: $tags, stats: $stats)';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class $ExampleEntryTranslationCopyWith<$Res>  {
-  factory $ExampleEntryTranslationCopyWith(ExampleEntryTranslation value, $Res Function(ExampleEntryTranslation) _then) = _$ExampleEntryTranslationCopyWithImpl;
+abstract mixin class $ExampleAudioEntryCopyWith<$Res>  {
+  factory $ExampleAudioEntryCopyWith(ExampleAudioEntry value, $Res Function(ExampleAudioEntry) _then) = _$ExampleAudioEntryCopyWithImpl;
 @useResult
 $Res call({
- String translation, String languageCode
+ String path, String name, List<TagBankV3Entry> tags, List<StatEntry> stats
 });
 
 
@@ -54,28 +54,30 @@ $Res call({
 
 }
 /// @nodoc
-class _$ExampleEntryTranslationCopyWithImpl<$Res>
-    implements $ExampleEntryTranslationCopyWith<$Res> {
-  _$ExampleEntryTranslationCopyWithImpl(this._self, this._then);
+class _$ExampleAudioEntryCopyWithImpl<$Res>
+    implements $ExampleAudioEntryCopyWith<$Res> {
+  _$ExampleAudioEntryCopyWithImpl(this._self, this._then);
 
-  final ExampleEntryTranslation _self;
-  final $Res Function(ExampleEntryTranslation) _then;
+  final ExampleAudioEntry _self;
+  final $Res Function(ExampleAudioEntry) _then;
 
-/// Create a copy of ExampleEntryTranslation
+/// Create a copy of ExampleAudioEntry
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? translation = null,Object? languageCode = null,}) {
-  return _then(ExampleEntryTranslation(
-translation: null == translation ? _self.translation : translation // ignore: cast_nullable_to_non_nullable
-as String,languageCode: null == languageCode ? _self.languageCode : languageCode // ignore: cast_nullable_to_non_nullable
-as String,
+@pragma('vm:prefer-inline') @override $Res call({Object? path = null,Object? name = null,Object? tags = null,Object? stats = null,}) {
+  return _then(ExampleAudioEntry(
+path: null == path ? _self.path : path // ignore: cast_nullable_to_non_nullable
+as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
+as String,tags: null == tags ? _self.tags : tags // ignore: cast_nullable_to_non_nullable
+as List<TagBankV3Entry>,stats: null == stats ? _self.stats : stats // ignore: cast_nullable_to_non_nullable
+as List<StatEntry>,
   ));
 }
 
 }
 
 
-/// Adds pattern-matching-related methods to [ExampleEntryTranslation].
-extension ExampleEntryTranslationPatterns on ExampleEntryTranslation {
+/// Adds pattern-matching-related methods to [ExampleAudioEntry].
+extension ExampleAudioEntryPatterns on ExampleAudioEntry {
 /// A variant of `map` that fallback to returning `orElse`.
 ///
 /// It is equivalent to doing:
