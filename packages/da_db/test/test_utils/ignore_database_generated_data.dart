@@ -1,4 +1,5 @@
 import 'package:da_db/database/db_queries/kanji_dictionary_search/kanji_dictionary_search_result.dart';
+import 'package:da_db/database/example/example_entry.dart';
 import 'package:da_db/database/kanji/kanji_bank_v3_entry.dart';
 import 'package:da_db/database/kanji_meta/kanji_meta_bank_v3_entry.dart';
 import 'package:da_db/database/term/term_bank_v3_entry.dart';
@@ -81,5 +82,29 @@ KanjiDictionarySearchResult kanjiDictionarySearchResultIgnoreDatabaseGeneratedDa
     kanjiMetaBankEntries: result.kanjiMetaBankEntries.map(
       (e) => kanjiMetaBankEntryIgnoreDatabaseGeneratedData(e)
     ).toList()
+  );
+}
+
+ExampleEntry exampleEntryIgnoreDatabaseGeneratedData(ExampleEntry entry) {
+  final standardIndex = entry.indexEntry.copyWith(
+    id: 0, 
+    currentSortingOrder: 0,
+  );
+
+  return entry.copyWith(
+    id: 0, // Ignore DB auto-increment ID
+    indexEntry: standardIndex,
+    // Normalize root tags
+    tags: entry.tags.map((t) => t.copyWith(
+      id: 0, 
+      indexEntry: standardIndex,
+    )).toList(),
+    // Normalize audio tags (THIS IS WHAT WAS MISSING)
+    audios: entry.audios.map((audio) => audio.copyWith(
+      tags: audio.tags.map((t) => t.copyWith(
+        id: 0,
+        indexEntry: standardIndex,
+      )).toList(),
+    )).toList(),
   );
 }

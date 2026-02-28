@@ -20,8 +20,9 @@ final dummyIndex = IndexEntry(
   description: "A dictionary for testing the example parser.",
 );
 
-TagBankV3Entry dummyTag(String name) => TagBankV3Entry(
-  id: 0, indexEntry: dummyIndex, name: name, category: 'tag', sortingOrder: 0, notes: '', score: 0
+/// Helper to generate the fully populated tags we expect to be pulled from the Yomitan tag banks
+TagBankV3Entry expectedTag(String name, String category, int order, String notes) => TagBankV3Entry(
+  id: 0, indexEntry: dummyIndex, name: name, category: category, sortingOrder: order, notes: notes, score: 0
 );
 
 final List<List<ExampleEntry>> exampleSentenceTestExpectedValues = [
@@ -30,9 +31,14 @@ final List<List<ExampleEntry>> exampleSentenceTestExpectedValues = [
     ExampleEntry(
       id: 0, indexEntry: dummyIndex, groupId: 100,
       sentence: "リンゴを食べます", reading: "りんごをたべます", languageCode: "jpn",
-      tags: [dummyTag("fruit"), dummyTag("license:CC-BY-4.0"), dummyTag("tatoeba")], // Sorted f -> l -> t
+      tags: [
+        // Sorted alphabetically: f -> l -> t, populated with real tag_bank metadata!
+        expectedTag("fruit", "category", 1, "Food related examples"),
+        expectedTag("license:CC-BY-4.0", "license", 3, "Creative Commons Attribution 4.0"),
+        expectedTag("tatoeba", "source", 2, "Imported from Tatoeba project"),
+      ], 
       stats: [
-        const StatEntry(statName: "JLPT", value: 1.0, displayValue: "N5"), // Sorted J -> d -> f -> q
+        const StatEntry(statName: "JLPT", value: 1.0, displayValue: "N5"), 
         const StatEntry(statName: "difficulty", displayName: "Difficulty", value: 2.5),
         const StatEntry(statName: "freq", displayName: "Frequency", value: 120.0, displayValue: "uncommon"),
         const StatEntry(statName: "quality", value: 5.0),
@@ -44,7 +50,12 @@ final List<List<ExampleEntry>> exampleSentenceTestExpectedValues = [
         ),
         ExampleAudioEntry(
           path: "media/apple_b.mp3", name: "apple_b.mp3",
-          tags: [dummyTag("female"), dummyTag("native"), dummyTag("tokyo")], // Sorted f -> n -> t
+          tags: [
+            // Sorted alphabetically: f -> n -> t
+            expectedTag("female", "gender", 1, "Female voice"),
+            expectedTag("native", "speaker", 1, "Native speaker audio"),
+            expectedTag("tokyo", "accent", 2, "Tokyo pitch accent"),
+          ], 
           stats: [
             const StatEntry(statName: "clarity", displayName: "Clarity", value: 4.0),
             const StatEntry(statName: "speed", displayName: "Speed", value: 3.5, displayValue: "normal"),
@@ -75,7 +86,9 @@ final List<List<ExampleEntry>> exampleSentenceTestExpectedValues = [
       audios: [
         ExampleAudioEntry(
           path: "media/cat.mp3", name: "cat.mp3",
-          tags: [dummyTag("tts")],
+          tags: [
+            expectedTag("tts", "speaker", 3, "Text-to-speech generated audio")
+          ],
           stats: [const StatEntry(statName: "quality", value: 2.0)],
         ),
       ],

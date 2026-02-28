@@ -25,6 +25,7 @@ import 'package:universal_io/io.dart';
 const String indexFileNamingScheme = "index.json";
 const List<String> parallelHandledFiles = [
   "example_bank",
+  "tag_bank",
 ];
 
 Future<Stream<String>> parseExampleDataSource({

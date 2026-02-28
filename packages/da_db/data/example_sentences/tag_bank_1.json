@@ -1,0 +1,6 @@
+[
+  ["fruit", "category", 1, "Food related examples", 0],
+  ["tatoeba", "source", 2, "Imported from Tatoeba project", 0],
+  ["license:CC-BY-4.0", "license", 3, "Creative Commons Attribution 4.0", 0],
+  ["native", "speaker", 1, "Native speaker audio", 0]
+]
