@@ -33,9 +33,13 @@ String findProjectRoot(String anchorFileName) {
 /// The root path of the DaKanji project.
 final String monoRepoRoot = findProjectRoot(".mono_repo_root");
 
+// --- MECAB FILES ------------------------------------------------------------
+/// Path to the folder that contains the files for mecab
+final mecabFilesPath = p.joinAll([monoRepoRoot, "mecab"]);
+/// Path to the mecab dictionary
+final mecabDicPath = p.joinAll([mecabFilesPath, "unidic"]);
+
 // --- DA DB PATHS -------------------------------------------------------------
-
-
 final String daDbRootPath = p.join(monoRepoRoot, "packages", "da_db");
 
 /// path to the tests folder
@@ -55,13 +59,6 @@ final daDbTestPath = p.joinAll([tmpPath, "da.db"]);
 
 /// Path to the folder that contains the generated database files for release
 final dakanjiDbFinalPath = p.joinAll([outPath, "dakanji.db"]);
-
-// --- MECAB FILES ------------------------------------------------------------
-/// Path to the folder that contains the files for mecab
-final mecabFilesPath = p.joinAll([daDbRootPath, "mecab"]);
-/// Path to the mecab dictionary
-final mecabDicPath = p.joinAll([mecabFilesPath, "unidic"]);
-
 
 // --- TESTING FILES ----------------------------------------------------------
 /// Path to the folder that contains yomitan dictionary samples for development
