@@ -1,10 +1,11 @@
-import 'package:da_db/parsing/staging_db/audio_staging_tables.dart';
-import 'package:da_db/parsing/staging_db/kanji_meta_staging_tables.dart';
-import 'package:da_db/parsing/staging_db/kanji_staging_tables.dart';
-import 'package:da_db/parsing/staging_db/media_staging_tables.dart';
-import 'package:da_db/parsing/staging_db/tag_staging_tables.dart';
-import 'package:da_db/parsing/staging_db/term_meta_staging_tables.dart';
-import 'package:da_db/parsing/staging_db/term_staging_tables.dart';
+import 'package:da_db/parsing/staging_db/tables/audio_staging_tables.dart';
+import 'package:da_db/parsing/staging_db/tables/example_staging_tables.dart';
+import 'package:da_db/parsing/staging_db/tables/kanji_meta_staging_tables.dart';
+import 'package:da_db/parsing/staging_db/tables/kanji_staging_tables.dart';
+import 'package:da_db/parsing/staging_db/tables/media_staging_tables.dart';
+import 'package:da_db/parsing/staging_db/tables/tag_staging_tables.dart';
+import 'package:da_db/parsing/staging_db/tables/term_meta_staging_tables.dart';
+import 'package:da_db/parsing/staging_db/tables/term_staging_tables.dart';
 // ignore: unused_import -- Needed for generated code
 import 'package:da_db/util/data_converters/zlib_text_converter_io.dart';
 import 'package:drift/drift.dart';
@@ -27,6 +28,10 @@ part 'staging_db.g.dart';
     KanjiMetaStagingTable,
     // audio
     AudioStagingTable, MediaStagingTable,
+    // examples
+    ExampleStagingTable, ExampleTagStagingTable, ExampleStatStagingTable, 
+    ExampleTermStagingTable, ExampleAudioStagingTable,
+    ExampleAudioTagStagingTable, ExampleAudioStatStagingTable
   ]
 )
 class StagingDatabase extends _$StagingDatabase {

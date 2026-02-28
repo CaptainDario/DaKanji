@@ -6405,6 +6405,2285 @@ class MediaStagingTableCompanion
   }
 }
 
+class $ExampleStagingTableTable extends ExampleStagingTable
+    with TableInfo<$ExampleStagingTableTable, ExampleStagingTableData> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $ExampleStagingTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _localIdMeta = const VerificationMeta(
+    'localId',
+  );
+  @override
+  late final GeneratedColumn<int> localId = GeneratedColumn<int>(
+    'local_id',
+    aliasedName,
+    false,
+    hasAutoIncrement: true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'PRIMARY KEY AUTOINCREMENT',
+    ),
+  );
+  static const VerificationMeta _groupIdMeta = const VerificationMeta(
+    'groupId',
+  );
+  @override
+  late final GeneratedColumn<int> groupId = GeneratedColumn<int>(
+    'group_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _languageCodeMeta = const VerificationMeta(
+    'languageCode',
+  );
+  @override
+  late final GeneratedColumn<String> languageCode = GeneratedColumn<String>(
+    'language_code',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _exampleSentenceMeta = const VerificationMeta(
+    'exampleSentence',
+  );
+  @override
+  late final GeneratedColumn<String> exampleSentence = GeneratedColumn<String>(
+    'example_sentence',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _exampleSentenceReadingMeta =
+      const VerificationMeta('exampleSentenceReading');
+  @override
+  late final GeneratedColumn<String> exampleSentenceReading =
+      GeneratedColumn<String>(
+        'example_sentence_reading',
+        aliasedName,
+        true,
+        type: DriftSqlType.string,
+        requiredDuringInsert: false,
+      );
+  static const VerificationMeta _exampleSentenceTokenizedMeta =
+      const VerificationMeta('exampleSentenceTokenized');
+  @override
+  late final GeneratedColumn<String> exampleSentenceTokenized =
+      GeneratedColumn<String>(
+        'example_sentence_tokenized',
+        aliasedName,
+        false,
+        type: DriftSqlType.string,
+        requiredDuringInsert: true,
+      );
+  @override
+  List<GeneratedColumn> get $columns => [
+    localId,
+    groupId,
+    languageCode,
+    exampleSentence,
+    exampleSentenceReading,
+    exampleSentenceTokenized,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'example_staging_table';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<ExampleStagingTableData> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('local_id')) {
+      context.handle(
+        _localIdMeta,
+        localId.isAcceptableOrUnknown(data['local_id']!, _localIdMeta),
+      );
+    }
+    if (data.containsKey('group_id')) {
+      context.handle(
+        _groupIdMeta,
+        groupId.isAcceptableOrUnknown(data['group_id']!, _groupIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_groupIdMeta);
+    }
+    if (data.containsKey('language_code')) {
+      context.handle(
+        _languageCodeMeta,
+        languageCode.isAcceptableOrUnknown(
+          data['language_code']!,
+          _languageCodeMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_languageCodeMeta);
+    }
+    if (data.containsKey('example_sentence')) {
+      context.handle(
+        _exampleSentenceMeta,
+        exampleSentence.isAcceptableOrUnknown(
+          data['example_sentence']!,
+          _exampleSentenceMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_exampleSentenceMeta);
+    }
+    if (data.containsKey('example_sentence_reading')) {
+      context.handle(
+        _exampleSentenceReadingMeta,
+        exampleSentenceReading.isAcceptableOrUnknown(
+          data['example_sentence_reading']!,
+          _exampleSentenceReadingMeta,
+        ),
+      );
+    }
+    if (data.containsKey('example_sentence_tokenized')) {
+      context.handle(
+        _exampleSentenceTokenizedMeta,
+        exampleSentenceTokenized.isAcceptableOrUnknown(
+          data['example_sentence_tokenized']!,
+          _exampleSentenceTokenizedMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_exampleSentenceTokenizedMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {localId};
+  @override
+  ExampleStagingTableData map(
+    Map<String, dynamic> data, {
+    String? tablePrefix,
+  }) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return ExampleStagingTableData(
+      localId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}local_id'],
+      )!,
+      groupId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}group_id'],
+      )!,
+      languageCode: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}language_code'],
+      )!,
+      exampleSentence: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}example_sentence'],
+      )!,
+      exampleSentenceReading: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}example_sentence_reading'],
+      ),
+      exampleSentenceTokenized: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}example_sentence_tokenized'],
+      )!,
+    );
+  }
+
+  @override
+  $ExampleStagingTableTable createAlias(String alias) {
+    return $ExampleStagingTableTable(attachedDatabase, alias);
+  }
+}
+
+class ExampleStagingTableData extends DataClass
+    implements Insertable<ExampleStagingTableData> {
+  /// The local staging ID used to link tags, stats, and terms
+  final int localId;
+  final int groupId;
+  final String languageCode;
+  final String exampleSentence;
+  final String? exampleSentenceReading;
+  final String exampleSentenceTokenized;
+  const ExampleStagingTableData({
+    required this.localId,
+    required this.groupId,
+    required this.languageCode,
+    required this.exampleSentence,
+    this.exampleSentenceReading,
+    required this.exampleSentenceTokenized,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['local_id'] = Variable<int>(localId);
+    map['group_id'] = Variable<int>(groupId);
+    map['language_code'] = Variable<String>(languageCode);
+    map['example_sentence'] = Variable<String>(exampleSentence);
+    if (!nullToAbsent || exampleSentenceReading != null) {
+      map['example_sentence_reading'] = Variable<String>(
+        exampleSentenceReading,
+      );
+    }
+    map['example_sentence_tokenized'] = Variable<String>(
+      exampleSentenceTokenized,
+    );
+    return map;
+  }
+
+  ExampleStagingTableCompanion toCompanion(bool nullToAbsent) {
+    return ExampleStagingTableCompanion(
+      localId: Value(localId),
+      groupId: Value(groupId),
+      languageCode: Value(languageCode),
+      exampleSentence: Value(exampleSentence),
+      exampleSentenceReading: exampleSentenceReading == null && nullToAbsent
+          ? const Value.absent()
+          : Value(exampleSentenceReading),
+      exampleSentenceTokenized: Value(exampleSentenceTokenized),
+    );
+  }
+
+  factory ExampleStagingTableData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return ExampleStagingTableData(
+      localId: serializer.fromJson<int>(json['localId']),
+      groupId: serializer.fromJson<int>(json['groupId']),
+      languageCode: serializer.fromJson<String>(json['languageCode']),
+      exampleSentence: serializer.fromJson<String>(json['exampleSentence']),
+      exampleSentenceReading: serializer.fromJson<String?>(
+        json['exampleSentenceReading'],
+      ),
+      exampleSentenceTokenized: serializer.fromJson<String>(
+        json['exampleSentenceTokenized'],
+      ),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'localId': serializer.toJson<int>(localId),
+      'groupId': serializer.toJson<int>(groupId),
+      'languageCode': serializer.toJson<String>(languageCode),
+      'exampleSentence': serializer.toJson<String>(exampleSentence),
+      'exampleSentenceReading': serializer.toJson<String?>(
+        exampleSentenceReading,
+      ),
+      'exampleSentenceTokenized': serializer.toJson<String>(
+        exampleSentenceTokenized,
+      ),
+    };
+  }
+
+  ExampleStagingTableData copyWith({
+    int? localId,
+    int? groupId,
+    String? languageCode,
+    String? exampleSentence,
+    Value<String?> exampleSentenceReading = const Value.absent(),
+    String? exampleSentenceTokenized,
+  }) => ExampleStagingTableData(
+    localId: localId ?? this.localId,
+    groupId: groupId ?? this.groupId,
+    languageCode: languageCode ?? this.languageCode,
+    exampleSentence: exampleSentence ?? this.exampleSentence,
+    exampleSentenceReading: exampleSentenceReading.present
+        ? exampleSentenceReading.value
+        : this.exampleSentenceReading,
+    exampleSentenceTokenized:
+        exampleSentenceTokenized ?? this.exampleSentenceTokenized,
+  );
+  ExampleStagingTableData copyWithCompanion(ExampleStagingTableCompanion data) {
+    return ExampleStagingTableData(
+      localId: data.localId.present ? data.localId.value : this.localId,
+      groupId: data.groupId.present ? data.groupId.value : this.groupId,
+      languageCode: data.languageCode.present
+          ? data.languageCode.value
+          : this.languageCode,
+      exampleSentence: data.exampleSentence.present
+          ? data.exampleSentence.value
+          : this.exampleSentence,
+      exampleSentenceReading: data.exampleSentenceReading.present
+          ? data.exampleSentenceReading.value
+          : this.exampleSentenceReading,
+      exampleSentenceTokenized: data.exampleSentenceTokenized.present
+          ? data.exampleSentenceTokenized.value
+          : this.exampleSentenceTokenized,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ExampleStagingTableData(')
+          ..write('localId: $localId, ')
+          ..write('groupId: $groupId, ')
+          ..write('languageCode: $languageCode, ')
+          ..write('exampleSentence: $exampleSentence, ')
+          ..write('exampleSentenceReading: $exampleSentenceReading, ')
+          ..write('exampleSentenceTokenized: $exampleSentenceTokenized')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    localId,
+    groupId,
+    languageCode,
+    exampleSentence,
+    exampleSentenceReading,
+    exampleSentenceTokenized,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is ExampleStagingTableData &&
+          other.localId == this.localId &&
+          other.groupId == this.groupId &&
+          other.languageCode == this.languageCode &&
+          other.exampleSentence == this.exampleSentence &&
+          other.exampleSentenceReading == this.exampleSentenceReading &&
+          other.exampleSentenceTokenized == this.exampleSentenceTokenized);
+}
+
+class ExampleStagingTableCompanion
+    extends UpdateCompanion<ExampleStagingTableData> {
+  final Value<int> localId;
+  final Value<int> groupId;
+  final Value<String> languageCode;
+  final Value<String> exampleSentence;
+  final Value<String?> exampleSentenceReading;
+  final Value<String> exampleSentenceTokenized;
+  const ExampleStagingTableCompanion({
+    this.localId = const Value.absent(),
+    this.groupId = const Value.absent(),
+    this.languageCode = const Value.absent(),
+    this.exampleSentence = const Value.absent(),
+    this.exampleSentenceReading = const Value.absent(),
+    this.exampleSentenceTokenized = const Value.absent(),
+  });
+  ExampleStagingTableCompanion.insert({
+    this.localId = const Value.absent(),
+    required int groupId,
+    required String languageCode,
+    required String exampleSentence,
+    this.exampleSentenceReading = const Value.absent(),
+    required String exampleSentenceTokenized,
+  }) : groupId = Value(groupId),
+       languageCode = Value(languageCode),
+       exampleSentence = Value(exampleSentence),
+       exampleSentenceTokenized = Value(exampleSentenceTokenized);
+  static Insertable<ExampleStagingTableData> custom({
+    Expression<int>? localId,
+    Expression<int>? groupId,
+    Expression<String>? languageCode,
+    Expression<String>? exampleSentence,
+    Expression<String>? exampleSentenceReading,
+    Expression<String>? exampleSentenceTokenized,
+  }) {
+    return RawValuesInsertable({
+      if (localId != null) 'local_id': localId,
+      if (groupId != null) 'group_id': groupId,
+      if (languageCode != null) 'language_code': languageCode,
+      if (exampleSentence != null) 'example_sentence': exampleSentence,
+      if (exampleSentenceReading != null)
+        'example_sentence_reading': exampleSentenceReading,
+      if (exampleSentenceTokenized != null)
+        'example_sentence_tokenized': exampleSentenceTokenized,
+    });
+  }
+
+  ExampleStagingTableCompanion copyWith({
+    Value<int>? localId,
+    Value<int>? groupId,
+    Value<String>? languageCode,
+    Value<String>? exampleSentence,
+    Value<String?>? exampleSentenceReading,
+    Value<String>? exampleSentenceTokenized,
+  }) {
+    return ExampleStagingTableCompanion(
+      localId: localId ?? this.localId,
+      groupId: groupId ?? this.groupId,
+      languageCode: languageCode ?? this.languageCode,
+      exampleSentence: exampleSentence ?? this.exampleSentence,
+      exampleSentenceReading:
+          exampleSentenceReading ?? this.exampleSentenceReading,
+      exampleSentenceTokenized:
+          exampleSentenceTokenized ?? this.exampleSentenceTokenized,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (localId.present) {
+      map['local_id'] = Variable<int>(localId.value);
+    }
+    if (groupId.present) {
+      map['group_id'] = Variable<int>(groupId.value);
+    }
+    if (languageCode.present) {
+      map['language_code'] = Variable<String>(languageCode.value);
+    }
+    if (exampleSentence.present) {
+      map['example_sentence'] = Variable<String>(exampleSentence.value);
+    }
+    if (exampleSentenceReading.present) {
+      map['example_sentence_reading'] = Variable<String>(
+        exampleSentenceReading.value,
+      );
+    }
+    if (exampleSentenceTokenized.present) {
+      map['example_sentence_tokenized'] = Variable<String>(
+        exampleSentenceTokenized.value,
+      );
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ExampleStagingTableCompanion(')
+          ..write('localId: $localId, ')
+          ..write('groupId: $groupId, ')
+          ..write('languageCode: $languageCode, ')
+          ..write('exampleSentence: $exampleSentence, ')
+          ..write('exampleSentenceReading: $exampleSentenceReading, ')
+          ..write('exampleSentenceTokenized: $exampleSentenceTokenized')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $ExampleTagStagingTableTable extends ExampleTagStagingTable
+    with TableInfo<$ExampleTagStagingTableTable, ExampleTagStagingTableData> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $ExampleTagStagingTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _exampleLocalIdMeta = const VerificationMeta(
+    'exampleLocalId',
+  );
+  @override
+  late final GeneratedColumn<int> exampleLocalId = GeneratedColumn<int>(
+    'example_local_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _tagNameMeta = const VerificationMeta(
+    'tagName',
+  );
+  @override
+  late final GeneratedColumn<String> tagName = GeneratedColumn<String>(
+    'tag_name',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [exampleLocalId, tagName];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'example_tag_staging_table';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<ExampleTagStagingTableData> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('example_local_id')) {
+      context.handle(
+        _exampleLocalIdMeta,
+        exampleLocalId.isAcceptableOrUnknown(
+          data['example_local_id']!,
+          _exampleLocalIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_exampleLocalIdMeta);
+    }
+    if (data.containsKey('tag_name')) {
+      context.handle(
+        _tagNameMeta,
+        tagName.isAcceptableOrUnknown(data['tag_name']!, _tagNameMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_tagNameMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => const {};
+  @override
+  ExampleTagStagingTableData map(
+    Map<String, dynamic> data, {
+    String? tablePrefix,
+  }) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return ExampleTagStagingTableData(
+      exampleLocalId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}example_local_id'],
+      )!,
+      tagName: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}tag_name'],
+      )!,
+    );
+  }
+
+  @override
+  $ExampleTagStagingTableTable createAlias(String alias) {
+    return $ExampleTagStagingTableTable(attachedDatabase, alias);
+  }
+}
+
+class ExampleTagStagingTableData extends DataClass
+    implements Insertable<ExampleTagStagingTableData> {
+  final int exampleLocalId;
+  final String tagName;
+  const ExampleTagStagingTableData({
+    required this.exampleLocalId,
+    required this.tagName,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['example_local_id'] = Variable<int>(exampleLocalId);
+    map['tag_name'] = Variable<String>(tagName);
+    return map;
+  }
+
+  ExampleTagStagingTableCompanion toCompanion(bool nullToAbsent) {
+    return ExampleTagStagingTableCompanion(
+      exampleLocalId: Value(exampleLocalId),
+      tagName: Value(tagName),
+    );
+  }
+
+  factory ExampleTagStagingTableData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return ExampleTagStagingTableData(
+      exampleLocalId: serializer.fromJson<int>(json['exampleLocalId']),
+      tagName: serializer.fromJson<String>(json['tagName']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'exampleLocalId': serializer.toJson<int>(exampleLocalId),
+      'tagName': serializer.toJson<String>(tagName),
+    };
+  }
+
+  ExampleTagStagingTableData copyWith({int? exampleLocalId, String? tagName}) =>
+      ExampleTagStagingTableData(
+        exampleLocalId: exampleLocalId ?? this.exampleLocalId,
+        tagName: tagName ?? this.tagName,
+      );
+  ExampleTagStagingTableData copyWithCompanion(
+    ExampleTagStagingTableCompanion data,
+  ) {
+    return ExampleTagStagingTableData(
+      exampleLocalId: data.exampleLocalId.present
+          ? data.exampleLocalId.value
+          : this.exampleLocalId,
+      tagName: data.tagName.present ? data.tagName.value : this.tagName,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ExampleTagStagingTableData(')
+          ..write('exampleLocalId: $exampleLocalId, ')
+          ..write('tagName: $tagName')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(exampleLocalId, tagName);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is ExampleTagStagingTableData &&
+          other.exampleLocalId == this.exampleLocalId &&
+          other.tagName == this.tagName);
+}
+
+class ExampleTagStagingTableCompanion
+    extends UpdateCompanion<ExampleTagStagingTableData> {
+  final Value<int> exampleLocalId;
+  final Value<String> tagName;
+  final Value<int> rowid;
+  const ExampleTagStagingTableCompanion({
+    this.exampleLocalId = const Value.absent(),
+    this.tagName = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  ExampleTagStagingTableCompanion.insert({
+    required int exampleLocalId,
+    required String tagName,
+    this.rowid = const Value.absent(),
+  }) : exampleLocalId = Value(exampleLocalId),
+       tagName = Value(tagName);
+  static Insertable<ExampleTagStagingTableData> custom({
+    Expression<int>? exampleLocalId,
+    Expression<String>? tagName,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (exampleLocalId != null) 'example_local_id': exampleLocalId,
+      if (tagName != null) 'tag_name': tagName,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  ExampleTagStagingTableCompanion copyWith({
+    Value<int>? exampleLocalId,
+    Value<String>? tagName,
+    Value<int>? rowid,
+  }) {
+    return ExampleTagStagingTableCompanion(
+      exampleLocalId: exampleLocalId ?? this.exampleLocalId,
+      tagName: tagName ?? this.tagName,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (exampleLocalId.present) {
+      map['example_local_id'] = Variable<int>(exampleLocalId.value);
+    }
+    if (tagName.present) {
+      map['tag_name'] = Variable<String>(tagName.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ExampleTagStagingTableCompanion(')
+          ..write('exampleLocalId: $exampleLocalId, ')
+          ..write('tagName: $tagName, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $ExampleStatStagingTableTable extends ExampleStatStagingTable
+    with TableInfo<$ExampleStatStagingTableTable, ExampleStatStagingTableData> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $ExampleStatStagingTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _exampleLocalIdMeta = const VerificationMeta(
+    'exampleLocalId',
+  );
+  @override
+  late final GeneratedColumn<int> exampleLocalId = GeneratedColumn<int>(
+    'example_local_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _statNameMeta = const VerificationMeta(
+    'statName',
+  );
+  @override
+  late final GeneratedColumn<String> statName = GeneratedColumn<String>(
+    'stat_name',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _displayNameMeta = const VerificationMeta(
+    'displayName',
+  );
+  @override
+  late final GeneratedColumn<String> displayName = GeneratedColumn<String>(
+    'display_name',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _statValueMeta = const VerificationMeta(
+    'statValue',
+  );
+  @override
+  late final GeneratedColumn<double> statValue = GeneratedColumn<double>(
+    'stat_value',
+    aliasedName,
+    true,
+    type: DriftSqlType.double,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _displayValueMeta = const VerificationMeta(
+    'displayValue',
+  );
+  @override
+  late final GeneratedColumn<String> displayValue = GeneratedColumn<String>(
+    'display_value',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    exampleLocalId,
+    statName,
+    displayName,
+    statValue,
+    displayValue,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'example_stat_staging_table';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<ExampleStatStagingTableData> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('example_local_id')) {
+      context.handle(
+        _exampleLocalIdMeta,
+        exampleLocalId.isAcceptableOrUnknown(
+          data['example_local_id']!,
+          _exampleLocalIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_exampleLocalIdMeta);
+    }
+    if (data.containsKey('stat_name')) {
+      context.handle(
+        _statNameMeta,
+        statName.isAcceptableOrUnknown(data['stat_name']!, _statNameMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_statNameMeta);
+    }
+    if (data.containsKey('display_name')) {
+      context.handle(
+        _displayNameMeta,
+        displayName.isAcceptableOrUnknown(
+          data['display_name']!,
+          _displayNameMeta,
+        ),
+      );
+    }
+    if (data.containsKey('stat_value')) {
+      context.handle(
+        _statValueMeta,
+        statValue.isAcceptableOrUnknown(data['stat_value']!, _statValueMeta),
+      );
+    }
+    if (data.containsKey('display_value')) {
+      context.handle(
+        _displayValueMeta,
+        displayValue.isAcceptableOrUnknown(
+          data['display_value']!,
+          _displayValueMeta,
+        ),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => const {};
+  @override
+  ExampleStatStagingTableData map(
+    Map<String, dynamic> data, {
+    String? tablePrefix,
+  }) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return ExampleStatStagingTableData(
+      exampleLocalId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}example_local_id'],
+      )!,
+      statName: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}stat_name'],
+      )!,
+      displayName: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}display_name'],
+      ),
+      statValue: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}stat_value'],
+      ),
+      displayValue: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}display_value'],
+      ),
+    );
+  }
+
+  @override
+  $ExampleStatStagingTableTable createAlias(String alias) {
+    return $ExampleStatStagingTableTable(attachedDatabase, alias);
+  }
+}
+
+class ExampleStatStagingTableData extends DataClass
+    implements Insertable<ExampleStatStagingTableData> {
+  final int exampleLocalId;
+  final String statName;
+  final String? displayName;
+  final double? statValue;
+  final String? displayValue;
+  const ExampleStatStagingTableData({
+    required this.exampleLocalId,
+    required this.statName,
+    this.displayName,
+    this.statValue,
+    this.displayValue,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['example_local_id'] = Variable<int>(exampleLocalId);
+    map['stat_name'] = Variable<String>(statName);
+    if (!nullToAbsent || displayName != null) {
+      map['display_name'] = Variable<String>(displayName);
+    }
+    if (!nullToAbsent || statValue != null) {
+      map['stat_value'] = Variable<double>(statValue);
+    }
+    if (!nullToAbsent || displayValue != null) {
+      map['display_value'] = Variable<String>(displayValue);
+    }
+    return map;
+  }
+
+  ExampleStatStagingTableCompanion toCompanion(bool nullToAbsent) {
+    return ExampleStatStagingTableCompanion(
+      exampleLocalId: Value(exampleLocalId),
+      statName: Value(statName),
+      displayName: displayName == null && nullToAbsent
+          ? const Value.absent()
+          : Value(displayName),
+      statValue: statValue == null && nullToAbsent
+          ? const Value.absent()
+          : Value(statValue),
+      displayValue: displayValue == null && nullToAbsent
+          ? const Value.absent()
+          : Value(displayValue),
+    );
+  }
+
+  factory ExampleStatStagingTableData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return ExampleStatStagingTableData(
+      exampleLocalId: serializer.fromJson<int>(json['exampleLocalId']),
+      statName: serializer.fromJson<String>(json['statName']),
+      displayName: serializer.fromJson<String?>(json['displayName']),
+      statValue: serializer.fromJson<double?>(json['statValue']),
+      displayValue: serializer.fromJson<String?>(json['displayValue']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'exampleLocalId': serializer.toJson<int>(exampleLocalId),
+      'statName': serializer.toJson<String>(statName),
+      'displayName': serializer.toJson<String?>(displayName),
+      'statValue': serializer.toJson<double?>(statValue),
+      'displayValue': serializer.toJson<String?>(displayValue),
+    };
+  }
+
+  ExampleStatStagingTableData copyWith({
+    int? exampleLocalId,
+    String? statName,
+    Value<String?> displayName = const Value.absent(),
+    Value<double?> statValue = const Value.absent(),
+    Value<String?> displayValue = const Value.absent(),
+  }) => ExampleStatStagingTableData(
+    exampleLocalId: exampleLocalId ?? this.exampleLocalId,
+    statName: statName ?? this.statName,
+    displayName: displayName.present ? displayName.value : this.displayName,
+    statValue: statValue.present ? statValue.value : this.statValue,
+    displayValue: displayValue.present ? displayValue.value : this.displayValue,
+  );
+  ExampleStatStagingTableData copyWithCompanion(
+    ExampleStatStagingTableCompanion data,
+  ) {
+    return ExampleStatStagingTableData(
+      exampleLocalId: data.exampleLocalId.present
+          ? data.exampleLocalId.value
+          : this.exampleLocalId,
+      statName: data.statName.present ? data.statName.value : this.statName,
+      displayName: data.displayName.present
+          ? data.displayName.value
+          : this.displayName,
+      statValue: data.statValue.present ? data.statValue.value : this.statValue,
+      displayValue: data.displayValue.present
+          ? data.displayValue.value
+          : this.displayValue,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ExampleStatStagingTableData(')
+          ..write('exampleLocalId: $exampleLocalId, ')
+          ..write('statName: $statName, ')
+          ..write('displayName: $displayName, ')
+          ..write('statValue: $statValue, ')
+          ..write('displayValue: $displayValue')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    exampleLocalId,
+    statName,
+    displayName,
+    statValue,
+    displayValue,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is ExampleStatStagingTableData &&
+          other.exampleLocalId == this.exampleLocalId &&
+          other.statName == this.statName &&
+          other.displayName == this.displayName &&
+          other.statValue == this.statValue &&
+          other.displayValue == this.displayValue);
+}
+
+class ExampleStatStagingTableCompanion
+    extends UpdateCompanion<ExampleStatStagingTableData> {
+  final Value<int> exampleLocalId;
+  final Value<String> statName;
+  final Value<String?> displayName;
+  final Value<double?> statValue;
+  final Value<String?> displayValue;
+  final Value<int> rowid;
+  const ExampleStatStagingTableCompanion({
+    this.exampleLocalId = const Value.absent(),
+    this.statName = const Value.absent(),
+    this.displayName = const Value.absent(),
+    this.statValue = const Value.absent(),
+    this.displayValue = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  ExampleStatStagingTableCompanion.insert({
+    required int exampleLocalId,
+    required String statName,
+    this.displayName = const Value.absent(),
+    this.statValue = const Value.absent(),
+    this.displayValue = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : exampleLocalId = Value(exampleLocalId),
+       statName = Value(statName);
+  static Insertable<ExampleStatStagingTableData> custom({
+    Expression<int>? exampleLocalId,
+    Expression<String>? statName,
+    Expression<String>? displayName,
+    Expression<double>? statValue,
+    Expression<String>? displayValue,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (exampleLocalId != null) 'example_local_id': exampleLocalId,
+      if (statName != null) 'stat_name': statName,
+      if (displayName != null) 'display_name': displayName,
+      if (statValue != null) 'stat_value': statValue,
+      if (displayValue != null) 'display_value': displayValue,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  ExampleStatStagingTableCompanion copyWith({
+    Value<int>? exampleLocalId,
+    Value<String>? statName,
+    Value<String?>? displayName,
+    Value<double?>? statValue,
+    Value<String?>? displayValue,
+    Value<int>? rowid,
+  }) {
+    return ExampleStatStagingTableCompanion(
+      exampleLocalId: exampleLocalId ?? this.exampleLocalId,
+      statName: statName ?? this.statName,
+      displayName: displayName ?? this.displayName,
+      statValue: statValue ?? this.statValue,
+      displayValue: displayValue ?? this.displayValue,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (exampleLocalId.present) {
+      map['example_local_id'] = Variable<int>(exampleLocalId.value);
+    }
+    if (statName.present) {
+      map['stat_name'] = Variable<String>(statName.value);
+    }
+    if (displayName.present) {
+      map['display_name'] = Variable<String>(displayName.value);
+    }
+    if (statValue.present) {
+      map['stat_value'] = Variable<double>(statValue.value);
+    }
+    if (displayValue.present) {
+      map['display_value'] = Variable<String>(displayValue.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ExampleStatStagingTableCompanion(')
+          ..write('exampleLocalId: $exampleLocalId, ')
+          ..write('statName: $statName, ')
+          ..write('displayName: $displayName, ')
+          ..write('statValue: $statValue, ')
+          ..write('displayValue: $displayValue, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $ExampleTermStagingTableTable extends ExampleTermStagingTable
+    with TableInfo<$ExampleTermStagingTableTable, ExampleTermStagingTableData> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $ExampleTermStagingTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _exampleLocalIdMeta = const VerificationMeta(
+    'exampleLocalId',
+  );
+  @override
+  late final GeneratedColumn<int> exampleLocalId = GeneratedColumn<int>(
+    'example_local_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _termMeta = const VerificationMeta('term');
+  @override
+  late final GeneratedColumn<String> term = GeneratedColumn<String>(
+    'term',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [exampleLocalId, term];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'example_term_staging_table';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<ExampleTermStagingTableData> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('example_local_id')) {
+      context.handle(
+        _exampleLocalIdMeta,
+        exampleLocalId.isAcceptableOrUnknown(
+          data['example_local_id']!,
+          _exampleLocalIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_exampleLocalIdMeta);
+    }
+    if (data.containsKey('term')) {
+      context.handle(
+        _termMeta,
+        term.isAcceptableOrUnknown(data['term']!, _termMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_termMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => const {};
+  @override
+  ExampleTermStagingTableData map(
+    Map<String, dynamic> data, {
+    String? tablePrefix,
+  }) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return ExampleTermStagingTableData(
+      exampleLocalId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}example_local_id'],
+      )!,
+      term: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}term'],
+      )!,
+    );
+  }
+
+  @override
+  $ExampleTermStagingTableTable createAlias(String alias) {
+    return $ExampleTermStagingTableTable(attachedDatabase, alias);
+  }
+}
+
+class ExampleTermStagingTableData extends DataClass
+    implements Insertable<ExampleTermStagingTableData> {
+  final int exampleLocalId;
+
+  /// The base dictionary term (e.g., "食べる") to resolve against TermTable
+  final String term;
+  const ExampleTermStagingTableData({
+    required this.exampleLocalId,
+    required this.term,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['example_local_id'] = Variable<int>(exampleLocalId);
+    map['term'] = Variable<String>(term);
+    return map;
+  }
+
+  ExampleTermStagingTableCompanion toCompanion(bool nullToAbsent) {
+    return ExampleTermStagingTableCompanion(
+      exampleLocalId: Value(exampleLocalId),
+      term: Value(term),
+    );
+  }
+
+  factory ExampleTermStagingTableData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return ExampleTermStagingTableData(
+      exampleLocalId: serializer.fromJson<int>(json['exampleLocalId']),
+      term: serializer.fromJson<String>(json['term']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'exampleLocalId': serializer.toJson<int>(exampleLocalId),
+      'term': serializer.toJson<String>(term),
+    };
+  }
+
+  ExampleTermStagingTableData copyWith({int? exampleLocalId, String? term}) =>
+      ExampleTermStagingTableData(
+        exampleLocalId: exampleLocalId ?? this.exampleLocalId,
+        term: term ?? this.term,
+      );
+  ExampleTermStagingTableData copyWithCompanion(
+    ExampleTermStagingTableCompanion data,
+  ) {
+    return ExampleTermStagingTableData(
+      exampleLocalId: data.exampleLocalId.present
+          ? data.exampleLocalId.value
+          : this.exampleLocalId,
+      term: data.term.present ? data.term.value : this.term,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ExampleTermStagingTableData(')
+          ..write('exampleLocalId: $exampleLocalId, ')
+          ..write('term: $term')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(exampleLocalId, term);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is ExampleTermStagingTableData &&
+          other.exampleLocalId == this.exampleLocalId &&
+          other.term == this.term);
+}
+
+class ExampleTermStagingTableCompanion
+    extends UpdateCompanion<ExampleTermStagingTableData> {
+  final Value<int> exampleLocalId;
+  final Value<String> term;
+  final Value<int> rowid;
+  const ExampleTermStagingTableCompanion({
+    this.exampleLocalId = const Value.absent(),
+    this.term = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  ExampleTermStagingTableCompanion.insert({
+    required int exampleLocalId,
+    required String term,
+    this.rowid = const Value.absent(),
+  }) : exampleLocalId = Value(exampleLocalId),
+       term = Value(term);
+  static Insertable<ExampleTermStagingTableData> custom({
+    Expression<int>? exampleLocalId,
+    Expression<String>? term,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (exampleLocalId != null) 'example_local_id': exampleLocalId,
+      if (term != null) 'term': term,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  ExampleTermStagingTableCompanion copyWith({
+    Value<int>? exampleLocalId,
+    Value<String>? term,
+    Value<int>? rowid,
+  }) {
+    return ExampleTermStagingTableCompanion(
+      exampleLocalId: exampleLocalId ?? this.exampleLocalId,
+      term: term ?? this.term,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (exampleLocalId.present) {
+      map['example_local_id'] = Variable<int>(exampleLocalId.value);
+    }
+    if (term.present) {
+      map['term'] = Variable<String>(term.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ExampleTermStagingTableCompanion(')
+          ..write('exampleLocalId: $exampleLocalId, ')
+          ..write('term: $term, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $ExampleAudioStagingTableTable extends ExampleAudioStagingTable
+    with
+        TableInfo<
+          $ExampleAudioStagingTableTable,
+          ExampleAudioStagingTableData
+        > {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $ExampleAudioStagingTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _localIdMeta = const VerificationMeta(
+    'localId',
+  );
+  @override
+  late final GeneratedColumn<int> localId = GeneratedColumn<int>(
+    'local_id',
+    aliasedName,
+    false,
+    hasAutoIncrement: true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'PRIMARY KEY AUTOINCREMENT',
+    ),
+  );
+  static const VerificationMeta _exampleLocalIdMeta = const VerificationMeta(
+    'exampleLocalId',
+  );
+  @override
+  late final GeneratedColumn<int> exampleLocalId = GeneratedColumn<int>(
+    'example_local_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _pathMeta = const VerificationMeta('path');
+  @override
+  late final GeneratedColumn<String> path = GeneratedColumn<String>(
+    'path',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _nameMeta = const VerificationMeta('name');
+  @override
+  late final GeneratedColumn<String> name = GeneratedColumn<String>(
+    'name',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [localId, exampleLocalId, path, name];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'example_audio_staging_table';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<ExampleAudioStagingTableData> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('local_id')) {
+      context.handle(
+        _localIdMeta,
+        localId.isAcceptableOrUnknown(data['local_id']!, _localIdMeta),
+      );
+    }
+    if (data.containsKey('example_local_id')) {
+      context.handle(
+        _exampleLocalIdMeta,
+        exampleLocalId.isAcceptableOrUnknown(
+          data['example_local_id']!,
+          _exampleLocalIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_exampleLocalIdMeta);
+    }
+    if (data.containsKey('path')) {
+      context.handle(
+        _pathMeta,
+        path.isAcceptableOrUnknown(data['path']!, _pathMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_pathMeta);
+    }
+    if (data.containsKey('name')) {
+      context.handle(
+        _nameMeta,
+        name.isAcceptableOrUnknown(data['name']!, _nameMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_nameMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {localId};
+  @override
+  ExampleAudioStagingTableData map(
+    Map<String, dynamic> data, {
+    String? tablePrefix,
+  }) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return ExampleAudioStagingTableData(
+      localId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}local_id'],
+      )!,
+      exampleLocalId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}example_local_id'],
+      )!,
+      path: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}path'],
+      )!,
+      name: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}name'],
+      )!,
+    );
+  }
+
+  @override
+  $ExampleAudioStagingTableTable createAlias(String alias) {
+    return $ExampleAudioStagingTableTable(attachedDatabase, alias);
+  }
+}
+
+class ExampleAudioStagingTableData extends DataClass
+    implements Insertable<ExampleAudioStagingTableData> {
+  /// Auto-incrementing ID so we can attach specific tags directly to the audio
+  final int localId;
+  final int exampleLocalId;
+  final String path;
+  final String name;
+  const ExampleAudioStagingTableData({
+    required this.localId,
+    required this.exampleLocalId,
+    required this.path,
+    required this.name,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['local_id'] = Variable<int>(localId);
+    map['example_local_id'] = Variable<int>(exampleLocalId);
+    map['path'] = Variable<String>(path);
+    map['name'] = Variable<String>(name);
+    return map;
+  }
+
+  ExampleAudioStagingTableCompanion toCompanion(bool nullToAbsent) {
+    return ExampleAudioStagingTableCompanion(
+      localId: Value(localId),
+      exampleLocalId: Value(exampleLocalId),
+      path: Value(path),
+      name: Value(name),
+    );
+  }
+
+  factory ExampleAudioStagingTableData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return ExampleAudioStagingTableData(
+      localId: serializer.fromJson<int>(json['localId']),
+      exampleLocalId: serializer.fromJson<int>(json['exampleLocalId']),
+      path: serializer.fromJson<String>(json['path']),
+      name: serializer.fromJson<String>(json['name']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'localId': serializer.toJson<int>(localId),
+      'exampleLocalId': serializer.toJson<int>(exampleLocalId),
+      'path': serializer.toJson<String>(path),
+      'name': serializer.toJson<String>(name),
+    };
+  }
+
+  ExampleAudioStagingTableData copyWith({
+    int? localId,
+    int? exampleLocalId,
+    String? path,
+    String? name,
+  }) => ExampleAudioStagingTableData(
+    localId: localId ?? this.localId,
+    exampleLocalId: exampleLocalId ?? this.exampleLocalId,
+    path: path ?? this.path,
+    name: name ?? this.name,
+  );
+  ExampleAudioStagingTableData copyWithCompanion(
+    ExampleAudioStagingTableCompanion data,
+  ) {
+    return ExampleAudioStagingTableData(
+      localId: data.localId.present ? data.localId.value : this.localId,
+      exampleLocalId: data.exampleLocalId.present
+          ? data.exampleLocalId.value
+          : this.exampleLocalId,
+      path: data.path.present ? data.path.value : this.path,
+      name: data.name.present ? data.name.value : this.name,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ExampleAudioStagingTableData(')
+          ..write('localId: $localId, ')
+          ..write('exampleLocalId: $exampleLocalId, ')
+          ..write('path: $path, ')
+          ..write('name: $name')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(localId, exampleLocalId, path, name);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is ExampleAudioStagingTableData &&
+          other.localId == this.localId &&
+          other.exampleLocalId == this.exampleLocalId &&
+          other.path == this.path &&
+          other.name == this.name);
+}
+
+class ExampleAudioStagingTableCompanion
+    extends UpdateCompanion<ExampleAudioStagingTableData> {
+  final Value<int> localId;
+  final Value<int> exampleLocalId;
+  final Value<String> path;
+  final Value<String> name;
+  const ExampleAudioStagingTableCompanion({
+    this.localId = const Value.absent(),
+    this.exampleLocalId = const Value.absent(),
+    this.path = const Value.absent(),
+    this.name = const Value.absent(),
+  });
+  ExampleAudioStagingTableCompanion.insert({
+    this.localId = const Value.absent(),
+    required int exampleLocalId,
+    required String path,
+    required String name,
+  }) : exampleLocalId = Value(exampleLocalId),
+       path = Value(path),
+       name = Value(name);
+  static Insertable<ExampleAudioStagingTableData> custom({
+    Expression<int>? localId,
+    Expression<int>? exampleLocalId,
+    Expression<String>? path,
+    Expression<String>? name,
+  }) {
+    return RawValuesInsertable({
+      if (localId != null) 'local_id': localId,
+      if (exampleLocalId != null) 'example_local_id': exampleLocalId,
+      if (path != null) 'path': path,
+      if (name != null) 'name': name,
+    });
+  }
+
+  ExampleAudioStagingTableCompanion copyWith({
+    Value<int>? localId,
+    Value<int>? exampleLocalId,
+    Value<String>? path,
+    Value<String>? name,
+  }) {
+    return ExampleAudioStagingTableCompanion(
+      localId: localId ?? this.localId,
+      exampleLocalId: exampleLocalId ?? this.exampleLocalId,
+      path: path ?? this.path,
+      name: name ?? this.name,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (localId.present) {
+      map['local_id'] = Variable<int>(localId.value);
+    }
+    if (exampleLocalId.present) {
+      map['example_local_id'] = Variable<int>(exampleLocalId.value);
+    }
+    if (path.present) {
+      map['path'] = Variable<String>(path.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ExampleAudioStagingTableCompanion(')
+          ..write('localId: $localId, ')
+          ..write('exampleLocalId: $exampleLocalId, ')
+          ..write('path: $path, ')
+          ..write('name: $name')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $ExampleAudioTagStagingTableTable extends ExampleAudioTagStagingTable
+    with
+        TableInfo<
+          $ExampleAudioTagStagingTableTable,
+          ExampleAudioTagStagingTableData
+        > {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $ExampleAudioTagStagingTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _audioLocalIdMeta = const VerificationMeta(
+    'audioLocalId',
+  );
+  @override
+  late final GeneratedColumn<int> audioLocalId = GeneratedColumn<int>(
+    'audio_local_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _tagNameMeta = const VerificationMeta(
+    'tagName',
+  );
+  @override
+  late final GeneratedColumn<String> tagName = GeneratedColumn<String>(
+    'tag_name',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [audioLocalId, tagName];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'example_audio_tag_staging_table';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<ExampleAudioTagStagingTableData> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('audio_local_id')) {
+      context.handle(
+        _audioLocalIdMeta,
+        audioLocalId.isAcceptableOrUnknown(
+          data['audio_local_id']!,
+          _audioLocalIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_audioLocalIdMeta);
+    }
+    if (data.containsKey('tag_name')) {
+      context.handle(
+        _tagNameMeta,
+        tagName.isAcceptableOrUnknown(data['tag_name']!, _tagNameMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_tagNameMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => const {};
+  @override
+  ExampleAudioTagStagingTableData map(
+    Map<String, dynamic> data, {
+    String? tablePrefix,
+  }) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return ExampleAudioTagStagingTableData(
+      audioLocalId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}audio_local_id'],
+      )!,
+      tagName: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}tag_name'],
+      )!,
+    );
+  }
+
+  @override
+  $ExampleAudioTagStagingTableTable createAlias(String alias) {
+    return $ExampleAudioTagStagingTableTable(attachedDatabase, alias);
+  }
+}
+
+class ExampleAudioTagStagingTableData extends DataClass
+    implements Insertable<ExampleAudioTagStagingTableData> {
+  final int audioLocalId;
+  final String tagName;
+  const ExampleAudioTagStagingTableData({
+    required this.audioLocalId,
+    required this.tagName,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['audio_local_id'] = Variable<int>(audioLocalId);
+    map['tag_name'] = Variable<String>(tagName);
+    return map;
+  }
+
+  ExampleAudioTagStagingTableCompanion toCompanion(bool nullToAbsent) {
+    return ExampleAudioTagStagingTableCompanion(
+      audioLocalId: Value(audioLocalId),
+      tagName: Value(tagName),
+    );
+  }
+
+  factory ExampleAudioTagStagingTableData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return ExampleAudioTagStagingTableData(
+      audioLocalId: serializer.fromJson<int>(json['audioLocalId']),
+      tagName: serializer.fromJson<String>(json['tagName']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'audioLocalId': serializer.toJson<int>(audioLocalId),
+      'tagName': serializer.toJson<String>(tagName),
+    };
+  }
+
+  ExampleAudioTagStagingTableData copyWith({
+    int? audioLocalId,
+    String? tagName,
+  }) => ExampleAudioTagStagingTableData(
+    audioLocalId: audioLocalId ?? this.audioLocalId,
+    tagName: tagName ?? this.tagName,
+  );
+  ExampleAudioTagStagingTableData copyWithCompanion(
+    ExampleAudioTagStagingTableCompanion data,
+  ) {
+    return ExampleAudioTagStagingTableData(
+      audioLocalId: data.audioLocalId.present
+          ? data.audioLocalId.value
+          : this.audioLocalId,
+      tagName: data.tagName.present ? data.tagName.value : this.tagName,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ExampleAudioTagStagingTableData(')
+          ..write('audioLocalId: $audioLocalId, ')
+          ..write('tagName: $tagName')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(audioLocalId, tagName);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is ExampleAudioTagStagingTableData &&
+          other.audioLocalId == this.audioLocalId &&
+          other.tagName == this.tagName);
+}
+
+class ExampleAudioTagStagingTableCompanion
+    extends UpdateCompanion<ExampleAudioTagStagingTableData> {
+  final Value<int> audioLocalId;
+  final Value<String> tagName;
+  final Value<int> rowid;
+  const ExampleAudioTagStagingTableCompanion({
+    this.audioLocalId = const Value.absent(),
+    this.tagName = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  ExampleAudioTagStagingTableCompanion.insert({
+    required int audioLocalId,
+    required String tagName,
+    this.rowid = const Value.absent(),
+  }) : audioLocalId = Value(audioLocalId),
+       tagName = Value(tagName);
+  static Insertable<ExampleAudioTagStagingTableData> custom({
+    Expression<int>? audioLocalId,
+    Expression<String>? tagName,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (audioLocalId != null) 'audio_local_id': audioLocalId,
+      if (tagName != null) 'tag_name': tagName,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  ExampleAudioTagStagingTableCompanion copyWith({
+    Value<int>? audioLocalId,
+    Value<String>? tagName,
+    Value<int>? rowid,
+  }) {
+    return ExampleAudioTagStagingTableCompanion(
+      audioLocalId: audioLocalId ?? this.audioLocalId,
+      tagName: tagName ?? this.tagName,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (audioLocalId.present) {
+      map['audio_local_id'] = Variable<int>(audioLocalId.value);
+    }
+    if (tagName.present) {
+      map['tag_name'] = Variable<String>(tagName.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ExampleAudioTagStagingTableCompanion(')
+          ..write('audioLocalId: $audioLocalId, ')
+          ..write('tagName: $tagName, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $ExampleAudioStatStagingTableTable extends ExampleAudioStatStagingTable
+    with
+        TableInfo<
+          $ExampleAudioStatStagingTableTable,
+          ExampleAudioStatStagingTableData
+        > {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $ExampleAudioStatStagingTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _audioLocalIdMeta = const VerificationMeta(
+    'audioLocalId',
+  );
+  @override
+  late final GeneratedColumn<int> audioLocalId = GeneratedColumn<int>(
+    'audio_local_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _statNameMeta = const VerificationMeta(
+    'statName',
+  );
+  @override
+  late final GeneratedColumn<String> statName = GeneratedColumn<String>(
+    'stat_name',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _displayNameMeta = const VerificationMeta(
+    'displayName',
+  );
+  @override
+  late final GeneratedColumn<String> displayName = GeneratedColumn<String>(
+    'display_name',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _statValueMeta = const VerificationMeta(
+    'statValue',
+  );
+  @override
+  late final GeneratedColumn<double> statValue = GeneratedColumn<double>(
+    'stat_value',
+    aliasedName,
+    true,
+    type: DriftSqlType.double,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _displayValueMeta = const VerificationMeta(
+    'displayValue',
+  );
+  @override
+  late final GeneratedColumn<String> displayValue = GeneratedColumn<String>(
+    'display_value',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    audioLocalId,
+    statName,
+    displayName,
+    statValue,
+    displayValue,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'example_audio_stat_staging_table';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<ExampleAudioStatStagingTableData> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('audio_local_id')) {
+      context.handle(
+        _audioLocalIdMeta,
+        audioLocalId.isAcceptableOrUnknown(
+          data['audio_local_id']!,
+          _audioLocalIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_audioLocalIdMeta);
+    }
+    if (data.containsKey('stat_name')) {
+      context.handle(
+        _statNameMeta,
+        statName.isAcceptableOrUnknown(data['stat_name']!, _statNameMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_statNameMeta);
+    }
+    if (data.containsKey('display_name')) {
+      context.handle(
+        _displayNameMeta,
+        displayName.isAcceptableOrUnknown(
+          data['display_name']!,
+          _displayNameMeta,
+        ),
+      );
+    }
+    if (data.containsKey('stat_value')) {
+      context.handle(
+        _statValueMeta,
+        statValue.isAcceptableOrUnknown(data['stat_value']!, _statValueMeta),
+      );
+    }
+    if (data.containsKey('display_value')) {
+      context.handle(
+        _displayValueMeta,
+        displayValue.isAcceptableOrUnknown(
+          data['display_value']!,
+          _displayValueMeta,
+        ),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => const {};
+  @override
+  ExampleAudioStatStagingTableData map(
+    Map<String, dynamic> data, {
+    String? tablePrefix,
+  }) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return ExampleAudioStatStagingTableData(
+      audioLocalId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}audio_local_id'],
+      )!,
+      statName: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}stat_name'],
+      )!,
+      displayName: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}display_name'],
+      ),
+      statValue: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}stat_value'],
+      ),
+      displayValue: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}display_value'],
+      ),
+    );
+  }
+
+  @override
+  $ExampleAudioStatStagingTableTable createAlias(String alias) {
+    return $ExampleAudioStatStagingTableTable(attachedDatabase, alias);
+  }
+}
+
+class ExampleAudioStatStagingTableData extends DataClass
+    implements Insertable<ExampleAudioStatStagingTableData> {
+  final int audioLocalId;
+  final String statName;
+  final String? displayName;
+  final double? statValue;
+  final String? displayValue;
+  const ExampleAudioStatStagingTableData({
+    required this.audioLocalId,
+    required this.statName,
+    this.displayName,
+    this.statValue,
+    this.displayValue,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['audio_local_id'] = Variable<int>(audioLocalId);
+    map['stat_name'] = Variable<String>(statName);
+    if (!nullToAbsent || displayName != null) {
+      map['display_name'] = Variable<String>(displayName);
+    }
+    if (!nullToAbsent || statValue != null) {
+      map['stat_value'] = Variable<double>(statValue);
+    }
+    if (!nullToAbsent || displayValue != null) {
+      map['display_value'] = Variable<String>(displayValue);
+    }
+    return map;
+  }
+
+  ExampleAudioStatStagingTableCompanion toCompanion(bool nullToAbsent) {
+    return ExampleAudioStatStagingTableCompanion(
+      audioLocalId: Value(audioLocalId),
+      statName: Value(statName),
+      displayName: displayName == null && nullToAbsent
+          ? const Value.absent()
+          : Value(displayName),
+      statValue: statValue == null && nullToAbsent
+          ? const Value.absent()
+          : Value(statValue),
+      displayValue: displayValue == null && nullToAbsent
+          ? const Value.absent()
+          : Value(displayValue),
+    );
+  }
+
+  factory ExampleAudioStatStagingTableData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return ExampleAudioStatStagingTableData(
+      audioLocalId: serializer.fromJson<int>(json['audioLocalId']),
+      statName: serializer.fromJson<String>(json['statName']),
+      displayName: serializer.fromJson<String?>(json['displayName']),
+      statValue: serializer.fromJson<double?>(json['statValue']),
+      displayValue: serializer.fromJson<String?>(json['displayValue']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'audioLocalId': serializer.toJson<int>(audioLocalId),
+      'statName': serializer.toJson<String>(statName),
+      'displayName': serializer.toJson<String?>(displayName),
+      'statValue': serializer.toJson<double?>(statValue),
+      'displayValue': serializer.toJson<String?>(displayValue),
+    };
+  }
+
+  ExampleAudioStatStagingTableData copyWith({
+    int? audioLocalId,
+    String? statName,
+    Value<String?> displayName = const Value.absent(),
+    Value<double?> statValue = const Value.absent(),
+    Value<String?> displayValue = const Value.absent(),
+  }) => ExampleAudioStatStagingTableData(
+    audioLocalId: audioLocalId ?? this.audioLocalId,
+    statName: statName ?? this.statName,
+    displayName: displayName.present ? displayName.value : this.displayName,
+    statValue: statValue.present ? statValue.value : this.statValue,
+    displayValue: displayValue.present ? displayValue.value : this.displayValue,
+  );
+  ExampleAudioStatStagingTableData copyWithCompanion(
+    ExampleAudioStatStagingTableCompanion data,
+  ) {
+    return ExampleAudioStatStagingTableData(
+      audioLocalId: data.audioLocalId.present
+          ? data.audioLocalId.value
+          : this.audioLocalId,
+      statName: data.statName.present ? data.statName.value : this.statName,
+      displayName: data.displayName.present
+          ? data.displayName.value
+          : this.displayName,
+      statValue: data.statValue.present ? data.statValue.value : this.statValue,
+      displayValue: data.displayValue.present
+          ? data.displayValue.value
+          : this.displayValue,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ExampleAudioStatStagingTableData(')
+          ..write('audioLocalId: $audioLocalId, ')
+          ..write('statName: $statName, ')
+          ..write('displayName: $displayName, ')
+          ..write('statValue: $statValue, ')
+          ..write('displayValue: $displayValue')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(audioLocalId, statName, displayName, statValue, displayValue);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is ExampleAudioStatStagingTableData &&
+          other.audioLocalId == this.audioLocalId &&
+          other.statName == this.statName &&
+          other.displayName == this.displayName &&
+          other.statValue == this.statValue &&
+          other.displayValue == this.displayValue);
+}
+
+class ExampleAudioStatStagingTableCompanion
+    extends UpdateCompanion<ExampleAudioStatStagingTableData> {
+  final Value<int> audioLocalId;
+  final Value<String> statName;
+  final Value<String?> displayName;
+  final Value<double?> statValue;
+  final Value<String?> displayValue;
+  final Value<int> rowid;
+  const ExampleAudioStatStagingTableCompanion({
+    this.audioLocalId = const Value.absent(),
+    this.statName = const Value.absent(),
+    this.displayName = const Value.absent(),
+    this.statValue = const Value.absent(),
+    this.displayValue = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  ExampleAudioStatStagingTableCompanion.insert({
+    required int audioLocalId,
+    required String statName,
+    this.displayName = const Value.absent(),
+    this.statValue = const Value.absent(),
+    this.displayValue = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : audioLocalId = Value(audioLocalId),
+       statName = Value(statName);
+  static Insertable<ExampleAudioStatStagingTableData> custom({
+    Expression<int>? audioLocalId,
+    Expression<String>? statName,
+    Expression<String>? displayName,
+    Expression<double>? statValue,
+    Expression<String>? displayValue,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (audioLocalId != null) 'audio_local_id': audioLocalId,
+      if (statName != null) 'stat_name': statName,
+      if (displayName != null) 'display_name': displayName,
+      if (statValue != null) 'stat_value': statValue,
+      if (displayValue != null) 'display_value': displayValue,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  ExampleAudioStatStagingTableCompanion copyWith({
+    Value<int>? audioLocalId,
+    Value<String>? statName,
+    Value<String?>? displayName,
+    Value<double?>? statValue,
+    Value<String?>? displayValue,
+    Value<int>? rowid,
+  }) {
+    return ExampleAudioStatStagingTableCompanion(
+      audioLocalId: audioLocalId ?? this.audioLocalId,
+      statName: statName ?? this.statName,
+      displayName: displayName ?? this.displayName,
+      statValue: statValue ?? this.statValue,
+      displayValue: displayValue ?? this.displayValue,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (audioLocalId.present) {
+      map['audio_local_id'] = Variable<int>(audioLocalId.value);
+    }
+    if (statName.present) {
+      map['stat_name'] = Variable<String>(statName.value);
+    }
+    if (displayName.present) {
+      map['display_name'] = Variable<String>(displayName.value);
+    }
+    if (statValue.present) {
+      map['stat_value'] = Variable<double>(statValue.value);
+    }
+    if (displayValue.present) {
+      map['display_value'] = Variable<String>(displayValue.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ExampleAudioStatStagingTableCompanion(')
+          ..write('audioLocalId: $audioLocalId, ')
+          ..write('statName: $statName, ')
+          ..write('displayName: $displayName, ')
+          ..write('statValue: $statValue, ')
+          ..write('displayValue: $displayValue, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$StagingDatabase extends GeneratedDatabase {
   _$StagingDatabase(QueryExecutor e) : super(e);
   $StagingDatabaseManager get managers => $StagingDatabaseManager(this);
@@ -6444,6 +8723,20 @@ abstract class _$StagingDatabase extends GeneratedDatabase {
       $AudioStagingTableTable(this);
   late final $MediaStagingTableTable mediaStagingTable =
       $MediaStagingTableTable(this);
+  late final $ExampleStagingTableTable exampleStagingTable =
+      $ExampleStagingTableTable(this);
+  late final $ExampleTagStagingTableTable exampleTagStagingTable =
+      $ExampleTagStagingTableTable(this);
+  late final $ExampleStatStagingTableTable exampleStatStagingTable =
+      $ExampleStatStagingTableTable(this);
+  late final $ExampleTermStagingTableTable exampleTermStagingTable =
+      $ExampleTermStagingTableTable(this);
+  late final $ExampleAudioStagingTableTable exampleAudioStagingTable =
+      $ExampleAudioStagingTableTable(this);
+  late final $ExampleAudioTagStagingTableTable exampleAudioTagStagingTable =
+      $ExampleAudioTagStagingTableTable(this);
+  late final $ExampleAudioStatStagingTableTable exampleAudioStatStagingTable =
+      $ExampleAudioStatStagingTableTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -6466,6 +8759,13 @@ abstract class _$StagingDatabase extends GeneratedDatabase {
     kanjiMetaStagingTable,
     audioStagingTable,
     mediaStagingTable,
+    exampleStagingTable,
+    exampleTagStagingTable,
+    exampleStatStagingTable,
+    exampleTermStagingTable,
+    exampleAudioStagingTable,
+    exampleAudioTagStagingTable,
+    exampleAudioStatStagingTable,
   ];
 }
 
@@ -10132,6 +12432,1381 @@ typedef $$MediaStagingTableTableProcessedTableManager =
       MediaStagingTableData,
       PrefetchHooks Function()
     >;
+typedef $$ExampleStagingTableTableCreateCompanionBuilder =
+    ExampleStagingTableCompanion Function({
+      Value<int> localId,
+      required int groupId,
+      required String languageCode,
+      required String exampleSentence,
+      Value<String?> exampleSentenceReading,
+      required String exampleSentenceTokenized,
+    });
+typedef $$ExampleStagingTableTableUpdateCompanionBuilder =
+    ExampleStagingTableCompanion Function({
+      Value<int> localId,
+      Value<int> groupId,
+      Value<String> languageCode,
+      Value<String> exampleSentence,
+      Value<String?> exampleSentenceReading,
+      Value<String> exampleSentenceTokenized,
+    });
+
+class $$ExampleStagingTableTableFilterComposer
+    extends Composer<_$StagingDatabase, $ExampleStagingTableTable> {
+  $$ExampleStagingTableTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get localId => $composableBuilder(
+    column: $table.localId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get groupId => $composableBuilder(
+    column: $table.groupId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get languageCode => $composableBuilder(
+    column: $table.languageCode,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get exampleSentence => $composableBuilder(
+    column: $table.exampleSentence,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get exampleSentenceReading => $composableBuilder(
+    column: $table.exampleSentenceReading,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get exampleSentenceTokenized => $composableBuilder(
+    column: $table.exampleSentenceTokenized,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$ExampleStagingTableTableOrderingComposer
+    extends Composer<_$StagingDatabase, $ExampleStagingTableTable> {
+  $$ExampleStagingTableTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get localId => $composableBuilder(
+    column: $table.localId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get groupId => $composableBuilder(
+    column: $table.groupId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get languageCode => $composableBuilder(
+    column: $table.languageCode,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get exampleSentence => $composableBuilder(
+    column: $table.exampleSentence,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get exampleSentenceReading => $composableBuilder(
+    column: $table.exampleSentenceReading,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get exampleSentenceTokenized => $composableBuilder(
+    column: $table.exampleSentenceTokenized,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$ExampleStagingTableTableAnnotationComposer
+    extends Composer<_$StagingDatabase, $ExampleStagingTableTable> {
+  $$ExampleStagingTableTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get localId =>
+      $composableBuilder(column: $table.localId, builder: (column) => column);
+
+  GeneratedColumn<int> get groupId =>
+      $composableBuilder(column: $table.groupId, builder: (column) => column);
+
+  GeneratedColumn<String> get languageCode => $composableBuilder(
+    column: $table.languageCode,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get exampleSentence => $composableBuilder(
+    column: $table.exampleSentence,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get exampleSentenceReading => $composableBuilder(
+    column: $table.exampleSentenceReading,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get exampleSentenceTokenized => $composableBuilder(
+    column: $table.exampleSentenceTokenized,
+    builder: (column) => column,
+  );
+}
+
+class $$ExampleStagingTableTableTableManager
+    extends
+        RootTableManager<
+          _$StagingDatabase,
+          $ExampleStagingTableTable,
+          ExampleStagingTableData,
+          $$ExampleStagingTableTableFilterComposer,
+          $$ExampleStagingTableTableOrderingComposer,
+          $$ExampleStagingTableTableAnnotationComposer,
+          $$ExampleStagingTableTableCreateCompanionBuilder,
+          $$ExampleStagingTableTableUpdateCompanionBuilder,
+          (
+            ExampleStagingTableData,
+            BaseReferences<
+              _$StagingDatabase,
+              $ExampleStagingTableTable,
+              ExampleStagingTableData
+            >,
+          ),
+          ExampleStagingTableData,
+          PrefetchHooks Function()
+        > {
+  $$ExampleStagingTableTableTableManager(
+    _$StagingDatabase db,
+    $ExampleStagingTableTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$ExampleStagingTableTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$ExampleStagingTableTableOrderingComposer(
+                $db: db,
+                $table: table,
+              ),
+          createComputedFieldComposer: () =>
+              $$ExampleStagingTableTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<int> localId = const Value.absent(),
+                Value<int> groupId = const Value.absent(),
+                Value<String> languageCode = const Value.absent(),
+                Value<String> exampleSentence = const Value.absent(),
+                Value<String?> exampleSentenceReading = const Value.absent(),
+                Value<String> exampleSentenceTokenized = const Value.absent(),
+              }) => ExampleStagingTableCompanion(
+                localId: localId,
+                groupId: groupId,
+                languageCode: languageCode,
+                exampleSentence: exampleSentence,
+                exampleSentenceReading: exampleSentenceReading,
+                exampleSentenceTokenized: exampleSentenceTokenized,
+              ),
+          createCompanionCallback:
+              ({
+                Value<int> localId = const Value.absent(),
+                required int groupId,
+                required String languageCode,
+                required String exampleSentence,
+                Value<String?> exampleSentenceReading = const Value.absent(),
+                required String exampleSentenceTokenized,
+              }) => ExampleStagingTableCompanion.insert(
+                localId: localId,
+                groupId: groupId,
+                languageCode: languageCode,
+                exampleSentence: exampleSentence,
+                exampleSentenceReading: exampleSentenceReading,
+                exampleSentenceTokenized: exampleSentenceTokenized,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$ExampleStagingTableTableProcessedTableManager =
+    ProcessedTableManager<
+      _$StagingDatabase,
+      $ExampleStagingTableTable,
+      ExampleStagingTableData,
+      $$ExampleStagingTableTableFilterComposer,
+      $$ExampleStagingTableTableOrderingComposer,
+      $$ExampleStagingTableTableAnnotationComposer,
+      $$ExampleStagingTableTableCreateCompanionBuilder,
+      $$ExampleStagingTableTableUpdateCompanionBuilder,
+      (
+        ExampleStagingTableData,
+        BaseReferences<
+          _$StagingDatabase,
+          $ExampleStagingTableTable,
+          ExampleStagingTableData
+        >,
+      ),
+      ExampleStagingTableData,
+      PrefetchHooks Function()
+    >;
+typedef $$ExampleTagStagingTableTableCreateCompanionBuilder =
+    ExampleTagStagingTableCompanion Function({
+      required int exampleLocalId,
+      required String tagName,
+      Value<int> rowid,
+    });
+typedef $$ExampleTagStagingTableTableUpdateCompanionBuilder =
+    ExampleTagStagingTableCompanion Function({
+      Value<int> exampleLocalId,
+      Value<String> tagName,
+      Value<int> rowid,
+    });
+
+class $$ExampleTagStagingTableTableFilterComposer
+    extends Composer<_$StagingDatabase, $ExampleTagStagingTableTable> {
+  $$ExampleTagStagingTableTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get exampleLocalId => $composableBuilder(
+    column: $table.exampleLocalId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get tagName => $composableBuilder(
+    column: $table.tagName,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$ExampleTagStagingTableTableOrderingComposer
+    extends Composer<_$StagingDatabase, $ExampleTagStagingTableTable> {
+  $$ExampleTagStagingTableTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get exampleLocalId => $composableBuilder(
+    column: $table.exampleLocalId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get tagName => $composableBuilder(
+    column: $table.tagName,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$ExampleTagStagingTableTableAnnotationComposer
+    extends Composer<_$StagingDatabase, $ExampleTagStagingTableTable> {
+  $$ExampleTagStagingTableTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get exampleLocalId => $composableBuilder(
+    column: $table.exampleLocalId,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get tagName =>
+      $composableBuilder(column: $table.tagName, builder: (column) => column);
+}
+
+class $$ExampleTagStagingTableTableTableManager
+    extends
+        RootTableManager<
+          _$StagingDatabase,
+          $ExampleTagStagingTableTable,
+          ExampleTagStagingTableData,
+          $$ExampleTagStagingTableTableFilterComposer,
+          $$ExampleTagStagingTableTableOrderingComposer,
+          $$ExampleTagStagingTableTableAnnotationComposer,
+          $$ExampleTagStagingTableTableCreateCompanionBuilder,
+          $$ExampleTagStagingTableTableUpdateCompanionBuilder,
+          (
+            ExampleTagStagingTableData,
+            BaseReferences<
+              _$StagingDatabase,
+              $ExampleTagStagingTableTable,
+              ExampleTagStagingTableData
+            >,
+          ),
+          ExampleTagStagingTableData,
+          PrefetchHooks Function()
+        > {
+  $$ExampleTagStagingTableTableTableManager(
+    _$StagingDatabase db,
+    $ExampleTagStagingTableTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$ExampleTagStagingTableTableFilterComposer(
+                $db: db,
+                $table: table,
+              ),
+          createOrderingComposer: () =>
+              $$ExampleTagStagingTableTableOrderingComposer(
+                $db: db,
+                $table: table,
+              ),
+          createComputedFieldComposer: () =>
+              $$ExampleTagStagingTableTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<int> exampleLocalId = const Value.absent(),
+                Value<String> tagName = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => ExampleTagStagingTableCompanion(
+                exampleLocalId: exampleLocalId,
+                tagName: tagName,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required int exampleLocalId,
+                required String tagName,
+                Value<int> rowid = const Value.absent(),
+              }) => ExampleTagStagingTableCompanion.insert(
+                exampleLocalId: exampleLocalId,
+                tagName: tagName,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$ExampleTagStagingTableTableProcessedTableManager =
+    ProcessedTableManager<
+      _$StagingDatabase,
+      $ExampleTagStagingTableTable,
+      ExampleTagStagingTableData,
+      $$ExampleTagStagingTableTableFilterComposer,
+      $$ExampleTagStagingTableTableOrderingComposer,
+      $$ExampleTagStagingTableTableAnnotationComposer,
+      $$ExampleTagStagingTableTableCreateCompanionBuilder,
+      $$ExampleTagStagingTableTableUpdateCompanionBuilder,
+      (
+        ExampleTagStagingTableData,
+        BaseReferences<
+          _$StagingDatabase,
+          $ExampleTagStagingTableTable,
+          ExampleTagStagingTableData
+        >,
+      ),
+      ExampleTagStagingTableData,
+      PrefetchHooks Function()
+    >;
+typedef $$ExampleStatStagingTableTableCreateCompanionBuilder =
+    ExampleStatStagingTableCompanion Function({
+      required int exampleLocalId,
+      required String statName,
+      Value<String?> displayName,
+      Value<double?> statValue,
+      Value<String?> displayValue,
+      Value<int> rowid,
+    });
+typedef $$ExampleStatStagingTableTableUpdateCompanionBuilder =
+    ExampleStatStagingTableCompanion Function({
+      Value<int> exampleLocalId,
+      Value<String> statName,
+      Value<String?> displayName,
+      Value<double?> statValue,
+      Value<String?> displayValue,
+      Value<int> rowid,
+    });
+
+class $$ExampleStatStagingTableTableFilterComposer
+    extends Composer<_$StagingDatabase, $ExampleStatStagingTableTable> {
+  $$ExampleStatStagingTableTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get exampleLocalId => $composableBuilder(
+    column: $table.exampleLocalId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get statName => $composableBuilder(
+    column: $table.statName,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get displayName => $composableBuilder(
+    column: $table.displayName,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get statValue => $composableBuilder(
+    column: $table.statValue,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get displayValue => $composableBuilder(
+    column: $table.displayValue,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$ExampleStatStagingTableTableOrderingComposer
+    extends Composer<_$StagingDatabase, $ExampleStatStagingTableTable> {
+  $$ExampleStatStagingTableTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get exampleLocalId => $composableBuilder(
+    column: $table.exampleLocalId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get statName => $composableBuilder(
+    column: $table.statName,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get displayName => $composableBuilder(
+    column: $table.displayName,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get statValue => $composableBuilder(
+    column: $table.statValue,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get displayValue => $composableBuilder(
+    column: $table.displayValue,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$ExampleStatStagingTableTableAnnotationComposer
+    extends Composer<_$StagingDatabase, $ExampleStatStagingTableTable> {
+  $$ExampleStatStagingTableTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get exampleLocalId => $composableBuilder(
+    column: $table.exampleLocalId,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get statName =>
+      $composableBuilder(column: $table.statName, builder: (column) => column);
+
+  GeneratedColumn<String> get displayName => $composableBuilder(
+    column: $table.displayName,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<double> get statValue =>
+      $composableBuilder(column: $table.statValue, builder: (column) => column);
+
+  GeneratedColumn<String> get displayValue => $composableBuilder(
+    column: $table.displayValue,
+    builder: (column) => column,
+  );
+}
+
+class $$ExampleStatStagingTableTableTableManager
+    extends
+        RootTableManager<
+          _$StagingDatabase,
+          $ExampleStatStagingTableTable,
+          ExampleStatStagingTableData,
+          $$ExampleStatStagingTableTableFilterComposer,
+          $$ExampleStatStagingTableTableOrderingComposer,
+          $$ExampleStatStagingTableTableAnnotationComposer,
+          $$ExampleStatStagingTableTableCreateCompanionBuilder,
+          $$ExampleStatStagingTableTableUpdateCompanionBuilder,
+          (
+            ExampleStatStagingTableData,
+            BaseReferences<
+              _$StagingDatabase,
+              $ExampleStatStagingTableTable,
+              ExampleStatStagingTableData
+            >,
+          ),
+          ExampleStatStagingTableData,
+          PrefetchHooks Function()
+        > {
+  $$ExampleStatStagingTableTableTableManager(
+    _$StagingDatabase db,
+    $ExampleStatStagingTableTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$ExampleStatStagingTableTableFilterComposer(
+                $db: db,
+                $table: table,
+              ),
+          createOrderingComposer: () =>
+              $$ExampleStatStagingTableTableOrderingComposer(
+                $db: db,
+                $table: table,
+              ),
+          createComputedFieldComposer: () =>
+              $$ExampleStatStagingTableTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<int> exampleLocalId = const Value.absent(),
+                Value<String> statName = const Value.absent(),
+                Value<String?> displayName = const Value.absent(),
+                Value<double?> statValue = const Value.absent(),
+                Value<String?> displayValue = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => ExampleStatStagingTableCompanion(
+                exampleLocalId: exampleLocalId,
+                statName: statName,
+                displayName: displayName,
+                statValue: statValue,
+                displayValue: displayValue,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required int exampleLocalId,
+                required String statName,
+                Value<String?> displayName = const Value.absent(),
+                Value<double?> statValue = const Value.absent(),
+                Value<String?> displayValue = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => ExampleStatStagingTableCompanion.insert(
+                exampleLocalId: exampleLocalId,
+                statName: statName,
+                displayName: displayName,
+                statValue: statValue,
+                displayValue: displayValue,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$ExampleStatStagingTableTableProcessedTableManager =
+    ProcessedTableManager<
+      _$StagingDatabase,
+      $ExampleStatStagingTableTable,
+      ExampleStatStagingTableData,
+      $$ExampleStatStagingTableTableFilterComposer,
+      $$ExampleStatStagingTableTableOrderingComposer,
+      $$ExampleStatStagingTableTableAnnotationComposer,
+      $$ExampleStatStagingTableTableCreateCompanionBuilder,
+      $$ExampleStatStagingTableTableUpdateCompanionBuilder,
+      (
+        ExampleStatStagingTableData,
+        BaseReferences<
+          _$StagingDatabase,
+          $ExampleStatStagingTableTable,
+          ExampleStatStagingTableData
+        >,
+      ),
+      ExampleStatStagingTableData,
+      PrefetchHooks Function()
+    >;
+typedef $$ExampleTermStagingTableTableCreateCompanionBuilder =
+    ExampleTermStagingTableCompanion Function({
+      required int exampleLocalId,
+      required String term,
+      Value<int> rowid,
+    });
+typedef $$ExampleTermStagingTableTableUpdateCompanionBuilder =
+    ExampleTermStagingTableCompanion Function({
+      Value<int> exampleLocalId,
+      Value<String> term,
+      Value<int> rowid,
+    });
+
+class $$ExampleTermStagingTableTableFilterComposer
+    extends Composer<_$StagingDatabase, $ExampleTermStagingTableTable> {
+  $$ExampleTermStagingTableTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get exampleLocalId => $composableBuilder(
+    column: $table.exampleLocalId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get term => $composableBuilder(
+    column: $table.term,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$ExampleTermStagingTableTableOrderingComposer
+    extends Composer<_$StagingDatabase, $ExampleTermStagingTableTable> {
+  $$ExampleTermStagingTableTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get exampleLocalId => $composableBuilder(
+    column: $table.exampleLocalId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get term => $composableBuilder(
+    column: $table.term,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$ExampleTermStagingTableTableAnnotationComposer
+    extends Composer<_$StagingDatabase, $ExampleTermStagingTableTable> {
+  $$ExampleTermStagingTableTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get exampleLocalId => $composableBuilder(
+    column: $table.exampleLocalId,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get term =>
+      $composableBuilder(column: $table.term, builder: (column) => column);
+}
+
+class $$ExampleTermStagingTableTableTableManager
+    extends
+        RootTableManager<
+          _$StagingDatabase,
+          $ExampleTermStagingTableTable,
+          ExampleTermStagingTableData,
+          $$ExampleTermStagingTableTableFilterComposer,
+          $$ExampleTermStagingTableTableOrderingComposer,
+          $$ExampleTermStagingTableTableAnnotationComposer,
+          $$ExampleTermStagingTableTableCreateCompanionBuilder,
+          $$ExampleTermStagingTableTableUpdateCompanionBuilder,
+          (
+            ExampleTermStagingTableData,
+            BaseReferences<
+              _$StagingDatabase,
+              $ExampleTermStagingTableTable,
+              ExampleTermStagingTableData
+            >,
+          ),
+          ExampleTermStagingTableData,
+          PrefetchHooks Function()
+        > {
+  $$ExampleTermStagingTableTableTableManager(
+    _$StagingDatabase db,
+    $ExampleTermStagingTableTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$ExampleTermStagingTableTableFilterComposer(
+                $db: db,
+                $table: table,
+              ),
+          createOrderingComposer: () =>
+              $$ExampleTermStagingTableTableOrderingComposer(
+                $db: db,
+                $table: table,
+              ),
+          createComputedFieldComposer: () =>
+              $$ExampleTermStagingTableTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<int> exampleLocalId = const Value.absent(),
+                Value<String> term = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => ExampleTermStagingTableCompanion(
+                exampleLocalId: exampleLocalId,
+                term: term,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required int exampleLocalId,
+                required String term,
+                Value<int> rowid = const Value.absent(),
+              }) => ExampleTermStagingTableCompanion.insert(
+                exampleLocalId: exampleLocalId,
+                term: term,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$ExampleTermStagingTableTableProcessedTableManager =
+    ProcessedTableManager<
+      _$StagingDatabase,
+      $ExampleTermStagingTableTable,
+      ExampleTermStagingTableData,
+      $$ExampleTermStagingTableTableFilterComposer,
+      $$ExampleTermStagingTableTableOrderingComposer,
+      $$ExampleTermStagingTableTableAnnotationComposer,
+      $$ExampleTermStagingTableTableCreateCompanionBuilder,
+      $$ExampleTermStagingTableTableUpdateCompanionBuilder,
+      (
+        ExampleTermStagingTableData,
+        BaseReferences<
+          _$StagingDatabase,
+          $ExampleTermStagingTableTable,
+          ExampleTermStagingTableData
+        >,
+      ),
+      ExampleTermStagingTableData,
+      PrefetchHooks Function()
+    >;
+typedef $$ExampleAudioStagingTableTableCreateCompanionBuilder =
+    ExampleAudioStagingTableCompanion Function({
+      Value<int> localId,
+      required int exampleLocalId,
+      required String path,
+      required String name,
+    });
+typedef $$ExampleAudioStagingTableTableUpdateCompanionBuilder =
+    ExampleAudioStagingTableCompanion Function({
+      Value<int> localId,
+      Value<int> exampleLocalId,
+      Value<String> path,
+      Value<String> name,
+    });
+
+class $$ExampleAudioStagingTableTableFilterComposer
+    extends Composer<_$StagingDatabase, $ExampleAudioStagingTableTable> {
+  $$ExampleAudioStagingTableTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get localId => $composableBuilder(
+    column: $table.localId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get exampleLocalId => $composableBuilder(
+    column: $table.exampleLocalId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get path => $composableBuilder(
+    column: $table.path,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$ExampleAudioStagingTableTableOrderingComposer
+    extends Composer<_$StagingDatabase, $ExampleAudioStagingTableTable> {
+  $$ExampleAudioStagingTableTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get localId => $composableBuilder(
+    column: $table.localId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get exampleLocalId => $composableBuilder(
+    column: $table.exampleLocalId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get path => $composableBuilder(
+    column: $table.path,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$ExampleAudioStagingTableTableAnnotationComposer
+    extends Composer<_$StagingDatabase, $ExampleAudioStagingTableTable> {
+  $$ExampleAudioStagingTableTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get localId =>
+      $composableBuilder(column: $table.localId, builder: (column) => column);
+
+  GeneratedColumn<int> get exampleLocalId => $composableBuilder(
+    column: $table.exampleLocalId,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get path =>
+      $composableBuilder(column: $table.path, builder: (column) => column);
+
+  GeneratedColumn<String> get name =>
+      $composableBuilder(column: $table.name, builder: (column) => column);
+}
+
+class $$ExampleAudioStagingTableTableTableManager
+    extends
+        RootTableManager<
+          _$StagingDatabase,
+          $ExampleAudioStagingTableTable,
+          ExampleAudioStagingTableData,
+          $$ExampleAudioStagingTableTableFilterComposer,
+          $$ExampleAudioStagingTableTableOrderingComposer,
+          $$ExampleAudioStagingTableTableAnnotationComposer,
+          $$ExampleAudioStagingTableTableCreateCompanionBuilder,
+          $$ExampleAudioStagingTableTableUpdateCompanionBuilder,
+          (
+            ExampleAudioStagingTableData,
+            BaseReferences<
+              _$StagingDatabase,
+              $ExampleAudioStagingTableTable,
+              ExampleAudioStagingTableData
+            >,
+          ),
+          ExampleAudioStagingTableData,
+          PrefetchHooks Function()
+        > {
+  $$ExampleAudioStagingTableTableTableManager(
+    _$StagingDatabase db,
+    $ExampleAudioStagingTableTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$ExampleAudioStagingTableTableFilterComposer(
+                $db: db,
+                $table: table,
+              ),
+          createOrderingComposer: () =>
+              $$ExampleAudioStagingTableTableOrderingComposer(
+                $db: db,
+                $table: table,
+              ),
+          createComputedFieldComposer: () =>
+              $$ExampleAudioStagingTableTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<int> localId = const Value.absent(),
+                Value<int> exampleLocalId = const Value.absent(),
+                Value<String> path = const Value.absent(),
+                Value<String> name = const Value.absent(),
+              }) => ExampleAudioStagingTableCompanion(
+                localId: localId,
+                exampleLocalId: exampleLocalId,
+                path: path,
+                name: name,
+              ),
+          createCompanionCallback:
+              ({
+                Value<int> localId = const Value.absent(),
+                required int exampleLocalId,
+                required String path,
+                required String name,
+              }) => ExampleAudioStagingTableCompanion.insert(
+                localId: localId,
+                exampleLocalId: exampleLocalId,
+                path: path,
+                name: name,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$ExampleAudioStagingTableTableProcessedTableManager =
+    ProcessedTableManager<
+      _$StagingDatabase,
+      $ExampleAudioStagingTableTable,
+      ExampleAudioStagingTableData,
+      $$ExampleAudioStagingTableTableFilterComposer,
+      $$ExampleAudioStagingTableTableOrderingComposer,
+      $$ExampleAudioStagingTableTableAnnotationComposer,
+      $$ExampleAudioStagingTableTableCreateCompanionBuilder,
+      $$ExampleAudioStagingTableTableUpdateCompanionBuilder,
+      (
+        ExampleAudioStagingTableData,
+        BaseReferences<
+          _$StagingDatabase,
+          $ExampleAudioStagingTableTable,
+          ExampleAudioStagingTableData
+        >,
+      ),
+      ExampleAudioStagingTableData,
+      PrefetchHooks Function()
+    >;
+typedef $$ExampleAudioTagStagingTableTableCreateCompanionBuilder =
+    ExampleAudioTagStagingTableCompanion Function({
+      required int audioLocalId,
+      required String tagName,
+      Value<int> rowid,
+    });
+typedef $$ExampleAudioTagStagingTableTableUpdateCompanionBuilder =
+    ExampleAudioTagStagingTableCompanion Function({
+      Value<int> audioLocalId,
+      Value<String> tagName,
+      Value<int> rowid,
+    });
+
+class $$ExampleAudioTagStagingTableTableFilterComposer
+    extends Composer<_$StagingDatabase, $ExampleAudioTagStagingTableTable> {
+  $$ExampleAudioTagStagingTableTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get audioLocalId => $composableBuilder(
+    column: $table.audioLocalId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get tagName => $composableBuilder(
+    column: $table.tagName,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$ExampleAudioTagStagingTableTableOrderingComposer
+    extends Composer<_$StagingDatabase, $ExampleAudioTagStagingTableTable> {
+  $$ExampleAudioTagStagingTableTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get audioLocalId => $composableBuilder(
+    column: $table.audioLocalId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get tagName => $composableBuilder(
+    column: $table.tagName,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$ExampleAudioTagStagingTableTableAnnotationComposer
+    extends Composer<_$StagingDatabase, $ExampleAudioTagStagingTableTable> {
+  $$ExampleAudioTagStagingTableTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get audioLocalId => $composableBuilder(
+    column: $table.audioLocalId,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get tagName =>
+      $composableBuilder(column: $table.tagName, builder: (column) => column);
+}
+
+class $$ExampleAudioTagStagingTableTableTableManager
+    extends
+        RootTableManager<
+          _$StagingDatabase,
+          $ExampleAudioTagStagingTableTable,
+          ExampleAudioTagStagingTableData,
+          $$ExampleAudioTagStagingTableTableFilterComposer,
+          $$ExampleAudioTagStagingTableTableOrderingComposer,
+          $$ExampleAudioTagStagingTableTableAnnotationComposer,
+          $$ExampleAudioTagStagingTableTableCreateCompanionBuilder,
+          $$ExampleAudioTagStagingTableTableUpdateCompanionBuilder,
+          (
+            ExampleAudioTagStagingTableData,
+            BaseReferences<
+              _$StagingDatabase,
+              $ExampleAudioTagStagingTableTable,
+              ExampleAudioTagStagingTableData
+            >,
+          ),
+          ExampleAudioTagStagingTableData,
+          PrefetchHooks Function()
+        > {
+  $$ExampleAudioTagStagingTableTableTableManager(
+    _$StagingDatabase db,
+    $ExampleAudioTagStagingTableTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$ExampleAudioTagStagingTableTableFilterComposer(
+                $db: db,
+                $table: table,
+              ),
+          createOrderingComposer: () =>
+              $$ExampleAudioTagStagingTableTableOrderingComposer(
+                $db: db,
+                $table: table,
+              ),
+          createComputedFieldComposer: () =>
+              $$ExampleAudioTagStagingTableTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<int> audioLocalId = const Value.absent(),
+                Value<String> tagName = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => ExampleAudioTagStagingTableCompanion(
+                audioLocalId: audioLocalId,
+                tagName: tagName,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required int audioLocalId,
+                required String tagName,
+                Value<int> rowid = const Value.absent(),
+              }) => ExampleAudioTagStagingTableCompanion.insert(
+                audioLocalId: audioLocalId,
+                tagName: tagName,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$ExampleAudioTagStagingTableTableProcessedTableManager =
+    ProcessedTableManager<
+      _$StagingDatabase,
+      $ExampleAudioTagStagingTableTable,
+      ExampleAudioTagStagingTableData,
+      $$ExampleAudioTagStagingTableTableFilterComposer,
+      $$ExampleAudioTagStagingTableTableOrderingComposer,
+      $$ExampleAudioTagStagingTableTableAnnotationComposer,
+      $$ExampleAudioTagStagingTableTableCreateCompanionBuilder,
+      $$ExampleAudioTagStagingTableTableUpdateCompanionBuilder,
+      (
+        ExampleAudioTagStagingTableData,
+        BaseReferences<
+          _$StagingDatabase,
+          $ExampleAudioTagStagingTableTable,
+          ExampleAudioTagStagingTableData
+        >,
+      ),
+      ExampleAudioTagStagingTableData,
+      PrefetchHooks Function()
+    >;
+typedef $$ExampleAudioStatStagingTableTableCreateCompanionBuilder =
+    ExampleAudioStatStagingTableCompanion Function({
+      required int audioLocalId,
+      required String statName,
+      Value<String?> displayName,
+      Value<double?> statValue,
+      Value<String?> displayValue,
+      Value<int> rowid,
+    });
+typedef $$ExampleAudioStatStagingTableTableUpdateCompanionBuilder =
+    ExampleAudioStatStagingTableCompanion Function({
+      Value<int> audioLocalId,
+      Value<String> statName,
+      Value<String?> displayName,
+      Value<double?> statValue,
+      Value<String?> displayValue,
+      Value<int> rowid,
+    });
+
+class $$ExampleAudioStatStagingTableTableFilterComposer
+    extends Composer<_$StagingDatabase, $ExampleAudioStatStagingTableTable> {
+  $$ExampleAudioStatStagingTableTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get audioLocalId => $composableBuilder(
+    column: $table.audioLocalId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get statName => $composableBuilder(
+    column: $table.statName,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get displayName => $composableBuilder(
+    column: $table.displayName,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get statValue => $composableBuilder(
+    column: $table.statValue,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get displayValue => $composableBuilder(
+    column: $table.displayValue,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$ExampleAudioStatStagingTableTableOrderingComposer
+    extends Composer<_$StagingDatabase, $ExampleAudioStatStagingTableTable> {
+  $$ExampleAudioStatStagingTableTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get audioLocalId => $composableBuilder(
+    column: $table.audioLocalId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get statName => $composableBuilder(
+    column: $table.statName,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get displayName => $composableBuilder(
+    column: $table.displayName,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get statValue => $composableBuilder(
+    column: $table.statValue,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get displayValue => $composableBuilder(
+    column: $table.displayValue,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$ExampleAudioStatStagingTableTableAnnotationComposer
+    extends Composer<_$StagingDatabase, $ExampleAudioStatStagingTableTable> {
+  $$ExampleAudioStatStagingTableTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get audioLocalId => $composableBuilder(
+    column: $table.audioLocalId,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get statName =>
+      $composableBuilder(column: $table.statName, builder: (column) => column);
+
+  GeneratedColumn<String> get displayName => $composableBuilder(
+    column: $table.displayName,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<double> get statValue =>
+      $composableBuilder(column: $table.statValue, builder: (column) => column);
+
+  GeneratedColumn<String> get displayValue => $composableBuilder(
+    column: $table.displayValue,
+    builder: (column) => column,
+  );
+}
+
+class $$ExampleAudioStatStagingTableTableTableManager
+    extends
+        RootTableManager<
+          _$StagingDatabase,
+          $ExampleAudioStatStagingTableTable,
+          ExampleAudioStatStagingTableData,
+          $$ExampleAudioStatStagingTableTableFilterComposer,
+          $$ExampleAudioStatStagingTableTableOrderingComposer,
+          $$ExampleAudioStatStagingTableTableAnnotationComposer,
+          $$ExampleAudioStatStagingTableTableCreateCompanionBuilder,
+          $$ExampleAudioStatStagingTableTableUpdateCompanionBuilder,
+          (
+            ExampleAudioStatStagingTableData,
+            BaseReferences<
+              _$StagingDatabase,
+              $ExampleAudioStatStagingTableTable,
+              ExampleAudioStatStagingTableData
+            >,
+          ),
+          ExampleAudioStatStagingTableData,
+          PrefetchHooks Function()
+        > {
+  $$ExampleAudioStatStagingTableTableTableManager(
+    _$StagingDatabase db,
+    $ExampleAudioStatStagingTableTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$ExampleAudioStatStagingTableTableFilterComposer(
+                $db: db,
+                $table: table,
+              ),
+          createOrderingComposer: () =>
+              $$ExampleAudioStatStagingTableTableOrderingComposer(
+                $db: db,
+                $table: table,
+              ),
+          createComputedFieldComposer: () =>
+              $$ExampleAudioStatStagingTableTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<int> audioLocalId = const Value.absent(),
+                Value<String> statName = const Value.absent(),
+                Value<String?> displayName = const Value.absent(),
+                Value<double?> statValue = const Value.absent(),
+                Value<String?> displayValue = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => ExampleAudioStatStagingTableCompanion(
+                audioLocalId: audioLocalId,
+                statName: statName,
+                displayName: displayName,
+                statValue: statValue,
+                displayValue: displayValue,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required int audioLocalId,
+                required String statName,
+                Value<String?> displayName = const Value.absent(),
+                Value<double?> statValue = const Value.absent(),
+                Value<String?> displayValue = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => ExampleAudioStatStagingTableCompanion.insert(
+                audioLocalId: audioLocalId,
+                statName: statName,
+                displayName: displayName,
+                statValue: statValue,
+                displayValue: displayValue,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$ExampleAudioStatStagingTableTableProcessedTableManager =
+    ProcessedTableManager<
+      _$StagingDatabase,
+      $ExampleAudioStatStagingTableTable,
+      ExampleAudioStatStagingTableData,
+      $$ExampleAudioStatStagingTableTableFilterComposer,
+      $$ExampleAudioStatStagingTableTableOrderingComposer,
+      $$ExampleAudioStatStagingTableTableAnnotationComposer,
+      $$ExampleAudioStatStagingTableTableCreateCompanionBuilder,
+      $$ExampleAudioStatStagingTableTableUpdateCompanionBuilder,
+      (
+        ExampleAudioStatStagingTableData,
+        BaseReferences<
+          _$StagingDatabase,
+          $ExampleAudioStatStagingTableTable,
+          ExampleAudioStatStagingTableData
+        >,
+      ),
+      ExampleAudioStatStagingTableData,
+      PrefetchHooks Function()
+    >;
 
 class $StagingDatabaseManager {
   final _$StagingDatabase _db;
@@ -10190,4 +13865,38 @@ class $StagingDatabaseManager {
       $$AudioStagingTableTableTableManager(_db, _db.audioStagingTable);
   $$MediaStagingTableTableTableManager get mediaStagingTable =>
       $$MediaStagingTableTableTableManager(_db, _db.mediaStagingTable);
+  $$ExampleStagingTableTableTableManager get exampleStagingTable =>
+      $$ExampleStagingTableTableTableManager(_db, _db.exampleStagingTable);
+  $$ExampleTagStagingTableTableTableManager get exampleTagStagingTable =>
+      $$ExampleTagStagingTableTableTableManager(
+        _db,
+        _db.exampleTagStagingTable,
+      );
+  $$ExampleStatStagingTableTableTableManager get exampleStatStagingTable =>
+      $$ExampleStatStagingTableTableTableManager(
+        _db,
+        _db.exampleStatStagingTable,
+      );
+  $$ExampleTermStagingTableTableTableManager get exampleTermStagingTable =>
+      $$ExampleTermStagingTableTableTableManager(
+        _db,
+        _db.exampleTermStagingTable,
+      );
+  $$ExampleAudioStagingTableTableTableManager get exampleAudioStagingTable =>
+      $$ExampleAudioStagingTableTableTableManager(
+        _db,
+        _db.exampleAudioStagingTable,
+      );
+  $$ExampleAudioTagStagingTableTableTableManager
+  get exampleAudioTagStagingTable =>
+      $$ExampleAudioTagStagingTableTableTableManager(
+        _db,
+        _db.exampleAudioTagStagingTable,
+      );
+  $$ExampleAudioStatStagingTableTableTableManager
+  get exampleAudioStatStagingTable =>
+      $$ExampleAudioStatStagingTableTableTableManager(
+        _db,
+        _db.exampleAudioStatStagingTable,
+      );
 }
