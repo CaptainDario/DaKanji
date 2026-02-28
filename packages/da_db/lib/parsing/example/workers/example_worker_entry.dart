@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 import 'dart:isolate';
+import 'dart:typed_data';
 
 import 'package:collection/collection.dart';
 import 'package:da_db/parsing/staging_db/staging_db.dart';
@@ -13,6 +14,7 @@ import 'package:drift/native.dart';
 import 'package:language_processing/language_processing.dart';
 
 import '../parsers/example_bank_parser.dart';
+import '../parsers/example_text_parser.dart'; // Add your new text parser import
 
 Future<void> exampleWorkerEntry(SendPort mainSendPort) async {
   final receivePort = ReceivePort();
@@ -28,6 +30,7 @@ Future<void> exampleWorkerEntry(SendPort mainSendPort) async {
   final List<DbFileParser> parsers = [
     ExampleBankParser(),
     TagBankParser(),
+    ExampleTextParser(),
   ];
 
   await for (final message in receivePort) {
@@ -53,14 +56,27 @@ Future<void> exampleWorkerEntry(SendPort mainSendPort) async {
           orElse: () => throw Exception("No parser found for ${message.fileName}")
         );
 
-        final fileHandle = daDbDataSourceIterator(archivePath: _zipPath)
-          .firstWhereOrNull((f) => f.name == message.fileName);
+        final archive = daDbDataSourceIterator(archivePath: _zipPath);
+        final mainFile = archive.firstWhereOrNull((f) => f.name == message.fileName);
 
-        if (fileHandle == null) throw Exception("File not found");
+        if (mainFile == null) throw Exception("File not found");
 
+        // 1. Prepare the payload list starting with the main file
+        List<Uint8List> payloadBytes = [mainFile.content];
 
+        // 2. If processing a .txt file, hunt for its .json companion
+        if (message.fileName.endsWith('.txt')) {
+          final companionName = message.fileName.replaceAll('.txt', '.json');
+          final companionFile = archive.firstWhereOrNull((f) => f.name == companionName);
+          
+          if (companionFile != null) {
+            payloadBytes.add(companionFile.content);
+          }
+        }
+
+        // 3. Pass the assembled payload to the parser
         currentLocalId = await parser.parseFileContent(
-          fileHandle.content, db, lp, processorOptions!, currentLocalId);
+          payloadBytes, db, lp, processorOptions!, currentLocalId);
           
         mainSendPort.send(MsgDone());
       }
@@ -88,7 +104,6 @@ Future<void> preIndex(StagingDatabase db) async {
   await db.customStatement('CREATE INDEX IF NOT EXISTS idx_stg_ex_tag ON ${db.exampleTagStagingTable.actualTableName}(tag_name)');
   await db.customStatement('CREATE INDEX IF NOT EXISTS idx_stg_exa_tag ON ${db.exampleAudioTagStagingTable.actualTableName}(tag_name)');
   
-  // Optional: Add indexes for the new stats to speed up the merger
   await db.customStatement('CREATE INDEX IF NOT EXISTS idx_stg_ex_stat ON ${db.exampleStatStagingTable.actualTableName}(stat_name)');
   await db.customStatement('CREATE INDEX IF NOT EXISTS idx_stg_exa_stat ON ${db.exampleAudioStatStagingTable.actualTableName}(stat_name)');
 }
