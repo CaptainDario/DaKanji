@@ -72,7 +72,9 @@ Future<void> workerEntry(SendPort mainSendPort) async {
         if (fileHandle == null) throw Exception("File not found");
 
         currentLocalId = await parser.parseFileContent(
-          fileHandle.content, db, lp, processorOptions!, currentLocalId);
+          [fileHandle.content],
+          db, lp, processorOptions!, currentLocalId
+        );
         mainSendPort.send(MsgDone());
 
       }

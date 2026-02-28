@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:typed_data';
 
 import 'package:crypto/crypto.dart';
 import 'package:da_db/parsing/staging_db/staging_db.dart';
@@ -14,7 +15,7 @@ class TermBankV3Parser implements DbFileParser {
 
   @override
   Future<int> parseFileContent(
-    List<int> inputBytes,
+    List<Uint8List> inputBytes,
     StagingDatabase db,
     LanguageProcessor? lp,
     ProcessorOptions options,
@@ -22,7 +23,7 @@ class TermBankV3Parser implements DbFileParser {
   ) async {
     if (lp == null) throw Exception("LanguageProcessor is required for parsing term_bank");
 
-    List jsonInput = jsonDecode(utf8.decode(inputBytes));
+    List jsonInput = jsonDecode(utf8.decode(inputBytes[0]));
     int localId = startId;
     
     var termRows = <List<Object?>>[];

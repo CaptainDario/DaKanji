@@ -18,7 +18,7 @@ class KanjiBankV3Parser implements DbFileParser {
   ) async {
     if (lp == null) throw Exception("LanguageProcessor required for kanji parser");
 
-    List jsonInput = jsonDecode(utf8.decode(inputBytes));
+    List jsonInput = jsonDecode(utf8.decode(inputBytes[0]));
     int localId = startId;
     
     var kanjiRows = <List<Object?>>[];

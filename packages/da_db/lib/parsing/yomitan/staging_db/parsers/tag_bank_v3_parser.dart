@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:typed_data';
 
 import 'package:da_db/parsing/staging_db/staging_db.dart';
 import 'package:da_db/parsing/util/db_file_parser.dart';
@@ -11,14 +12,14 @@ class TagBankParser implements DbFileParser {
 
   @override
   Future<int> parseFileContent(
-    List<int> inputBytes,
+    List<Uint8List> inputBytes,
     StagingDatabase db,
     LanguageProcessor? lp,
     ProcessorOptions options,
     int startId,
   ) async {
 
-    List jsonInput = jsonDecode(utf8.decode(inputBytes));
+    List jsonInput = jsonDecode(utf8.decode(inputBytes[0]));
     
     // Format: [tagName, category, order, notes, score]
     var rows = <List<Object?>>[];

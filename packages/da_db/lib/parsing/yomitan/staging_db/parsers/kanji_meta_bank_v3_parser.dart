@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:da_db/parsing/staging_db/staging_db.dart';
 import 'package:da_db/parsing/util/db_file_parser.dart';
+import 'package:drift/drift.dart';
 import 'package:language_processing/language_processing.dart';
 
 
@@ -12,14 +13,14 @@ class KanjiMetaBankV3Parser implements DbFileParser {
 
   @override
   Future<int> parseFileContent(
-    List<int> inputBytes,
+    List<Uint8List> inputBytes,
     StagingDatabase db,
     LanguageProcessor? lp,
     ProcessorOptions options,
     int startId,
   ) async {
     
-    List jsonInput = jsonDecode(utf8.decode(inputBytes));
+    List jsonInput = jsonDecode(utf8.decode(inputBytes[0]));
     int localId = startId;
     var rows = <List<Object?>>[];
     const int batchSize = 1000;

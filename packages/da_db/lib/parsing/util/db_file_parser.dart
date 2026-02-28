@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:da_db/parsing/staging_db/staging_db.dart';
 import 'package:language_processing/language_processing.dart';
 
@@ -10,7 +12,7 @@ abstract class DbFileParser {
 
   /// Processes the raw file bytes and writes directly to the DB.
   Future<int> parseFileContent(
-    List<int> inputBytes,
+    List<Uint8List> inputBytes,
     StagingDatabase db,
     LanguageProcessor? lp,
     ProcessorOptions options,
