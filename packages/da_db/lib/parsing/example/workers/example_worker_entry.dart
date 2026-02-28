@@ -7,6 +7,7 @@ import 'package:collection/collection.dart';
 import 'package:da_db/parsing/staging_db/staging_db.dart';
 import 'package:da_db/parsing/util/db_file_parser.dart';
 import 'package:da_db/parsing/util/db_optimization.dart';
+import 'package:da_db/parsing/util/parsing_constants.dart';
 import 'package:da_db/parsing/util/parsing_util.dart';
 import 'package:da_db/parsing/yomitan/staging_db/parsers/tag_bank_v3_parser.dart';
 import 'package:da_db/parsing/yomitan/staging_db/workers/worker_protocol.dart';
@@ -61,17 +62,19 @@ Future<void> exampleWorkerEntry(SendPort mainSendPort) async {
 
         if (mainFile == null) throw Exception("File not found");
 
-        // 1. Prepare the payload list starting with the main file
+        // 1. Prepare the payload list (Explicitly cast to Uint8List to satisfy the interface)
         List<Uint8List> payloadBytes = [mainFile.content];
 
-        // 2. If processing a .txt file, hunt for its .json companion
-        if (message.fileName.endsWith('.txt')) {
-          final companionName = message.fileName.replaceAll('.txt', '.json');
+        // 2. If it's a text bank, reconstruct the exact metadata filename
+        if (message.fileName.startsWith(exampleTextBankPrefix)) {
+          // Extract the number/suffix (e.g., "example_text_bank_1.txt" -> "1")
+          final fileSuffix = message.fileName
+              .substring(exampleTextBankPrefix.length).replaceAll('.txt', '');
+
+          // Reconstruct: "example_text_meta_bank_1.json"
+          final companionName = "$exampleTextMetaBankPrefix$fileSuffix.json";
           final companionFile = archive.firstWhereOrNull((f) => f.name == companionName);
-          
-          if (companionFile != null) {
-            payloadBytes.add(companionFile.content);
-          }
+          if (companionFile != null) payloadBytes.add(companionFile.content);
         }
 
         // 3. Pass the assembled payload to the parser

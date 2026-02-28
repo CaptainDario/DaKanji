@@ -33,10 +33,8 @@ class ExampleDao extends DatabaseAccessor<DaDb> with _$ExampleDaoMixin {
 
     // Phase 1: Search IDs (Quotes are handled in the .drift file)
     final matchingIds = await db.searchExampleIds(
-      query, 
-      langCodes, 
-      limit, 
-      offset
+      db.languageProcessor.segment(query) ?? query,
+      langCodes, limit, offset
     ).get();
 
     if (matchingIds.isEmpty) return [];

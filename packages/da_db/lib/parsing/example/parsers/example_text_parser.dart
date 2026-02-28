@@ -3,12 +3,13 @@ import 'dart:typed_data';
 
 import 'package:da_db/parsing/staging_db/staging_db.dart';
 import 'package:da_db/parsing/util/db_file_parser.dart';
+import 'package:da_db/parsing/util/parsing_constants.dart';
 import 'package:language_processing/language_processing.dart';
 
 class ExampleTextParser implements DbFileParser {
   
   @override
-  bool canHandle(String fileName) => fileName.endsWith(".txt") && fileName.contains("example");
+  bool canHandle(String fileName) => fileName.startsWith(exampleTextBankPrefix);
 
   @override
   Future<int> parseFileContent(
@@ -59,11 +60,10 @@ class ExampleTextParser implements DbFileParser {
       exampleLocalId++;
 
       // 2.1 Parse using MeCab (via LanguageProcessor)
-      final reading = lp.getReadings(sentence);
-      final tokens = lp.tokenize(sentence) ?? ""; 
+      final tokens = lp.segment(sentence)!; 
 
       // 2.2 Prepare data for DB insertion
-      exampleRows.add([exampleLocalId, groupId, langIsoCode, sentence, reading, tokens]);
+      exampleRows.add([exampleLocalId, groupId, langIsoCode, sentence, null, tokens]);
 
       for (final t in tags) {
         if (t.trim().isEmpty) continue;

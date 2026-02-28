@@ -3,12 +3,13 @@ import 'dart:typed_data';
 
 import 'package:da_db/parsing/staging_db/staging_db.dart';
 import 'package:da_db/parsing/util/db_file_parser.dart';
+import 'package:da_db/parsing/util/parsing_constants.dart';
 import 'package:language_processing/language_processing.dart';
 
 class ExampleBankParser implements DbFileParser {
   
   @override
-  bool canHandle(String fileName) => fileName.contains("example_bank");
+  bool canHandle(String fileName) => fileName.startsWith(exampleBankPrefix);
 
   @override
   Future<int> parseFileContent(
@@ -42,7 +43,6 @@ class ExampleBankParser implements DbFileParser {
 
       final groupId = entry['groupId'] as int? ?? 0;
       final sentence = entry['sentence'] as String;
-      // Using langIso3Code matching your new JSON
       final langIsoCode = entry['langIso3Code'] as String? ?? 'jpn';
       final reading = entry['sentenceReading'] as String?;
 
@@ -61,7 +61,7 @@ class ExampleBankParser implements DbFileParser {
         tagRows.add([exampleLocalId, t.trim()]);
       }
 
-      // Stats (Updated to match the new 4-field schema)
+      // Stats
       final stats = (entry['stats'] as List<dynamic>?)?.cast<Map<String, dynamic>>() ?? [];
       for (final s in stats) {
         statRows.add([

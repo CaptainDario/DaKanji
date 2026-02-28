@@ -11,6 +11,7 @@ import 'package:da_db/database/da_db.dart';
 import 'package:da_db/parsing/example/mergers/example_staging_db_merging.dart';
 import 'package:da_db/parsing/example/workers/example_worker_entry.dart';
 import 'package:da_db/parsing/util/db_optimization.dart';
+import 'package:da_db/parsing/util/parsing_constants.dart';
 import 'package:da_db/parsing/util/parsing_util.dart';
 import 'package:da_db/parsing/util/staging_worker_pool.dart';
 import 'package:da_db/parsing/yomitan/in_memory_cache/index/index_parser.dart';
@@ -20,13 +21,6 @@ import 'package:language_processing/language_processing.dart';
 import 'package:path/path.dart' as p;
 import 'package:universal_io/io.dart';
 
-
-
-const String indexFileNamingScheme = "index.json";
-const List<String> parallelHandledFiles = [
-  "example_bank",
-  "tag_bank",
-];
 
 Future<Stream<String>> parseExampleDataSource({
   String? dataSourcePath,
@@ -87,7 +81,8 @@ Future<void> _orchestratorEntry(({
   try {
     sendPort.send("Scanning example dictionary structure...");
     final allFiles = daDbDataSourceIterator(
-      archivePath: params.dataSourcePath, fileOrder: [indexFileNamingScheme]
+      archivePath: params.dataSourcePath,
+      fileOrder: [indexFileName, tagBankPrefix]
     ).toList();
     
     int? indexId;
@@ -98,12 +93,12 @@ Future<void> _orchestratorEntry(({
       if (!file.isFile) continue;
 
       final name = p.basename(file.name);
-      if (name == indexFileNamingScheme) {
+      if (name == indexFileName) {
         indexJson = utf8.decode(file.content);
         continue;
       }
       
-      if (parallelHandledFiles.any((s) => name.contains(s))) {
+      if (exampleDictFiles.any((s) => name.contains(s))) {
         parallelQueue.add(file.name);
       }
       else {
@@ -133,7 +128,7 @@ Future<void> _orchestratorEntry(({
     await optimizeTargetDbForMerge(db);
     await db.transaction(() async {
       indexId = await parseAndInsertIndex(indexJson!, db, DictionaryTypes.yomitan, params.isDefaultDictionary);
-      if (indexId == null) throw Exception("No valid index.json found.");
+      if (indexId == null) throw Exception("No valid $indexFileName found.");
 
       await _mergeStagingData(
         db: db, workerAliases: workerAliases, indexId: indexId!, sendPort: sendPort,);
