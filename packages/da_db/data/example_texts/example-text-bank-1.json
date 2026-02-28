@@ -1,0 +1,8 @@
+{
+  "groupId": 200,
+  "langIso3Code": "jpn",
+  "tags": ["text_import", "test_tag"],
+  "stats": [
+    { "statName": "quality", "value": 5.0 }
+  ]
+}
