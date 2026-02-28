@@ -242,7 +242,7 @@ Future importTatoebaExamples(DaDb db) async {
 
   Stopwatch s = Stopwatch()..start();
   final progress = await parseExampleDataSource(
-    examplesZipPath: tatoebaInputZipPath,
+    dataSourcePath: tatoebaInputZipPath,
     db: db,
     isDefaultDictionary: true
   );

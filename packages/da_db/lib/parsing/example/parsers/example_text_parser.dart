@@ -19,8 +19,8 @@ Future parseExampleText(String exampleText, DaDb db, int indexId) async {
     // add sentence to db
     exampleComps.add(ExampleTableCompanion(
       indexId: Value(indexId),
-      exampleSentence: Value(sentence),
-      exampleSentenceTokenized: Value(tokenized)
+      //exampleSentence: Value(sentence),
+      //exampleSentenceTokenized: Value(tokenized)
     ));
 
   }
