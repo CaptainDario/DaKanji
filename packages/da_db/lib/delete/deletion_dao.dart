@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import "package:da_db/database/da_db.dart";
-import 'package:da_db/delete/index_delete.dart';
 import 'package:da_db/parsing/util/db_optimization.dart';
 import "package:drift/drift.dart";
 
@@ -12,6 +11,20 @@ part 'deletion_dao.g.dart';
 class DeletionDao extends DatabaseAccessor<DaDb> with _$DeletionDaoMixin {
   
   DeletionDao(super.db);
+
+  Future deleteIndex(int indexId) async {
+
+    // Start a transaction to ensure all deletions are atomic
+    await db.transaction(() async {
+
+      // Delete a Dictionary (Index)
+      await (db.delete(db.indexTable)
+        ..where((tbl) => tbl.id.equals(indexId)))
+        .go();
+        
+    });
+
+  }
 
   /// Deletes a Yomitan dictionary and all its specific data.
   /// 
@@ -29,7 +42,7 @@ class DeletionDao extends DatabaseAccessor<DaDb> with _$DeletionDaoMixin {
         await db.transaction(() async {
           // 1. Delete the Index entry
           progress.add("Removing dictionary...");
-          await deleteIndex(db, indexId);
+          await deleteIndex(indexId);
 
           // 2. Perform Garbage Collection on shared tables
           progress.add("Cleaning up leftover data...");
