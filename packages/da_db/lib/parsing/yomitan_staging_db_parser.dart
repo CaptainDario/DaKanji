@@ -9,11 +9,11 @@ import 'package:da_db/data/dictionary_types.dart';
 import 'package:da_db/database/da_db.dart';
 import 'package:da_db/parsing/util/db_optimization.dart';
 import 'package:da_db/parsing/util/parsing_util.dart';
+import 'package:da_db/parsing/util/staging_worker_pool.dart';
 import 'package:da_db/parsing/yomitan/in_memory_cache/index/index_parser.dart';
 import 'package:da_db/parsing/yomitan/in_memory_cache/media/media_importer.dart';
 import 'package:da_db/parsing/yomitan/staging_db/mergers/staging_db_merging.dart';
 import 'package:da_db/parsing/yomitan/staging_db/workers/worker_entry.dart';
-import 'package:da_db/parsing/yomitan/staging_db/workers/worker_protocol.dart';
 import 'package:drift/isolate.dart';
 import 'package:language_processing/language_processing.dart';
 import 'package:path/path.dart' as p;
@@ -108,7 +108,7 @@ Future<void> _orchestratorEntry(({
         parallelQueue.add(file.name);
       }
       else {
-        if (name.endsWith('.json')) print("DEBUG: Treating as media: $name"); // Trace unhandled files
+        if (name.endsWith('.json')) print("DEBUG: Treating as media: $name");
         mediaQueue.add((
           file: file,
           indexId: 0,
@@ -118,14 +118,25 @@ Future<void> _orchestratorEntry(({
       }
     }
 
-    // --- STEP 2: STAGING ---
+    // --- STEP 2: STAGING (Using Shared Pool) ---
     if (indexId == null) throw Exception("No index.json found.");
     parallelQueue.sort((a, b) => a.compareTo(b));
 
-    final List<String> workerDbPaths = await _runGreedyParallelStaging(
-      params: params,
-      queue: parallelQueue,
-      sendPort: sendPort,
+    // Calculate number of workers based on Yomitan's specific logic
+    final int numWorkers = min(
+      max(1, parallelQueue.where((f) => f.contains(RegExp("term_bank|term_meta_bank"))).length),
+      4
+    );
+
+    // Call the shared pool, passing the Yomitan worker entry point
+    final List<String> workerDbPaths = await StagingWorkerPool.runGreedyParallelStaging(
+      numWorkers: numWorkers,
+      dataSourcePath: params.dataSourcePath,
+      languageProcessorJson: params.languageProcessorJson,
+      files: parallelQueue,
+      tempDir: params.tempDir,
+      workerEntryPoint: workerEntry,
+      onStatus: (msg) => sendPort.send(msg),
     );
 
     // --- STEP 3: MERGING ---
@@ -142,56 +153,11 @@ Future<void> _orchestratorEntry(({
   } catch (e, stack) {
     print(stack);
     sendPort.send(e.toString());
-  } finally {
-    zipStream?.close();
+  }
+  finally {
     db.close();
     sendPort.send(null);
   }
-}
-Future<List<String>> _runGreedyParallelStaging({
-  required ({
-    String dataSourcePath,
-    DriftIsolate dbConnection,
-    String languageProcessorJson,
-    SendPort mainIsolateSendPort,
-    bool inMemory,
-    bool isDefaultDictionary,
-    Directory tempDir,
-  }) params,
-  required List<String> queue,
-  required SendPort sendPort,
-}) async {
-  if (queue.isEmpty) return [];
-
-  sendPort.send("Importing ${queue.length} file(s)...");
-  final poolDir = await params.tempDir.createTemp('da_db_pool_');
-  final workerDbPaths = <String>[];
-  final completions = <Future>[];
-  
-  final int numWorkers = min(
-    max(1, queue.where((f) => f.contains(RegExp("term_bank|term_meta_bank"))).length),
-    4
-  );
-
-  for (int i = 0; i < numWorkers; i++) {
-    final workerDbPath = p.join(poolDir.path, 'worker_$i.db');
-    workerDbPaths.add(workerDbPath);
-    final completer = Completer<void>();
-    completions.add(completer.future);
-
-    _spawnWorker(
-      id: i,
-      zipPath: params.dataSourcePath,
-      dbPath: workerDbPath,
-      lpJson: params.languageProcessorJson,
-      files: queue,
-      completer: completer,
-      onStatus: (msg) => sendPort.send(msg)
-    );
-  }
-
-  await Future.wait(completions);
-  return workerDbPaths;
 }
 
 Future<void> _mergeStagingData({
@@ -234,58 +200,4 @@ Future<void> _finalizeImport(
 
   sendPort.send("Optimizing database...");
   await optimizeDbAfterImport(db);
-}
-
-Future<void> _spawnWorker({
-  required int id,
-  required String zipPath,
-  required String dbPath,
-  required String lpJson,
-  required List<String> files,
-  required Completer completer,
-  required Function(String) onStatus,
-}) async {
-  final receivePort = ReceivePort();
-  await Isolate.spawn(workerEntry, receivePort.sendPort);
-
-  SendPort? workerSendPort;
-  String? currentFileName;
-
-  receivePort.listen((message) {
-    if (message is SendPort) {
-      workerSendPort = message;
-      workerSendPort!.send(MsgInit(zipPath, dbPath, lpJson, receivePort.sendPort));
-    } 
-    else if (message is MsgReady) {
-      if (files.isNotEmpty) {
-        currentFileName = files.removeAt(0);
-        workerSendPort!.send(MsgProcessFile(currentFileName!));
-      } else {
-        workerSendPort!.send(MsgTerminate());
-      }
-    }
-    else if (message is MsgDone) {
-      onStatus("Parsed: $currentFileName");
-      
-      if (files.isNotEmpty) {
-        currentFileName = files.removeAt(0);
-        workerSendPort!.send(MsgProcessFile(currentFileName!));
-      } else {
-        workerSendPort!.send(MsgTerminate());
-      }
-    }
-    else if (message is MsgError) {
-      print("Worker $id Error: ${message.error}");
-      if (files.isNotEmpty) {
-        currentFileName = files.removeAt(0);
-        workerSendPort!.send(MsgProcessFile(currentFileName!));
-      } else {
-        workerSendPort!.send(MsgTerminate());
-      }
-    }
-    else if (message == "CLOSED") {
-      receivePort.close();
-      completer.complete();
-    }
-  });
 }

@@ -1,24 +1,30 @@
+import 'dart:convert';
+
 import 'package:da_db/parsing/staging_db/staging_db.dart';
-import 'package:da_db/parsing/yomitan/staging_db/parsers/yomitan_file_parser.dart';
+import 'package:da_db/parsing/util/db_file_parser.dart';
 import 'package:language_processing/language_processing.dart';
 
-class KanjiMetaBankV3Parser implements YomitanFileParser {
+
+
+class KanjiMetaBankV3Parser implements DbFileParser {
   @override
   bool canHandle(String fileName) => fileName.contains("kanji_meta_bank");
 
   @override
   Future<int> parseFileContent(
-    List<dynamic> jsonContent,
+    List<int> inputBytes,
     StagingDatabase db,
     LanguageProcessor? lp,
     ProcessorOptions options,
     int startId,
   ) async {
+    
+    List jsonInput = jsonDecode(utf8.decode(inputBytes));
     int localId = startId;
     var rows = <List<Object?>>[];
     const int batchSize = 1000;
 
-    for (final entry in jsonContent) {
+    for (final entry in jsonInput) {
       if (entry is! List) continue;
 
       localId++;

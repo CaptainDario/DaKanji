@@ -1,8 +1,8 @@
 import 'package:da_db/database/da_db.dart';
+import 'package:da_db/parsing/staging_db/mergers/staging_merger.dart';
 import 'package:da_db/parsing/util/db_optimization.dart';
 import 'package:da_db/parsing/yomitan/staging_db/mergers/kanji_bank_v3_merger.dart';
 import 'package:da_db/parsing/yomitan/staging_db/mergers/kanji_meta_bank_v3_merger.dart';
-import 'package:da_db/parsing/yomitan/staging_db/mergers/staging_merger.dart';
 import 'package:da_db/parsing/yomitan/staging_db/mergers/tag_bank_v3_merger.dart';
 import 'package:da_db/parsing/yomitan/staging_db/mergers/term_bank_v3_merger.dart';
 import 'package:da_db/parsing/yomitan/staging_db/mergers/term_meta_bank_v3_merger.dart';

@@ -70,7 +70,7 @@ Future parseTermBankV3(
 
       String? termNormalized = db.languageProcessor.normalize(term, ProcessorOptions()).firstOrNull;
       String? termTokens = term.isNotEmpty && k.isJapanese(term)
-        ? db.languageProcessor.segment(term)
+        ? db.languageProcessor.tokenize(term)
         : null;
       String? termTokensNormalized = termTokens==null
         ? null

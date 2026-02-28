@@ -2,25 +2,27 @@ import 'dart:convert';
 
 import 'package:crypto/crypto.dart';
 import 'package:da_db/parsing/staging_db/staging_db.dart';
+import 'package:da_db/parsing/util/db_file_parser.dart';
 import 'package:da_db/parsing/yomitan/in_memory_cache/term/definition_parser.dart';
-import 'package:da_db/parsing/yomitan/staging_db/parsers/yomitan_file_parser.dart';
 import 'package:da_db/util/data_converters/zlib_text_converter_io.dart';
 import 'package:language_processing/language_processing.dart';
 
 
-class TermBankV3Parser implements YomitanFileParser {
+class TermBankV3Parser implements DbFileParser {
   @override
   bool canHandle(String fileName) => fileName.contains("term_bank");
 
   @override
   Future<int> parseFileContent(
-    List<dynamic> jsonContent,
+    List<int> inputBytes,
     StagingDatabase db,
     LanguageProcessor? lp,
     ProcessorOptions options,
     int startId,
   ) async {
     if (lp == null) throw Exception("LanguageProcessor is required for parsing term_bank");
+
+    List jsonInput = jsonDecode(utf8.decode(inputBytes));
     int localId = startId;
     
     var termRows = <List<Object?>>[];
@@ -31,7 +33,7 @@ class TermBankV3Parser implements YomitanFileParser {
     const int batchSize = 1000;
     const ZlibStringConverter zlib = ZlibStringConverter();
 
-    for (final entry in jsonContent) {
+    for (final entry in jsonInput) {
       if (entry is! List) continue;
 
       localId++; 
@@ -49,7 +51,7 @@ class TermBankV3Parser implements YomitanFileParser {
       String? termNormalized = lp.normalize(term, options).firstOrNull;
       if (termNormalized == term) termNormalized = null;
       
-      String? termTokens = lp.segment(term);
+      String? termTokens = lp.tokenize(term);
       String? termTokensNormalized;
       if (termTokens != null) {
         termTokensNormalized = lp.normalize(termTokens, options).firstOrNull;

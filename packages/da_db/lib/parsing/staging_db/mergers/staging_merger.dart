@@ -3,8 +3,8 @@ import 'package:da_db/database/da_db.dart';
 
 
 /// Defines the interface that each merger must implement to merge a specific
-/// yomitan file type (e.g. TermBank, KanjiBank) from the worker DB into the
-/// main DB.
+/// file type (e.g. TermBank, KanjiBank, example, etc.) from the worker DB into
+/// the main DB.
 abstract class StagingMerger {
   /// Merges the specific data type (e.g. Terms, Kanji) from the worker DB.
   Future<void> merge({

@@ -1,7 +1,7 @@
 // Dart imports:
 import 'package:da_db/database/da_db.dart';
 
-import 'staging_merger.dart';
+import '../../../staging_db/mergers/staging_merger.dart';
 
 class TermBankV3Merger implements StagingMerger {
 

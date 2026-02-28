@@ -1,5 +1,5 @@
 import 'package:da_db/database/da_db.dart';
-import 'package:da_db/parsing/yomitan/staging_db/mergers/staging_merger.dart';
+import 'package:da_db/parsing/staging_db/mergers/staging_merger.dart';
 
 class KanjiBankV3Merger implements StagingMerger {
   @override

@@ -1,10 +1,10 @@
 import 'dart:async';
-import 'dart:convert';
 import 'dart:io';
 import 'dart:isolate';
 
 import 'package:collection/collection.dart';
 import 'package:da_db/parsing/staging_db/staging_db.dart';
+import 'package:da_db/parsing/util/db_file_parser.dart';
 import 'package:da_db/parsing/util/db_optimization.dart';
 import 'package:da_db/parsing/util/parsing_util.dart';
 import 'package:da_db/parsing/yomitan/staging_db/parsers/kanji_bank_v3_parser.dart';
@@ -12,7 +12,6 @@ import 'package:da_db/parsing/yomitan/staging_db/parsers/kanji_meta_bank_v3_pars
 import 'package:da_db/parsing/yomitan/staging_db/parsers/tag_bank_v3_parser.dart';
 import 'package:da_db/parsing/yomitan/staging_db/parsers/term_bank_v3_parser.dart';
 import 'package:da_db/parsing/yomitan/staging_db/parsers/term_meta_bank_v3_parser.dart';
-import 'package:da_db/parsing/yomitan/staging_db/parsers/yomitan_file_parser.dart';
 import 'package:drift/native.dart';
 import 'package:language_processing/language_processing.dart';
 
@@ -31,7 +30,7 @@ Future<void> workerEntry(SendPort mainSendPort) async {
   
   int currentLocalId = 0; 
 
-  final List<YomitanFileParser> parsers = [
+  final List<DbFileParser> parsers = [
     TagBankParser(),
     TermBankV3Parser(),
     TermMetaBankV3Parser(),
@@ -72,14 +71,8 @@ Future<void> workerEntry(SendPort mainSendPort) async {
 
         if (fileHandle == null) throw Exception("File not found");
 
-        // Lazy load the content only now
-        final bytes = fileHandle.readBytes()!; 
-        final jsonObject = jsonDecode(utf8.decode(bytes));
-
-        if (jsonObject is List) {
-          currentLocalId = await parser.parseFileContent(
-            jsonObject, db, lp, processorOptions!, currentLocalId);
-        }
+        currentLocalId = await parser.parseFileContent(
+          fileHandle.content, db, lp, processorOptions!, currentLocalId);
         mainSendPort.send(MsgDone());
 
       }

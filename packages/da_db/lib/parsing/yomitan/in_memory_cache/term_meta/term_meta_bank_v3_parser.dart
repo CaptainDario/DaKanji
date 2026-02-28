@@ -59,7 +59,7 @@ Future parseTermMetaBankV3(
       pC.allTerms[term] = termInsertId;
 
       String? termNormalized = db.languageProcessor.normalize(term, ProcessorOptions()).firstOrNull;
-      String? termTokens = db.languageProcessor.segment(term);
+      String? termTokens = db.languageProcessor.tokenize(term);
       String? termTokensNormalized = termTokens==null
         ? null
         : db.languageProcessor.normalize(termTokens, ProcessorOptions()).firstOrNull;

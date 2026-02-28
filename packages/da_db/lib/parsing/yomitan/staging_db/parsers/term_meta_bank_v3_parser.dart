@@ -1,21 +1,27 @@
+import 'dart:convert';
+
 import 'package:da_db/parsing/staging_db/staging_db.dart';
-import 'package:da_db/parsing/yomitan/staging_db/parsers/yomitan_file_parser.dart';
+import 'package:da_db/parsing/util/db_file_parser.dart';
 import 'package:language_processing/language_processing.dart';
 
-class TermMetaBankV3Parser implements YomitanFileParser {
+
+
+class TermMetaBankV3Parser implements DbFileParser {
   @override
   bool canHandle(String fileName) => fileName.contains("term_meta_bank");
 
   @override
   Future<int> parseFileContent(
-    List<dynamic> jsonContent,
+    List<int> inputBytes,
     StagingDatabase db,
     LanguageProcessor? lp,
     ProcessorOptions options,
     int startId,
   ) async {
+
     if (lp == null) throw Exception("LanguageProcessor is required for parsing term_meta_bank");
 
+    List jsonInput = jsonDecode(utf8.decode(inputBytes));
     int localId = startId;
     
     // Retrieve current max IDs for sub-tables to ensure uniqueness across batches
@@ -30,7 +36,7 @@ class TermMetaBankV3Parser implements YomitanFileParser {
 
     const int batchSize = 1000;
 
-    for (final entry in jsonContent) {
+    for (final entry in jsonInput) {
       if (entry is! List) continue;
 
       localId++;
@@ -43,7 +49,7 @@ class TermMetaBankV3Parser implements YomitanFileParser {
       String? termNormalized = lp.normalize(term, options).firstOrNull;
       if (termNormalized == term) termNormalized = null;
 
-      String? termTokens = lp.segment(term);
+      String? termTokens = lp.tokenize(term);
       String? termTokensNormalized;
       if (termTokens != null) {
         termTokensNormalized = lp.normalize(termTokens, options).firstOrNull;
