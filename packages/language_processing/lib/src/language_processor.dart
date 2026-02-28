@@ -68,6 +68,6 @@ abstract class LanguageProcessor {
   List<TermReadingPair> getTermReadingPairs(
     String term, String reading, ProcessorOptions options);
 
-  List<String> findSentences(String text);
+  List<String> findSentences(String text, ProcessorOptions options);
 
 }
