@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:da_db/database/da_db.dart';
 import 'package:da_db/database/term/term_bank_v3_entry.dart';
+import 'package:da_db/parsing/util/parsing_constants.dart';
 import 'package:da_db_shared/paths.dart';
 import 'package:path/path.dart' as p;
 import 'package:test/test.dart';
@@ -79,9 +80,9 @@ Future<DaDb> setupFreshDB(int testCaseIndex) async {
   db.clearDB();
   
   bool shouldIncludeFile(File file) =>
-    (p.basename(file.path) == "term_bank_$testCaseIndex.json" ||
-    !p.basename(file.path).contains("term_bank"));
-  await partialInit(db, shouldIncludeFile, "term_bank_test",
+    (p.basename(file.path) == "${termBankPrefix}_$testCaseIndex.json" ||
+    !p.basename(file.path).contains(termBankPrefix));
+  await partialInit(db, shouldIncludeFile, "${termBankPrefix}_test",
     isDefaultDictionary: false); 
 
   return db;

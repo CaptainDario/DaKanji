@@ -2,11 +2,12 @@ import 'dart:convert';
 
 import 'package:da_db/parsing/staging_db/staging_db.dart';
 import 'package:da_db/parsing/util/db_file_parser.dart';
+import 'package:da_db/parsing/util/parsing_constants.dart';
 import 'package:language_processing/language_processing.dart';
 
 class KanjiBankV3Parser implements DbFileParser {
   @override
-  bool canHandle(String fileName) => fileName.contains("kanji_bank");
+  bool canHandle(String fileName) => fileName.startsWith(kanjiBankPrefix);
 
   @override
   Future<int> parseFileContent(

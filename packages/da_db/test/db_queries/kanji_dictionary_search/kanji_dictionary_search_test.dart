@@ -1,6 +1,7 @@
 
 import 'package:da_db/database/da_db.dart';
 import 'package:da_db/database/db_queries/kanji_dictionary_search/kanji_dictionary_search_result.dart';
+import 'package:da_db/parsing/util/parsing_constants.dart';
 import 'package:da_db/parsing/yomitan_staging_db_parser.dart';
 import 'package:da_db_shared/paths.dart';
 import 'package:path/path.dart' as p;
@@ -97,8 +98,8 @@ Future<DaDb> setupFreshDB() async {
   s = Stopwatch()..start();
   await partialInit(db, (File f) => true, "term_search_test",
     otherFilesToCopy: [
-      File(p.join(daDbDataFilesPath, "testing_db", "kanji_bank_1.json")),
-      File(p.join(daDbDataFilesPath, "testing_db", "kanji_meta_bank_1.json")),
+      File(p.join(daDbDataFilesPath, "testing_db", "${kanjiBankPrefix}_1.json")),
+      File(p.join(daDbDataFilesPath, "testing_db", "${kanjiMetaBankPrefix}_1.json")),
     ],
     isDefaultDictionary: true
   );

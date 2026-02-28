@@ -4,6 +4,7 @@ import 'dart:typed_data';
 import 'package:crypto/crypto.dart';
 import 'package:da_db/parsing/staging_db/staging_db.dart';
 import 'package:da_db/parsing/util/db_file_parser.dart';
+import 'package:da_db/parsing/util/parsing_constants.dart';
 import 'package:da_db/parsing/yomitan/in_memory_cache/term/definition_parser.dart';
 import 'package:da_db/util/data_converters/zlib_text_converter_io.dart';
 import 'package:language_processing/language_processing.dart';
@@ -11,7 +12,7 @@ import 'package:language_processing/language_processing.dart';
 
 class TermBankV3Parser implements DbFileParser {
   @override
-  bool canHandle(String fileName) => fileName.contains("term_bank");
+  bool canHandle(String fileName) => fileName.contains(termBankPrefix);
 
   @override
   Future<int> parseFileContent(

@@ -8,6 +8,7 @@ import 'package:da_db/database/da_db.dart';
 import 'package:da_db/parsing/audio/mergers/audio_staging_db_merging.dart';
 import 'package:da_db/parsing/audio/workers/audio_worker_entry.dart';
 import 'package:da_db/parsing/util/db_optimization.dart';
+import 'package:da_db/parsing/util/parsing_constants.dart';
 import 'package:da_db/parsing/util/parsing_util.dart';
 import 'package:da_db/parsing/util/staging_worker_pool.dart';
 import 'package:da_db/parsing/yomitan/in_memory_cache/index/index_parser.dart';
@@ -77,27 +78,27 @@ Future<void> _audioOrchestratorEntry(({
 
     final allFiles = daDbDataSourceIterator(
       archivePath: params.dataSourcePath, 
-      fileOrder: ["yomitan_index.json"]
+      fileOrder: [yomitanIndexFile]
     ).toList(); 
 
     // --- 1. Parse Primary Dictionary Index ---
-    final indexFile = allFiles.firstWhereOrNull((f) => f.name == "yomitan_index.json");
-    if (indexFile == null) throw Exception("No yomitan_index.json found.");
+    final indexFile = allFiles.firstWhereOrNull((f) => f.name == yomitanIndexFile);
+    if (indexFile == null) throw Exception("No $yomitanIndexFile found.");
     
     final int indexId = await parseAndInsertIndex(
       utf8.decode(indexFile.readBytes()!), db, DictionaryTypes.audio, params.isDefaultDictionary
     );
 
     // --- 2. Build the File Queue ---
-    final contentFiles = allFiles.where((f) => f.name != "yomitan_index.json").map((f) => f.name).toList();
+    final contentFiles = allFiles.where((f) => f.name != yomitanIndexFile).map((f) => f.name).toList();
     
     // Sort the queue so metadata files (index.json / entries.json) 
     // are parsed FIRST.
     contentFiles.sort((a, b) {
       final baseA = p.basename(a);
       final baseB = p.basename(b);
-      if (baseA == 'index.json' || baseA == 'entries.json') return -1;
-      if (baseB == 'index.json' || baseB == 'entries.json') return 1;
+      if (baseA == audioIndexFile || baseA == audioEntriesFile) return -1;
+      if (baseB == audioIndexFile || baseB == audioEntriesFile) return 1;
       return a.compareTo(b);
     });
 

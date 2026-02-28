@@ -3,13 +3,14 @@ import 'dart:typed_data';
 
 import 'package:da_db/parsing/staging_db/staging_db.dart';
 import 'package:da_db/parsing/util/db_file_parser.dart';
+import 'package:da_db/parsing/util/parsing_constants.dart';
 import 'package:language_processing/language_processing.dart';
 
 
 
 class TermMetaBankV3Parser implements DbFileParser {
   @override
-  bool canHandle(String fileName) => fileName.contains("term_meta_bank");
+  bool canHandle(String fileName) => fileName.startsWith(termMetaBankPrefix);
 
   @override
   Future<int> parseFileContent(

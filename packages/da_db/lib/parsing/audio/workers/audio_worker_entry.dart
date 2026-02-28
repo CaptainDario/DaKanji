@@ -6,6 +6,7 @@ import 'dart:isolate';
 import 'package:collection/collection.dart';
 import 'package:da_db/parsing/audio/util/audio_staging_helper.dart';
 import 'package:da_db/parsing/staging_db/staging_db.dart';
+import 'package:da_db/parsing/util/parsing_constants.dart';
 import 'package:da_db/parsing/util/parsing_util.dart';
 import 'package:da_db/parsing/yomitan/staging_db/workers/worker_protocol.dart';
 import 'package:drift/native.dart';
@@ -73,7 +74,7 @@ Future<void> audioWorkerEntry(SendPort mainSendPort) async {
         final bytes = fileHandle.readBytes()!;
 
         // --- 1. Process Metadata Files ---
-        if (name == "index.json") {
+        if (name == audioIndexFile) {
           usesMetadataFile = true;
           final jsonMap = jsonDecode(utf8.decode(bytes)) as Map;
           final headwords = (jsonMap['headwords'] as Map).map((k, v) => MapEntry(k, List<String>.from(v)));
@@ -90,7 +91,7 @@ Future<void> audioWorkerEntry(SendPort mainSendPort) async {
             }
           });
         } 
-        else if (name == "entries.json") {
+        else if (name == audioEntriesFile) {
           usesMetadataFile = true;
           final jsonList = jsonDecode(utf8.decode(bytes)) as List;
           for (final entry in jsonList) {

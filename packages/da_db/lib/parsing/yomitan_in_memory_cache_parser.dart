@@ -8,6 +8,7 @@ import 'package:archive/archive_io.dart';
 import 'package:da_db/data/dictionary_types.dart';
 import 'package:da_db/parsing/util/db_optimization.dart';
 import 'package:da_db/parsing/util/import_context.dart';
+import 'package:da_db/parsing/util/parsing_constants.dart';
 import 'package:da_db/parsing/util/parsing_util.dart';
 import 'package:da_db/parsing/yomitan/in_memory_cache/audio_source_list/audio_source_list_parser.dart';
 import 'package:da_db/parsing/yomitan/in_memory_cache/index/index_parser.dart';
@@ -28,30 +29,6 @@ import 'package:path/path.dart' as p;
 
 import '/database/da_db.dart';
 
-
-
-/// A list containing the names of files that are valid yomtain files
-List<String> validDictionaryFiles = [
-  audioFileNamingScheme,
-  indexFileNamingScheme,
-  tagBankFileNamingScheme,
-  kanjiBankFileNamingScheme, kanjiMetaBankFileNamingScheme,
-  termBankFileNamingScheme, termMetaBankFileNamingScheme
-];
-/// The name of the audio source list file
-String audioFileNamingScheme = "audio_list";
-/// The name of the dictionary index files
-String indexFileNamingScheme = "index.json";
-/// The naming pattern for tag bank files
-String tagBankFileNamingScheme = "tag_bank";
-/// The naming pattern for kanji bank files
-String kanjiBankFileNamingScheme = "kanji_bank";
-/// the naming pattern for kanji meta bank files
-String kanjiMetaBankFileNamingScheme = "kanji_meta_bank";
-/// the naming pattern for term bank terms
-String termBankFileNamingScheme = "term_bank";
-/// the naming pattern for term meta bank files
-String termMetaBankFileNamingScheme = "term_meta_bank";
 
 
 /// Parses the given yomitan dictionary folder
@@ -119,7 +96,7 @@ Future _parseDictionaryDataSource(({
   try {
     Iterable<ArchiveFile> dataSources = daDbDataSourceIterator(
       archivePath: params.dataSourcePath,
-      fileOrder: [indexFileNamingScheme, tagBankFileNamingScheme],
+      fileOrder: [indexFileName, tagBankPrefix],
     );
     
     // parse the index file -> get dict index
@@ -144,8 +121,8 @@ Future _parseDictionaryDataSource(({
       params.mainIsolateSendPort.send("Parsing ${data.name} ($progressCounter/$noEntries) ...");
       printMemoryUsage();
 
-      if(p.basename(data.name).contains(indexFileNamingScheme)) continue; // skip index file (already parsed)
-      if(!validDictionaryFiles.any((scheme) => p.basename(data.name).contains(scheme))){
+      if(p.basename(data.name).contains(indexFileName)) continue; // skip index file (already parsed)
+      if(!yomitanDictFiles.any((scheme) => p.basename(data.name).contains(scheme))){
         params.mainIsolateSendPort.send("Copying ${data.name} to DB ...");
         filesToInsert.add((
           file: data, indexId: indexId, insertId: null));
@@ -153,16 +130,16 @@ Future _parseDictionaryDataSource(({
       else {
         // manage import contexts
         termImportContext = await manageImportContext(
-          termImportContext, data.name, termBankFileNamingScheme,
+          termImportContext, data.name, termBankPrefix,
           () => TermBankV3ParserContext.create(db, indexId));
         termMetaImportContext = await manageImportContext(
-          termMetaImportContext, data.name, termMetaBankFileNamingScheme,
+          termMetaImportContext, data.name, termMetaBankPrefix,
           () => TermMetaBankV3ParserContext.create(db, indexId));
         kanjiImportContext = await manageImportContext(
-          kanjiImportContext, data.name, kanjiBankFileNamingScheme,
+          kanjiImportContext, data.name, kanjiBankPrefix,
           () => KanjiBankV3ParserContext.create(db, indexId));
         kanjiMetaImportContext = await manageImportContext(
-          kanjiMetaImportContext, data.name, kanjiMetaBankFileNamingScheme,
+          kanjiMetaImportContext, data.name, kanjiMetaBankPrefix,
           () => KanjiMetaBankV3ParserContext.create(db));
           
         await parseDictionaryFile(
@@ -232,12 +209,12 @@ Future parseDictionaryFile({
   
   // create config to pass the different arguments to the functions
   final parserConfig = {
-    audioFileNamingScheme: () => parseAudio(fileContent, db, ind.id),
-    kanjiMetaBankFileNamingScheme: () => parseKanjiMetaBankV3(fileContent, importContext as KanjiMetaBankV3ParserContext, db, ind.id),
-    kanjiBankFileNamingScheme: () => parseKanjiBankV3(fileContent, importContext as KanjiBankV3ParserContext, db, ind.id),
-    tagBankFileNamingScheme: () => parseTagBankv3(fileContent, db, ind.id),
-    termMetaBankFileNamingScheme: () => parseTermMetaBankV3(fileContent, importContext as TermMetaBankV3ParserContext, db, ind.id),
-    termBankFileNamingScheme: () => parseTermBankV3(fileContent, importContext as TermBankV3ParserContext, db, ind.id),
+    audioListPrefix: () => parseAudio(fileContent, db, ind.id),
+    tagBankPrefix: () => parseTagBankv3(fileContent, db, ind.id),
+    kanjiBankPrefix: () => parseKanjiBankV3(fileContent, importContext as KanjiBankV3ParserContext, db, ind.id),
+    kanjiMetaBankPrefix: () => parseKanjiMetaBankV3(fileContent, importContext as KanjiMetaBankV3ParserContext, db, ind.id),
+    termBankPrefix: () => parseTermBankV3(fileContent, importContext as TermBankV3ParserContext, db, ind.id),
+    termMetaBankPrefix: () => parseTermMetaBankV3(fileContent, importContext as TermMetaBankV3ParserContext, db, ind.id),
   };
 
   final baseName = p.basename(filePath);

@@ -4,6 +4,7 @@ import 'dart:io';
 
 import 'package:da_db/database/da_db.dart';
 import 'package:da_db/database/db_queries/dictionary_search/dictionary_search_params.dart';
+import 'package:da_db/parsing/util/parsing_constants.dart';
 import 'package:da_db_shared/da_db_shared.dart';
 import 'package:drift/drift.dart';
 import 'package:language_processing/src/language_processor_options.dart';
@@ -236,7 +237,7 @@ Future setupFreshDB() async {
   for (int i in [2, 1, 3, 4, 5]) {
     bool shouldIncludeFile(File file) =>
       // take the full dictionary only once
-      (i == 1 && !p.basename(file.path).contains("term_bank")) || 
+      (i == 1 && !p.basename(file.path).startsWith(termBankPrefix)) || 
       p.basename(file.path).contains("index"); // always include index files
 
     await partialInit(db, shouldIncludeFile, "term_search_test",

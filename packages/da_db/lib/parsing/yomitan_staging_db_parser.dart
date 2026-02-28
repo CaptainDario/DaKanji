@@ -8,6 +8,7 @@ import 'package:archive/archive_io.dart';
 import 'package:da_db/data/dictionary_types.dart';
 import 'package:da_db/database/da_db.dart';
 import 'package:da_db/parsing/util/db_optimization.dart';
+import 'package:da_db/parsing/util/parsing_constants.dart';
 import 'package:da_db/parsing/util/parsing_util.dart';
 import 'package:da_db/parsing/util/staging_worker_pool.dart';
 import 'package:da_db/parsing/yomitan/in_memory_cache/index/index_parser.dart';
@@ -19,14 +20,6 @@ import 'package:language_processing/language_processing.dart';
 import 'package:path/path.dart' as p;
 import 'package:universal_io/io.dart';
 
-const String indexFileNamingScheme = "index.json";
-const List<String> parallelHandledFiles = [
-  "term_bank",
-  "kanji_bank",
-  "tag_bank", 
-  "term_meta_bank",
-  "kanji_meta_bank"
-];
 
 Future<Stream<String>> parseDictionaryDataSource({
   String? dataSourcePath,
@@ -89,7 +82,7 @@ Future<void> _orchestratorEntry(({
     sendPort.send("Scanning dictionary structure...");
     final allFiles = daDbDataSourceIterator(
       archivePath: params.dataSourcePath, 
-      fileOrder: [indexFileNamingScheme]
+      fileOrder: [indexFileName]
     ).toList();
     
     int? indexId;
@@ -98,13 +91,13 @@ Future<void> _orchestratorEntry(({
 
     for (final file in allFiles) {
       final name = p.basename(file.name);
-      if (name == indexFileNamingScheme) {
+      if (name == indexFileName) {
         final indexJson = utf8.decode(file.rawContent!.getStream(decompress: true).toUint8List());
         indexId = await parseAndInsertIndex(indexJson, db, DictionaryTypes.yomitan, params.isDefaultDictionary);
         continue;
       }
       if (!file.isFile) continue;
-      if (parallelHandledFiles.any((s) => name.contains(s))) {
+      if (yomitanDictFiles.any((s) => name.contains(s))) {
         parallelQueue.add(file.name);
       }
       else {
@@ -119,12 +112,12 @@ Future<void> _orchestratorEntry(({
     }
 
     // --- STEP 2: STAGING (Using Shared Pool) ---
-    if (indexId == null) throw Exception("No index.json found.");
+    if (indexId == null) throw Exception("No $indexFileName found.");
     parallelQueue.sort((a, b) => a.compareTo(b));
 
     // Calculate number of workers based on Yomitan's specific logic
     final int numWorkers = min(
-      max(1, parallelQueue.where((f) => f.contains(RegExp("term_bank|term_meta_bank"))).length),
+      max(1, parallelQueue.where((f) => f.startsWith(RegExp("$termBankPrefix|$termMetaBankPrefix"))).length),
       4
     );
 

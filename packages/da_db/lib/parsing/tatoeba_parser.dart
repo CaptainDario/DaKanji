@@ -3,6 +3,7 @@ import 'dart:io';
 import 'dart:isolate';
 
 import 'package:archive/archive_io.dart';
+import 'package:da_db/parsing/util/parsing_constants.dart';
 import 'package:da_db/parsing/util/parsing_util.dart';
 import 'package:disjoint_set/disjoint_set.dart';
 import 'package:language_processing/language_processing.dart';
@@ -34,7 +35,7 @@ Future<void> convertTatoebaDataSource(
 
   // add index file
   encoder.addArchiveFile(ArchiveFile.string(
-    "yomitan_index.json", getTatoebaIndexString()));
+    yomitanIndexFile, getTatoebaIndexString()));
 
   int i = 0;
   for (var linkedSentence in linkedSentences.sublist(1, 100)) {
