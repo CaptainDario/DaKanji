@@ -11,31 +11,38 @@
       "type": "object",
       "properties": {
         "groupId": {
-          "type": "string",
-          "description": "ID matchable across dictionaries (e.g., a Tatoeba sentence ID). Can be string or integer depending on your upstream source."
+          "type": "integer",
+          "description": "Numeric ID matchable across dictionaries to group similar sentences (e.g., a Tatoeba sentence ID)."
         },
         "sentence": {
           "type": "string",
           "description": "The complete, raw sentence string."
         },
+        "sentenceReading": {
+          "type": "string",
+          "description": "Optional reading for the entire sentence (e.g., kana only)."
+        },
         "tokens": {
+          "type": "string",
+          "description": "Space-separated string of base terms/tokens present in the sentence for FTS indexing."
+        },
+        "langIso3Code": {
+          "type": "string",
+          "description": "ISO 639-3 language code (e.g., 'jpn', 'eng', 'spa')."
+        },
+        "tags": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/Token"
+            "type": "string"
           },
-          "description": "Tokenized components and optional readings for rendering furigana/pinyin."
+          "description": "List of string tags (e.g., 'slang', 'idiom'). These reference definitions provided in Yomitan tag_bank_*.json files (schema: '../../dictionaries/yomitan_schema/yomitan-tag-bank-schema.json')."
         },
-        "lang": {
-          "type": "string",
-          "description": "ISO 639 language code (e.g., 'ja', 'en', 'es')."
-        },
-        "difficultyFloat": {
-          "type": "number",
-          "description": "Numeric difficulty score for backend sorting/filtering."
-        },
-        "difficultyString": {
-          "type": "string",
-          "description": "Display-friendly difficulty string (e.g., 'JLPT N3', 'B1 Intermediate')."
+        "stats": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Stat"
+          },
+          "description": "List of numeric stats associated with the sentence (e.g., frequency, JLPT level, difficulty)."
         },
         "audios": {
           "type": "array",
@@ -43,69 +50,55 @@
             "$ref": "#/definitions/Audio"
           },
           "description": "List of available audio pronunciations."
-        },
-        "quality": {
-          "type": "number",
-          "description": "Overall quality score or confidence metric of the sentence."
+        }
+      },
+      "required": ["sentence"]
+    },
+    "Audio": {
+      "type": "object",
+      "properties": {
+        "url": {
+          "type": "string",
+          "description": "Local path/URL to the audio file inside the archive."
         },
         "tags": {
           "type": "array",
           "items": {
             "type": "string"
           },
-          "description": "List of tags (e.g., 'slang', 'idiom', 'formal')."
+          "description": "Tags specific to this audio file (e.g., 'native', 'female'). These map directly to definitions provided in Yomitan tag_bank_*.json files."
         },
         "stats": {
-          "type": "object",
-          "additionalProperties": true,
-          "description": "Arbitrary key-value pairs for dataset-specific stats without polluting the core schema."
-        },
-        "source": {
-          "type": "string",
-          "description": "Origin dataset, author, or copyright info (e.g., 'Tatoeba')."
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Stat"
+          },
+          "description": "Numeric stats specific to this audio file (e.g., clarity score, speed)."
         }
       },
-      "required": ["groupId", "sentence", "lang"]
+      "required": ["url"]
     },
-    "Token": {
+    "Stat": {
       "type": "object",
       "properties": {
-        "text": {
+        "statName": {
           "type": "string",
-          "description": "The surface text of the token."
+          "description": "The backend identifier for the stat (e.g., 'freq', 'JLPT', 'quality')."
         },
-        "reading": {
+        "displayName": {
           "type": "string",
-          "description": "Optional reading (e.g., hiragana for kanji)."
-        }
-      },
-      "required": ["text"]
-    },
-    "Audio": {
-      "type": "object",
-      "properties": {
-        "path": {
-          "type": "string",
-          "description": "Local path to the audio file."
+          "description": "Optional user-friendly label for the stat (e.g., 'Frequency', 'JLPT Level')."
         },
-        "speaker": {
-          "type": "string",
-          "description": "e.g., 'native', 'tts'."
-        },
-        "accent": {
-          "type": "string",
-          "description": "e.g., 'US', 'UK', 'Kansai'."
-        },
-        "quality": {
+        "value": {
           "type": "number",
-          "description": "Audio quality metric."
+          "description": "The strictly numeric value used for sorting/filtering in the database."
         },
-        "notes": {
+        "displayValue": {
           "type": "string",
-          "description": "Any additional notes about this specific recording."
+          "description": "Optional formatted representation of the value (e.g., 'N5', 'uncommon')."
         }
       },
-      "required": ["path"]
+      "required": ["statName", "value"]
     }
   }
 }
