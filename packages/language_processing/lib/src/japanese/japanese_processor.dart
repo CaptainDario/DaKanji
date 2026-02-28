@@ -1,6 +1,7 @@
 import 'package:language_processing/src/deconjugation_result.dart';
 import 'package:language_processing/src/japanese/japanese_string_operations.dart';
 import 'package:language_processing/src/japanese/normalize/normalize.dart' as jp_norm;
+import 'package:language_processing/src/japanese/segment/segment.dart' as jp_seg;
 import 'package:language_processing/src/japanese/sentence_finding/sentence_finding_regex.dart' as jp_sent_regex;
 import 'package:language_processing/src/japanese/sentence_finding/sentence_finding_scan.dart' as jp_sent_scan;
 import 'package:language_processing/src/japanese/spellfix/forbidden_sequences.dart';
@@ -101,6 +102,9 @@ class JapaneseProcessor extends LanguageProcessor{
   @override
   List<Set<DeconjugationResult>> deconjugateAll(List<String> terms)
     => deconjugator.deconjugateAll(terms);
+
+  @override
+  String? segment(String text) => jp_seg.segment(text, mecab);
 
   @override
   String? tokenize(String text) => jp_tok.tokenize(text, mecab);

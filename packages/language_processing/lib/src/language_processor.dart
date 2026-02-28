@@ -44,8 +44,18 @@ abstract class LanguageProcessor {
 
   List<Set<DeconjugationResult>> deconjugateAll(List<String> terms);
 
+  /// Segments the given text and returns the segmented string (separated by
+  /// spaces), if `segmented != text` else returns null
+  /// 
+  /// This differs from `tokenize` as it returns the surfac forms not the base
+  /// forms
+  String? segment(String text);
+
   /// Tokenizes the given text and returns the tokenized string (separated by
   /// spaces), if `tokenizeed != text` else returns null
+  /// 
+  /// This differs from `segment` as it returns the base forms not the surface
+  /// forms
   String? tokenize(String text);
 
   /// Returns the readings for the given text

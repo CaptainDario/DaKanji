@@ -2,7 +2,7 @@ import 'package:mecab_for_dart/mecab_dart.dart';
 
 
 
-String? tokenize(String text, Mecab mecab) {
+String? segment(String text, Mecab mecab) {
   if (text.isEmpty) return null;
 
   List<String> tokens = mecab.parse(text).map((e) => e.surface).toList();
