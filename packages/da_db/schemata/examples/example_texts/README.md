@@ -6,21 +6,19 @@ The system will automatically segment and index the sentences during import.
 ## Archive Structure
 
 Your `.zip` file must contain `yomitan_index.json` and one or more `.txt` files in the root directory.
+Optionally, metadata can be supplied.
 
 ``` bash
 dictionary.zip
-├── yomitan_index.json      # Required dictionary metadata
-├── sentences_part1.txt     # Plain text file (UTF-8)
-└── sentences_part2.txt     # Optional chunked files
+├── index.json.                   # Required dictionary metadata
+├── example_text_bank_1.txt       # Plain text file 1 (UTF-8)
+├── example_text-metadata_1.json  # (Optional) metadata that is applied to all extracted sentences from bank-1
+├── example_text_bank_2.txt       # Next Plain text file (UTF-8)
+└── example_text_metadata_2.json  # (Optional) metadata that is applied to all extracted sentences from bank-2
 ```
 
 ## File Formatting
 
-* Files must be plain text (`.txt`) encoded in UTF-8.
+## Schema
 
-**Example `sentences_part1.txt`:**
-
-```text
-リンゴを食べます。 彼は毎朝走るのが好きです。
-昨日の夜はとても寒かった。
-```
+[Click here for the JSON schema definition.](example-bank-schema.json)

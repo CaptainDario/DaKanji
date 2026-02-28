@@ -23,4 +23,5 @@ dictionary.zip
 
 ## Schema
 
-[Click here for the JSON schema definition.](example-bank-schema.json)
+[Click here for the example_bank_1.json schema definition.](example-bank-schema.json)
+[Click here for the tag_bank.json schema definition.](example-bank-schema.json)
