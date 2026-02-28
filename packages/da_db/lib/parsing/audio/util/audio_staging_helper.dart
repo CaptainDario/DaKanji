@@ -1,13 +1,17 @@
-import 'package:da_db/database/da_db.dart';
 import 'package:da_db/parsing/staging_db/staging_db.dart';
 import 'package:drift/drift.dart';
 import 'package:language_processing/language_processing.dart';
 import 'package:path/path.dart' as p;
 import 'package:unorm_dart/unorm_dart.dart' as unorm;
 
+/// Formats, normalizes, and batches raw audio data into the Staging Database.
+/// 
+/// **Architectural Note:** This class relies on an isolated `LanguageProcessor` 
+/// instance rather than the main `DaDb` instance. Passing the main database into 
+/// the isolate would cause SQLite connection locking issues.
 class AudioStagingHelper {
   final StagingDatabase stagingDb;
-  final DaDb mainDb;
+  final LanguageProcessor lp; 
   final Function(String) onStatus;
 
   final List<AudioStagingTableCompanion> _audioRows = [];
@@ -15,10 +19,12 @@ class AudioStagingHelper {
 
   AudioStagingHelper({
     required this.stagingDb,
-    required this.mainDb,
+    required this.lp,
     required this.onStatus,
   });
 
+  /// Normalizes linguistic data (NFC formatting, tokenization) and queues 
+  /// the binary media file for batch insertion.
   Future<void> addEntry({
     required List<String> terms,
     required String? reading,
@@ -27,36 +33,22 @@ class AudioStagingHelper {
     required Uint8List fileContent,
   }) async {
     
-    // --- Ter/Reading ---
-    // Process Reading
+    // --- 1. Phonetic Normalization ---
     String? readingNormalized;
     if (reading != null) {
-      readingNormalized = mainDb.languageProcessor
-          .normalize(reading, ProcessorOptions())
-          .firstOrNull;
-      
+      readingNormalized = lp.normalize(reading, const ProcessorOptions()).firstOrNull;
       if (readingNormalized == reading) readingNormalized = null;
     }
 
-    // Process Terms
+    // --- 2. Term NLP Processing ---
     for (final term in terms) {
-      // Normalize Term
-      String? termNormalized = mainDb.languageProcessor
-        .normalize(term, ProcessorOptions())
-        .firstOrNull;
-      
+      String? termNormalized = lp.normalize(term, const ProcessorOptions()).firstOrNull;
       if (termNormalized == term) termNormalized = null;
 
-      // Segment Term
-      String? termTokens = mainDb.languageProcessor.segment(term);
-      
-      // Normalize Tokens
+      String? termTokens = lp.tokenize(term);
       String? termTokensNormalized;
       if (termTokens != null) {
-        termTokensNormalized = mainDb.languageProcessor
-          .normalize(termTokens, ProcessorOptions())
-          .firstOrNull;
-        
+        termTokensNormalized = lp.normalize(termTokens, const ProcessorOptions()).firstOrNull;
         if (termTokensNormalized == termTokens) termTokensNormalized = null;
       }
 
@@ -72,11 +64,9 @@ class AudioStagingHelper {
       ));
     }
 
-    // --- Path ---
+    // --- 3. Path & File Normalization ---
     final rawName = p.basename(originalFilePath);
     final rawDir = p.dirname(originalFilePath);
-    
-    // Normalize path and name to NFC
     final cleanName = unorm.nfc(rawName);
     final cleanPath = unorm.nfc(rawDir);
     
@@ -87,23 +77,21 @@ class AudioStagingHelper {
       content: Value(fileContent),
     ));
 
+    // Flush to disk iteratively to maintain a flat memory footprint
     if (_mediaRows.length >= 200) {
       await flush();
     }
   }
 
+  /// Writes all queued rows to the staging SQLite database inside a transaction.
   Future<void> flush() async {
     if (_mediaRows.isEmpty && _audioRows.isEmpty) return;
-
+    
     await stagingDb.batch((batch) {
-      if (_audioRows.isNotEmpty) {
-        batch.insertAll(stagingDb.audioStagingTable, _audioRows);
-      }
-      if (_mediaRows.isNotEmpty) {
-        batch.insertAll(stagingDb.mediaStagingTable, _mediaRows);
-      }
+      if (_audioRows.isNotEmpty) batch.insertAll(stagingDb.audioStagingTable, _audioRows);
+      if (_mediaRows.isNotEmpty) batch.insertAll(stagingDb.mediaStagingTable, _mediaRows);
     });
-
+    
     _audioRows.clear();
     _mediaRows.clear();
   }

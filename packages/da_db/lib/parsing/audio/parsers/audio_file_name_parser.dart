@@ -18,7 +18,7 @@ class AudioFileNameParser {
     // helper for parsing json and inserting into staging
     final helper = AudioStagingHelper(
       stagingDb: stagingDb, 
-      mainDb: mainDb, 
+      lp: mainDb.languageProcessor,
       onStatus: onStatus
     );
 

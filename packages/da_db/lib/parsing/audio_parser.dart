@@ -2,26 +2,26 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:isolate';
 
-import 'package:archive/archive_io.dart';
 import 'package:collection/collection.dart';
 import 'package:da_db/data/dictionary_types.dart';
 import 'package:da_db/database/da_db.dart';
-import 'package:da_db/parsing/audio/mergers/audio_bank_merger.dart';
-import 'package:da_db/parsing/staging_db/staging_db.dart';
+import 'package:da_db/parsing/audio/mergers/audio_staging_db_merging.dart';
+import 'package:da_db/parsing/audio/workers/audio_worker_entry.dart';
 import 'package:da_db/parsing/util/db_optimization.dart';
 import 'package:da_db/parsing/util/parsing_util.dart';
+import 'package:da_db/parsing/util/staging_worker_pool.dart';
 import 'package:da_db/parsing/yomitan/in_memory_cache/index/index_parser.dart';
 import 'package:drift/isolate.dart';
-import 'package:drift/native.dart';
 import 'package:language_processing/language_processing.dart';
 import 'package:path/path.dart' as p;
 import 'package:universal_io/io.dart';
 
-import 'audio/parsers/audio_entries_json_parser.dart';
-import 'audio/parsers/audio_file_name_parser.dart';
-import 'audio/parsers/audio_index_json_parser.dart';
 
-/// Orchestrates the audio data source import following the Yomitan staging pattern.
+/// Orchestrates the parsing, staging, and merging of Audio Dictionaries.
+/// 
+/// Operates on a dedicated Isolate using the `StagingWorkerPool` engine to 
+/// guarantee the main Flutter UI thread remains completely responsive while 
+/// massive binary blobs are moved through the file system.
 Future<Stream<String>> parseAudioDataSource({
   required String dataSourcePath,
   required bool isDefaultDictionary,
@@ -30,13 +30,11 @@ Future<Stream<String>> parseAudioDataSource({
   final controller = StreamController<String>();
   final connection = await db.attachedDatabase.serializableConnection();
   final lpJson = db.languageProcessor.toJsonString();
-  final inMemory = db.inMemory;
 
   final receivePort = ReceivePort();
   receivePort.listen((message) {
-    if (message is String) {
-      controller.add(message);
-    } else if (message == null) {
+    if (message is String) controller.add(message);
+    else if (message == null) {
       receivePort.close();
       controller.close();
     } else {
@@ -49,14 +47,13 @@ Future<Stream<String>> parseAudioDataSource({
     dbConnection: connection,
     languageProcessorJson: lpJson,
     mainIsolateSendPort: receivePort.sendPort,
-    inMemory: inMemory,
+    inMemory: db.inMemory,
     isDefaultDictionary: isDefaultDictionary,
   ));
 
   return controller.stream;
 }
 
-/// Worker entry point for parsing Audio Dictionary Data Sources.
 Future<void> _audioOrchestratorEntry(({
   String dataSourcePath,
   DriftIsolate dbConnection,
@@ -74,118 +71,72 @@ Future<void> _audioOrchestratorEntry(({
   );
 
   Directory? tempDir;
-  StagingDatabase? stagingDb;
 
   try {
     sendPort.send("Scanning audio dictionary structure...");
-    await db.languageProcessor.init();
 
-    // 1. Get all file handles lazily
     final allFiles = daDbDataSourceIterator(
       archivePath: params.dataSourcePath, 
       fileOrder: ["yomitan_index.json"]
-    ).toList(); // Safe: only stores ArchiveFile pointers, not content
+    ).toList(); 
 
-    // 2. Setup Index
+    // --- 1. Parse Primary Dictionary Index ---
     final indexFile = allFiles.firstWhereOrNull((f) => f.name == "yomitan_index.json");
     if (indexFile == null) throw Exception("No yomitan_index.json found.");
     
     final int indexId = await parseAndInsertIndex(
-      utf8.decode(indexFile.readBytes()!), 
-      db, 
-      DictionaryTypes.audio, 
-      params.isDefaultDictionary
+      utf8.decode(indexFile.readBytes()!), db, DictionaryTypes.audio, params.isDefaultDictionary
     );
 
-    // 3. Prepare Staging Environment
-    tempDir = await Directory.systemTemp.createTemp('da_db_audio_');
-    final String stagingDbPath = p.join(tempDir.path, 'audio_staging.db');
-    stagingDb = StagingDatabase(NativeDatabase(File(stagingDbPath)));
-
-    // 4. Stage Metadata
-    // Filter out the index file and pass the rest to the staging logic
-    final contentFiles = allFiles.where((f) => f.name != "yomitan_index.json").toList();
+    // --- 2. Build the File Queue ---
+    final contentFiles = allFiles.where((f) => f.name != "yomitan_index.json").map((f) => f.name).toList();
     
-    await _runAudioStaging(
-      contentFiles: contentFiles,
-      stagingDb: stagingDb,
-      db: db,
-      sendPort: sendPort,
+    // Sort the queue so metadata files (index.json / entries.json) 
+    // are parsed FIRST.
+    contentFiles.sort((a, b) {
+      final baseA = p.basename(a);
+      final baseB = p.basename(b);
+      if (baseA == 'index.json' || baseA == 'entries.json') return -1;
+      if (baseB == 'index.json' || baseB == 'entries.json') return 1;
+      return a.compareTo(b);
+    });
+
+    tempDir = await Directory.systemTemp.createTemp('da_db_audio_pool_');
+
+    // --- 3. Stage the Data ---
+    final List<String> workerDbPaths = await StagingWorkerPool.runGreedyParallelStaging(
+      numWorkers: 1, 
+      dataSourcePath: params.dataSourcePath,
+      languageProcessorJson: params.languageProcessorJson,
+      files: contentFiles,
+      tempDir: tempDir,
+      workerEntryPoint: audioWorkerEntry,
+      onStatus: (msg) => sendPort.send(msg),
     );
 
-    // 5. SQL-based Merge
-    await _mergeAudioStagingData(
-      db: db,
-      stagingDbPath: stagingDbPath,
-      indexId: indexId,
-      sendPort: sendPort,
-    );
+    // --- 4. Merge into Main Database ---
+    if (workerDbPaths.isNotEmpty && await File(workerDbPaths.first).exists()) {
+      sendPort.send("Merging audio staging database...");
+      await mergeAudioStagingDb(
+        db: db,
+        workerDbPath: workerDbPaths.first,
+        indexId: indexId,
+      );
+      await File(workerDbPaths.first).delete();
+    }
 
     sendPort.send("Optimizing database...");
     await optimizeDbAfterImport(db);
 
-  } catch (e, stack) {
+  }
+  catch (e, stack) {
     sendPort.send("Error: $e\n$stack");
-  } finally {
-    await stagingDb?.close();
+  } 
+  finally {
     if (tempDir != null && await tempDir.exists()) {
       await tempDir.delete(recursive: true);
     }
-    db.languageProcessor.close();
     await db.close();
     sendPort.send(null);
-  }
-}
-
-// --- Helper Functions ---
-
-Future<void> _runAudioStaging({
-  required List<ArchiveFile> contentFiles,
-  required StagingDatabase stagingDb,
-  required DaDb db,
-  required SendPort sendPort,
-}) async {
-  sendPort.send("Parsing metadata to staging database...");
-
-  if (contentFiles.isEmpty) return;
-
-  // Detect format using handles (No bytes loaded yet!)
-  final indexJsonEntry = contentFiles.firstWhereOrNull((f) => p.basename(f.name) == "index.json");
-  final entriesJsonEntry = contentFiles.firstWhereOrNull((f) => p.basename(f.name) == "entries.json");
-
-  if (indexJsonEntry != null) {
-    final jsonStr = utf8.decode(indexJsonEntry.readBytes()!);
-    final audioFiles = contentFiles.where((f) => f != indexJsonEntry).toList();
-    await AudioIndexJsonParser().parse(audioFiles, jsonStr, stagingDb, db, (msg) => sendPort.send(msg));
-  } 
-  else if (entriesJsonEntry != null) {
-    final jsonStr = utf8.decode(entriesJsonEntry.readBytes()!);
-    final audioFiles = contentFiles.where((f) => f != entriesJsonEntry).toList();
-    await AudioEntriesJsonParser().parse(audioFiles, jsonStr, stagingDb, db, (msg) => sendPort.send(msg));
-  } 
-  else {
-    await AudioFileNameParser().parse(contentFiles, stagingDb, db, (msg) => sendPort.send(msg));
-  }
-}
-
-Future<void> _mergeAudioStagingData({
-  required DaDb db,
-  required String stagingDbPath,
-  required int indexId,
-  required SendPort sendPort,
-}) async {
-  sendPort.send("Merging audio data into main database...");
-  
-  await db.customStatement("ATTACH DATABASE '$stagingDbPath' AS staging_worker");
-  
-  try {
-    await AudioBankMerger().merge(
-      targetDb: db,
-      workerAlias: 'staging_worker',
-      indexId: indexId,
-    );
-  }
-  finally {
-    await db.customStatement("DETACH DATABASE staging_worker");
   }
 }

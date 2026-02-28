@@ -1,13 +1,25 @@
 import 'package:da_db/database/da_db.dart';
+import 'package:da_db/parsing/staging_db/mergers/staging_merger.dart';
 
-class AudioBankMerger {
+
+
+
+/// Merges the audio staging database into the main application database.
+/// 
+/// This merger executes raw SQL `INSERT INTO ... SELECT` statements for maximum 
+/// performance. It handles the generation of unique IDs dynamically using SQLite 
+/// window functions (`ROW_NUMBER() OVER`) to perfectly map the flat staging data 
+/// into the highly relational structure of the main database.
+class AudioBankMerger implements StagingMerger { 
   
+  @override 
   Future<void> merge({
     required DaDb targetDb,
     required String workerAlias,
     required int indexId,
   }) async {
 
+    // Retrieve the current highest IDs to calculate offsets for new rows
     final int maxAudioId = (await targetDb.audioDao.maxAudioId());
     final int maxMediaId = (await targetDb.mediaDao.maxMediaId());
 
@@ -19,7 +31,7 @@ class AudioBankMerger {
 
     await targetDb.transaction(() async {
       
-      // 2. Insert Terms
+      // --- 1. Core Strings (Terms) ---
       await targetDb.customStatement('''
         INSERT OR IGNORE INTO ${tTerm.actualTableName} (
           ${tTerm.term.name}, 
@@ -31,10 +43,12 @@ class AudioBankMerger {
         FROM $workerAlias.audio_staging_table
       ''');
 
-      // 2.1 Insert Tokens (FTS)
+      // --- 2. Search Index (FTS5) ---
+      // We manually synchronize the Full-Text Search index here instead of 
+      // relying on SQLite triggers, which drastically improves bulk insert speed.
       await targetDb.customStatement('''
         INSERT INTO fts_tokens (rowid, tokens, tokens_normalized)
-        SELECT DISTINCT  -- <--- ADDED DISTINCT to prevent rowid crashes
+        SELECT DISTINCT 
           t.${tTerm.id.name}, 
           s.term_tokens, 
           s.term_tokens_normalized
@@ -49,7 +63,7 @@ class AudioBankMerger {
           )
       ''');
 
-      // 3. Insert Readings
+      // --- 3. Core Strings (Readings) ---
       await targetDb.customStatement('''
         INSERT OR IGNORE INTO ${tReading.actualTableName} (
           ${tReading.reading.name},
@@ -62,7 +76,8 @@ class AudioBankMerger {
         WHERE reading IS NOT NULL
       ''');
 
-      // 4. Insert Media (One row per file)
+      // --- 4. Binary Media ---
+      // Assigns a unique, incrementing ID to every file processed in the staging DB.
       await targetDb.customStatement('''
         INSERT INTO ${tMedia.actualTableName} (
           ${tMedia.id.name}, 
@@ -80,7 +95,8 @@ class AudioBankMerger {
         FROM $workerAlias.media_staging_table
       ''');
 
-      // 5. Insert Audio Entries (One Entry per Media File)
+      // --- 5. Audio Metadata ---
+      // Links the binary media back to its phonetic reading and pitch accent data.
       await targetDb.customStatement('''
         INSERT INTO ${tAudio.actualTableName} (
           ${tAudio.id.name}, 
@@ -110,7 +126,8 @@ class AudioBankMerger {
         LEFT JOIN ${tReading.actualTableName} r ON r.${tReading.reading.name} = meta.reading
       ''');
 
-      // 6. Link Audio -> Terms (Many-to-Many)
+      // --- 6. Junction Table (Many-to-Many Link) ---
+      // Resolves the link between the audio entry and the terms it represents.
       await targetDb.customStatement('''
         INSERT INTO ${tjAudioTerm.actualTableName} (${tjAudioTerm.audioId.name}, ${tjAudioTerm.termId.name})
         SELECT 
