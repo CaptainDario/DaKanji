@@ -1,12 +1,12 @@
 import 'package:language_processing/src/deconjugation_result.dart';
 import 'package:language_processing/src/japanese/japanese_string_operations.dart';
 import 'package:language_processing/src/japanese/normalize/normalize.dart' as jp_norm;
-import 'package:language_processing/src/japanese/segmentation/segment.dart' as jp_seg;
 import 'package:language_processing/src/japanese/sentence_finding/sentence_finding.dart';
 import 'package:language_processing/src/japanese/spellfix/forbidden_sequences.dart';
 import 'package:language_processing/src/japanese/spellfix/spellfix.dart' as jp_spell;
 import 'package:language_processing/src/japanese/spellfix/substitutions.dart';
 import 'package:language_processing/src/japanese/term_reading_pair/furigana_matching.dart';
+import 'package:language_processing/src/japanese/tokenization/tokenize.dart' as jp_tok;
 import 'package:language_processing/src/japanese/yomitan_deconjugation/deconjugate.dart' as jp_dec;
 import 'package:language_processing/src/language_processor.dart';
 import 'package:language_processing/src/language_processor_options.dart';
@@ -102,7 +102,7 @@ class JapaneseProcessor extends LanguageProcessor{
     => deconjugator.deconjugateAll(terms);
 
   @override
-  String? segment(String text) => jp_seg.segment(text, mecab);
+  String? tokenize(String text) => jp_tok.tokenize(text, mecab);
 
   @override
   String getReadings(String sentence) {

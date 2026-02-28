@@ -44,9 +44,9 @@ abstract class LanguageProcessor {
 
   List<Set<DeconjugationResult>> deconjugateAll(List<String> terms);
 
-  /// Segments the given text and returns the segmented string, if 
-  /// `segmentation != text` else returns null
-  String? segment(String text);
+  /// Tokenizes the given text and returns the tokenized string (separated by
+  /// spaces), if `tokenizeed != text` else returns null
+  String? tokenize(String text);
 
   /// Returns the readings for the given text
   String getReadings(String text);
