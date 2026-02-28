@@ -1,0 +1,34 @@
+[
+  {
+    "groupId": 100,
+    "sentence": "リンゴを食べます",
+    "sentenceReading": "りんごをたべます",
+    "tokens": "リンゴ を 食べ ます",
+    "langIso3Code": "jpn",
+    "tags": ["fruit", "tatoeba", "license:CC-BY-4.0"],
+    "stats": [
+      { "statName": "difficulty", "displayName": "Difficulty", "value": 2.5 },
+      { "statName": "quality", "value": 5.0 },
+      { "statName": "JLPT", "value": 1.0, "displayValue": "N5" },
+      { "statName": "freq", "displayName": "Frequency", "value": 120.0, "displayValue": "uncommon" }
+    ],
+    "audios": [
+      {
+        "url": "media/apple_b.mp3",
+        "tags": ["tokyo", "female", "native"],
+        "stats": [
+          { "statName": "clarity", "displayName": "Clarity", "value": 4.0 },
+          { "statName": "speed", "displayName": "Speed", "value": 3.5, "displayValue": "normal" }
+        ]
+      },
+      {
+        "url": "media/apple_a.mp3"
+      }
+    ]
+  },
+  {
+    "groupId": 101,
+    "sentence": "犬が走る",
+    "langIso3Code": "jpn"
+  }
+]

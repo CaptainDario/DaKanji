@@ -11,7 +11,7 @@ import 'package:mecab_for_dart/mecab_dart.dart';
 
 JapaneseProcessor? _japaneseProcessor;
 
-Future<JapaneseProcessor> get japaneseProcessor async{
+Future<JapaneseProcessor> get japaneseProcessor async {
   if (_japaneseProcessor == null) {
     _japaneseProcessor = JapaneseProcessor(
       mecabTransferableState: MecabTransferableState(

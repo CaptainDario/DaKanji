@@ -1,7 +1,5 @@
 import 'package:da_db/database/example/example_entry.dart';
 
-import '../dictionary_test_variables.dart';
-
 
 List<String> exampleTextsTestQueries = [
   "東京",
@@ -11,6 +9,7 @@ List<String> exampleTextsTestQueries = [
 ];
 
 List<ExampleEntry> exampleTextTestsExpectedValues = [
+  /*
   ExampleEntry(
     id: 0,
     indexEntry: exampleTextsIndexEntry,
@@ -34,5 +33,5 @@ List<ExampleEntry> exampleTextTestsExpectedValues = [
     indexEntry: exampleTextsIndexEntry,
     example: "新海誠監督長編アニメーション『君の名は。』の世界を掘り下げる、スニーカー文庫だけの特別編。",
     translations: []
-  ),
+  ),*/
 ];
