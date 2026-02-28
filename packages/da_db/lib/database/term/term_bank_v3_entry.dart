@@ -91,16 +91,16 @@ class TermBankV3Entry with _$TermBankV3Entry {
       definitions: List<String>.from(jsonDecode(r.definitions)),
       structuredContentDefinitions: List<dynamic>.from(jsonDecode(r.structuredContentDefinitions ?? "[]")),
       definitionTags: List.from(jsonDecode(r.definitionTags))
-          .where((tagJson) => tagJson != null && tagJson['name'] != null)
-          .map((e) => TagBankV3Entry.fromJson(e))
-          .toList(),
+        .where((tagJson) => tagJson != null && tagJson['name'] != null)
+        .map((e) => TagBankV3Entry.fromJson(e))
+        .toList(),
       ruleIdentifiers: List<String>.from(jsonDecode(r.ruleIdentifiers)),
       popularity: r.popularity,
       sequenceNumber: r.sequenceNumber,
       tags: List.from(jsonDecode(r.tags))
-          .where((tagJson) => tagJson != null && tagJson['name'] != null)
-          .map((e) => TagBankV3Entry.fromJson(e))
-          .toList(),
+        .where((tagJson) => tagJson != null && tagJson['name'] != null)
+        .map((e) => TagBankV3Entry.fromJson(e))
+        .toList(),
     );
   }
 
