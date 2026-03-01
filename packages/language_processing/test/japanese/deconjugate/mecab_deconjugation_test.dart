@@ -1,6 +1,5 @@
 
 import 'package:da_db_shared/da_db_shared.dart';
-import 'package:kana_kit/kana_kit.dart';
 import 'package:language_processing/src/japanese/mecab_deconjugation/deconjugate.dart';
 import 'package:mecab_for_dart/mecab_dart.dart';
 import 'package:test/test.dart';
@@ -16,8 +15,7 @@ void main() async {
     group("Mecab deconjugation", () {
       test('Deconjugating: ${verbs[i].toString()}', () async {
         print(verbs[i].toString());
-        List<String> deconjugated = getDeconjugatedTerms(
-          verbs[i].$1, mecab, const KanaKit());
+        List<String> deconjugated = getDeconjugatedTerms(verbs[i].$1, mecab);
         expect(deconjugated, verbs[i].$2);
         print("output: $deconjugated");
 
