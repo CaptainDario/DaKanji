@@ -1,17 +1,17 @@
 import 'package:language_processing/src/deconjugation_result.dart';
 import 'package:language_processing/src/japanese/japanese_string_operations.dart';
 import 'package:language_processing/src/japanese/normalize/normalize.dart' as jp_norm;
-import 'package:language_processing/src/japanese/segment/segment.dart' as jp_seg;
+import 'package:language_processing/src/japanese/parse/parse.dart' as jp_parse;
 import 'package:language_processing/src/japanese/sentence_finding/sentence_finding_regex.dart' as jp_sent_regex;
 import 'package:language_processing/src/japanese/sentence_finding/sentence_finding_scan.dart' as jp_sent_scan;
 import 'package:language_processing/src/japanese/spellfix/forbidden_sequences.dart';
 import 'package:language_processing/src/japanese/spellfix/spellfix.dart' as jp_spell;
 import 'package:language_processing/src/japanese/spellfix/substitutions.dart';
 import 'package:language_processing/src/japanese/term_reading_pair/furigana_matching.dart';
-import 'package:language_processing/src/japanese/tokenization/tokenize.dart' as jp_tok;
 import 'package:language_processing/src/japanese/yomitan_deconjugation/deconjugate.dart' as jp_dec;
 import 'package:language_processing/src/language_processor.dart';
 import 'package:language_processing/src/language_processor_options.dart';
+import 'package:language_processing/src/parse_result.dart';
 import 'package:language_processing/src/term_reading_pair.dart';
 import 'package:mecab_for_dart/mecab_dart.dart';
 
@@ -82,7 +82,7 @@ class JapaneseProcessor extends LanguageProcessor{
 
     return jp_norm.normalize(
       term,
-      convertRomajiToHiragana: options.japaneseNormalizationConvertsRomajiToHiragana
+      convertRomajiToHiragana: options.japaneseOptions.normalizationConvertsRomajiToHiragana
     );
   }
 
@@ -91,7 +91,7 @@ class JapaneseProcessor extends LanguageProcessor{
 
     return jp_norm.normalizeAll(
       terms,
-      convertRomajiToHiragana: options.japaneseNormalizationConvertsRomajiToHiragana
+      convertRomajiToHiragana: options.japaneseOptions.normalizationConvertsRomajiToHiragana
     );
   }
 
@@ -104,10 +104,8 @@ class JapaneseProcessor extends LanguageProcessor{
     => deconjugator.deconjugateAll(terms);
 
   @override
-  String? segment(String text) => jp_seg.segment(text, mecab);
-
-  @override
-  String? tokenize(String text) => jp_tok.tokenize(text, mecab);
+  ParseResult parse(String term, ProcessorOptions options)
+    => jp_parse.parse(term, mecab, options);
 
   @override
   String getReadings(String sentence) {
@@ -151,12 +149,12 @@ class JapaneseProcessor extends LanguageProcessor{
     String term, String reading, ProcessorOptions options) 
       => matchFurigana(
         term, reading,
-        convertToKatakana: options.japaneseGetTermReadingPairsConvertToKatakanaForFurigana
+        convertToKatakana: options.japaneseOptions.getTermReadingPairsConvertToKatakanaForFurigana
       );
 
   @override
   List<String> findSentences(String text, ProcessorOptions options) {
-    if (options.japaneseSentenceFindingUseScanMethod){
+    if (options.japaneseOptions.sentenceFindingUseScanMethod){
       return jp_sent_scan.findSentences(text);
     }
     else {

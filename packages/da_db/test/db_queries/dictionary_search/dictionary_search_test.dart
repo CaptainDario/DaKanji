@@ -134,7 +134,9 @@ void main() {
 
                 indexesToInclude: indexesToInclude,
 
-                options: ProcessorOptions(japaneseNormalizationConvertsRomajiToHiragana: true),
+                options: ProcessorOptions(japaneseOptions: JapaneseProcessorOptions(
+                  normalizationConvertsRomajiToHiragana: true
+                )),
               ),
               printDebugInfo: true
             ));
@@ -143,7 +145,7 @@ void main() {
             print("Expected:\n $testCase");
 
             // --- direct matches ---
-            // FIX START: Check length FIRST to avoid passing empty results
+            // Check length FIRST to avoid passing empty results
             if (results.queryMatches.length != testCase.queryMatches.length) {
               fail(
                 'Unexpected number of query match groups.\n'

@@ -19,9 +19,10 @@ void main() {
       final expectedTermVariants = testCase.$4;
 
       test('Test Case $input', () {
-        final normalized = jp.normalize(input, ProcessorOptions(
-          japaneseNormalizationConvertsRomajiToHiragana: convertRomajiToHiragana
-        ));
+        final normalized = jp.normalize(input, ProcessorOptions(japaneseOptions: 
+          JapaneseProcessorOptions(
+            normalizationConvertsRomajiToHiragana: convertRomajiToHiragana
+        )));
         expect(normalized, equals(expectedNormalizedTerm));
         final deconjugated = jp.deconjugateAll(normalized);
         expect(

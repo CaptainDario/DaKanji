@@ -47,9 +47,9 @@ class _TermBankTermWidgetState extends State<TermBankTermWidget> {
     termsAndReadings = widget.entries
       .map((e) => (e.term, e.reading)).toSet()
       .map((e) => GetIt.I<DaDb>().languageProcessor.getTermReadingPairs(
-        e.$1, e.$2, ProcessorOptions(
-          japaneseGetTermReadingPairsConvertToKatakanaForFurigana: widget.useKatakanaForFurigana
-      ))).toList();
+        e.$1, e.$2, ProcessorOptions(japaneseOptions: JapaneseProcessorOptions(
+          getTermReadingPairsConvertToKatakanaForFurigana: widget.useKatakanaForFurigana
+      )))).toList();
   }
 
   Future getAudiosForTerms(List<TermBankV3Entry> entries) async {
