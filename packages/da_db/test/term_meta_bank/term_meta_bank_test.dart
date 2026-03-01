@@ -1,19 +1,16 @@
 import 'package:da_db/database/da_db.dart';
-import 'package:da_db/parsing/unified_staging_parser.dart';
 import 'package:da_db_shared/paths.dart';
 import 'package:test/test.dart';
-import 'package:universal_io/io.dart';
 
-import '../dictionary_test_variables.dart';
-import '../test_utils/db_files.dart';
 import '../test_utils/ignore_database_generated_data.dart';
+import '../test_utils/setup_fresh_db.dart';
 import 'term_meta_bank_test_cases.dart';
 
 void main() {
   
   late DaDb db;
    setUpAll(() async {
-     db = await setupFreshDB();
+     db = await setupFreshDb(yomitanSampleDictionaryPath);
    });
    tearDownAll(() async {
      await db.close();
@@ -43,28 +40,4 @@ void main() {
     }
   });
 
-}
-
-Future<DaDb> setupFreshDB() async {
-
-  // create the testing database (delete any existing database)
-  if (File(daDbTestPath).existsSync()) File(daDbTestPath).deleteSync();
-  DaDb db = DaDb(
-    dbPath: daDbTestPath, inMemory: true, languageProcessor: await japaneseProcessor);
-
-  // convert the test files
-  Stopwatch s = Stopwatch()..start();
-  String dataSourceZipPath = await createTmpZip(Directory(yomitanSampleDictionaryPath));
-  Stream<String> parsingProgress = await parseDaDbDataSource(
-    dataSourcePath: dataSourceZipPath,
-    db: db,
-    isDefaultDictionary: false
-  );
-  await for (final progress in parsingProgress) {
-    print(progress);
-  }
-  
-  print("Conversion took ${s.elapsedMilliseconds} ms");
-
-  return db;
 }

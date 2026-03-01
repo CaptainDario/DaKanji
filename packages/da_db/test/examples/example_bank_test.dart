@@ -1,20 +1,16 @@
-import 'dart:io';
-
 import 'package:da_db/database/da_db.dart';
-import 'package:da_db/parsing/unified_staging_parser.dart';
 import 'package:da_db_shared/paths.dart';
 import 'package:test/test.dart';
 
-import '../dictionary_test_variables.dart';
-import '../test_utils/db_files.dart';
 import '../test_utils/ignore_database_generated_data.dart';
+import '../test_utils/setup_fresh_db.dart';
 import 'example_bank_test_cases.dart';
 
 void main() {
   late DaDb db;
 
   setUpAll(() async {
-    db = await setupFreshDB();
+    db = await setupFreshDb(devExampleSentencesPath);
   });
 
   tearDownAll(() async {
@@ -56,34 +52,4 @@ void main() {
       });
     }
   });
-}
-
-Future<DaDb> setupFreshDB() async {
-
-  if(File(daDbTestPath).existsSync()) File(daDbTestPath).deleteSync();
-
-  // create the testing database (delete any existing database)
-  DaDb db = DaDb(
-    dbPath: daDbTestPath, 
-    inMemory: false,
-    languageProcessor: await japaneseProcessor
-  );
-
-  // convert the test files directly from devExampleSentencesPath
-  Stopwatch s = Stopwatch()..start();
-  String dataSourceZipPath = await createTmpZip(Directory(devExampleSentencesPath));
-  
-  Stream<String> stream = await parseDaDbDataSource(
-    dataSourcePath: dataSourceZipPath,
-    db: db,
-    isDefaultDictionary: true,
-  );
-  
-  await for (final event in stream) {
-    print("Parser: $event");
-  }
-  
-  print("Conversion took ${s.elapsedMilliseconds} ms");
-
-  return db;
 }
