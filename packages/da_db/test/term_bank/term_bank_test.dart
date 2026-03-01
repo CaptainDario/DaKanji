@@ -80,9 +80,9 @@ Future<DaDb> setupFreshDB(int testCaseIndex) async {
   db.clearDB();
   
   bool shouldIncludeFile(File file) =>
-    (p.basename(file.path) == "${termBankPrefix}_$testCaseIndex.json" ||
+    (p.basename(file.path) == "term_bank_$testCaseIndex.json" ||
     !p.basename(file.path).contains(termBankPrefix));
-  await partialInit(db, shouldIncludeFile, "${termBankPrefix}_test",
+  await partialInit(db, shouldIncludeFile, "term_bank_test",
     isDefaultDictionary: false); 
 
   return db;

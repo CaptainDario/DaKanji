@@ -22,7 +22,7 @@ class TermBankV3Parser implements DbFileParser {
     ProcessorOptions options,
     int startId,
   ) async {
-    if (lp == null) throw Exception("LanguageProcessor is required for parsing term_bank");
+    if (lp == null) throw Exception("LanguageProcessor is required for parsing $termBankPrefix files");
 
     List jsonInput = jsonDecode(utf8.decode(inputBytes[0]));
     int localId = startId;

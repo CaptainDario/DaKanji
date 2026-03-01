@@ -1,7 +1,6 @@
 import 'package:da_db/data/dictionary_types.dart';
 import 'package:da_db/database/da_db.dart';
-import 'package:da_db/parsing/audio_parser.dart' as audio_parser;
-import 'package:da_db/parsing/yomitan_staging_db_parser.dart' as yomitan_parser;
+import 'package:da_db/parsing/unified_staging_parser.dart';
 import 'package:da_db_shared/paths.dart';
 import 'package:path/path.dart' as p;
 import 'package:test/test.dart';
@@ -174,18 +173,7 @@ void main() {
 /// Imports a dictionary from a zip path
 Future<void> _importDictionary(DaDb db, String zipPath, DictionaryTypes t) async {
 
-  late var parse;
-  if(t == DictionaryTypes.audio) {
-    parse = audio_parser.parseAudioDataSource;
-  }
-  else if (t == DictionaryTypes.yomitan) {
-    parse = yomitan_parser.parseDictionaryDataSource;
-  }
-  else if (t == DictionaryTypes.examples) {
-
-  }
-
-  final stream = await parse(
+  final stream = await parseDaDbDataSource(
     dataSourcePath: zipPath,
     db: db,
     isDefaultDictionary: false,

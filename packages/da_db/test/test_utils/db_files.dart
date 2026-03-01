@@ -1,7 +1,7 @@
 import 'package:archive/archive_io.dart';
 import 'package:da_db/database/da_db.dart';
+import 'package:da_db/parsing/unified_staging_parser.dart';
 import 'package:da_db/parsing/util/db_optimization.dart';
-import 'package:da_db/parsing/yomitan_staging_db_parser.dart';
 import 'package:da_db_shared/da_db_shared.dart';
 import 'package:path/path.dart' as p;
 import 'package:universal_io/io.dart';
@@ -40,7 +40,7 @@ Future<void> partialInit(
 
   print("Setting up test database...");
   Stopwatch s = Stopwatch()..start();
-  Stream<String> parsingProgress = await parseDictionaryDataSource(
+  Stream<String> parsingProgress = await parseDaDbDataSource(
     dataSourcePath: "${d.path}.zip",
     db: db,
     isDefaultDictionary: isDefaultDictionary,

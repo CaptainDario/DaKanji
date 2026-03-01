@@ -29,7 +29,8 @@ class ExampleTextParser implements DbFileParser {
     if (inputBytes.length > 1) {
       try {
         fileMetadata = jsonDecode(utf8.decode(inputBytes[1]));
-      } catch (e) {
+      }
+      catch (e) {
         print("Warning: Failed to parse companion metadata JSON: $e");
       }
     }

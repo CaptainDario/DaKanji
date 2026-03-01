@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:da_db/database/da_db.dart';
-import 'package:da_db/parsing/yomitan_staging_db_parser.dart';
+import 'package:da_db/parsing/unified_staging_parser.dart';
 import 'package:da_db_shared/paths.dart';
 import 'package:test/test.dart';
 
@@ -51,7 +51,7 @@ Future<DaDb> setupFreshDB() async {
   // convert the test files
   Stopwatch s = Stopwatch()..start();
   String dataSourceZipPath = await createTmpZip(Directory(yomitanSampleDictionaryPath));
-  Stream progress = await parseDictionaryDataSource(
+  Stream progress = await parseDaDbDataSource(
     dataSourcePath: dataSourceZipPath,
     db: db,
     isDefaultDictionary: false

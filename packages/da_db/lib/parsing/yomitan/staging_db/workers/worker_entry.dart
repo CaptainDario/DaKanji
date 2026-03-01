@@ -25,9 +25,7 @@ Future<void> workerEntry(SendPort mainSendPort) async {
   StagingDatabase? db;
   LanguageProcessor? lp;
   ProcessorOptions? processorOptions;
-  
-  String? _zipPath;
-  
+  String? zipPath;
   int currentLocalId = 0; 
 
   final List<DbFileParser> parsers = [
@@ -53,7 +51,7 @@ Future<void> workerEntry(SendPort mainSendPort) async {
       
       processorOptions = ProcessorOptions();
 
-      _zipPath = message.zipPath;
+      zipPath = message.zipPath;
       message.replyPort.send(MsgReady(receivePort.sendPort));
     }
     
@@ -66,7 +64,7 @@ Future<void> workerEntry(SendPort mainSendPort) async {
           orElse: () => throw Exception("No parser found for ${message.fileName}")
         );
 
-        final fileHandle = daDbDataSourceIterator(archivePath: _zipPath)
+        final fileHandle = daDbDataSourceIterator(archivePath: zipPath)
           .firstWhereOrNull((f) => f.name == message.fileName);
 
         if (fileHandle == null) throw Exception("File not found");

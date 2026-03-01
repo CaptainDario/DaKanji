@@ -1,7 +1,7 @@
 
 import 'package:da_db/database/audio/audio_entry.dart';
 import 'package:da_db/database/da_db.dart';
-import 'package:da_db/parsing/audio_parser.dart';
+import 'package:da_db/parsing/unified_staging_parser.dart';
 import 'package:da_db_shared/paths.dart';
 import 'package:test/test.dart';
 import 'package:universal_io/io.dart';
@@ -96,7 +96,7 @@ Future<DaDb> setupFreshDB(
   String dataSourceZipPath = await createTmpZip(Directory(dataSourcePath));
   print(dataSourceZipPath);
 
-  Stream importProgress = await parseAudioDataSource(
+  Stream importProgress = await parseDaDbDataSource(
     dataSourcePath: dataSourceZipPath,
     db: db,
     isDefaultDictionary: isDefaultDictionary

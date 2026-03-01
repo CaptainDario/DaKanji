@@ -1,6 +1,5 @@
 
 import 'package:da_db/database/da_db.dart';
-import 'package:da_db/parsing/util/parsing_constants.dart';
 import 'package:da_db/parsing/yomitan/in_memory_cache/audio_source_list/audio_source_list_parser.dart';
 import 'package:da_db_shared/paths.dart';
 import 'package:path/path.dart' as p;
@@ -19,7 +18,7 @@ void main() async {
 
   // convert the test files
   Stopwatch s = Stopwatch()..start();
-  await parseAudioFile(File(p.join(devExampleAudioListPath, "$audioListPrefix.json")), db, 1);
+  await parseAudioFile(File(p.join(devExampleAudioListPath, "audio_list.json")), db, 1);
   //await parseDictionaryFolder(Directory(devExampleAudioPath), db, true);
   print("Conversion took ${s.elapsedMilliseconds} ms");
   

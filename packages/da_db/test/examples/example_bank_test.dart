@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:da_db/database/da_db.dart';
-import 'package:da_db/parsing/example_parser.dart';
+import 'package:da_db/parsing/unified_staging_parser.dart';
 import 'package:da_db_shared/paths.dart';
 import 'package:test/test.dart';
 
@@ -73,7 +73,7 @@ Future<DaDb> setupFreshDB() async {
   Stopwatch s = Stopwatch()..start();
   String dataSourceZipPath = await createTmpZip(Directory(devExampleSentencesPath));
   
-  Stream<String> stream = await parseExampleDataSource(
+  Stream<String> stream = await parseDaDbDataSource(
     dataSourcePath: dataSourceZipPath,
     db: db,
     isDefaultDictionary: true,

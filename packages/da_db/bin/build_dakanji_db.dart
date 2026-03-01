@@ -1,12 +1,10 @@
 import 'dart:async';
 
 import 'package:da_db/database/da_db.dart';
-import 'package:da_db/parsing/audio_parser.dart';
-import 'package:da_db/parsing/example_parser.dart';
 import 'package:da_db/parsing/kanji_vg_parser.dart';
 import 'package:da_db/parsing/radicals_parser.dart';
 import 'package:da_db/parsing/tatoeba_parser.dart';
-import 'package:da_db/parsing/yomitan_staging_db_parser.dart' as staging_parser;
+import 'package:da_db/parsing/unified_staging_parser.dart';
 import 'package:da_db_shared/paths.dart';
 import 'package:language_processing/language_processing.dart';
 import 'package:mecab_for_dart/mecab_dart.dart';
@@ -108,7 +106,7 @@ void main(List<String> args) async {
   //await importRadicals(db);
 
   print("Importing yomitan dicts...");
-  await importYomitanDicts(db,
+  await importDaDbDataSource(db,
     [
       (kanjidic2InputPath, "KanjiDic2"),
       (jpdb2_2InputPath, "JPDB 2.2"),
@@ -119,8 +117,13 @@ void main(List<String> args) async {
 
   if(includeTatoebaExamplesArg){
     print("Adding tatoeba example sentences...");
-    await importTatoebaExamples(db);
+    await importDaDbDataSource(db,
+      [(tatoebaInputZipPath, p.basename(tatoebaInputZipPath))]);
   }
+
+  // import audio data
+  await importDaDbDataSource(db,
+    [(audioInputZipPath, p.basename(audioInputZipPath))]);
 
   exit(0);
 
@@ -211,7 +214,7 @@ Future importRadicals(DaDb db) async {
 }
 
 /// parses the kanjidic2 and adds it to the given [DaDb]
-Future importYomitanDicts(
+Future importDaDbDataSource(
   DaDb db,
   List<(String path, String name)> inputs,
 ) async {
@@ -222,7 +225,7 @@ Future importYomitanDicts(
     
     Stopwatch s = Stopwatch()..start();
     
-    Stream<String> progress = await staging_parser.parseDictionaryDataSource(
+    Stream<String> progress = await parseDaDbDataSource(
       dataSourcePath:  inputs[i].$1,
       db: db,
       isDefaultDictionary: true
@@ -237,37 +240,3 @@ Future importYomitanDicts(
 
 }
 
-/// parses tatoeba and adds it to the given [DaDb]
-Future importTatoebaExamples(DaDb db) async {
-
-  Stopwatch s = Stopwatch()..start();
-  final progress = await parseExampleDataSource(
-    dataSourcePath: tatoebaInputZipPath,
-    db: db,
-    isDefaultDictionary: true
-  );
-
-  await for (final progress in progress) {
-    print(progress);
-  }
-  
-  print("Import Tatoeba took: ${s.elapsedMilliseconds}ms");
-
-}
-
-/// Import the audio data into the given [DaDb]
-Future importPronunciationData(DaDb db) async {
-
-  Stopwatch s = Stopwatch()..start();
-  final progress = await parseAudioDataSource(
-    dataSourcePath: audioInputZipPath,
-    db: db,
-    isDefaultDictionary: true
-  );
-
-  await for (final progress in progress) {
-    print(progress);
-  }
-  print("Importing pronunciation data took: ${s.elapsedMilliseconds}ms");
-
-}

@@ -14,7 +14,7 @@ final List<(String, List<Iso639_3>)> exampleSentencesTestQueries = [
 ];
 
 final dummyIndex = IndexEntry(
-  id: 0, isDefaultDictionary: true, enabled: true, dictionaryType: DictionaryTypes.yomitan, 
+  id: 0, isDefaultDictionary: true, enabled: true, dictionaryType: DictionaryTypes.examples, 
   currentSortingOrder: 0, currentFrequencyDictionary: false, title: "Test Example Dictionary", 
   revision: "2024-01-01", format: 3, sequenced: true, author: "Test Author", 
   description: "A dictionary for testing the example parser.",
