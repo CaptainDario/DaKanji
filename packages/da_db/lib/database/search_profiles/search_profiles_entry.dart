@@ -173,9 +173,9 @@ abstract class SearchProfilesEntry with _$SearchProfilesEntry {
       spellfixMaxResults: spellfixMaxResults,
       limit: searchResultLimit,
       offset: offset,
-      options: ProcessorOptions(
-        japaneseNormalizationConvertsRomajiToHiragana: normalizeSearchConvertsRomajiToHiragana,
-      )
+      options: ProcessorOptions(japaneseOptions: JapaneseProcessorOptions(
+        normalizationConvertsRomajiToHiragana: normalizeSearchConvertsRomajiToHiragana,
+      ))
     );
   }
 

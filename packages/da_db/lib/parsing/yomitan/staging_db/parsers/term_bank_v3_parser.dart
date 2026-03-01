@@ -53,7 +53,7 @@ class TermBankV3Parser implements DbFileParser {
       String? termNormalized = lp.normalize(term, options).firstOrNull;
       if (termNormalized == term) termNormalized = null;
       
-      String? termTokens = lp.tokenize(term);
+      String? termTokens = lp.parse(term, const ProcessorOptions())?.tokens.nonNulls.join(" ");
       String? termTokensNormalized;
       if (termTokens != null) {
         termTokensNormalized = lp.normalize(termTokens, options).firstOrNull;

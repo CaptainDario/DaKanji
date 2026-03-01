@@ -51,12 +51,10 @@ class TermMetaBankV3Parser implements DbFileParser {
       String? termNormalized = lp.normalize(term, options).firstOrNull;
       if (termNormalized == term) termNormalized = null;
 
-      String? termTokens = lp.tokenize(term);
+      String? termTokens = lp.parse(term, const ProcessorOptions()).tokens.nonNulls.join(" ");
       String? termTokensNormalized;
-      if (termTokens != null) {
-        termTokensNormalized = lp.normalize(termTokens, options).firstOrNull;
-        if (termTokensNormalized == termTokens) termTokensNormalized = null;
-      }
+      termTokensNormalized = lp.normalize(termTokens, options).firstOrNull;
+      if (termTokensNormalized == termTokens) termTokensNormalized = null;
 
       String? reading;
       String? readingNormalized;

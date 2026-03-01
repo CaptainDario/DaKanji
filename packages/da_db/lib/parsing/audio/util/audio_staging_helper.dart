@@ -45,7 +45,7 @@ class AudioStagingHelper {
       String? termNormalized = lp.normalize(term, const ProcessorOptions()).firstOrNull;
       if (termNormalized == term) termNormalized = null;
 
-      String? termTokens = lp.tokenize(term);
+      String? termTokens = lp.parse(term, const ProcessorOptions())?.segments.nonNulls.join(" ");
       String? termTokensNormalized;
       if (termTokens != null) {
         termTokensNormalized = lp.normalize(termTokens, const ProcessorOptions()).firstOrNull;
