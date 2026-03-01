@@ -45,12 +45,10 @@ class AudioStagingHelper {
       String? termNormalized = lp.normalize(term, const ProcessorOptions()).firstOrNull;
       if (termNormalized == term) termNormalized = null;
 
-      String? termTokens = lp.parse(term, const ProcessorOptions())?.segments.nonNulls.join(" ");
+      String? termTokens = lp.parse(term, const ProcessorOptions()).segments.nonNulls.join(" ");
       String? termTokensNormalized;
-      if (termTokens != null) {
-        termTokensNormalized = lp.normalize(termTokens, const ProcessorOptions()).firstOrNull;
-        if (termTokensNormalized == termTokens) termTokensNormalized = null;
-      }
+      termTokensNormalized = lp.normalize(termTokens, const ProcessorOptions()).firstOrNull;
+      if (termTokensNormalized == termTokens) termTokensNormalized = null;
 
       _audioRows.add(AudioStagingTableCompanion(
         term: Value(term),

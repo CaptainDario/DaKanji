@@ -1,4 +1,5 @@
 
+import "package:collection/collection.dart";
 import "package:drift/drift.dart";
 
 import "/database/radicals/radical_relation_tables.dart";
@@ -34,7 +35,10 @@ class RadicalDao extends DatabaseAccessor<DaDb> with _$RadicalDaoMixin {
           radicalXKanjiRelationsTable.radicalId.equalsExp(radicalsTable.id)
         ),
       ])
-      ..where(db.kanjiTable.kanji.equals(kanji));
+      ..where(db.kanjiTable.kanji.equals(kanji))
+      ..orderBy([
+        OrderingTerm.asc(radicalsTable.strokeCount),
+      ]);
 
     // Map the results to get only the radical characters
     final result = await query.map((row) {
@@ -79,7 +83,7 @@ class RadicalDao extends DatabaseAccessor<DaDb> with _$RadicalDaoMixin {
       .map((e) => e.read(kanjiTable.kanji)!,)
       .toList();
 
-    return results;
+    return results.sorted();
 
   }
 

@@ -5,8 +5,8 @@ import 'package:tuple/tuple.dart';
 /// result
 List<Tuple2<String, List<String>>> radicalLookuptests = [
   Tuple2("丂", ["一", "勹"]),
-  Tuple2("漢", ["⺡", "⺾", "口", "一", "大", "二"]),
-  Tuple2("鬱", ["缶", "木", "冖", "凵", "匕", "彡", "鬯"]),
+  Tuple2("漢", ['一', '二', '口', '大', '⺡', '⺾']),
+  Tuple2("鬱", ['冖', '凵', '匕', '彡', '木', '缶', '鬯']),
   Tuple2("暚", ["凵", "山", "日", "曰", "爪", "缶"]),
 ];
 

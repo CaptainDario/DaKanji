@@ -43,7 +43,7 @@ final mecabDicPath = p.joinAll([mecabFilesPath, "unidic"]);
 final String daDbRootPath = p.join(monoRepoRoot, "packages", "da_db");
 
 /// path to the tests folder
-final coreTestsPath = p.joinAll([daDbDataFilesPath, "test"]);
+final coreTestsPath = p.joinAll([daDbRootPath, "test"]);
 
 /// the tmp path of the project
 final String tmpPath = p.joinAll([daDbRootPath, "tmp"]);
