@@ -6,7 +6,7 @@ import 'package:language_processing/src/japanese/yomitan_deconjugation/language_
 import 'package:test/test.dart';
 
 // Import the externally defined test cases
-import 'yomitan_conjugate_test_cases.dart';
+import 'yomitan_deconjugate_test_cases.dart';
 
 /// A data class to hold test case data for better type safety.
 class DeconjugationTestCase {
