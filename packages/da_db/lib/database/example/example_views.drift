@@ -18,7 +18,6 @@ CREATE VIEW example_entry_view AS
     
     -- 3. Sentence Data
     s.example_sentence,
-    s.example_sentence_reading,
     l.language_code,
 
     -- 4. Aggregated Tags Array

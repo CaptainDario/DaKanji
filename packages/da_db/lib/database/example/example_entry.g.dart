@@ -12,7 +12,6 @@ ExampleEntry _$ExampleEntryFromJson(Map<String, dynamic> json) => ExampleEntry(
   groupId: (json['groupId'] as num).toInt(),
   languageCode: json['languageCode'] as String,
   sentence: json['sentence'] as String,
-  reading: json['reading'] as String?,
   tags:
       (json['tags'] as List<dynamic>?)
           ?.map((e) => TagBankV3Entry.fromJson(e as Map<String, dynamic>))
@@ -37,7 +36,6 @@ Map<String, dynamic> _$ExampleEntryToJson(ExampleEntry instance) =>
       'groupId': instance.groupId,
       'languageCode': instance.languageCode,
       'sentence': instance.sentence,
-      'reading': instance.reading,
       'tags': instance.tags,
       'stats': instance.stats,
       'audios': instance.audios,

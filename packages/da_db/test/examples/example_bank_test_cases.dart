@@ -30,7 +30,7 @@ final List<List<ExampleEntry>> exampleSentenceTestExpectedValues = [
   [
     ExampleEntry(
       id: 0, indexEntry: dummyIndex, groupId: 100,
-      sentence: "リンゴを食べます", reading: "りんごをたべます", languageCode: "jpn",
+      sentence: "リンゴを食べます", languageCode: "jpn",
       tags: [
         // Sorted alphabetically: f -> l -> t, populated with real tag_bank metadata!
         expectedTag("fruit", "category", 1, "Food related examples"),
@@ -70,7 +70,6 @@ final List<List<ExampleEntry>> exampleSentenceTestExpectedValues = [
     ExampleEntry(
       id: 0, indexEntry: dummyIndex, groupId: 101,
       sentence: "犬が走る", 
-      reading: null, 
       languageCode: "jpn",
       tags: [], stats: [], audios: [],
     )
@@ -80,7 +79,7 @@ final List<List<ExampleEntry>> exampleSentenceTestExpectedValues = [
   [
     ExampleEntry(
       id: 0, indexEntry: dummyIndex, groupId: 102,
-      sentence: "猫が寝る", reading: "ねこがねる", languageCode: "jpn",
+      sentence: "猫が寝る", languageCode: "jpn",
       tags: [], 
       stats: [const StatEntry(statName: "quality", value: 3.5)],
       audios: [
@@ -100,7 +99,6 @@ final List<List<ExampleEntry>> exampleSentenceTestExpectedValues = [
     ExampleEntry(
       id: 0, indexEntry: dummyIndex, groupId: 103,
       sentence: "I eat apples.", 
-      reading: null, 
       languageCode: "eng",
       tags: [], 
       stats: [const StatEntry(statName: "quality", value: 4.5)], 

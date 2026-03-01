@@ -6459,17 +6459,6 @@ class $ExampleStagingTableTable extends ExampleStagingTable
     type: DriftSqlType.string,
     requiredDuringInsert: true,
   );
-  static const VerificationMeta _exampleSentenceReadingMeta =
-      const VerificationMeta('exampleSentenceReading');
-  @override
-  late final GeneratedColumn<String> exampleSentenceReading =
-      GeneratedColumn<String>(
-        'example_sentence_reading',
-        aliasedName,
-        true,
-        type: DriftSqlType.string,
-        requiredDuringInsert: false,
-      );
   static const VerificationMeta _exampleSentenceTokenizedMeta =
       const VerificationMeta('exampleSentenceTokenized');
   @override
@@ -6487,7 +6476,6 @@ class $ExampleStagingTableTable extends ExampleStagingTable
     groupId,
     languageCode,
     exampleSentence,
-    exampleSentenceReading,
     exampleSentenceTokenized,
   ];
   @override
@@ -6538,15 +6526,6 @@ class $ExampleStagingTableTable extends ExampleStagingTable
     } else if (isInserting) {
       context.missing(_exampleSentenceMeta);
     }
-    if (data.containsKey('example_sentence_reading')) {
-      context.handle(
-        _exampleSentenceReadingMeta,
-        exampleSentenceReading.isAcceptableOrUnknown(
-          data['example_sentence_reading']!,
-          _exampleSentenceReadingMeta,
-        ),
-      );
-    }
     if (data.containsKey('example_sentence_tokenized')) {
       context.handle(
         _exampleSentenceTokenizedMeta,
@@ -6586,10 +6565,6 @@ class $ExampleStagingTableTable extends ExampleStagingTable
         DriftSqlType.string,
         data['${effectivePrefix}example_sentence'],
       )!,
-      exampleSentenceReading: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}example_sentence_reading'],
-      ),
       exampleSentenceTokenized: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}example_sentence_tokenized'],
@@ -6610,14 +6585,12 @@ class ExampleStagingTableData extends DataClass
   final int groupId;
   final String languageCode;
   final String exampleSentence;
-  final String? exampleSentenceReading;
   final String exampleSentenceTokenized;
   const ExampleStagingTableData({
     required this.localId,
     required this.groupId,
     required this.languageCode,
     required this.exampleSentence,
-    this.exampleSentenceReading,
     required this.exampleSentenceTokenized,
   });
   @override
@@ -6627,11 +6600,6 @@ class ExampleStagingTableData extends DataClass
     map['group_id'] = Variable<int>(groupId);
     map['language_code'] = Variable<String>(languageCode);
     map['example_sentence'] = Variable<String>(exampleSentence);
-    if (!nullToAbsent || exampleSentenceReading != null) {
-      map['example_sentence_reading'] = Variable<String>(
-        exampleSentenceReading,
-      );
-    }
     map['example_sentence_tokenized'] = Variable<String>(
       exampleSentenceTokenized,
     );
@@ -6644,9 +6612,6 @@ class ExampleStagingTableData extends DataClass
       groupId: Value(groupId),
       languageCode: Value(languageCode),
       exampleSentence: Value(exampleSentence),
-      exampleSentenceReading: exampleSentenceReading == null && nullToAbsent
-          ? const Value.absent()
-          : Value(exampleSentenceReading),
       exampleSentenceTokenized: Value(exampleSentenceTokenized),
     );
   }
@@ -6661,9 +6626,6 @@ class ExampleStagingTableData extends DataClass
       groupId: serializer.fromJson<int>(json['groupId']),
       languageCode: serializer.fromJson<String>(json['languageCode']),
       exampleSentence: serializer.fromJson<String>(json['exampleSentence']),
-      exampleSentenceReading: serializer.fromJson<String?>(
-        json['exampleSentenceReading'],
-      ),
       exampleSentenceTokenized: serializer.fromJson<String>(
         json['exampleSentenceTokenized'],
       ),
@@ -6677,9 +6639,6 @@ class ExampleStagingTableData extends DataClass
       'groupId': serializer.toJson<int>(groupId),
       'languageCode': serializer.toJson<String>(languageCode),
       'exampleSentence': serializer.toJson<String>(exampleSentence),
-      'exampleSentenceReading': serializer.toJson<String?>(
-        exampleSentenceReading,
-      ),
       'exampleSentenceTokenized': serializer.toJson<String>(
         exampleSentenceTokenized,
       ),
@@ -6691,16 +6650,12 @@ class ExampleStagingTableData extends DataClass
     int? groupId,
     String? languageCode,
     String? exampleSentence,
-    Value<String?> exampleSentenceReading = const Value.absent(),
     String? exampleSentenceTokenized,
   }) => ExampleStagingTableData(
     localId: localId ?? this.localId,
     groupId: groupId ?? this.groupId,
     languageCode: languageCode ?? this.languageCode,
     exampleSentence: exampleSentence ?? this.exampleSentence,
-    exampleSentenceReading: exampleSentenceReading.present
-        ? exampleSentenceReading.value
-        : this.exampleSentenceReading,
     exampleSentenceTokenized:
         exampleSentenceTokenized ?? this.exampleSentenceTokenized,
   );
@@ -6714,9 +6669,6 @@ class ExampleStagingTableData extends DataClass
       exampleSentence: data.exampleSentence.present
           ? data.exampleSentence.value
           : this.exampleSentence,
-      exampleSentenceReading: data.exampleSentenceReading.present
-          ? data.exampleSentenceReading.value
-          : this.exampleSentenceReading,
       exampleSentenceTokenized: data.exampleSentenceTokenized.present
           ? data.exampleSentenceTokenized.value
           : this.exampleSentenceTokenized,
@@ -6730,7 +6682,6 @@ class ExampleStagingTableData extends DataClass
           ..write('groupId: $groupId, ')
           ..write('languageCode: $languageCode, ')
           ..write('exampleSentence: $exampleSentence, ')
-          ..write('exampleSentenceReading: $exampleSentenceReading, ')
           ..write('exampleSentenceTokenized: $exampleSentenceTokenized')
           ..write(')'))
         .toString();
@@ -6742,7 +6693,6 @@ class ExampleStagingTableData extends DataClass
     groupId,
     languageCode,
     exampleSentence,
-    exampleSentenceReading,
     exampleSentenceTokenized,
   );
   @override
@@ -6753,7 +6703,6 @@ class ExampleStagingTableData extends DataClass
           other.groupId == this.groupId &&
           other.languageCode == this.languageCode &&
           other.exampleSentence == this.exampleSentence &&
-          other.exampleSentenceReading == this.exampleSentenceReading &&
           other.exampleSentenceTokenized == this.exampleSentenceTokenized);
 }
 
@@ -6763,14 +6712,12 @@ class ExampleStagingTableCompanion
   final Value<int> groupId;
   final Value<String> languageCode;
   final Value<String> exampleSentence;
-  final Value<String?> exampleSentenceReading;
   final Value<String> exampleSentenceTokenized;
   const ExampleStagingTableCompanion({
     this.localId = const Value.absent(),
     this.groupId = const Value.absent(),
     this.languageCode = const Value.absent(),
     this.exampleSentence = const Value.absent(),
-    this.exampleSentenceReading = const Value.absent(),
     this.exampleSentenceTokenized = const Value.absent(),
   });
   ExampleStagingTableCompanion.insert({
@@ -6778,7 +6725,6 @@ class ExampleStagingTableCompanion
     required int groupId,
     required String languageCode,
     required String exampleSentence,
-    this.exampleSentenceReading = const Value.absent(),
     required String exampleSentenceTokenized,
   }) : groupId = Value(groupId),
        languageCode = Value(languageCode),
@@ -6789,7 +6735,6 @@ class ExampleStagingTableCompanion
     Expression<int>? groupId,
     Expression<String>? languageCode,
     Expression<String>? exampleSentence,
-    Expression<String>? exampleSentenceReading,
     Expression<String>? exampleSentenceTokenized,
   }) {
     return RawValuesInsertable({
@@ -6797,8 +6742,6 @@ class ExampleStagingTableCompanion
       if (groupId != null) 'group_id': groupId,
       if (languageCode != null) 'language_code': languageCode,
       if (exampleSentence != null) 'example_sentence': exampleSentence,
-      if (exampleSentenceReading != null)
-        'example_sentence_reading': exampleSentenceReading,
       if (exampleSentenceTokenized != null)
         'example_sentence_tokenized': exampleSentenceTokenized,
     });
@@ -6809,7 +6752,6 @@ class ExampleStagingTableCompanion
     Value<int>? groupId,
     Value<String>? languageCode,
     Value<String>? exampleSentence,
-    Value<String?>? exampleSentenceReading,
     Value<String>? exampleSentenceTokenized,
   }) {
     return ExampleStagingTableCompanion(
@@ -6817,8 +6759,6 @@ class ExampleStagingTableCompanion
       groupId: groupId ?? this.groupId,
       languageCode: languageCode ?? this.languageCode,
       exampleSentence: exampleSentence ?? this.exampleSentence,
-      exampleSentenceReading:
-          exampleSentenceReading ?? this.exampleSentenceReading,
       exampleSentenceTokenized:
           exampleSentenceTokenized ?? this.exampleSentenceTokenized,
     );
@@ -6839,11 +6779,6 @@ class ExampleStagingTableCompanion
     if (exampleSentence.present) {
       map['example_sentence'] = Variable<String>(exampleSentence.value);
     }
-    if (exampleSentenceReading.present) {
-      map['example_sentence_reading'] = Variable<String>(
-        exampleSentenceReading.value,
-      );
-    }
     if (exampleSentenceTokenized.present) {
       map['example_sentence_tokenized'] = Variable<String>(
         exampleSentenceTokenized.value,
@@ -6859,7 +6794,6 @@ class ExampleStagingTableCompanion
           ..write('groupId: $groupId, ')
           ..write('languageCode: $languageCode, ')
           ..write('exampleSentence: $exampleSentence, ')
-          ..write('exampleSentenceReading: $exampleSentenceReading, ')
           ..write('exampleSentenceTokenized: $exampleSentenceTokenized')
           ..write(')'))
         .toString();
@@ -12438,7 +12372,6 @@ typedef $$ExampleStagingTableTableCreateCompanionBuilder =
       required int groupId,
       required String languageCode,
       required String exampleSentence,
-      Value<String?> exampleSentenceReading,
       required String exampleSentenceTokenized,
     });
 typedef $$ExampleStagingTableTableUpdateCompanionBuilder =
@@ -12447,7 +12380,6 @@ typedef $$ExampleStagingTableTableUpdateCompanionBuilder =
       Value<int> groupId,
       Value<String> languageCode,
       Value<String> exampleSentence,
-      Value<String?> exampleSentenceReading,
       Value<String> exampleSentenceTokenized,
     });
 
@@ -12477,11 +12409,6 @@ class $$ExampleStagingTableTableFilterComposer
 
   ColumnFilters<String> get exampleSentence => $composableBuilder(
     column: $table.exampleSentence,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<String> get exampleSentenceReading => $composableBuilder(
-    column: $table.exampleSentenceReading,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -12520,11 +12447,6 @@ class $$ExampleStagingTableTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<String> get exampleSentenceReading => $composableBuilder(
-    column: $table.exampleSentenceReading,
-    builder: (column) => ColumnOrderings(column),
-  );
-
   ColumnOrderings<String> get exampleSentenceTokenized => $composableBuilder(
     column: $table.exampleSentenceTokenized,
     builder: (column) => ColumnOrderings(column),
@@ -12553,11 +12475,6 @@ class $$ExampleStagingTableTableAnnotationComposer
 
   GeneratedColumn<String> get exampleSentence => $composableBuilder(
     column: $table.exampleSentence,
-    builder: (column) => column,
-  );
-
-  GeneratedColumn<String> get exampleSentenceReading => $composableBuilder(
-    column: $table.exampleSentenceReading,
     builder: (column) => column,
   );
 
@@ -12614,14 +12531,12 @@ class $$ExampleStagingTableTableTableManager
                 Value<int> groupId = const Value.absent(),
                 Value<String> languageCode = const Value.absent(),
                 Value<String> exampleSentence = const Value.absent(),
-                Value<String?> exampleSentenceReading = const Value.absent(),
                 Value<String> exampleSentenceTokenized = const Value.absent(),
               }) => ExampleStagingTableCompanion(
                 localId: localId,
                 groupId: groupId,
                 languageCode: languageCode,
                 exampleSentence: exampleSentence,
-                exampleSentenceReading: exampleSentenceReading,
                 exampleSentenceTokenized: exampleSentenceTokenized,
               ),
           createCompanionCallback:
@@ -12630,14 +12545,12 @@ class $$ExampleStagingTableTableTableManager
                 required int groupId,
                 required String languageCode,
                 required String exampleSentence,
-                Value<String?> exampleSentenceReading = const Value.absent(),
                 required String exampleSentenceTokenized,
               }) => ExampleStagingTableCompanion.insert(
                 localId: localId,
                 groupId: groupId,
                 languageCode: languageCode,
                 exampleSentence: exampleSentence,
-                exampleSentenceReading: exampleSentenceReading,
                 exampleSentenceTokenized: exampleSentenceTokenized,
               ),
           withReferenceMapper: (p0) => p0

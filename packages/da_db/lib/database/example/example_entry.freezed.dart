@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$ExampleEntry {
 
- int get id; IndexEntry get indexEntry; int get groupId; String get languageCode; String get sentence; String? get reading; List<TagBankV3Entry> get tags; List<StatEntry> get stats; List<ExampleAudioEntry> get audios;
+ int get id; IndexEntry get indexEntry; int get groupId; String get languageCode; String get sentence; List<TagBankV3Entry> get tags; List<StatEntry> get stats; List<ExampleAudioEntry> get audios;
 /// Create a copy of ExampleEntry
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -26,16 +26,16 @@ $ExampleEntryCopyWith<ExampleEntry> get copyWith => _$ExampleEntryCopyWithImpl<E
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ExampleEntry&&(identical(other.id, id) || other.id == id)&&(identical(other.indexEntry, indexEntry) || other.indexEntry == indexEntry)&&(identical(other.groupId, groupId) || other.groupId == groupId)&&(identical(other.languageCode, languageCode) || other.languageCode == languageCode)&&(identical(other.sentence, sentence) || other.sentence == sentence)&&(identical(other.reading, reading) || other.reading == reading)&&const DeepCollectionEquality().equals(other.tags, tags)&&const DeepCollectionEquality().equals(other.stats, stats)&&const DeepCollectionEquality().equals(other.audios, audios));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ExampleEntry&&(identical(other.id, id) || other.id == id)&&(identical(other.indexEntry, indexEntry) || other.indexEntry == indexEntry)&&(identical(other.groupId, groupId) || other.groupId == groupId)&&(identical(other.languageCode, languageCode) || other.languageCode == languageCode)&&(identical(other.sentence, sentence) || other.sentence == sentence)&&const DeepCollectionEquality().equals(other.tags, tags)&&const DeepCollectionEquality().equals(other.stats, stats)&&const DeepCollectionEquality().equals(other.audios, audios));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,indexEntry,groupId,languageCode,sentence,reading,const DeepCollectionEquality().hash(tags),const DeepCollectionEquality().hash(stats),const DeepCollectionEquality().hash(audios));
+int get hashCode => Object.hash(runtimeType,id,indexEntry,groupId,languageCode,sentence,const DeepCollectionEquality().hash(tags),const DeepCollectionEquality().hash(stats),const DeepCollectionEquality().hash(audios));
 
 @override
 String toString() {
-  return 'ExampleEntry(id: $id, indexEntry: $indexEntry, groupId: $groupId, languageCode: $languageCode, sentence: $sentence, reading: $reading, tags: $tags, stats: $stats, audios: $audios)';
+  return 'ExampleEntry(id: $id, indexEntry: $indexEntry, groupId: $groupId, languageCode: $languageCode, sentence: $sentence, tags: $tags, stats: $stats, audios: $audios)';
 }
 
 
@@ -46,7 +46,7 @@ abstract mixin class $ExampleEntryCopyWith<$Res>  {
   factory $ExampleEntryCopyWith(ExampleEntry value, $Res Function(ExampleEntry) _then) = _$ExampleEntryCopyWithImpl;
 @useResult
 $Res call({
- int id, IndexEntry indexEntry, int groupId, String languageCode, String sentence, String? reading, List<TagBankV3Entry> tags, List<StatEntry> stats, List<ExampleAudioEntry> audios
+ int id, IndexEntry indexEntry, int groupId, String languageCode, String sentence, List<TagBankV3Entry> tags, List<StatEntry> stats, List<ExampleAudioEntry> audios
 });
 
 
@@ -63,15 +63,14 @@ class _$ExampleEntryCopyWithImpl<$Res>
 
 /// Create a copy of ExampleEntry
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? indexEntry = null,Object? groupId = null,Object? languageCode = null,Object? sentence = null,Object? reading = freezed,Object? tags = null,Object? stats = null,Object? audios = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? indexEntry = null,Object? groupId = null,Object? languageCode = null,Object? sentence = null,Object? tags = null,Object? stats = null,Object? audios = null,}) {
   return _then(ExampleEntry(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,indexEntry: null == indexEntry ? _self.indexEntry : indexEntry // ignore: cast_nullable_to_non_nullable
 as IndexEntry,groupId: null == groupId ? _self.groupId : groupId // ignore: cast_nullable_to_non_nullable
 as int,languageCode: null == languageCode ? _self.languageCode : languageCode // ignore: cast_nullable_to_non_nullable
 as String,sentence: null == sentence ? _self.sentence : sentence // ignore: cast_nullable_to_non_nullable
-as String,reading: freezed == reading ? _self.reading : reading // ignore: cast_nullable_to_non_nullable
-as String?,tags: null == tags ? _self.tags : tags // ignore: cast_nullable_to_non_nullable
+as String,tags: null == tags ? _self.tags : tags // ignore: cast_nullable_to_non_nullable
 as List<TagBankV3Entry>,stats: null == stats ? _self.stats : stats // ignore: cast_nullable_to_non_nullable
 as List<StatEntry>,audios: null == audios ? _self.audios : audios // ignore: cast_nullable_to_non_nullable
 as List<ExampleAudioEntry>,

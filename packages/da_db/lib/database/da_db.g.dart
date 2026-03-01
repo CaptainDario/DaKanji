@@ -14443,23 +14443,8 @@ class $ExampleSentenceTableTable extends ExampleSentenceTable
     type: DriftSqlType.string,
     requiredDuringInsert: true,
   );
-  static const VerificationMeta _exampleSentenceReadingMeta =
-      const VerificationMeta('exampleSentenceReading');
   @override
-  late final GeneratedColumn<String> exampleSentenceReading =
-      GeneratedColumn<String>(
-        'example_sentence_reading',
-        aliasedName,
-        true,
-        type: DriftSqlType.string,
-        requiredDuringInsert: false,
-      );
-  @override
-  List<GeneratedColumn> get $columns => [
-    id,
-    exampleSentence,
-    exampleSentenceReading,
-  ];
+  List<GeneratedColumn> get $columns => [id, exampleSentence];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -14486,15 +14471,6 @@ class $ExampleSentenceTableTable extends ExampleSentenceTable
     } else if (isInserting) {
       context.missing(_exampleSentenceMeta);
     }
-    if (data.containsKey('example_sentence_reading')) {
-      context.handle(
-        _exampleSentenceReadingMeta,
-        exampleSentenceReading.isAcceptableOrUnknown(
-          data['example_sentence_reading']!,
-          _exampleSentenceReadingMeta,
-        ),
-      );
-    }
     return context;
   }
 
@@ -14515,10 +14491,6 @@ class $ExampleSentenceTableTable extends ExampleSentenceTable
         DriftSqlType.string,
         data['${effectivePrefix}example_sentence'],
       )!,
-      exampleSentenceReading: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}example_sentence_reading'],
-      ),
     );
   }
 
@@ -14535,24 +14507,15 @@ class ExampleSentenceTableData extends DataClass
 
   /// the example of this entry
   final String exampleSentence;
-
-  /// the example's reading
-  final String? exampleSentenceReading;
   const ExampleSentenceTableData({
     required this.id,
     required this.exampleSentence,
-    this.exampleSentenceReading,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
     map['example_sentence'] = Variable<String>(exampleSentence);
-    if (!nullToAbsent || exampleSentenceReading != null) {
-      map['example_sentence_reading'] = Variable<String>(
-        exampleSentenceReading,
-      );
-    }
     return map;
   }
 
@@ -14560,9 +14523,6 @@ class ExampleSentenceTableData extends DataClass
     return ExampleSentenceTableCompanion(
       id: Value(id),
       exampleSentence: Value(exampleSentence),
-      exampleSentenceReading: exampleSentenceReading == null && nullToAbsent
-          ? const Value.absent()
-          : Value(exampleSentenceReading),
     );
   }
 
@@ -14574,9 +14534,6 @@ class ExampleSentenceTableData extends DataClass
     return ExampleSentenceTableData(
       id: serializer.fromJson<int>(json['id']),
       exampleSentence: serializer.fromJson<String>(json['exampleSentence']),
-      exampleSentenceReading: serializer.fromJson<String?>(
-        json['exampleSentenceReading'],
-      ),
     );
   }
   @override
@@ -14585,23 +14542,14 @@ class ExampleSentenceTableData extends DataClass
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
       'exampleSentence': serializer.toJson<String>(exampleSentence),
-      'exampleSentenceReading': serializer.toJson<String?>(
-        exampleSentenceReading,
-      ),
     };
   }
 
-  ExampleSentenceTableData copyWith({
-    int? id,
-    String? exampleSentence,
-    Value<String?> exampleSentenceReading = const Value.absent(),
-  }) => ExampleSentenceTableData(
-    id: id ?? this.id,
-    exampleSentence: exampleSentence ?? this.exampleSentence,
-    exampleSentenceReading: exampleSentenceReading.present
-        ? exampleSentenceReading.value
-        : this.exampleSentenceReading,
-  );
+  ExampleSentenceTableData copyWith({int? id, String? exampleSentence}) =>
+      ExampleSentenceTableData(
+        id: id ?? this.id,
+        exampleSentence: exampleSentence ?? this.exampleSentence,
+      );
   ExampleSentenceTableData copyWithCompanion(
     ExampleSentenceTableCompanion data,
   ) {
@@ -14610,9 +14558,6 @@ class ExampleSentenceTableData extends DataClass
       exampleSentence: data.exampleSentence.present
           ? data.exampleSentence.value
           : this.exampleSentence,
-      exampleSentenceReading: data.exampleSentenceReading.present
-          ? data.exampleSentenceReading.value
-          : this.exampleSentenceReading,
     );
   }
 
@@ -14620,61 +14565,50 @@ class ExampleSentenceTableData extends DataClass
   String toString() {
     return (StringBuffer('ExampleSentenceTableData(')
           ..write('id: $id, ')
-          ..write('exampleSentence: $exampleSentence, ')
-          ..write('exampleSentenceReading: $exampleSentenceReading')
+          ..write('exampleSentence: $exampleSentence')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(id, exampleSentence, exampleSentenceReading);
+  int get hashCode => Object.hash(id, exampleSentence);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is ExampleSentenceTableData &&
           other.id == this.id &&
-          other.exampleSentence == this.exampleSentence &&
-          other.exampleSentenceReading == this.exampleSentenceReading);
+          other.exampleSentence == this.exampleSentence);
 }
 
 class ExampleSentenceTableCompanion
     extends UpdateCompanion<ExampleSentenceTableData> {
   final Value<int> id;
   final Value<String> exampleSentence;
-  final Value<String?> exampleSentenceReading;
   const ExampleSentenceTableCompanion({
     this.id = const Value.absent(),
     this.exampleSentence = const Value.absent(),
-    this.exampleSentenceReading = const Value.absent(),
   });
   ExampleSentenceTableCompanion.insert({
     this.id = const Value.absent(),
     required String exampleSentence,
-    this.exampleSentenceReading = const Value.absent(),
   }) : exampleSentence = Value(exampleSentence);
   static Insertable<ExampleSentenceTableData> custom({
     Expression<int>? id,
     Expression<String>? exampleSentence,
-    Expression<String>? exampleSentenceReading,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
       if (exampleSentence != null) 'example_sentence': exampleSentence,
-      if (exampleSentenceReading != null)
-        'example_sentence_reading': exampleSentenceReading,
     });
   }
 
   ExampleSentenceTableCompanion copyWith({
     Value<int>? id,
     Value<String>? exampleSentence,
-    Value<String?>? exampleSentenceReading,
   }) {
     return ExampleSentenceTableCompanion(
       id: id ?? this.id,
       exampleSentence: exampleSentence ?? this.exampleSentence,
-      exampleSentenceReading:
-          exampleSentenceReading ?? this.exampleSentenceReading,
     );
   }
 
@@ -14687,11 +14621,6 @@ class ExampleSentenceTableCompanion
     if (exampleSentence.present) {
       map['example_sentence'] = Variable<String>(exampleSentence.value);
     }
-    if (exampleSentenceReading.present) {
-      map['example_sentence_reading'] = Variable<String>(
-        exampleSentenceReading.value,
-      );
-    }
     return map;
   }
 
@@ -14699,8 +14628,7 @@ class ExampleSentenceTableCompanion
   String toString() {
     return (StringBuffer('ExampleSentenceTableCompanion(')
           ..write('id: $id, ')
-          ..write('exampleSentence: $exampleSentence, ')
-          ..write('exampleSentenceReading: $exampleSentenceReading')
+          ..write('exampleSentence: $exampleSentence')
           ..write(')'))
         .toString();
   }
@@ -17314,7 +17242,6 @@ class ExampleEntryViewData extends DataClass {
   final int groupId;
   final String index;
   final String exampleSentence;
-  final String? exampleSentenceReading;
   final String languageCode;
   final String tagsJson;
   final String statsJson;
@@ -17324,7 +17251,6 @@ class ExampleEntryViewData extends DataClass {
     required this.groupId,
     required this.index,
     required this.exampleSentence,
-    this.exampleSentenceReading,
     required this.languageCode,
     required this.tagsJson,
     required this.statsJson,
@@ -17340,9 +17266,6 @@ class ExampleEntryViewData extends DataClass {
       groupId: serializer.fromJson<int>(json['group_id']),
       index: serializer.fromJson<String>(json['index']),
       exampleSentence: serializer.fromJson<String>(json['example_sentence']),
-      exampleSentenceReading: serializer.fromJson<String?>(
-        json['example_sentence_reading'],
-      ),
       languageCode: serializer.fromJson<String>(json['language_code']),
       tagsJson: serializer.fromJson<String>(json['tags_json']),
       statsJson: serializer.fromJson<String>(json['stats_json']),
@@ -17357,9 +17280,6 @@ class ExampleEntryViewData extends DataClass {
       'group_id': serializer.toJson<int>(groupId),
       'index': serializer.toJson<String>(index),
       'example_sentence': serializer.toJson<String>(exampleSentence),
-      'example_sentence_reading': serializer.toJson<String?>(
-        exampleSentenceReading,
-      ),
       'language_code': serializer.toJson<String>(languageCode),
       'tags_json': serializer.toJson<String>(tagsJson),
       'stats_json': serializer.toJson<String>(statsJson),
@@ -17372,7 +17292,6 @@ class ExampleEntryViewData extends DataClass {
     int? groupId,
     String? index,
     String? exampleSentence,
-    Value<String?> exampleSentenceReading = const Value.absent(),
     String? languageCode,
     String? tagsJson,
     String? statsJson,
@@ -17382,9 +17301,6 @@ class ExampleEntryViewData extends DataClass {
     groupId: groupId ?? this.groupId,
     index: index ?? this.index,
     exampleSentence: exampleSentence ?? this.exampleSentence,
-    exampleSentenceReading: exampleSentenceReading.present
-        ? exampleSentenceReading.value
-        : this.exampleSentenceReading,
     languageCode: languageCode ?? this.languageCode,
     tagsJson: tagsJson ?? this.tagsJson,
     statsJson: statsJson ?? this.statsJson,
@@ -17397,7 +17313,6 @@ class ExampleEntryViewData extends DataClass {
           ..write('groupId: $groupId, ')
           ..write('index: $index, ')
           ..write('exampleSentence: $exampleSentence, ')
-          ..write('exampleSentenceReading: $exampleSentenceReading, ')
           ..write('languageCode: $languageCode, ')
           ..write('tagsJson: $tagsJson, ')
           ..write('statsJson: $statsJson, ')
@@ -17412,7 +17327,6 @@ class ExampleEntryViewData extends DataClass {
     groupId,
     index,
     exampleSentence,
-    exampleSentenceReading,
     languageCode,
     tagsJson,
     statsJson,
@@ -17426,7 +17340,6 @@ class ExampleEntryViewData extends DataClass {
           other.groupId == this.groupId &&
           other.index == this.index &&
           other.exampleSentence == this.exampleSentence &&
-          other.exampleSentenceReading == this.exampleSentenceReading &&
           other.languageCode == this.languageCode &&
           other.tagsJson == this.tagsJson &&
           other.statsJson == this.statsJson &&
@@ -17445,7 +17358,6 @@ class ExampleEntryView extends ViewInfo<ExampleEntryView, ExampleEntryViewData>
     groupId,
     index,
     exampleSentence,
-    exampleSentenceReading,
     languageCode,
     tagsJson,
     statsJson,
@@ -17458,7 +17370,7 @@ class ExampleEntryView extends ViewInfo<ExampleEntryView, ExampleEntryViewData>
   @override
   Map<SqlDialect, String> get createViewStatements => {
     SqlDialect.sqlite:
-        'CREATE VIEW example_entry_view AS SELECT e.id, e.group_id, iv.index_entry AS "index", s.example_sentence, s.example_sentence_reading, l.language_code, (SELECT json_group_array(json_object(\'id\', t.id, \'indexEntry\', json(iv.index_entry), \'name\', t.name, \'category\', t.category, \'sortingOrder\', t.sorting_order, \'notes\', t.notes, \'score\', t.score)) FROM example_table_x_tag_bank_table AS ext INNER JOIN tag_bank_v3_table AS t ON t.id = ext.tag_bank_id WHERE ext.example_id = e.id) AS tags_json, (SELECT json_group_array(json_object(\'statName\', sn.name, \'displayName\', sdn.name, \'value\', st.value, \'displayValue\', st.display_value)) FROM example_table_x_stat_table AS ext INNER JOIN stat_table AS st ON st.id = ext.stat_table_id INNER JOIN stat_name_table AS sn ON sn.id = st.stat_name_id LEFT JOIN stat_name_table AS sdn ON sdn.id = st.stat_display_name_id WHERE ext.example_id = e.id) AS stats_json, (SELECT json_group_array(json_object(\'path\', a.path, \'name\', a.name, \'tags\', (SELECT json_group_array(json_object(\'id\', atag.id, \'indexEntry\', json(iv.index_entry), \'name\', atag.name, \'category\', atag.category, \'sortingOrder\', atag.sorting_order, \'notes\', atag.notes, \'score\', atag.score)) FROM example_audio_table_x_tag_bank_table AS axt INNER JOIN tag_bank_v3_table AS atag ON atag.id = axt.tag_bank_id WHERE axt.audio_id = a.id), \'stats\', (SELECT json_group_array(json_object(\'statName\', asn.name, \'displayName\', asdn.name, \'value\', ast.value, \'displayValue\', ast.display_value)) FROM example_audio_table_x_stat_table AS axst INNER JOIN stat_table AS ast ON ast.id = axst.stat_table_id INNER JOIN stat_name_table AS asn ON asn.id = ast.stat_name_id LEFT JOIN stat_name_table AS asdn ON asdn.id = ast.stat_display_name_id WHERE axst.audio_id = a.id))) FROM example_table_x_example_audio_table AS exa INNER JOIN example_audio_table AS a ON a.id = exa.audio_id WHERE exa.example_id = e.id) AS audios_json FROM example_table AS e INNER JOIN example_sentence_table AS s ON s.id = e.example_sentence_id INNER JOIN language_code_table AS l ON l.id = e.language_code_id INNER JOIN index_entry_as_json_view AS iv ON iv.id = e.index_id',
+        'CREATE VIEW example_entry_view AS SELECT e.id, e.group_id, iv.index_entry AS "index", s.example_sentence, l.language_code, (SELECT json_group_array(json_object(\'id\', t.id, \'indexEntry\', json(iv.index_entry), \'name\', t.name, \'category\', t.category, \'sortingOrder\', t.sorting_order, \'notes\', t.notes, \'score\', t.score)) FROM example_table_x_tag_bank_table AS ext INNER JOIN tag_bank_v3_table AS t ON t.id = ext.tag_bank_id WHERE ext.example_id = e.id) AS tags_json, (SELECT json_group_array(json_object(\'statName\', sn.name, \'displayName\', sdn.name, \'value\', st.value, \'displayValue\', st.display_value)) FROM example_table_x_stat_table AS ext INNER JOIN stat_table AS st ON st.id = ext.stat_table_id INNER JOIN stat_name_table AS sn ON sn.id = st.stat_name_id LEFT JOIN stat_name_table AS sdn ON sdn.id = st.stat_display_name_id WHERE ext.example_id = e.id) AS stats_json, (SELECT json_group_array(json_object(\'path\', a.path, \'name\', a.name, \'tags\', (SELECT json_group_array(json_object(\'id\', atag.id, \'indexEntry\', json(iv.index_entry), \'name\', atag.name, \'category\', atag.category, \'sortingOrder\', atag.sorting_order, \'notes\', atag.notes, \'score\', atag.score)) FROM example_audio_table_x_tag_bank_table AS axt INNER JOIN tag_bank_v3_table AS atag ON atag.id = axt.tag_bank_id WHERE axt.audio_id = a.id), \'stats\', (SELECT json_group_array(json_object(\'statName\', asn.name, \'displayName\', asdn.name, \'value\', ast.value, \'displayValue\', ast.display_value)) FROM example_audio_table_x_stat_table AS axst INNER JOIN stat_table AS ast ON ast.id = axst.stat_table_id INNER JOIN stat_name_table AS asn ON asn.id = ast.stat_name_id LEFT JOIN stat_name_table AS asdn ON asdn.id = ast.stat_display_name_id WHERE axst.audio_id = a.id))) FROM example_table_x_example_audio_table AS exa INNER JOIN example_audio_table AS a ON a.id = exa.audio_id WHERE exa.example_id = e.id) AS audios_json FROM example_table AS e INNER JOIN example_sentence_table AS s ON s.id = e.example_sentence_id INNER JOIN language_code_table AS l ON l.id = e.language_code_id INNER JOIN index_entry_as_json_view AS iv ON iv.id = e.index_id',
   };
   @override
   ExampleEntryView get asDslTable => this;
@@ -17482,10 +17394,6 @@ class ExampleEntryView extends ViewInfo<ExampleEntryView, ExampleEntryViewData>
         DriftSqlType.string,
         data['${effectivePrefix}example_sentence'],
       )!,
-      exampleSentenceReading: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}example_sentence_reading'],
-      ),
       languageCode: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}language_code'],
@@ -17529,13 +17437,6 @@ class ExampleEntryView extends ViewInfo<ExampleEntryView, ExampleEntryViewData>
     false,
     type: DriftSqlType.string,
   );
-  late final GeneratedColumn<String> exampleSentenceReading =
-      GeneratedColumn<String>(
-        'example_sentence_reading',
-        aliasedName,
-        true,
-        type: DriftSqlType.string,
-      );
   late final GeneratedColumn<String> languageCode = GeneratedColumn<String>(
     'language_code',
     aliasedName,
@@ -39775,13 +39676,11 @@ typedef $$ExampleSentenceTableTableCreateCompanionBuilder =
     ExampleSentenceTableCompanion Function({
       Value<int> id,
       required String exampleSentence,
-      Value<String?> exampleSentenceReading,
     });
 typedef $$ExampleSentenceTableTableUpdateCompanionBuilder =
     ExampleSentenceTableCompanion Function({
       Value<int> id,
       Value<String> exampleSentence,
-      Value<String?> exampleSentenceReading,
     });
 
 final class $$ExampleSentenceTableTableReferences
@@ -39866,11 +39765,6 @@ class $$ExampleSentenceTableTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<String> get exampleSentenceReading => $composableBuilder(
-    column: $table.exampleSentenceReading,
-    builder: (column) => ColumnFilters(column),
-  );
-
   Expression<bool> exampleTableRefs(
     Expression<bool> Function($$ExampleTableTableFilterComposer f) f,
   ) {
@@ -39944,11 +39838,6 @@ class $$ExampleSentenceTableTableOrderingComposer
     column: $table.exampleSentence,
     builder: (column) => ColumnOrderings(column),
   );
-
-  ColumnOrderings<String> get exampleSentenceReading => $composableBuilder(
-    column: $table.exampleSentenceReading,
-    builder: (column) => ColumnOrderings(column),
-  );
 }
 
 class $$ExampleSentenceTableTableAnnotationComposer
@@ -39965,11 +39854,6 @@ class $$ExampleSentenceTableTableAnnotationComposer
 
   GeneratedColumn<String> get exampleSentence => $composableBuilder(
     column: $table.exampleSentence,
-    builder: (column) => column,
-  );
-
-  GeneratedColumn<String> get exampleSentenceReading => $composableBuilder(
-    column: $table.exampleSentenceReading,
     builder: (column) => column,
   );
 
@@ -40069,21 +39953,17 @@ class $$ExampleSentenceTableTableTableManager
               ({
                 Value<int> id = const Value.absent(),
                 Value<String> exampleSentence = const Value.absent(),
-                Value<String?> exampleSentenceReading = const Value.absent(),
               }) => ExampleSentenceTableCompanion(
                 id: id,
                 exampleSentence: exampleSentence,
-                exampleSentenceReading: exampleSentenceReading,
               ),
           createCompanionCallback:
               ({
                 Value<int> id = const Value.absent(),
                 required String exampleSentence,
-                Value<String?> exampleSentenceReading = const Value.absent(),
               }) => ExampleSentenceTableCompanion.insert(
                 id: id,
                 exampleSentence: exampleSentence,
-                exampleSentenceReading: exampleSentenceReading,
               ),
           withReferenceMapper: (p0) => p0
               .map(

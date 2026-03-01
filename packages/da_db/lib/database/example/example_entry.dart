@@ -26,8 +26,6 @@ class ExampleEntry with _$ExampleEntry {
   @override
   final String sentence;
   @override
-  final String? reading;
-  @override
   final List<TagBankV3Entry> tags;
   @override
   final List<StatEntry> stats;
@@ -40,7 +38,6 @@ class ExampleEntry with _$ExampleEntry {
     required this.groupId,
     required this.languageCode,
     required this.sentence,
-    required this.reading,
     this.tags = const [],
     this.stats = const [],
     this.audios = const [],
@@ -66,7 +63,6 @@ class ExampleEntry with _$ExampleEntry {
       groupId: r.groupId,
       languageCode: r.languageCode,
       sentence: r.exampleSentence,
-      reading: r.exampleSentenceReading,
       tags: rawTags
         .map((t) => TagBankV3Entry.fromJson(t as Map<String, dynamic>))
         .toList(),

@@ -32,27 +32,34 @@ class ExampleBankParser implements DbFileParser {
     var termRows = <List<Object?>>[];
     var audioRows = <List<Object?>>[];
     var audioTagRows = <List<Object?>>[];
-    var audioStatRows = <List<Object?>>[]; // New for audio stats
+    var audioStatRows = <List<Object?>>[];
     
     const int batchSize = 1000;
 
     for (final entry in jsonInput) {
       if (entry is! Map<String, dynamic>) continue;
 
-      exampleLocalId++; 
+      final sentence = entry['sentence'] as String?;
+      if (sentence == null || sentence.trim().isEmpty) continue;
+
+      exampleLocalId++;
 
       final groupId = entry['groupId'] as int? ?? 0;
-      final sentence = entry['sentence'] as String;
       final langIsoCode = entry['langIso3Code'] as String? ?? 'jpn';
-      final reading = entry['sentenceReading'] as String?;
 
-      // NLP Processing
-      final String tokens = entry['tokens'] ?? lp.tokenize(sentence) ?? ""; 
+      // 1. Analyze sentence with the Language Processor to extract FTS5
+      
+      final parseResult = lp.parse(sentence, ProcessorOptions());
 
-      // Hardcoded quality, difficulty, and source are gone!
-      exampleRows.add([
-        exampleLocalId, groupId, langIsoCode, sentence, reading, tokens
-      ]);
+      // 2. Build the Surface Form string for FTS5 exact matching
+      final segmentString = parseResult.segments
+          .where((s) => s != null && s.trim().isNotEmpty)
+          .join(' ');
+      
+      final finalSegments = segmentString.isEmpty ? sentence : segmentString;
+
+      // Add 5 columns to the main table
+      exampleRows.add([exampleLocalId, groupId, langIsoCode, sentence, finalSegments]);
 
       // Tags
       final tags = (entry['tags'] as List<dynamic>?)?.cast<String>() ?? [];
@@ -73,9 +80,12 @@ class ExampleBankParser implements DbFileParser {
         ]);
       }
 
-      // Terms
-      final termList = tokens.split(' ').where((t) => t.trim().isNotEmpty).toSet();
-      for (final term in termList) {
+      // 3. Terms (Using parseResult.tokens instead of the undefined 'tokens' string)
+      final termSet = parseResult.tokens
+          .where((t) => t != null && t.trim().isNotEmpty)
+          .toSet();
+          
+      for (final term in termSet) {
         termRows.add([exampleLocalId, term]);
       }
 
@@ -86,17 +96,14 @@ class ExampleBankParser implements DbFileParser {
         final path = audio['url'] as String? ?? '';
         final name = path.split('/').last;
 
-        // Speaker, quality, and notes are gone!
         audioRows.add([audioLocalId, exampleLocalId, path, name]);
 
-        // Audio Tags
         final aTags = (audio['tags'] as List<dynamic>?)?.cast<String>() ?? [];
         for (final t in aTags) {
           if (t.trim().isEmpty) continue;
           audioTagRows.add([audioLocalId, t.trim()]);
         }
 
-        // Audio Stats
         final aStats = (audio['stats'] as List<dynamic>?)?.cast<Map<String, dynamic>>() ?? [];
         for (final s in aStats) {
           audioStatRows.add([
@@ -137,8 +144,8 @@ class ExampleBankParser implements DbFileParser {
 
     await db.transaction(() async {
       if (exampleRows.isNotEmpty) {
-        // Reduced to 6 columns
-        final sql = 'INSERT INTO ${db.exampleStagingTable.actualTableName} (local_id, group_id, language_code, example_sentence, example_sentence_reading, example_sentence_tokenized) VALUES ${List.filled(exampleRows.length, placeholders(6)).join(', ')}';
+        // FIXED: 5 columns and placeholders(5)
+        final sql = 'INSERT INTO ${db.exampleStagingTable.actualTableName} (local_id, group_id, language_code, example_sentence, example_sentence_tokenized) VALUES ${List.filled(exampleRows.length, placeholders(5)).join(', ')}';
         await db.customStatement(sql, exampleRows.expand((i) => i).toList());
       }
       if (tagRows.isNotEmpty) {
@@ -146,7 +153,6 @@ class ExampleBankParser implements DbFileParser {
         await db.customStatement(sql, tagRows.expand((i) => i).toList());
       }
       if (statRows.isNotEmpty) {
-        // Expanded to 5 columns
         final sql = 'INSERT INTO ${db.exampleStatStagingTable.actualTableName} (example_local_id, stat_name, display_name, stat_value, display_value) VALUES ${List.filled(statRows.length, placeholders(5)).join(', ')}';
         await db.customStatement(sql, statRows.expand((i) => i).toList());
       }
@@ -155,7 +161,6 @@ class ExampleBankParser implements DbFileParser {
         await db.customStatement(sql, termRows.expand((i) => i).toList());
       }
       if (audioRows.isNotEmpty) {
-        // Reduced to 4 columns
         final sql = 'INSERT INTO ${db.exampleAudioStagingTable.actualTableName} (local_id, example_local_id, path, name) VALUES ${List.filled(audioRows.length, placeholders(4)).join(', ')}';
         await db.customStatement(sql, audioRows.expand((i) => i).toList());
       }
@@ -164,7 +169,6 @@ class ExampleBankParser implements DbFileParser {
         await db.customStatement(sql, audioTagRows.expand((i) => i).toList());
       }
       if (audioStatRows.isNotEmpty) {
-        // New table mapping for audio stats
         final sql = 'INSERT INTO ${db.exampleAudioStatStagingTable.actualTableName} (audio_local_id, stat_name, display_name, stat_value, display_value) VALUES ${List.filled(audioStatRows.length, placeholders(5)).join(', ')}';
         await db.customStatement(sql, audioStatRows.expand((i) => i).toList());
       }

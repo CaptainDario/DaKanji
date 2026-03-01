@@ -21,8 +21,8 @@ class ExampleMerger implements StagingMerger {
 
       // 2. Sentences (Main Data)
       await targetDb.customStatement('''
-        INSERT INTO example_sentence_table (id, example_sentence, example_sentence_reading)
-          SELECT $maxSentenceId + local_id, example_sentence, example_sentence_reading
+        INSERT INTO example_sentence_table (id, example_sentence)
+          SELECT $maxSentenceId + local_id, example_sentence
           FROM $workerAlias.example_staging_table
           ORDER BY local_id
       ''');

@@ -59,11 +59,18 @@ class ExampleTextParser implements DbFileParser {
 
       exampleLocalId++;
 
-      // 2.1 Parse using MeCab (via LanguageProcessor)
-      final tokens = lp.segment(sentence)!; 
+      // 1. ONE PASS NLP PROCESSING
+      final parseResult = lp.parse(sentence, ProcessorOptions());
 
-      // 2.2 Prepare data for DB insertion
-      exampleRows.add([exampleLocalId, groupId, langIsoCode, sentence, null, tokens]);
+      // 2. Build the Surface Form string for FTS5 exact matching
+      final segmentString = parseResult.segments
+          .where((s) => s != null && s.trim().isNotEmpty)
+          .join(' ');
+      
+      final finalSegments = segmentString.isEmpty ? sentence : segmentString;
+
+      // Add 5 columns to the main table
+      exampleRows.add([exampleLocalId, groupId, langIsoCode, sentence, finalSegments]);
 
       for (final t in tags) {
         if (t.trim().isEmpty) continue;
@@ -80,20 +87,21 @@ class ExampleTextParser implements DbFileParser {
         ]);
       }
 
-      // Extract dictionary terms from the tokenized string for FTS indexing
-      final termList = tokens.split(' ').where((t) => t.trim().isNotEmpty).toSet();
-      for (final term in termList) {
+      // 3. Extract dictionary terms from parseResult.tokens
+      final termSet = parseResult.tokens
+          .where((t) => t != null && t.trim().isNotEmpty)
+          .toSet();
+          
+      for (final term in termSet) {
         termRows.add([exampleLocalId, term]);
       }
 
-      // Flush in batches to keep memory footprint low
       if (exampleRows.length >= batchSize) {
         await _flush(db, exampleRows, tagRows, statRows, termRows);
         exampleRows.clear(); tagRows.clear(); statRows.clear(); termRows.clear();
       }
     }
 
-    // Flush any remaining rows
     if (exampleRows.isNotEmpty) {
       await _flush(db, exampleRows, tagRows, statRows, termRows);
     }
@@ -112,7 +120,7 @@ class ExampleTextParser implements DbFileParser {
 
     await db.transaction(() async {
       if (exampleRows.isNotEmpty) {
-        final sql = 'INSERT INTO ${db.exampleStagingTable.actualTableName} (local_id, group_id, language_code, example_sentence, example_sentence_reading, example_sentence_tokenized) VALUES ${List.filled(exampleRows.length, placeholders(6)).join(', ')}';
+        final sql = 'INSERT INTO ${db.exampleStagingTable.actualTableName} (local_id, group_id, language_code, example_sentence, example_sentence_tokenized) VALUES ${List.filled(exampleRows.length, placeholders(5)).join(', ')}';
         await db.customStatement(sql, exampleRows.expand((i) => i).toList());
       }
       if (tagRows.isNotEmpty) {

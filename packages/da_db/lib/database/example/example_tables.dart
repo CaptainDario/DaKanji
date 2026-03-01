@@ -23,7 +23,6 @@ class ExampleTable extends Table {
   /// sentences of the same entry together
   IntColumn get groupId => integer()();
 
-
   IntColumn get exampleSentenceId => integer()
     .references(ExampleSentenceTable, #id)();
 
@@ -40,9 +39,6 @@ class ExampleSentenceTable extends Table {
 
   /// the example of this entry
   TextColumn get exampleSentence => text()();
-
-  /// the example's reading
-  TextColumn get exampleSentenceReading => text().nullable()();
 
 }
 
