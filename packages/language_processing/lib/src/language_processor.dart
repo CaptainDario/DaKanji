@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:language_processing/src/deconjugation_result.dart';
 import 'package:language_processing/src/japanese/japanese_processor.dart';
 import 'package:language_processing/src/language_processor_options.dart';
+import 'package:language_processing/src/parse_result.dart';
 import 'package:language_processing/src/term_reading_pair.dart';
 
 
@@ -44,19 +45,8 @@ abstract class LanguageProcessor {
 
   List<Set<DeconjugationResult>> deconjugateAll(List<String> terms);
 
-  /// Segments the given text and returns the segmented string (separated by
-  /// spaces), if `segmented != text` else returns null
-  /// 
-  /// This differs from `tokenize` as it returns the surfac forms not the base
-  /// forms
-  String? segment(String text);
-
-  /// Tokenizes the given text and returns the tokenized string (separated by
-  /// spaces), if `tokenizeed != text` else returns null
-  /// 
-  /// This differs from `segment` as it returns the base forms not the surface
-  /// forms
-  String? tokenize(String text);
+  
+  ParseResult parse(String term, ProcessorOptions options);
 
   /// Returns the readings for the given text
   String getReadings(String text);
