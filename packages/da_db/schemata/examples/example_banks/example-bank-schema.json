@@ -12,19 +12,11 @@
       "properties": {
         "groupId": {
           "type": "integer",
-          "description": "Numeric ID matchable across dictionaries to group similar sentences (e.g., a Tatoeba sentence ID)."
+          "description": "Numeric ID matchable across dictionaries to group sentences (e.g., a sentence and its translation)."
         },
         "sentence": {
           "type": "string",
-          "description": "The complete, raw sentence string."
-        },
-        "sentenceReading": {
-          "type": "string",
-          "description": "Optional reading for the entire sentence (e.g., kana only)."
-        },
-        "tokens": {
-          "type": "string",
-          "description": "Space-separated string of base terms/tokens present in the sentence for FTS indexing."
+          "description": "The complete, example sentence string. This is ignored when sentences are extracted from a accompanying example_text_bank file"
         },
         "langIso3Code": {
           "type": "string",
