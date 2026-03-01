@@ -7,19 +7,19 @@ import '/database/da_db.dart';
 
 
 /// parses the given json's contents and adds it to the given [DaDb]
-Future parseAudioFile(File kanjiBankV3JsonFile, DaDb db, int dictId) async {
+Future parseAudioListFile(File audioListJsonFile, DaDb db, int dictId) async {
 
-  String jsonString = kanjiBankV3JsonFile.readAsStringSync();
+  String jsonString = audioListJsonFile.readAsStringSync();
 
-  await parseAudio(jsonString, db, dictId);
+  await parseAudioList(jsonString, db, dictId);
 
 }
 
 /// parses the given json's contents and adds it to the given [DaDb]
-Future parseAudio(String kanjiBankV3Json, DaDb db, int indexId) async {
+Future parseAudioList(String audioListJson, DaDb db, int indexId) async {
 
   // read and decode the json
-  List jsonList = jsonDecode(kanjiBankV3Json)["audioSources"];
+  List jsonList = jsonDecode(audioListJson)["audioSources"];
   print("Parsing ${jsonList.length} audio entries");
 
   // populate the companion lists

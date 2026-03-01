@@ -4,7 +4,7 @@ const String indexFileName = "index.json";
 const String yomitanIndexFile = "yomitan_index.json";
 
 // --- Yomitan DICTIONARY BANKS ---
-const String audioListPrefix = "audio_list.json";
+const String audioListName = "audio_list.json";
 const String tagBankPrefix = "tag_bank_";
 const String termBankPrefix = "term_bank_";
 const String termMetaBankPrefix = "term_meta_bank_";
@@ -14,7 +14,7 @@ const String kanjiMetaBankPrefix = "kanji_meta_bank_";
 
 /// All files that yomitan parser should parse
 const List<String> yomitanDictFiles = [
-  audioListPrefix,
+  audioListName,
   tagBankPrefix,
   termBankPrefix,
   termMetaBankPrefix,

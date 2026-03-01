@@ -16,6 +16,7 @@ import 'package:da_db/parsing/util/db_optimization.dart';
 import 'package:da_db/parsing/util/parsing_constants.dart';
 import 'package:da_db/parsing/util/parsing_util.dart';
 import 'package:da_db/parsing/util/staging_worker_pool.dart';
+import 'package:da_db/parsing/yomitan/in_memory_cache/audio_source_list/audio_source_list_parser.dart';
 import 'package:da_db/parsing/yomitan/in_memory_cache/index/index_parser.dart';
 import 'package:da_db/parsing/yomitan/in_memory_cache/media/media_importer.dart';
 import 'package:da_db/parsing/yomitan/staging_db/mergers/staging_db_merging.dart';
@@ -114,6 +115,7 @@ Future<void> _unifiedOrchestratorEntry(({
     String? indexJson;
     final parallelQueue = <String>[];
     final mediaQueue = <ArchiveFile>[];
+    String? audioListContent;
 
     // --- STEP 2: FILE ROUTING ---
     for (final file in allFiles) {
@@ -142,7 +144,8 @@ Future<void> _unifiedOrchestratorEntry(({
       // Route data files to the parallel worker queue vs the transactional media queue
       switch (actualType) {
         case DictionaryTypes.yomitan:
-          if (yomitanDictFiles.any((s) => name.contains(s))) parallelQueue.add(file.name);
+          if (name == audioListName) audioListContent = utf8.decode(file.content);
+          else if(yomitanDictFiles.any((s) => name.contains(s))) parallelQueue.add(file.name);
           else mediaQueue.add(file);
           break;
         case DictionaryTypes.examples:
@@ -196,7 +199,7 @@ Future<void> _unifiedOrchestratorEntry(({
       tempDir: params.tempDir,
       workerEntryPoint: targetWorkerEntry,
       onStatus: (msg) => sendPort.send(msg),
-    ));
+    ));  
 
     // --- STEP 5: ATTACH WORKER DATABASES ---
     // Link the temporary worker SQLite files directly to the main database connection
@@ -233,11 +236,13 @@ Future<void> _unifiedOrchestratorEntry(({
           break;
       }
     }
+    // merge audio lists on top level as they are small
+    if(audioListContent != null) await parseAudioList(audioListContent, db, indexId);  
 
     // --- STEP 7: DYNAMIC MEDIA IMPORT ---
     if (mediaQueue.isNotEmpty) {
       sendPort.send("Importing ${mediaQueue.length} media files...");
-      final mappedMedia = mediaQueue.map((f) => (file: f, indexId: indexId, insertId: null as int?)).toList();
+      final mappedMedia = mediaQueue.map((f) => (file: f, indexId: indexId, insertId: null)).toList();
       
       for (var i = 0; i < mappedMedia.length; i += 200) {
         final end = min(i + 200, mappedMedia.length);
@@ -296,7 +301,7 @@ DictionaryTypes determineDictionaryType(Iterable<String> fileNames) {
              name.startsWith(kanjiBankPrefix) || name.startsWith(kanjiMetaBankPrefix) ||
              name.startsWith(tagBankPrefix)) {
       hasYomitanBanks = true;
-    } else if (name.startsWith(audioListPrefix)) {
+    } else if (name.startsWith(audioListName)) {
       hasYomitanAudioList = true;
     } 
     // 3. Audio Fingerprints

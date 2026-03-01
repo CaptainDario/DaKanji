@@ -209,7 +209,7 @@ Future parseDictionaryFile({
   
   // create config to pass the different arguments to the functions
   final parserConfig = {
-    audioListPrefix: () => parseAudio(fileContent, db, ind.id),
+    audioListName: () => parseAudioList(fileContent, db, ind.id),
     tagBankPrefix: () => parseTagBankv3(fileContent, db, ind.id),
     kanjiBankPrefix: () => parseKanjiBankV3(fileContent, importContext as KanjiBankV3ParserContext, db, ind.id),
     kanjiMetaBankPrefix: () => parseKanjiMetaBankV3(fileContent, importContext as KanjiMetaBankV3ParserContext, db, ind.id),
