@@ -2,6 +2,7 @@ import 'package:language_processing/src/deconjugation_result.dart';
 import 'package:language_processing/src/japanese/japanese_string_operations.dart';
 import 'package:language_processing/src/japanese/normalize/normalize.dart' as jp_norm;
 import 'package:language_processing/src/japanese/parse/parse.dart' as jp_parse;
+import 'package:language_processing/src/japanese/sentence_finding/sentence_finding_methods.dart';
 import 'package:language_processing/src/japanese/sentence_finding/sentence_finding_regex.dart' as jp_sent_regex;
 import 'package:language_processing/src/japanese/sentence_finding/sentence_finding_scan.dart' as jp_sent_scan;
 import 'package:language_processing/src/japanese/spellfix/forbidden_sequences.dart';
@@ -154,12 +155,14 @@ class JapaneseProcessor extends LanguageProcessor{
 
   @override
   List<String> findSentences(String text, ProcessorOptions options) {
-    if (options.japaneseOptions.sentenceFindingUseScanMethod){
-      return jp_sent_scan.findSentences(text);
+
+    switch(options.japaneseOptions.sentenceFindingMethod){
+      case SentenceFindingMethods.scan:
+        return jp_sent_scan.findSentences(text);
+      case SentenceFindingMethods.regex:
+        return jp_sent_regex.findSentences(text);
     }
-    else {
-      return jp_sent_regex.findSentences(text);
-    }
+    
   }
   
 

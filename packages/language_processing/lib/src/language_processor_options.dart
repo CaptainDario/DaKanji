@@ -1,3 +1,6 @@
+import 'package:language_processing/src/japanese/difficulty/difficulty_estimation_methods.dart';
+import 'package:language_processing/src/japanese/sentence_finding/sentence_finding_methods.dart';
+
 class ProcessorOptions {
 
   final JapaneseProcessorOptions japaneseOptions;
@@ -14,15 +17,15 @@ class JapaneseProcessorOptions {
   
   final bool getTermReadingPairsConvertToKatakanaForFurigana;
 
-  final bool sentenceFindingUseScanMethod;
+  final SentenceFindingMethods sentenceFindingMethod;
 
-  final bool sentenceFindingUseRegexMethod;
+  final DifficultyEstimationMethods difficultyEstimationMethod;
 
 
   const JapaneseProcessorOptions({
     this.normalizationConvertsRomajiToHiragana = false,
     this.getTermReadingPairsConvertToKatakanaForFurigana = false,
-    this.sentenceFindingUseScanMethod = false,
-    this.sentenceFindingUseRegexMethod = false,
+    this.sentenceFindingMethod = SentenceFindingMethods.scan,
+    this.difficultyEstimationMethod = DifficultyEstimationMethods.obi,
   });
 }

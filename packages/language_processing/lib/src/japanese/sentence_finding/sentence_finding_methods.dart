@@ -1,0 +1,6 @@
+enum SentenceFindingMethods {
+
+  regex,
+  scan
+
+}

@@ -1,0 +1,6 @@
+enum DifficultyEstimationMethods {
+
+  obi,
+  jReadability
+
+}
