@@ -26,6 +26,8 @@ Future testAudio(DaDb db) async {
   
   final results = await db.audioSourceListDao.getAllAudioSources();
 
+  expect(results.length, audioListTestCases.length);
+
   for (int i = 0; i < audioListTestCases.length; i++) {
     expect(results.contains(audioListTestCases[i]), true);
   }

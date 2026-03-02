@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$AudioSourceListEntry {
 
- String get name; set name(String value); String get uri; set uri(String value);
+ String get name; set name(String value); String get uri; set uri(String value); IndexEntry get indexEntry; set indexEntry(IndexEntry value);
 /// Create a copy of AudioSourceListEntry
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -26,16 +26,16 @@ $AudioSourceListEntryCopyWith<AudioSourceListEntry> get copyWith => _$AudioSourc
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is AudioSourceListEntry&&(identical(other.name, name) || other.name == name)&&(identical(other.uri, uri) || other.uri == uri));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AudioSourceListEntry&&(identical(other.name, name) || other.name == name)&&(identical(other.uri, uri) || other.uri == uri)&&(identical(other.indexEntry, indexEntry) || other.indexEntry == indexEntry));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,name,uri);
+int get hashCode => Object.hash(runtimeType,name,uri,indexEntry);
 
 @override
 String toString() {
-  return 'AudioSourceListEntry(name: $name, uri: $uri)';
+  return 'AudioSourceListEntry(name: $name, uri: $uri, indexEntry: $indexEntry)';
 }
 
 
@@ -46,7 +46,7 @@ abstract mixin class $AudioSourceListEntryCopyWith<$Res>  {
   factory $AudioSourceListEntryCopyWith(AudioSourceListEntry value, $Res Function(AudioSourceListEntry) _then) = _$AudioSourceListEntryCopyWithImpl;
 @useResult
 $Res call({
- String name, String uri
+ String name, String uri, IndexEntry indexEntry
 });
 
 
@@ -63,11 +63,12 @@ class _$AudioSourceListEntryCopyWithImpl<$Res>
 
 /// Create a copy of AudioSourceListEntry
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? name = null,Object? uri = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? name = null,Object? uri = null,Object? indexEntry = null,}) {
   return _then(AudioSourceListEntry(
 name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,uri: null == uri ? _self.uri : uri // ignore: cast_nullable_to_non_nullable
-as String,
+as String,indexEntry: null == indexEntry ? _self.indexEntry : indexEntry // ignore: cast_nullable_to_non_nullable
+as IndexEntry,
   ));
 }
 

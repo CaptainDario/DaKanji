@@ -1,4 +1,5 @@
 
+import 'package:da_db/database/index/index_table_entry.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'audio_source_list_entry.freezed.dart';
@@ -16,11 +17,14 @@ class AudioSourceListEntry with _$AudioSourceListEntry {
   /// The URI of the audio source
   @override
   String uri;
+  @override
+  IndexEntry indexEntry;
 
   AudioSourceListEntry(
     {
       required this.name,
       required this.uri,
+      required this.indexEntry,
     }){
       name = name.trim();
       uri = uri.trim();

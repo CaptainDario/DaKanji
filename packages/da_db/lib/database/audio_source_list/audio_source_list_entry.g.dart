@@ -11,8 +11,13 @@ AudioSourceListEntry _$AudioSourceListEntryFromJson(
 ) => AudioSourceListEntry(
   name: json['name'] as String,
   uri: json['uri'] as String,
+  indexEntry: IndexEntry.fromJson(json['indexEntry'] as Map<String, dynamic>),
 );
 
 Map<String, dynamic> _$AudioSourceListEntryToJson(
   AudioSourceListEntry instance,
-) => <String, dynamic>{'name': instance.name, 'uri': instance.uri};
+) => <String, dynamic>{
+  'name': instance.name,
+  'uri': instance.uri,
+  'indexEntry': instance.indexEntry,
+};
