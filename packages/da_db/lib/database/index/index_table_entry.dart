@@ -139,13 +139,6 @@ class IndexEntry with _$IndexEntry {
   bool get dictCanBeUpdated
     => (isUpdatable ?? false) && (indexUrl != null) && (downloadUrl != null);
 
-  /// Checks for updates for the dictonary 
-  Future<bool> checkForUpdates() async {
-
-    return false;
-
-  }
-
   bool compareRevision (String other) {
     final simpleVersionTest = RegExp(r'^(\d+\.)*\d+$');
 
