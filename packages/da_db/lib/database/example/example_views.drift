@@ -4,10 +4,11 @@ import '/database/index/index_views.drift';
 import '/database/general_tables/language_code_table.dart';
 import '/database/general_tables/term_tables.dart';
 import '/database/tag/tag_bank_v3_tables.dart';
+import '/database/tag/tag_bank_v3_views.drift';
 import '/database/stats/stat_tables.dart';
 import 'example_fts5_table.drift';
 
-CREATE VIEW example_entry_view AS
+CREATE VIEW IF NOT EXISTS example_entry_view AS
     SELECT 
     -- 1. Core Metadata
     e.id,
@@ -20,21 +21,10 @@ CREATE VIEW example_entry_view AS
     s.example_sentence,
     l.language_code,
 
-    -- 4. Aggregated Tags Array
-    (SELECT json_group_array(
-        json_object(
-            'id', t.id,
-            -- Inject the full index entry as a JSON object so the converter can parse it
-            'indexEntry', json(iv.index_entry), 
-            'name', t.name,
-            'category', t.category,
-            'sortingOrder', t.sorting_order,
-            'notes', t.notes,
-            'score', t.score
-        )
-    )
+    -- 4. Aggregated Tags Array (Using predefined view)
+    (SELECT json_group_array(json(tv.tag_json))
     FROM example_table_x_tag_bank_table ext
-        INNER JOIN tag_bank_v3_table t ON t.id = ext.tag_bank_id
+        INNER JOIN tag_bank_v3_as_json_view tv ON tv.tag_id = ext.tag_bank_id
     WHERE ext.example_id = e.id) AS tags_json,
 
     -- 5. Aggregated Stats Array
@@ -58,22 +48,11 @@ CREATE VIEW example_entry_view AS
             'path', a.path,
             'name', a.name,
             
-            -- Nested Audio Tags
+            -- Nested Audio Tags (Using predefined view)
             'tags', (
-                SELECT json_group_array(
-                    json_object(
-                        'id', atag.id,
-                        -- Inject the full index entry here as well!
-                        'indexEntry', json(iv.index_entry),
-                        'name', atag.name,
-                        'category', atag.category,
-                        'sortingOrder', atag.sorting_order,
-                        'notes', atag.notes,
-                        'score', atag.score
-                    )
-                )
+                SELECT json_group_array(json(atv.tag_json))
                 FROM example_audio_table_x_tag_bank_table axt
-                    INNER JOIN tag_bank_v3_table atag ON atag.id = axt.tag_bank_id
+                    INNER JOIN tag_bank_v3_as_json_view atv ON atv.tag_id = axt.tag_bank_id
                 WHERE axt.audio_id = a.id
             ),
             
