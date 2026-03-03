@@ -1,0 +1,10 @@
+[
+  {
+    "groupId": 1,
+    "sentence": "リンゴを食べる",
+    "langIso3Code": "jpn",
+    "tags": ["fruit"],
+    "stats": [{"statName": "quality", "value": 5.0}],
+    "audios": [{"url": "media/apple.mp3", "tags": ["native"]}]
+  }
+]

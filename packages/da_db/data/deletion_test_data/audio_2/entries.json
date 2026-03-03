@@ -1,0 +1,66 @@
+[
+    {
+        "id": "00001",
+        "kana": "ねこ",
+        "kanji": ["猫"],
+        "kanjiNotUsed": [],
+        "kanjiRaw": ["猫"],
+        "furigana": [],
+        "usage": null,
+        "category": null,
+        "accents": [
+            {
+                "notStandardButPermissible": false,
+                "accent": [
+                    {
+                        "pitchAccent": 1,
+                        "silencedMora": [],
+                        "pronunciation": "ネコ",
+                        "notes": [],
+                        "notStandardButPermissible": false
+                    }
+                ],
+                "soundFile": "cat.opus"
+            }
+        ],
+        "subentries": [],
+        "examples": [],
+        "conjugations": [],
+        "references": [],
+        "type": "headword",
+        "class": null,
+        "notes": []
+    },
+    {
+        "id": "00002",
+        "kana": "いぬ",
+        "kanji": ["犬"],
+        "kanjiNotUsed": [],
+        "kanjiRaw": ["犬"],
+        "furigana": [],
+        "usage": null,
+        "category": null,
+        "accents": [
+            {
+                "notStandardButPermissible": false,
+                "accent": [
+                    {
+                        "pitchAccent": 2,
+                        "silencedMora": [],
+                        "pronunciation": "イヌ",
+                        "notes": [],
+                        "notStandardButPermissible": false
+                    }
+                ],
+                "soundFile": "dog.opus"
+            }
+        ],
+        "subentries": [],
+        "examples": [],
+        "conjugations": [],
+        "references": [],
+        "type": "headword",
+        "class": null,
+        "notes": []
+    }
+]

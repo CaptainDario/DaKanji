@@ -1,0 +1,34 @@
+[
+    {
+        "id": "00003",
+        "kana": "とり",
+        "kanji": ["鳥"],
+        "kanjiNotUsed": [],
+        "kanjiRaw": ["鳥"],
+        "furigana": [],
+        "usage": null,
+        "category": null,
+        "accents": [
+            {
+                "notStandardButPermissible": false,
+                "accent": [
+                    {
+                        "pitchAccent": 0,
+                        "silencedMora": [],
+                        "pronunciation": "トリ",
+                        "notes": [],
+                        "notStandardButPermissible": false
+                    }
+                ],
+                "soundFile": "bird.opus"
+            }
+        ],
+        "subentries": [],
+        "examples": [],
+        "conjugations": [],
+        "references": [],
+        "type": "headword",
+        "class": null,
+        "notes": []
+    }
+]
