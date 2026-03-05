@@ -2,8 +2,6 @@
   {
     "groupId": 100,
     "sentence": "リンゴを食べます",
-    "sentenceReading": "りんごをたべます",
-    "tokens": "リンゴ を 食べ ます",
     "langIso3Code": "jpn",
     "tags": ["fruit", "tatoeba", "license:CC-BY-4.0"],
     "stats": [

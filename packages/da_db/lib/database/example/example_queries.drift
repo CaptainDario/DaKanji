@@ -4,7 +4,7 @@ import '/database/general_tables/language_code_table.dart';
 import '/database/example/example_fts5_table.drift';
 import '/database/example/example_views.drift';
 
--- Phase 1: Fast ID search
+-- Phase 1: Fast FTS 5
 searchExampleIds:
     SELECT e.id 
     FROM fts_example_tokens AS fts
@@ -15,6 +15,26 @@ searchExampleIds:
     ORDER BY bm25(fts_example_tokens)
     LIMIT :limit OFFSET :offset;
 
+-- Phase 1: Fast Token (Term ID) search
+searchExampleIdsByTermIds:
+    SELECT DISTINCT e.id 
+    FROM example_sentence_table_x_term_table AS st
+        INNER JOIN example_table AS e ON e.example_sentence_id = st.example_sentence_id
+        INNER JOIN language_code_table AS l ON l.id = e.language_code_id
+    WHERE st.term_id IN :termIds
+        AND l.language_code IN :languages
+    LIMIT :limit OFFSET :offset;
+
+-- Phase 1: Fast Token (Term String) search
+searchExampleIdsByTermString:
+    SELECT DISTINCT e.id 
+    FROM term_table AS t
+        INNER JOIN example_sentence_table_x_term_table AS st ON st.term_id = t.id
+        INNER JOIN example_table AS e ON e.example_sentence_id = st.example_sentence_id
+        INNER JOIN language_code_table AS l ON l.id = e.language_code_id
+    WHERE t.term = :termString
+        AND l.language_code IN :languages
+    LIMIT :limit OFFSET :offset;
 
 -- Phase 2: Rich data hydration
 getExamplesByIds:

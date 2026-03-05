@@ -51,6 +51,40 @@ class ExampleDao extends DatabaseAccessor<DaDb> with _$ExampleDaoMixin {
       .toList();
   }
 
+  /// Direct token search fetching examples containing specific dictionary terms by their IDs
+  Future<List<ExampleEntry>> searchExamplesByTermIds(
+    List<int> termIds,
+    List<Iso639_3> languages, {
+    int limit = 50,
+    int offset = 0,
+  }) async {
+    final langCodes = languages.map((l) => l.name).toList();
+    final ids = await db.searchExampleIdsByTermIds(termIds, langCodes, limit, offset).get();
+    
+    if (ids.isEmpty) return [];
+
+    // Phase 2: Rich data hydration 
+    final rows = await db.getExamplesByIds(ids).get();
+    return rows.map((row) => ExampleEntry.fromViewData(row)).toList();
+  }
+
+  /// Direct token search fetching examples containing a specific dictionary term string
+  Future<List<ExampleEntry>> searchExamplesByTermString(
+    String termString,
+    List<Iso639_3> languages, {
+    int limit = 50,
+    int offset = 0,
+  }) async {
+    final langCodes = languages.map((l) => l.name).toList();
+    final ids = await db.searchExampleIdsByTermString(termString, langCodes, limit, offset).get();
+    
+    if (ids.isEmpty) return [];
+
+    // Phase 2: Rich data hydration 
+    final rows = await db.getExamplesByIds(ids).get();
+    return rows.map((row) => ExampleEntry.fromViewData(row)).toList();
+  }
+
   // ---------------------------------------------------------------------------
   /// Get the maximum id of the [ExampleTable]
   Future<int> maxExampleId() async {

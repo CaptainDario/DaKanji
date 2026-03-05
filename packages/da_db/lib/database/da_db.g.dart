@@ -5776,9 +5776,9 @@ class FtsTerms extends Table
   late final GeneratedColumn<String> term = GeneratedColumn<String>(
     'term',
     aliasedName,
-    false,
+    true,
     type: DriftSqlType.string,
-    requiredDuringInsert: true,
+    requiredDuringInsert: false,
     $customConstraints: '',
   );
   static const VerificationMeta _termNormalizedMeta = const VerificationMeta(
@@ -5787,9 +5787,9 @@ class FtsTerms extends Table
   late final GeneratedColumn<String> termNormalized = GeneratedColumn<String>(
     'term_normalized',
     aliasedName,
-    false,
+    true,
     type: DriftSqlType.string,
-    requiredDuringInsert: true,
+    requiredDuringInsert: false,
     $customConstraints: '',
   );
   @override
@@ -5811,8 +5811,6 @@ class FtsTerms extends Table
         _termMeta,
         term.isAcceptableOrUnknown(data['term']!, _termMeta),
       );
-    } else if (isInserting) {
-      context.missing(_termMeta);
     }
     if (data.containsKey('term_normalized')) {
       context.handle(
@@ -5822,8 +5820,6 @@ class FtsTerms extends Table
           _termNormalizedMeta,
         ),
       );
-    } else if (isInserting) {
-      context.missing(_termNormalizedMeta);
     }
     return context;
   }
@@ -5837,11 +5833,11 @@ class FtsTerms extends Table
       term: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}term'],
-      )!,
+      ),
       termNormalized: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}term_normalized'],
-      )!,
+      ),
     );
   }
 
@@ -5858,21 +5854,27 @@ class FtsTerms extends Table
 }
 
 class FtsTerm extends DataClass implements Insertable<FtsTerm> {
-  final String term;
-  final String termNormalized;
-  const FtsTerm({required this.term, required this.termNormalized});
+  final String? term;
+  final String? termNormalized;
+  const FtsTerm({this.term, this.termNormalized});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
-    map['term'] = Variable<String>(term);
-    map['term_normalized'] = Variable<String>(termNormalized);
+    if (!nullToAbsent || term != null) {
+      map['term'] = Variable<String>(term);
+    }
+    if (!nullToAbsent || termNormalized != null) {
+      map['term_normalized'] = Variable<String>(termNormalized);
+    }
     return map;
   }
 
   FtsTermsCompanion toCompanion(bool nullToAbsent) {
     return FtsTermsCompanion(
-      term: Value(term),
-      termNormalized: Value(termNormalized),
+      term: term == null && nullToAbsent ? const Value.absent() : Value(term),
+      termNormalized: termNormalized == null && nullToAbsent
+          ? const Value.absent()
+          : Value(termNormalized),
     );
   }
 
@@ -5882,22 +5884,27 @@ class FtsTerm extends DataClass implements Insertable<FtsTerm> {
   }) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return FtsTerm(
-      term: serializer.fromJson<String>(json['term']),
-      termNormalized: serializer.fromJson<String>(json['term_normalized']),
+      term: serializer.fromJson<String?>(json['term']),
+      termNormalized: serializer.fromJson<String?>(json['term_normalized']),
     );
   }
   @override
   Map<String, dynamic> toJson({ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
-      'term': serializer.toJson<String>(term),
-      'term_normalized': serializer.toJson<String>(termNormalized),
+      'term': serializer.toJson<String?>(term),
+      'term_normalized': serializer.toJson<String?>(termNormalized),
     };
   }
 
-  FtsTerm copyWith({String? term, String? termNormalized}) => FtsTerm(
-    term: term ?? this.term,
-    termNormalized: termNormalized ?? this.termNormalized,
+  FtsTerm copyWith({
+    Value<String?> term = const Value.absent(),
+    Value<String?> termNormalized = const Value.absent(),
+  }) => FtsTerm(
+    term: term.present ? term.value : this.term,
+    termNormalized: termNormalized.present
+        ? termNormalized.value
+        : this.termNormalized,
   );
   FtsTerm copyWithCompanion(FtsTermsCompanion data) {
     return FtsTerm(
@@ -5928,8 +5935,8 @@ class FtsTerm extends DataClass implements Insertable<FtsTerm> {
 }
 
 class FtsTermsCompanion extends UpdateCompanion<FtsTerm> {
-  final Value<String> term;
-  final Value<String> termNormalized;
+  final Value<String?> term;
+  final Value<String?> termNormalized;
   final Value<int> rowid;
   const FtsTermsCompanion({
     this.term = const Value.absent(),
@@ -5937,11 +5944,10 @@ class FtsTermsCompanion extends UpdateCompanion<FtsTerm> {
     this.rowid = const Value.absent(),
   });
   FtsTermsCompanion.insert({
-    required String term,
-    required String termNormalized,
+    this.term = const Value.absent(),
+    this.termNormalized = const Value.absent(),
     this.rowid = const Value.absent(),
-  }) : term = Value(term),
-       termNormalized = Value(termNormalized);
+  });
   static Insertable<FtsTerm> custom({
     Expression<String>? term,
     Expression<String>? termNormalized,
@@ -5955,8 +5961,8 @@ class FtsTermsCompanion extends UpdateCompanion<FtsTerm> {
   }
 
   FtsTermsCompanion copyWith({
-    Value<String>? term,
-    Value<String>? termNormalized,
+    Value<String?>? term,
+    Value<String?>? termNormalized,
     Value<int>? rowid,
   }) {
     return FtsTermsCompanion(
@@ -6002,9 +6008,9 @@ class FtsTokens extends Table
   late final GeneratedColumn<String> tokens = GeneratedColumn<String>(
     'tokens',
     aliasedName,
-    false,
+    true,
     type: DriftSqlType.string,
-    requiredDuringInsert: true,
+    requiredDuringInsert: false,
     $customConstraints: '',
   );
   static const VerificationMeta _tokensNormalizedMeta = const VerificationMeta(
@@ -6013,9 +6019,9 @@ class FtsTokens extends Table
   late final GeneratedColumn<String> tokensNormalized = GeneratedColumn<String>(
     'tokens_normalized',
     aliasedName,
-    false,
+    true,
     type: DriftSqlType.string,
-    requiredDuringInsert: true,
+    requiredDuringInsert: false,
     $customConstraints: '',
   );
   @override
@@ -6037,8 +6043,6 @@ class FtsTokens extends Table
         _tokensMeta,
         tokens.isAcceptableOrUnknown(data['tokens']!, _tokensMeta),
       );
-    } else if (isInserting) {
-      context.missing(_tokensMeta);
     }
     if (data.containsKey('tokens_normalized')) {
       context.handle(
@@ -6048,8 +6052,6 @@ class FtsTokens extends Table
           _tokensNormalizedMeta,
         ),
       );
-    } else if (isInserting) {
-      context.missing(_tokensNormalizedMeta);
     }
     return context;
   }
@@ -6063,11 +6065,11 @@ class FtsTokens extends Table
       tokens: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}tokens'],
-      )!,
+      ),
       tokensNormalized: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}tokens_normalized'],
-      )!,
+      ),
     );
   }
 
@@ -6084,21 +6086,29 @@ class FtsTokens extends Table
 }
 
 class FtsToken extends DataClass implements Insertable<FtsToken> {
-  final String tokens;
-  final String tokensNormalized;
-  const FtsToken({required this.tokens, required this.tokensNormalized});
+  final String? tokens;
+  final String? tokensNormalized;
+  const FtsToken({this.tokens, this.tokensNormalized});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
-    map['tokens'] = Variable<String>(tokens);
-    map['tokens_normalized'] = Variable<String>(tokensNormalized);
+    if (!nullToAbsent || tokens != null) {
+      map['tokens'] = Variable<String>(tokens);
+    }
+    if (!nullToAbsent || tokensNormalized != null) {
+      map['tokens_normalized'] = Variable<String>(tokensNormalized);
+    }
     return map;
   }
 
   FtsTokensCompanion toCompanion(bool nullToAbsent) {
     return FtsTokensCompanion(
-      tokens: Value(tokens),
-      tokensNormalized: Value(tokensNormalized),
+      tokens: tokens == null && nullToAbsent
+          ? const Value.absent()
+          : Value(tokens),
+      tokensNormalized: tokensNormalized == null && nullToAbsent
+          ? const Value.absent()
+          : Value(tokensNormalized),
     );
   }
 
@@ -6108,22 +6118,27 @@ class FtsToken extends DataClass implements Insertable<FtsToken> {
   }) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return FtsToken(
-      tokens: serializer.fromJson<String>(json['tokens']),
-      tokensNormalized: serializer.fromJson<String>(json['tokens_normalized']),
+      tokens: serializer.fromJson<String?>(json['tokens']),
+      tokensNormalized: serializer.fromJson<String?>(json['tokens_normalized']),
     );
   }
   @override
   Map<String, dynamic> toJson({ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
-      'tokens': serializer.toJson<String>(tokens),
-      'tokens_normalized': serializer.toJson<String>(tokensNormalized),
+      'tokens': serializer.toJson<String?>(tokens),
+      'tokens_normalized': serializer.toJson<String?>(tokensNormalized),
     };
   }
 
-  FtsToken copyWith({String? tokens, String? tokensNormalized}) => FtsToken(
-    tokens: tokens ?? this.tokens,
-    tokensNormalized: tokensNormalized ?? this.tokensNormalized,
+  FtsToken copyWith({
+    Value<String?> tokens = const Value.absent(),
+    Value<String?> tokensNormalized = const Value.absent(),
+  }) => FtsToken(
+    tokens: tokens.present ? tokens.value : this.tokens,
+    tokensNormalized: tokensNormalized.present
+        ? tokensNormalized.value
+        : this.tokensNormalized,
   );
   FtsToken copyWithCompanion(FtsTokensCompanion data) {
     return FtsToken(
@@ -6154,8 +6169,8 @@ class FtsToken extends DataClass implements Insertable<FtsToken> {
 }
 
 class FtsTokensCompanion extends UpdateCompanion<FtsToken> {
-  final Value<String> tokens;
-  final Value<String> tokensNormalized;
+  final Value<String?> tokens;
+  final Value<String?> tokensNormalized;
   final Value<int> rowid;
   const FtsTokensCompanion({
     this.tokens = const Value.absent(),
@@ -6163,11 +6178,10 @@ class FtsTokensCompanion extends UpdateCompanion<FtsToken> {
     this.rowid = const Value.absent(),
   });
   FtsTokensCompanion.insert({
-    required String tokens,
-    required String tokensNormalized,
+    this.tokens = const Value.absent(),
+    this.tokensNormalized = const Value.absent(),
     this.rowid = const Value.absent(),
-  }) : tokens = Value(tokens),
-       tokensNormalized = Value(tokensNormalized);
+  });
   static Insertable<FtsToken> custom({
     Expression<String>? tokens,
     Expression<String>? tokensNormalized,
@@ -6181,8 +6195,8 @@ class FtsTokensCompanion extends UpdateCompanion<FtsToken> {
   }
 
   FtsTokensCompanion copyWith({
-    Value<String>? tokens,
-    Value<String>? tokensNormalized,
+    Value<String?>? tokens,
+    Value<String?>? tokensNormalized,
     Value<int>? rowid,
   }) {
     return FtsTokensCompanion(
@@ -6232,9 +6246,9 @@ class FtsReadings extends Table
   late final GeneratedColumn<String> reading = GeneratedColumn<String>(
     'reading',
     aliasedName,
-    false,
+    true,
     type: DriftSqlType.string,
-    requiredDuringInsert: true,
+    requiredDuringInsert: false,
     $customConstraints: '',
   );
   static const VerificationMeta _readingNormalizedMeta = const VerificationMeta(
@@ -6244,9 +6258,9 @@ class FtsReadings extends Table
       GeneratedColumn<String>(
         'reading_normalized',
         aliasedName,
-        false,
+        true,
         type: DriftSqlType.string,
-        requiredDuringInsert: true,
+        requiredDuringInsert: false,
         $customConstraints: '',
       );
   @override
@@ -6268,8 +6282,6 @@ class FtsReadings extends Table
         _readingMeta,
         reading.isAcceptableOrUnknown(data['reading']!, _readingMeta),
       );
-    } else if (isInserting) {
-      context.missing(_readingMeta);
     }
     if (data.containsKey('reading_normalized')) {
       context.handle(
@@ -6279,8 +6291,6 @@ class FtsReadings extends Table
           _readingNormalizedMeta,
         ),
       );
-    } else if (isInserting) {
-      context.missing(_readingNormalizedMeta);
     }
     return context;
   }
@@ -6294,11 +6304,11 @@ class FtsReadings extends Table
       reading: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}reading'],
-      )!,
+      ),
       readingNormalized: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}reading_normalized'],
-      )!,
+      ),
     );
   }
 
@@ -6315,21 +6325,29 @@ class FtsReadings extends Table
 }
 
 class FtsReading extends DataClass implements Insertable<FtsReading> {
-  final String reading;
-  final String readingNormalized;
-  const FtsReading({required this.reading, required this.readingNormalized});
+  final String? reading;
+  final String? readingNormalized;
+  const FtsReading({this.reading, this.readingNormalized});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
-    map['reading'] = Variable<String>(reading);
-    map['reading_normalized'] = Variable<String>(readingNormalized);
+    if (!nullToAbsent || reading != null) {
+      map['reading'] = Variable<String>(reading);
+    }
+    if (!nullToAbsent || readingNormalized != null) {
+      map['reading_normalized'] = Variable<String>(readingNormalized);
+    }
     return map;
   }
 
   FtsReadingsCompanion toCompanion(bool nullToAbsent) {
     return FtsReadingsCompanion(
-      reading: Value(reading),
-      readingNormalized: Value(readingNormalized),
+      reading: reading == null && nullToAbsent
+          ? const Value.absent()
+          : Value(reading),
+      readingNormalized: readingNormalized == null && nullToAbsent
+          ? const Value.absent()
+          : Value(readingNormalized),
     );
   }
 
@@ -6339,8 +6357,8 @@ class FtsReading extends DataClass implements Insertable<FtsReading> {
   }) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return FtsReading(
-      reading: serializer.fromJson<String>(json['reading']),
-      readingNormalized: serializer.fromJson<String>(
+      reading: serializer.fromJson<String?>(json['reading']),
+      readingNormalized: serializer.fromJson<String?>(
         json['reading_normalized'],
       ),
     );
@@ -6349,16 +6367,20 @@ class FtsReading extends DataClass implements Insertable<FtsReading> {
   Map<String, dynamic> toJson({ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
-      'reading': serializer.toJson<String>(reading),
-      'reading_normalized': serializer.toJson<String>(readingNormalized),
+      'reading': serializer.toJson<String?>(reading),
+      'reading_normalized': serializer.toJson<String?>(readingNormalized),
     };
   }
 
-  FtsReading copyWith({String? reading, String? readingNormalized}) =>
-      FtsReading(
-        reading: reading ?? this.reading,
-        readingNormalized: readingNormalized ?? this.readingNormalized,
-      );
+  FtsReading copyWith({
+    Value<String?> reading = const Value.absent(),
+    Value<String?> readingNormalized = const Value.absent(),
+  }) => FtsReading(
+    reading: reading.present ? reading.value : this.reading,
+    readingNormalized: readingNormalized.present
+        ? readingNormalized.value
+        : this.readingNormalized,
+  );
   FtsReading copyWithCompanion(FtsReadingsCompanion data) {
     return FtsReading(
       reading: data.reading.present ? data.reading.value : this.reading,
@@ -6388,8 +6410,8 @@ class FtsReading extends DataClass implements Insertable<FtsReading> {
 }
 
 class FtsReadingsCompanion extends UpdateCompanion<FtsReading> {
-  final Value<String> reading;
-  final Value<String> readingNormalized;
+  final Value<String?> reading;
+  final Value<String?> readingNormalized;
   final Value<int> rowid;
   const FtsReadingsCompanion({
     this.reading = const Value.absent(),
@@ -6397,11 +6419,10 @@ class FtsReadingsCompanion extends UpdateCompanion<FtsReading> {
     this.rowid = const Value.absent(),
   });
   FtsReadingsCompanion.insert({
-    required String reading,
-    required String readingNormalized,
+    this.reading = const Value.absent(),
+    this.readingNormalized = const Value.absent(),
     this.rowid = const Value.absent(),
-  }) : reading = Value(reading),
-       readingNormalized = Value(readingNormalized);
+  });
   static Insertable<FtsReading> custom({
     Expression<String>? reading,
     Expression<String>? readingNormalized,
@@ -6415,8 +6436,8 @@ class FtsReadingsCompanion extends UpdateCompanion<FtsReading> {
   }
 
   FtsReadingsCompanion copyWith({
-    Value<String>? reading,
-    Value<String>? readingNormalized,
+    Value<String?>? reading,
+    Value<String?>? readingNormalized,
     Value<int>? rowid,
   }) {
     return FtsReadingsCompanion(
@@ -6466,9 +6487,9 @@ class FtsDefinitions extends Table
   late final GeneratedColumn<String> definition = GeneratedColumn<String>(
     'definition',
     aliasedName,
-    false,
+    true,
     type: DriftSqlType.string,
-    requiredDuringInsert: true,
+    requiredDuringInsert: false,
     $customConstraints: '',
   );
   @override
@@ -6490,8 +6511,6 @@ class FtsDefinitions extends Table
         _definitionMeta,
         definition.isAcceptableOrUnknown(data['definition']!, _definitionMeta),
       );
-    } else if (isInserting) {
-      context.missing(_definitionMeta);
     }
     return context;
   }
@@ -6505,7 +6524,7 @@ class FtsDefinitions extends Table
       definition: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}definition'],
-      )!,
+      ),
     );
   }
 
@@ -6522,17 +6541,23 @@ class FtsDefinitions extends Table
 }
 
 class FtsDefinition extends DataClass implements Insertable<FtsDefinition> {
-  final String definition;
-  const FtsDefinition({required this.definition});
+  final String? definition;
+  const FtsDefinition({this.definition});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
-    map['definition'] = Variable<String>(definition);
+    if (!nullToAbsent || definition != null) {
+      map['definition'] = Variable<String>(definition);
+    }
     return map;
   }
 
   FtsDefinitionsCompanion toCompanion(bool nullToAbsent) {
-    return FtsDefinitionsCompanion(definition: Value(definition));
+    return FtsDefinitionsCompanion(
+      definition: definition == null && nullToAbsent
+          ? const Value.absent()
+          : Value(definition),
+    );
   }
 
   factory FtsDefinition.fromJson(
@@ -6541,19 +6566,21 @@ class FtsDefinition extends DataClass implements Insertable<FtsDefinition> {
   }) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return FtsDefinition(
-      definition: serializer.fromJson<String>(json['definition']),
+      definition: serializer.fromJson<String?>(json['definition']),
     );
   }
   @override
   Map<String, dynamic> toJson({ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
-      'definition': serializer.toJson<String>(definition),
+      'definition': serializer.toJson<String?>(definition),
     };
   }
 
-  FtsDefinition copyWith({String? definition}) =>
-      FtsDefinition(definition: definition ?? this.definition);
+  FtsDefinition copyWith({Value<String?> definition = const Value.absent()}) =>
+      FtsDefinition(
+        definition: definition.present ? definition.value : this.definition,
+      );
   FtsDefinition copyWithCompanion(FtsDefinitionsCompanion data) {
     return FtsDefinition(
       definition: data.definition.present
@@ -6579,16 +6606,16 @@ class FtsDefinition extends DataClass implements Insertable<FtsDefinition> {
 }
 
 class FtsDefinitionsCompanion extends UpdateCompanion<FtsDefinition> {
-  final Value<String> definition;
+  final Value<String?> definition;
   final Value<int> rowid;
   const FtsDefinitionsCompanion({
     this.definition = const Value.absent(),
     this.rowid = const Value.absent(),
   });
   FtsDefinitionsCompanion.insert({
-    required String definition,
+    this.definition = const Value.absent(),
     this.rowid = const Value.absent(),
-  }) : definition = Value(definition);
+  });
   static Insertable<FtsDefinition> custom({
     Expression<String>? definition,
     Expression<int>? rowid,
@@ -6600,7 +6627,7 @@ class FtsDefinitionsCompanion extends UpdateCompanion<FtsDefinition> {
   }
 
   FtsDefinitionsCompanion copyWith({
-    Value<String>? definition,
+    Value<String?>? definition,
     Value<int>? rowid,
   }) {
     return FtsDefinitionsCompanion(
@@ -10125,39 +10152,39 @@ class $TermMetaBankV3PitchTableTable extends TermMetaBankV3PitchTable
     type: DriftSqlType.int,
     requiredDuringInsert: false,
   );
-  static const VerificationMeta _positionMeta = const VerificationMeta(
-    'position',
+  static const VerificationMeta _positionsMeta = const VerificationMeta(
+    'positions',
   );
   @override
-  late final GeneratedColumn<int> position = GeneratedColumn<int>(
-    'position',
+  late final GeneratedColumn<String> positions = GeneratedColumn<String>(
+    'positions',
     aliasedName,
     false,
-    type: DriftSqlType.int,
+    type: DriftSqlType.string,
     requiredDuringInsert: true,
   );
-  static const VerificationMeta _nasalMeta = const VerificationMeta('nasal');
   @override
-  late final GeneratedColumn<int> nasal = GeneratedColumn<int>(
-    'nasal',
-    aliasedName,
-    true,
-    type: DriftSqlType.int,
-    requiredDuringInsert: false,
-  );
-  static const VerificationMeta _devoiceMeta = const VerificationMeta(
-    'devoice',
-  );
+  late final GeneratedColumnWithTypeConverter<Object?, String> nasals =
+      GeneratedColumn<String>(
+        'nasals',
+        aliasedName,
+        true,
+        type: DriftSqlType.string,
+        requiredDuringInsert: false,
+      ).withConverter<Object?>($TermMetaBankV3PitchTableTable.$converternasals);
   @override
-  late final GeneratedColumn<int> devoice = GeneratedColumn<int>(
-    'devoice',
-    aliasedName,
-    true,
-    type: DriftSqlType.int,
-    requiredDuringInsert: false,
-  );
+  late final GeneratedColumnWithTypeConverter<Object?, String> devoices =
+      GeneratedColumn<String>(
+        'devoices',
+        aliasedName,
+        true,
+        type: DriftSqlType.string,
+        requiredDuringInsert: false,
+      ).withConverter<Object?>(
+        $TermMetaBankV3PitchTableTable.$converterdevoices,
+      );
   @override
-  List<GeneratedColumn> get $columns => [id, position, nasal, devoice];
+  List<GeneratedColumn> get $columns => [id, positions, nasals, devoices];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -10173,25 +10200,13 @@ class $TermMetaBankV3PitchTableTable extends TermMetaBankV3PitchTable
     if (data.containsKey('id')) {
       context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
     }
-    if (data.containsKey('position')) {
+    if (data.containsKey('positions')) {
       context.handle(
-        _positionMeta,
-        position.isAcceptableOrUnknown(data['position']!, _positionMeta),
+        _positionsMeta,
+        positions.isAcceptableOrUnknown(data['positions']!, _positionsMeta),
       );
     } else if (isInserting) {
-      context.missing(_positionMeta);
-    }
-    if (data.containsKey('nasal')) {
-      context.handle(
-        _nasalMeta,
-        nasal.isAcceptableOrUnknown(data['nasal']!, _nasalMeta),
-      );
-    }
-    if (data.containsKey('devoice')) {
-      context.handle(
-        _devoiceMeta,
-        devoice.isAcceptableOrUnknown(data['devoice']!, _devoiceMeta),
-      );
+      context.missing(_positionsMeta);
     }
     return context;
   }
@@ -10209,17 +10224,21 @@ class $TermMetaBankV3PitchTableTable extends TermMetaBankV3PitchTable
         DriftSqlType.int,
         data['${effectivePrefix}id'],
       )!,
-      position: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}position'],
+      positions: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}positions'],
       )!,
-      nasal: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}nasal'],
+      nasals: $TermMetaBankV3PitchTableTable.$converternasals.fromSql(
+        attachedDatabase.typeMapping.read(
+          DriftSqlType.string,
+          data['${effectivePrefix}nasals'],
+        ),
       ),
-      devoice: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}devoice'],
+      devoices: $TermMetaBankV3PitchTableTable.$converterdevoices.fromSql(
+        attachedDatabase.typeMapping.read(
+          DriftSqlType.string,
+          data['${effectivePrefix}devoices'],
+        ),
       ),
     );
   }
@@ -10228,6 +10247,11 @@ class $TermMetaBankV3PitchTableTable extends TermMetaBankV3PitchTable
   $TermMetaBankV3PitchTableTable createAlias(String alias) {
     return $TermMetaBankV3PitchTableTable(attachedDatabase, alias);
   }
+
+  static TypeConverter<Object?, String?> $converternasals =
+      const NullableJsonConverter();
+  static TypeConverter<Object?, String?> $converterdevoices =
+      const NullableJsonConverter();
 }
 
 class TermMetaBankV3PitchTableData extends DataClass
@@ -10235,30 +10259,34 @@ class TermMetaBankV3PitchTableData extends DataClass
   /// id of this entry
   final int id;
 
-  /// The position of the pitch accent
-  final int position;
+  /// The positions of the pitch accents (H / L)
+  final String positions;
 
-  /// the nasal value of this pitch entry
-  final int? nasal;
+  /// the nasal values of this pitch entry
+  final Object? nasals;
 
-  /// the devoice value of this pitch entry
-  final int? devoice;
+  /// the devoice values of this pitch entry
+  final Object? devoices;
   const TermMetaBankV3PitchTableData({
     required this.id,
-    required this.position,
-    this.nasal,
-    this.devoice,
+    required this.positions,
+    this.nasals,
+    this.devoices,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
-    map['position'] = Variable<int>(position);
-    if (!nullToAbsent || nasal != null) {
-      map['nasal'] = Variable<int>(nasal);
+    map['positions'] = Variable<String>(positions);
+    if (!nullToAbsent || nasals != null) {
+      map['nasals'] = Variable<String>(
+        $TermMetaBankV3PitchTableTable.$converternasals.toSql(nasals),
+      );
     }
-    if (!nullToAbsent || devoice != null) {
-      map['devoice'] = Variable<int>(devoice);
+    if (!nullToAbsent || devoices != null) {
+      map['devoices'] = Variable<String>(
+        $TermMetaBankV3PitchTableTable.$converterdevoices.toSql(devoices),
+      );
     }
     return map;
   }
@@ -10266,13 +10294,13 @@ class TermMetaBankV3PitchTableData extends DataClass
   TermMetaBankV3PitchTableCompanion toCompanion(bool nullToAbsent) {
     return TermMetaBankV3PitchTableCompanion(
       id: Value(id),
-      position: Value(position),
-      nasal: nasal == null && nullToAbsent
+      positions: Value(positions),
+      nasals: nasals == null && nullToAbsent
           ? const Value.absent()
-          : Value(nasal),
-      devoice: devoice == null && nullToAbsent
+          : Value(nasals),
+      devoices: devoices == null && nullToAbsent
           ? const Value.absent()
-          : Value(devoice),
+          : Value(devoices),
     );
   }
 
@@ -10283,9 +10311,9 @@ class TermMetaBankV3PitchTableData extends DataClass
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return TermMetaBankV3PitchTableData(
       id: serializer.fromJson<int>(json['id']),
-      position: serializer.fromJson<int>(json['position']),
-      nasal: serializer.fromJson<int?>(json['nasal']),
-      devoice: serializer.fromJson<int?>(json['devoice']),
+      positions: serializer.fromJson<String>(json['positions']),
+      nasals: serializer.fromJson<Object?>(json['nasals']),
+      devoices: serializer.fromJson<Object?>(json['devoices']),
     );
   }
   @override
@@ -10293,31 +10321,31 @@ class TermMetaBankV3PitchTableData extends DataClass
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
-      'position': serializer.toJson<int>(position),
-      'nasal': serializer.toJson<int?>(nasal),
-      'devoice': serializer.toJson<int?>(devoice),
+      'positions': serializer.toJson<String>(positions),
+      'nasals': serializer.toJson<Object?>(nasals),
+      'devoices': serializer.toJson<Object?>(devoices),
     };
   }
 
   TermMetaBankV3PitchTableData copyWith({
     int? id,
-    int? position,
-    Value<int?> nasal = const Value.absent(),
-    Value<int?> devoice = const Value.absent(),
+    String? positions,
+    Value<Object?> nasals = const Value.absent(),
+    Value<Object?> devoices = const Value.absent(),
   }) => TermMetaBankV3PitchTableData(
     id: id ?? this.id,
-    position: position ?? this.position,
-    nasal: nasal.present ? nasal.value : this.nasal,
-    devoice: devoice.present ? devoice.value : this.devoice,
+    positions: positions ?? this.positions,
+    nasals: nasals.present ? nasals.value : this.nasals,
+    devoices: devoices.present ? devoices.value : this.devoices,
   );
   TermMetaBankV3PitchTableData copyWithCompanion(
     TermMetaBankV3PitchTableCompanion data,
   ) {
     return TermMetaBankV3PitchTableData(
       id: data.id.present ? data.id.value : this.id,
-      position: data.position.present ? data.position.value : this.position,
-      nasal: data.nasal.present ? data.nasal.value : this.nasal,
-      devoice: data.devoice.present ? data.devoice.value : this.devoice,
+      positions: data.positions.present ? data.positions.value : this.positions,
+      nasals: data.nasals.present ? data.nasals.value : this.nasals,
+      devoices: data.devoices.present ? data.devoices.value : this.devoices,
     );
   }
 
@@ -10325,68 +10353,68 @@ class TermMetaBankV3PitchTableData extends DataClass
   String toString() {
     return (StringBuffer('TermMetaBankV3PitchTableData(')
           ..write('id: $id, ')
-          ..write('position: $position, ')
-          ..write('nasal: $nasal, ')
-          ..write('devoice: $devoice')
+          ..write('positions: $positions, ')
+          ..write('nasals: $nasals, ')
+          ..write('devoices: $devoices')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(id, position, nasal, devoice);
+  int get hashCode => Object.hash(id, positions, nasals, devoices);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is TermMetaBankV3PitchTableData &&
           other.id == this.id &&
-          other.position == this.position &&
-          other.nasal == this.nasal &&
-          other.devoice == this.devoice);
+          other.positions == this.positions &&
+          other.nasals == this.nasals &&
+          other.devoices == this.devoices);
 }
 
 class TermMetaBankV3PitchTableCompanion
     extends UpdateCompanion<TermMetaBankV3PitchTableData> {
   final Value<int> id;
-  final Value<int> position;
-  final Value<int?> nasal;
-  final Value<int?> devoice;
+  final Value<String> positions;
+  final Value<Object?> nasals;
+  final Value<Object?> devoices;
   const TermMetaBankV3PitchTableCompanion({
     this.id = const Value.absent(),
-    this.position = const Value.absent(),
-    this.nasal = const Value.absent(),
-    this.devoice = const Value.absent(),
+    this.positions = const Value.absent(),
+    this.nasals = const Value.absent(),
+    this.devoices = const Value.absent(),
   });
   TermMetaBankV3PitchTableCompanion.insert({
     this.id = const Value.absent(),
-    required int position,
-    this.nasal = const Value.absent(),
-    this.devoice = const Value.absent(),
-  }) : position = Value(position);
+    required String positions,
+    this.nasals = const Value.absent(),
+    this.devoices = const Value.absent(),
+  }) : positions = Value(positions);
   static Insertable<TermMetaBankV3PitchTableData> custom({
     Expression<int>? id,
-    Expression<int>? position,
-    Expression<int>? nasal,
-    Expression<int>? devoice,
+    Expression<String>? positions,
+    Expression<String>? nasals,
+    Expression<String>? devoices,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
-      if (position != null) 'position': position,
-      if (nasal != null) 'nasal': nasal,
-      if (devoice != null) 'devoice': devoice,
+      if (positions != null) 'positions': positions,
+      if (nasals != null) 'nasals': nasals,
+      if (devoices != null) 'devoices': devoices,
     });
   }
 
   TermMetaBankV3PitchTableCompanion copyWith({
     Value<int>? id,
-    Value<int>? position,
-    Value<int?>? nasal,
-    Value<int?>? devoice,
+    Value<String>? positions,
+    Value<Object?>? nasals,
+    Value<Object?>? devoices,
   }) {
     return TermMetaBankV3PitchTableCompanion(
       id: id ?? this.id,
-      position: position ?? this.position,
-      nasal: nasal ?? this.nasal,
-      devoice: devoice ?? this.devoice,
+      positions: positions ?? this.positions,
+      nasals: nasals ?? this.nasals,
+      devoices: devoices ?? this.devoices,
     );
   }
 
@@ -10396,14 +10424,18 @@ class TermMetaBankV3PitchTableCompanion
     if (id.present) {
       map['id'] = Variable<int>(id.value);
     }
-    if (position.present) {
-      map['position'] = Variable<int>(position.value);
+    if (positions.present) {
+      map['positions'] = Variable<String>(positions.value);
     }
-    if (nasal.present) {
-      map['nasal'] = Variable<int>(nasal.value);
+    if (nasals.present) {
+      map['nasals'] = Variable<String>(
+        $TermMetaBankV3PitchTableTable.$converternasals.toSql(nasals.value),
+      );
     }
-    if (devoice.present) {
-      map['devoice'] = Variable<int>(devoice.value);
+    if (devoices.present) {
+      map['devoices'] = Variable<String>(
+        $TermMetaBankV3PitchTableTable.$converterdevoices.toSql(devoices.value),
+      );
     }
     return map;
   }
@@ -10412,9 +10444,9 @@ class TermMetaBankV3PitchTableCompanion
   String toString() {
     return (StringBuffer('TermMetaBankV3PitchTableCompanion(')
           ..write('id: $id, ')
-          ..write('position: $position, ')
-          ..write('nasal: $nasal, ')
-          ..write('devoice: $devoice')
+          ..write('positions: $positions, ')
+          ..write('nasals: $nasals, ')
+          ..write('devoices: $devoices')
           ..write(')'))
         .toString();
   }
@@ -10973,7 +11005,7 @@ class TermMetaBankV3PitchesJsonView
   @override
   Map<SqlDialect, String> get createViewStatements => {
     SqlDialect.sqlite:
-        'CREATE VIEW IF NOT EXISTS term_meta_bank_v3_pitches_json_view AS SELECT xp.term_meta_id, JSON_GROUP_ARRAY(JSON_OBJECT(\'position\', p.position, \'devoice\', p.devoice, \'nasal\', p.nasal, \'tags\', COALESCE((SELECT JSON_GROUP_ARRAY(TagJSON.tag_json) FROM term_meta_bank_v3_pitch_table_x_tag_bank_v3_table AS xpt JOIN tag_bank_v3_as_json_view AS TagJSON ON xpt.tag_id = TagJSON.tag_id WHERE xpt.pitch_id = p.id), JSON(\'[]\')))) AS pitches FROM term_meta_bank_v3_x_pitch_table AS xp JOIN term_meta_bank_v3_pitch_table AS p ON xp.pitch_id = p.id GROUP BY xp.term_meta_id',
+        'CREATE VIEW IF NOT EXISTS term_meta_bank_v3_pitches_json_view AS SELECT xp.term_meta_id, JSON_GROUP_ARRAY(JSON_OBJECT(\'positions\', p.positions, \'devoices\', p.devoices, \'nasals\', p.nasals, \'tags\', COALESCE((SELECT JSON_GROUP_ARRAY(TagJSON.tag_json) FROM term_meta_bank_v3_pitch_table_x_tag_bank_v3_table AS xpt JOIN tag_bank_v3_as_json_view AS TagJSON ON xpt.tag_id = TagJSON.tag_id WHERE xpt.pitch_id = p.id), JSON(\'[]\')))) AS pitches FROM term_meta_bank_v3_x_pitch_table AS xp JOIN term_meta_bank_v3_pitch_table AS p ON xp.pitch_id = p.id GROUP BY xp.term_meta_id',
   };
   @override
   TermMetaBankV3PitchesJsonView get asDslTable => this;
@@ -14229,9 +14261,9 @@ class FtsExampleTokens extends Table
       GeneratedColumn<String>(
         'example_sentence_tokenized',
         aliasedName,
-        false,
+        true,
         type: DriftSqlType.string,
-        requiredDuringInsert: true,
+        requiredDuringInsert: false,
         $customConstraints: '',
       );
   @override
@@ -14256,8 +14288,6 @@ class FtsExampleTokens extends Table
           _exampleSentenceTokenizedMeta,
         ),
       );
-    } else if (isInserting) {
-      context.missing(_exampleSentenceTokenizedMeta);
     }
     return context;
   }
@@ -14271,7 +14301,7 @@ class FtsExampleTokens extends Table
       exampleSentenceTokenized: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}example_sentence_tokenized'],
-      )!,
+      ),
     );
   }
 
@@ -14288,20 +14318,24 @@ class FtsExampleTokens extends Table
 }
 
 class FtsExampleToken extends DataClass implements Insertable<FtsExampleToken> {
-  final String exampleSentenceTokenized;
-  const FtsExampleToken({required this.exampleSentenceTokenized});
+  final String? exampleSentenceTokenized;
+  const FtsExampleToken({this.exampleSentenceTokenized});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
-    map['example_sentence_tokenized'] = Variable<String>(
-      exampleSentenceTokenized,
-    );
+    if (!nullToAbsent || exampleSentenceTokenized != null) {
+      map['example_sentence_tokenized'] = Variable<String>(
+        exampleSentenceTokenized,
+      );
+    }
     return map;
   }
 
   FtsExampleTokensCompanion toCompanion(bool nullToAbsent) {
     return FtsExampleTokensCompanion(
-      exampleSentenceTokenized: Value(exampleSentenceTokenized),
+      exampleSentenceTokenized: exampleSentenceTokenized == null && nullToAbsent
+          ? const Value.absent()
+          : Value(exampleSentenceTokenized),
     );
   }
 
@@ -14311,7 +14345,7 @@ class FtsExampleToken extends DataClass implements Insertable<FtsExampleToken> {
   }) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return FtsExampleToken(
-      exampleSentenceTokenized: serializer.fromJson<String>(
+      exampleSentenceTokenized: serializer.fromJson<String?>(
         json['example_sentence_tokenized'],
       ),
     );
@@ -14320,17 +14354,19 @@ class FtsExampleToken extends DataClass implements Insertable<FtsExampleToken> {
   Map<String, dynamic> toJson({ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
-      'example_sentence_tokenized': serializer.toJson<String>(
+      'example_sentence_tokenized': serializer.toJson<String?>(
         exampleSentenceTokenized,
       ),
     };
   }
 
-  FtsExampleToken copyWith({String? exampleSentenceTokenized}) =>
-      FtsExampleToken(
-        exampleSentenceTokenized:
-            exampleSentenceTokenized ?? this.exampleSentenceTokenized,
-      );
+  FtsExampleToken copyWith({
+    Value<String?> exampleSentenceTokenized = const Value.absent(),
+  }) => FtsExampleToken(
+    exampleSentenceTokenized: exampleSentenceTokenized.present
+        ? exampleSentenceTokenized.value
+        : this.exampleSentenceTokenized,
+  );
   FtsExampleToken copyWithCompanion(FtsExampleTokensCompanion data) {
     return FtsExampleToken(
       exampleSentenceTokenized: data.exampleSentenceTokenized.present
@@ -14357,16 +14393,16 @@ class FtsExampleToken extends DataClass implements Insertable<FtsExampleToken> {
 }
 
 class FtsExampleTokensCompanion extends UpdateCompanion<FtsExampleToken> {
-  final Value<String> exampleSentenceTokenized;
+  final Value<String?> exampleSentenceTokenized;
   final Value<int> rowid;
   const FtsExampleTokensCompanion({
     this.exampleSentenceTokenized = const Value.absent(),
     this.rowid = const Value.absent(),
   });
   FtsExampleTokensCompanion.insert({
-    required String exampleSentenceTokenized,
+    this.exampleSentenceTokenized = const Value.absent(),
     this.rowid = const Value.absent(),
-  }) : exampleSentenceTokenized = Value(exampleSentenceTokenized);
+  });
   static Insertable<FtsExampleToken> custom({
     Expression<String>? exampleSentenceTokenized,
     Expression<int>? rowid,
@@ -14379,7 +14415,7 @@ class FtsExampleTokensCompanion extends UpdateCompanion<FtsExampleToken> {
   }
 
   FtsExampleTokensCompanion copyWith({
-    Value<String>? exampleSentenceTokenized,
+    Value<String?>? exampleSentenceTokenized,
     Value<int>? rowid,
   }) {
     return FtsExampleTokensCompanion(
@@ -15224,6 +15260,245 @@ class ExampleTableCompanion extends UpdateCompanion<ExampleTableData> {
           ..write('groupId: $groupId, ')
           ..write('exampleSentenceId: $exampleSentenceId, ')
           ..write('languageCodeId: $languageCodeId')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $ExampleSentenceTable_X_TermTableTable
+    extends ExampleSentenceTable_X_TermTable
+    with
+        TableInfo<
+          $ExampleSentenceTable_X_TermTableTable,
+          ExampleSentenceTable_X_TermTableData
+        > {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $ExampleSentenceTable_X_TermTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _exampleSentenceIdMeta = const VerificationMeta(
+    'exampleSentenceId',
+  );
+  @override
+  late final GeneratedColumn<int> exampleSentenceId = GeneratedColumn<int>(
+    'example_sentence_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES example_sentence_table (id) ON DELETE CASCADE',
+    ),
+  );
+  static const VerificationMeta _termIdMeta = const VerificationMeta('termId');
+  @override
+  late final GeneratedColumn<int> termId = GeneratedColumn<int>(
+    'term_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES term_table (id) ON DELETE CASCADE',
+    ),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [exampleSentenceId, termId];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'example_sentence_table_x_term_table';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<ExampleSentenceTable_X_TermTableData> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('example_sentence_id')) {
+      context.handle(
+        _exampleSentenceIdMeta,
+        exampleSentenceId.isAcceptableOrUnknown(
+          data['example_sentence_id']!,
+          _exampleSentenceIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_exampleSentenceIdMeta);
+    }
+    if (data.containsKey('term_id')) {
+      context.handle(
+        _termIdMeta,
+        termId.isAcceptableOrUnknown(data['term_id']!, _termIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_termIdMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {exampleSentenceId, termId};
+  @override
+  ExampleSentenceTable_X_TermTableData map(
+    Map<String, dynamic> data, {
+    String? tablePrefix,
+  }) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return ExampleSentenceTable_X_TermTableData(
+      exampleSentenceId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}example_sentence_id'],
+      )!,
+      termId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}term_id'],
+      )!,
+    );
+  }
+
+  @override
+  $ExampleSentenceTable_X_TermTableTable createAlias(String alias) {
+    return $ExampleSentenceTable_X_TermTableTable(attachedDatabase, alias);
+  }
+
+  @override
+  bool get withoutRowId => true;
+}
+
+class ExampleSentenceTable_X_TermTableData extends DataClass
+    implements Insertable<ExampleSentenceTable_X_TermTableData> {
+  /// The ID of the example sentence entry.
+  final int exampleSentenceId;
+
+  /// The ID of the dictionary term entry.
+  final int termId;
+  const ExampleSentenceTable_X_TermTableData({
+    required this.exampleSentenceId,
+    required this.termId,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['example_sentence_id'] = Variable<int>(exampleSentenceId);
+    map['term_id'] = Variable<int>(termId);
+    return map;
+  }
+
+  ExampleSentenceTable_X_TermTableCompanion toCompanion(bool nullToAbsent) {
+    return ExampleSentenceTable_X_TermTableCompanion(
+      exampleSentenceId: Value(exampleSentenceId),
+      termId: Value(termId),
+    );
+  }
+
+  factory ExampleSentenceTable_X_TermTableData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return ExampleSentenceTable_X_TermTableData(
+      exampleSentenceId: serializer.fromJson<int>(json['exampleSentenceId']),
+      termId: serializer.fromJson<int>(json['termId']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'exampleSentenceId': serializer.toJson<int>(exampleSentenceId),
+      'termId': serializer.toJson<int>(termId),
+    };
+  }
+
+  ExampleSentenceTable_X_TermTableData copyWith({
+    int? exampleSentenceId,
+    int? termId,
+  }) => ExampleSentenceTable_X_TermTableData(
+    exampleSentenceId: exampleSentenceId ?? this.exampleSentenceId,
+    termId: termId ?? this.termId,
+  );
+  ExampleSentenceTable_X_TermTableData copyWithCompanion(
+    ExampleSentenceTable_X_TermTableCompanion data,
+  ) {
+    return ExampleSentenceTable_X_TermTableData(
+      exampleSentenceId: data.exampleSentenceId.present
+          ? data.exampleSentenceId.value
+          : this.exampleSentenceId,
+      termId: data.termId.present ? data.termId.value : this.termId,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ExampleSentenceTable_X_TermTableData(')
+          ..write('exampleSentenceId: $exampleSentenceId, ')
+          ..write('termId: $termId')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(exampleSentenceId, termId);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is ExampleSentenceTable_X_TermTableData &&
+          other.exampleSentenceId == this.exampleSentenceId &&
+          other.termId == this.termId);
+}
+
+class ExampleSentenceTable_X_TermTableCompanion
+    extends UpdateCompanion<ExampleSentenceTable_X_TermTableData> {
+  final Value<int> exampleSentenceId;
+  final Value<int> termId;
+  const ExampleSentenceTable_X_TermTableCompanion({
+    this.exampleSentenceId = const Value.absent(),
+    this.termId = const Value.absent(),
+  });
+  ExampleSentenceTable_X_TermTableCompanion.insert({
+    required int exampleSentenceId,
+    required int termId,
+  }) : exampleSentenceId = Value(exampleSentenceId),
+       termId = Value(termId);
+  static Insertable<ExampleSentenceTable_X_TermTableData> custom({
+    Expression<int>? exampleSentenceId,
+    Expression<int>? termId,
+  }) {
+    return RawValuesInsertable({
+      if (exampleSentenceId != null) 'example_sentence_id': exampleSentenceId,
+      if (termId != null) 'term_id': termId,
+    });
+  }
+
+  ExampleSentenceTable_X_TermTableCompanion copyWith({
+    Value<int>? exampleSentenceId,
+    Value<int>? termId,
+  }) {
+    return ExampleSentenceTable_X_TermTableCompanion(
+      exampleSentenceId: exampleSentenceId ?? this.exampleSentenceId,
+      termId: termId ?? this.termId,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (exampleSentenceId.present) {
+      map['example_sentence_id'] = Variable<int>(exampleSentenceId.value);
+    }
+    if (termId.present) {
+      map['term_id'] = Variable<int>(termId.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ExampleSentenceTable_X_TermTableCompanion(')
+          ..write('exampleSentenceId: $exampleSentenceId, ')
+          ..write('termId: $termId')
           ..write(')'))
         .toString();
   }
@@ -17484,245 +17759,6 @@ class ExampleEntryView extends ViewInfo<ExampleEntryView, ExampleEntryViewData>
     'example_audio_table_x_tag_bank_table',
     'example_audio_table_x_stat_table',
   };
-}
-
-class $ExampleSentenceTable_X_TermTableTable
-    extends ExampleSentenceTable_X_TermTable
-    with
-        TableInfo<
-          $ExampleSentenceTable_X_TermTableTable,
-          ExampleSentenceTable_X_TermTableData
-        > {
-  @override
-  final GeneratedDatabase attachedDatabase;
-  final String? _alias;
-  $ExampleSentenceTable_X_TermTableTable(this.attachedDatabase, [this._alias]);
-  static const VerificationMeta _exampleSentenceIdMeta = const VerificationMeta(
-    'exampleSentenceId',
-  );
-  @override
-  late final GeneratedColumn<int> exampleSentenceId = GeneratedColumn<int>(
-    'example_sentence_id',
-    aliasedName,
-    false,
-    type: DriftSqlType.int,
-    requiredDuringInsert: true,
-    defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'REFERENCES example_sentence_table (id) ON DELETE CASCADE',
-    ),
-  );
-  static const VerificationMeta _termIdMeta = const VerificationMeta('termId');
-  @override
-  late final GeneratedColumn<int> termId = GeneratedColumn<int>(
-    'term_id',
-    aliasedName,
-    false,
-    type: DriftSqlType.int,
-    requiredDuringInsert: true,
-    defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'REFERENCES term_table (id) ON DELETE CASCADE',
-    ),
-  );
-  @override
-  List<GeneratedColumn> get $columns => [exampleSentenceId, termId];
-  @override
-  String get aliasedName => _alias ?? actualTableName;
-  @override
-  String get actualTableName => $name;
-  static const String $name = 'example_sentence_table_x_term_table';
-  @override
-  VerificationContext validateIntegrity(
-    Insertable<ExampleSentenceTable_X_TermTableData> instance, {
-    bool isInserting = false,
-  }) {
-    final context = VerificationContext();
-    final data = instance.toColumns(true);
-    if (data.containsKey('example_sentence_id')) {
-      context.handle(
-        _exampleSentenceIdMeta,
-        exampleSentenceId.isAcceptableOrUnknown(
-          data['example_sentence_id']!,
-          _exampleSentenceIdMeta,
-        ),
-      );
-    } else if (isInserting) {
-      context.missing(_exampleSentenceIdMeta);
-    }
-    if (data.containsKey('term_id')) {
-      context.handle(
-        _termIdMeta,
-        termId.isAcceptableOrUnknown(data['term_id']!, _termIdMeta),
-      );
-    } else if (isInserting) {
-      context.missing(_termIdMeta);
-    }
-    return context;
-  }
-
-  @override
-  Set<GeneratedColumn> get $primaryKey => {exampleSentenceId, termId};
-  @override
-  ExampleSentenceTable_X_TermTableData map(
-    Map<String, dynamic> data, {
-    String? tablePrefix,
-  }) {
-    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return ExampleSentenceTable_X_TermTableData(
-      exampleSentenceId: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}example_sentence_id'],
-      )!,
-      termId: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}term_id'],
-      )!,
-    );
-  }
-
-  @override
-  $ExampleSentenceTable_X_TermTableTable createAlias(String alias) {
-    return $ExampleSentenceTable_X_TermTableTable(attachedDatabase, alias);
-  }
-
-  @override
-  bool get withoutRowId => true;
-}
-
-class ExampleSentenceTable_X_TermTableData extends DataClass
-    implements Insertable<ExampleSentenceTable_X_TermTableData> {
-  /// The ID of the example sentence entry.
-  final int exampleSentenceId;
-
-  /// The ID of the dictionary term entry.
-  final int termId;
-  const ExampleSentenceTable_X_TermTableData({
-    required this.exampleSentenceId,
-    required this.termId,
-  });
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    map['example_sentence_id'] = Variable<int>(exampleSentenceId);
-    map['term_id'] = Variable<int>(termId);
-    return map;
-  }
-
-  ExampleSentenceTable_X_TermTableCompanion toCompanion(bool nullToAbsent) {
-    return ExampleSentenceTable_X_TermTableCompanion(
-      exampleSentenceId: Value(exampleSentenceId),
-      termId: Value(termId),
-    );
-  }
-
-  factory ExampleSentenceTable_X_TermTableData.fromJson(
-    Map<String, dynamic> json, {
-    ValueSerializer? serializer,
-  }) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return ExampleSentenceTable_X_TermTableData(
-      exampleSentenceId: serializer.fromJson<int>(json['exampleSentenceId']),
-      termId: serializer.fromJson<int>(json['termId']),
-    );
-  }
-  @override
-  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return <String, dynamic>{
-      'exampleSentenceId': serializer.toJson<int>(exampleSentenceId),
-      'termId': serializer.toJson<int>(termId),
-    };
-  }
-
-  ExampleSentenceTable_X_TermTableData copyWith({
-    int? exampleSentenceId,
-    int? termId,
-  }) => ExampleSentenceTable_X_TermTableData(
-    exampleSentenceId: exampleSentenceId ?? this.exampleSentenceId,
-    termId: termId ?? this.termId,
-  );
-  ExampleSentenceTable_X_TermTableData copyWithCompanion(
-    ExampleSentenceTable_X_TermTableCompanion data,
-  ) {
-    return ExampleSentenceTable_X_TermTableData(
-      exampleSentenceId: data.exampleSentenceId.present
-          ? data.exampleSentenceId.value
-          : this.exampleSentenceId,
-      termId: data.termId.present ? data.termId.value : this.termId,
-    );
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('ExampleSentenceTable_X_TermTableData(')
-          ..write('exampleSentenceId: $exampleSentenceId, ')
-          ..write('termId: $termId')
-          ..write(')'))
-        .toString();
-  }
-
-  @override
-  int get hashCode => Object.hash(exampleSentenceId, termId);
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      (other is ExampleSentenceTable_X_TermTableData &&
-          other.exampleSentenceId == this.exampleSentenceId &&
-          other.termId == this.termId);
-}
-
-class ExampleSentenceTable_X_TermTableCompanion
-    extends UpdateCompanion<ExampleSentenceTable_X_TermTableData> {
-  final Value<int> exampleSentenceId;
-  final Value<int> termId;
-  const ExampleSentenceTable_X_TermTableCompanion({
-    this.exampleSentenceId = const Value.absent(),
-    this.termId = const Value.absent(),
-  });
-  ExampleSentenceTable_X_TermTableCompanion.insert({
-    required int exampleSentenceId,
-    required int termId,
-  }) : exampleSentenceId = Value(exampleSentenceId),
-       termId = Value(termId);
-  static Insertable<ExampleSentenceTable_X_TermTableData> custom({
-    Expression<int>? exampleSentenceId,
-    Expression<int>? termId,
-  }) {
-    return RawValuesInsertable({
-      if (exampleSentenceId != null) 'example_sentence_id': exampleSentenceId,
-      if (termId != null) 'term_id': termId,
-    });
-  }
-
-  ExampleSentenceTable_X_TermTableCompanion copyWith({
-    Value<int>? exampleSentenceId,
-    Value<int>? termId,
-  }) {
-    return ExampleSentenceTable_X_TermTableCompanion(
-      exampleSentenceId: exampleSentenceId ?? this.exampleSentenceId,
-      termId: termId ?? this.termId,
-    );
-  }
-
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    if (exampleSentenceId.present) {
-      map['example_sentence_id'] = Variable<int>(exampleSentenceId.value);
-    }
-    if (termId.present) {
-      map['term_id'] = Variable<int>(termId.value);
-    }
-    return map;
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('ExampleSentenceTable_X_TermTableCompanion(')
-          ..write('exampleSentenceId: $exampleSentenceId, ')
-          ..write('termId: $termId')
-          ..write(')'))
-        .toString();
-  }
 }
 
 class $KanjiVGTableTable extends KanjiVGTable
@@ -20264,6 +20300,8 @@ abstract class _$DaDb extends GeneratedDatabase {
   late final $LanguageCodeTableTable languageCodeTable =
       $LanguageCodeTableTable(this);
   late final $ExampleTableTable exampleTable = $ExampleTableTable(this);
+  late final $ExampleSentenceTable_X_TermTableTable
+  exampleSentenceTableXTermTable = $ExampleSentenceTable_X_TermTableTable(this);
   late final $ExampleTable_X_TagBankTableTable exampleTableXTagBankTable =
       $ExampleTable_X_TagBankTableTable(this);
   late final $StatNameTableTable statNameTable = $StatNameTableTable(this);
@@ -20283,8 +20321,6 @@ abstract class _$DaDb extends GeneratedDatabase {
     'LanguageCodeTable_languageCode',
     'CREATE INDEX LanguageCodeTable_languageCode ON language_code_table (language_code)',
   );
-  late final $ExampleSentenceTable_X_TermTableTable
-  exampleSentenceTableXTermTable = $ExampleSentenceTable_X_TermTableTable(this);
   late final Index exampleTableXExampleAudioTableAudioIdIndex = Index(
     'ExampleTable_X_ExampleAudioTable_audioIdIndex',
     'CREATE INDEX ExampleTable_X_ExampleAudioTable_audioIdIndex ON example_table_x_example_audio_table (audio_id)',
@@ -20788,6 +20824,59 @@ abstract class _$DaDb extends GeneratedDatabase {
     ).map((QueryRow row) => row.read<int>('id'));
   }
 
+  Selectable<int> searchExampleIdsByTermIds(
+    List<int> termIds,
+    List<String> languages,
+    int limit,
+    int offset,
+  ) {
+    var $arrayStartIndex = 3;
+    final expandedtermIds = $expandVar($arrayStartIndex, termIds.length);
+    $arrayStartIndex += termIds.length;
+    final expandedlanguages = $expandVar($arrayStartIndex, languages.length);
+    $arrayStartIndex += languages.length;
+    return customSelect(
+      'SELECT DISTINCT e.id FROM example_sentence_table_x_term_table AS st INNER JOIN example_table AS e ON e.example_sentence_id = st.example_sentence_id INNER JOIN language_code_table AS l ON l.id = e.language_code_id WHERE st.term_id IN ($expandedtermIds) AND l.language_code IN ($expandedlanguages) LIMIT ?1 OFFSET ?2',
+      variables: [
+        Variable<int>(limit),
+        Variable<int>(offset),
+        for (var $ in termIds) Variable<int>($),
+        for (var $ in languages) Variable<String>($),
+      ],
+      readsFrom: {
+        exampleTable,
+        exampleSentenceTableXTermTable,
+        languageCodeTable,
+      },
+    ).map((QueryRow row) => row.read<int>('id'));
+  }
+
+  Selectable<int> searchExampleIdsByTermString(
+    String termString,
+    List<String> languages,
+    int limit,
+    int offset,
+  ) {
+    var $arrayStartIndex = 4;
+    final expandedlanguages = $expandVar($arrayStartIndex, languages.length);
+    $arrayStartIndex += languages.length;
+    return customSelect(
+      'SELECT DISTINCT e.id FROM term_table AS t INNER JOIN example_sentence_table_x_term_table AS st ON st.term_id = t.id INNER JOIN example_table AS e ON e.example_sentence_id = st.example_sentence_id INNER JOIN language_code_table AS l ON l.id = e.language_code_id WHERE t.term = ?1 AND l.language_code IN ($expandedlanguages) LIMIT ?2 OFFSET ?3',
+      variables: [
+        Variable<String>(termString),
+        Variable<int>(limit),
+        Variable<int>(offset),
+        for (var $ in languages) Variable<String>($),
+      ],
+      readsFrom: {
+        exampleTable,
+        termTable,
+        exampleSentenceTableXTermTable,
+        languageCodeTable,
+      },
+    ).map((QueryRow row) => row.read<int>('id'));
+  }
+
   Selectable<ExampleEntryViewData> getExamplesByIds(List<int> ids) {
     var $arrayStartIndex = 1;
     final expandedids = $expandVar($arrayStartIndex, ids.length);
@@ -20928,6 +21017,7 @@ abstract class _$DaDb extends GeneratedDatabase {
     exampleSentenceTable,
     languageCodeTable,
     exampleTable,
+    exampleSentenceTableXTermTable,
     exampleTableXTagBankTable,
     statNameTable,
     statTable,
@@ -20938,7 +21028,6 @@ abstract class _$DaDb extends GeneratedDatabase {
     exampleAudioTableXStatTable,
     exampleEntryView,
     languageCodeTableLanguageCode,
-    exampleSentenceTableXTermTable,
     exampleTableXExampleAudioTableAudioIdIndex,
     exampleSentenceTableXTermTableTermIdIndex,
     exampleTableXStatTableStatIdIndex,
@@ -21284,114 +21373,6 @@ abstract class _$DaDb extends GeneratedDatabase {
     ),
     WritePropagation(
       on: TableUpdateQuery.onTableName(
-        'example_table',
-        limitUpdateKind: UpdateKind.delete,
-      ),
-      result: [
-        TableUpdate('example_table_x_tag_bank_table', kind: UpdateKind.delete),
-      ],
-    ),
-    WritePropagation(
-      on: TableUpdateQuery.onTableName(
-        'tag_bank_v3_table',
-        limitUpdateKind: UpdateKind.delete,
-      ),
-      result: [
-        TableUpdate('example_table_x_tag_bank_table', kind: UpdateKind.delete),
-      ],
-    ),
-    WritePropagation(
-      on: TableUpdateQuery.onTableName(
-        'example_table',
-        limitUpdateKind: UpdateKind.delete,
-      ),
-      result: [
-        TableUpdate('example_table_x_stat_table', kind: UpdateKind.delete),
-      ],
-    ),
-    WritePropagation(
-      on: TableUpdateQuery.onTableName(
-        'stat_table',
-        limitUpdateKind: UpdateKind.delete,
-      ),
-      result: [
-        TableUpdate('example_table_x_stat_table', kind: UpdateKind.delete),
-      ],
-    ),
-    WritePropagation(
-      on: TableUpdateQuery.onTableName(
-        'example_table',
-        limitUpdateKind: UpdateKind.delete,
-      ),
-      result: [
-        TableUpdate(
-          'example_table_x_example_audio_table',
-          kind: UpdateKind.delete,
-        ),
-      ],
-    ),
-    WritePropagation(
-      on: TableUpdateQuery.onTableName(
-        'example_audio_table',
-        limitUpdateKind: UpdateKind.delete,
-      ),
-      result: [
-        TableUpdate(
-          'example_table_x_example_audio_table',
-          kind: UpdateKind.delete,
-        ),
-      ],
-    ),
-    WritePropagation(
-      on: TableUpdateQuery.onTableName(
-        'example_audio_table',
-        limitUpdateKind: UpdateKind.delete,
-      ),
-      result: [
-        TableUpdate(
-          'example_audio_table_x_tag_bank_table',
-          kind: UpdateKind.delete,
-        ),
-      ],
-    ),
-    WritePropagation(
-      on: TableUpdateQuery.onTableName(
-        'tag_bank_v3_table',
-        limitUpdateKind: UpdateKind.delete,
-      ),
-      result: [
-        TableUpdate(
-          'example_audio_table_x_tag_bank_table',
-          kind: UpdateKind.delete,
-        ),
-      ],
-    ),
-    WritePropagation(
-      on: TableUpdateQuery.onTableName(
-        'example_audio_table',
-        limitUpdateKind: UpdateKind.delete,
-      ),
-      result: [
-        TableUpdate(
-          'example_audio_table_x_stat_table',
-          kind: UpdateKind.delete,
-        ),
-      ],
-    ),
-    WritePropagation(
-      on: TableUpdateQuery.onTableName(
-        'stat_table',
-        limitUpdateKind: UpdateKind.delete,
-      ),
-      result: [
-        TableUpdate(
-          'example_audio_table_x_stat_table',
-          kind: UpdateKind.delete,
-        ),
-      ],
-    ),
-    WritePropagation(
-      on: TableUpdateQuery.onTableName(
         'example_sentence_table',
         limitUpdateKind: UpdateKind.delete,
       ),
@@ -21410,6 +21391,114 @@ abstract class _$DaDb extends GeneratedDatabase {
       result: [
         TableUpdate(
           'example_sentence_table_x_term_table',
+          kind: UpdateKind.delete,
+        ),
+      ],
+    ),
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
+        'example_table',
+        limitUpdateKind: UpdateKind.delete,
+      ),
+      result: [
+        TableUpdate('example_table_x_tag_bank_table', kind: UpdateKind.delete),
+      ],
+    ),
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
+        'tag_bank_v3_table',
+        limitUpdateKind: UpdateKind.delete,
+      ),
+      result: [
+        TableUpdate('example_table_x_tag_bank_table', kind: UpdateKind.delete),
+      ],
+    ),
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
+        'example_table',
+        limitUpdateKind: UpdateKind.delete,
+      ),
+      result: [
+        TableUpdate('example_table_x_stat_table', kind: UpdateKind.delete),
+      ],
+    ),
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
+        'stat_table',
+        limitUpdateKind: UpdateKind.delete,
+      ),
+      result: [
+        TableUpdate('example_table_x_stat_table', kind: UpdateKind.delete),
+      ],
+    ),
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
+        'example_table',
+        limitUpdateKind: UpdateKind.delete,
+      ),
+      result: [
+        TableUpdate(
+          'example_table_x_example_audio_table',
+          kind: UpdateKind.delete,
+        ),
+      ],
+    ),
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
+        'example_audio_table',
+        limitUpdateKind: UpdateKind.delete,
+      ),
+      result: [
+        TableUpdate(
+          'example_table_x_example_audio_table',
+          kind: UpdateKind.delete,
+        ),
+      ],
+    ),
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
+        'example_audio_table',
+        limitUpdateKind: UpdateKind.delete,
+      ),
+      result: [
+        TableUpdate(
+          'example_audio_table_x_tag_bank_table',
+          kind: UpdateKind.delete,
+        ),
+      ],
+    ),
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
+        'tag_bank_v3_table',
+        limitUpdateKind: UpdateKind.delete,
+      ),
+      result: [
+        TableUpdate(
+          'example_audio_table_x_tag_bank_table',
+          kind: UpdateKind.delete,
+        ),
+      ],
+    ),
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
+        'example_audio_table',
+        limitUpdateKind: UpdateKind.delete,
+      ),
+      result: [
+        TableUpdate(
+          'example_audio_table_x_stat_table',
+          kind: UpdateKind.delete,
+        ),
+      ],
+    ),
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
+        'stat_table',
+        limitUpdateKind: UpdateKind.delete,
+      ),
+      result: [
+        TableUpdate(
+          'example_audio_table_x_stat_table',
           kind: UpdateKind.delete,
         ),
       ],
@@ -30323,14 +30412,14 @@ typedef $$TermTableTableProcessedTableManager =
     >;
 typedef $FtsTermsCreateCompanionBuilder =
     FtsTermsCompanion Function({
-      required String term,
-      required String termNormalized,
+      Value<String?> term,
+      Value<String?> termNormalized,
       Value<int> rowid,
     });
 typedef $FtsTermsUpdateCompanionBuilder =
     FtsTermsCompanion Function({
-      Value<String> term,
-      Value<String> termNormalized,
+      Value<String?> term,
+      Value<String?> termNormalized,
       Value<int> rowid,
     });
 
@@ -30417,8 +30506,8 @@ class $FtsTermsTableManager
               $FtsTermsAnnotationComposer($db: db, $table: table),
           updateCompanionCallback:
               ({
-                Value<String> term = const Value.absent(),
-                Value<String> termNormalized = const Value.absent(),
+                Value<String?> term = const Value.absent(),
+                Value<String?> termNormalized = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => FtsTermsCompanion(
                 term: term,
@@ -30427,8 +30516,8 @@ class $FtsTermsTableManager
               ),
           createCompanionCallback:
               ({
-                required String term,
-                required String termNormalized,
+                Value<String?> term = const Value.absent(),
+                Value<String?> termNormalized = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => FtsTermsCompanion.insert(
                 term: term,
@@ -30459,14 +30548,14 @@ typedef $FtsTermsProcessedTableManager =
     >;
 typedef $FtsTokensCreateCompanionBuilder =
     FtsTokensCompanion Function({
-      required String tokens,
-      required String tokensNormalized,
+      Value<String?> tokens,
+      Value<String?> tokensNormalized,
       Value<int> rowid,
     });
 typedef $FtsTokensUpdateCompanionBuilder =
     FtsTokensCompanion Function({
-      Value<String> tokens,
-      Value<String> tokensNormalized,
+      Value<String?> tokens,
+      Value<String?> tokensNormalized,
       Value<int> rowid,
     });
 
@@ -30553,8 +30642,8 @@ class $FtsTokensTableManager
               $FtsTokensAnnotationComposer($db: db, $table: table),
           updateCompanionCallback:
               ({
-                Value<String> tokens = const Value.absent(),
-                Value<String> tokensNormalized = const Value.absent(),
+                Value<String?> tokens = const Value.absent(),
+                Value<String?> tokensNormalized = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => FtsTokensCompanion(
                 tokens: tokens,
@@ -30563,8 +30652,8 @@ class $FtsTokensTableManager
               ),
           createCompanionCallback:
               ({
-                required String tokens,
-                required String tokensNormalized,
+                Value<String?> tokens = const Value.absent(),
+                Value<String?> tokensNormalized = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => FtsTokensCompanion.insert(
                 tokens: tokens,
@@ -30595,14 +30684,14 @@ typedef $FtsTokensProcessedTableManager =
     >;
 typedef $FtsReadingsCreateCompanionBuilder =
     FtsReadingsCompanion Function({
-      required String reading,
-      required String readingNormalized,
+      Value<String?> reading,
+      Value<String?> readingNormalized,
       Value<int> rowid,
     });
 typedef $FtsReadingsUpdateCompanionBuilder =
     FtsReadingsCompanion Function({
-      Value<String> reading,
-      Value<String> readingNormalized,
+      Value<String?> reading,
+      Value<String?> readingNormalized,
       Value<int> rowid,
     });
 
@@ -30689,8 +30778,8 @@ class $FtsReadingsTableManager
               $FtsReadingsAnnotationComposer($db: db, $table: table),
           updateCompanionCallback:
               ({
-                Value<String> reading = const Value.absent(),
-                Value<String> readingNormalized = const Value.absent(),
+                Value<String?> reading = const Value.absent(),
+                Value<String?> readingNormalized = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => FtsReadingsCompanion(
                 reading: reading,
@@ -30699,8 +30788,8 @@ class $FtsReadingsTableManager
               ),
           createCompanionCallback:
               ({
-                required String reading,
-                required String readingNormalized,
+                Value<String?> reading = const Value.absent(),
+                Value<String?> readingNormalized = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => FtsReadingsCompanion.insert(
                 reading: reading,
@@ -30731,12 +30820,12 @@ typedef $FtsReadingsProcessedTableManager =
     >;
 typedef $FtsDefinitionsCreateCompanionBuilder =
     FtsDefinitionsCompanion Function({
-      required String definition,
+      Value<String?> definition,
       Value<int> rowid,
     });
 typedef $FtsDefinitionsUpdateCompanionBuilder =
     FtsDefinitionsCompanion Function({
-      Value<String> definition,
+      Value<String?> definition,
       Value<int> rowid,
     });
 
@@ -30814,13 +30903,13 @@ class $FtsDefinitionsTableManager
               $FtsDefinitionsAnnotationComposer($db: db, $table: table),
           updateCompanionCallback:
               ({
-                Value<String> definition = const Value.absent(),
+                Value<String?> definition = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) =>
                   FtsDefinitionsCompanion(definition: definition, rowid: rowid),
           createCompanionCallback:
               ({
-                required String definition,
+                Value<String?> definition = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => FtsDefinitionsCompanion.insert(
                 definition: definition,
@@ -35233,16 +35322,16 @@ typedef $$TermBankV3_X_DefinitionTagTableTableProcessedTableManager =
 typedef $$TermMetaBankV3PitchTableTableCreateCompanionBuilder =
     TermMetaBankV3PitchTableCompanion Function({
       Value<int> id,
-      required int position,
-      Value<int?> nasal,
-      Value<int?> devoice,
+      required String positions,
+      Value<Object?> nasals,
+      Value<Object?> devoices,
     });
 typedef $$TermMetaBankV3PitchTableTableUpdateCompanionBuilder =
     TermMetaBankV3PitchTableCompanion Function({
       Value<int> id,
-      Value<int> position,
-      Value<int?> nasal,
-      Value<int?> devoice,
+      Value<String> positions,
+      Value<Object?> nasals,
+      Value<Object?> devoices,
     });
 
 final class $$TermMetaBankV3PitchTableTableReferences
@@ -35330,20 +35419,22 @@ class $$TermMetaBankV3PitchTableTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<int> get position => $composableBuilder(
-    column: $table.position,
+  ColumnFilters<String> get positions => $composableBuilder(
+    column: $table.positions,
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<int> get nasal => $composableBuilder(
-    column: $table.nasal,
-    builder: (column) => ColumnFilters(column),
-  );
+  ColumnWithTypeConverterFilters<Object?, Object, String> get nasals =>
+      $composableBuilder(
+        column: $table.nasals,
+        builder: (column) => ColumnWithTypeConverterFilters(column),
+      );
 
-  ColumnFilters<int> get devoice => $composableBuilder(
-    column: $table.devoice,
-    builder: (column) => ColumnFilters(column),
-  );
+  ColumnWithTypeConverterFilters<Object?, Object, String> get devoices =>
+      $composableBuilder(
+        column: $table.devoices,
+        builder: (column) => ColumnWithTypeConverterFilters(column),
+      );
 
   Expression<bool> termMetaBankV3XPitchTableRefs(
     Expression<bool> Function(
@@ -35418,18 +35509,18 @@ class $$TermMetaBankV3PitchTableTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<int> get position => $composableBuilder(
-    column: $table.position,
+  ColumnOrderings<String> get positions => $composableBuilder(
+    column: $table.positions,
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<int> get nasal => $composableBuilder(
-    column: $table.nasal,
+  ColumnOrderings<String> get nasals => $composableBuilder(
+    column: $table.nasals,
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<int> get devoice => $composableBuilder(
-    column: $table.devoice,
+  ColumnOrderings<String> get devoices => $composableBuilder(
+    column: $table.devoices,
     builder: (column) => ColumnOrderings(column),
   );
 }
@@ -35446,14 +35537,14 @@ class $$TermMetaBankV3PitchTableTableAnnotationComposer
   GeneratedColumn<int> get id =>
       $composableBuilder(column: $table.id, builder: (column) => column);
 
-  GeneratedColumn<int> get position =>
-      $composableBuilder(column: $table.position, builder: (column) => column);
+  GeneratedColumn<String> get positions =>
+      $composableBuilder(column: $table.positions, builder: (column) => column);
 
-  GeneratedColumn<int> get nasal =>
-      $composableBuilder(column: $table.nasal, builder: (column) => column);
+  GeneratedColumnWithTypeConverter<Object?, String> get nasals =>
+      $composableBuilder(column: $table.nasals, builder: (column) => column);
 
-  GeneratedColumn<int> get devoice =>
-      $composableBuilder(column: $table.devoice, builder: (column) => column);
+  GeneratedColumnWithTypeConverter<Object?, String> get devoices =>
+      $composableBuilder(column: $table.devoices, builder: (column) => column);
 
   Expression<T> termMetaBankV3XPitchTableRefs<T extends Object>(
     Expression<T> Function(
@@ -35561,26 +35652,26 @@ class $$TermMetaBankV3PitchTableTableTableManager
           updateCompanionCallback:
               ({
                 Value<int> id = const Value.absent(),
-                Value<int> position = const Value.absent(),
-                Value<int?> nasal = const Value.absent(),
-                Value<int?> devoice = const Value.absent(),
+                Value<String> positions = const Value.absent(),
+                Value<Object?> nasals = const Value.absent(),
+                Value<Object?> devoices = const Value.absent(),
               }) => TermMetaBankV3PitchTableCompanion(
                 id: id,
-                position: position,
-                nasal: nasal,
-                devoice: devoice,
+                positions: positions,
+                nasals: nasals,
+                devoices: devoices,
               ),
           createCompanionCallback:
               ({
                 Value<int> id = const Value.absent(),
-                required int position,
-                Value<int?> nasal = const Value.absent(),
-                Value<int?> devoice = const Value.absent(),
+                required String positions,
+                Value<Object?> nasals = const Value.absent(),
+                Value<Object?> devoices = const Value.absent(),
               }) => TermMetaBankV3PitchTableCompanion.insert(
                 id: id,
-                position: position,
-                nasal: nasal,
-                devoice: devoice,
+                positions: positions,
+                nasals: nasals,
+                devoices: devoices,
               ),
           withReferenceMapper: (p0) => p0
               .map(
@@ -39548,12 +39639,12 @@ typedef $HiraganaSpellfixCostProcessedTableManager =
     >;
 typedef $FtsExampleTokensCreateCompanionBuilder =
     FtsExampleTokensCompanion Function({
-      required String exampleSentenceTokenized,
+      Value<String?> exampleSentenceTokenized,
       Value<int> rowid,
     });
 typedef $FtsExampleTokensUpdateCompanionBuilder =
     FtsExampleTokensCompanion Function({
-      Value<String> exampleSentenceTokenized,
+      Value<String?> exampleSentenceTokenized,
       Value<int> rowid,
     });
 
@@ -39633,7 +39724,7 @@ class $FtsExampleTokensTableManager
               $FtsExampleTokensAnnotationComposer($db: db, $table: table),
           updateCompanionCallback:
               ({
-                Value<String> exampleSentenceTokenized = const Value.absent(),
+                Value<String?> exampleSentenceTokenized = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => FtsExampleTokensCompanion(
                 exampleSentenceTokenized: exampleSentenceTokenized,
@@ -39641,7 +39732,7 @@ class $FtsExampleTokensTableManager
               ),
           createCompanionCallback:
               ({
-                required String exampleSentenceTokenized,
+                Value<String?> exampleSentenceTokenized = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => FtsExampleTokensCompanion.insert(
                 exampleSentenceTokenized: exampleSentenceTokenized,
@@ -41155,6 +41246,389 @@ typedef $$ExampleTableTableProcessedTableManager =
         bool exampleTableXStatTableRefs,
         bool exampleTableXExampleAudioTableRefs,
       })
+    >;
+typedef $$ExampleSentenceTable_X_TermTableTableCreateCompanionBuilder =
+    ExampleSentenceTable_X_TermTableCompanion Function({
+      required int exampleSentenceId,
+      required int termId,
+    });
+typedef $$ExampleSentenceTable_X_TermTableTableUpdateCompanionBuilder =
+    ExampleSentenceTable_X_TermTableCompanion Function({
+      Value<int> exampleSentenceId,
+      Value<int> termId,
+    });
+
+final class $$ExampleSentenceTable_X_TermTableTableReferences
+    extends
+        BaseReferences<
+          _$DaDb,
+          $ExampleSentenceTable_X_TermTableTable,
+          ExampleSentenceTable_X_TermTableData
+        > {
+  $$ExampleSentenceTable_X_TermTableTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static $ExampleSentenceTableTable _exampleSentenceIdTable(_$DaDb db) =>
+      db.exampleSentenceTable.createAlias(
+        $_aliasNameGenerator(
+          db.exampleSentenceTableXTermTable.exampleSentenceId,
+          db.exampleSentenceTable.id,
+        ),
+      );
+
+  $$ExampleSentenceTableTableProcessedTableManager get exampleSentenceId {
+    final $_column = $_itemColumn<int>('example_sentence_id')!;
+
+    final manager = $$ExampleSentenceTableTableTableManager(
+      $_db,
+      $_db.exampleSentenceTable,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_exampleSentenceIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static $TermTableTable _termIdTable(_$DaDb db) => db.termTable.createAlias(
+    $_aliasNameGenerator(
+      db.exampleSentenceTableXTermTable.termId,
+      db.termTable.id,
+    ),
+  );
+
+  $$TermTableTableProcessedTableManager get termId {
+    final $_column = $_itemColumn<int>('term_id')!;
+
+    final manager = $$TermTableTableTableManager(
+      $_db,
+      $_db.termTable,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_termIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+}
+
+class $$ExampleSentenceTable_X_TermTableTableFilterComposer
+    extends Composer<_$DaDb, $ExampleSentenceTable_X_TermTableTable> {
+  $$ExampleSentenceTable_X_TermTableTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  $$ExampleSentenceTableTableFilterComposer get exampleSentenceId {
+    final $$ExampleSentenceTableTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.exampleSentenceId,
+      referencedTable: $db.exampleSentenceTable,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ExampleSentenceTableTableFilterComposer(
+            $db: $db,
+            $table: $db.exampleSentenceTable,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$TermTableTableFilterComposer get termId {
+    final $$TermTableTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.termId,
+      referencedTable: $db.termTable,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$TermTableTableFilterComposer(
+            $db: $db,
+            $table: $db.termTable,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$ExampleSentenceTable_X_TermTableTableOrderingComposer
+    extends Composer<_$DaDb, $ExampleSentenceTable_X_TermTableTable> {
+  $$ExampleSentenceTable_X_TermTableTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  $$ExampleSentenceTableTableOrderingComposer get exampleSentenceId {
+    final $$ExampleSentenceTableTableOrderingComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.exampleSentenceId,
+          referencedTable: $db.exampleSentenceTable,
+          getReferencedColumn: (t) => t.id,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$ExampleSentenceTableTableOrderingComposer(
+                $db: $db,
+                $table: $db.exampleSentenceTable,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return composer;
+  }
+
+  $$TermTableTableOrderingComposer get termId {
+    final $$TermTableTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.termId,
+      referencedTable: $db.termTable,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$TermTableTableOrderingComposer(
+            $db: $db,
+            $table: $db.termTable,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$ExampleSentenceTable_X_TermTableTableAnnotationComposer
+    extends Composer<_$DaDb, $ExampleSentenceTable_X_TermTableTable> {
+  $$ExampleSentenceTable_X_TermTableTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  $$ExampleSentenceTableTableAnnotationComposer get exampleSentenceId {
+    final $$ExampleSentenceTableTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.exampleSentenceId,
+          referencedTable: $db.exampleSentenceTable,
+          getReferencedColumn: (t) => t.id,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$ExampleSentenceTableTableAnnotationComposer(
+                $db: $db,
+                $table: $db.exampleSentenceTable,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return composer;
+  }
+
+  $$TermTableTableAnnotationComposer get termId {
+    final $$TermTableTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.termId,
+      referencedTable: $db.termTable,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$TermTableTableAnnotationComposer(
+            $db: $db,
+            $table: $db.termTable,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$ExampleSentenceTable_X_TermTableTableTableManager
+    extends
+        RootTableManager<
+          _$DaDb,
+          $ExampleSentenceTable_X_TermTableTable,
+          ExampleSentenceTable_X_TermTableData,
+          $$ExampleSentenceTable_X_TermTableTableFilterComposer,
+          $$ExampleSentenceTable_X_TermTableTableOrderingComposer,
+          $$ExampleSentenceTable_X_TermTableTableAnnotationComposer,
+          $$ExampleSentenceTable_X_TermTableTableCreateCompanionBuilder,
+          $$ExampleSentenceTable_X_TermTableTableUpdateCompanionBuilder,
+          (
+            ExampleSentenceTable_X_TermTableData,
+            $$ExampleSentenceTable_X_TermTableTableReferences,
+          ),
+          ExampleSentenceTable_X_TermTableData,
+          PrefetchHooks Function({bool exampleSentenceId, bool termId})
+        > {
+  $$ExampleSentenceTable_X_TermTableTableTableManager(
+    _$DaDb db,
+    $ExampleSentenceTable_X_TermTableTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$ExampleSentenceTable_X_TermTableTableFilterComposer(
+                $db: db,
+                $table: table,
+              ),
+          createOrderingComposer: () =>
+              $$ExampleSentenceTable_X_TermTableTableOrderingComposer(
+                $db: db,
+                $table: table,
+              ),
+          createComputedFieldComposer: () =>
+              $$ExampleSentenceTable_X_TermTableTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<int> exampleSentenceId = const Value.absent(),
+                Value<int> termId = const Value.absent(),
+              }) => ExampleSentenceTable_X_TermTableCompanion(
+                exampleSentenceId: exampleSentenceId,
+                termId: termId,
+              ),
+          createCompanionCallback:
+              ({required int exampleSentenceId, required int termId}) =>
+                  ExampleSentenceTable_X_TermTableCompanion.insert(
+                    exampleSentenceId: exampleSentenceId,
+                    termId: termId,
+                  ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable(table),
+                  $$ExampleSentenceTable_X_TermTableTableReferences(
+                    db,
+                    table,
+                    e,
+                  ),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: ({exampleSentenceId = false, termId = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [],
+              addJoins:
+                  <
+                    T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic
+                    >
+                  >(state) {
+                    if (exampleSentenceId) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.exampleSentenceId,
+                                referencedTable:
+                                    $$ExampleSentenceTable_X_TermTableTableReferences
+                                        ._exampleSentenceIdTable(db),
+                                referencedColumn:
+                                    $$ExampleSentenceTable_X_TermTableTableReferences
+                                        ._exampleSentenceIdTable(db)
+                                        .id,
+                              )
+                              as T;
+                    }
+                    if (termId) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.termId,
+                                referencedTable:
+                                    $$ExampleSentenceTable_X_TermTableTableReferences
+                                        ._termIdTable(db),
+                                referencedColumn:
+                                    $$ExampleSentenceTable_X_TermTableTableReferences
+                                        ._termIdTable(db)
+                                        .id,
+                              )
+                              as T;
+                    }
+
+                    return state;
+                  },
+              getPrefetchedDataCallback: (items) async {
+                return [];
+              },
+            );
+          },
+        ),
+      );
+}
+
+typedef $$ExampleSentenceTable_X_TermTableTableProcessedTableManager =
+    ProcessedTableManager<
+      _$DaDb,
+      $ExampleSentenceTable_X_TermTableTable,
+      ExampleSentenceTable_X_TermTableData,
+      $$ExampleSentenceTable_X_TermTableTableFilterComposer,
+      $$ExampleSentenceTable_X_TermTableTableOrderingComposer,
+      $$ExampleSentenceTable_X_TermTableTableAnnotationComposer,
+      $$ExampleSentenceTable_X_TermTableTableCreateCompanionBuilder,
+      $$ExampleSentenceTable_X_TermTableTableUpdateCompanionBuilder,
+      (
+        ExampleSentenceTable_X_TermTableData,
+        $$ExampleSentenceTable_X_TermTableTableReferences,
+      ),
+      ExampleSentenceTable_X_TermTableData,
+      PrefetchHooks Function({bool exampleSentenceId, bool termId})
     >;
 typedef $$ExampleTable_X_TagBankTableTableCreateCompanionBuilder =
     ExampleTable_X_TagBankTableCompanion Function({
@@ -44551,389 +45025,6 @@ typedef $$ExampleAudioTable_X_StatTableTableProcessedTableManager =
       ExampleAudioTable_X_StatTableData,
       PrefetchHooks Function({bool audioId, bool statTableId})
     >;
-typedef $$ExampleSentenceTable_X_TermTableTableCreateCompanionBuilder =
-    ExampleSentenceTable_X_TermTableCompanion Function({
-      required int exampleSentenceId,
-      required int termId,
-    });
-typedef $$ExampleSentenceTable_X_TermTableTableUpdateCompanionBuilder =
-    ExampleSentenceTable_X_TermTableCompanion Function({
-      Value<int> exampleSentenceId,
-      Value<int> termId,
-    });
-
-final class $$ExampleSentenceTable_X_TermTableTableReferences
-    extends
-        BaseReferences<
-          _$DaDb,
-          $ExampleSentenceTable_X_TermTableTable,
-          ExampleSentenceTable_X_TermTableData
-        > {
-  $$ExampleSentenceTable_X_TermTableTableReferences(
-    super.$_db,
-    super.$_table,
-    super.$_typedResult,
-  );
-
-  static $ExampleSentenceTableTable _exampleSentenceIdTable(_$DaDb db) =>
-      db.exampleSentenceTable.createAlias(
-        $_aliasNameGenerator(
-          db.exampleSentenceTableXTermTable.exampleSentenceId,
-          db.exampleSentenceTable.id,
-        ),
-      );
-
-  $$ExampleSentenceTableTableProcessedTableManager get exampleSentenceId {
-    final $_column = $_itemColumn<int>('example_sentence_id')!;
-
-    final manager = $$ExampleSentenceTableTableTableManager(
-      $_db,
-      $_db.exampleSentenceTable,
-    ).filter((f) => f.id.sqlEquals($_column));
-    final item = $_typedResult.readTableOrNull(_exampleSentenceIdTable($_db));
-    if (item == null) return manager;
-    return ProcessedTableManager(
-      manager.$state.copyWith(prefetchedData: [item]),
-    );
-  }
-
-  static $TermTableTable _termIdTable(_$DaDb db) => db.termTable.createAlias(
-    $_aliasNameGenerator(
-      db.exampleSentenceTableXTermTable.termId,
-      db.termTable.id,
-    ),
-  );
-
-  $$TermTableTableProcessedTableManager get termId {
-    final $_column = $_itemColumn<int>('term_id')!;
-
-    final manager = $$TermTableTableTableManager(
-      $_db,
-      $_db.termTable,
-    ).filter((f) => f.id.sqlEquals($_column));
-    final item = $_typedResult.readTableOrNull(_termIdTable($_db));
-    if (item == null) return manager;
-    return ProcessedTableManager(
-      manager.$state.copyWith(prefetchedData: [item]),
-    );
-  }
-}
-
-class $$ExampleSentenceTable_X_TermTableTableFilterComposer
-    extends Composer<_$DaDb, $ExampleSentenceTable_X_TermTableTable> {
-  $$ExampleSentenceTable_X_TermTableTableFilterComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  $$ExampleSentenceTableTableFilterComposer get exampleSentenceId {
-    final $$ExampleSentenceTableTableFilterComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.exampleSentenceId,
-      referencedTable: $db.exampleSentenceTable,
-      getReferencedColumn: (t) => t.id,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$ExampleSentenceTableTableFilterComposer(
-            $db: $db,
-            $table: $db.exampleSentenceTable,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return composer;
-  }
-
-  $$TermTableTableFilterComposer get termId {
-    final $$TermTableTableFilterComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.termId,
-      referencedTable: $db.termTable,
-      getReferencedColumn: (t) => t.id,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$TermTableTableFilterComposer(
-            $db: $db,
-            $table: $db.termTable,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return composer;
-  }
-}
-
-class $$ExampleSentenceTable_X_TermTableTableOrderingComposer
-    extends Composer<_$DaDb, $ExampleSentenceTable_X_TermTableTable> {
-  $$ExampleSentenceTable_X_TermTableTableOrderingComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  $$ExampleSentenceTableTableOrderingComposer get exampleSentenceId {
-    final $$ExampleSentenceTableTableOrderingComposer composer =
-        $composerBuilder(
-          composer: this,
-          getCurrentColumn: (t) => t.exampleSentenceId,
-          referencedTable: $db.exampleSentenceTable,
-          getReferencedColumn: (t) => t.id,
-          builder:
-              (
-                joinBuilder, {
-                $addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer,
-              }) => $$ExampleSentenceTableTableOrderingComposer(
-                $db: $db,
-                $table: $db.exampleSentenceTable,
-                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-                joinBuilder: joinBuilder,
-                $removeJoinBuilderFromRootComposer:
-                    $removeJoinBuilderFromRootComposer,
-              ),
-        );
-    return composer;
-  }
-
-  $$TermTableTableOrderingComposer get termId {
-    final $$TermTableTableOrderingComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.termId,
-      referencedTable: $db.termTable,
-      getReferencedColumn: (t) => t.id,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$TermTableTableOrderingComposer(
-            $db: $db,
-            $table: $db.termTable,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return composer;
-  }
-}
-
-class $$ExampleSentenceTable_X_TermTableTableAnnotationComposer
-    extends Composer<_$DaDb, $ExampleSentenceTable_X_TermTableTable> {
-  $$ExampleSentenceTable_X_TermTableTableAnnotationComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  $$ExampleSentenceTableTableAnnotationComposer get exampleSentenceId {
-    final $$ExampleSentenceTableTableAnnotationComposer composer =
-        $composerBuilder(
-          composer: this,
-          getCurrentColumn: (t) => t.exampleSentenceId,
-          referencedTable: $db.exampleSentenceTable,
-          getReferencedColumn: (t) => t.id,
-          builder:
-              (
-                joinBuilder, {
-                $addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer,
-              }) => $$ExampleSentenceTableTableAnnotationComposer(
-                $db: $db,
-                $table: $db.exampleSentenceTable,
-                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-                joinBuilder: joinBuilder,
-                $removeJoinBuilderFromRootComposer:
-                    $removeJoinBuilderFromRootComposer,
-              ),
-        );
-    return composer;
-  }
-
-  $$TermTableTableAnnotationComposer get termId {
-    final $$TermTableTableAnnotationComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.termId,
-      referencedTable: $db.termTable,
-      getReferencedColumn: (t) => t.id,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$TermTableTableAnnotationComposer(
-            $db: $db,
-            $table: $db.termTable,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return composer;
-  }
-}
-
-class $$ExampleSentenceTable_X_TermTableTableTableManager
-    extends
-        RootTableManager<
-          _$DaDb,
-          $ExampleSentenceTable_X_TermTableTable,
-          ExampleSentenceTable_X_TermTableData,
-          $$ExampleSentenceTable_X_TermTableTableFilterComposer,
-          $$ExampleSentenceTable_X_TermTableTableOrderingComposer,
-          $$ExampleSentenceTable_X_TermTableTableAnnotationComposer,
-          $$ExampleSentenceTable_X_TermTableTableCreateCompanionBuilder,
-          $$ExampleSentenceTable_X_TermTableTableUpdateCompanionBuilder,
-          (
-            ExampleSentenceTable_X_TermTableData,
-            $$ExampleSentenceTable_X_TermTableTableReferences,
-          ),
-          ExampleSentenceTable_X_TermTableData,
-          PrefetchHooks Function({bool exampleSentenceId, bool termId})
-        > {
-  $$ExampleSentenceTable_X_TermTableTableTableManager(
-    _$DaDb db,
-    $ExampleSentenceTable_X_TermTableTable table,
-  ) : super(
-        TableManagerState(
-          db: db,
-          table: table,
-          createFilteringComposer: () =>
-              $$ExampleSentenceTable_X_TermTableTableFilterComposer(
-                $db: db,
-                $table: table,
-              ),
-          createOrderingComposer: () =>
-              $$ExampleSentenceTable_X_TermTableTableOrderingComposer(
-                $db: db,
-                $table: table,
-              ),
-          createComputedFieldComposer: () =>
-              $$ExampleSentenceTable_X_TermTableTableAnnotationComposer(
-                $db: db,
-                $table: table,
-              ),
-          updateCompanionCallback:
-              ({
-                Value<int> exampleSentenceId = const Value.absent(),
-                Value<int> termId = const Value.absent(),
-              }) => ExampleSentenceTable_X_TermTableCompanion(
-                exampleSentenceId: exampleSentenceId,
-                termId: termId,
-              ),
-          createCompanionCallback:
-              ({required int exampleSentenceId, required int termId}) =>
-                  ExampleSentenceTable_X_TermTableCompanion.insert(
-                    exampleSentenceId: exampleSentenceId,
-                    termId: termId,
-                  ),
-          withReferenceMapper: (p0) => p0
-              .map(
-                (e) => (
-                  e.readTable(table),
-                  $$ExampleSentenceTable_X_TermTableTableReferences(
-                    db,
-                    table,
-                    e,
-                  ),
-                ),
-              )
-              .toList(),
-          prefetchHooksCallback: ({exampleSentenceId = false, termId = false}) {
-            return PrefetchHooks(
-              db: db,
-              explicitlyWatchedTables: [],
-              addJoins:
-                  <
-                    T extends TableManagerState<
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic
-                    >
-                  >(state) {
-                    if (exampleSentenceId) {
-                      state =
-                          state.withJoin(
-                                currentTable: table,
-                                currentColumn: table.exampleSentenceId,
-                                referencedTable:
-                                    $$ExampleSentenceTable_X_TermTableTableReferences
-                                        ._exampleSentenceIdTable(db),
-                                referencedColumn:
-                                    $$ExampleSentenceTable_X_TermTableTableReferences
-                                        ._exampleSentenceIdTable(db)
-                                        .id,
-                              )
-                              as T;
-                    }
-                    if (termId) {
-                      state =
-                          state.withJoin(
-                                currentTable: table,
-                                currentColumn: table.termId,
-                                referencedTable:
-                                    $$ExampleSentenceTable_X_TermTableTableReferences
-                                        ._termIdTable(db),
-                                referencedColumn:
-                                    $$ExampleSentenceTable_X_TermTableTableReferences
-                                        ._termIdTable(db)
-                                        .id,
-                              )
-                              as T;
-                    }
-
-                    return state;
-                  },
-              getPrefetchedDataCallback: (items) async {
-                return [];
-              },
-            );
-          },
-        ),
-      );
-}
-
-typedef $$ExampleSentenceTable_X_TermTableTableProcessedTableManager =
-    ProcessedTableManager<
-      _$DaDb,
-      $ExampleSentenceTable_X_TermTableTable,
-      ExampleSentenceTable_X_TermTableData,
-      $$ExampleSentenceTable_X_TermTableTableFilterComposer,
-      $$ExampleSentenceTable_X_TermTableTableOrderingComposer,
-      $$ExampleSentenceTable_X_TermTableTableAnnotationComposer,
-      $$ExampleSentenceTable_X_TermTableTableCreateCompanionBuilder,
-      $$ExampleSentenceTable_X_TermTableTableUpdateCompanionBuilder,
-      (
-        ExampleSentenceTable_X_TermTableData,
-        $$ExampleSentenceTable_X_TermTableTableReferences,
-      ),
-      ExampleSentenceTable_X_TermTableData,
-      PrefetchHooks Function({bool exampleSentenceId, bool termId})
-    >;
 typedef $$KanjiVGTableTableCreateCompanionBuilder =
     KanjiVGTableCompanion Function({
       Value<int> id,
@@ -46863,6 +46954,12 @@ class $DaDbManager {
       $$LanguageCodeTableTableTableManager(_db, _db.languageCodeTable);
   $$ExampleTableTableTableManager get exampleTable =>
       $$ExampleTableTableTableManager(_db, _db.exampleTable);
+  $$ExampleSentenceTable_X_TermTableTableTableManager
+  get exampleSentenceTableXTermTable =>
+      $$ExampleSentenceTable_X_TermTableTableTableManager(
+        _db,
+        _db.exampleSentenceTableXTermTable,
+      );
   $$ExampleTable_X_TagBankTableTableTableManager
   get exampleTableXTagBankTable =>
       $$ExampleTable_X_TagBankTableTableTableManager(
@@ -46897,12 +46994,6 @@ class $DaDbManager {
       $$ExampleAudioTable_X_StatTableTableTableManager(
         _db,
         _db.exampleAudioTableXStatTable,
-      );
-  $$ExampleSentenceTable_X_TermTableTableTableManager
-  get exampleSentenceTableXTermTable =>
-      $$ExampleSentenceTable_X_TermTableTableTableManager(
-        _db,
-        _db.exampleSentenceTableXTermTable,
       );
   $$KanjiVGTableTableTableManager get kanjiVGTable =>
       $$KanjiVGTableTableTableManager(_db, _db.kanjiVGTable);

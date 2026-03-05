@@ -202,7 +202,7 @@ Future parseTermBankV3(
       id: Value(pC.currentMaxTermBankId),
       indexId: Value(indexId),
       termId: Value(termInsertId),
-      definitionJsonId: jsonDefInsertId == null ? Value.absent() : Value(jsonDefInsertId),
+      definitionJsonId: Value(jsonDefInsertId),
       readingId: Value(readingInsertId),
       popularity: Value(jsonEntry[4]),
       sequenceNumber: Value(jsonEntry[6])

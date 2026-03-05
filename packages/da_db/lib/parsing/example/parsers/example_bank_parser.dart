@@ -45,21 +45,41 @@ class ExampleBankParser implements DbFileParser {
       exampleLocalId++;
 
       final groupId = entry['groupId'] as int? ?? 0;
-      final langIsoCode = entry['langIso3Code'] as String? ?? 'jpn';
+      final langIsoCode = entry['langIso3Code']!;
 
-      // 1. Analyze sentence with the Language Processor to extract FTS5
-      
-      final parseResult = lp.parse(sentence, ProcessorOptions());
+      // apply the language processor if the language matches
+      late final String segments;
+      late final Set<String> uniqueTerms;
+      if(langIsoCode == lp.languageCode.name) {
+        // 1. Analyze sentence with the Language Processor to extract FTS5 tokens
+        final parseResult = lp.parse(sentence, ProcessorOptions());
 
-      // 2. Build the Surface Form string for FTS5 exact matching
-      final segmentString = parseResult.segments
-          .where((s) => s != null && s.trim().isNotEmpty)
-          .join(' ');
-      
-      final finalSegments = segmentString.isEmpty ? sentence : segmentString;
+        // 2. Build the Surface Form string for FTS5 exact matching
+        final segmentString = parseResult.segments
+            .where((s) => s != null && s.trim().isNotEmpty)
+            .join(' ');
+        segments = segmentString.isEmpty ? sentence : segmentString;
+
+        // 3. Terms (Using parseResult.tokens instead of the undefined 'tokens' string)
+        uniqueTerms = parseResult.tokens
+          .where((t) => t != null && t.trim().isNotEmpty)
+          .nonNulls.toSet();
+      }
+      // otherwise use the raw sentnce
+      else {
+        segments = sentence;
+        uniqueTerms = RegExp(r"\b[\w'-]+\b")
+          .allMatches(sentence)
+          .map((m) => m.group(0)!.toLowerCase())
+          .toSet();
+      }
+          
+      for (final term in uniqueTerms) {
+        termRows.add([exampleLocalId, term]);
+      }
 
       // Add 5 columns to the main table
-      exampleRows.add([exampleLocalId, groupId, langIsoCode, sentence, finalSegments]);
+      exampleRows.add([exampleLocalId, groupId, langIsoCode, sentence, segments]);
 
       // Tags
       final tags = (entry['tags'] as List<dynamic>?)?.cast<String>() ?? [];
@@ -78,15 +98,6 @@ class ExampleBankParser implements DbFileParser {
           s['value'] != null ? (s['value'] as num).toDouble() : null,
           s['displayValue'] as String?
         ]);
-      }
-
-      // 3. Terms (Using parseResult.tokens instead of the undefined 'tokens' string)
-      final termSet = parseResult.tokens
-          .where((t) => t != null && t.trim().isNotEmpty)
-          .toSet();
-          
-      for (final term in termSet) {
-        termRows.add([exampleLocalId, term]);
       }
 
       // Audios

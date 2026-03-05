@@ -2,7 +2,6 @@
   {
     "groupId": 102,
     "sentence": "猫が寝る",
-    "sentenceReading": "ねこがねる",
     "langIso3Code": "jpn",
     "stats": [
       { "statName": "quality", "value": 3.5 }
