@@ -55,7 +55,6 @@ import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
 import 'package:language_processing/language_processing.dart';
 import 'package:sqlite3/sqlite3.dart';
-import 'package:sqlite3_native_assets/sqlite3_native_assets.dart';
 import 'package:sqlite_extensions/sqlite_extensions.dart';
 import 'package:universal_io/io.dart';
 
@@ -135,7 +134,6 @@ part 'da_db.g.dart';
     'tag/tag_bank_v3_views.drift',
 
     'example/example_fts5_table.drift', 'example/example_views.drift', 'example/example_queries.drift',
-    //'general_tables/reading_spellfix_table.drift',
     'general_tables/hiragana_spellfix_cost.drift',
     'audio/audio_views.drift', 'audio/audio_queries.drift',
     
@@ -239,6 +237,6 @@ void setupDb (Database database) {
 
 Sqlite3 loadExtensions() {
 
-  sqlite3Native.loadSqliteVectorExtension();
-  return sqlite3Native;
+  sqlite3.loadSqliteVectorExtension();
+  return sqlite3;
 }

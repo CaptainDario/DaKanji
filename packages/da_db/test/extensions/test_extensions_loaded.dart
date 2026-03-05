@@ -1,15 +1,15 @@
-import 'package:sqlite3/native_assets.dart';
+import 'package:sqlite3/sqlite3.dart';
 import 'package:sqlite_extensions/sqlite_extensions.dart';
 import 'package:test/test.dart';
 
 void main() async {
 
-  sqlite3Native.loadSqliteVectorExtension();
-  sqlite3Native.loadSqliteSpellfixExtension();
-  sqlite3Native.loadSqliteCrsqliteExtension();
-  sqlite3Native.loadSqliteCompressExtension();
+  sqlite3.loadSqliteVectorExtension();
+  sqlite3.loadSqliteSpellfixExtension();
+  sqlite3.loadSqliteCrsqliteExtension();
+  sqlite3.loadSqliteCompressExtension();
 
-  final db = sqlite3Native.openInMemory();
+  final db = sqlite3.openInMemory();
 
   test('Testing FTS5 loaded', () async {
     db.execute('CREATE VIRTUAL TABLE email USING fts5(sender, title, body);');

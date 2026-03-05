@@ -6,12 +6,8 @@ targets:
           sql:
             dialect: sqlite
             options:
-              version: "3.44"
+              version: "3.51"
               modules:
                 - fts5
                 - json1
                 - dbstat
-                - spellfix1
-              known_functions:
-                compress: "blob null (blob null)"
-                uncompress: "blob null (blob null)"
