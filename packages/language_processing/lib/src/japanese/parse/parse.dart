@@ -1,4 +1,5 @@
 import 'package:language_processing/language_processing.dart';
+import 'package:language_processing/src/japanese/mecab/unidic_fields.dart';
 import 'package:language_processing/src/parse_result.dart';
 import 'package:mecab_for_dart/mecab_dart.dart';
 
@@ -19,28 +20,30 @@ ParseResult parse(String text, Mecab mecab, ProcessorOptions options) {
 
     segments.add(node.surface);
     
-    if(l > 4) {
-      pos.add(node.features.sublist(0, 4));
+    if(l > UniDicFields.pos4) {
+      pos.add(node.features.sublist(0, UniDicFields.pos4+1));
     }
     else {
       pos.add([]);
     }
 
-    if(l > 10) {
-      tokens.add(node.features[10]);
+    if(l > UniDicFields.orthBase) {
+      tokens.add(node.features[UniDicFields.orthBase]);
     }
     else {
       tokens.add(null);
     }
     
-    if(l > 20) {
-      readings.add(node.features[20]);
+    if(l > UniDicFields.kana) {
+      readings.add(node.features[UniDicFields.kana]);
     }
     else {
       readings.add(null);
     }
     
   }
+
+  print("lakfhlkadshf $tokens");
 
   return ParseResult(
     segments: segments,

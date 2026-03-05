@@ -1,10 +1,7 @@
 import 'dart:convert';
 
-import 'package:language_processing/src/deconjugation_result.dart';
-import 'package:language_processing/src/japanese/japanese_processor.dart';
-import 'package:language_processing/src/language_processor_options.dart';
+import 'package:language_processing/language_processing.dart';
 import 'package:language_processing/src/parse_result.dart';
-import 'package:language_processing/src/term_reading_pair.dart';
 
 
 
@@ -12,16 +9,18 @@ import 'package:language_processing/src/term_reading_pair.dart';
 
 abstract class LanguageProcessor {
 
+  abstract Iso639_3 languageCode;
+
   const LanguageProcessor();
 
   factory LanguageProcessor.fromJson(Map<String, dynamic> json) {
-    final String type = json['type'];
+    final String languageCode = json['languageCode'];
 
-    switch (type) {
-      case 'japanese':
-        return JapaneseProcessor.fromJson(json);
-      default:
-        throw UnsupportedError('Unknown LanguageProcessor type: $type');
+    if (languageCode == Iso639_3.jpn.name) {
+      return JapaneseProcessor.fromJson(json);
+    }
+    else {
+      throw UnsupportedError('Unknown LanguageProcessor type: $languageCode');
     }
   }
 
@@ -45,13 +44,8 @@ abstract class LanguageProcessor {
 
   List<Set<DeconjugationResult>> deconjugateAll(List<String> terms);
 
-  
   ParseResult parse(String term, ProcessorOptions options);
 
-  /// Returns the readings for the given text
-  String getReadings(String text);
-
-  /// Generates possible misspelling variants from a given string
   List<String> generateSpellingVariations({
     required String word,
     required int n,
