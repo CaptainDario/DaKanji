@@ -16,6 +16,9 @@ final List<({String reading, List<String> expected})> moraTestCases = [
   // Single mora edge cases
   (reading: 'き', expected: ['き']),
   (reading: 'しゃ', expected: ['しゃ']),
+
+  // Edge case: decomposed characters
+  (reading: 'バンコ゚ー', expected: ['バ', 'ン', 'コ゚', 'ー']),
 ];
 
 /// Test cases for the H/L pitch pattern generation logic
@@ -56,4 +59,5 @@ final List<({String reading, int position, String expected})> patternTestCases =
   // Edge case: 1-mora word Odaka (Starts High, drops on particle)
   (reading: 'き', position: 1, expected: 'H'), // 1 mora
   (reading: 'しゃ', position: 1, expected: 'H'), // 1 mora (yōon)
+
 ];
