@@ -117,8 +117,10 @@ class TermBankV3Merger implements StagingMerger {
       ''');
 
       // --- Junction Tables ---
+      
+      // 1. Definition Junction
       await targetDb.customStatement('''
-        INSERT INTO ${tjDef.actualTableName} (
+        INSERT OR IGNORE INTO ${tjDef.actualTableName} (
             ${tjDef.termBankId.name}, 
             ${tjDef.definitionId.name}, 
             ${tjDef.rank.name}
@@ -126,14 +128,15 @@ class TermBankV3Merger implements StagingMerger {
         SELECT 
             $maxTermBankId + s.term_local_id, 
             d.id, 
-            s.rank -- Select the rank from staging
+            s.rank
         FROM $workerAlias.term_definition_staging_table s
-        JOIN ${tDef.actualTableName} d ON d.definition = s.definition
+        JOIN ${tDef.actualTableName} d ON d.${tDef.definition.name} = s.definition
         ORDER BY s.rowid
       ''');
 
+      // 2. Tag Junction
       await targetDb.customStatement('''
-        INSERT INTO ${tjTag.actualTableName} (${tjTag.termBankId.name}, ${tjTag.tagBankId.name})
+        INSERT OR IGNORE INTO ${tjTag.actualTableName} (${tjTag.termBankId.name}, ${tjTag.tagBankId.name})
         SELECT $maxTermBankId + s.term_local_id, t.id
         FROM $workerAlias.term_tag_staging_table s
         JOIN ${tTag.actualTableName} t ON t.name = s.tag_name AND t.index_id = $indexId
@@ -141,8 +144,9 @@ class TermBankV3Merger implements StagingMerger {
         ORDER BY s.rowid
       ''');
       
+      // 3. Definition Tag Junction
       await targetDb.customStatement('''
-        INSERT INTO ${tjDefTag.actualTableName} (${tjDefTag.termBankId.name}, ${tjDefTag.definitionTagId.name})
+        INSERT OR IGNORE INTO ${tjDefTag.actualTableName} (${tjDefTag.termBankId.name}, ${tjDefTag.definitionTagId.name})
         SELECT $maxTermBankId + s.term_local_id, t.id
         FROM $workerAlias.term_tag_staging_table s
         JOIN ${tTag.actualTableName} t ON t.name = s.tag_name AND t.index_id = $indexId
@@ -150,11 +154,12 @@ class TermBankV3Merger implements StagingMerger {
         ORDER BY s.rowid
       ''');
 
+      // 4. Rule Junction
       await targetDb.customStatement('''
-        INSERT INTO ${tjRule.actualTableName} (${tjRule.termBankId.name}, ${tjRule.ruleIdentifierId.name})
+        INSERT OR IGNORE INTO ${tjRule.actualTableName} (${tjRule.termBankId.name}, ${tjRule.ruleIdentifierId.name})
         SELECT $maxTermBankId + s.term_local_id, r.id
         FROM $workerAlias.term_rule_staging_table s
-        JOIN ${tRule.actualTableName} r ON r.rule_identifier = s.rule_id
+        JOIN ${tRule.actualTableName} r ON r.${tRule.ruleIdentifier.name} = s.rule_id
         ORDER BY s.rowid
       ''');
 
