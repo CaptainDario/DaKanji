@@ -1,3 +1,6 @@
+import 'package:characters/characters.dart';
+
+
 /// Set of small combining kana (yōon and small vowels) used to calculate morae.
 const Set<String> smallCombiningKana = {
   'ゃ', 'ゅ', 'ょ', 'ぁ', 'ぃ', 'ぅ', 'ぇ', 'ぉ',
@@ -39,7 +42,7 @@ String parseYomitanPitch(dynamic input) {
 /// becomes a single mora) to ensure accurate pitch accent alignment.
 List<String> convertToMoraList(String reading) {
   List<String> moraList = [];
-  final runes = reading.runes.map((r) => String.fromCharCode(r)).toList();
+  final runes = reading.characters.toList();
 
   for (int i = 0; i < runes.length; i++) {
     final String char = runes[i];
