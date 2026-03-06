@@ -4,6 +4,7 @@ import 'dart:typed_data';
 import 'package:da_db/parsing/staging_db/staging_db.dart';
 import 'package:da_db/parsing/util/db_file_parser.dart';
 import 'package:da_db/parsing/util/parsing_constants.dart';
+import 'package:da_db/parsing/util/staging_utils.dart';
 import 'package:language_processing/language_processing.dart';
 
 
@@ -93,21 +94,32 @@ class TermMetaBankV3Parser implements DbFileParser {
       } 
       else if (mode == 'pitch' && data is Map) {
         final pitches = data['pitches'];
-        if (pitches is List) {
+
+        if (pitches is List && reading != null) {
           for (var p in pitches) {
             pitchLocalId++;
-            // Parse fields
-            final position = p['position'] as int? ?? 0;
-            // Handle nasal/devoice loosely (could be bool or int)
-            int? nasal;
-            if (p['nasal'] is int) nasal = p['nasal'];
-            else if (p['nasal'] is bool) nasal = (p['nasal'] as bool) ? 1 : 0;
             
-            int? devoice;
-            if (p['devoice'] is int) devoice = p['devoice'];
-            else if (p['devoice'] is bool) devoice = (p['devoice'] as bool) ? 1 : 0;
+            try {
+              // Ensure this method name matches your LanguageProcessor interface!
+              final String positionPattern = lp.parseYomitanPitch({
+                'position': p['position'],
+                'reading': reading,
+              });
 
-            pitchRows.add([pitchLocalId, localId, position, nasal, devoice]);
+              // Handle nasal/devoice using the local normalizer
+              List<int>? nasalList = normalizePositions(p['nasal']);
+              List<int>? devoiceList = normalizePositions(p['devoice']);
+
+              // Encode the arrays for the DB
+              String? nasalStr = nasalList != null ? jsonEncode(nasalList) : null;
+              String? devoiceStr = devoiceList != null ? jsonEncode(devoiceList) : null;
+
+              pitchRows.add([pitchLocalId, localId, positionPattern, nasalStr, devoiceStr]);
+              
+            } catch (e) {
+              // If the pitch is malformed, skip it and don't insert its tags
+              continue; 
+            }
 
             // Pitch Tags
             if (p['tags'] is List) {
@@ -154,6 +166,14 @@ class TermMetaBankV3Parser implements DbFileParser {
     }
 
     return localId;
+  }
+
+  /// 2. Normalizes Yomitan's nasal/devoice fields into a consistent `List<int>`
+  List<int>? normalizePositions(dynamic value) {
+    if (value == null) return null;
+    if (value is int) return [value];
+    if (value is List) return value.cast<int>();
+    return null;
   }
 
   Future<int> _getMaxId(StagingDatabase db, String table, String col) async {
