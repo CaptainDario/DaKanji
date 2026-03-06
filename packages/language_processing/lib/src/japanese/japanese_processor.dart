@@ -1,7 +1,8 @@
-import 'package:language_processing/src/deconjugation_result.dart';
+import 'package:language_processing/language_processing.dart';
 import 'package:language_processing/src/japanese/japanese_string_operations.dart';
 import 'package:language_processing/src/japanese/normalize/normalize.dart' as jp_norm;
 import 'package:language_processing/src/japanese/parse/parse.dart' as jp_parse;
+import 'package:language_processing/src/japanese/pronouncation/pronounciation.dart' as jp_pron;
 import 'package:language_processing/src/japanese/sentence_finding/sentence_finding_methods.dart';
 import 'package:language_processing/src/japanese/sentence_finding/sentence_finding_regex.dart' as jp_sent_regex;
 import 'package:language_processing/src/japanese/sentence_finding/sentence_finding_scan.dart' as jp_sent_scan;
@@ -10,15 +11,15 @@ import 'package:language_processing/src/japanese/spellfix/spellfix.dart' as jp_s
 import 'package:language_processing/src/japanese/spellfix/substitutions.dart';
 import 'package:language_processing/src/japanese/term_reading_pair/furigana_matching.dart';
 import 'package:language_processing/src/japanese/yomitan_deconjugation/deconjugate.dart' as jp_dec;
-import 'package:language_processing/src/language_processor.dart';
-import 'package:language_processing/src/language_processor_options.dart';
 import 'package:language_processing/src/parse_result.dart';
-import 'package:language_processing/src/term_reading_pair.dart';
 import 'package:mecab_for_dart/mecab_dart.dart';
 
 
 
 class JapaneseProcessor extends LanguageProcessor{
+
+  @override
+  Iso639_3 languageCode = Iso639_3.jpn;
 
   /// State from which a new mecab instance can be created
   /// Note: if this is set to null some methods will throw an exception
@@ -44,12 +45,13 @@ class JapaneseProcessor extends LanguageProcessor{
   @override
   Map<String, dynamic> toJson() {
     return {
-      'type': 'japanese', // <--- CRITICAL: Identifies this class
+      'languageCode': languageCode.name,
       'transferableMecab': _mecab?.transferableState.toJson() ?? mecabTransferableState?.toJson(),
     };
   }
 
   JapaneseProcessor.fromJson(Map<String, dynamic> json) {
+    languageCode = Iso639_3.values.firstWhere((e) => e.name == json['languageCode']);
     if (json['transferableMecab'] != null) {
       mecabTransferableState = MecabTransferableState.fromJson(json['transferableMecab']);
     }
@@ -69,8 +71,12 @@ class JapaneseProcessor extends LanguageProcessor{
 
     _initialized = false;
   }
+
+  @override
+  String parseYomitanPitch(dynamic input)
+    => jp_pron.parseYomitanPitch(input);
   
-  /// Normalizes aterm by:
+  /// Normalizes a term by:
   /// 1. Converting full-width Romaji to half-width.
   /// 2. Converting half-width Kana to full-width.
   /// 3. Converting Katakana to Hiragana.
@@ -78,6 +84,9 @@ class JapaneseProcessor extends LanguageProcessor{
   /// 
   /// Options:
   /// - convertRomajiToHiragana: bool (default: false)
+  /// 
+  /// Returns: List of normalized terms (usually just one, but can be
+  ///          multiple if there are multiple valid normalizations)
   @override
   List<String> normalize(String term, ProcessorOptions options) {
 
@@ -107,21 +116,6 @@ class JapaneseProcessor extends LanguageProcessor{
   @override
   ParseResult parse(String term, ProcessorOptions options)
     => jp_parse.parse(term, mecab, options);
-
-  @override
-  String getReadings(String sentence) {
-
-    List<TokenNode> parsed = mecab.parse(sentence);
-    String tokenized = "";
-    for (int i = 0; i < parsed.length; i++) {
-      if(parsed[i].features.isEmpty) continue;
-
-      tokenized += "${parsed[i].features[10]} ";
-    }
-
-    return tokenized;
-
-  }
 
   @override
   List<String> generateSpellingVariations({

@@ -43,8 +43,6 @@ ParseResult parse(String text, Mecab mecab, ProcessorOptions options) {
     
   }
 
-  print("lakfhlkadshf $tokens");
-
   return ParseResult(
     segments: segments,
     tokens: tokens,

@@ -36,6 +36,8 @@ abstract class LanguageProcessor {
 
   Future close();
 
+  String parseYomitanPitch(dynamic input);
+
   List<String> normalize(String term, ProcessorOptions options);
 
   List<String> normalizeAll(List<String> terms, ProcessorOptions options);
