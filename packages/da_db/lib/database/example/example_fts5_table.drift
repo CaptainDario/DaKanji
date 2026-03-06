@@ -4,7 +4,7 @@ import 'example_tables.dart';
 CREATE VIRTUAL TABLE IF NOT EXISTS fts_example_tokens USING fts5(
   example_sentence_tokenized,
   content='',
-  tokenize='unicode61',
+  tokenize='better_trigram',
   prefix='2 3',
   contentless_delete=1
 );

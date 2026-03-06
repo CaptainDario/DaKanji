@@ -50,6 +50,7 @@ import 'package:da_db/database/term_meta/term_meta_bank_v3_tables.dart';
 import 'package:da_db/delete/deletion_dao.dart';
 import 'package:da_db/util/data_converters/sort_order_converter.dart';
 import 'package:da_db/util/data_converters/sql_json_converter.dart';   // neccessary for drift generator
+import 'package:da_db/util/data_converters/sql_nullable_json_converter.dart';
 import 'package:da_db/util/data_converters/zlib_text_converter_io.dart'; // neccessary for drift generator
 import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
@@ -61,6 +62,8 @@ import 'package:universal_io/io.dart';
 import 'audio_source_list/audio_source_list_tables.dart';
 
 part 'da_db.g.dart';
+
+
 
 @DriftDatabase(
   tables: [
@@ -238,5 +241,7 @@ void setupDb (Database database) {
 Sqlite3 loadExtensions() {
 
   sqlite3.loadSqliteVectorExtension();
+  sqlite3.loadSqliteBetterTrigramExtension();
+  sqlite3.loadSqliteCrsqliteExtension();
   return sqlite3;
 }

@@ -10152,39 +10152,39 @@ class $TermMetaBankV3PitchTableTable extends TermMetaBankV3PitchTable
     type: DriftSqlType.int,
     requiredDuringInsert: false,
   );
-  static const VerificationMeta _positionsMeta = const VerificationMeta(
-    'positions',
+  static const VerificationMeta _positionMeta = const VerificationMeta(
+    'position',
   );
   @override
-  late final GeneratedColumn<String> positions = GeneratedColumn<String>(
-    'positions',
+  late final GeneratedColumn<String> position = GeneratedColumn<String>(
+    'position',
     aliasedName,
     false,
     type: DriftSqlType.string,
     requiredDuringInsert: true,
   );
   @override
-  late final GeneratedColumnWithTypeConverter<Object?, String> nasals =
+  late final GeneratedColumnWithTypeConverter<Object?, String> nasal =
       GeneratedColumn<String>(
-        'nasals',
+        'nasal',
         aliasedName,
         true,
         type: DriftSqlType.string,
         requiredDuringInsert: false,
-      ).withConverter<Object?>($TermMetaBankV3PitchTableTable.$converternasals);
+      ).withConverter<Object?>($TermMetaBankV3PitchTableTable.$converternasal);
   @override
-  late final GeneratedColumnWithTypeConverter<Object?, String> devoices =
+  late final GeneratedColumnWithTypeConverter<Object?, String> devoice =
       GeneratedColumn<String>(
-        'devoices',
+        'devoice',
         aliasedName,
         true,
         type: DriftSqlType.string,
         requiredDuringInsert: false,
       ).withConverter<Object?>(
-        $TermMetaBankV3PitchTableTable.$converterdevoices,
+        $TermMetaBankV3PitchTableTable.$converterdevoice,
       );
   @override
-  List<GeneratedColumn> get $columns => [id, positions, nasals, devoices];
+  List<GeneratedColumn> get $columns => [id, position, nasal, devoice];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -10200,13 +10200,13 @@ class $TermMetaBankV3PitchTableTable extends TermMetaBankV3PitchTable
     if (data.containsKey('id')) {
       context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
     }
-    if (data.containsKey('positions')) {
+    if (data.containsKey('position')) {
       context.handle(
-        _positionsMeta,
-        positions.isAcceptableOrUnknown(data['positions']!, _positionsMeta),
+        _positionMeta,
+        position.isAcceptableOrUnknown(data['position']!, _positionMeta),
       );
     } else if (isInserting) {
-      context.missing(_positionsMeta);
+      context.missing(_positionMeta);
     }
     return context;
   }
@@ -10224,20 +10224,20 @@ class $TermMetaBankV3PitchTableTable extends TermMetaBankV3PitchTable
         DriftSqlType.int,
         data['${effectivePrefix}id'],
       )!,
-      positions: attachedDatabase.typeMapping.read(
+      position: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
-        data['${effectivePrefix}positions'],
+        data['${effectivePrefix}position'],
       )!,
-      nasals: $TermMetaBankV3PitchTableTable.$converternasals.fromSql(
+      nasal: $TermMetaBankV3PitchTableTable.$converternasal.fromSql(
         attachedDatabase.typeMapping.read(
           DriftSqlType.string,
-          data['${effectivePrefix}nasals'],
+          data['${effectivePrefix}nasal'],
         ),
       ),
-      devoices: $TermMetaBankV3PitchTableTable.$converterdevoices.fromSql(
+      devoice: $TermMetaBankV3PitchTableTable.$converterdevoice.fromSql(
         attachedDatabase.typeMapping.read(
           DriftSqlType.string,
-          data['${effectivePrefix}devoices'],
+          data['${effectivePrefix}devoice'],
         ),
       ),
     );
@@ -10248,9 +10248,9 @@ class $TermMetaBankV3PitchTableTable extends TermMetaBankV3PitchTable
     return $TermMetaBankV3PitchTableTable(attachedDatabase, alias);
   }
 
-  static TypeConverter<Object?, String?> $converternasals =
+  static TypeConverter<Object?, String?> $converternasal =
       const NullableJsonConverter();
-  static TypeConverter<Object?, String?> $converterdevoices =
+  static TypeConverter<Object?, String?> $converterdevoice =
       const NullableJsonConverter();
 }
 
@@ -10260,32 +10260,32 @@ class TermMetaBankV3PitchTableData extends DataClass
   final int id;
 
   /// The positions of the pitch accents (H / L)
-  final String positions;
+  final String position;
 
   /// the nasal values of this pitch entry
-  final Object? nasals;
+  final Object? nasal;
 
   /// the devoice values of this pitch entry
-  final Object? devoices;
+  final Object? devoice;
   const TermMetaBankV3PitchTableData({
     required this.id,
-    required this.positions,
-    this.nasals,
-    this.devoices,
+    required this.position,
+    this.nasal,
+    this.devoice,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
-    map['positions'] = Variable<String>(positions);
-    if (!nullToAbsent || nasals != null) {
-      map['nasals'] = Variable<String>(
-        $TermMetaBankV3PitchTableTable.$converternasals.toSql(nasals),
+    map['position'] = Variable<String>(position);
+    if (!nullToAbsent || nasal != null) {
+      map['nasal'] = Variable<String>(
+        $TermMetaBankV3PitchTableTable.$converternasal.toSql(nasal),
       );
     }
-    if (!nullToAbsent || devoices != null) {
-      map['devoices'] = Variable<String>(
-        $TermMetaBankV3PitchTableTable.$converterdevoices.toSql(devoices),
+    if (!nullToAbsent || devoice != null) {
+      map['devoice'] = Variable<String>(
+        $TermMetaBankV3PitchTableTable.$converterdevoice.toSql(devoice),
       );
     }
     return map;
@@ -10294,13 +10294,13 @@ class TermMetaBankV3PitchTableData extends DataClass
   TermMetaBankV3PitchTableCompanion toCompanion(bool nullToAbsent) {
     return TermMetaBankV3PitchTableCompanion(
       id: Value(id),
-      positions: Value(positions),
-      nasals: nasals == null && nullToAbsent
+      position: Value(position),
+      nasal: nasal == null && nullToAbsent
           ? const Value.absent()
-          : Value(nasals),
-      devoices: devoices == null && nullToAbsent
+          : Value(nasal),
+      devoice: devoice == null && nullToAbsent
           ? const Value.absent()
-          : Value(devoices),
+          : Value(devoice),
     );
   }
 
@@ -10311,9 +10311,9 @@ class TermMetaBankV3PitchTableData extends DataClass
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return TermMetaBankV3PitchTableData(
       id: serializer.fromJson<int>(json['id']),
-      positions: serializer.fromJson<String>(json['positions']),
-      nasals: serializer.fromJson<Object?>(json['nasals']),
-      devoices: serializer.fromJson<Object?>(json['devoices']),
+      position: serializer.fromJson<String>(json['position']),
+      nasal: serializer.fromJson<Object?>(json['nasal']),
+      devoice: serializer.fromJson<Object?>(json['devoice']),
     );
   }
   @override
@@ -10321,31 +10321,31 @@ class TermMetaBankV3PitchTableData extends DataClass
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
-      'positions': serializer.toJson<String>(positions),
-      'nasals': serializer.toJson<Object?>(nasals),
-      'devoices': serializer.toJson<Object?>(devoices),
+      'position': serializer.toJson<String>(position),
+      'nasal': serializer.toJson<Object?>(nasal),
+      'devoice': serializer.toJson<Object?>(devoice),
     };
   }
 
   TermMetaBankV3PitchTableData copyWith({
     int? id,
-    String? positions,
-    Value<Object?> nasals = const Value.absent(),
-    Value<Object?> devoices = const Value.absent(),
+    String? position,
+    Value<Object?> nasal = const Value.absent(),
+    Value<Object?> devoice = const Value.absent(),
   }) => TermMetaBankV3PitchTableData(
     id: id ?? this.id,
-    positions: positions ?? this.positions,
-    nasals: nasals.present ? nasals.value : this.nasals,
-    devoices: devoices.present ? devoices.value : this.devoices,
+    position: position ?? this.position,
+    nasal: nasal.present ? nasal.value : this.nasal,
+    devoice: devoice.present ? devoice.value : this.devoice,
   );
   TermMetaBankV3PitchTableData copyWithCompanion(
     TermMetaBankV3PitchTableCompanion data,
   ) {
     return TermMetaBankV3PitchTableData(
       id: data.id.present ? data.id.value : this.id,
-      positions: data.positions.present ? data.positions.value : this.positions,
-      nasals: data.nasals.present ? data.nasals.value : this.nasals,
-      devoices: data.devoices.present ? data.devoices.value : this.devoices,
+      position: data.position.present ? data.position.value : this.position,
+      nasal: data.nasal.present ? data.nasal.value : this.nasal,
+      devoice: data.devoice.present ? data.devoice.value : this.devoice,
     );
   }
 
@@ -10353,68 +10353,68 @@ class TermMetaBankV3PitchTableData extends DataClass
   String toString() {
     return (StringBuffer('TermMetaBankV3PitchTableData(')
           ..write('id: $id, ')
-          ..write('positions: $positions, ')
-          ..write('nasals: $nasals, ')
-          ..write('devoices: $devoices')
+          ..write('position: $position, ')
+          ..write('nasal: $nasal, ')
+          ..write('devoice: $devoice')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(id, positions, nasals, devoices);
+  int get hashCode => Object.hash(id, position, nasal, devoice);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is TermMetaBankV3PitchTableData &&
           other.id == this.id &&
-          other.positions == this.positions &&
-          other.nasals == this.nasals &&
-          other.devoices == this.devoices);
+          other.position == this.position &&
+          other.nasal == this.nasal &&
+          other.devoice == this.devoice);
 }
 
 class TermMetaBankV3PitchTableCompanion
     extends UpdateCompanion<TermMetaBankV3PitchTableData> {
   final Value<int> id;
-  final Value<String> positions;
-  final Value<Object?> nasals;
-  final Value<Object?> devoices;
+  final Value<String> position;
+  final Value<Object?> nasal;
+  final Value<Object?> devoice;
   const TermMetaBankV3PitchTableCompanion({
     this.id = const Value.absent(),
-    this.positions = const Value.absent(),
-    this.nasals = const Value.absent(),
-    this.devoices = const Value.absent(),
+    this.position = const Value.absent(),
+    this.nasal = const Value.absent(),
+    this.devoice = const Value.absent(),
   });
   TermMetaBankV3PitchTableCompanion.insert({
     this.id = const Value.absent(),
-    required String positions,
-    this.nasals = const Value.absent(),
-    this.devoices = const Value.absent(),
-  }) : positions = Value(positions);
+    required String position,
+    this.nasal = const Value.absent(),
+    this.devoice = const Value.absent(),
+  }) : position = Value(position);
   static Insertable<TermMetaBankV3PitchTableData> custom({
     Expression<int>? id,
-    Expression<String>? positions,
-    Expression<String>? nasals,
-    Expression<String>? devoices,
+    Expression<String>? position,
+    Expression<String>? nasal,
+    Expression<String>? devoice,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
-      if (positions != null) 'positions': positions,
-      if (nasals != null) 'nasals': nasals,
-      if (devoices != null) 'devoices': devoices,
+      if (position != null) 'position': position,
+      if (nasal != null) 'nasal': nasal,
+      if (devoice != null) 'devoice': devoice,
     });
   }
 
   TermMetaBankV3PitchTableCompanion copyWith({
     Value<int>? id,
-    Value<String>? positions,
-    Value<Object?>? nasals,
-    Value<Object?>? devoices,
+    Value<String>? position,
+    Value<Object?>? nasal,
+    Value<Object?>? devoice,
   }) {
     return TermMetaBankV3PitchTableCompanion(
       id: id ?? this.id,
-      positions: positions ?? this.positions,
-      nasals: nasals ?? this.nasals,
-      devoices: devoices ?? this.devoices,
+      position: position ?? this.position,
+      nasal: nasal ?? this.nasal,
+      devoice: devoice ?? this.devoice,
     );
   }
 
@@ -10424,17 +10424,17 @@ class TermMetaBankV3PitchTableCompanion
     if (id.present) {
       map['id'] = Variable<int>(id.value);
     }
-    if (positions.present) {
-      map['positions'] = Variable<String>(positions.value);
+    if (position.present) {
+      map['position'] = Variable<String>(position.value);
     }
-    if (nasals.present) {
-      map['nasals'] = Variable<String>(
-        $TermMetaBankV3PitchTableTable.$converternasals.toSql(nasals.value),
+    if (nasal.present) {
+      map['nasal'] = Variable<String>(
+        $TermMetaBankV3PitchTableTable.$converternasal.toSql(nasal.value),
       );
     }
-    if (devoices.present) {
-      map['devoices'] = Variable<String>(
-        $TermMetaBankV3PitchTableTable.$converterdevoices.toSql(devoices.value),
+    if (devoice.present) {
+      map['devoice'] = Variable<String>(
+        $TermMetaBankV3PitchTableTable.$converterdevoice.toSql(devoice.value),
       );
     }
     return map;
@@ -10444,9 +10444,9 @@ class TermMetaBankV3PitchTableCompanion
   String toString() {
     return (StringBuffer('TermMetaBankV3PitchTableCompanion(')
           ..write('id: $id, ')
-          ..write('positions: $positions, ')
-          ..write('nasals: $nasals, ')
-          ..write('devoices: $devoices')
+          ..write('position: $position, ')
+          ..write('nasal: $nasal, ')
+          ..write('devoice: $devoice')
           ..write(')'))
         .toString();
   }
@@ -11005,7 +11005,7 @@ class TermMetaBankV3PitchesJsonView
   @override
   Map<SqlDialect, String> get createViewStatements => {
     SqlDialect.sqlite:
-        'CREATE VIEW IF NOT EXISTS term_meta_bank_v3_pitches_json_view AS SELECT xp.term_meta_id, JSON_GROUP_ARRAY(JSON_OBJECT(\'positions\', p.positions, \'devoices\', p.devoices, \'nasals\', p.nasals, \'tags\', COALESCE((SELECT JSON_GROUP_ARRAY(TagJSON.tag_json) FROM term_meta_bank_v3_pitch_table_x_tag_bank_v3_table AS xpt JOIN tag_bank_v3_as_json_view AS TagJSON ON xpt.tag_id = TagJSON.tag_id WHERE xpt.pitch_id = p.id), JSON(\'[]\')))) AS pitches FROM term_meta_bank_v3_x_pitch_table AS xp JOIN term_meta_bank_v3_pitch_table AS p ON xp.pitch_id = p.id GROUP BY xp.term_meta_id',
+        'CREATE VIEW IF NOT EXISTS term_meta_bank_v3_pitches_json_view AS SELECT xp.term_meta_id, JSON_GROUP_ARRAY(JSON_OBJECT(\'position\', p.position, \'devoice\', json(p.devoice), \'nasal\', json(p.nasal), \'tags\', COALESCE((SELECT JSON_GROUP_ARRAY(TagJSON.tag_json) FROM term_meta_bank_v3_pitch_table_x_tag_bank_v3_table AS xpt JOIN tag_bank_v3_as_json_view AS TagJSON ON xpt.tag_id = TagJSON.tag_id WHERE xpt.pitch_id = p.id), JSON(\'[]\')))) AS pitches FROM term_meta_bank_v3_x_pitch_table AS xp JOIN term_meta_bank_v3_pitch_table AS p ON xp.pitch_id = p.id GROUP BY xp.term_meta_id',
   };
   @override
   TermMetaBankV3PitchesJsonView get asDslTable => this;
@@ -13112,13 +13112,14 @@ class $AudioTableTable extends AudioTable
   static const VerificationMeta _pitchAccentPatternMeta =
       const VerificationMeta('pitchAccentPattern');
   @override
-  late final GeneratedColumn<int> pitchAccentPattern = GeneratedColumn<int>(
-    'pitch_accent_pattern',
-    aliasedName,
-    true,
-    type: DriftSqlType.int,
-    requiredDuringInsert: false,
-  );
+  late final GeneratedColumn<String> pitchAccentPattern =
+      GeneratedColumn<String>(
+        'pitch_accent_pattern',
+        aliasedName,
+        true,
+        type: DriftSqlType.string,
+        requiredDuringInsert: false,
+      );
   @override
   List<GeneratedColumn> get $columns => [
     id,
@@ -13199,7 +13200,7 @@ class $AudioTableTable extends AudioTable
         data['${effectivePrefix}media_id'],
       )!,
       pitchAccentPattern: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
+        DriftSqlType.string,
         data['${effectivePrefix}pitch_accent_pattern'],
       ),
     );
@@ -13224,8 +13225,8 @@ class AudioTableData extends DataClass implements Insertable<AudioTableData> {
   /// The id of the media file in the media table
   final int mediaId;
 
-  /// The pitch accent pattern number
-  final int? pitchAccentPattern;
+  /// The pitch accent pattern
+  final String? pitchAccentPattern;
   const AudioTableData({
     required this.id,
     required this.indexId,
@@ -13243,7 +13244,7 @@ class AudioTableData extends DataClass implements Insertable<AudioTableData> {
     }
     map['media_id'] = Variable<int>(mediaId);
     if (!nullToAbsent || pitchAccentPattern != null) {
-      map['pitch_accent_pattern'] = Variable<int>(pitchAccentPattern);
+      map['pitch_accent_pattern'] = Variable<String>(pitchAccentPattern);
     }
     return map;
   }
@@ -13272,7 +13273,9 @@ class AudioTableData extends DataClass implements Insertable<AudioTableData> {
       indexId: serializer.fromJson<int>(json['indexId']),
       readingId: serializer.fromJson<int?>(json['readingId']),
       mediaId: serializer.fromJson<int>(json['mediaId']),
-      pitchAccentPattern: serializer.fromJson<int?>(json['pitchAccentPattern']),
+      pitchAccentPattern: serializer.fromJson<String?>(
+        json['pitchAccentPattern'],
+      ),
     );
   }
   @override
@@ -13283,7 +13286,7 @@ class AudioTableData extends DataClass implements Insertable<AudioTableData> {
       'indexId': serializer.toJson<int>(indexId),
       'readingId': serializer.toJson<int?>(readingId),
       'mediaId': serializer.toJson<int>(mediaId),
-      'pitchAccentPattern': serializer.toJson<int?>(pitchAccentPattern),
+      'pitchAccentPattern': serializer.toJson<String?>(pitchAccentPattern),
     };
   }
 
@@ -13292,7 +13295,7 @@ class AudioTableData extends DataClass implements Insertable<AudioTableData> {
     int? indexId,
     Value<int?> readingId = const Value.absent(),
     int? mediaId,
-    Value<int?> pitchAccentPattern = const Value.absent(),
+    Value<String?> pitchAccentPattern = const Value.absent(),
   }) => AudioTableData(
     id: id ?? this.id,
     indexId: indexId ?? this.indexId,
@@ -13345,7 +13348,7 @@ class AudioTableCompanion extends UpdateCompanion<AudioTableData> {
   final Value<int> indexId;
   final Value<int?> readingId;
   final Value<int> mediaId;
-  final Value<int?> pitchAccentPattern;
+  final Value<String?> pitchAccentPattern;
   const AudioTableCompanion({
     this.id = const Value.absent(),
     this.indexId = const Value.absent(),
@@ -13366,7 +13369,7 @@ class AudioTableCompanion extends UpdateCompanion<AudioTableData> {
     Expression<int>? indexId,
     Expression<int>? readingId,
     Expression<int>? mediaId,
-    Expression<int>? pitchAccentPattern,
+    Expression<String>? pitchAccentPattern,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
@@ -13383,7 +13386,7 @@ class AudioTableCompanion extends UpdateCompanion<AudioTableData> {
     Value<int>? indexId,
     Value<int?>? readingId,
     Value<int>? mediaId,
-    Value<int?>? pitchAccentPattern,
+    Value<String?>? pitchAccentPattern,
   }) {
     return AudioTableCompanion(
       id: id ?? this.id,
@@ -13410,7 +13413,7 @@ class AudioTableCompanion extends UpdateCompanion<AudioTableData> {
       map['media_id'] = Variable<int>(mediaId.value);
     }
     if (pitchAccentPattern.present) {
-      map['pitch_accent_pattern'] = Variable<int>(pitchAccentPattern.value);
+      map['pitch_accent_pattern'] = Variable<String>(pitchAccentPattern.value);
     }
     return map;
   }
@@ -13659,7 +13662,7 @@ class AudioEntryViewData extends DataClass {
   final int id;
   final int? readingId;
   final String indexEntry;
-  final int? pitchAccentPattern;
+  final String? pitchAccentPattern;
   final String termsJsonList;
   final String? reading;
   final String? path;
@@ -13685,7 +13688,7 @@ class AudioEntryViewData extends DataClass {
       id: serializer.fromJson<int>(json['id']),
       readingId: serializer.fromJson<int?>(json['reading_id']),
       indexEntry: serializer.fromJson<String>(json['indexEntry']),
-      pitchAccentPattern: serializer.fromJson<int?>(
+      pitchAccentPattern: serializer.fromJson<String?>(
         json['pitch_accent_pattern'],
       ),
       termsJsonList: serializer.fromJson<String>(json['terms_json_list']),
@@ -13702,7 +13705,7 @@ class AudioEntryViewData extends DataClass {
       'id': serializer.toJson<int>(id),
       'reading_id': serializer.toJson<int?>(readingId),
       'indexEntry': serializer.toJson<String>(indexEntry),
-      'pitch_accent_pattern': serializer.toJson<int?>(pitchAccentPattern),
+      'pitch_accent_pattern': serializer.toJson<String?>(pitchAccentPattern),
       'terms_json_list': serializer.toJson<String>(termsJsonList),
       'reading': serializer.toJson<String?>(reading),
       'path': serializer.toJson<String?>(path),
@@ -13715,7 +13718,7 @@ class AudioEntryViewData extends DataClass {
     int? id,
     Value<int?> readingId = const Value.absent(),
     String? indexEntry,
-    Value<int?> pitchAccentPattern = const Value.absent(),
+    Value<String?> pitchAccentPattern = const Value.absent(),
     String? termsJsonList,
     Value<String?> reading = const Value.absent(),
     Value<String?> path = const Value.absent(),
@@ -13823,7 +13826,7 @@ class AudioEntryView extends ViewInfo<AudioEntryView, AudioEntryViewData>
         data['${effectivePrefix}indexEntry'],
       )!,
       pitchAccentPattern: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
+        DriftSqlType.string,
         data['${effectivePrefix}pitch_accent_pattern'],
       ),
       termsJsonList: attachedDatabase.typeMapping.read(
@@ -13867,12 +13870,13 @@ class AudioEntryView extends ViewInfo<AudioEntryView, AudioEntryViewData>
     false,
     type: DriftSqlType.string,
   );
-  late final GeneratedColumn<int> pitchAccentPattern = GeneratedColumn<int>(
-    'pitch_accent_pattern',
-    aliasedName,
-    true,
-    type: DriftSqlType.int,
-  );
+  late final GeneratedColumn<String> pitchAccentPattern =
+      GeneratedColumn<String>(
+        'pitch_accent_pattern',
+        aliasedName,
+        true,
+        type: DriftSqlType.string,
+      );
   late final GeneratedColumn<String> termsJsonList = GeneratedColumn<String>(
     'terms_json_list',
     aliasedName,
@@ -20782,7 +20786,7 @@ abstract class _$DaDb extends GeneratedDatabase {
 
   Selectable<AudioEntryViewData> audio_search_drift(String queryJson) {
     return customSelect(
-      'WITH request_values AS (SELECT CAST(json_extract(value, \'\$.term\') AS TEXT) AS term, CAST(json_extract(value, \'\$.reading\') AS TEXT) AS reading, CAST(json_extract(value, \'\$.pitch\') AS INT) AS pitch FROM json_each(?1)) SELECT DISTINCT AEV.* FROM request_values AS REQ INNER JOIN term_table AS TT ON TT.term = REQ.term OR TT.term_normalized = REQ.term INNER JOIN audio_table_x_term_table AS ATXTT ON ATXTT.term_id = TT.id INNER JOIN audio_entry_view AS AEV ON AEV.id = ATXTT.audio_id LEFT JOIN reading_table AS RT ON RT.id = AEV.reading_id WHERE(REQ.reading IS NULL OR AEV.reading = REQ.reading OR RT.reading_normalized = REQ.reading)AND(REQ.pitch IS NULL OR AEV.pitch_accent_pattern = REQ.pitch)ORDER BY(AEV.reading IS NOT NULL)DESC, AEV.reading ASC,(AEV.pitch_accent_pattern IS NOT NULL)DESC, AEV.pitch_accent_pattern ASC, TT.term ASC, AEV.path ASC',
+      'WITH request_values AS (SELECT CAST(json_extract(value, \'\$.term\') AS TEXT) AS term, CAST(json_extract(value, \'\$.reading\') AS TEXT) AS reading, CAST(json_extract(value, \'\$.pitch\') AS TEXT) AS pitch FROM json_each(?1)) SELECT DISTINCT AEV.* FROM request_values AS REQ INNER JOIN term_table AS TT ON TT.term = REQ.term OR TT.term_normalized = REQ.term INNER JOIN audio_table_x_term_table AS ATXTT ON ATXTT.term_id = TT.id INNER JOIN audio_entry_view AS AEV ON AEV.id = ATXTT.audio_id LEFT JOIN reading_table AS RT ON RT.id = AEV.reading_id WHERE(REQ.reading IS NULL OR AEV.reading = REQ.reading OR RT.reading_normalized = REQ.reading)AND(REQ.pitch IS NULL OR AEV.pitch_accent_pattern = REQ.pitch)ORDER BY TT.term ASC,(AEV.reading IS NOT NULL)DESC, AEV.reading ASC,(AEV.pitch_accent_pattern IS NOT NULL)DESC, AEV.pitch_accent_pattern ASC, AEV.path ASC',
       variables: [Variable<String>(queryJson)],
       readsFrom: {
         termTable,
@@ -35322,16 +35326,16 @@ typedef $$TermBankV3_X_DefinitionTagTableTableProcessedTableManager =
 typedef $$TermMetaBankV3PitchTableTableCreateCompanionBuilder =
     TermMetaBankV3PitchTableCompanion Function({
       Value<int> id,
-      required String positions,
-      Value<Object?> nasals,
-      Value<Object?> devoices,
+      required String position,
+      Value<Object?> nasal,
+      Value<Object?> devoice,
     });
 typedef $$TermMetaBankV3PitchTableTableUpdateCompanionBuilder =
     TermMetaBankV3PitchTableCompanion Function({
       Value<int> id,
-      Value<String> positions,
-      Value<Object?> nasals,
-      Value<Object?> devoices,
+      Value<String> position,
+      Value<Object?> nasal,
+      Value<Object?> devoice,
     });
 
 final class $$TermMetaBankV3PitchTableTableReferences
@@ -35419,20 +35423,20 @@ class $$TermMetaBankV3PitchTableTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<String> get positions => $composableBuilder(
-    column: $table.positions,
+  ColumnFilters<String> get position => $composableBuilder(
+    column: $table.position,
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnWithTypeConverterFilters<Object?, Object, String> get nasals =>
+  ColumnWithTypeConverterFilters<Object?, Object, String> get nasal =>
       $composableBuilder(
-        column: $table.nasals,
+        column: $table.nasal,
         builder: (column) => ColumnWithTypeConverterFilters(column),
       );
 
-  ColumnWithTypeConverterFilters<Object?, Object, String> get devoices =>
+  ColumnWithTypeConverterFilters<Object?, Object, String> get devoice =>
       $composableBuilder(
-        column: $table.devoices,
+        column: $table.devoice,
         builder: (column) => ColumnWithTypeConverterFilters(column),
       );
 
@@ -35509,18 +35513,18 @@ class $$TermMetaBankV3PitchTableTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<String> get positions => $composableBuilder(
-    column: $table.positions,
+  ColumnOrderings<String> get position => $composableBuilder(
+    column: $table.position,
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<String> get nasals => $composableBuilder(
-    column: $table.nasals,
+  ColumnOrderings<String> get nasal => $composableBuilder(
+    column: $table.nasal,
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<String> get devoices => $composableBuilder(
-    column: $table.devoices,
+  ColumnOrderings<String> get devoice => $composableBuilder(
+    column: $table.devoice,
     builder: (column) => ColumnOrderings(column),
   );
 }
@@ -35537,14 +35541,14 @@ class $$TermMetaBankV3PitchTableTableAnnotationComposer
   GeneratedColumn<int> get id =>
       $composableBuilder(column: $table.id, builder: (column) => column);
 
-  GeneratedColumn<String> get positions =>
-      $composableBuilder(column: $table.positions, builder: (column) => column);
+  GeneratedColumn<String> get position =>
+      $composableBuilder(column: $table.position, builder: (column) => column);
 
-  GeneratedColumnWithTypeConverter<Object?, String> get nasals =>
-      $composableBuilder(column: $table.nasals, builder: (column) => column);
+  GeneratedColumnWithTypeConverter<Object?, String> get nasal =>
+      $composableBuilder(column: $table.nasal, builder: (column) => column);
 
-  GeneratedColumnWithTypeConverter<Object?, String> get devoices =>
-      $composableBuilder(column: $table.devoices, builder: (column) => column);
+  GeneratedColumnWithTypeConverter<Object?, String> get devoice =>
+      $composableBuilder(column: $table.devoice, builder: (column) => column);
 
   Expression<T> termMetaBankV3XPitchTableRefs<T extends Object>(
     Expression<T> Function(
@@ -35652,26 +35656,26 @@ class $$TermMetaBankV3PitchTableTableTableManager
           updateCompanionCallback:
               ({
                 Value<int> id = const Value.absent(),
-                Value<String> positions = const Value.absent(),
-                Value<Object?> nasals = const Value.absent(),
-                Value<Object?> devoices = const Value.absent(),
+                Value<String> position = const Value.absent(),
+                Value<Object?> nasal = const Value.absent(),
+                Value<Object?> devoice = const Value.absent(),
               }) => TermMetaBankV3PitchTableCompanion(
                 id: id,
-                positions: positions,
-                nasals: nasals,
-                devoices: devoices,
+                position: position,
+                nasal: nasal,
+                devoice: devoice,
               ),
           createCompanionCallback:
               ({
                 Value<int> id = const Value.absent(),
-                required String positions,
-                Value<Object?> nasals = const Value.absent(),
-                Value<Object?> devoices = const Value.absent(),
+                required String position,
+                Value<Object?> nasal = const Value.absent(),
+                Value<Object?> devoice = const Value.absent(),
               }) => TermMetaBankV3PitchTableCompanion.insert(
                 id: id,
-                positions: positions,
-                nasals: nasals,
-                devoices: devoices,
+                position: position,
+                nasal: nasal,
+                devoice: devoice,
               ),
           withReferenceMapper: (p0) => p0
               .map(
@@ -38483,7 +38487,7 @@ typedef $$AudioTableTableCreateCompanionBuilder =
       required int indexId,
       Value<int?> readingId,
       required int mediaId,
-      Value<int?> pitchAccentPattern,
+      Value<String?> pitchAccentPattern,
     });
 typedef $$AudioTableTableUpdateCompanionBuilder =
     AudioTableCompanion Function({
@@ -38491,7 +38495,7 @@ typedef $$AudioTableTableUpdateCompanionBuilder =
       Value<int> indexId,
       Value<int?> readingId,
       Value<int> mediaId,
-      Value<int?> pitchAccentPattern,
+      Value<String?> pitchAccentPattern,
     });
 
 final class $$AudioTableTableReferences
@@ -38595,7 +38599,7 @@ class $$AudioTableTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<int> get pitchAccentPattern => $composableBuilder(
+  ColumnFilters<String> get pitchAccentPattern => $composableBuilder(
     column: $table.pitchAccentPattern,
     builder: (column) => ColumnFilters(column),
   );
@@ -38710,7 +38714,7 @@ class $$AudioTableTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<int> get pitchAccentPattern => $composableBuilder(
+  ColumnOrderings<String> get pitchAccentPattern => $composableBuilder(
     column: $table.pitchAccentPattern,
     builder: (column) => ColumnOrderings(column),
   );
@@ -38797,7 +38801,7 @@ class $$AudioTableTableAnnotationComposer
   GeneratedColumn<int> get id =>
       $composableBuilder(column: $table.id, builder: (column) => column);
 
-  GeneratedColumn<int> get pitchAccentPattern => $composableBuilder(
+  GeneratedColumn<String> get pitchAccentPattern => $composableBuilder(
     column: $table.pitchAccentPattern,
     builder: (column) => column,
   );
@@ -38935,7 +38939,7 @@ class $$AudioTableTableTableManager
                 Value<int> indexId = const Value.absent(),
                 Value<int?> readingId = const Value.absent(),
                 Value<int> mediaId = const Value.absent(),
-                Value<int?> pitchAccentPattern = const Value.absent(),
+                Value<String?> pitchAccentPattern = const Value.absent(),
               }) => AudioTableCompanion(
                 id: id,
                 indexId: indexId,
@@ -38949,7 +38953,7 @@ class $$AudioTableTableTableManager
                 required int indexId,
                 Value<int?> readingId = const Value.absent(),
                 required int mediaId,
-                Value<int?> pitchAccentPattern = const Value.absent(),
+                Value<String?> pitchAccentPattern = const Value.absent(),
               }) => AudioTableCompanion.insert(
                 id: id,
                 indexId: indexId,

@@ -28,5 +28,10 @@
     "groupId": 101,
     "sentence": "犬が走る",
     "langIso3Code": "jpn"
+  },
+  {
+    "groupId": 100,
+    "sentence": "「apple」を食べます",
+    "langIso3Code": "jpn"
   }
 ]

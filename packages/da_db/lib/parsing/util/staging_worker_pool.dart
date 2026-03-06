@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:isolate';
 
-import 'package:da_db/parsing/yomitan/staging_db/workers/worker_protocol.dart';
+import 'package:da_db/parsing/util/worker_protocol.dart';
 import 'package:path/path.dart' as p;
 import 'package:universal_io/io.dart';
 

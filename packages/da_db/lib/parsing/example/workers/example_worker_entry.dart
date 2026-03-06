@@ -9,8 +9,8 @@ import 'package:da_db/parsing/util/db_file_parser.dart';
 import 'package:da_db/parsing/util/db_optimization.dart';
 import 'package:da_db/parsing/util/parsing_constants.dart';
 import 'package:da_db/parsing/util/parsing_util.dart';
+import 'package:da_db/parsing/util/worker_protocol.dart';
 import 'package:da_db/parsing/yomitan/staging_db/parsers/tag_bank_v3_parser.dart';
-import 'package:da_db/parsing/yomitan/staging_db/workers/worker_protocol.dart';
 import 'package:drift/native.dart';
 import 'package:language_processing/language_processing.dart';
 
@@ -62,7 +62,7 @@ Future<void> exampleWorkerEntry(SendPort mainSendPort) async {
 
         if (mainFile == null) throw Exception("File not found");
 
-        // 1. Prepare the payload list (Explicitly cast to Uint8List to satisfy the interface)
+        // 1. Prepare the payload list
         List<Uint8List> payloadBytes = [mainFile.content];
 
         // 2. If it's a text bank, reconstruct the exact metadata filename
