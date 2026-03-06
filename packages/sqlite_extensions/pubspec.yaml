@@ -13,8 +13,10 @@ dependencies:
   universal_io: ^2.2.2
   hooks: ^1.0.1
   code_assets: ^1.0.0
+  sqlite_vector: ^0.9.85
   da_db_shared:
 
 dev_dependencies:
   lints: ^6.0.0
   test: ^1.25.6
+
