@@ -13,6 +13,7 @@ dependencies:
   kana_kit: ^2.1.1
   collection: ^1.19.1
   fullwidth_halfwidth_converter: ^1.2.0
+  characters: ^1.4.1
 
 dev_dependencies:
   lints: ^6.0.0
