@@ -16,6 +16,7 @@ import 'package:da_db/parsing/util/db_optimization.dart';
 import 'package:da_db/parsing/util/parsing_constants.dart';
 import 'package:da_db/parsing/util/parsing_util.dart';
 import 'package:da_db/parsing/util/staging_worker_pool.dart';
+import 'package:da_db/parsing/util/worker_protocol.dart';
 import 'package:da_db/parsing/yomitan/in_memory_cache/audio_source_list/audio_source_list_parser.dart';
 import 'package:da_db/parsing/yomitan/in_memory_cache/index/index_parser.dart';
 import 'package:da_db/parsing/yomitan/in_memory_cache/media/media_importer.dart';
@@ -121,19 +122,17 @@ Future<void> _unifiedOrchestratorEntry(({
     for (final file in allFiles) {
       final name = p.basename(file.name);
       
-      // Strict Metadata Extraction: 
-      // Audio formats use `yomitan_index.json` for metadata (and `index.json` for data mapping).
-      // Standard formats use `index.json` for metadata.
+      // Strict Metadata Extraction
       bool isMetadataFile = false;
       if (actualType == DictionaryTypes.audio && name == yomitanIndexFile) {
         isMetadataFile = true;
       } else if (actualType != DictionaryTypes.audio && name == indexFileName) {
         isMetadataFile = true;
       } else if (actualType == DictionaryTypes.examples && name == yomitanIndexFile && indexJson == null) {
-        isMetadataFile = true; // Fallback for edge-case example formats
+        isMetadataFile = true; 
       }
 
-      // Decode metadata into memory and skip adding it to worker queues
+      // Decode main metadata into memory for the orchestrator
       if (isMetadataFile) {
         indexJson = utf8.decode(file.rawContent!.getStream(decompress: true).toUint8List());
         continue; 
@@ -141,7 +140,7 @@ Future<void> _unifiedOrchestratorEntry(({
       
       if (!file.isFile) continue;
 
-      // Route data files to the parallel worker queue vs the transactional media queue
+      // Route data files
       switch (actualType) {
         case DictionaryTypes.yomitan:
           if (name == audioListName) audioListContent = utf8.decode(file.content);
@@ -153,7 +152,8 @@ Future<void> _unifiedOrchestratorEntry(({
           else if (SupportedAudioFormats.values.any((ext) => name.endsWith(".${ext.name}"))) mediaQueue.add(file);
           break;
         case DictionaryTypes.audio:
-          parallelQueue.add(file.name); // Audio parses ALL data/media staging side
+          // We DO NOT add individual files here. 
+          // The worker will handle the entire archive iteration.
           break;
       }
     }
@@ -179,14 +179,10 @@ Future<void> _unifiedOrchestratorEntry(({
         break;
       case DictionaryTypes.audio:
         targetWorkerEntry = audioWorkerEntry; 
-        numWorkers = 1; // Sequential processing required for massive audio blobs
-        // Ensure mapping files (index/entries) are parsed BEFORE raw audio blobs
-        parallelQueue.sort((a, b) {
-          final baseA = p.basename(a), baseB = p.basename(b);
-          if (baseA == audioIndexFile || baseA == audioEntriesFile) return -1;
-          if (baseB == audioIndexFile || baseB == audioEntriesFile) return 1;
-          return a.compareTo(b);
-        });
+        numWorkers = 1; // 1 worker will process the entire zip in a single pass
+        
+        // Give the worker the single command to process everything
+        parallelQueue.add(processFullAudioArchive); 
         break;
     }
 

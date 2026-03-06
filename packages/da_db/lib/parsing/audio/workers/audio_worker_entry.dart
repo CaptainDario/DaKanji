@@ -49,7 +49,7 @@ Future<void> audioWorkerEntry(SendPort mainSendPort) async {
       if (stagingDb == null || helper == null || lp == null) continue;
 
       try {
-        if (message.fileName == "PROCESS_FULL_AUDIO_ARCHIVE") {
+        if (message.fileName == processFullAudioArchive) {
           
           // 1. Open the archive ONCE and force the index/entries files to yield first
           final allFiles = daDbDataSourceIterator(
