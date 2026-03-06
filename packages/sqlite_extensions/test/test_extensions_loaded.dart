@@ -5,9 +5,8 @@ import 'package:test/test.dart';
 void main() async {
 
   sqlite3.loadSqliteVectorExtension();
-  sqlite3.loadSqliteSpellfixExtension();
   sqlite3.loadSqliteCrsqliteExtension();
-  sqlite3.loadSqliteCompressExtension();
+  sqlite3.loadSqliteBetterTrigramExtension();
 
   final db = sqlite3.openInMemory();
 
@@ -19,21 +18,12 @@ void main() async {
     db.execute('SELECT * FROM dbstat;');
   });
 
-  test('Testing SPELLFIX loaded', () async {
-    db.execute('CREATE VIRTUAL TABLE demo USING spellfix1;');
-  });
-
-  test('Testing COMPRESS loaded', () async {
-    db.execute('CREATE TABLE t1 (data TEXT);');
-    db.execute("INSERT INTO t1 (data) VALUES (compress('This is a test'));");
-    final result = db.select('SELECT uncompress(data) as data FROM t1;');
-    List<int> uncompressed = result.first['data'];
-    String decoded = String.fromCharCodes(uncompressed);
-    expect(decoded, 'This is a test');
-  });
-
   test('Testing SQLite-vector loaded', () async {
     db.execute('SELECT vector_version()');
+  });
+
+  test('Testing Better Trigram loaded', () async {
+    db.execute("CREATE VIRTUAL TABLE t1 USING fts5(y, tokenize='better_trigram')");
   });
 
   test('Testing CR-SQLite loaded', () async {
