@@ -17,7 +17,7 @@ import 'audio_index_format_test_cases.dart';
 List<({
   String format,
   String dataSource,
-  List<(String, String?, int?)> searchTerms,
+  List<(String, String?, String?)> searchTerms,
   List<List<AudioEntry>> testCases
 })> tests = [
   (

@@ -8,7 +8,7 @@ import '../dictionary_test_variables.dart';
 
 final placeholderAudioData = Uint8List.fromList([1, 2, 3]);
 
-List<(String, String?, int?)> audioFileNameFormatTestCaseSearchTerms = [
+List<(String, String?, String?)> audioFileNameFormatTestCaseSearchTerms = [
   // folder 1
   ('お手前', null, null),
   ('強み', null, null),
@@ -29,10 +29,12 @@ List<(String, String?, int?)> audioFileNameFormatTestCaseSearchTerms = [
   ('主催する', 'しゅさいする', null),
   // folder 4
   ('主に', null, null), // 5 results
-  ('主に', null, 1,), // 2 results
-  ('主に', 'おもに', 0), // 1 result
+  ('主に', null, 'HLL',), // 2 results
+  ('主に', 'おもに', 'LHH'), // 1 result
   ('主に', 'おもに', null), // 3 results
-  ('主に', 'おもに', 1), // 1 result
+  ('主に', 'おもに', 'HLL'), // 1 result
+  ('テスト', null, null),
+  ('テスト', 'てすと', 'HHLLL'),
 ];
 
 List<List<AudioEntry>> audioFileNameFormatTestCases = [
@@ -275,9 +277,9 @@ List<List<AudioEntry>> audioFileNameFormatTestCases = [
       indexEntry: audioFormat1ExampleDictionaryIndexEntry,
       terms: ['主に'],
       reading: 'おもに',
-      pitchAccentPattern: 0,
+      pitchAccentPattern: 'HLL',
       filePath: '4',
-      fileName: '主に[おもに](0).mp3',
+      fileName: '主に[おもに](1).mp3',
       fileData: placeholderAudioData,
     ),
     AudioEntry(
@@ -285,9 +287,9 @@ List<List<AudioEntry>> audioFileNameFormatTestCases = [
       indexEntry: audioFormat1ExampleDictionaryIndexEntry,
       terms: ['主に'],
       reading: 'おもに',
-      pitchAccentPattern: 1,
+      pitchAccentPattern: 'LHH',
       filePath: '4',
-      fileName: '主に[おもに](1).mp3',
+      fileName: '主に[おもに](0).mp3',
       fileData: placeholderAudioData,
     ),
     AudioEntry(
@@ -305,7 +307,7 @@ List<List<AudioEntry>> audioFileNameFormatTestCases = [
       indexEntry: audioFormat1ExampleDictionaryIndexEntry,
       terms: ['主に'],
       reading: null,
-      pitchAccentPattern: 1,
+      pitchAccentPattern: 'HL',
       filePath: '4',
       fileName: '主に(1).mp3',
       fileData: placeholderAudioData,
@@ -321,37 +323,27 @@ List<List<AudioEntry>> audioFileNameFormatTestCases = [
       fileData: placeholderAudioData,
     ),
   ],
-  // Results for '主に', null, 1
+  // Results for '主に', null, 'HLL'
   [
     AudioEntry(
       id: 0,
       indexEntry: audioFormat1ExampleDictionaryIndexEntry,
       terms: ['主に'],
       reading: 'おもに',
-      pitchAccentPattern: 1,
+      pitchAccentPattern: 'HLL',
       filePath: '4',
       fileName: '主に[おもに](1).mp3',
       fileData: placeholderAudioData,
     ),
-    AudioEntry(
-      id: 0,
-      indexEntry: audioFormat1ExampleDictionaryIndexEntry,
-      terms: ['主に'],
-      reading: null,
-      pitchAccentPattern: 1,
-      filePath: '4',
-      fileName: '主に(1).mp3',
-      fileData: placeholderAudioData,
-    ),
   ],
-  // Results for '主に', 'おもに', 0
+  // Results for '主に', 'おもに', 'LHH'
   [
     AudioEntry(
       id: 0,
       indexEntry: audioFormat1ExampleDictionaryIndexEntry,
       terms: ['主に'],
       reading: 'おもに',
-      pitchAccentPattern: 0,
+      pitchAccentPattern: 'LHH',
       filePath: '4',
       fileName: '主に[おもに](0).mp3',
       fileData: placeholderAudioData,
@@ -364,9 +356,9 @@ List<List<AudioEntry>> audioFileNameFormatTestCases = [
       indexEntry: audioFormat1ExampleDictionaryIndexEntry,
       terms: ['主に'],
       reading: 'おもに',
-      pitchAccentPattern: 0,
+      pitchAccentPattern: 'HLL',
       filePath: '4',
-      fileName: '主に[おもに](0).mp3',
+      fileName: '主に[おもに](1).mp3',
       fileData: placeholderAudioData,
     ),
     AudioEntry(
@@ -374,9 +366,9 @@ List<List<AudioEntry>> audioFileNameFormatTestCases = [
       indexEntry: audioFormat1ExampleDictionaryIndexEntry,
       terms: ['主に'],
       reading: 'おもに',
-      pitchAccentPattern: 1,
+      pitchAccentPattern: 'LHH',
       filePath: '4',
-      fileName: '主に[おもに](1).mp3',
+      fileName: '主に[おもに](0).mp3',
       fileData: placeholderAudioData,
     ),
     AudioEntry(
@@ -390,16 +382,40 @@ List<List<AudioEntry>> audioFileNameFormatTestCases = [
       fileData: placeholderAudioData,
     ),
   ],
-  // Results for '主に', 'おもに', 1
+  // Results for '主に', 'おもに', 'HLL'
   [
     AudioEntry(
       id: 0,
       indexEntry: audioFormat1ExampleDictionaryIndexEntry,
       terms: ['主に'], 
       reading: 'おもに',
-      pitchAccentPattern: 1,
+      pitchAccentPattern: 'HLL',
       filePath: '4',
       fileName: '主に[おもに](1).mp3',
+      fileData: placeholderAudioData,
+    ),
+  ],
+  [
+    AudioEntry(
+      id: 0,
+      indexEntry: audioFormat1ExampleDictionaryIndexEntry,
+      terms: ['テスト'],
+      reading: 'てすと',
+      pitchAccentPattern: 'HHLLL',
+      filePath: '4',
+      fileName: 'テスト[てすと](HHLLL).mp3',
+      fileData: placeholderAudioData,
+    ),
+  ],
+  [
+    AudioEntry(
+      id: 0,
+      indexEntry: audioFormat1ExampleDictionaryIndexEntry,
+      terms: ['テスト'],
+      reading: 'てすと',
+      pitchAccentPattern: 'HHLLL',
+      filePath: '4',
+      fileName: 'テスト[てすと](HHLLL).mp3',
       fileData: placeholderAudioData,
     ),
   ],

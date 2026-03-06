@@ -8,15 +8,15 @@ import '../dictionary_test_variables.dart';
 
 final placeholderAudioData = Uint8List.fromList([1, 2, 3]);
 
-List<(String, String?, int?)> audioEntriesFormatTestCaseSearchTerms = [
+List<(String, String?, String?)> audioEntriesFormatTestCaseSearchTerms = [
   ('画像', null, null),
   ('日本人', null, null),
   ('打つ', null, null),
   ('番号', null, null),
   ('詠む', null, null),
   ('討つ', 'うつ', null),
-  ('撃つ', 'うつ', 1),
-  ('撃つ', 'うつ', 10),
+  ('撃つ', 'うつ', 'HL'),
+  ('撃つ', 'うつ', 'HLLLL'),
 ];
 
 List<List<AudioEntry>> audioEntriesFormatTestCases = [
@@ -25,7 +25,7 @@ List<List<AudioEntry>> audioEntriesFormatTestCases = [
     AudioEntry(
       id: 0,
       indexEntry: audioFormat3ExampleDictionaryIndexEntry,
-      pitchAccentPattern: 0,
+      pitchAccentPattern: 'LHH',
       terms: ['画像'],
       reading: 'ガゾー',
       filePath: 'media',
@@ -38,7 +38,7 @@ List<List<AudioEntry>> audioEntriesFormatTestCases = [
     AudioEntry(
       id: 0,
       indexEntry: audioFormat3ExampleDictionaryIndexEntry,
-      pitchAccentPattern: 5,
+      pitchAccentPattern: 'LHHHHL',
       terms: ['日本人'],
       reading: 'ニッポンジン',
       filePath: 'media',
@@ -48,7 +48,7 @@ List<List<AudioEntry>> audioEntriesFormatTestCases = [
     AudioEntry(
       id: 0,
       indexEntry: audioFormat3ExampleDictionaryIndexEntry,
-      pitchAccentPattern: 4,
+      pitchAccentPattern: 'LHHHL',
       terms: ['日本人'],
       reading: 'ニホンジン',
       filePath: 'media',
@@ -61,7 +61,7 @@ List<List<AudioEntry>> audioEntriesFormatTestCases = [
     AudioEntry(
       id: 0,
       indexEntry: audioFormat3ExampleDictionaryIndexEntry,
-      pitchAccentPattern: 1,
+      pitchAccentPattern: 'HL',
       terms: ['打つ', '討つ', '撃つ'],
       reading: 'ウツ',
       filePath: 'media',
@@ -74,7 +74,7 @@ List<List<AudioEntry>> audioEntriesFormatTestCases = [
     AudioEntry(
       id: 0,
       indexEntry: audioFormat3ExampleDictionaryIndexEntry,
-      pitchAccentPattern: 3,
+      pitchAccentPattern: 'LHHL',
       terms: ['番号'],
       reading: 'バンコ゚ー',
       filePath: 'media',
@@ -87,7 +87,7 @@ List<List<AudioEntry>> audioEntriesFormatTestCases = [
     AudioEntry(
       id: 0,
       indexEntry: audioFormat3ExampleDictionaryIndexEntry,
-      pitchAccentPattern: 1,
+      pitchAccentPattern: 'HL',
       terms: ['詠む', '読む'],
       reading: 'ヨム',
       filePath: 'media',
@@ -102,7 +102,7 @@ List<List<AudioEntry>> audioEntriesFormatTestCases = [
       indexEntry: audioFormat2ExampleDictionaryIndexEntry,
       terms: ['打つ', '撃つ', '討つ'],
       reading: 'ウツ',
-      pitchAccentPattern: 1,
+      pitchAccentPattern: 'HL',
       filePath: 'media',
       fileName: '20170928151250.opus',
       fileData: placeholderAudioData,
@@ -114,7 +114,7 @@ List<List<AudioEntry>> audioEntriesFormatTestCases = [
       indexEntry: audioFormat2ExampleDictionaryIndexEntry,
       terms: ['打つ', '撃つ', '討つ'],
       reading: 'ウツ',
-      pitchAccentPattern: 1,
+      pitchAccentPattern: 'HL',
       filePath: 'media',
       fileName: '20170928151250.opus',
       fileData: placeholderAudioData,
