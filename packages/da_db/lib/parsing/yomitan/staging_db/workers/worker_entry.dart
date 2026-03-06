@@ -15,7 +15,7 @@ import 'package:da_db/parsing/yomitan/staging_db/parsers/term_meta_bank_v3_parse
 import 'package:drift/native.dart';
 import 'package:language_processing/language_processing.dart';
 
-import 'worker_protocol.dart'; 
+import '../../../util/worker_protocol.dart'; 
 
 
 Future<void> workerEntry(SendPort mainSendPort) async {
@@ -111,8 +111,8 @@ Future<void> preIndex(StagingDatabase db) async {
   await db.customStatement('CREATE INDEX IF NOT EXISTS idx_stg_tag_split ON ${db.termTagStagingTable.actualTableName}(is_definition_tag, tag_name)');
 
   // 3. Term Meta indexes
-  await db.customStatement('CREATE INDEX IF NOT EXISTS idx_stm_term ON ${db.termMetaStagingTable.actualTableName}(term)');
-  await db.customStatement('CREATE INDEX IF NOT EXISTS idx_stm_reading ON ${db.termMetaStagingTable.actualTableName}(reading)');
+  await db.customStatement('CREATE INDEX IF NOT EXISTS idx_stm_term_cov ON ${db.termMetaStagingTable.actualTableName}(term, term_normalized)');
+  await db.customStatement('CREATE INDEX IF NOT EXISTS idx_stm_reading_cov ON ${db.termMetaStagingTable.actualTableName}(reading, reading_normalized)');
   await db.customStatement('CREATE INDEX IF NOT EXISTS idx_stm_mode ON ${db.termMetaStagingTable.actualTableName}(mode)');
   await db.customStatement('CREATE INDEX IF NOT EXISTS idx_stm_tag_composite ON ${db.termMetaTagStagingTable.actualTableName}(parent_type, tag_name)');
 
@@ -124,7 +124,6 @@ Future<void> preIndex(StagingDatabase db) async {
   await db.customStatement('CREATE INDEX IF NOT EXISTS idx_sk_stat_tag ON ${db.kanjiStatStagingTable.actualTableName}(tag_name)');
 
   // 5. Kanji Meta Bank Indexes
-  await db.customStatement('CREATE INDEX IF NOT EXISTS idx_skm_kanji ON ${db.kanjiMetaStagingTable.actualTableName}(kanji)');
-  await db.customStatement('CREATE INDEX IF NOT EXISTS idx_skm_type ON ${db.kanjiMetaStagingTable.actualTableName}(type)');
+  await db.customStatement('CREATE INDEX IF NOT EXISTS idx_skm_kanji_type ON ${db.kanjiMetaStagingTable.actualTableName}(kanji, type)');
 
 }
