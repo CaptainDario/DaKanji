@@ -24,7 +24,7 @@ class AudioStagingTable extends Table {
   TextColumn get readingNormalized => text().nullable()();
   
   /// The pitch accent integer
-  IntColumn get pitchPattern => integer().nullable()();
+  TextColumn get pitchPattern => text().nullable()();
   
   /// The full file path from the source zip, used to link to the MediaStagingTable
   TextColumn get originalFileName => text()(); 

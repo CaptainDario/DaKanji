@@ -1,4 +1,3 @@
-
 import "dart:convert";
 
 import "package:da_db/database/audio/audio_entry.dart";
@@ -12,30 +11,29 @@ import "../da_db.dart";
 
 part 'audio_dao.g.dart';
 
-
-
-// Dao class that contains all queries related to the `ReadingTable`
-@DriftAccessor(tables: [
-  AudioTable
-])
+/// Data Access Object for handling audio-related database queries.
+/// 
+/// Manages searching for audio files based on term, reading, and pitch pattern 
+/// combinations, and linking term bank entries to their corresponding audio.
+@DriftAccessor(tables: [AudioTable])
 class AudioDao extends DatabaseAccessor<DaDb> with _$AudioDaoMixin {
-  
-  // this constructor is required so that the main database can create an instance
-  // of this object.
   AudioDao(super.db);
 
-  /// Search for audio entries matching the given terms, readings, and pitch
-  /// accent patterns.
-  /// If reading or pitchAccentPattern is null, it will be ignored in the search
-  /// ie. all readings or pitch accent patterns will be matched.
+  /// Searches for audio entries matching specific linguistic criteria.
+  ///
+  /// Takes a list of [entries] records. Each record must contain a [term].
+  /// [reading] and [pitchAccentPattern] are optional; if provided, they act as 
+  /// strict filters. If null, the search returns all matches for that term.
+  /// 
+  /// [pitchAccentPattern] expects the unified "H/L" string format.
   Future<List<AudioEntry>> audioSearch(
-    List<({String term, String? reading, int? pitchAccentPattern})> entries
+    List<({String term, String? reading, String? pitchAccentPattern})> entries
   ) async {
-
     if (entries.isEmpty) return [];
 
-    // 1. Convert the rich objects to a simple List of Maps
-    ProcessorOptions opts = ProcessorOptions();
+    final ProcessorOptions opts = const ProcessorOptions();
+    
+    // Normalize and serialize search parameters into a JSON array for the SQL engine.
     final List<Map<String, dynamic>> jsonList = entries.map((e) => {
       'term': db.languageProcessor.normalize(e.term, opts).first,
       'reading': e.reading != null
@@ -44,22 +42,25 @@ class AudioDao extends DatabaseAccessor<DaDb> with _$AudioDaoMixin {
       'pitch': e.pitchAccentPattern,
     }).toList();
 
-    // 2. Execute the SQL (Pass as a JSON string)
+    // Execute the optimized Drift custom query using JSON-based bulk parameter passing.
     final rows = await db.audio_search_drift(jsonEncode(jsonList)).get();
 
-    // 3. Map result
     return rows.map((row) => AudioEntry.fromAudioEntryViewData(row)).toList();
-
   }
 
-  /// Get audio data for the given term bank entries.
+  /// Retrieves audio data associated with specific term bank and metadata entries.
+  ///
+  /// [entries] and [termMetaEntries] must be of equal length. This method 
+  /// extracts the term, reading, and the primary pitch pattern to perform 
+  /// a bulk audio search.
   Future<List<AudioEntry>> getAudioDataByTermBankEntries(
-    List<TermBankV3Entry> entries, List<TermMetaBankV3Entry?> termMetaEntries
+    List<TermBankV3Entry> entries, 
+    List<TermMetaBankV3Entry?> termMetaEntries
   ) async {
-
     assert(entries.length == termMetaEntries.length);
 
-    List<({String term, String? reading, int? pitchAccentPattern})> searchEntries = [];
+    final List<({String term, String? reading, String? pitchAccentPattern})> searchEntries = [];
+    
     for (int i = 0; i < entries.length; i++) {
       final termEntry = entries[i];
       final termMetaEntry = termMetaEntries[i];
@@ -67,24 +68,22 @@ class AudioDao extends DatabaseAccessor<DaDb> with _$AudioDaoMixin {
       searchEntries.add((
         term: termEntry.term,
         reading: termMetaEntry?.reading,
-        pitchAccentPattern: termMetaEntry?.pitchs.first.position
+        // Accesses the normalized "H/L" string pattern from the first pitch entry.
+        pitchAccentPattern: termMetaEntry?.pitchs.firstOrNull?.position
       ));
     }
 
     return await audioSearch(searchEntries);
-
   }
   
-  /// Get the maximum id of the media table
+  /// Returns the maximum ID currently present in the audio table.
+  /// 
+  /// Used primarily for maintaining ID uniqueness during staging and batch imports.
   Future<int> maxAudioId() async {
-    
     final query = await (selectOnly(audioTable)
         ..addColumns([audioTable.id.max()]))
       .getSingle();
 
-    // Extract the max ID value, defaulting to 0 if null
     return query.read(audioTable.id.max()) ?? 0;
-
   }
-
 }

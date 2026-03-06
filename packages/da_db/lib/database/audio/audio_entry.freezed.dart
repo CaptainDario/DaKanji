@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$AudioEntry {
 
- int get id; set id(int value); IndexEntry get indexEntry; set indexEntry(IndexEntry value); List<String> get terms; String? get reading; int? get pitchAccentPattern; String? get filePath; String get fileName; Uint8List get fileData;
+ int get id; set id(int value); IndexEntry get indexEntry; set indexEntry(IndexEntry value); List<String> get terms; String? get reading; String? get pitchAccentPattern; String? get filePath; String get fileName; Uint8List get fileData;
 /// Create a copy of AudioEntry
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -46,7 +46,7 @@ abstract mixin class $AudioEntryCopyWith<$Res>  {
   factory $AudioEntryCopyWith(AudioEntry value, $Res Function(AudioEntry) _then) = _$AudioEntryCopyWithImpl;
 @useResult
 $Res call({
- int id, IndexEntry indexEntry, List<String> terms, String? reading, int? pitchAccentPattern, String? filePath, String fileName, Uint8List fileData
+ int id, IndexEntry indexEntry, List<String> terms, String? reading, String? pitchAccentPattern, String? filePath, String fileName, Uint8List fileData
 });
 
 
@@ -70,7 +70,7 @@ as int,indexEntry: null == indexEntry ? _self.indexEntry : indexEntry // ignore:
 as IndexEntry,terms: null == terms ? _self.terms : terms // ignore: cast_nullable_to_non_nullable
 as List<String>,reading: freezed == reading ? _self.reading : reading // ignore: cast_nullable_to_non_nullable
 as String?,pitchAccentPattern: freezed == pitchAccentPattern ? _self.pitchAccentPattern : pitchAccentPattern // ignore: cast_nullable_to_non_nullable
-as int?,filePath: freezed == filePath ? _self.filePath : filePath // ignore: cast_nullable_to_non_nullable
+as String?,filePath: freezed == filePath ? _self.filePath : filePath // ignore: cast_nullable_to_non_nullable
 as String?,fileName: null == fileName ? _self.fileName : fileName // ignore: cast_nullable_to_non_nullable
 as String,fileData: null == fileData ? _self.fileData : fileData // ignore: cast_nullable_to_non_nullable
 as Uint8List,

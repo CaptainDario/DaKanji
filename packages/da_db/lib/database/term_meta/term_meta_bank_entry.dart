@@ -40,7 +40,8 @@ abstract class TermMetaBankV3Entry with _$TermMetaBankV3Entry {
       required List<TermMetaBankV3PitchEntry> pitchs,
       /// Ipa transcription data of this entry
       required List<TermMetaBankV3IpaEntry> ipas
-    }) = _TermMetaBankV3Entry;
+    }
+  ) = _TermMetaBankV3Entry;
 
   factory TermMetaBankV3Entry.fromTermMetaBankV3EntryViewData(TermMetaBankV3EntryViewData data) {
 

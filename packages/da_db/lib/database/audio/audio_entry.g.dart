@@ -11,7 +11,7 @@ AudioEntry _$AudioEntryFromJson(Map<String, dynamic> json) => AudioEntry(
   indexEntry: IndexEntry.fromJson(json['indexEntry'] as Map<String, dynamic>),
   terms: (json['terms'] as List<dynamic>).map((e) => e as String).toList(),
   reading: json['reading'] as String?,
-  pitchAccentPattern: (json['pitchAccentPattern'] as num?)?.toInt(),
+  pitchAccentPattern: json['pitchAccentPattern'] as String?,
   filePath: json['filePath'] as String?,
   fileName: json['fileName'] as String,
   fileData: base64Decode(json['fileData'] as String),

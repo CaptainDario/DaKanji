@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$TermMetaBankV3PitchEntry {
 
- int get position; set position(int value); List<TagBankV3Entry> get tags; set tags(List<TagBankV3Entry> value); int? get nasal; set nasal(int? value); int? get devoice; set devoice(int? value);
+ String get position; set position(String value); List<TagBankV3Entry> get tags; set tags(List<TagBankV3Entry> value); List<int>? get nasal; set nasal(List<int>? value); List<int>? get devoice; set devoice(List<int>? value);
 /// Create a copy of TermMetaBankV3PitchEntry
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -26,12 +26,12 @@ $TermMetaBankV3PitchEntryCopyWith<TermMetaBankV3PitchEntry> get copyWith => _$Te
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is TermMetaBankV3PitchEntry&&(identical(other.position, position) || other.position == position)&&const DeepCollectionEquality().equals(other.tags, tags)&&(identical(other.nasal, nasal) || other.nasal == nasal)&&(identical(other.devoice, devoice) || other.devoice == devoice));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is TermMetaBankV3PitchEntry&&(identical(other.position, position) || other.position == position)&&const DeepCollectionEquality().equals(other.tags, tags)&&const DeepCollectionEquality().equals(other.nasal, nasal)&&const DeepCollectionEquality().equals(other.devoice, devoice));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,position,const DeepCollectionEquality().hash(tags),nasal,devoice);
+int get hashCode => Object.hash(runtimeType,position,const DeepCollectionEquality().hash(tags),const DeepCollectionEquality().hash(nasal),const DeepCollectionEquality().hash(devoice));
 
 @override
 String toString() {
@@ -46,7 +46,7 @@ abstract mixin class $TermMetaBankV3PitchEntryCopyWith<$Res>  {
   factory $TermMetaBankV3PitchEntryCopyWith(TermMetaBankV3PitchEntry value, $Res Function(TermMetaBankV3PitchEntry) _then) = _$TermMetaBankV3PitchEntryCopyWithImpl;
 @useResult
 $Res call({
- int position, List<TagBankV3Entry> tags, int? nasal, int? devoice
+ String position, List<TagBankV3Entry> tags, List<int>? nasal, List<int>? devoice
 });
 
 
@@ -66,10 +66,10 @@ class _$TermMetaBankV3PitchEntryCopyWithImpl<$Res>
 @pragma('vm:prefer-inline') @override $Res call({Object? position = null,Object? tags = null,Object? nasal = freezed,Object? devoice = freezed,}) {
   return _then(TermMetaBankV3PitchEntry(
 position: null == position ? _self.position : position // ignore: cast_nullable_to_non_nullable
-as int,tags: null == tags ? _self.tags : tags // ignore: cast_nullable_to_non_nullable
+as String,tags: null == tags ? _self.tags : tags // ignore: cast_nullable_to_non_nullable
 as List<TagBankV3Entry>,nasal: freezed == nasal ? _self.nasal : nasal // ignore: cast_nullable_to_non_nullable
-as int?,devoice: freezed == devoice ? _self.devoice : devoice // ignore: cast_nullable_to_non_nullable
-as int?,
+as List<int>?,devoice: freezed == devoice ? _self.devoice : devoice // ignore: cast_nullable_to_non_nullable
+as List<int>?,
   ));
 }
 

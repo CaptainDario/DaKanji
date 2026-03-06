@@ -1,4 +1,5 @@
 
+import 'package:da_db/util/data_converters/sql_nullable_json_converter.dart';
 import 'package:drift/drift.dart';
 
 import '/database/general_tables/reading_tables.dart';
@@ -59,14 +60,14 @@ class TermMetaBankV3PitchTable extends Table {
   /// id of this entry
   IntColumn get id => integer()();
 
-  /// The position of the pitch accent
-  IntColumn get position => integer()();
+  /// The positions of the pitch accents (H / L)
+  TextColumn get position => text()();
 
-  /// the nasal value of this pitch entry
-  IntColumn get nasal => integer().nullable()();
+  /// the nasal values of this pitch entry
+  TextColumn get nasal => text().map(const NullableJsonConverter()).nullable()();
 
-  /// the devoice value of this pitch entry
-  IntColumn get devoice => integer().nullable()();
+  /// the devoice values of this pitch entry
+  TextColumn get devoice => text().map(const NullableJsonConverter()).nullable()();
 
 }
 

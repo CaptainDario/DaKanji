@@ -28,10 +28,12 @@ class AudioStagingHelper {
   Future<void> addEntry({
     required List<String> terms,
     required String? reading,
-    required int? pitchPattern,
+    required String? pitchPattern,
     required String originalFilePath,
     required Uint8List fileContent,
   }) async {
+
+    int batchSize = 500;
     
     // --- 1. Phonetic Normalization ---
     String? readingNormalized;
@@ -76,7 +78,7 @@ class AudioStagingHelper {
     ));
 
     // Flush to disk iteratively to maintain a flat memory footprint
-    if (_mediaRows.length >= 200) {
+    if (_mediaRows.length >= batchSize) {
       await flush();
     }
   }

@@ -9,14 +9,18 @@ part of 'term_meta_bank_pitch_entry.dart';
 TermMetaBankV3PitchEntry _$TermMetaBankV3PitchEntryFromJson(
   Map<String, dynamic> json,
 ) => TermMetaBankV3PitchEntry(
-  position: (json['position'] as num).toInt(),
+  position: json['position'] as String,
   tags:
       (json['tags'] as List<dynamic>?)
           ?.map(const TagBankV3EntryConverter().fromJson)
           .toList() ??
       const [],
-  nasal: (json['nasal'] as num?)?.toInt(),
-  devoice: (json['devoice'] as num?)?.toInt(),
+  nasal: (json['nasal'] as List<dynamic>?)
+      ?.map((e) => (e as num).toInt())
+      .toList(),
+  devoice: (json['devoice'] as List<dynamic>?)
+      ?.map((e) => (e as num).toInt())
+      .toList(),
 );
 
 Map<String, dynamic> _$TermMetaBankV3PitchEntryToJson(

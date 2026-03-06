@@ -30,7 +30,7 @@ class AudioEntry with _$AudioEntry {
   final String? reading;
   /// The pitch accent pattern of this audio entry, if any
   @override
-  final int? pitchAccentPattern;
+  final String? pitchAccentPattern;
   /// the path of the audio file as found in the original data source
   @override
   final String? filePath;

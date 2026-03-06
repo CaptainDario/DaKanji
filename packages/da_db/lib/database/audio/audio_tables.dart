@@ -26,7 +26,7 @@ class AudioTable extends Table {
   IntColumn get mediaId => integer()
     .references(MediaTable, #id, onDelete: KeyAction.cascade)();
 
-  /// The pitch accent pattern number
-  IntColumn get pitchAccentPattern => integer().nullable()();
+  /// The pitch accent pattern
+  TextColumn get pitchAccentPattern => text().nullable()();
 
 }

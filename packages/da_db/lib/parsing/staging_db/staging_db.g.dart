@@ -2582,33 +2582,33 @@ class $TermMetaPitchStagingTableTable extends TermMetaPitchStagingTable
     'position',
   );
   @override
-  late final GeneratedColumn<int> position = GeneratedColumn<int>(
+  late final GeneratedColumn<String> position = GeneratedColumn<String>(
     'position',
     aliasedName,
     false,
-    type: DriftSqlType.int,
+    type: DriftSqlType.string,
     requiredDuringInsert: true,
   );
-  static const VerificationMeta _nasalMeta = const VerificationMeta('nasal');
   @override
-  late final GeneratedColumn<int> nasal = GeneratedColumn<int>(
-    'nasal',
-    aliasedName,
-    true,
-    type: DriftSqlType.int,
-    requiredDuringInsert: false,
-  );
-  static const VerificationMeta _devoiceMeta = const VerificationMeta(
-    'devoice',
-  );
+  late final GeneratedColumnWithTypeConverter<Object?, String> nasal =
+      GeneratedColumn<String>(
+        'nasal',
+        aliasedName,
+        true,
+        type: DriftSqlType.string,
+        requiredDuringInsert: false,
+      ).withConverter<Object?>($TermMetaPitchStagingTableTable.$converternasal);
   @override
-  late final GeneratedColumn<int> devoice = GeneratedColumn<int>(
-    'devoice',
-    aliasedName,
-    true,
-    type: DriftSqlType.int,
-    requiredDuringInsert: false,
-  );
+  late final GeneratedColumnWithTypeConverter<Object?, String> devoice =
+      GeneratedColumn<String>(
+        'devoice',
+        aliasedName,
+        true,
+        type: DriftSqlType.string,
+        requiredDuringInsert: false,
+      ).withConverter<Object?>(
+        $TermMetaPitchStagingTableTable.$converterdevoice,
+      );
   @override
   List<GeneratedColumn> get $columns => [
     pitchLocalId,
@@ -2659,18 +2659,6 @@ class $TermMetaPitchStagingTableTable extends TermMetaPitchStagingTable
     } else if (isInserting) {
       context.missing(_positionMeta);
     }
-    if (data.containsKey('nasal')) {
-      context.handle(
-        _nasalMeta,
-        nasal.isAcceptableOrUnknown(data['nasal']!, _nasalMeta),
-      );
-    }
-    if (data.containsKey('devoice')) {
-      context.handle(
-        _devoiceMeta,
-        devoice.isAcceptableOrUnknown(data['devoice']!, _devoiceMeta),
-      );
-    }
     return context;
   }
 
@@ -2692,16 +2680,20 @@ class $TermMetaPitchStagingTableTable extends TermMetaPitchStagingTable
         data['${effectivePrefix}meta_local_id'],
       )!,
       position: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
+        DriftSqlType.string,
         data['${effectivePrefix}position'],
       )!,
-      nasal: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}nasal'],
+      nasal: $TermMetaPitchStagingTableTable.$converternasal.fromSql(
+        attachedDatabase.typeMapping.read(
+          DriftSqlType.string,
+          data['${effectivePrefix}nasal'],
+        ),
       ),
-      devoice: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}devoice'],
+      devoice: $TermMetaPitchStagingTableTable.$converterdevoice.fromSql(
+        attachedDatabase.typeMapping.read(
+          DriftSqlType.string,
+          data['${effectivePrefix}devoice'],
+        ),
       ),
     );
   }
@@ -2710,15 +2702,20 @@ class $TermMetaPitchStagingTableTable extends TermMetaPitchStagingTable
   $TermMetaPitchStagingTableTable createAlias(String alias) {
     return $TermMetaPitchStagingTableTable(attachedDatabase, alias);
   }
+
+  static TypeConverter<Object?, String?> $converternasal =
+      const NullableJsonConverter();
+  static TypeConverter<Object?, String?> $converterdevoice =
+      const NullableJsonConverter();
 }
 
 class TermMetaPitchStagingTableData extends DataClass
     implements Insertable<TermMetaPitchStagingTableData> {
   final int pitchLocalId;
   final int metaLocalId;
-  final int position;
-  final int? nasal;
-  final int? devoice;
+  final String position;
+  final Object? nasal;
+  final Object? devoice;
   const TermMetaPitchStagingTableData({
     required this.pitchLocalId,
     required this.metaLocalId,
@@ -2731,12 +2728,16 @@ class TermMetaPitchStagingTableData extends DataClass
     final map = <String, Expression>{};
     map['pitch_local_id'] = Variable<int>(pitchLocalId);
     map['meta_local_id'] = Variable<int>(metaLocalId);
-    map['position'] = Variable<int>(position);
+    map['position'] = Variable<String>(position);
     if (!nullToAbsent || nasal != null) {
-      map['nasal'] = Variable<int>(nasal);
+      map['nasal'] = Variable<String>(
+        $TermMetaPitchStagingTableTable.$converternasal.toSql(nasal),
+      );
     }
     if (!nullToAbsent || devoice != null) {
-      map['devoice'] = Variable<int>(devoice);
+      map['devoice'] = Variable<String>(
+        $TermMetaPitchStagingTableTable.$converterdevoice.toSql(devoice),
+      );
     }
     return map;
   }
@@ -2763,9 +2764,9 @@ class TermMetaPitchStagingTableData extends DataClass
     return TermMetaPitchStagingTableData(
       pitchLocalId: serializer.fromJson<int>(json['pitchLocalId']),
       metaLocalId: serializer.fromJson<int>(json['metaLocalId']),
-      position: serializer.fromJson<int>(json['position']),
-      nasal: serializer.fromJson<int?>(json['nasal']),
-      devoice: serializer.fromJson<int?>(json['devoice']),
+      position: serializer.fromJson<String>(json['position']),
+      nasal: serializer.fromJson<Object?>(json['nasal']),
+      devoice: serializer.fromJson<Object?>(json['devoice']),
     );
   }
   @override
@@ -2774,18 +2775,18 @@ class TermMetaPitchStagingTableData extends DataClass
     return <String, dynamic>{
       'pitchLocalId': serializer.toJson<int>(pitchLocalId),
       'metaLocalId': serializer.toJson<int>(metaLocalId),
-      'position': serializer.toJson<int>(position),
-      'nasal': serializer.toJson<int?>(nasal),
-      'devoice': serializer.toJson<int?>(devoice),
+      'position': serializer.toJson<String>(position),
+      'nasal': serializer.toJson<Object?>(nasal),
+      'devoice': serializer.toJson<Object?>(devoice),
     };
   }
 
   TermMetaPitchStagingTableData copyWith({
     int? pitchLocalId,
     int? metaLocalId,
-    int? position,
-    Value<int?> nasal = const Value.absent(),
-    Value<int?> devoice = const Value.absent(),
+    String? position,
+    Value<Object?> nasal = const Value.absent(),
+    Value<Object?> devoice = const Value.absent(),
   }) => TermMetaPitchStagingTableData(
     pitchLocalId: pitchLocalId ?? this.pitchLocalId,
     metaLocalId: metaLocalId ?? this.metaLocalId,
@@ -2839,9 +2840,9 @@ class TermMetaPitchStagingTableCompanion
     extends UpdateCompanion<TermMetaPitchStagingTableData> {
   final Value<int> pitchLocalId;
   final Value<int> metaLocalId;
-  final Value<int> position;
-  final Value<int?> nasal;
-  final Value<int?> devoice;
+  final Value<String> position;
+  final Value<Object?> nasal;
+  final Value<Object?> devoice;
   final Value<int> rowid;
   const TermMetaPitchStagingTableCompanion({
     this.pitchLocalId = const Value.absent(),
@@ -2854,7 +2855,7 @@ class TermMetaPitchStagingTableCompanion
   TermMetaPitchStagingTableCompanion.insert({
     required int pitchLocalId,
     required int metaLocalId,
-    required int position,
+    required String position,
     this.nasal = const Value.absent(),
     this.devoice = const Value.absent(),
     this.rowid = const Value.absent(),
@@ -2864,9 +2865,9 @@ class TermMetaPitchStagingTableCompanion
   static Insertable<TermMetaPitchStagingTableData> custom({
     Expression<int>? pitchLocalId,
     Expression<int>? metaLocalId,
-    Expression<int>? position,
-    Expression<int>? nasal,
-    Expression<int>? devoice,
+    Expression<String>? position,
+    Expression<String>? nasal,
+    Expression<String>? devoice,
     Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
@@ -2882,9 +2883,9 @@ class TermMetaPitchStagingTableCompanion
   TermMetaPitchStagingTableCompanion copyWith({
     Value<int>? pitchLocalId,
     Value<int>? metaLocalId,
-    Value<int>? position,
-    Value<int?>? nasal,
-    Value<int?>? devoice,
+    Value<String>? position,
+    Value<Object?>? nasal,
+    Value<Object?>? devoice,
     Value<int>? rowid,
   }) {
     return TermMetaPitchStagingTableCompanion(
@@ -2907,13 +2908,17 @@ class TermMetaPitchStagingTableCompanion
       map['meta_local_id'] = Variable<int>(metaLocalId.value);
     }
     if (position.present) {
-      map['position'] = Variable<int>(position.value);
+      map['position'] = Variable<String>(position.value);
     }
     if (nasal.present) {
-      map['nasal'] = Variable<int>(nasal.value);
+      map['nasal'] = Variable<String>(
+        $TermMetaPitchStagingTableTable.$converternasal.toSql(nasal.value),
+      );
     }
     if (devoice.present) {
-      map['devoice'] = Variable<int>(devoice.value);
+      map['devoice'] = Variable<String>(
+        $TermMetaPitchStagingTableTable.$converterdevoice.toSql(devoice.value),
+      );
     }
     if (rowid.present) {
       map['rowid'] = Variable<int>(rowid.value);
@@ -5501,11 +5506,11 @@ class $AudioStagingTableTable extends AudioStagingTable
     'pitchPattern',
   );
   @override
-  late final GeneratedColumn<int> pitchPattern = GeneratedColumn<int>(
+  late final GeneratedColumn<String> pitchPattern = GeneratedColumn<String>(
     'pitch_pattern',
     aliasedName,
     true,
-    type: DriftSqlType.int,
+    type: DriftSqlType.string,
     requiredDuringInsert: false,
   );
   static const VerificationMeta _originalFileNameMeta = const VerificationMeta(
@@ -5654,7 +5659,7 @@ class $AudioStagingTableTable extends AudioStagingTable
         data['${effectivePrefix}reading_normalized'],
       ),
       pitchPattern: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
+        DriftSqlType.string,
         data['${effectivePrefix}pitch_pattern'],
       ),
       originalFileName: attachedDatabase.typeMapping.read(
@@ -5694,7 +5699,7 @@ class AudioStagingTableData extends DataClass
   final String? readingNormalized;
 
   /// The pitch accent integer
-  final int? pitchPattern;
+  final String? pitchPattern;
 
   /// The full file path from the source zip, used to link to the MediaStagingTable
   final String originalFileName;
@@ -5730,7 +5735,7 @@ class AudioStagingTableData extends DataClass
       map['reading_normalized'] = Variable<String>(readingNormalized);
     }
     if (!nullToAbsent || pitchPattern != null) {
-      map['pitch_pattern'] = Variable<int>(pitchPattern);
+      map['pitch_pattern'] = Variable<String>(pitchPattern);
     }
     map['original_file_name'] = Variable<String>(originalFileName);
     return map;
@@ -5779,7 +5784,7 @@ class AudioStagingTableData extends DataClass
       readingNormalized: serializer.fromJson<String?>(
         json['readingNormalized'],
       ),
-      pitchPattern: serializer.fromJson<int?>(json['pitchPattern']),
+      pitchPattern: serializer.fromJson<String?>(json['pitchPattern']),
       originalFileName: serializer.fromJson<String>(json['originalFileName']),
     );
   }
@@ -5794,7 +5799,7 @@ class AudioStagingTableData extends DataClass
       'termTokensNormalized': serializer.toJson<String?>(termTokensNormalized),
       'reading': serializer.toJson<String?>(reading),
       'readingNormalized': serializer.toJson<String?>(readingNormalized),
-      'pitchPattern': serializer.toJson<int?>(pitchPattern),
+      'pitchPattern': serializer.toJson<String?>(pitchPattern),
       'originalFileName': serializer.toJson<String>(originalFileName),
     };
   }
@@ -5807,7 +5812,7 @@ class AudioStagingTableData extends DataClass
     Value<String?> termTokensNormalized = const Value.absent(),
     Value<String?> reading = const Value.absent(),
     Value<String?> readingNormalized = const Value.absent(),
-    Value<int?> pitchPattern = const Value.absent(),
+    Value<String?> pitchPattern = const Value.absent(),
     String? originalFileName,
   }) => AudioStagingTableData(
     localId: localId ?? this.localId,
@@ -5904,7 +5909,7 @@ class AudioStagingTableCompanion
   final Value<String?> termTokensNormalized;
   final Value<String?> reading;
   final Value<String?> readingNormalized;
-  final Value<int?> pitchPattern;
+  final Value<String?> pitchPattern;
   final Value<String> originalFileName;
   const AudioStagingTableCompanion({
     this.localId = const Value.absent(),
@@ -5937,7 +5942,7 @@ class AudioStagingTableCompanion
     Expression<String>? termTokensNormalized,
     Expression<String>? reading,
     Expression<String>? readingNormalized,
-    Expression<int>? pitchPattern,
+    Expression<String>? pitchPattern,
     Expression<String>? originalFileName,
   }) {
     return RawValuesInsertable({
@@ -5962,7 +5967,7 @@ class AudioStagingTableCompanion
     Value<String?>? termTokensNormalized,
     Value<String?>? reading,
     Value<String?>? readingNormalized,
-    Value<int?>? pitchPattern,
+    Value<String?>? pitchPattern,
     Value<String>? originalFileName,
   }) {
     return AudioStagingTableCompanion(
@@ -6005,7 +6010,7 @@ class AudioStagingTableCompanion
       map['reading_normalized'] = Variable<String>(readingNormalized.value);
     }
     if (pitchPattern.present) {
-      map['pitch_pattern'] = Variable<int>(pitchPattern.value);
+      map['pitch_pattern'] = Variable<String>(pitchPattern.value);
     }
     if (originalFileName.present) {
       map['original_file_name'] = Variable<String>(originalFileName.value);
@@ -10104,18 +10109,18 @@ typedef $$TermMetaPitchStagingTableTableCreateCompanionBuilder =
     TermMetaPitchStagingTableCompanion Function({
       required int pitchLocalId,
       required int metaLocalId,
-      required int position,
-      Value<int?> nasal,
-      Value<int?> devoice,
+      required String position,
+      Value<Object?> nasal,
+      Value<Object?> devoice,
       Value<int> rowid,
     });
 typedef $$TermMetaPitchStagingTableTableUpdateCompanionBuilder =
     TermMetaPitchStagingTableCompanion Function({
       Value<int> pitchLocalId,
       Value<int> metaLocalId,
-      Value<int> position,
-      Value<int?> nasal,
-      Value<int?> devoice,
+      Value<String> position,
+      Value<Object?> nasal,
+      Value<Object?> devoice,
       Value<int> rowid,
     });
 
@@ -10138,20 +10143,22 @@ class $$TermMetaPitchStagingTableTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<int> get position => $composableBuilder(
+  ColumnFilters<String> get position => $composableBuilder(
     column: $table.position,
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<int> get nasal => $composableBuilder(
-    column: $table.nasal,
-    builder: (column) => ColumnFilters(column),
-  );
+  ColumnWithTypeConverterFilters<Object?, Object, String> get nasal =>
+      $composableBuilder(
+        column: $table.nasal,
+        builder: (column) => ColumnWithTypeConverterFilters(column),
+      );
 
-  ColumnFilters<int> get devoice => $composableBuilder(
-    column: $table.devoice,
-    builder: (column) => ColumnFilters(column),
-  );
+  ColumnWithTypeConverterFilters<Object?, Object, String> get devoice =>
+      $composableBuilder(
+        column: $table.devoice,
+        builder: (column) => ColumnWithTypeConverterFilters(column),
+      );
 }
 
 class $$TermMetaPitchStagingTableTableOrderingComposer
@@ -10173,17 +10180,17 @@ class $$TermMetaPitchStagingTableTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<int> get position => $composableBuilder(
+  ColumnOrderings<String> get position => $composableBuilder(
     column: $table.position,
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<int> get nasal => $composableBuilder(
+  ColumnOrderings<String> get nasal => $composableBuilder(
     column: $table.nasal,
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<int> get devoice => $composableBuilder(
+  ColumnOrderings<String> get devoice => $composableBuilder(
     column: $table.devoice,
     builder: (column) => ColumnOrderings(column),
   );
@@ -10208,13 +10215,13 @@ class $$TermMetaPitchStagingTableTableAnnotationComposer
     builder: (column) => column,
   );
 
-  GeneratedColumn<int> get position =>
+  GeneratedColumn<String> get position =>
       $composableBuilder(column: $table.position, builder: (column) => column);
 
-  GeneratedColumn<int> get nasal =>
+  GeneratedColumnWithTypeConverter<Object?, String> get nasal =>
       $composableBuilder(column: $table.nasal, builder: (column) => column);
 
-  GeneratedColumn<int> get devoice =>
+  GeneratedColumnWithTypeConverter<Object?, String> get devoice =>
       $composableBuilder(column: $table.devoice, builder: (column) => column);
 }
 
@@ -10266,9 +10273,9 @@ class $$TermMetaPitchStagingTableTableTableManager
               ({
                 Value<int> pitchLocalId = const Value.absent(),
                 Value<int> metaLocalId = const Value.absent(),
-                Value<int> position = const Value.absent(),
-                Value<int?> nasal = const Value.absent(),
-                Value<int?> devoice = const Value.absent(),
+                Value<String> position = const Value.absent(),
+                Value<Object?> nasal = const Value.absent(),
+                Value<Object?> devoice = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => TermMetaPitchStagingTableCompanion(
                 pitchLocalId: pitchLocalId,
@@ -10282,9 +10289,9 @@ class $$TermMetaPitchStagingTableTableTableManager
               ({
                 required int pitchLocalId,
                 required int metaLocalId,
-                required int position,
-                Value<int?> nasal = const Value.absent(),
-                Value<int?> devoice = const Value.absent(),
+                required String position,
+                Value<Object?> nasal = const Value.absent(),
+                Value<Object?> devoice = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
               }) => TermMetaPitchStagingTableCompanion.insert(
                 pitchLocalId: pitchLocalId,
@@ -11873,7 +11880,7 @@ typedef $$AudioStagingTableTableCreateCompanionBuilder =
       Value<String?> termTokensNormalized,
       Value<String?> reading,
       Value<String?> readingNormalized,
-      Value<int?> pitchPattern,
+      Value<String?> pitchPattern,
       required String originalFileName,
     });
 typedef $$AudioStagingTableTableUpdateCompanionBuilder =
@@ -11885,7 +11892,7 @@ typedef $$AudioStagingTableTableUpdateCompanionBuilder =
       Value<String?> termTokensNormalized,
       Value<String?> reading,
       Value<String?> readingNormalized,
-      Value<int?> pitchPattern,
+      Value<String?> pitchPattern,
       Value<String> originalFileName,
     });
 
@@ -11933,7 +11940,7 @@ class $$AudioStagingTableTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<int> get pitchPattern => $composableBuilder(
+  ColumnFilters<String> get pitchPattern => $composableBuilder(
     column: $table.pitchPattern,
     builder: (column) => ColumnFilters(column),
   );
@@ -11988,7 +11995,7 @@ class $$AudioStagingTableTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<int> get pitchPattern => $composableBuilder(
+  ColumnOrderings<String> get pitchPattern => $composableBuilder(
     column: $table.pitchPattern,
     builder: (column) => ColumnOrderings(column),
   );
@@ -12037,7 +12044,7 @@ class $$AudioStagingTableTableAnnotationComposer
     builder: (column) => column,
   );
 
-  GeneratedColumn<int> get pitchPattern => $composableBuilder(
+  GeneratedColumn<String> get pitchPattern => $composableBuilder(
     column: $table.pitchPattern,
     builder: (column) => column,
   );
@@ -12095,7 +12102,7 @@ class $$AudioStagingTableTableTableManager
                 Value<String?> termTokensNormalized = const Value.absent(),
                 Value<String?> reading = const Value.absent(),
                 Value<String?> readingNormalized = const Value.absent(),
-                Value<int?> pitchPattern = const Value.absent(),
+                Value<String?> pitchPattern = const Value.absent(),
                 Value<String> originalFileName = const Value.absent(),
               }) => AudioStagingTableCompanion(
                 localId: localId,
@@ -12117,7 +12124,7 @@ class $$AudioStagingTableTableTableManager
                 Value<String?> termTokensNormalized = const Value.absent(),
                 Value<String?> reading = const Value.absent(),
                 Value<String?> readingNormalized = const Value.absent(),
-                Value<int?> pitchPattern = const Value.absent(),
+                Value<String?> pitchPattern = const Value.absent(),
                 required String originalFileName,
               }) => AudioStagingTableCompanion.insert(
                 localId: localId,

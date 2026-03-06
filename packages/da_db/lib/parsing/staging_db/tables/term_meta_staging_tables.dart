@@ -1,3 +1,4 @@
+import 'package:da_db/util/data_converters/sql_nullable_json_converter.dart';
 import 'package:drift/drift.dart';
 
 /// Staging table for the main Term Meta entry (Freq, Pitch, IPA root)
@@ -24,9 +25,9 @@ class TermMetaStagingTable extends Table {
 class TermMetaPitchStagingTable extends Table {
   IntColumn get pitchLocalId => integer()();
   IntColumn get metaLocalId => integer()(); // FK to TermMetaStagingTable.localId
-  IntColumn get position => integer()();
-  IntColumn get nasal => integer().nullable()();   // 0 or 1
-  IntColumn get devoice => integer().nullable()(); // 0 or 1
+  TextColumn get position => text()();
+  TextColumn get nasal => text().map(const NullableJsonConverter()).nullable()();
+  TextColumn get devoice => text().map(const NullableJsonConverter()).nullable()();
 }
 
 /// Staging table for IPA details

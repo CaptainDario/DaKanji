@@ -35,8 +35,8 @@ SELECT
   JSON_GROUP_ARRAY(
     JSON_OBJECT(
       'position', p.position,
-      'devoice',  p.devoice,
-      'nasal',    p.nasal,
+      'devoice',  json(p.devoice),
+      'nasal',    json(p.nasal),
       'tags',     COALESCE(
         (
           SELECT JSON_GROUP_ARRAY(TagJSON.tag_json)

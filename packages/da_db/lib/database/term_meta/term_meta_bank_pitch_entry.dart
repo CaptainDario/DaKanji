@@ -15,7 +15,7 @@ class TermMetaBankV3PitchEntry with _$TermMetaBankV3PitchEntry {
 
   /// the position of this pitch entry
   @override
-  int position;
+  String position;
   /// all tags of this pitch entry
   @TagBankV3EntryConverter()
   @Default([])
@@ -23,17 +23,17 @@ class TermMetaBankV3PitchEntry with _$TermMetaBankV3PitchEntry {
   List<TagBankV3Entry> tags;
   /// nasal data of this pitch entry
   @override
-  int? nasal;
+  List<int>? nasal;
   /// devoice data of this pitch entry
   @override
-  int? devoice;
+  List<int>? devoice;
 
   TermMetaBankV3PitchEntry(
     {
       required this.position,
       this.tags = const [],
       this.nasal,
-      this.devoice    
+      this.devoice
     }){
       tags = List.from(tags)..sort((a, b) => a.compareTo(b));
     }

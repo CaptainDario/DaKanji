@@ -8,59 +8,52 @@ import '/database/tag/tag_bank_v3_tables.dart';
 import '/database/tag/tag_bank_v3_views.drift';
 
 
--- VIEW : For Definitions (handles the JSON ordering)
+-- VIEW For Definitions (handles the JSON ordering)
 CREATE VIEW IF NOT EXISTS term_bank_v3_definitions_json_view AS
-SELECT
-    TB3XDT.term_bank_id,
-    MT.definition,
-    TB3XDT.rank AS sort_key
-FROM
-    term_bank_v3_x_definition_table AS TB3XDT
-JOIN
-    definition_table AS MT ON TB3XDT.definition_id = MT.id;
+    SELECT
+        TB3XDT.term_bank_id,
+        MT.definition,
+        TB3XDT.rank AS sort_key
+    FROM
+        term_bank_v3_x_definition_table AS TB3XDT
+    JOIN
+        definition_table AS MT ON TB3XDT.definition_id = MT.id;
 
----
-
--- VIEW : For Rule Identifiers
+-- VIEW For Rule Identifiers
 CREATE VIEW IF NOT EXISTS term_bank_v3_rules_json_view AS
-SELECT
-    TB3RIRT.term_bank_id,
-    TB3RIT.rule_identifier
-FROM
-    term_bank_v3_x_rule_identifier_table AS TB3RIRT
-JOIN
-    term_bank_v3_rule_identifier_table AS TB3RIT
-        ON TB3RIRT.rule_identifier_id = TB3RIT.id;
+    SELECT
+        TB3RIRT.term_bank_id,
+        TB3RIT.rule_identifier
+    FROM
+        term_bank_v3_x_rule_identifier_table AS TB3RIRT
+    JOIN
+        term_bank_v3_rule_identifier_table AS TB3RIT
+            ON TB3RIRT.rule_identifier_id = TB3RIT.id;
 
----
-
--- VIEW : For Definition Tags (pre-builds the JSON object)
+-- VIEW For Definition Tags (pre-builds the JSON object)
 CREATE VIEW IF NOT EXISTS term_bank_v3_def_tags_json_view AS
-SELECT
-    TB3DTRT.term_bank_id,
-    TagJSON.tag_json -- Just select the pre-built JSON
-FROM
-    term_bank_v3_x_definition_tag_table AS TB3DTRT
--- Join the link table to the new reusable view
-JOIN
-    tag_bank_v3_as_json_view AS TagJSON
-    ON TB3DTRT.definition_tag_id = TagJSON.tag_id;
-
----
+    SELECT
+        TB3DTRT.term_bank_id,
+        TagJSON.tag_json -- Just select the pre-built JSON
+    FROM
+        term_bank_v3_x_definition_tag_table AS TB3DTRT
+    -- Join the link table to the new reusable view
+    JOIN
+        tag_bank_v3_as_json_view AS TagJSON
+        ON TB3DTRT.definition_tag_id = TagJSON.tag_id;
         
--- VIEW : For Tags (pre-builds the JSON object)
+-- VIEW For Tags (pre-builds the JSON object)
 CREATE VIEW IF NOT EXISTS term_bank_v3_tags_json_view AS
-SELECT
-    TB3TBRT.term_bank_id,
-    TagJSON.tag_json -- Just select the pre-built JSON
-FROM
-    term_bank_v3_x_tag_bank_table AS TB3TBRT
--- Join the link table to the new reusable view
-JOIN
-    tag_bank_v3_as_json_view AS TagJSON
-    ON TB3TBRT.tag_bank_id = TagJSON.tag_id;
+    SELECT
+        TB3TBRT.term_bank_id,
+        TagJSON.tag_json -- Just select the pre-built JSON
+    FROM
+        term_bank_v3_x_tag_bank_table AS TB3TBRT
+    -- Join the link table to the new reusable view
+    JOIN
+        tag_bank_v3_as_json_view AS TagJSON
+        ON TB3TBRT.tag_bank_id = TagJSON.tag_id;
 
----
 
 CREATE VIEW IF NOT EXISTS term_bank_v3_entry_view AS
     WITH
