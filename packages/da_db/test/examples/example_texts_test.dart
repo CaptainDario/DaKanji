@@ -1,4 +1,4 @@
-  import 'package:da_db/database/da_db.dart';
+import 'package:da_db/database/da_db.dart';
 import 'package:da_db_shared/paths.dart';
 import 'package:test/test.dart';
 
@@ -10,7 +10,7 @@ void main() {
   late DaDb db;
 
   setUpAll(() async {
-    db = await setupFreshDb(devExampleTextsPath);
+    db = await setupFreshDb(devExampleTextsPath, true);
   });
 
   tearDownAll(() async {

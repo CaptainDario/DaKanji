@@ -10,7 +10,7 @@ void main() {
   
   late DaDb db;
    setUpAll(() async {
-     db = await setupFreshDb(yomitanSampleDictionaryPath);
+     db = await setupFreshDb(yomitanSampleDictionaryPath, false);
    });
    tearDownAll(() async {
      await db.close();

@@ -10,7 +10,8 @@ import 'audio_list_test_cases.dart';
 void main() async {
   
   // create the testing database (delete any existing database)
-  DaDb db = await setupFreshDb(p.join(daDbDataFilesPath, 'example_audio_sources'));
+  DaDb db = await setupFreshDb(
+    p.join(daDbDataFilesPath, 'example_audio_sources'), true);
   
   // convert the test files
   Stopwatch s = Stopwatch()..start();

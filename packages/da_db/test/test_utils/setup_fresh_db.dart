@@ -7,7 +7,7 @@ import 'package:da_db_shared/paths.dart';
 import '../dictionary_test_variables.dart';
 import '../test_utils/db_files.dart';
 
-Future<DaDb> setupFreshDb(String dictionaryPath) async {
+Future<DaDb> setupFreshDb(String dictionaryPath, bool isDefaultDictionary) async {
 
   if(File(daDbTestPath).existsSync()) File(daDbTestPath).deleteSync();
 
@@ -25,7 +25,7 @@ Future<DaDb> setupFreshDb(String dictionaryPath) async {
   Stream<String> stream = await parseDaDbDataSource(
     dataSourcePath: dataSourceZipPath,
     db: db,
-    isDefaultDictionary: true,
+    isDefaultDictionary: isDefaultDictionary,
   );
   
   await for (final event in stream) {
