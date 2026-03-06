@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:da_db/parsing/staging_db/staging_db.dart';
 import 'package:da_db/parsing/util/db_file_parser.dart';
 import 'package:da_db/parsing/util/parsing_constants.dart';
+import 'package:da_db/parsing/util/staging_utils.dart';
 import 'package:language_processing/language_processing.dart';
 
 class KanjiBankV3Parser implements DbFileParser {
@@ -107,29 +108,21 @@ class KanjiBankV3Parser implements DbFileParser {
     List<List<Object?>> tagRows,
     List<List<Object?>> statRows,
   ) async {
-    String placeholders(int count) => '(${List.filled(count, '?').join(', ')})';
-
     await db.transaction(() async {
-      if (kanjiRows.isNotEmpty) {
-        final sql = 'INSERT INTO ${db.kanjiStagingTable.actualTableName} (local_id, kanji, original_onyomi, original_kunyomi) VALUES ${List.filled(kanjiRows.length, placeholders(4)).join(', ')}';
-        await db.customStatement(sql, kanjiRows.expand((i) => i).toList());
-      }
-      if (readingRows.isNotEmpty) {
-        final sql = 'INSERT INTO ${db.kanjiReadingStagingTable.actualTableName} (kanji_local_id, reading, reading_normalized, type, position) VALUES ${List.filled(readingRows.length, placeholders(5)).join(', ')}';
-        await db.customStatement(sql, readingRows.expand((i) => i).toList());
-      }
-      if (defRows.isNotEmpty) {
-        final sql = 'INSERT INTO ${db.kanjiDefinitionStagingTable.actualTableName} (kanji_local_id, definition, position) VALUES ${List.filled(defRows.length, placeholders(3)).join(', ')}';
-        await db.customStatement(sql, defRows.expand((i) => i).toList());
-      }
-      if (tagRows.isNotEmpty) {
-        final sql = 'INSERT INTO ${db.kanjiTagStagingTable.actualTableName} (kanji_local_id, tag_name) VALUES ${List.filled(tagRows.length, placeholders(2)).join(', ')}';
-        await db.customStatement(sql, tagRows.expand((i) => i).toList());
-      }
-      if (statRows.isNotEmpty) {
-        final sql = 'INSERT INTO ${db.kanjiStatStagingTable.actualTableName} (kanji_local_id, tag_name, value) VALUES ${List.filled(statRows.length, placeholders(3)).join(', ')}';
-        await db.customStatement(sql, statRows.expand((i) => i).toList());
-      }
+      await insertChunked(db, db.kanjiStagingTable.actualTableName, 
+        ['local_id', 'kanji', 'original_onyomi', 'original_kunyomi'], kanjiRows);
+          
+      await insertChunked(db, db.kanjiReadingStagingTable.actualTableName, 
+        ['kanji_local_id', 'reading', 'reading_normalized', 'type', 'position'], readingRows);
+
+      await insertChunked(db, db.kanjiDefinitionStagingTable.actualTableName, 
+        ['kanji_local_id', 'definition', 'position'], defRows);
+
+      await insertChunked(db, db.kanjiTagStagingTable.actualTableName, 
+        ['kanji_local_id', 'tag_name'], tagRows);
+
+      await insertChunked(db, db.kanjiStatStagingTable.actualTableName, 
+        ['kanji_local_id', 'tag_name', 'value'], statRows);
     });
   }
 }

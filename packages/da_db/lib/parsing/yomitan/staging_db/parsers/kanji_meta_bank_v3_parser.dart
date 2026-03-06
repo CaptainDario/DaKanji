@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:da_db/parsing/staging_db/staging_db.dart';
 import 'package:da_db/parsing/util/db_file_parser.dart';
 import 'package:da_db/parsing/util/parsing_constants.dart';
+import 'package:da_db/parsing/util/staging_utils.dart';
 import 'package:drift/drift.dart';
 import 'package:language_processing/language_processing.dart';
 
@@ -64,9 +65,13 @@ class KanjiMetaBankV3Parser implements DbFileParser {
   }
 
   Future<void> _flush(StagingDatabase db, List<List<Object?>> rows) async {
-    final sql = 'INSERT INTO ${db.kanjiMetaStagingTable.actualTableName} '
-        '(local_id, kanji, type, freq_value, freq_display_value) '
-        'VALUES ${List.filled(rows.length, '(?, ?, ?, ?, ?)').join(', ')}';
-    await db.customStatement(sql, rows.expand((i) => i).toList());
+    await db.transaction(() async {
+      await insertChunked(
+        db, 
+        db.kanjiMetaStagingTable.actualTableName, 
+        ['local_id', 'kanji', 'type', 'freq_value', 'freq_display_value'], 
+        rows
+      );
+    });
   }
 }

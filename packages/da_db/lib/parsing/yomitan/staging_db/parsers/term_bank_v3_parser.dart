@@ -5,6 +5,7 @@ import 'package:crypto/crypto.dart';
 import 'package:da_db/parsing/staging_db/staging_db.dart';
 import 'package:da_db/parsing/util/db_file_parser.dart';
 import 'package:da_db/parsing/util/parsing_constants.dart';
+import 'package:da_db/parsing/util/staging_utils.dart';
 import 'package:da_db/parsing/yomitan/in_memory_cache/term/definition_parser.dart';
 import 'package:da_db/util/data_converters/zlib_text_converter_io.dart';
 import 'package:language_processing/language_processing.dart';
@@ -112,35 +113,43 @@ class TermBankV3Parser implements DbFileParser {
     return localId;
   }
 
-  Future<void> _flush(
+Future<void> _flush(
     StagingDatabase db, 
     List<List<Object?>> termRows,
     List<List<Object?>> defRows,
     List<List<Object?>> tagRows,
     List<List<Object?>> ruleRows,
   ) async {
-    String placeholders(int count) => '(${List.filled(count, '?').join(', ')})';
-
     await db.transaction(() async {
-      if (termRows.isNotEmpty) {
-        final sql = 'INSERT INTO ${db.termStagingTable.actualTableName} (local_id, term, reading, term_normalized, term_tokens, term_tokens_normalized, reading_normalized, popularity, sequence_number, original_json, definition_json_hash) VALUES ${List.filled(termRows.length, placeholders(11)).join(', ')}';
-        await db.customStatement(sql, termRows.expand((i) => i).toList());
-      }
+      // 1. Term Staging
+      await insertChunked(
+        db, db.termStagingTable.actualTableName,
+        ['local_id', 'term', 'reading', 'term_normalized', 'term_tokens', 
+         'term_tokens_normalized', 'reading_normalized', 'popularity', 
+         'sequence_number', 'original_json', 'definition_json_hash'],
+        termRows
+      );
 
-      if (defRows.isNotEmpty) {
-        final sql = 'INSERT INTO ${db.termDefinitionStagingTable.actualTableName} (term_local_id, definition, rank) VALUES ${List.filled(defRows.length, placeholders(3)).join(', ')}';
-        await db.customStatement(sql, defRows.expand((i) => i).toList());
-      }
+      // 2. Definition Staging
+      await insertChunked(
+        db, db.termDefinitionStagingTable.actualTableName,
+        ['term_local_id', 'definition', 'rank'],
+        defRows
+      );
 
-      if (tagRows.isNotEmpty) {
-        final sql = 'INSERT INTO ${db.termTagStagingTable.actualTableName} (term_local_id, tag_name, is_definition_tag) VALUES ${List.filled(tagRows.length, placeholders(3)).join(', ')}';
-        await db.customStatement(sql, tagRows.expand((i) => i).toList());
-      }
+      // 3. Tag Staging
+      await insertChunked(
+        db, db.termTagStagingTable.actualTableName,
+        ['term_local_id', 'tag_name', 'is_definition_tag'],
+        tagRows
+      );
 
-      if (ruleRows.isNotEmpty) {
-        final sql = 'INSERT INTO ${db.termRuleStagingTable.actualTableName} (term_local_id, rule_id) VALUES ${List.filled(ruleRows.length, placeholders(2)).join(', ')}';
-        await db.customStatement(sql, ruleRows.expand((i) => i).toList());
-      }
+      // 4. Rule Staging
+      await insertChunked(
+        db, db.termRuleStagingTable.actualTableName,
+        ['term_local_id', 'rule_id'],
+        ruleRows
+      );
     });
   }
 }

@@ -168,33 +168,22 @@ class TermMetaBankV3Parser implements DbFileParser {
     List<List<Object?>> ipaRows,
     List<List<Object?>> tagRows,
   ) async {
-    String placeholders(int count) => '(${List.filled(count, '?').join(', ')})';
-
     await db.transaction(() async {
-      if (metaRows.isNotEmpty) {
-        final sql = 'INSERT INTO ${db.termMetaStagingTable.actualTableName} '
-            '(local_id, term, term_normalized, term_tokens, term_tokens_normalized, mode, reading, reading_normalized, freq_value, freq_display) '
-            'VALUES ${List.filled(metaRows.length, placeholders(10)).join(', ')}';
-        await db.customStatement(sql, metaRows.expand((i) => i).toList());
-      }
-      if (pitchRows.isNotEmpty) {
-        final sql = 'INSERT INTO ${db.termMetaPitchStagingTable.actualTableName} '
-            '(pitch_local_id, meta_local_id, position, nasal, devoice) '
-            'VALUES ${List.filled(pitchRows.length, placeholders(5)).join(', ')}';
-        await db.customStatement(sql, pitchRows.expand((i) => i).toList());
-      }
-      if (ipaRows.isNotEmpty) {
-        final sql = 'INSERT INTO ${db.termMetaIpaStagingTable.actualTableName} '
-            '(ipa_local_id, meta_local_id, ipa) '
-            'VALUES ${List.filled(ipaRows.length, placeholders(3)).join(', ')}';
-        await db.customStatement(sql, ipaRows.expand((i) => i).toList());
-      }
-      if (tagRows.isNotEmpty) {
-        final sql = 'INSERT INTO ${db.termMetaTagStagingTable.actualTableName} '
-            '(parent_local_id, parent_type, tag_name) '
-            'VALUES ${List.filled(tagRows.length, placeholders(3)).join(', ')}';
-        await db.customStatement(sql, tagRows.expand((i) => i).toList());
-      }
+      await insertChunked(db, db.termMetaStagingTable.actualTableName, 
+          ['local_id', 'term', 'term_normalized', 'term_tokens', 'term_tokens_normalized', 'mode', 'reading', 'reading_normalized', 'freq_value', 'freq_display'], 
+          metaRows);
+
+      await insertChunked(db, db.termMetaPitchStagingTable.actualTableName, 
+          ['pitch_local_id', 'meta_local_id', 'position', 'nasal', 'devoice'], 
+          pitchRows);
+
+      await insertChunked(db, db.termMetaIpaStagingTable.actualTableName, 
+          ['ipa_local_id', 'meta_local_id', 'ipa'], 
+          ipaRows);
+
+      await insertChunked(db, db.termMetaTagStagingTable.actualTableName, 
+          ['parent_local_id', 'parent_type', 'tag_name'], 
+          tagRows);
     });
   }
 }

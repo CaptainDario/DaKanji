@@ -4,6 +4,7 @@ import 'dart:typed_data';
 import 'package:da_db/parsing/staging_db/staging_db.dart';
 import 'package:da_db/parsing/util/db_file_parser.dart';
 import 'package:da_db/parsing/util/parsing_constants.dart';
+import 'package:da_db/parsing/util/staging_utils.dart';
 import 'package:language_processing/language_processing.dart';
 
 
@@ -52,10 +53,13 @@ class TagBankParser implements DbFileParser {
   }
 
   Future<void> _flush(StagingDatabase db, List<List<Object?>> rows) async {
-    final placeholders = rows.map((_) => '(?, ?, ?, ?, ?)').join(', ');
-    
-    final sql = 'INSERT INTO ${db.tagStagingTable.actualTableName} (tag_name, category, sorting_order, notes, score) VALUES $placeholders';
-    
-    await db.customStatement(sql, rows.expand((i) => i).toList());
+    await db.transaction(() async {
+      await insertChunked(
+        db, 
+        db.tagStagingTable.actualTableName, 
+        ['tag_name', 'category', 'sorting_order', 'notes', 'score'], 
+        rows
+      );
+    });
   }
 }
