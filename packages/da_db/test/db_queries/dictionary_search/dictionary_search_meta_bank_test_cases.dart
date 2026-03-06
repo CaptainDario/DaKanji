@@ -16,7 +16,7 @@ List<DictionarySearchTestCase> metaBankTestCases = [
     queryMatches: [ExpectedMatchGroup(
       exactMatches: [
         [
-          ExpectedDictionaryMatch(
+ExpectedDictionaryMatch(
             term: '土木工事',
             reading: 'どぼくこうじ',
             match: '土木工事',
@@ -29,10 +29,15 @@ List<DictionarySearchTestCase> metaBankTestCases = [
                 reading: 'どぼくこうじ',
                 type: TermMetaBankEntryTypes.pitch,
                 pitchs: [
-                  TermMetaBankV3PitchEntry(position: 1, devoice: 12),
-                  TermMetaBankV3PitchEntry(position: 2, nasal: 23, tags: [p1Tag]),
-                  TermMetaBankV3PitchEntry(position: 3, devoice: 34),
-                  TermMetaBankV3PitchEntry(position: 4, devoice: 45, tags: [p1Tag, p2Tag]),
+                  // どぼくこうじ = 6 morae
+                  // pos 1: Atamadaka -> High drops to Low immediately
+                  TermMetaBankV3PitchEntry(position: "HLLLLL", devoice: [12], tags: []),
+                  // pos 2: Nakadaka -> Drops after 2nd mora
+                  TermMetaBankV3PitchEntry(position: "LHLLLL", nasal: [23], tags: [p1Tag]),
+                  // pos 3: Nakadaka -> Drops after 3rd mora
+                  TermMetaBankV3PitchEntry(position: "LHHLLL", devoice: [34], tags: []),
+                  // pos 4: Nakadaka -> Drops after 4th mora
+                  TermMetaBankV3PitchEntry(position: "LHHHLL", devoice: [45], tags: [p1Tag, p2Tag]),
                 ],
                 ipas: []
               ),
@@ -45,7 +50,7 @@ List<DictionarySearchTestCase> metaBankTestCases = [
                 pitchs: [],
                 ipas: [
                   TermMetaBankV3IpaEntry(ipa: "[sɨᵝkʲi]", tags: [tokyoTag, kyotoTag]),
-                  TermMetaBankV3IpaEntry(ipa: "[laerglaeh]"),
+                  TermMetaBankV3IpaEntry(ipa: "[laerglaeh]", tags: []),
                   TermMetaBankV3IpaEntry(ipa: "[alsjega]", tags: [tokyoTag]),
                   TermMetaBankV3IpaEntry(ipa: "[laheig]", tags: [testTag, asdTag]),
                 ],

@@ -8,8 +8,8 @@ import 'package:test/test.dart';
 
 import 'dictionary_search_test_helper_classes.dart';
 
-Matcher matchesPitch(int position, {List<TagBankV3Entry>? tags, int? nasal, int? devoice}) {
-  
+// ENFORCED: position is a String, nasal/devoice are List<int>?
+Matcher matchesPitch(String position, {List<TagBankV3Entry>? tags, List<int>? nasal, List<int>? devoice}) {
   return isA<TermMetaBankV3PitchEntry>()
     .having((p) => p.position, 'position', position)
     .having((p) => p.tags.map((e) => e.copyWith(
@@ -21,7 +21,6 @@ Matcher matchesPitch(int position, {List<TagBankV3Entry>? tags, int? nasal, int?
 }
 
 Matcher matchesIpa(String ipa, {List<TagBankV3Entry>? tags}) {
-
   return isA<TermMetaBankV3IpaEntry>()
     .having((e) => e.ipa, 'ipa', ipa)
     .having((p) => p.tags.map((e) => e.copyWith(
@@ -42,7 +41,7 @@ Matcher matchesMetaEntry(TermMetaBankV3Entry expectedMeta) {
       .having((e) => e.frequency, 'frequency', expectedMeta.frequency,)
       .having((e) => e.frequencyDisplayValue, 'frequencyDisplayValue', expectedMeta.frequencyDisplayValue,)
       
-      // --- 2. Match Pitch List ---
+      // --- 3. Match Pitch List ---
       .having(
         (e) => e.pitchs,
         'pitchs',
@@ -56,7 +55,7 @@ Matcher matchesMetaEntry(TermMetaBankV3Entry expectedMeta) {
         ),
       )
 
-      // --- 3. Match IPA List ---
+      // --- 4. Match IPA List ---
       .having(
         (e) => e.ipas,
         'ipas',
@@ -70,16 +69,10 @@ Matcher matchesMetaEntry(TermMetaBankV3Entry expectedMeta) {
 }
 
 /// Custom matcher that verifies a `DictionaryMatch` object.
-///
-/// It checks the `match` text and the nested `entry`'s term, reading,
-/// and definitions. This has been updated to use `DictionaryMatch`.
 Matcher matchesSearchResult(List<ExpectedDictionaryMatch> expectedGroup) {
-  final expectedMatches =
-      expectedGroup.map((e) => e.match).toList();
-  final expectedTerms =
-      expectedGroup.map((e) => e.term).toList();
-  final expectedReadings =
-      expectedGroup.map((e) => e.reading).toList();
+  final expectedMatches = expectedGroup.map((e) => e.match).toList();
+  final expectedTerms = expectedGroup.map((e) => e.term).toList();
+  final expectedReadings = expectedGroup.map((e) => e.reading).toList();
   final expectedDefinitionMatchers = expectedGroup
       .map((e) => orderedEquals(e.definitions))
       .toList();
@@ -90,72 +83,23 @@ Matcher matchesSearchResult(List<ExpectedDictionaryMatch> expectedGroup) {
       .toList();
 
   return isA<DictionaryMatch>()
-      .having(
-        (res) => res.matches,
-        'matches',
-        orderedEquals(expectedMatches),
-      )
-      .having(
-        (res) => res.entries.map((e) => e.term).toList(),
-        'entry terms',
-        orderedEquals(expectedTerms),
-      )
-      .having(
-        (res) => res.entries.map((e) => e.reading).toList(),
-        'entry readings',
-        orderedEquals(expectedReadings),
-      )
-      .having(
-        (res) => res.entries.map((e) => e.definitions).toList(),
-        'entry definitions',
-        orderedEquals(expectedDefinitionMatchers),
-      )
-      .having(
-        (res) => res.metaEntriesForEachEntry,
-        'entry meta entries',
-        orderedEquals(expectedMetaMatchers),
-      );
+      .having((res) => res.matches, 'matches', orderedEquals(expectedMatches))
+      .having((res) => res.entries.map((e) => e.term).toList(), 'entry terms', orderedEquals(expectedTerms))
+      .having((res) => res.entries.map((e) => e.reading).toList(), 'entry readings', orderedEquals(expectedReadings))
+      .having((res) => res.entries.map((e) => e.definitions).toList(), 'entry definitions', orderedEquals(expectedDefinitionMatchers))
+      .having((res) => res.metaEntriesForEachEntry, 'entry meta entries', orderedEquals(expectedMetaMatchers));
 }
 
-/// Helper function to assert that an actual `SearchMatchGroup`
-/// matches an `ExpectedMatchGroup`.
 void expectMatchGroup(
     DictionaryMatchGroup actual,
     ExpectedMatchGroup expected,
     String query,
     String groupName,
 ) {
-  _compareMatchBucket(
-    actual.exactMatches,
-    expected.exactMatches,
-    query,
-    groupName,
-    'ExactMatches',
-  );
-
-  _compareMatchBucket(
-    actual.prefixMatches,
-    expected.prefixMatches,
-    query,
-    groupName,
-    'PrefixMatches',
-  );
-
-  _compareMatchBucket(
-    actual.tokenMatches,
-    expected.tokenMatches,
-    query,
-    groupName,
-    'TokenMatches',
-  );
-
-  _compareMatchBucket(
-    actual.wildcardMatches,
-    expected.wildcardMatches,
-    query,
-    groupName,
-    'WildcardMatches',
-  );
+  _compareMatchBucket(actual.exactMatches, expected.exactMatches, query, groupName, 'ExactMatches');
+  _compareMatchBucket(actual.prefixMatches, expected.prefixMatches, query, groupName, 'PrefixMatches');
+  _compareMatchBucket(actual.tokenMatches, expected.tokenMatches, query, groupName, 'TokenMatches');
+  _compareMatchBucket(actual.wildcardMatches, expected.wildcardMatches, query, groupName, 'WildcardMatches');
 }
 
 void _compareMatchBucket(
@@ -181,17 +125,14 @@ void _compareMatchBucket(
 
     expect(
       current,
-      matchesSearchResult(expectedGroup), // This matcher is correct
+      matchesSearchResult(expectedGroup),
       reason: "$bucketLabel[$groupIndex] in group '$groupName' for query '$query' did not match.",
     );
     actualIndex++;
   }
 
   if (actualIndex != actual.length) {
-    final extras = actual
-        .sublist(actualIndex)
-        .map((m) => m.toFormattedString(indent: '  '))
-        .join('\n');
+    final extras = actual.sublist(actualIndex).map((m) => m.toFormattedString(indent: '  ')).join('\n');
     fail('Unexpected extra $bucketLabel in group \'$groupName\' for query \'$query\':\n$extras',);
   }
 }
