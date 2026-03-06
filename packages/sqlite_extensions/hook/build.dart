@@ -4,8 +4,8 @@ import 'package:path/path.dart' as p;
 
 
 List<String> extensionNames = [
-  //"spellfix", "crsqlite", "compress",
-  "vector", 
+  "crsqlite",
+  "better_trigram"
 ];
 
 void main(List<String> args) async {
