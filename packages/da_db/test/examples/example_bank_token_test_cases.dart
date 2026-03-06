@@ -14,7 +14,10 @@ final List<(String, List<Iso639_3>)> exampleTokenTestQueries = [
 /// We reuse the meticulously defined expected values from the FTS test cases 
 /// since the resulting hydrated ExampleEntry objects should be identical.
 final List<List<ExampleEntry>> exampleTokenTestExpectedValues = [
-  exampleSentenceTestExpectedValues[0], // Expected for "リンゴ"
+  [
+    ...exampleSentenceTestExpectedValues[0], // Expected for "リンゴ"
+    ...exampleSentenceTestExpectedValues[4], // Expected for "[apple]"
+  ],
   exampleSentenceTestExpectedValues[1], // Expected for "犬"
   exampleSentenceTestExpectedValues[3], // Expected for "apples"
 ];

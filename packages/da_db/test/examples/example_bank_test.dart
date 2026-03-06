@@ -4,90 +4,80 @@ import 'package:test/test.dart';
 
 import '../test_utils/ignore_database_generated_data.dart';
 import '../test_utils/setup_fresh_db.dart';
+import 'example_bank_fts_test_cases.dart';
 import 'example_bank_token_test_cases.dart';
 
 void main() {
   late DaDb db;
 
   setUpAll(() async {
-    db = await setupFreshDb(devExampleSentencesPath);
+    db = await setupFreshDb(devExampleSentencesPath, true);
   });
 
   tearDownAll(() async {
     await db.close();
   });
 
-  group("Test direct token/term searches", () {
-    
-    // 1. Loop through and test the Term String searches
-    for (int i = 0; i < exampleTokenTestQueries.length; i++) {
-      test('Query (Term String): ${exampleTokenTestQueries[i].$1}', () async {
-      
-        Stopwatch s = Stopwatch()..start();
-        
-        final results = await db.exampleDao.searchExamplesByTermString(
-          exampleTokenTestQueries[i].$1, 
-          exampleTokenTestQueries[i].$2
-        );
-        
-        print("Looking up term string '${exampleTokenTestQueries[i].$1}' took ${s.elapsedMilliseconds}ms");
+  group('FTS5 Search (better-trigram)', () {
+    for (var i = 0; i < exampleSentencesTestQueries.length; i++) {
+      final query = exampleSentencesTestQueries[i].$1;
+      final languages = exampleSentencesTestQueries[i].$2;
+      final expected = exampleSentenceTestExpectedValues[i];
 
-        bool allFound = true;
-        expect(results.isNotEmpty, true, reason: "DAO returned empty results for term string ${exampleTokenTestQueries[i].$1}");
+      test('Returns expected FTS results for "$query"', () async {
+        final results = await db.exampleDao.searchExamples(query, languages);
 
-        for (int j = 0; j < results.length; j++) {
-          final result = results[j];
-          final expected = exampleTokenTestExpectedValues[i][j];
+        expect(results.length, expected.length);
 
-          // Strip out DB-generated IDs for clean comparison
-          final resultForTesting = exampleEntryIgnoreDatabaseGeneratedData(result);
-
-          if (resultForTesting != expected) {
-            allFound = false;
-            print("--- MISMATCH FOUND ---");
-            print("EXPECTED: $expected");
-            print("ACTUAL:   $resultForTesting");
-          }
+        for (var j = 0; j < results.length; j++) {
+          final actual = exampleEntryIgnoreDatabaseGeneratedData(results[j]);
+          expect(actual, expected[j]);
         }
-        
-        expect(allFound, true);
+      });
+    }
+  });
+
+  group('Relational Token / Term Search', () {
+    for (var i = 0; i < exampleTokenTestQueries.length; i++) {
+      final termString = exampleTokenTestQueries[i].$1;
+      final languages = exampleTokenTestQueries[i].$2;
+      final expected = exampleTokenTestExpectedValues[i];
+
+      test('searchExamplesByTermString returns expected results for "$termString"', () async {
+        final results = await db.exampleDao.searchExamplesByTermString(termString, languages);
+
+        expect(results.length, expected.length);
+
+        for (var j = 0; j < results.length; j++) {
+          final actual = exampleEntryIgnoreDatabaseGeneratedData(results[j]);
+          expect(actual, expected[j]);
+        }
       });
     }
 
-    // 2. Test the Term ID search dynamically
-    test('Query (Term ID): Fetch examples matching exact term ID', () async {
-      final testQueryString = exampleTokenTestQueries[0].$1; // "リンゴ"
-      final testQueryLang = exampleTokenTestQueries[0].$2;   // [Iso639_3.jpn]
+    test('searchExamplesByTermIds returns expected results for exact ID', () async {
+      final targetTerm = exampleTokenTestQueries.first.$1;
+      final languages = exampleTokenTestQueries.first.$2;
+      final expected = exampleTokenTestExpectedValues.first;
 
-      // Fetch the actual DB-generated ID for "リンゴ" using Drift's type-safe builder
+      // Fetch the DB-generated ID for the term
       final termRecord = await (db.select(db.termTable)
-        ..where((t) => t.term.equals(testQueryString))
-        ..limit(1)
-      ).getSingleOrNull();
+          ..where((t) => t.term.equals(targetTerm))
+          ..limit(1))
+        .getSingle();
 
-      if (termRecord == null) {
-        markTestSkipped("Term '$testQueryString' not found in DB during setup. Skipping ID search test.");
-        return;
+      final resultsId = await db.exampleDao.searchExamplesByTermIds([termRecord.id], languages);
+      final resultsTerm = await db.exampleDao.searchExamplesByTermString(termRecord.term, languages);
+
+      expect(resultsId.length, expected.length);
+      expect(resultsTerm.length, expected.length);
+
+      for (var j = 0; j < resultsId.length; j++) {
+        var actual = exampleEntryIgnoreDatabaseGeneratedData(resultsId[j]);
+        expect(actual, expected[j]);
+        actual = exampleEntryIgnoreDatabaseGeneratedData(resultsTerm[j]);
+        expect(actual, expected[j]);
       }
-
-      final termId = termRecord.id;
-      
-      Stopwatch s = Stopwatch()..start();
-      
-      final results = await db.exampleDao.searchExamplesByTermIds(
-        [termId], 
-        testQueryLang
-      );
-      
-      print("Looking up term ID '$termId' took ${s.elapsedMilliseconds}ms");
-
-      expect(results.isNotEmpty, true, reason: "DAO returned empty results for term ID $termId");
-
-      // Verify it fetched the correct expected value
-      final resultForTesting = exampleEntryIgnoreDatabaseGeneratedData(results.first);
-      final expected = exampleTokenTestExpectedValues[0].first;
-      
-      expect(resultForTesting, expected);
     });
   });
 }

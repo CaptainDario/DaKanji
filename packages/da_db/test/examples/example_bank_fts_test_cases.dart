@@ -7,10 +7,11 @@ import 'package:da_db/database/tag/tag_bank_v3_entry.dart';
 import 'package:language_processing/language_processing.dart';
 
 final List<(String, List<Iso639_3>)> exampleSentencesTestQueries = [
-  ("リンゴ", [Iso639_3.jpn]), // 1. Fully Loaded & Sorted
-  ("犬", [Iso639_3.jpn]),    // 2. Bare Minimum (Testing defaults)
-  ("猫", [Iso639_3.jpn]),    // 3. Missing Tokens
+  ("リンゴ", [Iso639_3.jpn]),  // 1. Fully Loaded & Sorted
+  ("犬", [Iso639_3.jpn]),     // 2. Bare Minimum (Testing defaults)
+  ("猫", [Iso639_3.jpn]),     // 3. Missing Tokens
   ("apples", [Iso639_3.eng]), // 4. English
+  ("apple", [Iso639_3.jpn]),  // 5. english in Japanese sentence should work
 ];
 
 final dummyIndex = IndexEntry(
@@ -103,6 +104,16 @@ final List<List<ExampleEntry>> exampleSentenceTestExpectedValues = [
       tags: [], 
       stats: [const StatEntry(statName: "quality", value: 4.5)], 
       audios: [],
+    )
+  ],
+
+  // Query 5: English in Japanese sentence should work
+  [
+    ExampleEntry(
+      id: 0, indexEntry: dummyIndex, groupId: 100,
+      sentence: "「apple」を食べます", 
+      languageCode: "jpn",
+      tags: [], stats: [], audios: [],
     )
   ],
 ];
