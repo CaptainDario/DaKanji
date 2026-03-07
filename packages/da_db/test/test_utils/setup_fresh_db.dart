@@ -7,14 +7,20 @@ import 'package:da_db_shared/paths.dart';
 import '../dictionary_test_variables.dart';
 import '../test_utils/db_files.dart';
 
-Future<DaDb> setupFreshDb(String dictionaryPath, bool isDefaultDictionary) async {
+Future<DaDb> setupFreshDb(
+  String dictionaryPath,
+  bool isDefaultDictionary,
+  {
+    bool inMemory = true,
+  }
+) async {
 
   if(File(daDbTestPath).existsSync()) File(daDbTestPath).deleteSync();
 
   // create the testing database (delete any existing database)
   DaDb db = DaDb(
     dbPath: daDbTestPath, 
-    inMemory: false,
+    inMemory: inMemory,
     languageProcessor: await japaneseProcessor
   );
 
