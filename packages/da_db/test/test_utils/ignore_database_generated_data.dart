@@ -106,6 +106,12 @@ ExampleEntry exampleEntryIgnoreDatabaseGeneratedData(ExampleEntry entry) {
         id: 0,
         indexEntry: standardIndex,
       )).toList(),
+      stats: audio.stats.map((s) => s.copyWith(
+        id: 0,
+      )).toList()
+    )).toList(),
+    stats: entry.stats.map((s) => s.copyWith(
+      id: 0,
     )).toList(),
   );
 }

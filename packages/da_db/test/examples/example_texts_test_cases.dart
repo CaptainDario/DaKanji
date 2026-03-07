@@ -37,7 +37,7 @@ final List<List<ExampleEntry>> exampleTextTestExpectedValues = [
       sentence: "リンゴを食べます。", 
       languageCode: "jpn",
       tags: [dummyTag("test_tag"), dummyTag("text_import")], 
-      stats: [const StatEntry(statName: "quality", value: 5.0)],
+      stats: [const StatEntry(id: 0, statName: "quality", value: 5.0)],
       audios: [],
     )
   ],
@@ -48,7 +48,7 @@ final List<List<ExampleEntry>> exampleTextTestExpectedValues = [
       sentence: "犬が走る。", 
       languageCode: "jpn",
       tags: [dummyTag("test_tag"), dummyTag("text_import")],
-      stats: [const StatEntry(statName: "quality", value: 5.0)],
+      stats: [const StatEntry(id: 0, statName: "quality", value: 5.0)],
       audios: [],
     )
   ],
@@ -63,9 +63,6 @@ final List<List<ExampleEntry>> exampleTextTestExpectedValues = [
   ],
   
   // --- FILE 3 EXPECTATIONS ---
-  // (Note: If your MeCab dictionary outputs different readings for proper nouns 
-  // like 瀧 or 三葉, just update the expected `reading` strings below).
-
   // Query 4: Sentence 1
   [
     ExampleEntry(

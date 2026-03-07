@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$StatEntry {
 
- String get statName; String? get displayName; double get value; String? get displayValue;
+ int get id; String get statName; String? get displayName; double get value; String? get displayValue;
 /// Create a copy of StatEntry
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $StatEntryCopyWith<StatEntry> get copyWith => _$StatEntryCopyWithImpl<StatEntry>
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is StatEntry&&(identical(other.statName, statName) || other.statName == statName)&&(identical(other.displayName, displayName) || other.displayName == displayName)&&(identical(other.value, value) || other.value == value)&&(identical(other.displayValue, displayValue) || other.displayValue == displayValue));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is StatEntry&&(identical(other.id, id) || other.id == id)&&(identical(other.statName, statName) || other.statName == statName)&&(identical(other.displayName, displayName) || other.displayName == displayName)&&(identical(other.value, value) || other.value == value)&&(identical(other.displayValue, displayValue) || other.displayValue == displayValue));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,statName,displayName,value,displayValue);
+int get hashCode => Object.hash(runtimeType,id,statName,displayName,value,displayValue);
 
 @override
 String toString() {
-  return 'StatEntry(statName: $statName, displayName: $displayName, value: $value, displayValue: $displayValue)';
+  return 'StatEntry(id: $id, statName: $statName, displayName: $displayName, value: $value, displayValue: $displayValue)';
 }
 
 
@@ -48,7 +48,7 @@ abstract mixin class $StatEntryCopyWith<$Res>  {
   factory $StatEntryCopyWith(StatEntry value, $Res Function(StatEntry) _then) = _$StatEntryCopyWithImpl;
 @useResult
 $Res call({
- String statName, String? displayName, double value, String? displayValue
+ int id, String statName, String? displayName, double value, String? displayValue
 });
 
 
@@ -65,9 +65,10 @@ class _$StatEntryCopyWithImpl<$Res>
 
 /// Create a copy of StatEntry
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? statName = null,Object? displayName = freezed,Object? value = null,Object? displayValue = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? statName = null,Object? displayName = freezed,Object? value = null,Object? displayValue = freezed,}) {
   return _then(_self.copyWith(
-statName: null == statName ? _self.statName : statName // ignore: cast_nullable_to_non_nullable
+id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as int,statName: null == statName ? _self.statName : statName // ignore: cast_nullable_to_non_nullable
 as String,displayName: freezed == displayName ? _self.displayName : displayName // ignore: cast_nullable_to_non_nullable
 as String?,value: null == value ? _self.value : value // ignore: cast_nullable_to_non_nullable
 as double,displayValue: freezed == displayValue ? _self.displayValue : displayValue // ignore: cast_nullable_to_non_nullable
@@ -156,10 +157,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String statName,  String? displayName,  double value,  String? displayValue)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id,  String statName,  String? displayName,  double value,  String? displayValue)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _StatEntry() when $default != null:
-return $default(_that.statName,_that.displayName,_that.value,_that.displayValue);case _:
+return $default(_that.id,_that.statName,_that.displayName,_that.value,_that.displayValue);case _:
   return orElse();
 
 }
@@ -177,10 +178,10 @@ return $default(_that.statName,_that.displayName,_that.value,_that.displayValue)
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String statName,  String? displayName,  double value,  String? displayValue)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id,  String statName,  String? displayName,  double value,  String? displayValue)  $default,) {final _that = this;
 switch (_that) {
 case _StatEntry():
-return $default(_that.statName,_that.displayName,_that.value,_that.displayValue);case _:
+return $default(_that.id,_that.statName,_that.displayName,_that.value,_that.displayValue);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -197,10 +198,10 @@ return $default(_that.statName,_that.displayName,_that.value,_that.displayValue)
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String statName,  String? displayName,  double value,  String? displayValue)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id,  String statName,  String? displayName,  double value,  String? displayValue)?  $default,) {final _that = this;
 switch (_that) {
 case _StatEntry() when $default != null:
-return $default(_that.statName,_that.displayName,_that.value,_that.displayValue);case _:
+return $default(_that.id,_that.statName,_that.displayName,_that.value,_that.displayValue);case _:
   return null;
 
 }
@@ -212,9 +213,10 @@ return $default(_that.statName,_that.displayName,_that.value,_that.displayValue)
 @JsonSerializable()
 
 class _StatEntry implements StatEntry {
-  const _StatEntry({required this.statName, this.displayName, required this.value, this.displayValue});
+  const _StatEntry({required this.id, required this.statName, this.displayName, required this.value, this.displayValue});
   factory _StatEntry.fromJson(Map<String, dynamic> json) => _$StatEntryFromJson(json);
 
+@override final  int id;
 @override final  String statName;
 @override final  String? displayName;
 @override final  double value;
@@ -233,16 +235,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _StatEntry&&(identical(other.statName, statName) || other.statName == statName)&&(identical(other.displayName, displayName) || other.displayName == displayName)&&(identical(other.value, value) || other.value == value)&&(identical(other.displayValue, displayValue) || other.displayValue == displayValue));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _StatEntry&&(identical(other.id, id) || other.id == id)&&(identical(other.statName, statName) || other.statName == statName)&&(identical(other.displayName, displayName) || other.displayName == displayName)&&(identical(other.value, value) || other.value == value)&&(identical(other.displayValue, displayValue) || other.displayValue == displayValue));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,statName,displayName,value,displayValue);
+int get hashCode => Object.hash(runtimeType,id,statName,displayName,value,displayValue);
 
 @override
 String toString() {
-  return 'StatEntry(statName: $statName, displayName: $displayName, value: $value, displayValue: $displayValue)';
+  return 'StatEntry(id: $id, statName: $statName, displayName: $displayName, value: $value, displayValue: $displayValue)';
 }
 
 
@@ -253,7 +255,7 @@ abstract mixin class _$StatEntryCopyWith<$Res> implements $StatEntryCopyWith<$Re
   factory _$StatEntryCopyWith(_StatEntry value, $Res Function(_StatEntry) _then) = __$StatEntryCopyWithImpl;
 @override @useResult
 $Res call({
- String statName, String? displayName, double value, String? displayValue
+ int id, String statName, String? displayName, double value, String? displayValue
 });
 
 
@@ -270,9 +272,10 @@ class __$StatEntryCopyWithImpl<$Res>
 
 /// Create a copy of StatEntry
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? statName = null,Object? displayName = freezed,Object? value = null,Object? displayValue = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? statName = null,Object? displayName = freezed,Object? value = null,Object? displayValue = freezed,}) {
   return _then(_StatEntry(
-statName: null == statName ? _self.statName : statName // ignore: cast_nullable_to_non_nullable
+id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as int,statName: null == statName ? _self.statName : statName // ignore: cast_nullable_to_non_nullable
 as String,displayName: freezed == displayName ? _self.displayName : displayName // ignore: cast_nullable_to_non_nullable
 as String?,value: null == value ? _self.value : value // ignore: cast_nullable_to_non_nullable
 as double,displayValue: freezed == displayValue ? _self.displayValue : displayValue // ignore: cast_nullable_to_non_nullable

@@ -46,10 +46,10 @@ final List<List<ExampleEntry>> exampleSentenceTestExpectedValues = [
         expectedTag("tatoeba", "source", 2, "Imported from Tatoeba project"),
       ], 
       stats: [
-        const StatEntry(statName: "JLPT", value: 1.0, displayValue: "N5"), 
-        const StatEntry(statName: "difficulty", displayName: "Difficulty", value: 2.5),
-        const StatEntry(statName: "freq", displayName: "Frequency", value: 120.0, displayValue: "uncommon"),
-        const StatEntry(statName: "quality", value: 5.0),
+        const StatEntry(id: 0, statName: "JLPT", value: 1.0, displayValue: "N5"), 
+        const StatEntry(id: 0, statName: "difficulty", displayName: "Difficulty", value: 2.5),
+        const StatEntry(id: 0, statName: "freq", displayName: "Frequency", value: 120.0, displayValue: "uncommon"),
+        const StatEntry(id: 0, statName: "quality", value: 5.0),
       ],
       audios: [
         ExampleAudioEntry(
@@ -67,8 +67,8 @@ final List<List<ExampleEntry>> exampleSentenceTestExpectedValues = [
             expectedTag("tokyo", "accent", 2, "Tokyo pitch accent"),
           ], 
           stats: [
-            const StatEntry(statName: "clarity", displayName: "Clarity", value: 4.0),
-            const StatEntry(statName: "speed", displayName: "Speed", value: 3.5, displayValue: "normal"),
+            const StatEntry(id: 0, statName: "clarity", displayName: "Clarity", value: 4.0),
+            const StatEntry(id: 0, statName: "speed", displayName: "Speed", value: 3.5, displayValue: "normal"),
           ],
         ),
       ],
@@ -91,7 +91,7 @@ final List<List<ExampleEntry>> exampleSentenceTestExpectedValues = [
       id: 0, indexEntry: dummyIndex, groupId: 102,
       sentence: "猫が寝る", languageCode: "jpn",
       tags: [], 
-      stats: [const StatEntry(statName: "quality", value: 3.5)],
+      stats: [const StatEntry(id: 0, statName: "quality", value: 3.5)],
       audios: [
         ExampleAudioEntry(
           id: 0,
@@ -99,7 +99,7 @@ final List<List<ExampleEntry>> exampleSentenceTestExpectedValues = [
           tags: [
             expectedTag("tts", "speaker", 3, "Text-to-speech generated audio")
           ],
-          stats: [const StatEntry(statName: "quality", value: 2.0)],
+          stats: [const StatEntry(id: 0, statName: "quality", value: 2.0)],
         ),
       ],
     )
@@ -112,7 +112,7 @@ final List<List<ExampleEntry>> exampleSentenceTestExpectedValues = [
       sentence: "I eat apples.", 
       languageCode: "eng",
       tags: [], 
-      stats: [const StatEntry(statName: "quality", value: 4.5)], 
+      stats: [const StatEntry(id: 0, statName: "quality", value: 4.5)], 
       audios: [],
     )
   ],
@@ -149,10 +149,10 @@ final List<List<ExampleEntry>> exampleSentenceTestExpectedValues = [
         expectedTag("tatoeba", "source", 2, "Imported from Tatoeba project"),
       ], 
       stats: [
-        const StatEntry(statName: "JLPT", value: 1.0, displayValue: "N5"), 
-        const StatEntry(statName: "difficulty", displayName: "Difficulty", value: 2.5),
-        const StatEntry(statName: "freq", displayName: "Frequency", value: 120.0, displayValue: "uncommon"),
-        const StatEntry(statName: "quality", value: 5.0),
+        const StatEntry(id: 0, statName: "JLPT", value: 1.0, displayValue: "N5"), 
+        const StatEntry(id: 0, statName: "difficulty", displayName: "Difficulty", value: 2.5),
+        const StatEntry(id: 0, statName: "freq", displayName: "Frequency", value: 120.0, displayValue: "uncommon"),
+        const StatEntry(id: 0, statName: "quality", value: 5.0),
       ],
       audios: [
         ExampleAudioEntry(
@@ -169,8 +169,8 @@ final List<List<ExampleEntry>> exampleSentenceTestExpectedValues = [
             expectedTag("tokyo", "accent", 2, "Tokyo pitch accent"),
           ], 
           stats: [
-            const StatEntry(statName: "clarity", displayName: "Clarity", value: 4.0),
-            const StatEntry(statName: "speed", displayName: "Speed", value: 3.5, displayValue: "normal"),
+            const StatEntry(id: 0, statName: "clarity", displayName: "Clarity", value: 4.0),
+            const StatEntry(id: 0, statName: "speed", displayName: "Speed", value: 3.5, displayValue: "normal"),
           ],
         ),
       ],
@@ -184,7 +184,7 @@ final List<List<ExampleEntry>> exampleSentenceTestExpectedValues = [
       sentence: "I eat apples.", 
       languageCode: "eng",
       tags: [], 
-      stats: [const StatEntry(statName: "quality", value: 4.5)], 
+      stats: [const StatEntry(id: 0, statName: "quality", value: 4.5)], 
       audios: [],
     )
   ],

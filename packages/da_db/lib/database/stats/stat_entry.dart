@@ -5,7 +5,9 @@ part 'stat_entry.g.dart';
 
 @freezed
 abstract class StatEntry with _$StatEntry {
+
   const factory StatEntry({
+    required int id,
     required String statName,
     String? displayName,
     required double value,

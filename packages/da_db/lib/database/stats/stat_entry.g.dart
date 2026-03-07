@@ -7,6 +7,7 @@ part of 'stat_entry.dart';
 // **************************************************************************
 
 _StatEntry _$StatEntryFromJson(Map<String, dynamic> json) => _StatEntry(
+  id: (json['id'] as num).toInt(),
   statName: json['statName'] as String,
   displayName: json['displayName'] as String?,
   value: (json['value'] as num).toDouble(),
@@ -15,6 +16,7 @@ _StatEntry _$StatEntryFromJson(Map<String, dynamic> json) => _StatEntry(
 
 Map<String, dynamic> _$StatEntryToJson(_StatEntry instance) =>
     <String, dynamic>{
+      'id': instance.id,
       'statName': instance.statName,
       'displayName': instance.displayName,
       'value': instance.value,
