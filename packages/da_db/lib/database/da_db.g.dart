@@ -13925,534 +13925,6 @@ class AudioEntryView extends ViewInfo<AudioEntryView, AudioEntryViewData>
   };
 }
 
-class HiraganaSpellfixCost extends Table
-    with TableInfo<HiraganaSpellfixCost, HiraganaSpellfixCostData> {
-  @override
-  final GeneratedDatabase attachedDatabase;
-  final String? _alias;
-  HiraganaSpellfixCost(this.attachedDatabase, [this._alias]);
-  static const VerificationMeta _iLangMeta = const VerificationMeta('iLang');
-  late final GeneratedColumn<int> iLang = GeneratedColumn<int>(
-    'iLang',
-    aliasedName,
-    true,
-    type: DriftSqlType.int,
-    requiredDuringInsert: false,
-    $customConstraints: '',
-  );
-  static const VerificationMeta _cFromMeta = const VerificationMeta('cFrom');
-  late final GeneratedColumn<String> cFrom = GeneratedColumn<String>(
-    'cFrom',
-    aliasedName,
-    true,
-    type: DriftSqlType.string,
-    requiredDuringInsert: false,
-    $customConstraints: '',
-  );
-  static const VerificationMeta _cToMeta = const VerificationMeta('cTo');
-  late final GeneratedColumn<String> cTo = GeneratedColumn<String>(
-    'cTo',
-    aliasedName,
-    true,
-    type: DriftSqlType.string,
-    requiredDuringInsert: false,
-    $customConstraints: '',
-  );
-  static const VerificationMeta _iCostMeta = const VerificationMeta('iCost');
-  late final GeneratedColumn<int> iCost = GeneratedColumn<int>(
-    'iCost',
-    aliasedName,
-    true,
-    type: DriftSqlType.int,
-    requiredDuringInsert: false,
-    $customConstraints: '',
-  );
-  @override
-  List<GeneratedColumn> get $columns => [iLang, cFrom, cTo, iCost];
-  @override
-  String get aliasedName => _alias ?? actualTableName;
-  @override
-  String get actualTableName => $name;
-  static const String $name = 'hiragana_spellfix_cost';
-  @override
-  VerificationContext validateIntegrity(
-    Insertable<HiraganaSpellfixCostData> instance, {
-    bool isInserting = false,
-  }) {
-    final context = VerificationContext();
-    final data = instance.toColumns(true);
-    if (data.containsKey('iLang')) {
-      context.handle(
-        _iLangMeta,
-        iLang.isAcceptableOrUnknown(data['iLang']!, _iLangMeta),
-      );
-    }
-    if (data.containsKey('cFrom')) {
-      context.handle(
-        _cFromMeta,
-        cFrom.isAcceptableOrUnknown(data['cFrom']!, _cFromMeta),
-      );
-    }
-    if (data.containsKey('cTo')) {
-      context.handle(
-        _cToMeta,
-        cTo.isAcceptableOrUnknown(data['cTo']!, _cToMeta),
-      );
-    }
-    if (data.containsKey('iCost')) {
-      context.handle(
-        _iCostMeta,
-        iCost.isAcceptableOrUnknown(data['iCost']!, _iCostMeta),
-      );
-    }
-    return context;
-  }
-
-  @override
-  Set<GeneratedColumn> get $primaryKey => const {};
-  @override
-  HiraganaSpellfixCostData map(
-    Map<String, dynamic> data, {
-    String? tablePrefix,
-  }) {
-    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return HiraganaSpellfixCostData(
-      iLang: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}iLang'],
-      ),
-      cFrom: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}cFrom'],
-      ),
-      cTo: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}cTo'],
-      ),
-      iCost: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}iCost'],
-      ),
-    );
-  }
-
-  @override
-  HiraganaSpellfixCost createAlias(String alias) {
-    return HiraganaSpellfixCost(attachedDatabase, alias);
-  }
-
-  @override
-  bool get dontWriteConstraints => true;
-}
-
-class HiraganaSpellfixCostData extends DataClass
-    implements Insertable<HiraganaSpellfixCostData> {
-  final int? iLang;
-
-  /// The language ID
-  final String? cFrom;
-
-  /// Convert text from this
-  final String? cTo;
-
-  /// Convert text into this
-  final int? iCost;
-  const HiraganaSpellfixCostData({
-    this.iLang,
-    this.cFrom,
-    this.cTo,
-    this.iCost,
-  });
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    if (!nullToAbsent || iLang != null) {
-      map['iLang'] = Variable<int>(iLang);
-    }
-    if (!nullToAbsent || cFrom != null) {
-      map['cFrom'] = Variable<String>(cFrom);
-    }
-    if (!nullToAbsent || cTo != null) {
-      map['cTo'] = Variable<String>(cTo);
-    }
-    if (!nullToAbsent || iCost != null) {
-      map['iCost'] = Variable<int>(iCost);
-    }
-    return map;
-  }
-
-  HiraganaSpellfixCostCompanion toCompanion(bool nullToAbsent) {
-    return HiraganaSpellfixCostCompanion(
-      iLang: iLang == null && nullToAbsent
-          ? const Value.absent()
-          : Value(iLang),
-      cFrom: cFrom == null && nullToAbsent
-          ? const Value.absent()
-          : Value(cFrom),
-      cTo: cTo == null && nullToAbsent ? const Value.absent() : Value(cTo),
-      iCost: iCost == null && nullToAbsent
-          ? const Value.absent()
-          : Value(iCost),
-    );
-  }
-
-  factory HiraganaSpellfixCostData.fromJson(
-    Map<String, dynamic> json, {
-    ValueSerializer? serializer,
-  }) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return HiraganaSpellfixCostData(
-      iLang: serializer.fromJson<int?>(json['iLang']),
-      cFrom: serializer.fromJson<String?>(json['cFrom']),
-      cTo: serializer.fromJson<String?>(json['cTo']),
-      iCost: serializer.fromJson<int?>(json['iCost']),
-    );
-  }
-  @override
-  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return <String, dynamic>{
-      'iLang': serializer.toJson<int?>(iLang),
-      'cFrom': serializer.toJson<String?>(cFrom),
-      'cTo': serializer.toJson<String?>(cTo),
-      'iCost': serializer.toJson<int?>(iCost),
-    };
-  }
-
-  HiraganaSpellfixCostData copyWith({
-    Value<int?> iLang = const Value.absent(),
-    Value<String?> cFrom = const Value.absent(),
-    Value<String?> cTo = const Value.absent(),
-    Value<int?> iCost = const Value.absent(),
-  }) => HiraganaSpellfixCostData(
-    iLang: iLang.present ? iLang.value : this.iLang,
-    cFrom: cFrom.present ? cFrom.value : this.cFrom,
-    cTo: cTo.present ? cTo.value : this.cTo,
-    iCost: iCost.present ? iCost.value : this.iCost,
-  );
-  HiraganaSpellfixCostData copyWithCompanion(
-    HiraganaSpellfixCostCompanion data,
-  ) {
-    return HiraganaSpellfixCostData(
-      iLang: data.iLang.present ? data.iLang.value : this.iLang,
-      cFrom: data.cFrom.present ? data.cFrom.value : this.cFrom,
-      cTo: data.cTo.present ? data.cTo.value : this.cTo,
-      iCost: data.iCost.present ? data.iCost.value : this.iCost,
-    );
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('HiraganaSpellfixCostData(')
-          ..write('iLang: $iLang, ')
-          ..write('cFrom: $cFrom, ')
-          ..write('cTo: $cTo, ')
-          ..write('iCost: $iCost')
-          ..write(')'))
-        .toString();
-  }
-
-  @override
-  int get hashCode => Object.hash(iLang, cFrom, cTo, iCost);
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      (other is HiraganaSpellfixCostData &&
-          other.iLang == this.iLang &&
-          other.cFrom == this.cFrom &&
-          other.cTo == this.cTo &&
-          other.iCost == this.iCost);
-}
-
-class HiraganaSpellfixCostCompanion
-    extends UpdateCompanion<HiraganaSpellfixCostData> {
-  final Value<int?> iLang;
-  final Value<String?> cFrom;
-  final Value<String?> cTo;
-  final Value<int?> iCost;
-  final Value<int> rowid;
-  const HiraganaSpellfixCostCompanion({
-    this.iLang = const Value.absent(),
-    this.cFrom = const Value.absent(),
-    this.cTo = const Value.absent(),
-    this.iCost = const Value.absent(),
-    this.rowid = const Value.absent(),
-  });
-  HiraganaSpellfixCostCompanion.insert({
-    this.iLang = const Value.absent(),
-    this.cFrom = const Value.absent(),
-    this.cTo = const Value.absent(),
-    this.iCost = const Value.absent(),
-    this.rowid = const Value.absent(),
-  });
-  static Insertable<HiraganaSpellfixCostData> custom({
-    Expression<int>? iLang,
-    Expression<String>? cFrom,
-    Expression<String>? cTo,
-    Expression<int>? iCost,
-    Expression<int>? rowid,
-  }) {
-    return RawValuesInsertable({
-      if (iLang != null) 'iLang': iLang,
-      if (cFrom != null) 'cFrom': cFrom,
-      if (cTo != null) 'cTo': cTo,
-      if (iCost != null) 'iCost': iCost,
-      if (rowid != null) 'rowid': rowid,
-    });
-  }
-
-  HiraganaSpellfixCostCompanion copyWith({
-    Value<int?>? iLang,
-    Value<String?>? cFrom,
-    Value<String?>? cTo,
-    Value<int?>? iCost,
-    Value<int>? rowid,
-  }) {
-    return HiraganaSpellfixCostCompanion(
-      iLang: iLang ?? this.iLang,
-      cFrom: cFrom ?? this.cFrom,
-      cTo: cTo ?? this.cTo,
-      iCost: iCost ?? this.iCost,
-      rowid: rowid ?? this.rowid,
-    );
-  }
-
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    if (iLang.present) {
-      map['iLang'] = Variable<int>(iLang.value);
-    }
-    if (cFrom.present) {
-      map['cFrom'] = Variable<String>(cFrom.value);
-    }
-    if (cTo.present) {
-      map['cTo'] = Variable<String>(cTo.value);
-    }
-    if (iCost.present) {
-      map['iCost'] = Variable<int>(iCost.value);
-    }
-    if (rowid.present) {
-      map['rowid'] = Variable<int>(rowid.value);
-    }
-    return map;
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('HiraganaSpellfixCostCompanion(')
-          ..write('iLang: $iLang, ')
-          ..write('cFrom: $cFrom, ')
-          ..write('cTo: $cTo, ')
-          ..write('iCost: $iCost, ')
-          ..write('rowid: $rowid')
-          ..write(')'))
-        .toString();
-  }
-}
-
-class FtsExampleTokens extends Table
-    with
-        TableInfo<FtsExampleTokens, FtsExampleToken>,
-        VirtualTableInfo<FtsExampleTokens, FtsExampleToken> {
-  @override
-  final GeneratedDatabase attachedDatabase;
-  final String? _alias;
-  FtsExampleTokens(this.attachedDatabase, [this._alias]);
-  static const VerificationMeta _exampleSentenceTokenizedMeta =
-      const VerificationMeta('exampleSentenceTokenized');
-  late final GeneratedColumn<String> exampleSentenceTokenized =
-      GeneratedColumn<String>(
-        'example_sentence_tokenized',
-        aliasedName,
-        true,
-        type: DriftSqlType.string,
-        requiredDuringInsert: false,
-        $customConstraints: '',
-      );
-  @override
-  List<GeneratedColumn> get $columns => [exampleSentenceTokenized];
-  @override
-  String get aliasedName => _alias ?? actualTableName;
-  @override
-  String get actualTableName => $name;
-  static const String $name = 'fts_example_tokens';
-  @override
-  VerificationContext validateIntegrity(
-    Insertable<FtsExampleToken> instance, {
-    bool isInserting = false,
-  }) {
-    final context = VerificationContext();
-    final data = instance.toColumns(true);
-    if (data.containsKey('example_sentence_tokenized')) {
-      context.handle(
-        _exampleSentenceTokenizedMeta,
-        exampleSentenceTokenized.isAcceptableOrUnknown(
-          data['example_sentence_tokenized']!,
-          _exampleSentenceTokenizedMeta,
-        ),
-      );
-    }
-    return context;
-  }
-
-  @override
-  Set<GeneratedColumn> get $primaryKey => const {};
-  @override
-  FtsExampleToken map(Map<String, dynamic> data, {String? tablePrefix}) {
-    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return FtsExampleToken(
-      exampleSentenceTokenized: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}example_sentence_tokenized'],
-      ),
-    );
-  }
-
-  @override
-  FtsExampleTokens createAlias(String alias) {
-    return FtsExampleTokens(attachedDatabase, alias);
-  }
-
-  @override
-  bool get dontWriteConstraints => true;
-  @override
-  String get moduleAndArgs =>
-      'fts5(example_sentence_tokenized, content=\'\', tokenize=\'unicode61\', prefix=\'2 3\', contentless_delete=1)';
-}
-
-class FtsExampleToken extends DataClass implements Insertable<FtsExampleToken> {
-  final String? exampleSentenceTokenized;
-  const FtsExampleToken({this.exampleSentenceTokenized});
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    if (!nullToAbsent || exampleSentenceTokenized != null) {
-      map['example_sentence_tokenized'] = Variable<String>(
-        exampleSentenceTokenized,
-      );
-    }
-    return map;
-  }
-
-  FtsExampleTokensCompanion toCompanion(bool nullToAbsent) {
-    return FtsExampleTokensCompanion(
-      exampleSentenceTokenized: exampleSentenceTokenized == null && nullToAbsent
-          ? const Value.absent()
-          : Value(exampleSentenceTokenized),
-    );
-  }
-
-  factory FtsExampleToken.fromJson(
-    Map<String, dynamic> json, {
-    ValueSerializer? serializer,
-  }) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return FtsExampleToken(
-      exampleSentenceTokenized: serializer.fromJson<String?>(
-        json['example_sentence_tokenized'],
-      ),
-    );
-  }
-  @override
-  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return <String, dynamic>{
-      'example_sentence_tokenized': serializer.toJson<String?>(
-        exampleSentenceTokenized,
-      ),
-    };
-  }
-
-  FtsExampleToken copyWith({
-    Value<String?> exampleSentenceTokenized = const Value.absent(),
-  }) => FtsExampleToken(
-    exampleSentenceTokenized: exampleSentenceTokenized.present
-        ? exampleSentenceTokenized.value
-        : this.exampleSentenceTokenized,
-  );
-  FtsExampleToken copyWithCompanion(FtsExampleTokensCompanion data) {
-    return FtsExampleToken(
-      exampleSentenceTokenized: data.exampleSentenceTokenized.present
-          ? data.exampleSentenceTokenized.value
-          : this.exampleSentenceTokenized,
-    );
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('FtsExampleToken(')
-          ..write('exampleSentenceTokenized: $exampleSentenceTokenized')
-          ..write(')'))
-        .toString();
-  }
-
-  @override
-  int get hashCode => exampleSentenceTokenized.hashCode;
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      (other is FtsExampleToken &&
-          other.exampleSentenceTokenized == this.exampleSentenceTokenized);
-}
-
-class FtsExampleTokensCompanion extends UpdateCompanion<FtsExampleToken> {
-  final Value<String?> exampleSentenceTokenized;
-  final Value<int> rowid;
-  const FtsExampleTokensCompanion({
-    this.exampleSentenceTokenized = const Value.absent(),
-    this.rowid = const Value.absent(),
-  });
-  FtsExampleTokensCompanion.insert({
-    this.exampleSentenceTokenized = const Value.absent(),
-    this.rowid = const Value.absent(),
-  });
-  static Insertable<FtsExampleToken> custom({
-    Expression<String>? exampleSentenceTokenized,
-    Expression<int>? rowid,
-  }) {
-    return RawValuesInsertable({
-      if (exampleSentenceTokenized != null)
-        'example_sentence_tokenized': exampleSentenceTokenized,
-      if (rowid != null) 'rowid': rowid,
-    });
-  }
-
-  FtsExampleTokensCompanion copyWith({
-    Value<String?>? exampleSentenceTokenized,
-    Value<int>? rowid,
-  }) {
-    return FtsExampleTokensCompanion(
-      exampleSentenceTokenized:
-          exampleSentenceTokenized ?? this.exampleSentenceTokenized,
-      rowid: rowid ?? this.rowid,
-    );
-  }
-
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    if (exampleSentenceTokenized.present) {
-      map['example_sentence_tokenized'] = Variable<String>(
-        exampleSentenceTokenized.value,
-      );
-    }
-    if (rowid.present) {
-      map['rowid'] = Variable<int>(rowid.value);
-    }
-    return map;
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('FtsExampleTokensCompanion(')
-          ..write('exampleSentenceTokenized: $exampleSentenceTokenized, ')
-          ..write('rowid: $rowid')
-          ..write(')'))
-        .toString();
-  }
-}
-
 class $ExampleSentenceTableTable extends ExampleSentenceTable
     with TableInfo<$ExampleSentenceTableTable, ExampleSentenceTableData> {
   @override
@@ -14669,6 +14141,198 @@ class ExampleSentenceTableCompanion
     return (StringBuffer('ExampleSentenceTableCompanion(')
           ..write('id: $id, ')
           ..write('exampleSentence: $exampleSentence')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class FtsExampleTokens extends Table
+    with
+        TableInfo<FtsExampleTokens, FtsExampleToken>,
+        VirtualTableInfo<FtsExampleTokens, FtsExampleToken> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  FtsExampleTokens(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _exampleSentenceMeta = const VerificationMeta(
+    'exampleSentence',
+  );
+  late final GeneratedColumn<String> exampleSentence = GeneratedColumn<String>(
+    'example_sentence',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    $customConstraints: '',
+  );
+  @override
+  List<GeneratedColumn> get $columns => [exampleSentence];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'fts_example_tokens';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<FtsExampleToken> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('example_sentence')) {
+      context.handle(
+        _exampleSentenceMeta,
+        exampleSentence.isAcceptableOrUnknown(
+          data['example_sentence']!,
+          _exampleSentenceMeta,
+        ),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => const {};
+  @override
+  FtsExampleToken map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return FtsExampleToken(
+      exampleSentence: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}example_sentence'],
+      ),
+    );
+  }
+
+  @override
+  FtsExampleTokens createAlias(String alias) {
+    return FtsExampleTokens(attachedDatabase, alias);
+  }
+
+  @override
+  bool get dontWriteConstraints => true;
+  @override
+  String get moduleAndArgs =>
+      'fts5(example_sentence, content=\'example_sentence_table\', content_rowid=\'id\', tokenize=\'better_trigram\', prefix=\'2 3\')';
+}
+
+class FtsExampleToken extends DataClass implements Insertable<FtsExampleToken> {
+  final String? exampleSentence;
+  const FtsExampleToken({this.exampleSentence});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (!nullToAbsent || exampleSentence != null) {
+      map['example_sentence'] = Variable<String>(exampleSentence);
+    }
+    return map;
+  }
+
+  FtsExampleTokensCompanion toCompanion(bool nullToAbsent) {
+    return FtsExampleTokensCompanion(
+      exampleSentence: exampleSentence == null && nullToAbsent
+          ? const Value.absent()
+          : Value(exampleSentence),
+    );
+  }
+
+  factory FtsExampleToken.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return FtsExampleToken(
+      exampleSentence: serializer.fromJson<String?>(json['example_sentence']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'example_sentence': serializer.toJson<String?>(exampleSentence),
+    };
+  }
+
+  FtsExampleToken copyWith({
+    Value<String?> exampleSentence = const Value.absent(),
+  }) => FtsExampleToken(
+    exampleSentence: exampleSentence.present
+        ? exampleSentence.value
+        : this.exampleSentence,
+  );
+  FtsExampleToken copyWithCompanion(FtsExampleTokensCompanion data) {
+    return FtsExampleToken(
+      exampleSentence: data.exampleSentence.present
+          ? data.exampleSentence.value
+          : this.exampleSentence,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('FtsExampleToken(')
+          ..write('exampleSentence: $exampleSentence')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => exampleSentence.hashCode;
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is FtsExampleToken &&
+          other.exampleSentence == this.exampleSentence);
+}
+
+class FtsExampleTokensCompanion extends UpdateCompanion<FtsExampleToken> {
+  final Value<String?> exampleSentence;
+  final Value<int> rowid;
+  const FtsExampleTokensCompanion({
+    this.exampleSentence = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  FtsExampleTokensCompanion.insert({
+    this.exampleSentence = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  static Insertable<FtsExampleToken> custom({
+    Expression<String>? exampleSentence,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (exampleSentence != null) 'example_sentence': exampleSentence,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  FtsExampleTokensCompanion copyWith({
+    Value<String?>? exampleSentence,
+    Value<int>? rowid,
+  }) {
+    return FtsExampleTokensCompanion(
+      exampleSentence: exampleSentence ?? this.exampleSentence,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (exampleSentence.present) {
+      map['example_sentence'] = Variable<String>(exampleSentence.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('FtsExampleTokensCompanion(')
+          ..write('exampleSentence: $exampleSentence, ')
+          ..write('rowid: $rowid')
           ..write(')'))
         .toString();
   }
@@ -20295,12 +19959,9 @@ abstract class _$DaDb extends GeneratedDatabase {
     'AudioTable_mediaIdIndex',
     'CREATE INDEX AudioTable_mediaIdIndex ON audio_table (media_id)',
   );
-  late final HiraganaSpellfixCost hiraganaSpellfixCost = HiraganaSpellfixCost(
-    this,
-  );
-  late final FtsExampleTokens ftsExampleTokens = FtsExampleTokens(this);
   late final $ExampleSentenceTableTable exampleSentenceTable =
       $ExampleSentenceTableTable(this);
+  late final FtsExampleTokens ftsExampleTokens = FtsExampleTokens(this);
   late final $LanguageCodeTableTable languageCodeTable =
       $LanguageCodeTableTable(this);
   late final $ExampleTableTable exampleTable = $ExampleTableTable(this);
@@ -20799,14 +20460,6 @@ abstract class _$DaDb extends GeneratedDatabase {
     ).asyncMap(audioEntryView.mapFromRow);
   }
 
-  Future<int> populateHiraganaSpellfixCostTable() {
-    return customInsert(
-      'INSERT OR IGNORE INTO hiragana_spellfix_cost (iLang, cFrom, cTo, iCost) VALUES (0, \'か\', \'が\', 10), (0, \'が\', \'か\', 10), (0, \'き\', \'ぎ\', 10), (0, \'ぎ\', \'き\', 10), (0, \'く\', \'ぐ\', 10), (0, \'ぐ\', \'く\', 10), (0, \'け\', \'げ\', 10), (0, \'げ\', \'け\', 10), (0, \'こ\', \'ご\', 10), (0, \'ご\', \'こ\', 10), (0, \'さ\', \'ざ\', 10), (0, \'ざ\', \'さ\', 10), (0, \'し\', \'じ\', 10), (0, \'じ\', \'し\', 10), (0, \'す\', \'ず\', 10), (0, \'ず\', \'す\', 10), (0, \'せ\', \'ぜ\', 10), (0, \'ぜ\', \'せ\', 10), (0, \'そ\', \'ぞ\', 10), (0, \'ぞ\', \'そ\', 10), (0, \'た\', \'だ\', 10), (0, \'だ\', \'た\', 10), (0, \'ち\', \'ぢ\', 10), (0, \'ぢ\', \'ち\', 10), (0, \'ち\', \'じ\', 10), (0, \'じ\', \'ち\', 10), (0, \'つ\', \'づ\', 10), (0, \'づ\', \'つ\', 10), (0, \'て\', \'で\', 10), (0, \'で\', \'て\', 10), (0, \'と\', \'ど\', 10), (0, \'ど\', \'と\', 10), (0, \'は\', \'ば\', 10), (0, \'ば\', \'は\', 10), (0, \'は\', \'ぱ\', 10), (0, \'ぱ\', \'は\', 10), (0, \'ば\', \'ぱ\', 10), (0, \'ぱ\', \'ば\', 10), (0, \'ひ\', \'び\', 10), (0, \'び\', \'ひ\', 10), (0, \'ひ\', \'ぴ\', 10), (0, \'ぴ\', \'ひ\', 10), (0, \'び\', \'ぴ\', 10), (0, \'ぴ\', \'び\', 10), (0, \'ふ\', \'ぶ\', 10), (0, \'ぶ\', \'ふ\', 10), (0, \'ふ\', \'ぷ\', 10), (0, \'ぷ\', \'ふ\', 10), (0, \'ぶ\', \'ぷ\', 10), (0, \'ぷ\', \'ぶ\', 10), (0, \'へ\', \'べ\', 10), (0, \'べ\', \'へ\', 10), (0, \'へ\', \'ぺ\', 10), (0, \'ぺ\', \'へ\', 10), (0, \'べ\', \'ぺ\', 10), (0, \'ぺ\', \'べ\', 10), (0, \'ほ\', \'ぼ\', 10), (0, \'ぼ\', \'ほ\', 10), (0, \'ほ\', \'ぽ\', 10), (0, \'ぽ\', \'ほ\', 10), (0, \'ぼ\', \'ぽ\', 10), (0, \'ぽ\', \'ぼ\', 10), (0, \'じ\', \'ぢ\', 5), (0, \'ぢ\', \'じ\', 5), (0, \'ず\', \'づ\', 5), (0, \'づ\', \'ず\', 5), (0, \'つ\', \'っ\', 20), (0, \'っ\', \'つ\', 20), (0, \'や\', \'ゃ\', 20), (0, \'ゃ\', \'や\', 20), (0, \'ゆ\', \'ゅ\', 20), (0, \'ゅ\', \'ゆ\', 20), (0, \'よ\', \'ょ\', 20), (0, \'ょ\', \'よ\', 20), (0, \'あ\', \'ぁ\', 20), (0, \'ぁ\', \'あ\', 20), (0, \'い\', \'ぃ\', 20), (0, \'ぃ\', \'い\', 20), (0, \'う\', \'ぅ\', 20), (0, \'ぅ\', \'う\', 20), (0, \'え\', \'ぇ\', 20), (0, \'ぇ\', \'え\', 20), (0, \'お\', \'ぉ\', 20), (0, \'ぉ\', \'お\', 20), (0, \'おう\', \'おお\', 25), (0, \'おお\', \'おう\', 25), (0, \'えい\', \'ええ\', 25), (0, \'ええ\', \'えい\', 25), (0, \'こう\', \'こお\', 25), (0, \'こお\', \'こう\', 25), (0, \'そう\', \'そお\', 25), (0, \'そお\', \'そう\', 25), (0, \'とう\', \'とお\', 25), (0, \'とお\', \'とう\', 25), (0, \'のう\', \'のお\', 25), (0, \'のお\', \'のう\', 25), (0, \'ほう\', \'ほお\', 25), (0, \'ほお\', \'ほう\', 25), (0, \'もう\', \'もお\', 25), (0, \'もお\', \'もう\', 25), (0, \'よう\', \'よお\', 25), (0, \'よお\', \'よう\', 25), (0, \'ろう\', \'ろお\', 25), (0, \'ろお\', \'ろう\', 25), (0, \'ごう\', \'ごお\', 25), (0, \'ごお\', \'ごう\', 25), (0, \'ぞう\', \'ぞお\', 25), (0, \'ぞお\', \'ぞう\', 25), (0, \'どう\', \'どお\', 25), (0, \'どお\', \'どう\', 25), (0, \'ぼう\', \'ぼお\', 25), (0, \'ぼお\', \'ぼう\', 25), (0, \'ぽう\', \'ぽお\', 25), (0, \'ぽお\', \'ぽう\', 25), (0, \'せい\', \'せえ\', 25), (0, \'せえ\', \'せい\', 25), (0, \'てい\', \'てえ\', 25), (0, \'てえ\', \'てい\', 25), (0, \'ねい\', \'ねえ\', 25), (0, \'ねえ\', \'ねい\', 25), (0, \'へい\', \'へえ\', 25), (0, \'へえ\', \'へい\', 25), (0, \'めい\', \'めえ\', 25), (0, \'めえ\', \'めい\', 25), (0, \'れい\', \'れえ\', 25), (0, \'れえ\', \'れい\', 25), (0, \'げい\', \'げえ\', 25), (0, \'げえ\', \'げい\', 25), (0, \'ぜい\', \'ぜえ\', 25), (0, \'ぜえ\', \'ぜい\', 25), (0, \'でい\', \'でえ\', 25), (0, \'でえ\', \'でい\', 25), (0, \'べい\', \'べえ\', 25), (0, \'べえ\', \'べい\', 25), (0, \'ぺい\', \'ぺえ\', 25), (0, \'ぺえ\', \'ぺい\', 25), (0, \'ぬ\', \'め\', 40), (0, \'め\', \'ぬ\', 40), (0, \'ね\', \'れ\', 40), (0, \'れ\', \'ね\', 40), (0, \'わ\', \'れ\', 40), (0, \'れ\', \'わ\', 40), (0, \'わ\', \'ね\', 40), (0, \'ね\', \'わ\', 40), (0, \'は\', \'ほ\', 40), (0, \'ほ\', \'は\', 40), (0, \'る\', \'ろ\', 40), (0, \'ろ\', \'る\', 40), (0, \'い\', \'り\', 45), (0, \'り\', \'い\', 45), (0, \'お\', \'を\', 15), (0, \'を\', \'お\', 15), (0, \'わ\', \'は\', 15), (0, \'は\', \'わ\', 15), (0, \'え\', \'へ\', 15), (0, \'へ\', \'え\', 15), (0, \'し\', \'ひ\', 50), (0, \'ひ\', \'し\', 50), (0, \'しゃ\', \'ひゃ\', 50), (0, \'ひゃ\', \'しゃ\', 50), (0, \'しゅ\', \'ひゅ\', 50), (0, \'ひゅ\', \'しゅ\', 50), (0, \'しょ\', \'ひょ\', 50), (0, \'ひょ\', \'しょ\', 50), (0, \'ち\', \'き\', 55), (0, \'き\', \'ち\', 55), (0, \'ちゃ\', \'きゃ\', 55), (0, \'きゃ\', \'ちゃ\', 55), (0, \'ちゅ\', \'きゅ\', 55), (0, \'きゅ\', \'ちゅ\', 55), (0, \'ちょ\', \'きょ\', 55), (0, \'きょ\', \'ちょ\', 55), (0, \'か\', \'きゃ\', 60), (0, \'きゃ\', \'か\', 60), (0, \'く\', \'きゅ\', 60), (0, \'きゅ\', \'く\', 60), (0, \'こ\', \'きょ\', 60), (0, \'きょ\', \'こ\', 60), (0, \'さ\', \'しゃ\', 60), (0, \'しゃ\', \'さ\', 60), (0, \'す\', \'しゅ\', 60), (0, \'しゅ\', \'す\', 60), (0, \'そ\', \'しょ\', 60), (0, \'しょ\', \'そ\', 60), (0, \'た\', \'ちゃ\', 60), (0, \'ちゃ\', \'た\', 60), (0, \'つ\', \'ちゅ\', 60), (0, \'ちゅ\', \'つ\', 60), (0, \'と\', \'ちょ\', 60), (0, \'ちょ\', \'と\', 60), (0, \'な\', \'にゃ\', 60), (0, \'にゃ\', \'な\', 60), (0, \'ぬ\', \'にゅ\', 60), (0, \'にゅ\', \'ぬ\', 60), (0, \'の\', \'にょ\', 60), (0, \'にょ\', \'の\', 60), (0, \'は\', \'ひゃ\', 60), (0, \'ひゃ\', \'は\', 60), (0, \'ふ\', \'ひゅ\', 60), (0, \'ひゅ\', \'ふ\', 60), (0, \'ほ\', \'ひょ\', 60), (0, \'ひょ\', \'ほ\', 60), (0, \'ま\', \'みゃ\', 60), (0, \'みゃ\', \'ま\', 60), (0, \'む\', \'みゅ\', 60), (0, \'みゅ\', \'む\', 60), (0, \'も\', \'みょ\', 60), (0, \'みょ\', \'も\', 60), (0, \'ら\', \'りゃ\', 60), (0, \'りゃ\', \'ら\', 60), (0, \'る\', \'りゅ\', 60), (0, \'りゅ\', \'る\', 60), (0, \'ろ\', \'りょ\', 60), (0, \'りょ\', \'ろ\', 60)',
-      variables: [],
-      updates: {hiraganaSpellfixCost},
-    );
-  }
-
   Selectable<int> searchExampleIds(
     String query,
     List<String> languages,
@@ -21016,9 +20669,8 @@ abstract class _$DaDb extends GeneratedDatabase {
     audioTableIndexIdIndex,
     audioTableReadingIdIndex,
     audioTableMediaIdIndex,
-    hiraganaSpellfixCost,
-    ftsExampleTokens,
     exampleSentenceTable,
+    ftsExampleTokens,
     languageCodeTable,
     exampleTable,
     exampleSentenceTableXTermTable,
@@ -39456,317 +39108,6 @@ typedef $$AudioTable_X_TermTableTableProcessedTableManager =
       AudioTable_X_TermTableData,
       PrefetchHooks Function({bool audioId, bool termId})
     >;
-typedef $HiraganaSpellfixCostCreateCompanionBuilder =
-    HiraganaSpellfixCostCompanion Function({
-      Value<int?> iLang,
-      Value<String?> cFrom,
-      Value<String?> cTo,
-      Value<int?> iCost,
-      Value<int> rowid,
-    });
-typedef $HiraganaSpellfixCostUpdateCompanionBuilder =
-    HiraganaSpellfixCostCompanion Function({
-      Value<int?> iLang,
-      Value<String?> cFrom,
-      Value<String?> cTo,
-      Value<int?> iCost,
-      Value<int> rowid,
-    });
-
-class $HiraganaSpellfixCostFilterComposer
-    extends Composer<_$DaDb, HiraganaSpellfixCost> {
-  $HiraganaSpellfixCostFilterComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnFilters<int> get iLang => $composableBuilder(
-    column: $table.iLang,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<String> get cFrom => $composableBuilder(
-    column: $table.cFrom,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<String> get cTo => $composableBuilder(
-    column: $table.cTo,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<int> get iCost => $composableBuilder(
-    column: $table.iCost,
-    builder: (column) => ColumnFilters(column),
-  );
-}
-
-class $HiraganaSpellfixCostOrderingComposer
-    extends Composer<_$DaDb, HiraganaSpellfixCost> {
-  $HiraganaSpellfixCostOrderingComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnOrderings<int> get iLang => $composableBuilder(
-    column: $table.iLang,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<String> get cFrom => $composableBuilder(
-    column: $table.cFrom,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<String> get cTo => $composableBuilder(
-    column: $table.cTo,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<int> get iCost => $composableBuilder(
-    column: $table.iCost,
-    builder: (column) => ColumnOrderings(column),
-  );
-}
-
-class $HiraganaSpellfixCostAnnotationComposer
-    extends Composer<_$DaDb, HiraganaSpellfixCost> {
-  $HiraganaSpellfixCostAnnotationComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  GeneratedColumn<int> get iLang =>
-      $composableBuilder(column: $table.iLang, builder: (column) => column);
-
-  GeneratedColumn<String> get cFrom =>
-      $composableBuilder(column: $table.cFrom, builder: (column) => column);
-
-  GeneratedColumn<String> get cTo =>
-      $composableBuilder(column: $table.cTo, builder: (column) => column);
-
-  GeneratedColumn<int> get iCost =>
-      $composableBuilder(column: $table.iCost, builder: (column) => column);
-}
-
-class $HiraganaSpellfixCostTableManager
-    extends
-        RootTableManager<
-          _$DaDb,
-          HiraganaSpellfixCost,
-          HiraganaSpellfixCostData,
-          $HiraganaSpellfixCostFilterComposer,
-          $HiraganaSpellfixCostOrderingComposer,
-          $HiraganaSpellfixCostAnnotationComposer,
-          $HiraganaSpellfixCostCreateCompanionBuilder,
-          $HiraganaSpellfixCostUpdateCompanionBuilder,
-          (
-            HiraganaSpellfixCostData,
-            BaseReferences<
-              _$DaDb,
-              HiraganaSpellfixCost,
-              HiraganaSpellfixCostData
-            >,
-          ),
-          HiraganaSpellfixCostData,
-          PrefetchHooks Function()
-        > {
-  $HiraganaSpellfixCostTableManager(_$DaDb db, HiraganaSpellfixCost table)
-    : super(
-        TableManagerState(
-          db: db,
-          table: table,
-          createFilteringComposer: () =>
-              $HiraganaSpellfixCostFilterComposer($db: db, $table: table),
-          createOrderingComposer: () =>
-              $HiraganaSpellfixCostOrderingComposer($db: db, $table: table),
-          createComputedFieldComposer: () =>
-              $HiraganaSpellfixCostAnnotationComposer($db: db, $table: table),
-          updateCompanionCallback:
-              ({
-                Value<int?> iLang = const Value.absent(),
-                Value<String?> cFrom = const Value.absent(),
-                Value<String?> cTo = const Value.absent(),
-                Value<int?> iCost = const Value.absent(),
-                Value<int> rowid = const Value.absent(),
-              }) => HiraganaSpellfixCostCompanion(
-                iLang: iLang,
-                cFrom: cFrom,
-                cTo: cTo,
-                iCost: iCost,
-                rowid: rowid,
-              ),
-          createCompanionCallback:
-              ({
-                Value<int?> iLang = const Value.absent(),
-                Value<String?> cFrom = const Value.absent(),
-                Value<String?> cTo = const Value.absent(),
-                Value<int?> iCost = const Value.absent(),
-                Value<int> rowid = const Value.absent(),
-              }) => HiraganaSpellfixCostCompanion.insert(
-                iLang: iLang,
-                cFrom: cFrom,
-                cTo: cTo,
-                iCost: iCost,
-                rowid: rowid,
-              ),
-          withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
-              .toList(),
-          prefetchHooksCallback: null,
-        ),
-      );
-}
-
-typedef $HiraganaSpellfixCostProcessedTableManager =
-    ProcessedTableManager<
-      _$DaDb,
-      HiraganaSpellfixCost,
-      HiraganaSpellfixCostData,
-      $HiraganaSpellfixCostFilterComposer,
-      $HiraganaSpellfixCostOrderingComposer,
-      $HiraganaSpellfixCostAnnotationComposer,
-      $HiraganaSpellfixCostCreateCompanionBuilder,
-      $HiraganaSpellfixCostUpdateCompanionBuilder,
-      (
-        HiraganaSpellfixCostData,
-        BaseReferences<_$DaDb, HiraganaSpellfixCost, HiraganaSpellfixCostData>,
-      ),
-      HiraganaSpellfixCostData,
-      PrefetchHooks Function()
-    >;
-typedef $FtsExampleTokensCreateCompanionBuilder =
-    FtsExampleTokensCompanion Function({
-      Value<String?> exampleSentenceTokenized,
-      Value<int> rowid,
-    });
-typedef $FtsExampleTokensUpdateCompanionBuilder =
-    FtsExampleTokensCompanion Function({
-      Value<String?> exampleSentenceTokenized,
-      Value<int> rowid,
-    });
-
-class $FtsExampleTokensFilterComposer
-    extends Composer<_$DaDb, FtsExampleTokens> {
-  $FtsExampleTokensFilterComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnFilters<String> get exampleSentenceTokenized => $composableBuilder(
-    column: $table.exampleSentenceTokenized,
-    builder: (column) => ColumnFilters(column),
-  );
-}
-
-class $FtsExampleTokensOrderingComposer
-    extends Composer<_$DaDb, FtsExampleTokens> {
-  $FtsExampleTokensOrderingComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnOrderings<String> get exampleSentenceTokenized => $composableBuilder(
-    column: $table.exampleSentenceTokenized,
-    builder: (column) => ColumnOrderings(column),
-  );
-}
-
-class $FtsExampleTokensAnnotationComposer
-    extends Composer<_$DaDb, FtsExampleTokens> {
-  $FtsExampleTokensAnnotationComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  GeneratedColumn<String> get exampleSentenceTokenized => $composableBuilder(
-    column: $table.exampleSentenceTokenized,
-    builder: (column) => column,
-  );
-}
-
-class $FtsExampleTokensTableManager
-    extends
-        RootTableManager<
-          _$DaDb,
-          FtsExampleTokens,
-          FtsExampleToken,
-          $FtsExampleTokensFilterComposer,
-          $FtsExampleTokensOrderingComposer,
-          $FtsExampleTokensAnnotationComposer,
-          $FtsExampleTokensCreateCompanionBuilder,
-          $FtsExampleTokensUpdateCompanionBuilder,
-          (
-            FtsExampleToken,
-            BaseReferences<_$DaDb, FtsExampleTokens, FtsExampleToken>,
-          ),
-          FtsExampleToken,
-          PrefetchHooks Function()
-        > {
-  $FtsExampleTokensTableManager(_$DaDb db, FtsExampleTokens table)
-    : super(
-        TableManagerState(
-          db: db,
-          table: table,
-          createFilteringComposer: () =>
-              $FtsExampleTokensFilterComposer($db: db, $table: table),
-          createOrderingComposer: () =>
-              $FtsExampleTokensOrderingComposer($db: db, $table: table),
-          createComputedFieldComposer: () =>
-              $FtsExampleTokensAnnotationComposer($db: db, $table: table),
-          updateCompanionCallback:
-              ({
-                Value<String?> exampleSentenceTokenized = const Value.absent(),
-                Value<int> rowid = const Value.absent(),
-              }) => FtsExampleTokensCompanion(
-                exampleSentenceTokenized: exampleSentenceTokenized,
-                rowid: rowid,
-              ),
-          createCompanionCallback:
-              ({
-                Value<String?> exampleSentenceTokenized = const Value.absent(),
-                Value<int> rowid = const Value.absent(),
-              }) => FtsExampleTokensCompanion.insert(
-                exampleSentenceTokenized: exampleSentenceTokenized,
-                rowid: rowid,
-              ),
-          withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
-              .toList(),
-          prefetchHooksCallback: null,
-        ),
-      );
-}
-
-typedef $FtsExampleTokensProcessedTableManager =
-    ProcessedTableManager<
-      _$DaDb,
-      FtsExampleTokens,
-      FtsExampleToken,
-      $FtsExampleTokensFilterComposer,
-      $FtsExampleTokensOrderingComposer,
-      $FtsExampleTokensAnnotationComposer,
-      $FtsExampleTokensCreateCompanionBuilder,
-      $FtsExampleTokensUpdateCompanionBuilder,
-      (
-        FtsExampleToken,
-        BaseReferences<_$DaDb, FtsExampleTokens, FtsExampleToken>,
-      ),
-      FtsExampleToken,
-      PrefetchHooks Function()
-    >;
 typedef $$ExampleSentenceTableTableCreateCompanionBuilder =
     ExampleSentenceTableCompanion Function({
       Value<int> id,
@@ -40149,6 +39490,132 @@ typedef $$ExampleSentenceTableTableProcessedTableManager =
         bool exampleTableRefs,
         bool exampleSentenceTableXTermTableRefs,
       })
+    >;
+typedef $FtsExampleTokensCreateCompanionBuilder =
+    FtsExampleTokensCompanion Function({
+      Value<String?> exampleSentence,
+      Value<int> rowid,
+    });
+typedef $FtsExampleTokensUpdateCompanionBuilder =
+    FtsExampleTokensCompanion Function({
+      Value<String?> exampleSentence,
+      Value<int> rowid,
+    });
+
+class $FtsExampleTokensFilterComposer
+    extends Composer<_$DaDb, FtsExampleTokens> {
+  $FtsExampleTokensFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get exampleSentence => $composableBuilder(
+    column: $table.exampleSentence,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $FtsExampleTokensOrderingComposer
+    extends Composer<_$DaDb, FtsExampleTokens> {
+  $FtsExampleTokensOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get exampleSentence => $composableBuilder(
+    column: $table.exampleSentence,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $FtsExampleTokensAnnotationComposer
+    extends Composer<_$DaDb, FtsExampleTokens> {
+  $FtsExampleTokensAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get exampleSentence => $composableBuilder(
+    column: $table.exampleSentence,
+    builder: (column) => column,
+  );
+}
+
+class $FtsExampleTokensTableManager
+    extends
+        RootTableManager<
+          _$DaDb,
+          FtsExampleTokens,
+          FtsExampleToken,
+          $FtsExampleTokensFilterComposer,
+          $FtsExampleTokensOrderingComposer,
+          $FtsExampleTokensAnnotationComposer,
+          $FtsExampleTokensCreateCompanionBuilder,
+          $FtsExampleTokensUpdateCompanionBuilder,
+          (
+            FtsExampleToken,
+            BaseReferences<_$DaDb, FtsExampleTokens, FtsExampleToken>,
+          ),
+          FtsExampleToken,
+          PrefetchHooks Function()
+        > {
+  $FtsExampleTokensTableManager(_$DaDb db, FtsExampleTokens table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $FtsExampleTokensFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $FtsExampleTokensOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $FtsExampleTokensAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String?> exampleSentence = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => FtsExampleTokensCompanion(
+                exampleSentence: exampleSentence,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                Value<String?> exampleSentence = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => FtsExampleTokensCompanion.insert(
+                exampleSentence: exampleSentence,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $FtsExampleTokensProcessedTableManager =
+    ProcessedTableManager<
+      _$DaDb,
+      FtsExampleTokens,
+      FtsExampleToken,
+      $FtsExampleTokensFilterComposer,
+      $FtsExampleTokensOrderingComposer,
+      $FtsExampleTokensAnnotationComposer,
+      $FtsExampleTokensCreateCompanionBuilder,
+      $FtsExampleTokensUpdateCompanionBuilder,
+      (
+        FtsExampleToken,
+        BaseReferences<_$DaDb, FtsExampleTokens, FtsExampleToken>,
+      ),
+      FtsExampleToken,
+      PrefetchHooks Function()
     >;
 typedef $$LanguageCodeTableTableCreateCompanionBuilder =
     LanguageCodeTableCompanion Function({
@@ -46948,12 +46415,10 @@ class $DaDbManager {
       $$AudioTableTableTableManager(_db, _db.audioTable);
   $$AudioTable_X_TermTableTableTableManager get audioTableXTermTable =>
       $$AudioTable_X_TermTableTableTableManager(_db, _db.audioTableXTermTable);
-  $HiraganaSpellfixCostTableManager get hiraganaSpellfixCost =>
-      $HiraganaSpellfixCostTableManager(_db, _db.hiraganaSpellfixCost);
-  $FtsExampleTokensTableManager get ftsExampleTokens =>
-      $FtsExampleTokensTableManager(_db, _db.ftsExampleTokens);
   $$ExampleSentenceTableTableTableManager get exampleSentenceTable =>
       $$ExampleSentenceTableTableTableManager(_db, _db.exampleSentenceTable);
+  $FtsExampleTokensTableManager get ftsExampleTokens =>
+      $FtsExampleTokensTableManager(_db, _db.ftsExampleTokens);
   $$LanguageCodeTableTableTableManager get languageCodeTable =>
       $$LanguageCodeTableTableTableManager(_db, _db.languageCodeTable);
   $$ExampleTableTableTableManager get exampleTable =>

@@ -2,9 +2,9 @@ import 'example_tables.dart';
 
 -- Create the FTS5 virtual table
 CREATE VIRTUAL TABLE IF NOT EXISTS fts_example_tokens USING fts5(
-  example_sentence_tokenized,
-  content='',
+  example_sentence,
+  content='example_sentence_table',
+  content_rowid='id',
   tokenize='better_trigram',
-  prefix='2 3',
-  contentless_delete=1
+  prefix='2 3'
 );

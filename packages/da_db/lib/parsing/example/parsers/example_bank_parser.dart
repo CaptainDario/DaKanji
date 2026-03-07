@@ -48,38 +48,23 @@ class ExampleBankParser implements DbFileParser {
       final langIsoCode = entry['langIso3Code']!;
 
       // apply the language processor if the language matches
-      late final String segments;
-      late final Set<String> uniqueTerms;
+      Set<String>? uniqueTerms;
       if(langIsoCode == lp.languageCode.name) {
-        // 1. Analyze sentence with the Language Processor to extract FTS5 tokens
+        // 1. Analyze sentence with the Language Processor to extract tokens
         final parseResult = lp.parse(sentence, ProcessorOptions());
 
-        // 2. Build the Surface Form string for FTS5 exact matching
-        final segmentString = parseResult.segments
-            .where((s) => s != null && s.trim().isNotEmpty)
-            .join(' ');
-        segments = segmentString.isEmpty ? sentence : segmentString;
-
-        // 3. Terms (Using parseResult.tokens instead of the undefined 'tokens' string)
+        // 2. Terms 
         uniqueTerms = parseResult.tokens
           .where((t) => t != null && t.trim().isNotEmpty)
           .nonNulls.toSet();
       }
-      // otherwise use the raw sentnce
-      else {
-        segments = sentence;
-        uniqueTerms = RegExp(r"\b[\w'-]+\b")
-          .allMatches(sentence)
-          .map((m) => m.group(0)!.toLowerCase())
-          .toSet();
-      }
           
-      for (final term in uniqueTerms) {
+      for (final term in uniqueTerms ?? {}) {
         termRows.add([exampleLocalId, term]);
       }
 
       // Add 5 columns to the main table
-      exampleRows.add([exampleLocalId, groupId, langIsoCode, sentence, segments]);
+      exampleRows.add([exampleLocalId, groupId, langIsoCode, sentence]);
 
       // Tags
       final tags = (entry['tags'] as List<dynamic>?)?.cast<String>() ?? [];
@@ -155,8 +140,7 @@ class ExampleBankParser implements DbFileParser {
 
     await db.transaction(() async {
       if (exampleRows.isNotEmpty) {
-        // FIXED: 5 columns and placeholders(5)
-        final sql = 'INSERT INTO ${db.exampleStagingTable.actualTableName} (local_id, group_id, language_code, example_sentence, example_sentence_tokenized) VALUES ${List.filled(exampleRows.length, placeholders(5)).join(', ')}';
+        final sql = 'INSERT INTO ${db.exampleStagingTable.actualTableName} (local_id, group_id, language_code, example_sentence) VALUES ${List.filled(exampleRows.length, placeholders(4)).join(', ')}';
         await db.customStatement(sql, exampleRows.expand((i) => i).toList());
       }
       if (tagRows.isNotEmpty) {

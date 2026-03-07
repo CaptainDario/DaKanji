@@ -198,8 +198,6 @@ Future<void> _unifiedOrchestratorEntry(({
     ));  
 
     // --- STEP 5: ATTACH WORKER DATABASES ---
-    // Link the temporary worker SQLite files directly to the main database connection
-    // to allow ultra-fast `INSERT INTO ... SELECT FROM` cross-database merging.
     List<String> workerAliases = [];
     for (int i = 0; i < workerDbPaths.length; i++) {
       workerAliases.add("worker_$i");
@@ -209,9 +207,6 @@ Future<void> _unifiedOrchestratorEntry(({
     await optimizeTargetDbForMerge(db);
 
     // --- STEP 6: MERGE ---
-    // (Removed the overarching db.transaction wrapper because individual 
-    // mergers execute PRAGMA safety changes which SQLite forbids inside transactions).
-    
     final indexId = await parseAndInsertIndex(
       indexJson, db, actualType, params.isDefaultDictionary);
     

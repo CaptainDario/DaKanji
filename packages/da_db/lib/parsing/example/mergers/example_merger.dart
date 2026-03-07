@@ -8,9 +8,11 @@ class ExampleMerger implements StagingMerger {
     required String workerAlias,
     required int indexId,
   }) async {
+
     final maxSentenceId = await targetDb.exampleDao.maxExampleSentenceId();
     final maxExampleId = await targetDb.exampleDao.maxExampleId();
     final maxAudioId = await targetDb.exampleDao.maxExampleAudioTableId();
+    final maxTermId = await targetDb.termDao.maxTermId();
 
     try {
       // 1. Languages
@@ -29,13 +31,13 @@ class ExampleMerger implements StagingMerger {
 
       // 3. FTS Tokens
       await targetDb.customStatement('''
-        INSERT INTO fts_example_tokens (rowid, example_sentence_tokenized)
-          SELECT $maxSentenceId + local_id, example_sentence_tokenized
+        INSERT INTO fts_example_tokens (rowid, example_sentence)
+          SELECT $maxSentenceId + local_id, example_sentence
           FROM $workerAlias.example_staging_table
           ORDER BY local_id
       ''');
 
-      // 4. Examples (Cleaned up: No more hardcoded quality/difficulty)
+      // 4. Examples
       await targetDb.customStatement('''
         INSERT INTO example_table (id, index_id, group_id, example_sentence_id, language_code_id)
           SELECT 
@@ -49,7 +51,7 @@ class ExampleMerger implements StagingMerger {
           ORDER BY e.local_id
       ''');
 
-      // 5. Audios (Cleaned up: No more hardcoded speaker/quality/notes)
+      // 5. Audios
       await targetDb.customStatement('''
         INSERT INTO example_audio_table (id, path, name)
             SELECT $maxAudioId + a.local_id, a.path, a.name
@@ -69,7 +71,10 @@ class ExampleMerger implements StagingMerger {
         INSERT OR IGNORE INTO term_table (term, term_normalized)
             SELECT DISTINCT term, term FROM $workerAlias.example_term_staging_table
       ''');
-
+      await targetDb.customStatement('''
+        INSERT INTO fts_terms(rowid, term, term_normalized)
+        SELECT id, term, term_normalized FROM term_table WHERE id > $maxTermId
+      ''');
       await targetDb.customStatement('''
         INSERT INTO example_sentence_table_x_term_table (example_sentence_id, term_id)
             SELECT $maxSentenceId + s.example_local_id, t.id

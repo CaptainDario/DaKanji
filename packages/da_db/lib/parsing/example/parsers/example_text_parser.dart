@@ -50,28 +50,18 @@ class ExampleTextParser implements DbFileParser {
 
     const int batchSize = 1000;
 
-    // --- STEP 1: Extract sentences using the Language Processor ---
+    // Extract sentences using the Language Processor
     final extractedSentences = lp.findSentences(rawText, const ProcessorOptions());
 
-    // --- STEP 2: Iterate and parse using MeCab ---
+    // Iterate and parse using MeCab
     for (var sentence in extractedSentences) {
       sentence = sentence.trim();
       if (sentence.isEmpty) continue;
 
       exampleLocalId++;
 
-      // 1. ONE PASS NLP PROCESSING
-      final parseResult = lp.parse(sentence, ProcessorOptions());
-
-      // 2. Build the Surface Form string for FTS5 exact matching
-      final segmentString = parseResult.segments
-          .where((s) => s != null && s.trim().isNotEmpty)
-          .join(' ');
-      
-      final finalSegments = segmentString.isEmpty ? sentence : segmentString;
-
       // Add 5 columns to the main table
-      exampleRows.add([exampleLocalId, groupId, langIsoCode, sentence, finalSegments]);
+      exampleRows.add([exampleLocalId, groupId, langIsoCode, sentence]);
 
       for (final t in tags) {
         if (t.trim().isEmpty) continue;
@@ -88,7 +78,8 @@ class ExampleTextParser implements DbFileParser {
         ]);
       }
 
-      // 3. Extract dictionary terms from parseResult.tokens
+      // Extract dictionary terms from parseResult.tokens
+      final parseResult = lp.parse(sentence, ProcessorOptions());
       final termSet = parseResult.tokens
           .where((t) => t != null && t.trim().isNotEmpty)
           .toSet();
@@ -121,7 +112,7 @@ class ExampleTextParser implements DbFileParser {
 
     await db.transaction(() async {
       if (exampleRows.isNotEmpty) {
-        final sql = 'INSERT INTO ${db.exampleStagingTable.actualTableName} (local_id, group_id, language_code, example_sentence, example_sentence_tokenized) VALUES ${List.filled(exampleRows.length, placeholders(5)).join(', ')}';
+        final sql = 'INSERT INTO ${db.exampleStagingTable.actualTableName} (local_id, group_id, language_code, example_sentence) VALUES ${List.filled(exampleRows.length, placeholders(4)).join(', ')}';
         await db.customStatement(sql, exampleRows.expand((i) => i).toList());
       }
       if (tagRows.isNotEmpty) {

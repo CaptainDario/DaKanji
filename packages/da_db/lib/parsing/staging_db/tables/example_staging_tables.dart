@@ -11,7 +11,6 @@ class ExampleStagingTable extends Table {
 
   // --- Data mapped to ExampleSentenceTable & FTS ---
   TextColumn get exampleSentence => text()();
-  TextColumn get exampleSentenceTokenized => text()(); // The MeCab tokens for FTS5
 }
 
 /// Staging table for tags attached to the example
