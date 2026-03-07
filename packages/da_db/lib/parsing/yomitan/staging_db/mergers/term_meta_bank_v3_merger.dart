@@ -14,6 +14,8 @@ class TermMetaBankV3Merger implements StagingMerger {
     final maxMetaId = await targetDb.termMetaBankV3Dao.maxTermMetaBankV3Id();
     final maxPitchId = await targetDb.termMetaBankV3Dao.maxTermMetaBankV3PitchId();
     final maxIpaId = await targetDb.termMetaBankV3Dao.maxTermMetaBankV3IpaId();
+    final maxTermId = await targetDb.termDao.maxTermId();
+    final maxReadingId = await targetDb.readingDao.maxReadingId();
 
     // Table references
     final tTerm = targetDb.termTable;
@@ -31,11 +33,15 @@ class TermMetaBankV3Merger implements StagingMerger {
     final tjIpaTag = targetDb.termMetaBankV3IpaTableXTagBankV3Table;
 
     try {
-      // Terms: ONLY insert term and normalized
+      // Terms
       await targetDb.customStatement('''
         INSERT OR IGNORE INTO ${tTerm.actualTableName} (${tTerm.term.name}, ${tTerm.termNormalized.name})
         SELECT DISTINCT term, term_normalized
         FROM $workerAlias.term_meta_staging_table
+      ''');
+      await targetDb.customStatement('''
+        INSERT INTO fts_terms(rowid, term, term_normalized)
+        SELECT id, term, term_normalized FROM ${tTerm.actualTableName} WHERE id > $maxTermId
       ''');
 
       // Manually populate the Contentless FTS Tokens table
@@ -46,7 +52,7 @@ class TermMetaBankV3Merger implements StagingMerger {
         JOIN ${tTerm.actualTableName} t ON t.${tTerm.term.name} = s.term
         WHERE 
           (s.term_tokens IS NOT NULL OR s.term_tokens_normalized IS NOT NULL)
-          AND NOT EXISTS (SELECT 1 FROM fts_tokens WHERE rowid = t.${tTerm.id.name})
+          AND t.${tTerm.id.name} > $maxTermId
       ''');
 
       // Types (Modes)
@@ -61,6 +67,10 @@ class TermMetaBankV3Merger implements StagingMerger {
         SELECT DISTINCT reading, reading_normalized 
         FROM $workerAlias.term_meta_staging_table
         WHERE reading IS NOT NULL
+      ''');
+      await targetDb.customStatement('''
+        INSERT INTO fts_readings(rowid, reading, reading_normalized)
+        SELECT id, reading, reading_normalized FROM ${tReading.actualTableName} WHERE id > $maxReadingId
       ''');
 
       // Tags (from Pitch/IPA staging)

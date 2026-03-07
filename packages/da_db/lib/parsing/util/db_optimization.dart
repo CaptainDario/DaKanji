@@ -6,12 +6,10 @@ import 'package:drift/drift.dart';
 
 Future optimizeDbAfterImport(GeneratedDatabase db) async {
   
-  // update fts indexes
-  await db.customStatement("INSERT INTO fts_terms(fts_terms) VALUES('rebuild')");
-  await db.customStatement("INSERT INTO fts_readings(fts_readings) VALUES('rebuild')");
-  await db.customStatement("INSERT INTO fts_definitions(fts_definitions) VALUES('rebuild')");
-
   // optimize fts tables
+  await db.customStatement("INSERT INTO fts_terms(fts_terms) VALUES('optimize')");
+  await db.customStatement("INSERT INTO fts_readings(fts_readings) VALUES('optimize')");
+  await db.customStatement("INSERT INTO fts_definitions(fts_definitions) VALUES('optimize')");  
   await db.customStatement("INSERT INTO fts_tokens(fts_tokens) VALUES('optimize');");
   await db.customStatement("INSERT INTO fts_example_tokens(fts_example_tokens) VALUES('optimize');");
 
@@ -71,11 +69,7 @@ Future optimizeStagingDbForRawInsert(StagingDatabase db) async {
 
   // 4. Memory Storage for Temp tables
   await db.customStatement('PRAGMA temp_store = MEMORY;');
-  
-  // 5. Locking Mode
-  // If this is a dedicated worker process, EXCLUSIVE prevents 
-  // SQLite from constantly checking for other file locks.
-  await db.customStatement('PRAGMA locking_mode = EXCLUSIVE;');
+
 }
 
 Future optimizeDbAfterDelete(DaDb db) async {

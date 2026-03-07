@@ -22,6 +22,8 @@ class AudioBankMerger implements StagingMerger {
     // Retrieve the current highest IDs to calculate offsets for new rows
     final int maxAudioId = (await targetDb.audioDao.maxAudioId());
     final int maxMediaId = (await targetDb.mediaDao.maxMediaId());
+    final int maxTermId = await targetDb.termDao.maxTermId();
+    final int maxReadingId = await targetDb.readingDao.maxReadingId();
 
     final tTerm = targetDb.termTable;
     final tReading = targetDb.readingTable;
@@ -42,10 +44,12 @@ class AudioBankMerger implements StagingMerger {
           term_normalized
         FROM $workerAlias.audio_staging_table
       ''');
+      await targetDb.customStatement('''
+        INSERT INTO fts_terms(rowid, term, term_normalized)
+        SELECT id, term, term_normalized FROM ${tTerm.actualTableName} WHERE id > $maxTermId
+      ''');
 
       // --- 2. Search Index (FTS5) ---
-      // We manually synchronize the Full-Text Search index here instead of 
-      // relying on SQLite triggers, which drastically improves bulk insert speed.
       await targetDb.customStatement('''
         INSERT INTO fts_tokens (rowid, tokens, tokens_normalized)
         SELECT DISTINCT 
@@ -58,9 +62,7 @@ class AudioBankMerger implements StagingMerger {
           s.term_tokens IS NOT NULL
           AND trim(s.term_tokens) != ''
           AND s.term_tokens != s.term
-          AND NOT EXISTS (
-            SELECT 1 FROM fts_tokens WHERE rowid = t.${tTerm.id.name}
-          )
+          AND t.${tTerm.id.name} > $maxTermId
       ''');
 
       // --- 3. Core Strings (Readings) ---
@@ -74,6 +76,10 @@ class AudioBankMerger implements StagingMerger {
           reading_normalized 
         FROM $workerAlias.audio_staging_table 
         WHERE reading IS NOT NULL
+      ''');
+      await targetDb.customStatement('''
+        INSERT INTO fts_readings(rowid, reading, reading_normalized)
+        SELECT id, reading, reading_normalized FROM ${tReading.actualTableName} WHERE id > $maxReadingId
       ''');
 
       // --- 4. Binary Media ---

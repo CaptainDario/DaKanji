@@ -15,6 +15,9 @@ class TermBankV3Merger implements StagingMerger {
   }) async {
 
     final maxTermBankId = (await targetDb.termBankV3Dao.maxTermBankV3Id());
+    final maxTermId = await targetDb.termDao.maxTermId();
+    final maxReadingId = await targetDb.readingDao.maxReadingId(); 
+    final maxDefinitionId = await targetDb.definitionDao.maxDefinitionId();
 
     try {
       final tTerm = targetDb.termTable;
@@ -38,6 +41,12 @@ class TermBankV3Merger implements StagingMerger {
         SELECT DISTINCT term, term_normalized
         FROM $workerAlias.term_staging_table
       ''');
+      await targetDb.customStatement('''
+        INSERT INTO fts_terms(rowid, term, term_normalized)
+        SELECT id, term, term_normalized 
+        FROM ${tTerm.actualTableName} 
+        WHERE id > $maxTermId
+      ''');
 
       // FTS Tokens (Contentless, only insertif tokens != term)
       await targetDb.customStatement('''
@@ -47,8 +56,8 @@ class TermBankV3Merger implements StagingMerger {
         JOIN ${tTerm.actualTableName} t ON t.${tTerm.term.name} = s.term
         WHERE 
           s.term_tokens IS NOT NULL 
-          AND s.term_tokens != s.term  -- <--- The Filter
-          AND NOT EXISTS (SELECT 1 FROM fts_tokens WHERE rowid = t.${tTerm.id.name})
+          AND s.term_tokens != s.term 
+          AND t.${tTerm.id.name} > $maxTermId
       ''');
 
       // Readings
@@ -57,12 +66,24 @@ class TermBankV3Merger implements StagingMerger {
         SELECT DISTINCT reading, reading_normalized 
         FROM $workerAlias.term_staging_table
       ''');
+      await targetDb.customStatement('''
+        INSERT INTO fts_readings(rowid, reading, reading_normalized)
+        SELECT id, reading, reading_normalized 
+        FROM ${tReading.actualTableName} 
+        WHERE id > $maxReadingId
+      ''');
 
       // Definitions (Simple)
       await targetDb.customStatement('''
         INSERT OR IGNORE INTO ${tDef.actualTableName} (${tDef.definition.name})
         SELECT DISTINCT definition 
         FROM $workerAlias.term_definition_staging_table
+      ''');
+      await targetDb.customStatement('''
+        INSERT INTO fts_definitions(rowid, definition)
+        SELECT id, definition 
+        FROM ${tDef.actualTableName} 
+        WHERE id > $maxDefinitionId
       ''');
       
       // Tags

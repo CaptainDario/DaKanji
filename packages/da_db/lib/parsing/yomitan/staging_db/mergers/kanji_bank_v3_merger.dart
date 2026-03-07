@@ -12,6 +12,8 @@ class KanjiBankV3Merger implements StagingMerger {
     // 1. Fetch IDs
     final maxKanjiBankId = await targetDb.kanjiBankV3Dao.maxKanjiId();
     final maxStatId = await targetDb.kanjiBankV3Dao.maxStatsId();
+    final maxReadingId = await targetDb.readingDao.maxReadingId();
+    final maxDefinitionId = await targetDb.definitionDao.maxDefinitionId();
 
     // Table Shortcuts
     final tKanji = targetDb.kanjiTable;
@@ -41,11 +43,19 @@ class KanjiBankV3Merger implements StagingMerger {
         INSERT OR IGNORE INTO ${tReading.actualTableName} (${tReading.reading.name}, ${tReading.readingNormalized.name})
         SELECT DISTINCT reading, reading_normalized FROM $workerAlias.kanji_reading_staging_table
       ''');
+      await targetDb.customStatement('''
+        INSERT INTO fts_readings(rowid, reading, reading_normalized)
+        SELECT id, reading, reading_normalized FROM ${tReading.actualTableName} WHERE id > $maxReadingId
+      ''');
 
       // Definitions
       await targetDb.customStatement('''
         INSERT OR IGNORE INTO ${tDef.actualTableName} (${tDef.definition.name})
         SELECT DISTINCT definition FROM $workerAlias.kanji_definition_staging_table
+      ''');
+      await targetDb.customStatement('''
+        INSERT INTO fts_definitions(rowid, definition)
+        SELECT id, definition FROM ${tDef.actualTableName} WHERE id > $maxDefinitionId
       ''');
 
       // Tags (From Tag Staging)
