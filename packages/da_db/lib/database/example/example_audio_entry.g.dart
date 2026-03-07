@@ -8,6 +8,7 @@ part of 'example_audio_entry.dart';
 
 ExampleAudioEntry _$ExampleAudioEntryFromJson(Map<String, dynamic> json) =>
     ExampleAudioEntry(
+      id: (json['id'] as num).toInt(),
       path: json['path'] as String,
       name: json['name'] as String,
       tags:
@@ -24,6 +25,7 @@ ExampleAudioEntry _$ExampleAudioEntryFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$ExampleAudioEntryToJson(ExampleAudioEntry instance) =>
     <String, dynamic>{
+      'id': instance.id,
       'path': instance.path,
       'name': instance.name,
       'tags': instance.tags,

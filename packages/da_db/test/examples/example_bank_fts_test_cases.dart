@@ -53,10 +53,12 @@ final List<List<ExampleEntry>> exampleSentenceTestExpectedValues = [
       ],
       audios: [
         ExampleAudioEntry(
+          id: 0,
           path: "media/apple_a.mp3", name: "apple_a.mp3",
           tags: [], stats: [],
         ),
         ExampleAudioEntry(
+          id: 0,
           path: "media/apple_b.mp3", name: "apple_b.mp3",
           tags: [
             // Sorted alphabetically: f -> n -> t
@@ -92,6 +94,7 @@ final List<List<ExampleEntry>> exampleSentenceTestExpectedValues = [
       stats: [const StatEntry(statName: "quality", value: 3.5)],
       audios: [
         ExampleAudioEntry(
+          id: 0,
           path: "media/cat.mp3", name: "cat.mp3",
           tags: [
             expectedTag("tts", "speaker", 3, "Text-to-speech generated audio")
@@ -153,10 +156,12 @@ final List<List<ExampleEntry>> exampleSentenceTestExpectedValues = [
       ],
       audios: [
         ExampleAudioEntry(
+          id: 0,
           path: "media/apple_a.mp3", name: "apple_a.mp3",
           tags: [], stats: [],
         ),
         ExampleAudioEntry(
+          id: 0,
           path: "media/apple_b.mp3", name: "apple_b.mp3",
           tags: [
             expectedTag("female", "gender", 1, "Female voice"),

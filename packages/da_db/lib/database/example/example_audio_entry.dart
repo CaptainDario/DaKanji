@@ -10,6 +10,8 @@ part 'example_audio_entry.g.dart';
 class ExampleAudioEntry with _$ExampleAudioEntry {
   
   @override
+  final int id;
+  @override
   final String path;
   @override
   final String name;
@@ -19,6 +21,7 @@ class ExampleAudioEntry with _$ExampleAudioEntry {
   final List<StatEntry> stats;
 
   ExampleAudioEntry({
+    required this.id,
     required this.path,
     required this.name,
     this.tags = const [],

@@ -99,8 +99,9 @@ ExampleEntry exampleEntryIgnoreDatabaseGeneratedData(ExampleEntry entry) {
       id: 0, 
       indexEntry: standardIndex,
     )).toList(),
-    // Normalize audio tags (THIS IS WHAT WAS MISSING)
+    // Normalize audio tags
     audios: entry.audios.map((audio) => audio.copyWith(
+      id: 0,
       tags: audio.tags.map((t) => t.copyWith(
         id: 0,
         indexEntry: standardIndex,

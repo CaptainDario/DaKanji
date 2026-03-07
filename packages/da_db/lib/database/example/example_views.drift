@@ -45,6 +45,7 @@ CREATE VIEW IF NOT EXISTS example_entry_view AS
     -- 6. Aggregated Audio Array
     (SELECT json_group_array(
         json_object(
+            'id', a.id,
             'path', a.path,
             'name', a.name,
             

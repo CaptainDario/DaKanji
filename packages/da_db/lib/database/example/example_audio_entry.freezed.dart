@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$ExampleAudioEntry {
 
- String get path; String get name; List<TagBankV3Entry> get tags; List<StatEntry> get stats;
+ int get id; String get path; String get name; List<TagBankV3Entry> get tags; List<StatEntry> get stats;
 /// Create a copy of ExampleAudioEntry
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -26,16 +26,16 @@ $ExampleAudioEntryCopyWith<ExampleAudioEntry> get copyWith => _$ExampleAudioEntr
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ExampleAudioEntry&&(identical(other.path, path) || other.path == path)&&(identical(other.name, name) || other.name == name)&&const DeepCollectionEquality().equals(other.tags, tags)&&const DeepCollectionEquality().equals(other.stats, stats));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ExampleAudioEntry&&(identical(other.id, id) || other.id == id)&&(identical(other.path, path) || other.path == path)&&(identical(other.name, name) || other.name == name)&&const DeepCollectionEquality().equals(other.tags, tags)&&const DeepCollectionEquality().equals(other.stats, stats));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,path,name,const DeepCollectionEquality().hash(tags),const DeepCollectionEquality().hash(stats));
+int get hashCode => Object.hash(runtimeType,id,path,name,const DeepCollectionEquality().hash(tags),const DeepCollectionEquality().hash(stats));
 
 @override
 String toString() {
-  return 'ExampleAudioEntry(path: $path, name: $name, tags: $tags, stats: $stats)';
+  return 'ExampleAudioEntry(id: $id, path: $path, name: $name, tags: $tags, stats: $stats)';
 }
 
 
@@ -46,7 +46,7 @@ abstract mixin class $ExampleAudioEntryCopyWith<$Res>  {
   factory $ExampleAudioEntryCopyWith(ExampleAudioEntry value, $Res Function(ExampleAudioEntry) _then) = _$ExampleAudioEntryCopyWithImpl;
 @useResult
 $Res call({
- String path, String name, List<TagBankV3Entry> tags, List<StatEntry> stats
+ int id, String path, String name, List<TagBankV3Entry> tags, List<StatEntry> stats
 });
 
 
@@ -63,9 +63,10 @@ class _$ExampleAudioEntryCopyWithImpl<$Res>
 
 /// Create a copy of ExampleAudioEntry
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? path = null,Object? name = null,Object? tags = null,Object? stats = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? path = null,Object? name = null,Object? tags = null,Object? stats = null,}) {
   return _then(ExampleAudioEntry(
-path: null == path ? _self.path : path // ignore: cast_nullable_to_non_nullable
+id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
+as int,path: null == path ? _self.path : path // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,tags: null == tags ? _self.tags : tags // ignore: cast_nullable_to_non_nullable
 as List<TagBankV3Entry>,stats: null == stats ? _self.stats : stats // ignore: cast_nullable_to_non_nullable
