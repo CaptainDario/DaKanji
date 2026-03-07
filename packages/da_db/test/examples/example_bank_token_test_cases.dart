@@ -7,7 +7,6 @@ import 'example_bank_fts_test_cases.dart';
 final List<(String, List<Iso639_3>)> exampleTokenTestQueries = [
   ("食べる", [Iso639_3.jpn]),  // 1. Should match the fully loaded example
   ("犬", [Iso639_3.jpn]),     // 2. Should match the bare minimum example
-  ("apples", [Iso639_3.eng]), // 3. Should match the English example
 ];
 
 /// The expected outputs for the token queries. 

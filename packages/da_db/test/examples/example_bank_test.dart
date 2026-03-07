@@ -11,7 +11,7 @@ void main() {
   late DaDb db;
 
   setUpAll(() async {
-    db = await setupFreshDb(devExampleSentencesPath, true);
+    db = await setupFreshDb(devExampleSentencesPath, true, inMemory: false);
   });
 
   tearDownAll(() async {

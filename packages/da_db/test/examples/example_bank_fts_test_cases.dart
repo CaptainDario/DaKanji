@@ -12,6 +12,13 @@ final List<(String, List<Iso639_3>)> exampleSentencesTestQueries = [
   ("猫", [Iso639_3.jpn]),     // 3. Missing Tokens
   ("apples", [Iso639_3.eng]), // 4. English
   ("apple", [Iso639_3.jpn]),  // 5. english in Japanese sentence should work
+  
+  // --- Edge Cases ---
+  ("THIS_DOES_NOT_EXIST", [Iso639_3.jpn]), // 6. Garbage string
+  ("", [Iso639_3.jpn]),                    // 7. Empty string
+  ("   ", [Iso639_3.jpn]),                 // 8. Whitespace only
+  ("ゴを食", [Iso639_3.jpn]),               // 9. Partial substring of "リンゴを食べます"
+  ("APPLES", [Iso639_3.eng]),              // 10. Case insensitivity
 ];
 
 final dummyIndex = IndexEntry(
@@ -114,6 +121,66 @@ final List<List<ExampleEntry>> exampleSentenceTestExpectedValues = [
       sentence: "「apple」を食べます", 
       languageCode: "jpn",
       tags: [], stats: [], audios: [],
+    )
+  ],
+
+  // --- Edge Cases Expected Results ---
+
+  // Query 6: Garbage string (Should return empty)
+  [],
+
+  // Query 7: Empty string (Should return empty)
+  [],
+
+  // Query 8: Whitespace only (Should return empty)
+  [],
+
+  // Query 9: Partial substring "ンゴ" (Should return the "リンゴを食べます" entry)
+  [
+    ExampleEntry(
+      id: 0, indexEntry: dummyIndex, groupId: 100,
+      sentence: "リンゴを食べます", languageCode: "jpn",
+      tags: [
+        expectedTag("fruit", "category", 1, "Food related examples"),
+        expectedTag("license:CC-BY-4.0", "license", 3, "Creative Commons Attribution 4.0"),
+        expectedTag("tatoeba", "source", 2, "Imported from Tatoeba project"),
+      ], 
+      stats: [
+        const StatEntry(statName: "JLPT", value: 1.0, displayValue: "N5"), 
+        const StatEntry(statName: "difficulty", displayName: "Difficulty", value: 2.5),
+        const StatEntry(statName: "freq", displayName: "Frequency", value: 120.0, displayValue: "uncommon"),
+        const StatEntry(statName: "quality", value: 5.0),
+      ],
+      audios: [
+        ExampleAudioEntry(
+          path: "media/apple_a.mp3", name: "apple_a.mp3",
+          tags: [], stats: [],
+        ),
+        ExampleAudioEntry(
+          path: "media/apple_b.mp3", name: "apple_b.mp3",
+          tags: [
+            expectedTag("female", "gender", 1, "Female voice"),
+            expectedTag("native", "speaker", 1, "Native speaker audio"),
+            expectedTag("tokyo", "accent", 2, "Tokyo pitch accent"),
+          ], 
+          stats: [
+            const StatEntry(statName: "clarity", displayName: "Clarity", value: 4.0),
+            const StatEntry(statName: "speed", displayName: "Speed", value: 3.5, displayValue: "normal"),
+          ],
+        ),
+      ],
+    )
+  ],
+
+  // Query 10: Case insensitivity "APPLES" (Should return the "I eat apples." entry)
+  [
+    ExampleEntry(
+      id: 0, indexEntry: dummyIndex, groupId: 103,
+      sentence: "I eat apples.", 
+      languageCode: "eng",
+      tags: [], 
+      stats: [const StatEntry(statName: "quality", value: 4.5)], 
+      audios: [],
     )
   ],
 ];
