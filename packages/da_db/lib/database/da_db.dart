@@ -137,7 +137,6 @@ part 'da_db.g.dart';
     'tag/tag_bank_v3_views.drift',
 
     'example/example_fts5_table.drift', 'example/example_views.drift', 'example/example_queries.drift',
-    'general_tables/hiragana_spellfix_cost.drift',
     'audio/audio_views.drift', 'audio/audio_queries.drift',
     
     'kanji/kanji_bank_v3_views.drift', 'kanji/kanji_bank_v3_queries.drift',
