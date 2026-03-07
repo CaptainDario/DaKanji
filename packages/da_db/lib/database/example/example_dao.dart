@@ -29,13 +29,11 @@ class ExampleDao extends DatabaseAccessor<DaDb> with _$ExampleDaoMixin {
       int offset = 0,
     }
   ) async {
-    final langCodes = languages.map((l) => l.name).toList();
 
-    // Phase 1: Search IDs (Quotes are handled in the .drift file)
-    final finalQuery = db.languageProcessor.parse(query, ProcessorOptions())
-      .segments.nonNulls.join(" ");
+    // Phase 1: FTS Search to get matching IDs
+    final langCodes = languages.map((l) => l.name).toList();
     final matchingIds = await db.searchExampleIds(
-      finalQuery, langCodes, limit, offset).get();
+      query, langCodes, limit, offset).get();
 
     if (matchingIds.isEmpty) return [];
 
