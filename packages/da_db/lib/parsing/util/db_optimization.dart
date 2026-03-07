@@ -80,9 +80,9 @@ Future optimizeDbAfterDelete(DaDb db) async {
   await db.customStatement("INSERT INTO fts_tokens(fts_tokens) VALUES('optimize');");
   await db.customStatement("INSERT INTO fts_example_tokens(fts_example_tokens) VALUES('optimize');");
 
-  // 2. Update Query Planner Statistics
-  await db.customStatement("ANALYZE;");
-
-  // 3. Reclaim Space
+  // 2. Reclaim Space
   await db.customStatement("VACUUM;");
+
+  // 3. Update Query Planner Statistics
+  await db.customStatement("ANALYZE;");
 }

@@ -52,153 +52,134 @@ class DeletionDao extends DatabaseAccessor<DaDb> with _$DeletionDaoMixin {
     return progress.stream;
   }
 
-  /// Utility function to perform garbage collection on shared tables after a
-  /// dictionary deletion, using Drift's generated table names.
+  /// Utility function to perform garbage collection on shared tables.
+  /// Uses a TEMP table to reliably bulk-sync FTS External Content tables.
   Future<void> garbageCollectSharedTables(DaDb db) async {
-    
-    // --- Store Generated Table Names for SQL String Interpolation ---
-    final term = db.termTable.actualTableName;
-    final termBank = db.termBankV3Table.actualTableName;
-    final termMeta = db.termMetaBankV3Table.actualTableName;
-    final audioTerm = db.audioTableXTermTable.actualTableName;
-    
-    final reading = db.readingTable.actualTableName;
-    final audio = db.audioTable.actualTableName;
-    final kanjiOnyomi = db.kanjiBankV3XOnyomiReadingTable.actualTableName;
-    final kanjiKunyomi = db.kanjiBankV3XKunyomiReadingTable.actualTableName;
-    
-    final kanji = db.kanjiTable.actualTableName;
-    final kanjiBank = db.kanjiBankV3Table.actualTableName;
-    final kanjiMeta = db.kanjiMetaBankV3Table.actualTableName;
-    final kanjiVg = db.kanjiVGTable.actualTableName; 
-    final radicalKanji = db.radicalXKanjiRelationsTable.actualTableName;
-    
-    final def = db.definitionTable.actualTableName;
-    final kanjiDef = db.kanjiBankV3XDefinitionTable.actualTableName;
-    final termDef = db.termBankV3XDefinitionTable.actualTableName;
-    
-    final termJson = db.termBankV3DefinitionJsonTable.actualTableName;
-    
-    final rule = db.termBankV3RuleIdentifierTable.actualTableName;
-    final termRule = db.termBankV3XRuleIdentifierTable.actualTableName;
-    
-    final termMetaType = db.termMetaBankV3TypeTable.actualTableName;
-    final kanjiMetaType = db.kanjiMetaBankV3TypeTable.actualTableName;
-    
-    final pitch = db.termMetaBankV3PitchTable.actualTableName;
-    final termPitch = db.termMetaBankV3XPitchTable.actualTableName;
-    
-    final ipa = db.termMetaBankV3IpaTable.actualTableName;
-    final termIpa = db.termMetaBankV3XIpaTable.actualTableName;
-    
-    final media = db.mediaTable.actualTableName;
-    
-    final exSentence = db.exampleSentenceTable.actualTableName;
-    final exTable = db.exampleTable.actualTableName;
-    
-    final exAudio = db.exampleAudioTable.actualTableName;
-    final exTableAudio = db.exampleTableXExampleAudioTable.actualTableName;
-    
-    final langCode = db.languageCodeTable.actualTableName;
-    
-    final stat = db.statTable.actualTableName;
-    final exStat = db.exampleTableXStatTable.actualTableName;
-    final exAudioStat = db.exampleAudioTableXStatTable.actualTableName;
-    
-    final statName = db.statNameTable.actualTableName;
+    // 0. Setup temp table. We explicitly store the text columns to feed directly back to FTS.
+    await db.customStatement('CREATE TEMP TABLE IF NOT EXISTS fts_garbage (id INTEGER PRIMARY KEY, t1 TEXT, t2 TEXT);');
 
+    // --- 1. TERMS & fts_terms & fts_tokens ---
+    await db.customStatement('DELETE FROM fts_garbage;');
+    await db.customStatement('''
+      INSERT INTO fts_garbage (id, t1, t2)
+      SELECT id, term, term_normalized FROM ${db.termTable.actualTableName} 
+      WHERE NOT EXISTS (SELECT 1 FROM ${db.termBankV3Table.actualTableName} WHERE term_id = ${db.termTable.actualTableName}.id) 
+      AND NOT EXISTS (SELECT 1 FROM ${db.termMetaBankV3Table.actualTableName} WHERE term_id = ${db.termTable.actualTableName}.id)
+      AND NOT EXISTS (SELECT 1 FROM ${db.audioTableXTermTable.actualTableName} WHERE term_id = ${db.termTable.actualTableName}.id);
+    ''');
 
-    // --- Execute Deletions ---
-    final queries = [
+    // Force FTS5 to un-index using the exact strings captured in the temp table
+    await db.customStatement('''
+      INSERT INTO fts_terms(fts_terms, rowid, term, term_normalized)
+      SELECT 'delete', id, t1, t2 FROM fts_garbage;
+    ''');
+    
+    // Cleanup contentless tokens and actual term rows
+    await db.customStatement('DELETE FROM fts_tokens WHERE rowid IN (SELECT id FROM fts_garbage);');
+    await db.customStatement('DELETE FROM ${db.termTable.actualTableName} WHERE id IN (SELECT id FROM fts_garbage);');
 
-      // 1. Delete tokens (contentless FTS table string is hardcoded since Drift doesn't always expose a standard getter for them)
-      '''DELETE FROM fts_tokens 
-          WHERE rowid IN (
-            SELECT id FROM $term 
-            WHERE NOT EXISTS (SELECT 1 FROM $termBank WHERE term_id = $term.id) 
-            AND NOT EXISTS (SELECT 1 FROM $termMeta WHERE term_id = $term.id));''',
+    // --- 2. READINGS & fts_readings ---
+    await db.customStatement('DELETE FROM fts_garbage;');
+    await db.customStatement('''
+      INSERT INTO fts_garbage (id, t1, t2)
+      SELECT id, reading, reading_normalized FROM ${db.readingTable.actualTableName} 
+      WHERE NOT EXISTS (SELECT 1 FROM ${db.termBankV3Table.actualTableName} WHERE reading_id = ${db.readingTable.actualTableName}.id) 
+      AND NOT EXISTS (SELECT 1 FROM ${db.termMetaBankV3Table.actualTableName} WHERE reading_id = ${db.readingTable.actualTableName}.id) 
+      AND NOT EXISTS (SELECT 1 FROM ${db.audioTable.actualTableName} WHERE reading_id = ${db.readingTable.actualTableName}.id) 
+      AND NOT EXISTS (SELECT 1 FROM ${db.kanjiBankV3XOnyomiReadingTable.actualTableName} WHERE onyomi_reading_id = ${db.readingTable.actualTableName}.id) 
+      AND NOT EXISTS (SELECT 1 FROM ${db.kanjiBankV3XKunyomiReadingTable.actualTableName} WHERE kunyomi_reading_id = ${db.readingTable.actualTableName}.id);
+    ''');
 
-      // 2. Delete unreferenced Terms 
-      '''DELETE FROM $term 
-        WHERE NOT EXISTS (SELECT 1 FROM $termBank WHERE term_id = $term.id) 
-        AND NOT EXISTS (SELECT 1 FROM $termMeta WHERE term_id = $term.id)
-        AND NOT EXISTS (SELECT 1 FROM $audioTerm WHERE term_id = $term.id);''',
-      
-      // 3. Delete unreferenced Readings 
-      '''DELETE FROM $reading 
-        WHERE NOT EXISTS (SELECT 1 FROM $termBank WHERE reading_id = $reading.id) 
-        AND NOT EXISTS (SELECT 1 FROM $termMeta WHERE reading_id = $reading.id) 
-        AND NOT EXISTS (SELECT 1 FROM $audio WHERE reading_id = $reading.id) 
-        AND NOT EXISTS (SELECT 1 FROM $kanjiOnyomi WHERE onyomi_reading_id = $reading.id) 
-        AND NOT EXISTS (SELECT 1 FROM $kanjiKunyomi WHERE kunyomi_reading_id = $reading.id);''',
-      
+    await db.customStatement('''
+      INSERT INTO fts_readings(fts_readings, rowid, reading, reading_normalized)
+      SELECT 'delete', id, t1, t2 FROM fts_garbage;
+    ''');
+
+    await db.customStatement('DELETE FROM ${db.readingTable.actualTableName} WHERE id IN (SELECT id FROM fts_garbage);');
+
+    // --- 3. DEFINITIONS & fts_definitions ---
+    await db.customStatement('DELETE FROM fts_garbage;');
+    await db.customStatement('''
+      INSERT INTO fts_garbage (id, t1)
+      SELECT id, definition FROM ${db.definitionTable.actualTableName} 
+      WHERE NOT EXISTS (SELECT 1 FROM ${db.kanjiBankV3XDefinitionTable.actualTableName} WHERE definition_id = ${db.definitionTable.actualTableName}.id) 
+      AND NOT EXISTS (SELECT 1 FROM ${db.termBankV3XDefinitionTable.actualTableName} WHERE definition_id = ${db.definitionTable.actualTableName}.id);
+    ''');
+
+    await db.customStatement('''
+      INSERT INTO fts_definitions(fts_definitions, rowid, definition)
+      SELECT 'delete', id, t1 FROM fts_garbage;
+    ''');
+
+    await db.customStatement('DELETE FROM ${db.definitionTable.actualTableName} WHERE id IN (SELECT id FROM fts_garbage);');
+
+    // Drop temp table
+    await db.customStatement('DROP TABLE fts_garbage;');
+
+    // --- 4. REMAINING ORPHAN LOGIC (4-18 EXACTLY AS PROVIDED) ---
+    final remainingQueries = [
       // 4. Delete unreferenced Kanjis
-      '''DELETE FROM $kanji 
-        WHERE NOT EXISTS (SELECT 1 FROM $kanjiBank WHERE kanji_id = $kanji.id) 
-        AND NOT EXISTS (SELECT 1 FROM $kanjiMeta WHERE kanji_id = $kanji.id) 
-        AND NOT EXISTS (SELECT 1 FROM $kanjiVg WHERE kanji_id = $kanji.id) 
-        AND NOT EXISTS (SELECT 1 FROM $radicalKanji WHERE kanji_id = $kanji.id);''',
+      '''DELETE FROM ${db.kanjiTable.actualTableName} 
+        WHERE NOT EXISTS (SELECT 1 FROM ${db.kanjiBankV3Table.actualTableName} WHERE kanji_id = ${db.kanjiTable.actualTableName}.id) 
+        AND NOT EXISTS (SELECT 1 FROM ${db.kanjiMetaBankV3Table.actualTableName} WHERE kanji_id = ${db.kanjiTable.actualTableName}.id) 
+        AND NOT EXISTS (SELECT 1 FROM ${db.kanjiVGTable.actualTableName} WHERE kanji_id = ${db.kanjiTable.actualTableName}.id) 
+        AND NOT EXISTS (SELECT 1 FROM ${db.radicalXKanjiRelationsTable.actualTableName} WHERE kanji_id = ${db.kanjiTable.actualTableName}.id);''',
       
-      // 5. Delete unreferenced Definitions
-      '''DELETE FROM $def 
-        WHERE NOT EXISTS (SELECT 1 FROM $kanjiDef WHERE definition_id = $def.id) 
-        AND NOT EXISTS (SELECT 1 FROM $termDef WHERE definition_id = $def.id);''',
+      // 5. Delete unreferenced Structured Content JSON
+      '''DELETE FROM ${db.termBankV3DefinitionJsonTable.actualTableName} 
+        WHERE NOT EXISTS (SELECT 1 FROM ${db.termBankV3Table.actualTableName} WHERE definition_json_id = ${db.termBankV3DefinitionJsonTable.actualTableName}.id);''',
       
-      // 6. Delete unreferenced Structured Content JSON
-      '''DELETE FROM $termJson 
-        WHERE NOT EXISTS (SELECT 1 FROM $termBank WHERE definition_json_id = $termJson.id);''',
+      // 6. Delete unreferenced Rule Identifiers
+      '''DELETE FROM ${db.termBankV3RuleIdentifierTable.actualTableName} 
+        WHERE NOT EXISTS (SELECT 1 FROM ${db.termBankV3XRuleIdentifierTable.actualTableName} WHERE rule_identifier_id = ${db.termBankV3RuleIdentifierTable.actualTableName}.id);''',
       
-      // 7. Delete unreferenced Rule Identifiers
-      '''DELETE FROM $rule 
-        WHERE NOT EXISTS (SELECT 1 FROM $termRule WHERE rule_identifier_id = $rule.id);''',
+      // 7. Delete unreferenced Term Meta Type metadata
+      '''DELETE FROM ${db.termMetaBankV3TypeTable.actualTableName} 
+        WHERE NOT EXISTS (SELECT 1 FROM ${db.termMetaBankV3Table.actualTableName} WHERE type_id = ${db.termMetaBankV3TypeTable.actualTableName}.id);''',
       
-      // 8. Delete unreferenced Term Meta Type metadata
-      '''DELETE FROM $termMetaType 
-        WHERE NOT EXISTS (SELECT 1 FROM $termMeta WHERE type_id = $termMetaType.id);''',
+      // 8. Delete unreferenced Kanji Meta Type metadata
+      '''DELETE FROM ${db.kanjiMetaBankV3TypeTable.actualTableName} 
+        WHERE NOT EXISTS (SELECT 1 FROM ${db.kanjiMetaBankV3Table.actualTableName} WHERE type_id = ${db.kanjiMetaBankV3TypeTable.actualTableName}.id);''',
       
-      // 9. Delete unreferenced Kanji Meta Type metadata
-      '''DELETE FROM $kanjiMetaType 
-        WHERE NOT EXISTS (SELECT 1 FROM $kanjiMeta WHERE type_id = $kanjiMetaType.id);''',
+      // 9. Delete unreferenced Pitch entries
+      '''DELETE FROM ${db.termMetaBankV3PitchTable.actualTableName} 
+        WHERE NOT EXISTS (SELECT 1 FROM ${db.termMetaBankV3XPitchTable.actualTableName} WHERE pitch_id = ${db.termMetaBankV3PitchTable.actualTableName}.id);''',
       
-      // 10. Delete unreferenced Pitch entries
-      '''DELETE FROM $pitch 
-        WHERE NOT EXISTS (SELECT 1 FROM $termPitch WHERE pitch_id = $pitch.id);''',
-      
-      // 11. Delete unreferenced IPA entries
-      '''DELETE FROM $ipa 
-        WHERE NOT EXISTS (SELECT 1 FROM $termIpa WHERE ipa_id = $ipa.id);''',
+      // 10. Delete unreferenced IPA entries
+      '''DELETE FROM ${db.termMetaBankV3IpaTable.actualTableName} 
+        WHERE NOT EXISTS (SELECT 1 FROM ${db.termMetaBankV3XIpaTable.actualTableName} WHERE ipa_id = ${db.termMetaBankV3IpaTable.actualTableName}.id);''',
 
-      // 12. Delete unreferenced Audios (Media)
-      '''DELETE FROM $media 
-         WHERE NOT EXISTS (SELECT 1 FROM $audio WHERE media_id = $media.id);''',
+      // 11. Delete unreferenced Audios (Media)
+      '''DELETE FROM ${db.mediaTable.actualTableName} 
+         WHERE NOT EXISTS (SELECT 1 FROM ${db.audioTable.actualTableName} WHERE media_id = ${db.mediaTable.actualTableName}.id);''',
 
-      // 13. Delete unreferenced Example FTS Tokens
+      // 12. Delete unreferenced Example FTS Tokens
       '''DELETE FROM fts_example_tokens 
-         WHERE rowid NOT IN (SELECT example_sentence_id FROM $exTable);''',
+         WHERE rowid NOT IN (SELECT example_sentence_id FROM ${db.exampleTable.actualTableName});''',
 
-      // 14. Delete unreferenced Example Sentences
-      '''DELETE FROM $exSentence 
-         WHERE NOT EXISTS (SELECT 1 FROM $exTable WHERE example_sentence_id = $exSentence.id);''',
+      // 13. Delete unreferenced Example Sentences
+      '''DELETE FROM ${db.exampleSentenceTable.actualTableName} 
+         WHERE NOT EXISTS (SELECT 1 FROM ${db.exampleTable.actualTableName} WHERE example_sentence_id = ${db.exampleSentenceTable.actualTableName}.id);''',
 
-      // 15. Delete unreferenced Example Audios
-      '''DELETE FROM $exAudio 
-         WHERE NOT EXISTS (SELECT 1 FROM $exTableAudio WHERE audio_id = $exAudio.id);''',
+      // 14. Delete unreferenced Example Audios
+      '''DELETE FROM ${db.exampleAudioTable.actualTableName} 
+         WHERE NOT EXISTS (SELECT 1 FROM ${db.exampleTableXExampleAudioTable.actualTableName} WHERE audio_id = ${db.exampleAudioTable.actualTableName}.id);''',
 
-      // 16. Delete unreferenced Language Codes
-      '''DELETE FROM $langCode 
-         WHERE NOT EXISTS (SELECT 1 FROM $exTable WHERE language_code_id = $langCode.id);''',
+      // 15. Delete unreferenced Language Codes
+      '''DELETE FROM ${db.languageCodeTable.actualTableName} 
+         WHERE NOT EXISTS (SELECT 1 FROM ${db.exampleTable.actualTableName} WHERE language_code_id = ${db.languageCodeTable.actualTableName}.id);''',
 
-      // 17. Delete unreferenced Stat Combinations
-      '''DELETE FROM $stat 
-         WHERE NOT EXISTS (SELECT 1 FROM $exStat WHERE stat_table_id = $stat.id)
-         AND NOT EXISTS (SELECT 1 FROM $exAudioStat WHERE stat_table_id = $stat.id);''',
+      // 16. Delete unreferenced Stat Combinations
+      '''DELETE FROM ${db.statTable.actualTableName} 
+         WHERE NOT EXISTS (SELECT 1 FROM ${db.exampleTableXStatTable.actualTableName} WHERE stat_table_id = ${db.statTable.actualTableName}.id)
+         AND NOT EXISTS (SELECT 1 FROM ${db.exampleAudioTableXStatTable.actualTableName} WHERE stat_table_id = ${db.statTable.actualTableName}.id);''',
 
-      // 18. Delete unreferenced Stat Names
-      '''DELETE FROM $statName 
-         WHERE NOT EXISTS (SELECT 1 FROM $stat WHERE stat_name_id = $statName.id);''',
+      // 17. Delete unreferenced Stat Names
+      '''DELETE FROM ${db.statNameTable.actualTableName} 
+         WHERE NOT EXISTS (SELECT 1 FROM ${db.statTable.actualTableName} WHERE stat_name_id = ${db.statNameTable.actualTableName}.id);''',
     ];
 
-    for (final query in queries) {
+    for (final query in remainingQueries) {
       await db.customStatement(query);
     }
   }
