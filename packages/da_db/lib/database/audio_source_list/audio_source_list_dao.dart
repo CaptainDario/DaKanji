@@ -47,6 +47,7 @@ class AudioSourceListDao extends DatabaseAccessor<DaDb> with _$AudioSourceListDa
 
       // 5. Construct your Freezed class
       return AudioSourceListEntry(
+        id: sourceRow.id,
         name: sourceRow.name,
         uri: sourceRow.uri,
         indexEntry: indexEntry,

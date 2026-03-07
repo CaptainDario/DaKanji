@@ -11,6 +11,9 @@ part 'audio_source_list_entry.g.dart';
 @JsonSerializable()
 /// Class representing one audio entry of the database
 class AudioSourceListEntry with _$AudioSourceListEntry {
+
+  @override
+  int id;
   /// The name of the audio source
   @override
   String name;
@@ -22,6 +25,7 @@ class AudioSourceListEntry with _$AudioSourceListEntry {
 
   AudioSourceListEntry(
     {
+      required this.id,
       required this.name,
       required this.uri,
       required this.indexEntry,
