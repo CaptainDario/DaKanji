@@ -19,11 +19,13 @@ IndexEntry index = IndexEntry(
 
 List<AudioSourceListEntry> audioListTestCases = [
   AudioSourceListEntry(
+    id: 0,
     name: "JapanesePod101",
     uri: "https://assets.languagepod101.com/dictionary/japanese/audiomp3.php?kanji={{KANJI}}&kana={{KANA}}",
     indexEntry: index
   ),
   AudioSourceListEntry(
+    id: 0,
     name: "JapanesePod102",
     uri: "https://assets.languagepod102.com/dictionary/japanese/audiomp3.php?kanji={{KANJI}}&kana={{KANA}}",
     indexEntry: index
