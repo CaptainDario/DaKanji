@@ -1,0 +1,6 @@
+[
+  { "groupId": 10, "sentence": "リンゴ", "langIso3Code": "jpn" },
+  { "groupId": 10, "sentence": "青いリンゴ", "langIso3Code": "jpn" },
+  { "groupId": 11, "sentence": "犬", "langIso3Code": "jpn" },
+  { "groupId": 12, "sentence": "猫", "langIso3Code": "jpn" }
+]
