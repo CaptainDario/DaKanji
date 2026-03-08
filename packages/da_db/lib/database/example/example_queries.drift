@@ -4,39 +4,87 @@ import '/database/general_tables/language_code_table.dart';
 import '/database/example/example_fts5_table.drift';
 import '/database/example/example_views.drift';
 
--- Phase 1: Fast FTS 5
-searchExampleIds:
-    SELECT e.id 
-    FROM fts_example_tokens AS fts
+----------------------------------------------------------------------
+-- PHASE 1: Base Match Discovery
+-- Now returning group_id and language_code so Dart can apply rules
+----------------------------------------------------------------------
+
+-- Fast FTS 5 Search
+searchExampleBaseMatches:
+    SELECT 
+        e.id, 
+        e.group_id, 
+        l.language_code,
+        e.index_id
+    FROM fts_example_sentence AS fts
         INNER JOIN example_table AS e ON e.example_sentence_id = fts.rowid
         INNER JOIN language_code_table AS l ON l.id = e.language_code_id
-    WHERE fts_example_tokens MATCH '"' || :query || '"'
+    WHERE fts_example_sentence MATCH :query
         AND l.language_code IN :languages
-    ORDER BY bm25(fts_example_tokens)
+    ORDER BY bm25(fts_example_sentence)
     LIMIT :limit OFFSET :offset;
 
--- Phase 1: Fast Token (Term ID) search
-searchExampleIdsByTermIds:
-    SELECT DISTINCT e.id 
+-- Fast Token (Term ID) Search
+searchExampleBaseMatchesByTermIds:
+    SELECT DISTINCT 
+        e.id, 
+        e.group_id, 
+        l.language_code,
+        e.index_id
     FROM example_sentence_table_x_term_table AS st
         INNER JOIN example_table AS e ON e.example_sentence_id = st.example_sentence_id
         INNER JOIN language_code_table AS l ON l.id = e.language_code_id
     WHERE st.term_id IN :termIds
         AND l.language_code IN :languages
+    ORDER BY e.id ASC
     LIMIT :limit OFFSET :offset;
 
--- Phase 1: Fast Token (Term String) search
-searchExampleIdsByTermString:
-    SELECT DISTINCT e.id 
+-- Fast Token (Term String) Search
+searchExampleBaseMatchesByTermString:
+    SELECT DISTINCT 
+        e.id, 
+        e.group_id, 
+        l.language_code,
+        e.index_id
     FROM term_table AS t
         INNER JOIN example_sentence_table_x_term_table AS st ON st.term_id = t.id
         INNER JOIN example_table AS e ON e.example_sentence_id = st.example_sentence_id
         INNER JOIN language_code_table AS l ON l.id = e.language_code_id
-    WHERE t.term = :termString
+    WHERE t.term IN :terms
         AND l.language_code IN :languages
+    ORDER BY e.id ASC
     LIMIT :limit OFFSET :offset;
 
--- Phase 2: Rich data hydration
+
+----------------------------------------------------------------------
+-- PHASE 2: Targeted Sibling Expansion
+----------------------------------------------------------------------
+
+-- Fetches missing group entries based on JSON pairs: [{"g": 123, "l": "eng"}, ...]
+getMissingGroupEntries:
+    WITH
+        RequiredLookups(groupId, targetIndexId) AS (
+            SELECT 
+                CAST(json_extract(value, '$.g') AS INTEGER),
+                CAST(json_extract(value, '$.i') AS INTEGER)
+            FROM json_each(:lookup_pairs)
+        )
+    SELECT 
+        e.id, 
+        e.group_id, 
+        e.index_id
+    FROM RequiredLookups
+    -- Match strictly and directly on index_id and group_id
+    INNER JOIN example_table AS e 
+        ON e.group_id = RequiredLookups.groupId
+        AND e.index_id = RequiredLookups.targetIndexId
+    WHERE e.id NOT IN :excludedIds;
+
+----------------------------------------------------------------------
+-- PHASE 3: Rich Data Hydration
+----------------------------------------------------------------------
+
+-- Hydrates all collected IDs at once
 getExamplesByIds:
     SELECT * FROM example_entry_view 
     WHERE id IN :ids;

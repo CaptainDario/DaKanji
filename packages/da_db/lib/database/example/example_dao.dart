@@ -1,19 +1,24 @@
+import 'dart:convert';
 
+import "package:collection/collection.dart";
+import "package:da_db/data/grouping_rules.dart";
 import "package:drift/drift.dart";
 import 'package:language_processing/language_processing.dart';
 
 import "/database/example/example_entry.dart";
+import "/database/example/example_search_result.dart";
 import "/database/example/example_tables.dart";
 import "../da_db.dart";
 
 part 'example_dao.g.dart';
 
+// Type alias for our standardized base match record to keep signatures clean
+typedef _BaseMatchRecord = ({int id, int groupId, int indexId});
 
-
-// Dao class that contains all queries related to the `ExampleTable`
 @DriftAccessor(
   tables: [
-    ExampleTable, ExampleSentenceTable,
+    ExampleTable, 
+    ExampleSentenceTable,
     ExampleAudioTable,
   ],
 )
@@ -21,66 +26,144 @@ class ExampleDao extends DatabaseAccessor<DaDb> with _$ExampleDaoMixin {
   
   ExampleDao(super.db);
 
-  Future<List<ExampleEntry>> searchExamples(
-    String query,
-    List<Iso639_3> languages, 
+  /// Uses the raw FTS5 query syntax to search the example database,
+  /// returning a list of [ExampleSearchResult] objects if successful,
+  /// or null if the query was invalid.
+  Future<List<ExampleSearchResult>?> searchExamples(
+    String rawFts5Query,
+    List<Iso639_3> languages,
     {
+      Set<SequenceGroupingRule> groupingRules = const {},
       int limit = -1,
       int offset = 0,
     }
   ) async {
+    if (rawFts5Query.trim().isEmpty) return [];
 
-    // Phase 1: FTS Search to get matching IDs
     final langCodes = languages.map((l) => l.name).toList();
-    final matchingIds = await db.searchExampleIds(
-      query, langCodes, limit, offset).get();
+    List<SearchExampleBaseMatchesResult> rawMatches;
 
-    if (matchingIds.isEmpty) return [];
+    try {
+      rawMatches = await db.searchExampleBaseMatches(
+        rawFts5Query, langCodes, limit, offset
+      ).get();
+    } catch (e) {
+      return null;
+    }
 
-    // Phase 2: Fetch and Hydrate
-    final viewRows = await db.getExamplesByIds(matchingIds).get();
+    if (rawMatches.isEmpty) return [];
 
-    // Sort back to FTS rank
-    final rowMap = {for (final row in viewRows) row.id: row};
-    
-    return matchingIds
-      .where((id) => rowMap.containsKey(id))
-      .map((id) => ExampleEntry.fromViewData(rowMap[id]!))
-      .toList();
+    final baseMatches = rawMatches.map((m) => 
+      (id: m.id, groupId: m.groupId, indexId: m.indexId)
+    ).toList();
+
+    return _processBaseMatches(baseMatches, groupingRules);
   }
 
-  /// Direct token search fetching examples containing specific dictionary terms by their IDs
-  Future<List<ExampleEntry>> searchExamplesByTermIds(
+  Future<List<ExampleSearchResult>> searchExamplesByTermIds(
     List<int> termIds,
     List<Iso639_3> languages, {
+    Set<SequenceGroupingRule> groupingRules = const {},
     int limit = 50,
     int offset = 0,
   }) async {
     final langCodes = languages.map((l) => l.name).toList();
-    final ids = await db.searchExampleIdsByTermIds(termIds, langCodes, limit, offset).get();
     
-    if (ids.isEmpty) return [];
+    final rawMatches = await db.searchExampleBaseMatchesByTermIds(
+      termIds, langCodes, limit, offset
+    ).get();
+    
+    if (rawMatches.isEmpty) return [];
 
-    // Phase 2: Rich data hydration 
-    final rows = await db.getExamplesByIds(ids).get();
-    return rows.map((row) => ExampleEntry.fromViewData(row)).toList();
+    final baseMatches = rawMatches.map((m) => 
+      (id: m.id, groupId: m.groupId, indexId: m.indexId)
+    ).toList();
+
+    return _processBaseMatches(baseMatches, groupingRules);
   }
 
-  /// Direct token search fetching examples containing a specific dictionary term string
-  Future<List<ExampleEntry>> searchExamplesByTermString(
-    String termString,
+  Future<List<ExampleSearchResult>> searchExamplesByTermString(
+    List<String> terms,
     List<Iso639_3> languages, {
+    Set<SequenceGroupingRule> groupingRules = const {},
     int limit = 50,
     int offset = 0,
   }) async {
     final langCodes = languages.map((l) => l.name).toList();
-    final ids = await db.searchExampleIdsByTermString(termString, langCodes, limit, offset).get();
     
-    if (ids.isEmpty) return [];
+    final rawMatches = await db.searchExampleBaseMatchesByTermString(
+      terms, langCodes, limit, offset
+    ).get();
+    
+    if (rawMatches.isEmpty) return [];
 
-    // Phase 2: Rich data hydration 
-    final rows = await db.getExamplesByIds(ids).get();
-    return rows.map((row) => ExampleEntry.fromViewData(row)).toList();
+    final baseMatches = rawMatches.map((m) => 
+      (id: m.id, groupId: m.groupId, indexId: m.indexId)
+    ).toList();
+
+    return _processBaseMatches(baseMatches, groupingRules);
+  }
+
+  Future<List<ExampleSearchResult>> _processBaseMatches(
+    List<_BaseMatchRecord> baseMatches,
+    Set<SequenceGroupingRule> groupingRules,
+  ) async {
+    
+    // Phase 2: Targeted Sibling Expansion
+    final lookupPairs = _buildLookupPairs(baseMatches, groupingRules);
+    final missingEntries = <_BaseMatchRecord>[];
+
+    if (lookupPairs.isNotEmpty) {
+      final pairsJson = jsonEncode(lookupPairs);
+      final excludedIds = baseMatches.map((m) => m.id).toList();
+      
+      final rawMissing = await db.getMissingGroupEntries(pairsJson, excludedIds).get();
+      
+      missingEntries.addAll(rawMissing.map((m) => 
+        (id: m.id, groupId: m.groupId, indexId: m.indexId)
+      ));
+    }
+
+    // Phase 3: Rich Data Hydration
+    final allIdsToFetch = [
+      ...baseMatches.map((m) => m.id),
+      ...missingEntries.map((m) => m.id)
+    ];
+    
+    final viewRows = await db.getExamplesByIds(allIdsToFetch).get();
+    final hydratedEntries = viewRows.map((row) => ExampleEntry.fromViewData(row)).toList();
+
+    // Delegate Assembly
+    return ExampleSearchResult.fromRawData(
+      baseMatches: baseMatches,
+      missingEntries: missingEntries,
+      hydratedEntries: hydratedEntries,
+      groupingRules: groupingRules,
+    );
+  }
+
+  /// Helper method to extract the JSON payload needed for Phase 2
+  List<Map<String, int>> _buildLookupPairs(
+    List<_BaseMatchRecord> baseMatches, 
+    Set<SequenceGroupingRule> groupingRules
+  ) {
+    final pairs = <Map<String, int>>[];
+    final seen = <String>{}; 
+    
+    for (final match in baseMatches) {
+      final rule = groupingRules.firstWhereOrNull((r) => r.sourceDictId == match.indexId);
+      if (rule != null) {
+        for (final targetId in rule.targetDictIds) {
+          final key = '${match.groupId}_$targetId';
+          
+          // Only add the lookup pair if we haven't already requested it
+          if (seen.add(key)) {
+            pairs.add({"g": match.groupId, "i": targetId});
+          }
+        }
+      }
+    }
+    return pairs;
   }
 
   // ---------------------------------------------------------------------------
