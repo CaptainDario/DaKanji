@@ -56,7 +56,6 @@ class _SearchProfileManagementWidgetState extends State<SearchProfileManagementW
 
   Widget _buildProfileCard(BuildContext context, SearchProfilesEntry profile, int index) {
     final db = GetIt.I<DaDb>();
-    final theme = Theme.of(context);
     final isActive = profile.isActiveProfile;
 
     return Card(
