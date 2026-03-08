@@ -154,7 +154,7 @@ class DeletionDao extends DatabaseAccessor<DaDb> with _$DeletionDaoMixin {
          WHERE NOT EXISTS (SELECT 1 FROM ${db.audioTable.actualTableName} WHERE media_id = ${db.mediaTable.actualTableName}.id);''',
 
       // 12. Delete unreferenced Example FTS Tokens
-      '''DELETE FROM fts_example_tokens 
+      '''DELETE FROM fts_example_sentence 
          WHERE rowid NOT IN (SELECT example_sentence_id FROM ${db.exampleTable.actualTableName});''',
 
       // 13. Delete unreferenced Example Sentences

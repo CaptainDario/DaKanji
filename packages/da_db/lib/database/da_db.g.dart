@@ -14146,14 +14146,14 @@ class ExampleSentenceTableCompanion
   }
 }
 
-class FtsExampleTokens extends Table
+class FtsExampleSentence extends Table
     with
-        TableInfo<FtsExampleTokens, FtsExampleToken>,
-        VirtualTableInfo<FtsExampleTokens, FtsExampleToken> {
+        TableInfo<FtsExampleSentence, FtsExampleSentenceData>,
+        VirtualTableInfo<FtsExampleSentence, FtsExampleSentenceData> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
-  FtsExampleTokens(this.attachedDatabase, [this._alias]);
+  FtsExampleSentence(this.attachedDatabase, [this._alias]);
   static const VerificationMeta _exampleSentenceMeta = const VerificationMeta(
     'exampleSentence',
   );
@@ -14171,10 +14171,10 @@ class FtsExampleTokens extends Table
   String get aliasedName => _alias ?? actualTableName;
   @override
   String get actualTableName => $name;
-  static const String $name = 'fts_example_tokens';
+  static const String $name = 'fts_example_sentence';
   @override
   VerificationContext validateIntegrity(
-    Insertable<FtsExampleToken> instance, {
+    Insertable<FtsExampleSentenceData> instance, {
     bool isInserting = false,
   }) {
     final context = VerificationContext();
@@ -14194,9 +14194,9 @@ class FtsExampleTokens extends Table
   @override
   Set<GeneratedColumn> get $primaryKey => const {};
   @override
-  FtsExampleToken map(Map<String, dynamic> data, {String? tablePrefix}) {
+  FtsExampleSentenceData map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return FtsExampleToken(
+    return FtsExampleSentenceData(
       exampleSentence: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}example_sentence'],
@@ -14205,8 +14205,8 @@ class FtsExampleTokens extends Table
   }
 
   @override
-  FtsExampleTokens createAlias(String alias) {
-    return FtsExampleTokens(attachedDatabase, alias);
+  FtsExampleSentence createAlias(String alias) {
+    return FtsExampleSentence(attachedDatabase, alias);
   }
 
   @override
@@ -14216,9 +14216,10 @@ class FtsExampleTokens extends Table
       'fts5(example_sentence, content=\'example_sentence_table\', content_rowid=\'id\', tokenize=\'better_trigram\', prefix=\'2 3\')';
 }
 
-class FtsExampleToken extends DataClass implements Insertable<FtsExampleToken> {
+class FtsExampleSentenceData extends DataClass
+    implements Insertable<FtsExampleSentenceData> {
   final String? exampleSentence;
-  const FtsExampleToken({this.exampleSentence});
+  const FtsExampleSentenceData({this.exampleSentence});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -14228,20 +14229,20 @@ class FtsExampleToken extends DataClass implements Insertable<FtsExampleToken> {
     return map;
   }
 
-  FtsExampleTokensCompanion toCompanion(bool nullToAbsent) {
-    return FtsExampleTokensCompanion(
+  FtsExampleSentenceCompanion toCompanion(bool nullToAbsent) {
+    return FtsExampleSentenceCompanion(
       exampleSentence: exampleSentence == null && nullToAbsent
           ? const Value.absent()
           : Value(exampleSentence),
     );
   }
 
-  factory FtsExampleToken.fromJson(
+  factory FtsExampleSentenceData.fromJson(
     Map<String, dynamic> json, {
     ValueSerializer? serializer,
   }) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
-    return FtsExampleToken(
+    return FtsExampleSentenceData(
       exampleSentence: serializer.fromJson<String?>(json['example_sentence']),
     );
   }
@@ -14253,15 +14254,15 @@ class FtsExampleToken extends DataClass implements Insertable<FtsExampleToken> {
     };
   }
 
-  FtsExampleToken copyWith({
+  FtsExampleSentenceData copyWith({
     Value<String?> exampleSentence = const Value.absent(),
-  }) => FtsExampleToken(
+  }) => FtsExampleSentenceData(
     exampleSentence: exampleSentence.present
         ? exampleSentence.value
         : this.exampleSentence,
   );
-  FtsExampleToken copyWithCompanion(FtsExampleTokensCompanion data) {
-    return FtsExampleToken(
+  FtsExampleSentenceData copyWithCompanion(FtsExampleSentenceCompanion data) {
+    return FtsExampleSentenceData(
       exampleSentence: data.exampleSentence.present
           ? data.exampleSentence.value
           : this.exampleSentence,
@@ -14270,7 +14271,7 @@ class FtsExampleToken extends DataClass implements Insertable<FtsExampleToken> {
 
   @override
   String toString() {
-    return (StringBuffer('FtsExampleToken(')
+    return (StringBuffer('FtsExampleSentenceData(')
           ..write('exampleSentence: $exampleSentence')
           ..write(')'))
         .toString();
@@ -14281,22 +14282,23 @@ class FtsExampleToken extends DataClass implements Insertable<FtsExampleToken> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is FtsExampleToken &&
+      (other is FtsExampleSentenceData &&
           other.exampleSentence == this.exampleSentence);
 }
 
-class FtsExampleTokensCompanion extends UpdateCompanion<FtsExampleToken> {
+class FtsExampleSentenceCompanion
+    extends UpdateCompanion<FtsExampleSentenceData> {
   final Value<String?> exampleSentence;
   final Value<int> rowid;
-  const FtsExampleTokensCompanion({
+  const FtsExampleSentenceCompanion({
     this.exampleSentence = const Value.absent(),
     this.rowid = const Value.absent(),
   });
-  FtsExampleTokensCompanion.insert({
+  FtsExampleSentenceCompanion.insert({
     this.exampleSentence = const Value.absent(),
     this.rowid = const Value.absent(),
   });
-  static Insertable<FtsExampleToken> custom({
+  static Insertable<FtsExampleSentenceData> custom({
     Expression<String>? exampleSentence,
     Expression<int>? rowid,
   }) {
@@ -14306,11 +14308,11 @@ class FtsExampleTokensCompanion extends UpdateCompanion<FtsExampleToken> {
     });
   }
 
-  FtsExampleTokensCompanion copyWith({
+  FtsExampleSentenceCompanion copyWith({
     Value<String?>? exampleSentence,
     Value<int>? rowid,
   }) {
-    return FtsExampleTokensCompanion(
+    return FtsExampleSentenceCompanion(
       exampleSentence: exampleSentence ?? this.exampleSentence,
       rowid: rowid ?? this.rowid,
     );
@@ -14330,7 +14332,7 @@ class FtsExampleTokensCompanion extends UpdateCompanion<FtsExampleToken> {
 
   @override
   String toString() {
-    return (StringBuffer('FtsExampleTokensCompanion(')
+    return (StringBuffer('FtsExampleSentenceCompanion(')
           ..write('exampleSentence: $exampleSentence, ')
           ..write('rowid: $rowid')
           ..write(')'))
@@ -19961,7 +19963,7 @@ abstract class _$DaDb extends GeneratedDatabase {
   );
   late final $ExampleSentenceTableTable exampleSentenceTable =
       $ExampleSentenceTableTable(this);
-  late final FtsExampleTokens ftsExampleTokens = FtsExampleTokens(this);
+  late final FtsExampleSentence ftsExampleSentence = FtsExampleSentence(this);
   late final $LanguageCodeTableTable languageCodeTable =
       $LanguageCodeTableTable(this);
   late final $ExampleTableTable exampleTable = $ExampleTableTable(this);
@@ -20021,6 +20023,14 @@ abstract class _$DaDb extends GeneratedDatabase {
   late final Index exampleSentencesTableLanguageCodeIdIndex = Index(
     'ExampleSentencesTable_languageCodeIdIndex',
     'CREATE INDEX ExampleSentencesTable_languageCodeIdIndex ON example_table (language_code_id)',
+  );
+  late final Index exampleSentencesTableGroupIdIndex = Index(
+    'ExampleSentencesTable_groupIdIndex',
+    'CREATE INDEX ExampleSentencesTable_groupIdIndex ON example_table (group_id)',
+  );
+  late final Index exampleTableExampleSentenceIdIndex = Index(
+    'ExampleTable_exampleSentenceIdIndex',
+    'CREATE INDEX ExampleTable_exampleSentenceIdIndex ON example_table (example_sentence_id)',
   );
   late final $KanjiVGTableTable kanjiVGTable = $KanjiVGTableTable(this);
   late final Index kanjiVGTableKanjiIdIndex = Index(
@@ -20460,7 +20470,7 @@ abstract class _$DaDb extends GeneratedDatabase {
     ).asyncMap(audioEntryView.mapFromRow);
   }
 
-  Selectable<int> searchExampleIds(
+  Selectable<SearchExampleBaseMatchesResult> searchExampleBaseMatches(
     String query,
     List<String> languages,
     int limit,
@@ -20470,18 +20480,26 @@ abstract class _$DaDb extends GeneratedDatabase {
     final expandedlanguages = $expandVar($arrayStartIndex, languages.length);
     $arrayStartIndex += languages.length;
     return customSelect(
-      'SELECT e.id FROM fts_example_tokens AS fts INNER JOIN example_table AS e ON e.example_sentence_id = fts."rowid" INNER JOIN language_code_table AS l ON l.id = e.language_code_id WHERE fts_example_tokens MATCH \'"\' || ?1 || \'"\' AND l.language_code IN ($expandedlanguages) ORDER BY bm25(fts_example_tokens) LIMIT ?2 OFFSET ?3',
+      'SELECT e.id, e.group_id, l.language_code, e.index_id FROM fts_example_sentence AS fts INNER JOIN example_table AS e ON e.example_sentence_id = fts."rowid" INNER JOIN language_code_table AS l ON l.id = e.language_code_id WHERE fts_example_sentence MATCH ?1 AND l.language_code IN ($expandedlanguages) ORDER BY bm25(fts_example_sentence) LIMIT ?2 OFFSET ?3',
       variables: [
         Variable<String>(query),
         Variable<int>(limit),
         Variable<int>(offset),
         for (var $ in languages) Variable<String>($),
       ],
-      readsFrom: {exampleTable, ftsExampleTokens, languageCodeTable},
-    ).map((QueryRow row) => row.read<int>('id'));
+      readsFrom: {exampleTable, languageCodeTable, ftsExampleSentence},
+    ).map(
+      (QueryRow row) => SearchExampleBaseMatchesResult(
+        id: row.read<int>('id'),
+        groupId: row.read<int>('group_id'),
+        languageCode: row.read<String>('language_code'),
+        indexId: row.read<int>('index_id'),
+      ),
+    );
   }
 
-  Selectable<int> searchExampleIdsByTermIds(
+  Selectable<SearchExampleBaseMatchesByTermIdsResult>
+  searchExampleBaseMatchesByTermIds(
     List<int> termIds,
     List<String> languages,
     int limit,
@@ -20493,7 +20511,7 @@ abstract class _$DaDb extends GeneratedDatabase {
     final expandedlanguages = $expandVar($arrayStartIndex, languages.length);
     $arrayStartIndex += languages.length;
     return customSelect(
-      'SELECT DISTINCT e.id FROM example_sentence_table_x_term_table AS st INNER JOIN example_table AS e ON e.example_sentence_id = st.example_sentence_id INNER JOIN language_code_table AS l ON l.id = e.language_code_id WHERE st.term_id IN ($expandedtermIds) AND l.language_code IN ($expandedlanguages) LIMIT ?1 OFFSET ?2',
+      'SELECT DISTINCT e.id, e.group_id, l.language_code, e.index_id FROM example_sentence_table_x_term_table AS st INNER JOIN example_table AS e ON e.example_sentence_id = st.example_sentence_id INNER JOIN language_code_table AS l ON l.id = e.language_code_id WHERE st.term_id IN ($expandedtermIds) AND l.language_code IN ($expandedlanguages) ORDER BY e.id ASC LIMIT ?1 OFFSET ?2',
       variables: [
         Variable<int>(limit),
         Variable<int>(offset),
@@ -20502,36 +20520,79 @@ abstract class _$DaDb extends GeneratedDatabase {
       ],
       readsFrom: {
         exampleTable,
-        exampleSentenceTableXTermTable,
         languageCodeTable,
+        exampleSentenceTableXTermTable,
       },
-    ).map((QueryRow row) => row.read<int>('id'));
+    ).map(
+      (QueryRow row) => SearchExampleBaseMatchesByTermIdsResult(
+        id: row.read<int>('id'),
+        groupId: row.read<int>('group_id'),
+        languageCode: row.read<String>('language_code'),
+        indexId: row.read<int>('index_id'),
+      ),
+    );
   }
 
-  Selectable<int> searchExampleIdsByTermString(
-    String termString,
+  Selectable<SearchExampleBaseMatchesByTermStringResult>
+  searchExampleBaseMatchesByTermString(
+    List<String> terms,
     List<String> languages,
     int limit,
     int offset,
   ) {
-    var $arrayStartIndex = 4;
+    var $arrayStartIndex = 3;
+    final expandedterms = $expandVar($arrayStartIndex, terms.length);
+    $arrayStartIndex += terms.length;
     final expandedlanguages = $expandVar($arrayStartIndex, languages.length);
     $arrayStartIndex += languages.length;
     return customSelect(
-      'SELECT DISTINCT e.id FROM term_table AS t INNER JOIN example_sentence_table_x_term_table AS st ON st.term_id = t.id INNER JOIN example_table AS e ON e.example_sentence_id = st.example_sentence_id INNER JOIN language_code_table AS l ON l.id = e.language_code_id WHERE t.term = ?1 AND l.language_code IN ($expandedlanguages) LIMIT ?2 OFFSET ?3',
+      'SELECT DISTINCT e.id, e.group_id, l.language_code, e.index_id FROM term_table AS t INNER JOIN example_sentence_table_x_term_table AS st ON st.term_id = t.id INNER JOIN example_table AS e ON e.example_sentence_id = st.example_sentence_id INNER JOIN language_code_table AS l ON l.id = e.language_code_id WHERE t.term IN ($expandedterms) AND l.language_code IN ($expandedlanguages) ORDER BY e.id ASC LIMIT ?1 OFFSET ?2',
       variables: [
-        Variable<String>(termString),
         Variable<int>(limit),
         Variable<int>(offset),
+        for (var $ in terms) Variable<String>($),
         for (var $ in languages) Variable<String>($),
       ],
       readsFrom: {
         exampleTable,
+        languageCodeTable,
         termTable,
         exampleSentenceTableXTermTable,
-        languageCodeTable,
       },
-    ).map((QueryRow row) => row.read<int>('id'));
+    ).map(
+      (QueryRow row) => SearchExampleBaseMatchesByTermStringResult(
+        id: row.read<int>('id'),
+        groupId: row.read<int>('group_id'),
+        languageCode: row.read<String>('language_code'),
+        indexId: row.read<int>('index_id'),
+      ),
+    );
+  }
+
+  Selectable<GetMissingGroupEntriesResult> getMissingGroupEntries(
+    String lookupPairs,
+    List<int> excludedIds,
+  ) {
+    var $arrayStartIndex = 2;
+    final expandedexcludedIds = $expandVar(
+      $arrayStartIndex,
+      excludedIds.length,
+    );
+    $arrayStartIndex += excludedIds.length;
+    return customSelect(
+      'WITH RequiredLookups (groupId, targetIndexId) AS (SELECT CAST(json_extract(value, \'\$.g\') AS INTEGER), CAST(json_extract(value, \'\$.i\') AS INTEGER) FROM json_each(?1)) SELECT e.id, e.group_id, e.index_id FROM RequiredLookups INNER JOIN example_table AS e ON e.group_id = RequiredLookups.groupId AND e.index_id = RequiredLookups.targetIndexId WHERE e.id NOT IN ($expandedexcludedIds)',
+      variables: [
+        Variable<String>(lookupPairs),
+        for (var $ in excludedIds) Variable<int>($),
+      ],
+      readsFrom: {exampleTable},
+    ).map(
+      (QueryRow row) => GetMissingGroupEntriesResult(
+        id: row.read<int>('id'),
+        groupId: row.read<int>('group_id'),
+        indexId: row.read<int>('index_id'),
+      ),
+    );
   }
 
   Selectable<ExampleEntryViewData> getExamplesByIds(List<int> ids) {
@@ -20670,7 +20731,7 @@ abstract class _$DaDb extends GeneratedDatabase {
     audioTableReadingIdIndex,
     audioTableMediaIdIndex,
     exampleSentenceTable,
-    ftsExampleTokens,
+    ftsExampleSentence,
     languageCodeTable,
     exampleTable,
     exampleSentenceTableXTermTable,
@@ -20693,6 +20754,8 @@ abstract class _$DaDb extends GeneratedDatabase {
     statDataNameValueIndex,
     exampleTableIndexIdIndex,
     exampleSentencesTableLanguageCodeIdIndex,
+    exampleSentencesTableGroupIdIndex,
+    exampleTableExampleSentenceIdIndex,
     kanjiVGTable,
     kanjiVGTableKanjiIdIndex,
     audioSourceListTable,
@@ -39491,20 +39554,20 @@ typedef $$ExampleSentenceTableTableProcessedTableManager =
         bool exampleSentenceTableXTermTableRefs,
       })
     >;
-typedef $FtsExampleTokensCreateCompanionBuilder =
-    FtsExampleTokensCompanion Function({
+typedef $FtsExampleSentenceCreateCompanionBuilder =
+    FtsExampleSentenceCompanion Function({
       Value<String?> exampleSentence,
       Value<int> rowid,
     });
-typedef $FtsExampleTokensUpdateCompanionBuilder =
-    FtsExampleTokensCompanion Function({
+typedef $FtsExampleSentenceUpdateCompanionBuilder =
+    FtsExampleSentenceCompanion Function({
       Value<String?> exampleSentence,
       Value<int> rowid,
     });
 
-class $FtsExampleTokensFilterComposer
-    extends Composer<_$DaDb, FtsExampleTokens> {
-  $FtsExampleTokensFilterComposer({
+class $FtsExampleSentenceFilterComposer
+    extends Composer<_$DaDb, FtsExampleSentence> {
+  $FtsExampleSentenceFilterComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -39517,9 +39580,9 @@ class $FtsExampleTokensFilterComposer
   );
 }
 
-class $FtsExampleTokensOrderingComposer
-    extends Composer<_$DaDb, FtsExampleTokens> {
-  $FtsExampleTokensOrderingComposer({
+class $FtsExampleSentenceOrderingComposer
+    extends Composer<_$DaDb, FtsExampleSentence> {
+  $FtsExampleSentenceOrderingComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -39532,9 +39595,9 @@ class $FtsExampleTokensOrderingComposer
   );
 }
 
-class $FtsExampleTokensAnnotationComposer
-    extends Composer<_$DaDb, FtsExampleTokens> {
-  $FtsExampleTokensAnnotationComposer({
+class $FtsExampleSentenceAnnotationComposer
+    extends Composer<_$DaDb, FtsExampleSentence> {
+  $FtsExampleSentenceAnnotationComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -39547,40 +39610,40 @@ class $FtsExampleTokensAnnotationComposer
   );
 }
 
-class $FtsExampleTokensTableManager
+class $FtsExampleSentenceTableManager
     extends
         RootTableManager<
           _$DaDb,
-          FtsExampleTokens,
-          FtsExampleToken,
-          $FtsExampleTokensFilterComposer,
-          $FtsExampleTokensOrderingComposer,
-          $FtsExampleTokensAnnotationComposer,
-          $FtsExampleTokensCreateCompanionBuilder,
-          $FtsExampleTokensUpdateCompanionBuilder,
+          FtsExampleSentence,
+          FtsExampleSentenceData,
+          $FtsExampleSentenceFilterComposer,
+          $FtsExampleSentenceOrderingComposer,
+          $FtsExampleSentenceAnnotationComposer,
+          $FtsExampleSentenceCreateCompanionBuilder,
+          $FtsExampleSentenceUpdateCompanionBuilder,
           (
-            FtsExampleToken,
-            BaseReferences<_$DaDb, FtsExampleTokens, FtsExampleToken>,
+            FtsExampleSentenceData,
+            BaseReferences<_$DaDb, FtsExampleSentence, FtsExampleSentenceData>,
           ),
-          FtsExampleToken,
+          FtsExampleSentenceData,
           PrefetchHooks Function()
         > {
-  $FtsExampleTokensTableManager(_$DaDb db, FtsExampleTokens table)
+  $FtsExampleSentenceTableManager(_$DaDb db, FtsExampleSentence table)
     : super(
         TableManagerState(
           db: db,
           table: table,
           createFilteringComposer: () =>
-              $FtsExampleTokensFilterComposer($db: db, $table: table),
+              $FtsExampleSentenceFilterComposer($db: db, $table: table),
           createOrderingComposer: () =>
-              $FtsExampleTokensOrderingComposer($db: db, $table: table),
+              $FtsExampleSentenceOrderingComposer($db: db, $table: table),
           createComputedFieldComposer: () =>
-              $FtsExampleTokensAnnotationComposer($db: db, $table: table),
+              $FtsExampleSentenceAnnotationComposer($db: db, $table: table),
           updateCompanionCallback:
               ({
                 Value<String?> exampleSentence = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
-              }) => FtsExampleTokensCompanion(
+              }) => FtsExampleSentenceCompanion(
                 exampleSentence: exampleSentence,
                 rowid: rowid,
               ),
@@ -39588,7 +39651,7 @@ class $FtsExampleTokensTableManager
               ({
                 Value<String?> exampleSentence = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
-              }) => FtsExampleTokensCompanion.insert(
+              }) => FtsExampleSentenceCompanion.insert(
                 exampleSentence: exampleSentence,
                 rowid: rowid,
               ),
@@ -39600,21 +39663,21 @@ class $FtsExampleTokensTableManager
       );
 }
 
-typedef $FtsExampleTokensProcessedTableManager =
+typedef $FtsExampleSentenceProcessedTableManager =
     ProcessedTableManager<
       _$DaDb,
-      FtsExampleTokens,
-      FtsExampleToken,
-      $FtsExampleTokensFilterComposer,
-      $FtsExampleTokensOrderingComposer,
-      $FtsExampleTokensAnnotationComposer,
-      $FtsExampleTokensCreateCompanionBuilder,
-      $FtsExampleTokensUpdateCompanionBuilder,
+      FtsExampleSentence,
+      FtsExampleSentenceData,
+      $FtsExampleSentenceFilterComposer,
+      $FtsExampleSentenceOrderingComposer,
+      $FtsExampleSentenceAnnotationComposer,
+      $FtsExampleSentenceCreateCompanionBuilder,
+      $FtsExampleSentenceUpdateCompanionBuilder,
       (
-        FtsExampleToken,
-        BaseReferences<_$DaDb, FtsExampleTokens, FtsExampleToken>,
+        FtsExampleSentenceData,
+        BaseReferences<_$DaDb, FtsExampleSentence, FtsExampleSentenceData>,
       ),
-      FtsExampleToken,
+      FtsExampleSentenceData,
       PrefetchHooks Function()
     >;
 typedef $$LanguageCodeTableTableCreateCompanionBuilder =
@@ -46417,8 +46480,8 @@ class $DaDbManager {
       $$AudioTable_X_TermTableTableTableManager(_db, _db.audioTableXTermTable);
   $$ExampleSentenceTableTableTableManager get exampleSentenceTable =>
       $$ExampleSentenceTableTableTableManager(_db, _db.exampleSentenceTable);
-  $FtsExampleTokensTableManager get ftsExampleTokens =>
-      $FtsExampleTokensTableManager(_db, _db.ftsExampleTokens);
+  $FtsExampleSentenceTableManager get ftsExampleSentence =>
+      $FtsExampleSentenceTableManager(_db, _db.ftsExampleSentence);
   $$LanguageCodeTableTableTableManager get languageCodeTable =>
       $$LanguageCodeTableTableTableManager(_db, _db.languageCodeTable);
   $$ExampleTableTableTableManager get exampleTable =>
@@ -46648,6 +46711,56 @@ class GetMbSizesDriftResult {
     required this.name,
     this.bytes,
     required this.megabytes,
+  });
+}
+
+class SearchExampleBaseMatchesResult {
+  final int id;
+  final int groupId;
+  final String languageCode;
+  final int indexId;
+  SearchExampleBaseMatchesResult({
+    required this.id,
+    required this.groupId,
+    required this.languageCode,
+    required this.indexId,
+  });
+}
+
+class SearchExampleBaseMatchesByTermIdsResult {
+  final int id;
+  final int groupId;
+  final String languageCode;
+  final int indexId;
+  SearchExampleBaseMatchesByTermIdsResult({
+    required this.id,
+    required this.groupId,
+    required this.languageCode,
+    required this.indexId,
+  });
+}
+
+class SearchExampleBaseMatchesByTermStringResult {
+  final int id;
+  final int groupId;
+  final String languageCode;
+  final int indexId;
+  SearchExampleBaseMatchesByTermStringResult({
+    required this.id,
+    required this.groupId,
+    required this.languageCode,
+    required this.indexId,
+  });
+}
+
+class GetMissingGroupEntriesResult {
+  final int id;
+  final int groupId;
+  final int indexId;
+  GetMissingGroupEntriesResult({
+    required this.id,
+    required this.groupId,
+    required this.indexId,
   });
 }
 
