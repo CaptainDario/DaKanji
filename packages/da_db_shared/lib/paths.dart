@@ -65,7 +65,7 @@ final dakanjiDbFinalPath = p.joinAll([outPath, "dakanji.db"]);
 final yomitanSampleDictionaryPath = p.joinAll([daDbDataFilesPath, "yomitan"]);
 
 /// Path to the folder that contains example sentences for development
-final devExampleSentencesPath = p.joinAll([daDbDataFilesPath, "example_sentences"]);
+final devExampleBanksPath = p.joinAll([daDbDataFilesPath, "example_banks"]);
 /// Path to the folder that contains example texts for development
 final devExampleTextsPath = p.joinAll([daDbDataFilesPath, "example_texts"]);
 

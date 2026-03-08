@@ -1,5 +1,6 @@
 import 'package:da_db/database/db_queries/kanji_dictionary_search/kanji_dictionary_search_result.dart';
 import 'package:da_db/database/example/example_entry.dart';
+import 'package:da_db/database/example/example_search_result.dart';
 import 'package:da_db/database/kanji/kanji_bank_v3_entry.dart';
 import 'package:da_db/database/kanji_meta/kanji_meta_bank_v3_entry.dart';
 import 'package:da_db/database/term/term_bank_v3_entry.dart';
@@ -113,5 +114,16 @@ ExampleEntry exampleEntryIgnoreDatabaseGeneratedData(ExampleEntry entry) {
     stats: entry.stats.map((s) => s.copyWith(
       id: 0,
     )).toList(),
+  );
+}
+
+ExampleSearchResult exampleSearchResultIgnoreDatabaseGeneratedData(ExampleSearchResult result) {
+  return ExampleSearchResult(
+    sourceEntries: result.sourceEntries
+      .map((entry) => exampleEntryIgnoreDatabaseGeneratedData(entry))
+      .toList(),
+    targetEntries: result.targetEntries
+      .map((entry) => exampleEntryIgnoreDatabaseGeneratedData(entry))
+      .toList(),
   );
 }

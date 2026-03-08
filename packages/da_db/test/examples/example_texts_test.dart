@@ -22,26 +22,23 @@ void main() {
       test('Query: ${exampleTextTestQueries[i].$1}', () async {
       
         Stopwatch s = Stopwatch()..start();
-        final queryTerm = exampleTextTestQueries[i].$1;
+        final queryTerms = exampleTextTestQueries[i].$1;
         
         final results = await db.exampleDao.searchExamples(
-          queryTerm, 
+          queryTerms.first, 
           exampleTextTestQueries[i].$2
         );
         
-        print("Looking up '$queryTerm' took ${s.elapsedMilliseconds}ms");
+        print("Looking up '${queryTerms.first}' took ${s.elapsedMilliseconds}ms");
 
-        // 1. Assert we found AT LEAST one result 
-        expect(results.isNotEmpty, true, reason: "DAO returned empty results for query $queryTerm");
+        expect(results, isNotNull, reason: "DAO returned null (syntax error) for query ${queryTerms.first}");
+        expect(results!.isNotEmpty, true, reason: "DAO returned empty results for query ${queryTerms.first}");
 
-        // 2. Safely grab ONLY the first result to avoid RangeErrors from duplicated file contents
         final result = results.first;
-        final expected = exampleTextTestExpectedValues[i].first; // Grab the single expected item
+        final expected = exampleTextTestExpectedValues[i].first; 
 
-        // 3. Strip out DB-generated IDs for a clean comparison
-        final resultForTesting = exampleEntryIgnoreDatabaseGeneratedData(result);
+        final resultForTesting = exampleSearchResultIgnoreDatabaseGeneratedData(result);
 
-        // 4. Compare the first result to our expected object
         if (resultForTesting != expected) {
           print("--- MISMATCH FOUND ---");
           print("EXPECTED: $expected");
