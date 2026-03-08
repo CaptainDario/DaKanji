@@ -1,8 +1,8 @@
+import 'package:da_db/data/grouping_rules.dart';
 import 'package:da_db/database/da_db.dart';
 import 'package:da_db/database/db_queries/dictionary_search/dictionary_match.dart';
 import 'package:da_db/database/db_queries/dictionary_search/dictionary_match_group.dart';
 import 'package:da_db/database/db_queries/dictionary_search/dictionary_search_match_type.dart';
-import 'package:da_db/database/db_queries/dictionary_search/grouping_rules.dart';
 import 'package:da_db/database/db_queries/kanji_dictionary_search/kanji_dictionary_search_result.dart';
 
 class DictionarySearchResult {

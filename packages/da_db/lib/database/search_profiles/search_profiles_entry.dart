@@ -1,7 +1,7 @@
+import 'package:da_db/data/grouping_rules.dart';
 import 'package:da_db/data/search_result_sort_order.dart';
 import 'package:da_db/database/da_db.dart';
 import 'package:da_db/database/db_queries/dictionary_search/dictionary_search_params.dart';
-import 'package:da_db/database/db_queries/dictionary_search/grouping_rules.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:language_processing/language_processing.dart';
 

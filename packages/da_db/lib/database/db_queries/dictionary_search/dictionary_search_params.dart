@@ -1,4 +1,4 @@
-import 'package:da_db/database/db_queries/dictionary_search/grouping_rules.dart';
+import 'package:da_db/data/grouping_rules.dart';
 import 'package:language_processing/language_processing.dart';
 
 class DictionarySearchParams {

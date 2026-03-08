@@ -1,5 +1,5 @@
 import 'package:da_db/data/frequency_mode.dart';
-import 'package:da_db/database/db_queries/dictionary_search/grouping_rules.dart';
+import 'package:da_db/data/grouping_rules.dart';
 import 'package:da_db/database/term_meta/term_meta_bank_entry.dart';
 
 

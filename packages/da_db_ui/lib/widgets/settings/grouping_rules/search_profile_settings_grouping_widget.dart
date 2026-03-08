@@ -1,5 +1,5 @@
+import 'package:da_db/data/grouping_rules.dart';
 import 'package:da_db/database/da_db.dart';
-import 'package:da_db/database/db_queries/dictionary_search/grouping_rules.dart';
 import 'package:da_db/database/search_profiles/search_profiles_entry.dart';
 import 'package:da_db_ui/model/da_db_localization.dart';
 import 'package:da_db_ui/widgets/settings/grouping_rules/search_profile_settings_grouping_rule_card.dart';
