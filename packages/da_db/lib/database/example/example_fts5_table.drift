@@ -1,7 +1,7 @@
 import 'example_tables.dart';
 
 -- Create the FTS5 virtual table
-CREATE VIRTUAL TABLE IF NOT EXISTS fts_example_tokens USING fts5(
+CREATE VIRTUAL TABLE IF NOT EXISTS fts_example_sentence USING fts5(
   example_sentence,
   content='example_sentence_table',
   content_rowid='id',

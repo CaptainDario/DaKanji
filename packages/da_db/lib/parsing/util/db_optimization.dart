@@ -11,7 +11,7 @@ Future optimizeDbAfterImport(GeneratedDatabase db) async {
   await db.customStatement("INSERT INTO fts_readings(fts_readings) VALUES('optimize')");
   await db.customStatement("INSERT INTO fts_definitions(fts_definitions) VALUES('optimize')");  
   await db.customStatement("INSERT INTO fts_tokens(fts_tokens) VALUES('optimize');");
-  await db.customStatement("INSERT INTO fts_example_tokens(fts_example_tokens) VALUES('optimize');");
+  await db.customStatement("INSERT INTO fts_example_sentence(fts_example_sentence) VALUES('optimize');");
 
   //  optimize statistics for query planner
   await db.customStatement('ANALYZE;');
@@ -78,7 +78,7 @@ Future optimizeDbAfterDelete(DaDb db) async {
   await db.customStatement("INSERT INTO fts_readings(fts_readings) VALUES('optimize');");
   await db.customStatement("INSERT INTO fts_definitions(fts_definitions) VALUES('optimize');");
   await db.customStatement("INSERT INTO fts_tokens(fts_tokens) VALUES('optimize');");
-  await db.customStatement("INSERT INTO fts_example_tokens(fts_example_tokens) VALUES('optimize');");
+  await db.customStatement("INSERT INTO fts_example_sentence(fts_example_sentence) VALUES('optimize');");
 
   // 2. Reclaim Space
   await db.customStatement("VACUUM;");

@@ -31,7 +31,7 @@ class ExampleMerger implements StagingMerger {
 
       // 3. FTS Tokens
       await targetDb.customStatement('''
-        INSERT INTO fts_example_tokens (rowid, example_sentence)
+        INSERT INTO fts_example_sentence (rowid, example_sentence)
           SELECT $maxSentenceId + local_id, example_sentence
           FROM $workerAlias.example_staging_table
           ORDER BY local_id
