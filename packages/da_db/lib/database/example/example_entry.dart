@@ -20,7 +20,7 @@ class ExampleEntry with _$ExampleEntry {
   @override
   final IndexEntry indexEntry;
   @override
-  final int groupId;
+  final int? groupId;
   @override
   final String languageCode;
   @override

@@ -14667,9 +14667,9 @@ class $ExampleTableTable extends ExampleTable
   late final GeneratedColumn<int> groupId = GeneratedColumn<int>(
     'group_id',
     aliasedName,
-    false,
+    true,
     type: DriftSqlType.int,
-    requiredDuringInsert: true,
+    requiredDuringInsert: false,
   );
   static const VerificationMeta _exampleSentenceIdMeta = const VerificationMeta(
     'exampleSentenceId',
@@ -14735,8 +14735,6 @@ class $ExampleTableTable extends ExampleTable
         _groupIdMeta,
         groupId.isAcceptableOrUnknown(data['group_id']!, _groupIdMeta),
       );
-    } else if (isInserting) {
-      context.missing(_groupIdMeta);
     }
     if (data.containsKey('example_sentence_id')) {
       context.handle(
@@ -14780,7 +14778,7 @@ class $ExampleTableTable extends ExampleTable
       groupId: attachedDatabase.typeMapping.read(
         DriftSqlType.int,
         data['${effectivePrefix}group_id'],
-      )!,
+      ),
       exampleSentenceId: attachedDatabase.typeMapping.read(
         DriftSqlType.int,
         data['${effectivePrefix}example_sentence_id'],
@@ -14808,7 +14806,7 @@ class ExampleTableData extends DataClass
 
   /// The id of the group this entry belongs to. Can be used to group example
   /// sentences of the same entry together
-  final int groupId;
+  final int? groupId;
   final int exampleSentenceId;
 
   /// The id of the language code (iso 639 2T) of this translation
@@ -14816,7 +14814,7 @@ class ExampleTableData extends DataClass
   const ExampleTableData({
     required this.id,
     required this.indexId,
-    required this.groupId,
+    this.groupId,
     required this.exampleSentenceId,
     required this.languageCodeId,
   });
@@ -14825,7 +14823,9 @@ class ExampleTableData extends DataClass
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
     map['index_id'] = Variable<int>(indexId);
-    map['group_id'] = Variable<int>(groupId);
+    if (!nullToAbsent || groupId != null) {
+      map['group_id'] = Variable<int>(groupId);
+    }
     map['example_sentence_id'] = Variable<int>(exampleSentenceId);
     map['language_code_id'] = Variable<int>(languageCodeId);
     return map;
@@ -14835,7 +14835,9 @@ class ExampleTableData extends DataClass
     return ExampleTableCompanion(
       id: Value(id),
       indexId: Value(indexId),
-      groupId: Value(groupId),
+      groupId: groupId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(groupId),
       exampleSentenceId: Value(exampleSentenceId),
       languageCodeId: Value(languageCodeId),
     );
@@ -14849,7 +14851,7 @@ class ExampleTableData extends DataClass
     return ExampleTableData(
       id: serializer.fromJson<int>(json['id']),
       indexId: serializer.fromJson<int>(json['indexId']),
-      groupId: serializer.fromJson<int>(json['groupId']),
+      groupId: serializer.fromJson<int?>(json['groupId']),
       exampleSentenceId: serializer.fromJson<int>(json['exampleSentenceId']),
       languageCodeId: serializer.fromJson<int>(json['languageCodeId']),
     );
@@ -14860,7 +14862,7 @@ class ExampleTableData extends DataClass
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
       'indexId': serializer.toJson<int>(indexId),
-      'groupId': serializer.toJson<int>(groupId),
+      'groupId': serializer.toJson<int?>(groupId),
       'exampleSentenceId': serializer.toJson<int>(exampleSentenceId),
       'languageCodeId': serializer.toJson<int>(languageCodeId),
     };
@@ -14869,13 +14871,13 @@ class ExampleTableData extends DataClass
   ExampleTableData copyWith({
     int? id,
     int? indexId,
-    int? groupId,
+    Value<int?> groupId = const Value.absent(),
     int? exampleSentenceId,
     int? languageCodeId,
   }) => ExampleTableData(
     id: id ?? this.id,
     indexId: indexId ?? this.indexId,
-    groupId: groupId ?? this.groupId,
+    groupId: groupId.present ? groupId.value : this.groupId,
     exampleSentenceId: exampleSentenceId ?? this.exampleSentenceId,
     languageCodeId: languageCodeId ?? this.languageCodeId,
   );
@@ -14922,7 +14924,7 @@ class ExampleTableData extends DataClass
 class ExampleTableCompanion extends UpdateCompanion<ExampleTableData> {
   final Value<int> id;
   final Value<int> indexId;
-  final Value<int> groupId;
+  final Value<int?> groupId;
   final Value<int> exampleSentenceId;
   final Value<int> languageCodeId;
   const ExampleTableCompanion({
@@ -14935,11 +14937,10 @@ class ExampleTableCompanion extends UpdateCompanion<ExampleTableData> {
   ExampleTableCompanion.insert({
     this.id = const Value.absent(),
     required int indexId,
-    required int groupId,
+    this.groupId = const Value.absent(),
     required int exampleSentenceId,
     required int languageCodeId,
   }) : indexId = Value(indexId),
-       groupId = Value(groupId),
        exampleSentenceId = Value(exampleSentenceId),
        languageCodeId = Value(languageCodeId);
   static Insertable<ExampleTableData> custom({
@@ -14961,7 +14962,7 @@ class ExampleTableCompanion extends UpdateCompanion<ExampleTableData> {
   ExampleTableCompanion copyWith({
     Value<int>? id,
     Value<int>? indexId,
-    Value<int>? groupId,
+    Value<int?>? groupId,
     Value<int>? exampleSentenceId,
     Value<int>? languageCodeId,
   }) {
@@ -17230,7 +17231,7 @@ class ExampleAudioTable_X_StatTableCompanion
 
 class ExampleEntryViewData extends DataClass {
   final int id;
-  final int groupId;
+  final int? groupId;
   final String index;
   final String exampleSentence;
   final String languageCode;
@@ -17239,7 +17240,7 @@ class ExampleEntryViewData extends DataClass {
   final String audiosJson;
   const ExampleEntryViewData({
     required this.id,
-    required this.groupId,
+    this.groupId,
     required this.index,
     required this.exampleSentence,
     required this.languageCode,
@@ -17254,7 +17255,7 @@ class ExampleEntryViewData extends DataClass {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return ExampleEntryViewData(
       id: serializer.fromJson<int>(json['id']),
-      groupId: serializer.fromJson<int>(json['group_id']),
+      groupId: serializer.fromJson<int?>(json['group_id']),
       index: serializer.fromJson<String>(json['index']),
       exampleSentence: serializer.fromJson<String>(json['example_sentence']),
       languageCode: serializer.fromJson<String>(json['language_code']),
@@ -17268,7 +17269,7 @@ class ExampleEntryViewData extends DataClass {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
-      'group_id': serializer.toJson<int>(groupId),
+      'group_id': serializer.toJson<int?>(groupId),
       'index': serializer.toJson<String>(index),
       'example_sentence': serializer.toJson<String>(exampleSentence),
       'language_code': serializer.toJson<String>(languageCode),
@@ -17280,7 +17281,7 @@ class ExampleEntryViewData extends DataClass {
 
   ExampleEntryViewData copyWith({
     int? id,
-    int? groupId,
+    Value<int?> groupId = const Value.absent(),
     String? index,
     String? exampleSentence,
     String? languageCode,
@@ -17289,7 +17290,7 @@ class ExampleEntryViewData extends DataClass {
     String? audiosJson,
   }) => ExampleEntryViewData(
     id: id ?? this.id,
-    groupId: groupId ?? this.groupId,
+    groupId: groupId.present ? groupId.value : this.groupId,
     index: index ?? this.index,
     exampleSentence: exampleSentence ?? this.exampleSentence,
     languageCode: languageCode ?? this.languageCode,
@@ -17376,7 +17377,7 @@ class ExampleEntryView extends ViewInfo<ExampleEntryView, ExampleEntryViewData>
       groupId: attachedDatabase.typeMapping.read(
         DriftSqlType.int,
         data['${effectivePrefix}group_id'],
-      )!,
+      ),
       index: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}index'],
@@ -17413,7 +17414,7 @@ class ExampleEntryView extends ViewInfo<ExampleEntryView, ExampleEntryViewData>
   late final GeneratedColumn<int> groupId = GeneratedColumn<int>(
     'group_id',
     aliasedName,
-    false,
+    true,
     type: DriftSqlType.int,
   );
   late final GeneratedColumn<String> index = GeneratedColumn<String>(
@@ -20778,7 +20779,7 @@ abstract class _$DaDb extends GeneratedDatabase {
     ).map(
       (QueryRow row) => SearchExampleBaseMatchesResult(
         id: row.read<int>('id'),
-        groupId: row.read<int>('group_id'),
+        groupId: row.readNullable<int>('group_id'),
         languageCode: row.read<String>('language_code'),
         indexId: row.read<int>('index_id'),
       ),
@@ -20807,7 +20808,7 @@ abstract class _$DaDb extends GeneratedDatabase {
     ).map(
       (QueryRow row) => SearchExampleBaseMatchesByTokensResult(
         id: row.read<int>('id'),
-        groupId: row.read<int>('group_id'),
+        groupId: row.readNullable<int>('group_id'),
         languageCode: row.read<String>('language_code'),
         indexId: row.read<int>('index_id'),
       ),
@@ -20834,7 +20835,7 @@ abstract class _$DaDb extends GeneratedDatabase {
     ).map(
       (QueryRow row) => GetMissingGroupEntriesResult(
         id: row.read<int>('id'),
-        groupId: row.read<int>('group_id'),
+        groupId: row.readNullable<int>('group_id'),
         indexId: row.read<int>('index_id'),
       ),
     );
@@ -40204,7 +40205,7 @@ typedef $$ExampleTableTableCreateCompanionBuilder =
     ExampleTableCompanion Function({
       Value<int> id,
       required int indexId,
-      required int groupId,
+      Value<int?> groupId,
       required int exampleSentenceId,
       required int languageCodeId,
     });
@@ -40212,7 +40213,7 @@ typedef $$ExampleTableTableUpdateCompanionBuilder =
     ExampleTableCompanion Function({
       Value<int> id,
       Value<int> indexId,
-      Value<int> groupId,
+      Value<int?> groupId,
       Value<int> exampleSentenceId,
       Value<int> languageCodeId,
     });
@@ -40840,7 +40841,7 @@ class $$ExampleTableTableTableManager
               ({
                 Value<int> id = const Value.absent(),
                 Value<int> indexId = const Value.absent(),
-                Value<int> groupId = const Value.absent(),
+                Value<int?> groupId = const Value.absent(),
                 Value<int> exampleSentenceId = const Value.absent(),
                 Value<int> languageCodeId = const Value.absent(),
               }) => ExampleTableCompanion(
@@ -40854,7 +40855,7 @@ class $$ExampleTableTableTableManager
               ({
                 Value<int> id = const Value.absent(),
                 required int indexId,
-                required int groupId,
+                Value<int?> groupId = const Value.absent(),
                 required int exampleSentenceId,
                 required int languageCodeId,
               }) => ExampleTableCompanion.insert(
@@ -47133,12 +47134,12 @@ class GetMbSizesDriftResult {
 
 class SearchExampleBaseMatchesResult {
   final int id;
-  final int groupId;
+  final int? groupId;
   final String languageCode;
   final int indexId;
   SearchExampleBaseMatchesResult({
     required this.id,
-    required this.groupId,
+    this.groupId,
     required this.languageCode,
     required this.indexId,
   });
@@ -47146,12 +47147,12 @@ class SearchExampleBaseMatchesResult {
 
 class SearchExampleBaseMatchesByTokensResult {
   final int id;
-  final int groupId;
+  final int? groupId;
   final String languageCode;
   final int indexId;
   SearchExampleBaseMatchesByTokensResult({
     required this.id,
-    required this.groupId,
+    this.groupId,
     required this.languageCode,
     required this.indexId,
   });
@@ -47159,11 +47160,11 @@ class SearchExampleBaseMatchesByTokensResult {
 
 class GetMissingGroupEntriesResult {
   final int id;
-  final int groupId;
+  final int? groupId;
   final int indexId;
   GetMissingGroupEntriesResult({
     required this.id,
-    required this.groupId,
+    this.groupId,
     required this.indexId,
   });
 }

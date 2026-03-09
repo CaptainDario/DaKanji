@@ -11,8 +11,8 @@
       "type": "object",
       "properties": {
         "groupId": {
-          "type": "integer",
-          "description": "Numeric ID matchable across dictionaries to group sentences (e.g., a sentence and its translation)."
+          "type": ["integer", "null"],
+          "description": "Numeric ID matchable across dictionaries to group sentences. Can be null if the sentence has no group."
         },
         "sentence": {
           "type": "string",

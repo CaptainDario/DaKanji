@@ -37,7 +37,7 @@ class ExampleTextParser implements DbFileParser {
 
     // Extract file-level metadata 
     final langIsoCode = fileMetadata['langIso3Code'] as String? ?? 'jpn';
-    final groupId = fileMetadata['groupId'] as int? ?? 0;
+    final groupId = fileMetadata['groupId'];
     
     final tags = (fileMetadata['tags'] as List<dynamic>?)?.cast<String>() ?? [];
     final stats = (fileMetadata['stats'] as List<dynamic>?)?.cast<Map<String, dynamic>>() ?? [];

@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import "package:collection/collection.dart";
 import "package:da_db/data/grouping_rules.dart";
 import "package:drift/drift.dart";
 import 'package:language_processing/language_processing.dart';
@@ -12,8 +11,6 @@ import "../da_db.dart";
 
 part 'example_dao.g.dart';
 
-// Type alias for our standardized base match record to keep signatures clean
-typedef _BaseMatchRecord = ({int id, int groupId, int indexId});
 
 @DriftAccessor(
   tables: [
@@ -97,14 +94,22 @@ class ExampleDao extends DatabaseAccessor<DaDb> with _$ExampleDaoMixin {
     }
   }
 
+  /// Orchestrates the multi-phase lookup to resolve base FTS matches into 
+  /// fully hydrated and grouped domain objects.
   Future<List<ExampleSearchResult>> _processBaseMatches(
-    List<_BaseMatchRecord> baseMatches,
+    List<({int id, int? groupId, int indexId})> baseMatches,
     Set<SequenceGroupingRule> groupingRules,
   ) async {
+    if (baseMatches.isEmpty) return const [];
+
+    // Phase 2: Group Expansion
+    // Delegate payload generation to the domain model
+    final lookupPairs = ExampleSearchResult.buildLookupPayload(
+      baseMatches, 
+      groupingRules,
+    );
     
-    // Phase 2: Targeted Sibling Expansion
-    final lookupPairs = _buildLookupPairs(baseMatches, groupingRules);
-    final missingEntries = <_BaseMatchRecord>[];
+    final missingEntries = <({int id, int? groupId, int indexId})>[];
 
     if (lookupPairs.isNotEmpty) {
       final pairsJson = jsonEncode(lookupPairs);
@@ -112,9 +117,9 @@ class ExampleDao extends DatabaseAccessor<DaDb> with _$ExampleDaoMixin {
       
       final rawMissing = await db.getMissingGroupEntries(pairsJson, excludedIds).get();
       
-      missingEntries.addAll(rawMissing.map((m) => 
-        (id: m.id, groupId: m.groupId, indexId: m.indexId)
-      ));
+      missingEntries.addAll(
+        rawMissing.map((m) => (id: m.id, groupId: m.groupId, indexId: m.indexId))
+      );
     }
 
     // Phase 3: Rich Data Hydration
@@ -126,7 +131,7 @@ class ExampleDao extends DatabaseAccessor<DaDb> with _$ExampleDaoMixin {
     final viewRows = await db.getExamplesByIds(allIdsToFetch).get();
     final hydratedEntries = viewRows.map((row) => ExampleEntry.fromViewData(row)).toList();
 
-    // Delegate Assembly
+    // Delegate Final Assembly
     return ExampleSearchResult.fromRawData(
       baseMatches: baseMatches,
       missingEntries: missingEntries,
@@ -134,31 +139,6 @@ class ExampleDao extends DatabaseAccessor<DaDb> with _$ExampleDaoMixin {
       groupingRules: groupingRules,
     );
   }
-
-  /// Helper method to extract the JSON payload needed for Phase 2
-  List<Map<String, int>> _buildLookupPairs(
-    List<_BaseMatchRecord> baseMatches, 
-    Set<SequenceGroupingRule> groupingRules
-  ) {
-    final pairs = <Map<String, int>>[];
-    final seen = <String>{}; 
-    
-    for (final match in baseMatches) {
-      final rule = groupingRules.firstWhereOrNull((r) => r.sourceDictId == match.indexId);
-      if (rule != null) {
-        for (final targetId in rule.targetDictIds) {
-          final key = '${match.groupId}_$targetId';
-          
-          // Only add the lookup pair if we haven't already requested it
-          if (seen.add(key)) {
-            pairs.add({"g": match.groupId, "i": targetId});
-          }
-        }
-      }
-    }
-    return pairs;
-  }
-
   // ---------------------------------------------------------------------------
   /// Get the maximum id of the [ExampleTable]
   Future<int> maxExampleId() async {

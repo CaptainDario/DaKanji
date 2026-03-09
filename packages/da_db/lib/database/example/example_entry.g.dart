@@ -9,7 +9,7 @@ part of 'example_entry.dart';
 ExampleEntry _$ExampleEntryFromJson(Map<String, dynamic> json) => ExampleEntry(
   id: (json['id'] as num).toInt(),
   indexEntry: IndexEntry.fromJson(json['indexEntry'] as Map<String, dynamic>),
-  groupId: (json['groupId'] as num).toInt(),
+  groupId: (json['groupId'] as num?)?.toInt(),
   languageCode: json['languageCode'] as String,
   sentence: json['sentence'] as String,
   tags:

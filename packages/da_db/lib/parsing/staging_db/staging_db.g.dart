@@ -6438,9 +6438,9 @@ class $ExampleStagingTableTable extends ExampleStagingTable
   late final GeneratedColumn<int> groupId = GeneratedColumn<int>(
     'group_id',
     aliasedName,
-    false,
+    true,
     type: DriftSqlType.int,
-    requiredDuringInsert: true,
+    requiredDuringInsert: false,
   );
   static const VerificationMeta _languageCodeMeta = const VerificationMeta(
     'languageCode',
@@ -6506,8 +6506,6 @@ class $ExampleStagingTableTable extends ExampleStagingTable
         _groupIdMeta,
         groupId.isAcceptableOrUnknown(data['group_id']!, _groupIdMeta),
       );
-    } else if (isInserting) {
-      context.missing(_groupIdMeta);
     }
     if (data.containsKey('language_code')) {
       context.handle(
@@ -6559,7 +6557,7 @@ class $ExampleStagingTableTable extends ExampleStagingTable
       groupId: attachedDatabase.typeMapping.read(
         DriftSqlType.int,
         data['${effectivePrefix}group_id'],
-      )!,
+      ),
       languageCode: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}language_code'],
@@ -6585,13 +6583,13 @@ class ExampleStagingTableData extends DataClass
     implements Insertable<ExampleStagingTableData> {
   /// The local staging ID used to link tags, stats, and terms
   final int localId;
-  final int groupId;
+  final int? groupId;
   final String languageCode;
   final String exampleSentence;
   final String? exampleSentenceTokenized;
   const ExampleStagingTableData({
     required this.localId,
-    required this.groupId,
+    this.groupId,
     required this.languageCode,
     required this.exampleSentence,
     this.exampleSentenceTokenized,
@@ -6600,7 +6598,9 @@ class ExampleStagingTableData extends DataClass
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['local_id'] = Variable<int>(localId);
-    map['group_id'] = Variable<int>(groupId);
+    if (!nullToAbsent || groupId != null) {
+      map['group_id'] = Variable<int>(groupId);
+    }
     map['language_code'] = Variable<String>(languageCode);
     map['example_sentence'] = Variable<String>(exampleSentence);
     if (!nullToAbsent || exampleSentenceTokenized != null) {
@@ -6614,7 +6614,9 @@ class ExampleStagingTableData extends DataClass
   ExampleStagingTableCompanion toCompanion(bool nullToAbsent) {
     return ExampleStagingTableCompanion(
       localId: Value(localId),
-      groupId: Value(groupId),
+      groupId: groupId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(groupId),
       languageCode: Value(languageCode),
       exampleSentence: Value(exampleSentence),
       exampleSentenceTokenized: exampleSentenceTokenized == null && nullToAbsent
@@ -6630,7 +6632,7 @@ class ExampleStagingTableData extends DataClass
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return ExampleStagingTableData(
       localId: serializer.fromJson<int>(json['localId']),
-      groupId: serializer.fromJson<int>(json['groupId']),
+      groupId: serializer.fromJson<int?>(json['groupId']),
       languageCode: serializer.fromJson<String>(json['languageCode']),
       exampleSentence: serializer.fromJson<String>(json['exampleSentence']),
       exampleSentenceTokenized: serializer.fromJson<String?>(
@@ -6643,7 +6645,7 @@ class ExampleStagingTableData extends DataClass
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
       'localId': serializer.toJson<int>(localId),
-      'groupId': serializer.toJson<int>(groupId),
+      'groupId': serializer.toJson<int?>(groupId),
       'languageCode': serializer.toJson<String>(languageCode),
       'exampleSentence': serializer.toJson<String>(exampleSentence),
       'exampleSentenceTokenized': serializer.toJson<String?>(
@@ -6654,13 +6656,13 @@ class ExampleStagingTableData extends DataClass
 
   ExampleStagingTableData copyWith({
     int? localId,
-    int? groupId,
+    Value<int?> groupId = const Value.absent(),
     String? languageCode,
     String? exampleSentence,
     Value<String?> exampleSentenceTokenized = const Value.absent(),
   }) => ExampleStagingTableData(
     localId: localId ?? this.localId,
-    groupId: groupId ?? this.groupId,
+    groupId: groupId.present ? groupId.value : this.groupId,
     languageCode: languageCode ?? this.languageCode,
     exampleSentence: exampleSentence ?? this.exampleSentence,
     exampleSentenceTokenized: exampleSentenceTokenized.present
@@ -6717,7 +6719,7 @@ class ExampleStagingTableData extends DataClass
 class ExampleStagingTableCompanion
     extends UpdateCompanion<ExampleStagingTableData> {
   final Value<int> localId;
-  final Value<int> groupId;
+  final Value<int?> groupId;
   final Value<String> languageCode;
   final Value<String> exampleSentence;
   final Value<String?> exampleSentenceTokenized;
@@ -6730,12 +6732,11 @@ class ExampleStagingTableCompanion
   });
   ExampleStagingTableCompanion.insert({
     this.localId = const Value.absent(),
-    required int groupId,
+    this.groupId = const Value.absent(),
     required String languageCode,
     required String exampleSentence,
     this.exampleSentenceTokenized = const Value.absent(),
-  }) : groupId = Value(groupId),
-       languageCode = Value(languageCode),
+  }) : languageCode = Value(languageCode),
        exampleSentence = Value(exampleSentence);
   static Insertable<ExampleStagingTableData> custom({
     Expression<int>? localId,
@@ -6756,7 +6757,7 @@ class ExampleStagingTableCompanion
 
   ExampleStagingTableCompanion copyWith({
     Value<int>? localId,
-    Value<int>? groupId,
+    Value<int?>? groupId,
     Value<String>? languageCode,
     Value<String>? exampleSentence,
     Value<String?>? exampleSentenceTokenized,
@@ -12142,7 +12143,7 @@ typedef $$MediaStagingTableTableProcessedTableManager =
 typedef $$ExampleStagingTableTableCreateCompanionBuilder =
     ExampleStagingTableCompanion Function({
       Value<int> localId,
-      required int groupId,
+      Value<int?> groupId,
       required String languageCode,
       required String exampleSentence,
       Value<String?> exampleSentenceTokenized,
@@ -12150,7 +12151,7 @@ typedef $$ExampleStagingTableTableCreateCompanionBuilder =
 typedef $$ExampleStagingTableTableUpdateCompanionBuilder =
     ExampleStagingTableCompanion Function({
       Value<int> localId,
-      Value<int> groupId,
+      Value<int?> groupId,
       Value<String> languageCode,
       Value<String> exampleSentence,
       Value<String?> exampleSentenceTokenized,
@@ -12301,7 +12302,7 @@ class $$ExampleStagingTableTableTableManager
           updateCompanionCallback:
               ({
                 Value<int> localId = const Value.absent(),
-                Value<int> groupId = const Value.absent(),
+                Value<int?> groupId = const Value.absent(),
                 Value<String> languageCode = const Value.absent(),
                 Value<String> exampleSentence = const Value.absent(),
                 Value<String?> exampleSentenceTokenized = const Value.absent(),
@@ -12315,7 +12316,7 @@ class $$ExampleStagingTableTableTableManager
           createCompanionCallback:
               ({
                 Value<int> localId = const Value.absent(),
-                required int groupId,
+                Value<int?> groupId = const Value.absent(),
                 required String languageCode,
                 required String exampleSentence,
                 Value<String?> exampleSentenceTokenized = const Value.absent(),

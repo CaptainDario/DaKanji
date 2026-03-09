@@ -23,7 +23,7 @@ class ExampleTable extends Table {
 
   /// The id of the group this entry belongs to. Can be used to group example
   /// sentences of the same entry together
-  IntColumn get groupId => integer()();
+  IntColumn get groupId => integer().nullable()();
 
   IntColumn get exampleSentenceId => integer()
     .references(ExampleSentenceTable, #id)();

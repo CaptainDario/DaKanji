@@ -6,7 +6,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'example_search_result.freezed.dart';
 
 @freezed
-class ExampleSearchResult with _$ExampleSearchResult{
+class ExampleSearchResult with _$ExampleSearchResult {
 
   @override
   final List<ExampleEntry> sourceEntries;
@@ -18,22 +18,64 @@ class ExampleSearchResult with _$ExampleSearchResult{
     required this.targetEntries,
   });
 
+  /// Generates the JSON payload required to query missing sibling entries.
+  /// 
+  /// Sentences with an explicitly `null` groupId are treated as standalone entries 
+  /// and are excluded from group expansion lookups. 
+  static List<Map<String, int>> buildLookupPayload(
+    List<({int id, int? groupId, int indexId})> baseMatches,
+    Set<SequenceGroupingRule> groupingRules,
+  ) {
+    if (groupingRules.isEmpty) return [];
+
+    final pairs = <Map<String, int>>[];
+    final seen = <String>{};
+
+    for (final match in baseMatches) {
+      // Standalone sentences (null) have no siblings to look up.
+      if (match.groupId == null) continue;
+
+      final rule = groupingRules.firstWhereOrNull(
+        (r) => r.sourceDictId == match.indexId,
+      );
+
+      if (rule == null) continue;
+
+      for (final targetId in rule.targetDictIds) {
+        final key = '${match.groupId}_$targetId';
+
+        if (seen.add(key)) {
+          pairs.add({"g": match.groupId!, "i": targetId});
+        }
+      }
+    }
+
+    return pairs;
+  }
+
   /// Factory method to assemble raw database results into grouped objects.
+  /// 
+  /// Groups entries based on `groupId` and `indexId`. Entries with a `null` 
+  /// `groupId` bypass grouping logic and are yielded as standalone results.
   static List<ExampleSearchResult> fromRawData({
-    required List<({int id, int groupId, int indexId})> baseMatches,
-    required List<({int id, int groupId, int indexId})> missingEntries,
+    required List<({int id, int? groupId, int indexId})> baseMatches,
+    required List<({int id, int? groupId, int indexId})> missingEntries,
     required List<ExampleEntry> hydratedEntries,
     required Set<SequenceGroupingRule> groupingRules,
   }) {
+    if (baseMatches.isEmpty) return [];
+
     // 1. Map hydrated rows by ID for O(1) access
     final hydratedMap = {
       for (final entry in hydratedEntries) entry.id: entry
     };
 
     // 2. Map missing entries by their groupId for fast lookup
-    final missingGroupMap = <int, List<({int id, int groupId, int indexId})>>{};
+    final missingGroupMap = <int, List<({int id, int? groupId, int indexId})>>{};
     for (final entry in missingEntries) {
-      missingGroupMap.putIfAbsent(entry.groupId, () => []).add(entry);
+      if (entry.groupId != null) {
+        missingGroupMap.putIfAbsent(entry.groupId!, () => []).add(entry);
+      }
     }
 
     final results = <ExampleSearchResult>[];
@@ -43,17 +85,32 @@ class ExampleSearchResult with _$ExampleSearchResult{
 
     // 3. Assemble the groups preserving the original Phase 1 order (e.g., BM25)
     for (final match in baseMatches) {
+      
+      // ISOLATION: Explicitly null groupIds are standalone sentences.
+      // Do not attempt to bundle them with other entries.
+      if (match.groupId == null) {
+        final hydratedEntry = hydratedMap[match.id];
+        if (hydratedEntry != null) {
+          results.add(ExampleSearchResult(
+            sourceEntries: [hydratedEntry],
+            targetEntries: [], // Standalone entries have no linked targets
+          ));
+        }
+        continue; // Skip the grouping logic below
+      }
+
+      // --- Standard Grouping Logic for valid Group IDs ---
       final groupKey = '${match.groupId}_${match.indexId}';
 
       // Skip if we already bundled this group
-      if (processedGroups.contains(groupKey)) continue;
-      processedGroups.add(groupKey);
+      if (!processedGroups.add(groupKey)) continue;
 
       // Find all base matches that share this groupId and dictionary
       final matchingBaseEntries = baseMatches
           .where((m) => m.groupId == match.groupId && m.indexId == match.indexId)
           .map((m) => hydratedMap[m.id])
-          .nonNulls.toList();
+          .nonNulls
+          .toList();
 
       if (matchingBaseEntries.isEmpty) continue; // Safeguard
 
@@ -63,7 +120,7 @@ class ExampleSearchResult with _$ExampleSearchResult{
 
       final targetEntries = <ExampleEntry>[];
 
-      // If a rule applies, attach the missing entries we found
+      // If a rule applies, attach the missing sibling entries we found
       if (rule != null) {
         final groupMissingEntries = missingGroupMap[match.groupId] ?? [];
         

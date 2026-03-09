@@ -63,7 +63,7 @@ class _$ExampleSearchResultCopyWithImpl<$Res>
 /// Create a copy of ExampleSearchResult
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? sourceEntries = null,Object? targetEntries = null,}) {
-  return _then(ExampleSearchResult(
+  return _then(_self.copyWith(
 sourceEntries: null == sourceEntries ? _self.sourceEntries : sourceEntries // ignore: cast_nullable_to_non_nullable
 as List<ExampleEntry>,targetEntries: null == targetEntries ? _self.targetEntries : targetEntries // ignore: cast_nullable_to_non_nullable
 as List<ExampleEntry>,
@@ -87,10 +87,11 @@ extension ExampleSearchResultPatterns on ExampleSearchResult {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _ExampleSearchResult value)?  $default,{required TResult orElse(),}){
 final _that = this;
 switch (_that) {
-case _:
+case _ExampleSearchResult() when $default != null:
+return $default(_that);case _:
   return orElse();
 
 }
@@ -108,10 +109,11 @@ case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>(){
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _ExampleSearchResult value)  $default,){
 final _that = this;
 switch (_that) {
-case _:
+case _ExampleSearchResult():
+return $default(_that);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -128,10 +130,11 @@ case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _ExampleSearchResult value)?  $default,){
 final _that = this;
 switch (_that) {
-case _:
+case _ExampleSearchResult() when $default != null:
+return $default(_that);case _:
   return null;
 
 }
@@ -148,9 +151,10 @@ case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( List<ExampleEntry> sourceEntries,  List<ExampleEntry> targetEntries)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
-case _:
+case _ExampleSearchResult() when $default != null:
+return $default(_that.sourceEntries,_that.targetEntries);case _:
   return orElse();
 
 }
@@ -168,9 +172,10 @@ case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>() {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( List<ExampleEntry> sourceEntries,  List<ExampleEntry> targetEntries)  $default,) {final _that = this;
 switch (_that) {
-case _:
+case _ExampleSearchResult():
+return $default(_that.sourceEntries,_that.targetEntries);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -187,13 +192,94 @@ case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>() {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( List<ExampleEntry> sourceEntries,  List<ExampleEntry> targetEntries)?  $default,) {final _that = this;
 switch (_that) {
-case _:
+case _ExampleSearchResult() when $default != null:
+return $default(_that.sourceEntries,_that.targetEntries);case _:
   return null;
 
 }
 }
+
+}
+
+/// @nodoc
+
+
+class _ExampleSearchResult implements ExampleSearchResult {
+  const _ExampleSearchResult({required final  List<ExampleEntry> sourceEntries, required final  List<ExampleEntry> targetEntries}): _sourceEntries = sourceEntries,_targetEntries = targetEntries;
+  
+
+ final  List<ExampleEntry> _sourceEntries;
+@override List<ExampleEntry> get sourceEntries {
+  if (_sourceEntries is EqualUnmodifiableListView) return _sourceEntries;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_sourceEntries);
+}
+
+ final  List<ExampleEntry> _targetEntries;
+@override List<ExampleEntry> get targetEntries {
+  if (_targetEntries is EqualUnmodifiableListView) return _targetEntries;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_targetEntries);
+}
+
+
+/// Create a copy of ExampleSearchResult
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$ExampleSearchResultCopyWith<_ExampleSearchResult> get copyWith => __$ExampleSearchResultCopyWithImpl<_ExampleSearchResult>(this, _$identity);
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ExampleSearchResult&&const DeepCollectionEquality().equals(other._sourceEntries, _sourceEntries)&&const DeepCollectionEquality().equals(other._targetEntries, _targetEntries));
+}
+
+
+@override
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_sourceEntries),const DeepCollectionEquality().hash(_targetEntries));
+
+@override
+String toString() {
+  return 'ExampleSearchResult(sourceEntries: $sourceEntries, targetEntries: $targetEntries)';
+}
+
+
+}
+
+/// @nodoc
+abstract mixin class _$ExampleSearchResultCopyWith<$Res> implements $ExampleSearchResultCopyWith<$Res> {
+  factory _$ExampleSearchResultCopyWith(_ExampleSearchResult value, $Res Function(_ExampleSearchResult) _then) = __$ExampleSearchResultCopyWithImpl;
+@override @useResult
+$Res call({
+ List<ExampleEntry> sourceEntries, List<ExampleEntry> targetEntries
+});
+
+
+
+
+}
+/// @nodoc
+class __$ExampleSearchResultCopyWithImpl<$Res>
+    implements _$ExampleSearchResultCopyWith<$Res> {
+  __$ExampleSearchResultCopyWithImpl(this._self, this._then);
+
+  final _ExampleSearchResult _self;
+  final $Res Function(_ExampleSearchResult) _then;
+
+/// Create a copy of ExampleSearchResult
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? sourceEntries = null,Object? targetEntries = null,}) {
+  return _then(_ExampleSearchResult(
+sourceEntries: null == sourceEntries ? _self._sourceEntries : sourceEntries // ignore: cast_nullable_to_non_nullable
+as List<ExampleEntry>,targetEntries: null == targetEntries ? _self._targetEntries : targetEntries // ignore: cast_nullable_to_non_nullable
+as List<ExampleEntry>,
+  ));
+}
+
 
 }
 
