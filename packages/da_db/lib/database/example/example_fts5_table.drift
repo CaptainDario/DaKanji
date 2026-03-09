@@ -5,6 +5,12 @@ CREATE VIRTUAL TABLE IF NOT EXISTS fts_example_sentence USING fts5(
   example_sentence,
   content='example_sentence_table',
   content_rowid='id',
-  tokenize='better_trigram',
-  prefix='2 3'
+  tokenize='better_trigram'
+);
+
+CREATE VIRTUAL TABLE IF NOT EXISTS fts_example_sentence_tokenized USING fts5(
+  example_sentence_tokenized,
+  content='example_sentence_table',
+  content_rowid='id',
+  tokenize='unicode61'
 );

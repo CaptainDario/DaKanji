@@ -29,7 +29,6 @@ class ExampleBankParser implements DbFileParser {
     var exampleRows = <List<Object?>>[];
     var tagRows = <List<Object?>>[];
     var statRows = <List<Object?>>[];
-    var termRows = <List<Object?>>[];
     var audioRows = <List<Object?>>[];
     var audioTagRows = <List<Object?>>[];
     var audioStatRows = <List<Object?>>[];
@@ -48,23 +47,18 @@ class ExampleBankParser implements DbFileParser {
       final langIsoCode = entry['langIso3Code']!;
 
       // apply the language processor if the language matches
-      Set<String>? uniqueTerms;
+      String? exampleTokenized;
       if(langIsoCode == lp.languageCode.name) {
         // 1. Analyze sentence with the Language Processor to extract tokens
         final parseResult = lp.parse(sentence, ProcessorOptions());
 
         // 2. Terms 
-        uniqueTerms = parseResult.tokens
-          .where((t) => t != null && t.trim().isNotEmpty)
-          .nonNulls.toSet();
-      }
-          
-      for (final term in uniqueTerms ?? {}) {
-        termRows.add([exampleLocalId, term]);
+        exampleTokenized = parseResult.tokens.join(" ");
+        print(exampleTokenized);
       }
 
       // Add 5 columns to the main table
-      exampleRows.add([exampleLocalId, groupId, langIsoCode, sentence]);
+      exampleRows.add([exampleLocalId, groupId, langIsoCode, sentence, exampleTokenized]);
 
       // Tags
       final tags = (entry['tags'] as List<dynamic>?)?.cast<String>() ?? [];
@@ -113,14 +107,14 @@ class ExampleBankParser implements DbFileParser {
       }
 
       if (exampleRows.length >= batchSize) {
-        await _flush(db, exampleRows, tagRows, statRows, termRows, audioRows, audioTagRows, audioStatRows);
+        await _flush(db, exampleRows, tagRows, statRows, audioRows, audioTagRows, audioStatRows);
         exampleRows.clear(); tagRows.clear(); statRows.clear(); 
-        termRows.clear(); audioRows.clear(); audioTagRows.clear(); audioStatRows.clear();
+        audioRows.clear(); audioTagRows.clear(); audioStatRows.clear();
       }
     }
 
     if (exampleRows.isNotEmpty) {
-      await _flush(db, exampleRows, tagRows, statRows, termRows, audioRows, audioTagRows, audioStatRows);
+      await _flush(db, exampleRows, tagRows, statRows, audioRows, audioTagRows, audioStatRows);
     }
     
     return exampleLocalId;
@@ -131,7 +125,6 @@ class ExampleBankParser implements DbFileParser {
     List<List<Object?>> exampleRows,
     List<List<Object?>> tagRows,
     List<List<Object?>> statRows,
-    List<List<Object?>> termRows,
     List<List<Object?>> audioRows,
     List<List<Object?>> audioTagRows,
     List<List<Object?>> audioStatRows,
@@ -140,7 +133,7 @@ class ExampleBankParser implements DbFileParser {
 
     await db.transaction(() async {
       if (exampleRows.isNotEmpty) {
-        final sql = 'INSERT INTO ${db.exampleStagingTable.actualTableName} (local_id, group_id, language_code, example_sentence) VALUES ${List.filled(exampleRows.length, placeholders(4)).join(', ')}';
+        final sql = 'INSERT INTO ${db.exampleStagingTable.actualTableName} (local_id, group_id, language_code, example_sentence, example_sentence_tokenized) VALUES ${List.filled(exampleRows.length, placeholders(5)).join(', ')}';
         await db.customStatement(sql, exampleRows.expand((i) => i).toList());
       }
       if (tagRows.isNotEmpty) {
@@ -150,10 +143,6 @@ class ExampleBankParser implements DbFileParser {
       if (statRows.isNotEmpty) {
         final sql = 'INSERT INTO ${db.exampleStatStagingTable.actualTableName} (example_local_id, stat_name, display_name, stat_value, display_value) VALUES ${List.filled(statRows.length, placeholders(5)).join(', ')}';
         await db.customStatement(sql, statRows.expand((i) => i).toList());
-      }
-      if (termRows.isNotEmpty) {
-        final sql = 'INSERT INTO ${db.exampleTermStagingTable.actualTableName} (example_local_id, term) VALUES ${List.filled(termRows.length, placeholders(2)).join(', ')}';
-        await db.customStatement(sql, termRows.expand((i) => i).toList());
       }
       if (audioRows.isNotEmpty) {
         final sql = 'INSERT INTO ${db.exampleAudioStagingTable.actualTableName} (local_id, example_local_id, path, name) VALUES ${List.filled(audioRows.length, placeholders(4)).join(', ')}';

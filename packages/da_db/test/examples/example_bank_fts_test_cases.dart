@@ -132,7 +132,7 @@ final List<List<ExampleSearchResult>?> exampleSentenceTestExpectedValues = [
   [
     ExampleSearchResult(
       sourceEntries: [ExampleEntry(
-        id: 0, indexEntry: dummyIndex, groupId: 100,
+        id: 0, indexEntry: dummyIndex, groupId: 102,
         sentence: "「apple」を食べます", 
         languageCode: "jpn",
         tags: [], stats: [], audios: [],

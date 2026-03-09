@@ -26,9 +26,9 @@ class ExampleDao extends DatabaseAccessor<DaDb> with _$ExampleDaoMixin {
   
   ExampleDao(super.db);
 
-  /// Uses the raw FTS5 query syntax to search the example database,
-  /// returning a list of [ExampleSearchResult] objects if successful,
-  /// or null if the query was invalid.
+  /// Uses the raw FTS5 query syntax to search the exact surface forms of the examples
+  /// (Using the better-trigram index). 
+  /// Returns a list of [ExampleSearchResult] objects if successful, or null on invalid query.
   Future<List<ExampleSearchResult>?> searchExamples(
     String rawFts5Query,
     List<Iso639_3> languages,
@@ -41,67 +41,60 @@ class ExampleDao extends DatabaseAccessor<DaDb> with _$ExampleDaoMixin {
     if (rawFts5Query.trim().isEmpty) return [];
 
     final langCodes = languages.map((l) => l.name).toList();
-    List<SearchExampleBaseMatchesResult> rawMatches;
-
+    
+    // Note: Drift auto-generates the class SearchExampleBaseMatchesResult
     try {
-      rawMatches = await db.searchExampleBaseMatches(
+      final rawMatches = await db.searchExampleBaseMatches(
         rawFts5Query, langCodes, limit, offset
       ).get();
+
+      if (rawMatches.isEmpty) return [];
+
+      final baseMatches = rawMatches.map((m) => 
+        (id: m.id, groupId: m.groupId, indexId: m.indexId)
+      ).toList();
+
+      return _processBaseMatches(baseMatches, groupingRules);
     } catch (e) {
-      return null;
+      // Catch syntax errors from malformed FTS queries
+      return null; 
     }
-
-    if (rawMatches.isEmpty) return [];
-
-    final baseMatches = rawMatches.map((m) => 
-      (id: m.id, groupId: m.groupId, indexId: m.indexId)
-    ).toList();
-
-    return _processBaseMatches(baseMatches, groupingRules);
   }
 
-  Future<List<ExampleSearchResult>> searchExamplesByTermIds(
-    List<int> termIds,
+  /// Searches the lemmatized (base form) FTS index using unicode61.
+  /// Replaces both `searchExamplesByTermIds` and `searchExamplesByTermString`.
+  Future<List<ExampleSearchResult>> searchExamplesByTokens(
+    List<String> lemmas,
     List<Iso639_3> languages, {
     Set<SequenceGroupingRule> groupingRules = const {},
+    bool requireAllTokens = false,
     int limit = 50,
     int offset = 0,
   }) async {
+    if (lemmas.isEmpty) return [];
+
     final langCodes = languages.map((l) => l.name).toList();
     
-    final rawMatches = await db.searchExampleBaseMatchesByTermIds(
-      termIds, langCodes, limit, offset
-    ).get();
+    // Construct the FTS5 query string from the list of lemmas.
+    final operator = requireAllTokens ? ' ' : ' OR ';
+    final ftsTokenQuery = lemmas.map((l) => '"${l.replaceAll('"', '""')}"').join(operator);
     
-    if (rawMatches.isEmpty) return [];
+    try {
+      final rawMatches = await db.searchExampleBaseMatchesByTokens(
+        ftsTokenQuery, langCodes, limit, offset
+      ).get();
+      
+      if (rawMatches.isEmpty) return [];
 
-    final baseMatches = rawMatches.map((m) => 
-      (id: m.id, groupId: m.groupId, indexId: m.indexId)
-    ).toList();
+      final baseMatches = rawMatches.map((m) => 
+        (id: m.id, groupId: m.groupId, indexId: m.indexId)
+      ).toList();
 
-    return _processBaseMatches(baseMatches, groupingRules);
-  }
-
-  Future<List<ExampleSearchResult>> searchExamplesByTermString(
-    List<String> terms,
-    List<Iso639_3> languages, {
-    Set<SequenceGroupingRule> groupingRules = const {},
-    int limit = 50,
-    int offset = 0,
-  }) async {
-    final langCodes = languages.map((l) => l.name).toList();
-    
-    final rawMatches = await db.searchExampleBaseMatchesByTermString(
-      terms, langCodes, limit, offset
-    ).get();
-    
-    if (rawMatches.isEmpty) return [];
-
-    final baseMatches = rawMatches.map((m) => 
-      (id: m.id, groupId: m.groupId, indexId: m.indexId)
-    ).toList();
-
-    return _processBaseMatches(baseMatches, groupingRules);
+      return _processBaseMatches(baseMatches, groupingRules);
+    } catch (e) {
+      print('FTS Token Search Error: $e');
+      return [];
+    }
   }
 
   Future<List<ExampleSearchResult>> _processBaseMatches(

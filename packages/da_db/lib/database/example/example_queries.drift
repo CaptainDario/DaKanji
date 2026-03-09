@@ -6,10 +6,9 @@ import '/database/example/example_views.drift';
 
 ----------------------------------------------------------------------
 -- PHASE 1: Base Match Discovery
--- Now returning group_id and language_code so Dart can apply rules
 ----------------------------------------------------------------------
 
--- Fast FTS 5 Search
+-- 1. Fast FTS 5 Search (Exact Surface Form via better-trigram, for full text search)
 searchExampleBaseMatches:
     SELECT 
         e.id, 
@@ -24,35 +23,19 @@ searchExampleBaseMatches:
     ORDER BY bm25(fts_example_sentence)
     LIMIT :limit OFFSET :offset;
 
--- Fast Token (Term ID) Search
-searchExampleBaseMatchesByTermIds:
-    SELECT DISTINCT 
+-- 2. Fast Token/Lemma Search (Base Form via unicode61, for searching via tokens)
+searchExampleBaseMatchesByTokens:
+    SELECT 
         e.id, 
         e.group_id, 
         l.language_code,
         e.index_id
-    FROM example_sentence_table_x_term_table AS st
-        INNER JOIN example_table AS e ON e.example_sentence_id = st.example_sentence_id
+    FROM fts_example_sentence_tokenized AS fts
+        INNER JOIN example_table AS e ON e.example_sentence_id = fts.rowid
         INNER JOIN language_code_table AS l ON l.id = e.language_code_id
-    WHERE st.term_id IN :termIds
+    WHERE fts_example_sentence_tokenized MATCH :lemmas
         AND l.language_code IN :languages
-    ORDER BY e.id ASC
-    LIMIT :limit OFFSET :offset;
-
--- Fast Token (Term String) Search
-searchExampleBaseMatchesByTermString:
-    SELECT DISTINCT 
-        e.id, 
-        e.group_id, 
-        l.language_code,
-        e.index_id
-    FROM term_table AS t
-        INNER JOIN example_sentence_table_x_term_table AS st ON st.term_id = t.id
-        INNER JOIN example_table AS e ON e.example_sentence_id = st.example_sentence_id
-        INNER JOIN language_code_table AS l ON l.id = e.language_code_id
-    WHERE t.term IN :terms
-        AND l.language_code IN :languages
-    ORDER BY e.id ASC
+    ORDER BY bm25(fts_example_sentence_tokenized)
     LIMIT :limit OFFSET :offset;
 
 
@@ -60,7 +43,6 @@ searchExampleBaseMatchesByTermString:
 -- PHASE 2: Targeted Sibling Expansion
 ----------------------------------------------------------------------
 
--- Fetches missing group entries based on JSON pairs: [{"g": 123, "l": "eng"}, ...]
 getMissingGroupEntries:
     WITH
         RequiredLookups(groupId, targetIndexId) AS (
@@ -84,7 +66,6 @@ getMissingGroupEntries:
 -- PHASE 3: Rich Data Hydration
 ----------------------------------------------------------------------
 
--- Hydrates all collected IDs at once
 getExamplesByIds:
     SELECT * FROM example_entry_view 
     WHERE id IN :ids;

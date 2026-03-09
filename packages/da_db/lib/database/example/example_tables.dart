@@ -42,6 +42,9 @@ class ExampleSentenceTable extends Table {
   /// the example of this entry
   TextColumn get exampleSentence => text()();
 
+  /// `exampleSentence` tokenized for looking up term -> example
+  TextColumn get exampleSentenceTokenized => text().nullable()();
+
 }
 
 /// Contains the audio data for example sentences

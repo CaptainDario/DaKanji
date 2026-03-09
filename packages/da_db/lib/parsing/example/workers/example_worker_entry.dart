@@ -103,7 +103,6 @@ Future<void> exampleWorkerEntry(SendPort mainSendPort) async {
 
 Future<void> preIndex(StagingDatabase db) async {
   await db.customStatement('CREATE INDEX IF NOT EXISTS idx_stg_ex_lang ON ${db.exampleStagingTable.actualTableName}(language_code)');
-  await db.customStatement('CREATE INDEX IF NOT EXISTS idx_stg_ex_term ON ${db.exampleTermStagingTable.actualTableName}(term)');
   await db.customStatement('CREATE INDEX IF NOT EXISTS idx_stg_ex_tag ON ${db.exampleTagStagingTable.actualTableName}(tag_name)');
   await db.customStatement('CREATE INDEX IF NOT EXISTS idx_stg_exa_tag ON ${db.exampleAudioTagStagingTable.actualTableName}(tag_name)');
   

@@ -11,6 +11,7 @@ class ExampleStagingTable extends Table {
 
   // --- Data mapped to ExampleSentenceTable & FTS ---
   TextColumn get exampleSentence => text()();
+  TextColumn get exampleSentenceTokenized => text().nullable()();
 }
 
 /// Staging table for tags attached to the example
@@ -28,14 +29,6 @@ class ExampleStatStagingTable extends Table {
   TextColumn get displayName => text().nullable()();
   RealColumn get statValue => real().nullable()(); // Nullable for pure text stats!
   TextColumn get displayValue => text().nullable()();
-}
-
-/// Staging table for the dictionary words present in the sentence.
-/// This maps directly to ExampleSentenceTable_X_TermTable for reverse-lookups.
-class ExampleTermStagingTable extends Table {
-  IntColumn get exampleLocalId => integer()();
-  /// The base dictionary term (e.g., "食べる") to resolve against TermTable
-  TextColumn get term => text()(); 
 }
 
 /// Staging table for audio files associated with the example

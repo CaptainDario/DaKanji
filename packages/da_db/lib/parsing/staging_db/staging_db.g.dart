@@ -6464,12 +6464,24 @@ class $ExampleStagingTableTable extends ExampleStagingTable
     type: DriftSqlType.string,
     requiredDuringInsert: true,
   );
+  static const VerificationMeta _exampleSentenceTokenizedMeta =
+      const VerificationMeta('exampleSentenceTokenized');
+  @override
+  late final GeneratedColumn<String> exampleSentenceTokenized =
+      GeneratedColumn<String>(
+        'example_sentence_tokenized',
+        aliasedName,
+        true,
+        type: DriftSqlType.string,
+        requiredDuringInsert: false,
+      );
   @override
   List<GeneratedColumn> get $columns => [
     localId,
     groupId,
     languageCode,
     exampleSentence,
+    exampleSentenceTokenized,
   ];
   @override
   String get aliasedName => _alias ?? actualTableName;
@@ -6519,6 +6531,15 @@ class $ExampleStagingTableTable extends ExampleStagingTable
     } else if (isInserting) {
       context.missing(_exampleSentenceMeta);
     }
+    if (data.containsKey('example_sentence_tokenized')) {
+      context.handle(
+        _exampleSentenceTokenizedMeta,
+        exampleSentenceTokenized.isAcceptableOrUnknown(
+          data['example_sentence_tokenized']!,
+          _exampleSentenceTokenizedMeta,
+        ),
+      );
+    }
     return context;
   }
 
@@ -6547,6 +6568,10 @@ class $ExampleStagingTableTable extends ExampleStagingTable
         DriftSqlType.string,
         data['${effectivePrefix}example_sentence'],
       )!,
+      exampleSentenceTokenized: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}example_sentence_tokenized'],
+      ),
     );
   }
 
@@ -6563,11 +6588,13 @@ class ExampleStagingTableData extends DataClass
   final int groupId;
   final String languageCode;
   final String exampleSentence;
+  final String? exampleSentenceTokenized;
   const ExampleStagingTableData({
     required this.localId,
     required this.groupId,
     required this.languageCode,
     required this.exampleSentence,
+    this.exampleSentenceTokenized,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
@@ -6576,6 +6603,11 @@ class ExampleStagingTableData extends DataClass
     map['group_id'] = Variable<int>(groupId);
     map['language_code'] = Variable<String>(languageCode);
     map['example_sentence'] = Variable<String>(exampleSentence);
+    if (!nullToAbsent || exampleSentenceTokenized != null) {
+      map['example_sentence_tokenized'] = Variable<String>(
+        exampleSentenceTokenized,
+      );
+    }
     return map;
   }
 
@@ -6585,6 +6617,9 @@ class ExampleStagingTableData extends DataClass
       groupId: Value(groupId),
       languageCode: Value(languageCode),
       exampleSentence: Value(exampleSentence),
+      exampleSentenceTokenized: exampleSentenceTokenized == null && nullToAbsent
+          ? const Value.absent()
+          : Value(exampleSentenceTokenized),
     );
   }
 
@@ -6598,6 +6633,9 @@ class ExampleStagingTableData extends DataClass
       groupId: serializer.fromJson<int>(json['groupId']),
       languageCode: serializer.fromJson<String>(json['languageCode']),
       exampleSentence: serializer.fromJson<String>(json['exampleSentence']),
+      exampleSentenceTokenized: serializer.fromJson<String?>(
+        json['exampleSentenceTokenized'],
+      ),
     );
   }
   @override
@@ -6608,6 +6646,9 @@ class ExampleStagingTableData extends DataClass
       'groupId': serializer.toJson<int>(groupId),
       'languageCode': serializer.toJson<String>(languageCode),
       'exampleSentence': serializer.toJson<String>(exampleSentence),
+      'exampleSentenceTokenized': serializer.toJson<String?>(
+        exampleSentenceTokenized,
+      ),
     };
   }
 
@@ -6616,11 +6657,15 @@ class ExampleStagingTableData extends DataClass
     int? groupId,
     String? languageCode,
     String? exampleSentence,
+    Value<String?> exampleSentenceTokenized = const Value.absent(),
   }) => ExampleStagingTableData(
     localId: localId ?? this.localId,
     groupId: groupId ?? this.groupId,
     languageCode: languageCode ?? this.languageCode,
     exampleSentence: exampleSentence ?? this.exampleSentence,
+    exampleSentenceTokenized: exampleSentenceTokenized.present
+        ? exampleSentenceTokenized.value
+        : this.exampleSentenceTokenized,
   );
   ExampleStagingTableData copyWithCompanion(ExampleStagingTableCompanion data) {
     return ExampleStagingTableData(
@@ -6632,6 +6677,9 @@ class ExampleStagingTableData extends DataClass
       exampleSentence: data.exampleSentence.present
           ? data.exampleSentence.value
           : this.exampleSentence,
+      exampleSentenceTokenized: data.exampleSentenceTokenized.present
+          ? data.exampleSentenceTokenized.value
+          : this.exampleSentenceTokenized,
     );
   }
 
@@ -6641,14 +6689,20 @@ class ExampleStagingTableData extends DataClass
           ..write('localId: $localId, ')
           ..write('groupId: $groupId, ')
           ..write('languageCode: $languageCode, ')
-          ..write('exampleSentence: $exampleSentence')
+          ..write('exampleSentence: $exampleSentence, ')
+          ..write('exampleSentenceTokenized: $exampleSentenceTokenized')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode =>
-      Object.hash(localId, groupId, languageCode, exampleSentence);
+  int get hashCode => Object.hash(
+    localId,
+    groupId,
+    languageCode,
+    exampleSentence,
+    exampleSentenceTokenized,
+  );
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -6656,7 +6710,8 @@ class ExampleStagingTableData extends DataClass
           other.localId == this.localId &&
           other.groupId == this.groupId &&
           other.languageCode == this.languageCode &&
-          other.exampleSentence == this.exampleSentence);
+          other.exampleSentence == this.exampleSentence &&
+          other.exampleSentenceTokenized == this.exampleSentenceTokenized);
 }
 
 class ExampleStagingTableCompanion
@@ -6665,17 +6720,20 @@ class ExampleStagingTableCompanion
   final Value<int> groupId;
   final Value<String> languageCode;
   final Value<String> exampleSentence;
+  final Value<String?> exampleSentenceTokenized;
   const ExampleStagingTableCompanion({
     this.localId = const Value.absent(),
     this.groupId = const Value.absent(),
     this.languageCode = const Value.absent(),
     this.exampleSentence = const Value.absent(),
+    this.exampleSentenceTokenized = const Value.absent(),
   });
   ExampleStagingTableCompanion.insert({
     this.localId = const Value.absent(),
     required int groupId,
     required String languageCode,
     required String exampleSentence,
+    this.exampleSentenceTokenized = const Value.absent(),
   }) : groupId = Value(groupId),
        languageCode = Value(languageCode),
        exampleSentence = Value(exampleSentence);
@@ -6684,12 +6742,15 @@ class ExampleStagingTableCompanion
     Expression<int>? groupId,
     Expression<String>? languageCode,
     Expression<String>? exampleSentence,
+    Expression<String>? exampleSentenceTokenized,
   }) {
     return RawValuesInsertable({
       if (localId != null) 'local_id': localId,
       if (groupId != null) 'group_id': groupId,
       if (languageCode != null) 'language_code': languageCode,
       if (exampleSentence != null) 'example_sentence': exampleSentence,
+      if (exampleSentenceTokenized != null)
+        'example_sentence_tokenized': exampleSentenceTokenized,
     });
   }
 
@@ -6698,12 +6759,15 @@ class ExampleStagingTableCompanion
     Value<int>? groupId,
     Value<String>? languageCode,
     Value<String>? exampleSentence,
+    Value<String?>? exampleSentenceTokenized,
   }) {
     return ExampleStagingTableCompanion(
       localId: localId ?? this.localId,
       groupId: groupId ?? this.groupId,
       languageCode: languageCode ?? this.languageCode,
       exampleSentence: exampleSentence ?? this.exampleSentence,
+      exampleSentenceTokenized:
+          exampleSentenceTokenized ?? this.exampleSentenceTokenized,
     );
   }
 
@@ -6722,6 +6786,11 @@ class ExampleStagingTableCompanion
     if (exampleSentence.present) {
       map['example_sentence'] = Variable<String>(exampleSentence.value);
     }
+    if (exampleSentenceTokenized.present) {
+      map['example_sentence_tokenized'] = Variable<String>(
+        exampleSentenceTokenized.value,
+      );
+    }
     return map;
   }
 
@@ -6731,7 +6800,8 @@ class ExampleStagingTableCompanion
           ..write('localId: $localId, ')
           ..write('groupId: $groupId, ')
           ..write('languageCode: $languageCode, ')
-          ..write('exampleSentence: $exampleSentence')
+          ..write('exampleSentence: $exampleSentence, ')
+          ..write('exampleSentenceTokenized: $exampleSentenceTokenized')
           ..write(')'))
         .toString();
   }
@@ -7362,239 +7432,6 @@ class ExampleStatStagingTableCompanion
           ..write('displayName: $displayName, ')
           ..write('statValue: $statValue, ')
           ..write('displayValue: $displayValue, ')
-          ..write('rowid: $rowid')
-          ..write(')'))
-        .toString();
-  }
-}
-
-class $ExampleTermStagingTableTable extends ExampleTermStagingTable
-    with TableInfo<$ExampleTermStagingTableTable, ExampleTermStagingTableData> {
-  @override
-  final GeneratedDatabase attachedDatabase;
-  final String? _alias;
-  $ExampleTermStagingTableTable(this.attachedDatabase, [this._alias]);
-  static const VerificationMeta _exampleLocalIdMeta = const VerificationMeta(
-    'exampleLocalId',
-  );
-  @override
-  late final GeneratedColumn<int> exampleLocalId = GeneratedColumn<int>(
-    'example_local_id',
-    aliasedName,
-    false,
-    type: DriftSqlType.int,
-    requiredDuringInsert: true,
-  );
-  static const VerificationMeta _termMeta = const VerificationMeta('term');
-  @override
-  late final GeneratedColumn<String> term = GeneratedColumn<String>(
-    'term',
-    aliasedName,
-    false,
-    type: DriftSqlType.string,
-    requiredDuringInsert: true,
-  );
-  @override
-  List<GeneratedColumn> get $columns => [exampleLocalId, term];
-  @override
-  String get aliasedName => _alias ?? actualTableName;
-  @override
-  String get actualTableName => $name;
-  static const String $name = 'example_term_staging_table';
-  @override
-  VerificationContext validateIntegrity(
-    Insertable<ExampleTermStagingTableData> instance, {
-    bool isInserting = false,
-  }) {
-    final context = VerificationContext();
-    final data = instance.toColumns(true);
-    if (data.containsKey('example_local_id')) {
-      context.handle(
-        _exampleLocalIdMeta,
-        exampleLocalId.isAcceptableOrUnknown(
-          data['example_local_id']!,
-          _exampleLocalIdMeta,
-        ),
-      );
-    } else if (isInserting) {
-      context.missing(_exampleLocalIdMeta);
-    }
-    if (data.containsKey('term')) {
-      context.handle(
-        _termMeta,
-        term.isAcceptableOrUnknown(data['term']!, _termMeta),
-      );
-    } else if (isInserting) {
-      context.missing(_termMeta);
-    }
-    return context;
-  }
-
-  @override
-  Set<GeneratedColumn> get $primaryKey => const {};
-  @override
-  ExampleTermStagingTableData map(
-    Map<String, dynamic> data, {
-    String? tablePrefix,
-  }) {
-    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return ExampleTermStagingTableData(
-      exampleLocalId: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}example_local_id'],
-      )!,
-      term: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}term'],
-      )!,
-    );
-  }
-
-  @override
-  $ExampleTermStagingTableTable createAlias(String alias) {
-    return $ExampleTermStagingTableTable(attachedDatabase, alias);
-  }
-}
-
-class ExampleTermStagingTableData extends DataClass
-    implements Insertable<ExampleTermStagingTableData> {
-  final int exampleLocalId;
-
-  /// The base dictionary term (e.g., "食べる") to resolve against TermTable
-  final String term;
-  const ExampleTermStagingTableData({
-    required this.exampleLocalId,
-    required this.term,
-  });
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    map['example_local_id'] = Variable<int>(exampleLocalId);
-    map['term'] = Variable<String>(term);
-    return map;
-  }
-
-  ExampleTermStagingTableCompanion toCompanion(bool nullToAbsent) {
-    return ExampleTermStagingTableCompanion(
-      exampleLocalId: Value(exampleLocalId),
-      term: Value(term),
-    );
-  }
-
-  factory ExampleTermStagingTableData.fromJson(
-    Map<String, dynamic> json, {
-    ValueSerializer? serializer,
-  }) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return ExampleTermStagingTableData(
-      exampleLocalId: serializer.fromJson<int>(json['exampleLocalId']),
-      term: serializer.fromJson<String>(json['term']),
-    );
-  }
-  @override
-  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return <String, dynamic>{
-      'exampleLocalId': serializer.toJson<int>(exampleLocalId),
-      'term': serializer.toJson<String>(term),
-    };
-  }
-
-  ExampleTermStagingTableData copyWith({int? exampleLocalId, String? term}) =>
-      ExampleTermStagingTableData(
-        exampleLocalId: exampleLocalId ?? this.exampleLocalId,
-        term: term ?? this.term,
-      );
-  ExampleTermStagingTableData copyWithCompanion(
-    ExampleTermStagingTableCompanion data,
-  ) {
-    return ExampleTermStagingTableData(
-      exampleLocalId: data.exampleLocalId.present
-          ? data.exampleLocalId.value
-          : this.exampleLocalId,
-      term: data.term.present ? data.term.value : this.term,
-    );
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('ExampleTermStagingTableData(')
-          ..write('exampleLocalId: $exampleLocalId, ')
-          ..write('term: $term')
-          ..write(')'))
-        .toString();
-  }
-
-  @override
-  int get hashCode => Object.hash(exampleLocalId, term);
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      (other is ExampleTermStagingTableData &&
-          other.exampleLocalId == this.exampleLocalId &&
-          other.term == this.term);
-}
-
-class ExampleTermStagingTableCompanion
-    extends UpdateCompanion<ExampleTermStagingTableData> {
-  final Value<int> exampleLocalId;
-  final Value<String> term;
-  final Value<int> rowid;
-  const ExampleTermStagingTableCompanion({
-    this.exampleLocalId = const Value.absent(),
-    this.term = const Value.absent(),
-    this.rowid = const Value.absent(),
-  });
-  ExampleTermStagingTableCompanion.insert({
-    required int exampleLocalId,
-    required String term,
-    this.rowid = const Value.absent(),
-  }) : exampleLocalId = Value(exampleLocalId),
-       term = Value(term);
-  static Insertable<ExampleTermStagingTableData> custom({
-    Expression<int>? exampleLocalId,
-    Expression<String>? term,
-    Expression<int>? rowid,
-  }) {
-    return RawValuesInsertable({
-      if (exampleLocalId != null) 'example_local_id': exampleLocalId,
-      if (term != null) 'term': term,
-      if (rowid != null) 'rowid': rowid,
-    });
-  }
-
-  ExampleTermStagingTableCompanion copyWith({
-    Value<int>? exampleLocalId,
-    Value<String>? term,
-    Value<int>? rowid,
-  }) {
-    return ExampleTermStagingTableCompanion(
-      exampleLocalId: exampleLocalId ?? this.exampleLocalId,
-      term: term ?? this.term,
-      rowid: rowid ?? this.rowid,
-    );
-  }
-
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    if (exampleLocalId.present) {
-      map['example_local_id'] = Variable<int>(exampleLocalId.value);
-    }
-    if (term.present) {
-      map['term'] = Variable<String>(term.value);
-    }
-    if (rowid.present) {
-      map['rowid'] = Variable<int>(rowid.value);
-    }
-    return map;
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('ExampleTermStagingTableCompanion(')
-          ..write('exampleLocalId: $exampleLocalId, ')
-          ..write('term: $term, ')
           ..write('rowid: $rowid')
           ..write(')'))
         .toString();
@@ -8600,8 +8437,6 @@ abstract class _$StagingDatabase extends GeneratedDatabase {
       $ExampleTagStagingTableTable(this);
   late final $ExampleStatStagingTableTable exampleStatStagingTable =
       $ExampleStatStagingTableTable(this);
-  late final $ExampleTermStagingTableTable exampleTermStagingTable =
-      $ExampleTermStagingTableTable(this);
   late final $ExampleAudioStagingTableTable exampleAudioStagingTable =
       $ExampleAudioStagingTableTable(this);
   late final $ExampleAudioTagStagingTableTable exampleAudioTagStagingTable =
@@ -8633,7 +8468,6 @@ abstract class _$StagingDatabase extends GeneratedDatabase {
     exampleStagingTable,
     exampleTagStagingTable,
     exampleStatStagingTable,
-    exampleTermStagingTable,
     exampleAudioStagingTable,
     exampleAudioTagStagingTable,
     exampleAudioStatStagingTable,
@@ -12311,6 +12145,7 @@ typedef $$ExampleStagingTableTableCreateCompanionBuilder =
       required int groupId,
       required String languageCode,
       required String exampleSentence,
+      Value<String?> exampleSentenceTokenized,
     });
 typedef $$ExampleStagingTableTableUpdateCompanionBuilder =
     ExampleStagingTableCompanion Function({
@@ -12318,6 +12153,7 @@ typedef $$ExampleStagingTableTableUpdateCompanionBuilder =
       Value<int> groupId,
       Value<String> languageCode,
       Value<String> exampleSentence,
+      Value<String?> exampleSentenceTokenized,
     });
 
 class $$ExampleStagingTableTableFilterComposer
@@ -12346,6 +12182,11 @@ class $$ExampleStagingTableTableFilterComposer
 
   ColumnFilters<String> get exampleSentence => $composableBuilder(
     column: $table.exampleSentence,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get exampleSentenceTokenized => $composableBuilder(
+    column: $table.exampleSentenceTokenized,
     builder: (column) => ColumnFilters(column),
   );
 }
@@ -12378,6 +12219,11 @@ class $$ExampleStagingTableTableOrderingComposer
     column: $table.exampleSentence,
     builder: (column) => ColumnOrderings(column),
   );
+
+  ColumnOrderings<String> get exampleSentenceTokenized => $composableBuilder(
+    column: $table.exampleSentenceTokenized,
+    builder: (column) => ColumnOrderings(column),
+  );
 }
 
 class $$ExampleStagingTableTableAnnotationComposer
@@ -12402,6 +12248,11 @@ class $$ExampleStagingTableTableAnnotationComposer
 
   GeneratedColumn<String> get exampleSentence => $composableBuilder(
     column: $table.exampleSentence,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get exampleSentenceTokenized => $composableBuilder(
+    column: $table.exampleSentenceTokenized,
     builder: (column) => column,
   );
 }
@@ -12453,11 +12304,13 @@ class $$ExampleStagingTableTableTableManager
                 Value<int> groupId = const Value.absent(),
                 Value<String> languageCode = const Value.absent(),
                 Value<String> exampleSentence = const Value.absent(),
+                Value<String?> exampleSentenceTokenized = const Value.absent(),
               }) => ExampleStagingTableCompanion(
                 localId: localId,
                 groupId: groupId,
                 languageCode: languageCode,
                 exampleSentence: exampleSentence,
+                exampleSentenceTokenized: exampleSentenceTokenized,
               ),
           createCompanionCallback:
               ({
@@ -12465,11 +12318,13 @@ class $$ExampleStagingTableTableTableManager
                 required int groupId,
                 required String languageCode,
                 required String exampleSentence,
+                Value<String?> exampleSentenceTokenized = const Value.absent(),
               }) => ExampleStagingTableCompanion.insert(
                 localId: localId,
                 groupId: groupId,
                 languageCode: languageCode,
                 exampleSentence: exampleSentence,
+                exampleSentenceTokenized: exampleSentenceTokenized,
               ),
           withReferenceMapper: (p0) => p0
               .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
@@ -12887,170 +12742,6 @@ typedef $$ExampleStatStagingTableTableProcessedTableManager =
         >,
       ),
       ExampleStatStagingTableData,
-      PrefetchHooks Function()
-    >;
-typedef $$ExampleTermStagingTableTableCreateCompanionBuilder =
-    ExampleTermStagingTableCompanion Function({
-      required int exampleLocalId,
-      required String term,
-      Value<int> rowid,
-    });
-typedef $$ExampleTermStagingTableTableUpdateCompanionBuilder =
-    ExampleTermStagingTableCompanion Function({
-      Value<int> exampleLocalId,
-      Value<String> term,
-      Value<int> rowid,
-    });
-
-class $$ExampleTermStagingTableTableFilterComposer
-    extends Composer<_$StagingDatabase, $ExampleTermStagingTableTable> {
-  $$ExampleTermStagingTableTableFilterComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnFilters<int> get exampleLocalId => $composableBuilder(
-    column: $table.exampleLocalId,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<String> get term => $composableBuilder(
-    column: $table.term,
-    builder: (column) => ColumnFilters(column),
-  );
-}
-
-class $$ExampleTermStagingTableTableOrderingComposer
-    extends Composer<_$StagingDatabase, $ExampleTermStagingTableTable> {
-  $$ExampleTermStagingTableTableOrderingComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnOrderings<int> get exampleLocalId => $composableBuilder(
-    column: $table.exampleLocalId,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<String> get term => $composableBuilder(
-    column: $table.term,
-    builder: (column) => ColumnOrderings(column),
-  );
-}
-
-class $$ExampleTermStagingTableTableAnnotationComposer
-    extends Composer<_$StagingDatabase, $ExampleTermStagingTableTable> {
-  $$ExampleTermStagingTableTableAnnotationComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  GeneratedColumn<int> get exampleLocalId => $composableBuilder(
-    column: $table.exampleLocalId,
-    builder: (column) => column,
-  );
-
-  GeneratedColumn<String> get term =>
-      $composableBuilder(column: $table.term, builder: (column) => column);
-}
-
-class $$ExampleTermStagingTableTableTableManager
-    extends
-        RootTableManager<
-          _$StagingDatabase,
-          $ExampleTermStagingTableTable,
-          ExampleTermStagingTableData,
-          $$ExampleTermStagingTableTableFilterComposer,
-          $$ExampleTermStagingTableTableOrderingComposer,
-          $$ExampleTermStagingTableTableAnnotationComposer,
-          $$ExampleTermStagingTableTableCreateCompanionBuilder,
-          $$ExampleTermStagingTableTableUpdateCompanionBuilder,
-          (
-            ExampleTermStagingTableData,
-            BaseReferences<
-              _$StagingDatabase,
-              $ExampleTermStagingTableTable,
-              ExampleTermStagingTableData
-            >,
-          ),
-          ExampleTermStagingTableData,
-          PrefetchHooks Function()
-        > {
-  $$ExampleTermStagingTableTableTableManager(
-    _$StagingDatabase db,
-    $ExampleTermStagingTableTable table,
-  ) : super(
-        TableManagerState(
-          db: db,
-          table: table,
-          createFilteringComposer: () =>
-              $$ExampleTermStagingTableTableFilterComposer(
-                $db: db,
-                $table: table,
-              ),
-          createOrderingComposer: () =>
-              $$ExampleTermStagingTableTableOrderingComposer(
-                $db: db,
-                $table: table,
-              ),
-          createComputedFieldComposer: () =>
-              $$ExampleTermStagingTableTableAnnotationComposer(
-                $db: db,
-                $table: table,
-              ),
-          updateCompanionCallback:
-              ({
-                Value<int> exampleLocalId = const Value.absent(),
-                Value<String> term = const Value.absent(),
-                Value<int> rowid = const Value.absent(),
-              }) => ExampleTermStagingTableCompanion(
-                exampleLocalId: exampleLocalId,
-                term: term,
-                rowid: rowid,
-              ),
-          createCompanionCallback:
-              ({
-                required int exampleLocalId,
-                required String term,
-                Value<int> rowid = const Value.absent(),
-              }) => ExampleTermStagingTableCompanion.insert(
-                exampleLocalId: exampleLocalId,
-                term: term,
-                rowid: rowid,
-              ),
-          withReferenceMapper: (p0) => p0
-              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
-              .toList(),
-          prefetchHooksCallback: null,
-        ),
-      );
-}
-
-typedef $$ExampleTermStagingTableTableProcessedTableManager =
-    ProcessedTableManager<
-      _$StagingDatabase,
-      $ExampleTermStagingTableTable,
-      ExampleTermStagingTableData,
-      $$ExampleTermStagingTableTableFilterComposer,
-      $$ExampleTermStagingTableTableOrderingComposer,
-      $$ExampleTermStagingTableTableAnnotationComposer,
-      $$ExampleTermStagingTableTableCreateCompanionBuilder,
-      $$ExampleTermStagingTableTableUpdateCompanionBuilder,
-      (
-        ExampleTermStagingTableData,
-        BaseReferences<
-          _$StagingDatabase,
-          $ExampleTermStagingTableTable,
-          ExampleTermStagingTableData
-        >,
-      ),
-      ExampleTermStagingTableData,
       PrefetchHooks Function()
     >;
 typedef $$ExampleAudioStagingTableTableCreateCompanionBuilder =
@@ -13707,11 +13398,6 @@ class $StagingDatabaseManager {
       $$ExampleStatStagingTableTableTableManager(
         _db,
         _db.exampleStatStagingTable,
-      );
-  $$ExampleTermStagingTableTableTableManager get exampleTermStagingTable =>
-      $$ExampleTermStagingTableTableTableManager(
-        _db,
-        _db.exampleTermStagingTable,
       );
   $$ExampleAudioStagingTableTableTableManager get exampleAudioStagingTable =>
       $$ExampleAudioStagingTableTableTableManager(

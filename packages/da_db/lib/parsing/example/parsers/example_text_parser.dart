@@ -60,8 +60,11 @@ class ExampleTextParser implements DbFileParser {
 
       exampleLocalId++;
 
+      // tokenize the sentence with the Language Processor to extract terms
+      String? exampleTokenized = lp.parse(sentence, const ProcessorOptions()).tokens.join(" ");
+
       // Add 5 columns to the main table
-      exampleRows.add([exampleLocalId, groupId, langIsoCode, sentence]);
+      exampleRows.add([exampleLocalId, groupId, langIsoCode, sentence, exampleTokenized]);
 
       for (final t in tags) {
         if (t.trim().isEmpty) continue;
@@ -112,7 +115,7 @@ class ExampleTextParser implements DbFileParser {
 
     await db.transaction(() async {
       if (exampleRows.isNotEmpty) {
-        final sql = 'INSERT INTO ${db.exampleStagingTable.actualTableName} (local_id, group_id, language_code, example_sentence) VALUES ${List.filled(exampleRows.length, placeholders(4)).join(', ')}';
+        final sql = 'INSERT INTO ${db.exampleStagingTable.actualTableName} (local_id, group_id, language_code, example_sentence, example_sentence_tokenized) VALUES ${List.filled(exampleRows.length, placeholders(5)).join(', ')}';
         await db.customStatement(sql, exampleRows.expand((i) => i).toList());
       }
       if (tagRows.isNotEmpty) {
@@ -122,10 +125,6 @@ class ExampleTextParser implements DbFileParser {
       if (statRows.isNotEmpty) {
         final sql = 'INSERT INTO ${db.exampleStatStagingTable.actualTableName} (example_local_id, stat_name, display_name, stat_value, display_value) VALUES ${List.filled(statRows.length, placeholders(5)).join(', ')}';
         await db.customStatement(sql, statRows.expand((i) => i).toList());
-      }
-      if (termRows.isNotEmpty) {
-        final sql = 'INSERT INTO ${db.exampleTermStagingTable.actualTableName} (example_local_id, term) VALUES ${List.filled(termRows.length, placeholders(2)).join(', ')}';
-        await db.customStatement(sql, termRows.expand((i) => i).toList());
       }
     });
   }

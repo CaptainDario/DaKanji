@@ -13955,8 +13955,23 @@ class $ExampleSentenceTableTable extends ExampleSentenceTable
     type: DriftSqlType.string,
     requiredDuringInsert: true,
   );
+  static const VerificationMeta _exampleSentenceTokenizedMeta =
+      const VerificationMeta('exampleSentenceTokenized');
   @override
-  List<GeneratedColumn> get $columns => [id, exampleSentence];
+  late final GeneratedColumn<String> exampleSentenceTokenized =
+      GeneratedColumn<String>(
+        'example_sentence_tokenized',
+        aliasedName,
+        true,
+        type: DriftSqlType.string,
+        requiredDuringInsert: false,
+      );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    exampleSentence,
+    exampleSentenceTokenized,
+  ];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -13983,6 +13998,15 @@ class $ExampleSentenceTableTable extends ExampleSentenceTable
     } else if (isInserting) {
       context.missing(_exampleSentenceMeta);
     }
+    if (data.containsKey('example_sentence_tokenized')) {
+      context.handle(
+        _exampleSentenceTokenizedMeta,
+        exampleSentenceTokenized.isAcceptableOrUnknown(
+          data['example_sentence_tokenized']!,
+          _exampleSentenceTokenizedMeta,
+        ),
+      );
+    }
     return context;
   }
 
@@ -14003,6 +14027,10 @@ class $ExampleSentenceTableTable extends ExampleSentenceTable
         DriftSqlType.string,
         data['${effectivePrefix}example_sentence'],
       )!,
+      exampleSentenceTokenized: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}example_sentence_tokenized'],
+      ),
     );
   }
 
@@ -14019,15 +14047,24 @@ class ExampleSentenceTableData extends DataClass
 
   /// the example of this entry
   final String exampleSentence;
+
+  /// `exampleSentence` tokenized for looking up term -> example
+  final String? exampleSentenceTokenized;
   const ExampleSentenceTableData({
     required this.id,
     required this.exampleSentence,
+    this.exampleSentenceTokenized,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
     map['example_sentence'] = Variable<String>(exampleSentence);
+    if (!nullToAbsent || exampleSentenceTokenized != null) {
+      map['example_sentence_tokenized'] = Variable<String>(
+        exampleSentenceTokenized,
+      );
+    }
     return map;
   }
 
@@ -14035,6 +14072,9 @@ class ExampleSentenceTableData extends DataClass
     return ExampleSentenceTableCompanion(
       id: Value(id),
       exampleSentence: Value(exampleSentence),
+      exampleSentenceTokenized: exampleSentenceTokenized == null && nullToAbsent
+          ? const Value.absent()
+          : Value(exampleSentenceTokenized),
     );
   }
 
@@ -14046,6 +14086,9 @@ class ExampleSentenceTableData extends DataClass
     return ExampleSentenceTableData(
       id: serializer.fromJson<int>(json['id']),
       exampleSentence: serializer.fromJson<String>(json['exampleSentence']),
+      exampleSentenceTokenized: serializer.fromJson<String?>(
+        json['exampleSentenceTokenized'],
+      ),
     );
   }
   @override
@@ -14054,14 +14097,23 @@ class ExampleSentenceTableData extends DataClass
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
       'exampleSentence': serializer.toJson<String>(exampleSentence),
+      'exampleSentenceTokenized': serializer.toJson<String?>(
+        exampleSentenceTokenized,
+      ),
     };
   }
 
-  ExampleSentenceTableData copyWith({int? id, String? exampleSentence}) =>
-      ExampleSentenceTableData(
-        id: id ?? this.id,
-        exampleSentence: exampleSentence ?? this.exampleSentence,
-      );
+  ExampleSentenceTableData copyWith({
+    int? id,
+    String? exampleSentence,
+    Value<String?> exampleSentenceTokenized = const Value.absent(),
+  }) => ExampleSentenceTableData(
+    id: id ?? this.id,
+    exampleSentence: exampleSentence ?? this.exampleSentence,
+    exampleSentenceTokenized: exampleSentenceTokenized.present
+        ? exampleSentenceTokenized.value
+        : this.exampleSentenceTokenized,
+  );
   ExampleSentenceTableData copyWithCompanion(
     ExampleSentenceTableCompanion data,
   ) {
@@ -14070,6 +14122,9 @@ class ExampleSentenceTableData extends DataClass
       exampleSentence: data.exampleSentence.present
           ? data.exampleSentence.value
           : this.exampleSentence,
+      exampleSentenceTokenized: data.exampleSentenceTokenized.present
+          ? data.exampleSentenceTokenized.value
+          : this.exampleSentenceTokenized,
     );
   }
 
@@ -14077,50 +14132,62 @@ class ExampleSentenceTableData extends DataClass
   String toString() {
     return (StringBuffer('ExampleSentenceTableData(')
           ..write('id: $id, ')
-          ..write('exampleSentence: $exampleSentence')
+          ..write('exampleSentence: $exampleSentence, ')
+          ..write('exampleSentenceTokenized: $exampleSentenceTokenized')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(id, exampleSentence);
+  int get hashCode =>
+      Object.hash(id, exampleSentence, exampleSentenceTokenized);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is ExampleSentenceTableData &&
           other.id == this.id &&
-          other.exampleSentence == this.exampleSentence);
+          other.exampleSentence == this.exampleSentence &&
+          other.exampleSentenceTokenized == this.exampleSentenceTokenized);
 }
 
 class ExampleSentenceTableCompanion
     extends UpdateCompanion<ExampleSentenceTableData> {
   final Value<int> id;
   final Value<String> exampleSentence;
+  final Value<String?> exampleSentenceTokenized;
   const ExampleSentenceTableCompanion({
     this.id = const Value.absent(),
     this.exampleSentence = const Value.absent(),
+    this.exampleSentenceTokenized = const Value.absent(),
   });
   ExampleSentenceTableCompanion.insert({
     this.id = const Value.absent(),
     required String exampleSentence,
+    this.exampleSentenceTokenized = const Value.absent(),
   }) : exampleSentence = Value(exampleSentence);
   static Insertable<ExampleSentenceTableData> custom({
     Expression<int>? id,
     Expression<String>? exampleSentence,
+    Expression<String>? exampleSentenceTokenized,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
       if (exampleSentence != null) 'example_sentence': exampleSentence,
+      if (exampleSentenceTokenized != null)
+        'example_sentence_tokenized': exampleSentenceTokenized,
     });
   }
 
   ExampleSentenceTableCompanion copyWith({
     Value<int>? id,
     Value<String>? exampleSentence,
+    Value<String?>? exampleSentenceTokenized,
   }) {
     return ExampleSentenceTableCompanion(
       id: id ?? this.id,
       exampleSentence: exampleSentence ?? this.exampleSentence,
+      exampleSentenceTokenized:
+          exampleSentenceTokenized ?? this.exampleSentenceTokenized,
     );
   }
 
@@ -14133,6 +14200,11 @@ class ExampleSentenceTableCompanion
     if (exampleSentence.present) {
       map['example_sentence'] = Variable<String>(exampleSentence.value);
     }
+    if (exampleSentenceTokenized.present) {
+      map['example_sentence_tokenized'] = Variable<String>(
+        exampleSentenceTokenized.value,
+      );
+    }
     return map;
   }
 
@@ -14140,7 +14212,8 @@ class ExampleSentenceTableCompanion
   String toString() {
     return (StringBuffer('ExampleSentenceTableCompanion(')
           ..write('id: $id, ')
-          ..write('exampleSentence: $exampleSentence')
+          ..write('exampleSentence: $exampleSentence, ')
+          ..write('exampleSentenceTokenized: $exampleSentenceTokenized')
           ..write(')'))
         .toString();
   }
@@ -14213,7 +14286,7 @@ class FtsExampleSentence extends Table
   bool get dontWriteConstraints => true;
   @override
   String get moduleAndArgs =>
-      'fts5(example_sentence, content=\'example_sentence_table\', content_rowid=\'id\', tokenize=\'better_trigram\', prefix=\'2 3\')';
+      'fts5(example_sentence, content=\'example_sentence_table\', content_rowid=\'id\', tokenize=\'better_trigram\')';
 }
 
 class FtsExampleSentenceData extends DataClass
@@ -14935,240 +15008,213 @@ class ExampleTableCompanion extends UpdateCompanion<ExampleTableData> {
   }
 }
 
-class $ExampleSentenceTable_X_TermTableTable
-    extends ExampleSentenceTable_X_TermTable
+class FtsExampleSentenceTokenized extends Table
     with
-        TableInfo<
-          $ExampleSentenceTable_X_TermTableTable,
-          ExampleSentenceTable_X_TermTableData
+        TableInfo<FtsExampleSentenceTokenized, FtsExampleSentenceTokenizedData>,
+        VirtualTableInfo<
+          FtsExampleSentenceTokenized,
+          FtsExampleSentenceTokenizedData
         > {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
-  $ExampleSentenceTable_X_TermTableTable(this.attachedDatabase, [this._alias]);
-  static const VerificationMeta _exampleSentenceIdMeta = const VerificationMeta(
-    'exampleSentenceId',
-  );
+  FtsExampleSentenceTokenized(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _exampleSentenceTokenizedMeta =
+      const VerificationMeta('exampleSentenceTokenized');
+  late final GeneratedColumn<String> exampleSentenceTokenized =
+      GeneratedColumn<String>(
+        'example_sentence_tokenized',
+        aliasedName,
+        true,
+        type: DriftSqlType.string,
+        requiredDuringInsert: false,
+        $customConstraints: '',
+      );
   @override
-  late final GeneratedColumn<int> exampleSentenceId = GeneratedColumn<int>(
-    'example_sentence_id',
-    aliasedName,
-    false,
-    type: DriftSqlType.int,
-    requiredDuringInsert: true,
-    defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'REFERENCES example_sentence_table (id) ON DELETE CASCADE',
-    ),
-  );
-  static const VerificationMeta _termIdMeta = const VerificationMeta('termId');
-  @override
-  late final GeneratedColumn<int> termId = GeneratedColumn<int>(
-    'term_id',
-    aliasedName,
-    false,
-    type: DriftSqlType.int,
-    requiredDuringInsert: true,
-    defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'REFERENCES term_table (id) ON DELETE CASCADE',
-    ),
-  );
-  @override
-  List<GeneratedColumn> get $columns => [exampleSentenceId, termId];
+  List<GeneratedColumn> get $columns => [exampleSentenceTokenized];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
   String get actualTableName => $name;
-  static const String $name = 'example_sentence_table_x_term_table';
+  static const String $name = 'fts_example_sentence_tokenized';
   @override
   VerificationContext validateIntegrity(
-    Insertable<ExampleSentenceTable_X_TermTableData> instance, {
+    Insertable<FtsExampleSentenceTokenizedData> instance, {
     bool isInserting = false,
   }) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
-    if (data.containsKey('example_sentence_id')) {
+    if (data.containsKey('example_sentence_tokenized')) {
       context.handle(
-        _exampleSentenceIdMeta,
-        exampleSentenceId.isAcceptableOrUnknown(
-          data['example_sentence_id']!,
-          _exampleSentenceIdMeta,
+        _exampleSentenceTokenizedMeta,
+        exampleSentenceTokenized.isAcceptableOrUnknown(
+          data['example_sentence_tokenized']!,
+          _exampleSentenceTokenizedMeta,
         ),
       );
-    } else if (isInserting) {
-      context.missing(_exampleSentenceIdMeta);
-    }
-    if (data.containsKey('term_id')) {
-      context.handle(
-        _termIdMeta,
-        termId.isAcceptableOrUnknown(data['term_id']!, _termIdMeta),
-      );
-    } else if (isInserting) {
-      context.missing(_termIdMeta);
     }
     return context;
   }
 
   @override
-  Set<GeneratedColumn> get $primaryKey => {exampleSentenceId, termId};
+  Set<GeneratedColumn> get $primaryKey => const {};
   @override
-  ExampleSentenceTable_X_TermTableData map(
+  FtsExampleSentenceTokenizedData map(
     Map<String, dynamic> data, {
     String? tablePrefix,
   }) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return ExampleSentenceTable_X_TermTableData(
-      exampleSentenceId: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}example_sentence_id'],
-      )!,
-      termId: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}term_id'],
-      )!,
+    return FtsExampleSentenceTokenizedData(
+      exampleSentenceTokenized: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}example_sentence_tokenized'],
+      ),
     );
   }
 
   @override
-  $ExampleSentenceTable_X_TermTableTable createAlias(String alias) {
-    return $ExampleSentenceTable_X_TermTableTable(attachedDatabase, alias);
+  FtsExampleSentenceTokenized createAlias(String alias) {
+    return FtsExampleSentenceTokenized(attachedDatabase, alias);
   }
 
   @override
-  bool get withoutRowId => true;
+  bool get dontWriteConstraints => true;
+  @override
+  String get moduleAndArgs =>
+      'fts5(example_sentence_tokenized, content=\'example_sentence_table\', content_rowid=\'id\', tokenize=\'unicode61\')';
 }
 
-class ExampleSentenceTable_X_TermTableData extends DataClass
-    implements Insertable<ExampleSentenceTable_X_TermTableData> {
-  /// The ID of the example sentence entry.
-  final int exampleSentenceId;
-
-  /// The ID of the dictionary term entry.
-  final int termId;
-  const ExampleSentenceTable_X_TermTableData({
-    required this.exampleSentenceId,
-    required this.termId,
-  });
+class FtsExampleSentenceTokenizedData extends DataClass
+    implements Insertable<FtsExampleSentenceTokenizedData> {
+  final String? exampleSentenceTokenized;
+  const FtsExampleSentenceTokenizedData({this.exampleSentenceTokenized});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
-    map['example_sentence_id'] = Variable<int>(exampleSentenceId);
-    map['term_id'] = Variable<int>(termId);
+    if (!nullToAbsent || exampleSentenceTokenized != null) {
+      map['example_sentence_tokenized'] = Variable<String>(
+        exampleSentenceTokenized,
+      );
+    }
     return map;
   }
 
-  ExampleSentenceTable_X_TermTableCompanion toCompanion(bool nullToAbsent) {
-    return ExampleSentenceTable_X_TermTableCompanion(
-      exampleSentenceId: Value(exampleSentenceId),
-      termId: Value(termId),
+  FtsExampleSentenceTokenizedCompanion toCompanion(bool nullToAbsent) {
+    return FtsExampleSentenceTokenizedCompanion(
+      exampleSentenceTokenized: exampleSentenceTokenized == null && nullToAbsent
+          ? const Value.absent()
+          : Value(exampleSentenceTokenized),
     );
   }
 
-  factory ExampleSentenceTable_X_TermTableData.fromJson(
+  factory FtsExampleSentenceTokenizedData.fromJson(
     Map<String, dynamic> json, {
     ValueSerializer? serializer,
   }) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
-    return ExampleSentenceTable_X_TermTableData(
-      exampleSentenceId: serializer.fromJson<int>(json['exampleSentenceId']),
-      termId: serializer.fromJson<int>(json['termId']),
+    return FtsExampleSentenceTokenizedData(
+      exampleSentenceTokenized: serializer.fromJson<String?>(
+        json['example_sentence_tokenized'],
+      ),
     );
   }
   @override
   Map<String, dynamic> toJson({ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
-      'exampleSentenceId': serializer.toJson<int>(exampleSentenceId),
-      'termId': serializer.toJson<int>(termId),
+      'example_sentence_tokenized': serializer.toJson<String?>(
+        exampleSentenceTokenized,
+      ),
     };
   }
 
-  ExampleSentenceTable_X_TermTableData copyWith({
-    int? exampleSentenceId,
-    int? termId,
-  }) => ExampleSentenceTable_X_TermTableData(
-    exampleSentenceId: exampleSentenceId ?? this.exampleSentenceId,
-    termId: termId ?? this.termId,
+  FtsExampleSentenceTokenizedData copyWith({
+    Value<String?> exampleSentenceTokenized = const Value.absent(),
+  }) => FtsExampleSentenceTokenizedData(
+    exampleSentenceTokenized: exampleSentenceTokenized.present
+        ? exampleSentenceTokenized.value
+        : this.exampleSentenceTokenized,
   );
-  ExampleSentenceTable_X_TermTableData copyWithCompanion(
-    ExampleSentenceTable_X_TermTableCompanion data,
+  FtsExampleSentenceTokenizedData copyWithCompanion(
+    FtsExampleSentenceTokenizedCompanion data,
   ) {
-    return ExampleSentenceTable_X_TermTableData(
-      exampleSentenceId: data.exampleSentenceId.present
-          ? data.exampleSentenceId.value
-          : this.exampleSentenceId,
-      termId: data.termId.present ? data.termId.value : this.termId,
+    return FtsExampleSentenceTokenizedData(
+      exampleSentenceTokenized: data.exampleSentenceTokenized.present
+          ? data.exampleSentenceTokenized.value
+          : this.exampleSentenceTokenized,
     );
   }
 
   @override
   String toString() {
-    return (StringBuffer('ExampleSentenceTable_X_TermTableData(')
-          ..write('exampleSentenceId: $exampleSentenceId, ')
-          ..write('termId: $termId')
+    return (StringBuffer('FtsExampleSentenceTokenizedData(')
+          ..write('exampleSentenceTokenized: $exampleSentenceTokenized')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(exampleSentenceId, termId);
+  int get hashCode => exampleSentenceTokenized.hashCode;
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is ExampleSentenceTable_X_TermTableData &&
-          other.exampleSentenceId == this.exampleSentenceId &&
-          other.termId == this.termId);
+      (other is FtsExampleSentenceTokenizedData &&
+          other.exampleSentenceTokenized == this.exampleSentenceTokenized);
 }
 
-class ExampleSentenceTable_X_TermTableCompanion
-    extends UpdateCompanion<ExampleSentenceTable_X_TermTableData> {
-  final Value<int> exampleSentenceId;
-  final Value<int> termId;
-  const ExampleSentenceTable_X_TermTableCompanion({
-    this.exampleSentenceId = const Value.absent(),
-    this.termId = const Value.absent(),
+class FtsExampleSentenceTokenizedCompanion
+    extends UpdateCompanion<FtsExampleSentenceTokenizedData> {
+  final Value<String?> exampleSentenceTokenized;
+  final Value<int> rowid;
+  const FtsExampleSentenceTokenizedCompanion({
+    this.exampleSentenceTokenized = const Value.absent(),
+    this.rowid = const Value.absent(),
   });
-  ExampleSentenceTable_X_TermTableCompanion.insert({
-    required int exampleSentenceId,
-    required int termId,
-  }) : exampleSentenceId = Value(exampleSentenceId),
-       termId = Value(termId);
-  static Insertable<ExampleSentenceTable_X_TermTableData> custom({
-    Expression<int>? exampleSentenceId,
-    Expression<int>? termId,
+  FtsExampleSentenceTokenizedCompanion.insert({
+    this.exampleSentenceTokenized = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  static Insertable<FtsExampleSentenceTokenizedData> custom({
+    Expression<String>? exampleSentenceTokenized,
+    Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
-      if (exampleSentenceId != null) 'example_sentence_id': exampleSentenceId,
-      if (termId != null) 'term_id': termId,
+      if (exampleSentenceTokenized != null)
+        'example_sentence_tokenized': exampleSentenceTokenized,
+      if (rowid != null) 'rowid': rowid,
     });
   }
 
-  ExampleSentenceTable_X_TermTableCompanion copyWith({
-    Value<int>? exampleSentenceId,
-    Value<int>? termId,
+  FtsExampleSentenceTokenizedCompanion copyWith({
+    Value<String?>? exampleSentenceTokenized,
+    Value<int>? rowid,
   }) {
-    return ExampleSentenceTable_X_TermTableCompanion(
-      exampleSentenceId: exampleSentenceId ?? this.exampleSentenceId,
-      termId: termId ?? this.termId,
+    return FtsExampleSentenceTokenizedCompanion(
+      exampleSentenceTokenized:
+          exampleSentenceTokenized ?? this.exampleSentenceTokenized,
+      rowid: rowid ?? this.rowid,
     );
   }
 
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
-    if (exampleSentenceId.present) {
-      map['example_sentence_id'] = Variable<int>(exampleSentenceId.value);
+    if (exampleSentenceTokenized.present) {
+      map['example_sentence_tokenized'] = Variable<String>(
+        exampleSentenceTokenized.value,
+      );
     }
-    if (termId.present) {
-      map['term_id'] = Variable<int>(termId.value);
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
     }
     return map;
   }
 
   @override
   String toString() {
-    return (StringBuffer('ExampleSentenceTable_X_TermTableCompanion(')
-          ..write('exampleSentenceId: $exampleSentenceId, ')
-          ..write('termId: $termId')
+    return (StringBuffer('FtsExampleSentenceTokenizedCompanion(')
+          ..write('exampleSentenceTokenized: $exampleSentenceTokenized, ')
+          ..write('rowid: $rowid')
           ..write(')'))
         .toString();
   }
@@ -17429,6 +17475,245 @@ class ExampleEntryView extends ViewInfo<ExampleEntryView, ExampleEntryViewData>
     'example_audio_table_x_tag_bank_table',
     'example_audio_table_x_stat_table',
   };
+}
+
+class $ExampleSentenceTable_X_TermTableTable
+    extends ExampleSentenceTable_X_TermTable
+    with
+        TableInfo<
+          $ExampleSentenceTable_X_TermTableTable,
+          ExampleSentenceTable_X_TermTableData
+        > {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $ExampleSentenceTable_X_TermTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _exampleSentenceIdMeta = const VerificationMeta(
+    'exampleSentenceId',
+  );
+  @override
+  late final GeneratedColumn<int> exampleSentenceId = GeneratedColumn<int>(
+    'example_sentence_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES example_sentence_table (id) ON DELETE CASCADE',
+    ),
+  );
+  static const VerificationMeta _termIdMeta = const VerificationMeta('termId');
+  @override
+  late final GeneratedColumn<int> termId = GeneratedColumn<int>(
+    'term_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES term_table (id) ON DELETE CASCADE',
+    ),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [exampleSentenceId, termId];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'example_sentence_table_x_term_table';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<ExampleSentenceTable_X_TermTableData> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('example_sentence_id')) {
+      context.handle(
+        _exampleSentenceIdMeta,
+        exampleSentenceId.isAcceptableOrUnknown(
+          data['example_sentence_id']!,
+          _exampleSentenceIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_exampleSentenceIdMeta);
+    }
+    if (data.containsKey('term_id')) {
+      context.handle(
+        _termIdMeta,
+        termId.isAcceptableOrUnknown(data['term_id']!, _termIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_termIdMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {exampleSentenceId, termId};
+  @override
+  ExampleSentenceTable_X_TermTableData map(
+    Map<String, dynamic> data, {
+    String? tablePrefix,
+  }) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return ExampleSentenceTable_X_TermTableData(
+      exampleSentenceId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}example_sentence_id'],
+      )!,
+      termId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}term_id'],
+      )!,
+    );
+  }
+
+  @override
+  $ExampleSentenceTable_X_TermTableTable createAlias(String alias) {
+    return $ExampleSentenceTable_X_TermTableTable(attachedDatabase, alias);
+  }
+
+  @override
+  bool get withoutRowId => true;
+}
+
+class ExampleSentenceTable_X_TermTableData extends DataClass
+    implements Insertable<ExampleSentenceTable_X_TermTableData> {
+  /// The ID of the example sentence entry.
+  final int exampleSentenceId;
+
+  /// The ID of the dictionary term entry.
+  final int termId;
+  const ExampleSentenceTable_X_TermTableData({
+    required this.exampleSentenceId,
+    required this.termId,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['example_sentence_id'] = Variable<int>(exampleSentenceId);
+    map['term_id'] = Variable<int>(termId);
+    return map;
+  }
+
+  ExampleSentenceTable_X_TermTableCompanion toCompanion(bool nullToAbsent) {
+    return ExampleSentenceTable_X_TermTableCompanion(
+      exampleSentenceId: Value(exampleSentenceId),
+      termId: Value(termId),
+    );
+  }
+
+  factory ExampleSentenceTable_X_TermTableData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return ExampleSentenceTable_X_TermTableData(
+      exampleSentenceId: serializer.fromJson<int>(json['exampleSentenceId']),
+      termId: serializer.fromJson<int>(json['termId']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'exampleSentenceId': serializer.toJson<int>(exampleSentenceId),
+      'termId': serializer.toJson<int>(termId),
+    };
+  }
+
+  ExampleSentenceTable_X_TermTableData copyWith({
+    int? exampleSentenceId,
+    int? termId,
+  }) => ExampleSentenceTable_X_TermTableData(
+    exampleSentenceId: exampleSentenceId ?? this.exampleSentenceId,
+    termId: termId ?? this.termId,
+  );
+  ExampleSentenceTable_X_TermTableData copyWithCompanion(
+    ExampleSentenceTable_X_TermTableCompanion data,
+  ) {
+    return ExampleSentenceTable_X_TermTableData(
+      exampleSentenceId: data.exampleSentenceId.present
+          ? data.exampleSentenceId.value
+          : this.exampleSentenceId,
+      termId: data.termId.present ? data.termId.value : this.termId,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ExampleSentenceTable_X_TermTableData(')
+          ..write('exampleSentenceId: $exampleSentenceId, ')
+          ..write('termId: $termId')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(exampleSentenceId, termId);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is ExampleSentenceTable_X_TermTableData &&
+          other.exampleSentenceId == this.exampleSentenceId &&
+          other.termId == this.termId);
+}
+
+class ExampleSentenceTable_X_TermTableCompanion
+    extends UpdateCompanion<ExampleSentenceTable_X_TermTableData> {
+  final Value<int> exampleSentenceId;
+  final Value<int> termId;
+  const ExampleSentenceTable_X_TermTableCompanion({
+    this.exampleSentenceId = const Value.absent(),
+    this.termId = const Value.absent(),
+  });
+  ExampleSentenceTable_X_TermTableCompanion.insert({
+    required int exampleSentenceId,
+    required int termId,
+  }) : exampleSentenceId = Value(exampleSentenceId),
+       termId = Value(termId);
+  static Insertable<ExampleSentenceTable_X_TermTableData> custom({
+    Expression<int>? exampleSentenceId,
+    Expression<int>? termId,
+  }) {
+    return RawValuesInsertable({
+      if (exampleSentenceId != null) 'example_sentence_id': exampleSentenceId,
+      if (termId != null) 'term_id': termId,
+    });
+  }
+
+  ExampleSentenceTable_X_TermTableCompanion copyWith({
+    Value<int>? exampleSentenceId,
+    Value<int>? termId,
+  }) {
+    return ExampleSentenceTable_X_TermTableCompanion(
+      exampleSentenceId: exampleSentenceId ?? this.exampleSentenceId,
+      termId: termId ?? this.termId,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (exampleSentenceId.present) {
+      map['example_sentence_id'] = Variable<int>(exampleSentenceId.value);
+    }
+    if (termId.present) {
+      map['term_id'] = Variable<int>(termId.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ExampleSentenceTable_X_TermTableCompanion(')
+          ..write('exampleSentenceId: $exampleSentenceId, ')
+          ..write('termId: $termId')
+          ..write(')'))
+        .toString();
+  }
 }
 
 class $KanjiVGTableTable extends KanjiVGTable
@@ -19967,8 +20252,8 @@ abstract class _$DaDb extends GeneratedDatabase {
   late final $LanguageCodeTableTable languageCodeTable =
       $LanguageCodeTableTable(this);
   late final $ExampleTableTable exampleTable = $ExampleTableTable(this);
-  late final $ExampleSentenceTable_X_TermTableTable
-  exampleSentenceTableXTermTable = $ExampleSentenceTable_X_TermTableTable(this);
+  late final FtsExampleSentenceTokenized ftsExampleSentenceTokenized =
+      FtsExampleSentenceTokenized(this);
   late final $ExampleTable_X_TagBankTableTable exampleTableXTagBankTable =
       $ExampleTable_X_TagBankTableTable(this);
   late final $StatNameTableTable statNameTable = $StatNameTableTable(this);
@@ -19988,6 +20273,8 @@ abstract class _$DaDb extends GeneratedDatabase {
     'LanguageCodeTable_languageCode',
     'CREATE INDEX LanguageCodeTable_languageCode ON language_code_table (language_code)',
   );
+  late final $ExampleSentenceTable_X_TermTableTable
+  exampleSentenceTableXTermTable = $ExampleSentenceTable_X_TermTableTable(this);
   late final Index exampleTableXExampleAudioTableAudioIdIndex = Index(
     'ExampleTable_X_ExampleAudioTable_audioIdIndex',
     'CREATE INDEX ExampleTable_X_ExampleAudioTable_audioIdIndex ON example_table_x_example_audio_table (audio_id)',
@@ -20498,69 +20785,27 @@ abstract class _$DaDb extends GeneratedDatabase {
     );
   }
 
-  Selectable<SearchExampleBaseMatchesByTermIdsResult>
-  searchExampleBaseMatchesByTermIds(
-    List<int> termIds,
+  Selectable<SearchExampleBaseMatchesByTokensResult>
+  searchExampleBaseMatchesByTokens(
+    String lemmas,
     List<String> languages,
     int limit,
     int offset,
   ) {
-    var $arrayStartIndex = 3;
-    final expandedtermIds = $expandVar($arrayStartIndex, termIds.length);
-    $arrayStartIndex += termIds.length;
+    var $arrayStartIndex = 4;
     final expandedlanguages = $expandVar($arrayStartIndex, languages.length);
     $arrayStartIndex += languages.length;
     return customSelect(
-      'SELECT DISTINCT e.id, e.group_id, l.language_code, e.index_id FROM example_sentence_table_x_term_table AS st INNER JOIN example_table AS e ON e.example_sentence_id = st.example_sentence_id INNER JOIN language_code_table AS l ON l.id = e.language_code_id WHERE st.term_id IN ($expandedtermIds) AND l.language_code IN ($expandedlanguages) ORDER BY e.id ASC LIMIT ?1 OFFSET ?2',
+      'SELECT e.id, e.group_id, l.language_code, e.index_id FROM fts_example_sentence_tokenized AS fts INNER JOIN example_table AS e ON e.example_sentence_id = fts."rowid" INNER JOIN language_code_table AS l ON l.id = e.language_code_id WHERE fts_example_sentence_tokenized MATCH ?1 AND l.language_code IN ($expandedlanguages) ORDER BY bm25(fts_example_sentence_tokenized) LIMIT ?2 OFFSET ?3',
       variables: [
+        Variable<String>(lemmas),
         Variable<int>(limit),
         Variable<int>(offset),
-        for (var $ in termIds) Variable<int>($),
         for (var $ in languages) Variable<String>($),
       ],
-      readsFrom: {
-        exampleTable,
-        languageCodeTable,
-        exampleSentenceTableXTermTable,
-      },
+      readsFrom: {exampleTable, languageCodeTable, ftsExampleSentenceTokenized},
     ).map(
-      (QueryRow row) => SearchExampleBaseMatchesByTermIdsResult(
-        id: row.read<int>('id'),
-        groupId: row.read<int>('group_id'),
-        languageCode: row.read<String>('language_code'),
-        indexId: row.read<int>('index_id'),
-      ),
-    );
-  }
-
-  Selectable<SearchExampleBaseMatchesByTermStringResult>
-  searchExampleBaseMatchesByTermString(
-    List<String> terms,
-    List<String> languages,
-    int limit,
-    int offset,
-  ) {
-    var $arrayStartIndex = 3;
-    final expandedterms = $expandVar($arrayStartIndex, terms.length);
-    $arrayStartIndex += terms.length;
-    final expandedlanguages = $expandVar($arrayStartIndex, languages.length);
-    $arrayStartIndex += languages.length;
-    return customSelect(
-      'SELECT DISTINCT e.id, e.group_id, l.language_code, e.index_id FROM term_table AS t INNER JOIN example_sentence_table_x_term_table AS st ON st.term_id = t.id INNER JOIN example_table AS e ON e.example_sentence_id = st.example_sentence_id INNER JOIN language_code_table AS l ON l.id = e.language_code_id WHERE t.term IN ($expandedterms) AND l.language_code IN ($expandedlanguages) ORDER BY e.id ASC LIMIT ?1 OFFSET ?2',
-      variables: [
-        Variable<int>(limit),
-        Variable<int>(offset),
-        for (var $ in terms) Variable<String>($),
-        for (var $ in languages) Variable<String>($),
-      ],
-      readsFrom: {
-        exampleTable,
-        languageCodeTable,
-        termTable,
-        exampleSentenceTableXTermTable,
-      },
-    ).map(
-      (QueryRow row) => SearchExampleBaseMatchesByTermStringResult(
+      (QueryRow row) => SearchExampleBaseMatchesByTokensResult(
         id: row.read<int>('id'),
         groupId: row.read<int>('group_id'),
         languageCode: row.read<String>('language_code'),
@@ -20734,7 +20979,7 @@ abstract class _$DaDb extends GeneratedDatabase {
     ftsExampleSentence,
     languageCodeTable,
     exampleTable,
-    exampleSentenceTableXTermTable,
+    ftsExampleSentenceTokenized,
     exampleTableXTagBankTable,
     statNameTable,
     statTable,
@@ -20745,6 +20990,7 @@ abstract class _$DaDb extends GeneratedDatabase {
     exampleAudioTableXStatTable,
     exampleEntryView,
     languageCodeTableLanguageCode,
+    exampleSentenceTableXTermTable,
     exampleTableXExampleAudioTableAudioIdIndex,
     exampleSentenceTableXTermTableTermIdIndex,
     exampleTableXStatTableStatIdIndex,
@@ -21092,6 +21338,114 @@ abstract class _$DaDb extends GeneratedDatabase {
     ),
     WritePropagation(
       on: TableUpdateQuery.onTableName(
+        'example_table',
+        limitUpdateKind: UpdateKind.delete,
+      ),
+      result: [
+        TableUpdate('example_table_x_tag_bank_table', kind: UpdateKind.delete),
+      ],
+    ),
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
+        'tag_bank_v3_table',
+        limitUpdateKind: UpdateKind.delete,
+      ),
+      result: [
+        TableUpdate('example_table_x_tag_bank_table', kind: UpdateKind.delete),
+      ],
+    ),
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
+        'example_table',
+        limitUpdateKind: UpdateKind.delete,
+      ),
+      result: [
+        TableUpdate('example_table_x_stat_table', kind: UpdateKind.delete),
+      ],
+    ),
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
+        'stat_table',
+        limitUpdateKind: UpdateKind.delete,
+      ),
+      result: [
+        TableUpdate('example_table_x_stat_table', kind: UpdateKind.delete),
+      ],
+    ),
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
+        'example_table',
+        limitUpdateKind: UpdateKind.delete,
+      ),
+      result: [
+        TableUpdate(
+          'example_table_x_example_audio_table',
+          kind: UpdateKind.delete,
+        ),
+      ],
+    ),
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
+        'example_audio_table',
+        limitUpdateKind: UpdateKind.delete,
+      ),
+      result: [
+        TableUpdate(
+          'example_table_x_example_audio_table',
+          kind: UpdateKind.delete,
+        ),
+      ],
+    ),
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
+        'example_audio_table',
+        limitUpdateKind: UpdateKind.delete,
+      ),
+      result: [
+        TableUpdate(
+          'example_audio_table_x_tag_bank_table',
+          kind: UpdateKind.delete,
+        ),
+      ],
+    ),
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
+        'tag_bank_v3_table',
+        limitUpdateKind: UpdateKind.delete,
+      ),
+      result: [
+        TableUpdate(
+          'example_audio_table_x_tag_bank_table',
+          kind: UpdateKind.delete,
+        ),
+      ],
+    ),
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
+        'example_audio_table',
+        limitUpdateKind: UpdateKind.delete,
+      ),
+      result: [
+        TableUpdate(
+          'example_audio_table_x_stat_table',
+          kind: UpdateKind.delete,
+        ),
+      ],
+    ),
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
+        'stat_table',
+        limitUpdateKind: UpdateKind.delete,
+      ),
+      result: [
+        TableUpdate(
+          'example_audio_table_x_stat_table',
+          kind: UpdateKind.delete,
+        ),
+      ],
+    ),
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
         'example_sentence_table',
         limitUpdateKind: UpdateKind.delete,
       ),
@@ -21110,114 +21464,6 @@ abstract class _$DaDb extends GeneratedDatabase {
       result: [
         TableUpdate(
           'example_sentence_table_x_term_table',
-          kind: UpdateKind.delete,
-        ),
-      ],
-    ),
-    WritePropagation(
-      on: TableUpdateQuery.onTableName(
-        'example_table',
-        limitUpdateKind: UpdateKind.delete,
-      ),
-      result: [
-        TableUpdate('example_table_x_tag_bank_table', kind: UpdateKind.delete),
-      ],
-    ),
-    WritePropagation(
-      on: TableUpdateQuery.onTableName(
-        'tag_bank_v3_table',
-        limitUpdateKind: UpdateKind.delete,
-      ),
-      result: [
-        TableUpdate('example_table_x_tag_bank_table', kind: UpdateKind.delete),
-      ],
-    ),
-    WritePropagation(
-      on: TableUpdateQuery.onTableName(
-        'example_table',
-        limitUpdateKind: UpdateKind.delete,
-      ),
-      result: [
-        TableUpdate('example_table_x_stat_table', kind: UpdateKind.delete),
-      ],
-    ),
-    WritePropagation(
-      on: TableUpdateQuery.onTableName(
-        'stat_table',
-        limitUpdateKind: UpdateKind.delete,
-      ),
-      result: [
-        TableUpdate('example_table_x_stat_table', kind: UpdateKind.delete),
-      ],
-    ),
-    WritePropagation(
-      on: TableUpdateQuery.onTableName(
-        'example_table',
-        limitUpdateKind: UpdateKind.delete,
-      ),
-      result: [
-        TableUpdate(
-          'example_table_x_example_audio_table',
-          kind: UpdateKind.delete,
-        ),
-      ],
-    ),
-    WritePropagation(
-      on: TableUpdateQuery.onTableName(
-        'example_audio_table',
-        limitUpdateKind: UpdateKind.delete,
-      ),
-      result: [
-        TableUpdate(
-          'example_table_x_example_audio_table',
-          kind: UpdateKind.delete,
-        ),
-      ],
-    ),
-    WritePropagation(
-      on: TableUpdateQuery.onTableName(
-        'example_audio_table',
-        limitUpdateKind: UpdateKind.delete,
-      ),
-      result: [
-        TableUpdate(
-          'example_audio_table_x_tag_bank_table',
-          kind: UpdateKind.delete,
-        ),
-      ],
-    ),
-    WritePropagation(
-      on: TableUpdateQuery.onTableName(
-        'tag_bank_v3_table',
-        limitUpdateKind: UpdateKind.delete,
-      ),
-      result: [
-        TableUpdate(
-          'example_audio_table_x_tag_bank_table',
-          kind: UpdateKind.delete,
-        ),
-      ],
-    ),
-    WritePropagation(
-      on: TableUpdateQuery.onTableName(
-        'example_audio_table',
-        limitUpdateKind: UpdateKind.delete,
-      ),
-      result: [
-        TableUpdate(
-          'example_audio_table_x_stat_table',
-          kind: UpdateKind.delete,
-        ),
-      ],
-    ),
-    WritePropagation(
-      on: TableUpdateQuery.onTableName(
-        'stat_table',
-        limitUpdateKind: UpdateKind.delete,
-      ),
-      result: [
-        TableUpdate(
-          'example_audio_table_x_stat_table',
           kind: UpdateKind.delete,
         ),
       ],
@@ -39175,11 +39421,13 @@ typedef $$ExampleSentenceTableTableCreateCompanionBuilder =
     ExampleSentenceTableCompanion Function({
       Value<int> id,
       required String exampleSentence,
+      Value<String?> exampleSentenceTokenized,
     });
 typedef $$ExampleSentenceTableTableUpdateCompanionBuilder =
     ExampleSentenceTableCompanion Function({
       Value<int> id,
       Value<String> exampleSentence,
+      Value<String?> exampleSentenceTokenized,
     });
 
 final class $$ExampleSentenceTableTableReferences
@@ -39264,6 +39512,11 @@ class $$ExampleSentenceTableTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
+  ColumnFilters<String> get exampleSentenceTokenized => $composableBuilder(
+    column: $table.exampleSentenceTokenized,
+    builder: (column) => ColumnFilters(column),
+  );
+
   Expression<bool> exampleTableRefs(
     Expression<bool> Function($$ExampleTableTableFilterComposer f) f,
   ) {
@@ -39337,6 +39590,11 @@ class $$ExampleSentenceTableTableOrderingComposer
     column: $table.exampleSentence,
     builder: (column) => ColumnOrderings(column),
   );
+
+  ColumnOrderings<String> get exampleSentenceTokenized => $composableBuilder(
+    column: $table.exampleSentenceTokenized,
+    builder: (column) => ColumnOrderings(column),
+  );
 }
 
 class $$ExampleSentenceTableTableAnnotationComposer
@@ -39353,6 +39611,11 @@ class $$ExampleSentenceTableTableAnnotationComposer
 
   GeneratedColumn<String> get exampleSentence => $composableBuilder(
     column: $table.exampleSentence,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get exampleSentenceTokenized => $composableBuilder(
+    column: $table.exampleSentenceTokenized,
     builder: (column) => column,
   );
 
@@ -39452,17 +39715,21 @@ class $$ExampleSentenceTableTableTableManager
               ({
                 Value<int> id = const Value.absent(),
                 Value<String> exampleSentence = const Value.absent(),
+                Value<String?> exampleSentenceTokenized = const Value.absent(),
               }) => ExampleSentenceTableCompanion(
                 id: id,
                 exampleSentence: exampleSentence,
+                exampleSentenceTokenized: exampleSentenceTokenized,
               ),
           createCompanionCallback:
               ({
                 Value<int> id = const Value.absent(),
                 required String exampleSentence,
+                Value<String?> exampleSentenceTokenized = const Value.absent(),
               }) => ExampleSentenceTableCompanion.insert(
                 id: id,
                 exampleSentence: exampleSentence,
+                exampleSentenceTokenized: exampleSentenceTokenized,
               ),
           withReferenceMapper: (p0) => p0
               .map(
@@ -40781,388 +41048,150 @@ typedef $$ExampleTableTableProcessedTableManager =
         bool exampleTableXExampleAudioTableRefs,
       })
     >;
-typedef $$ExampleSentenceTable_X_TermTableTableCreateCompanionBuilder =
-    ExampleSentenceTable_X_TermTableCompanion Function({
-      required int exampleSentenceId,
-      required int termId,
+typedef $FtsExampleSentenceTokenizedCreateCompanionBuilder =
+    FtsExampleSentenceTokenizedCompanion Function({
+      Value<String?> exampleSentenceTokenized,
+      Value<int> rowid,
     });
-typedef $$ExampleSentenceTable_X_TermTableTableUpdateCompanionBuilder =
-    ExampleSentenceTable_X_TermTableCompanion Function({
-      Value<int> exampleSentenceId,
-      Value<int> termId,
+typedef $FtsExampleSentenceTokenizedUpdateCompanionBuilder =
+    FtsExampleSentenceTokenizedCompanion Function({
+      Value<String?> exampleSentenceTokenized,
+      Value<int> rowid,
     });
 
-final class $$ExampleSentenceTable_X_TermTableTableReferences
-    extends
-        BaseReferences<
-          _$DaDb,
-          $ExampleSentenceTable_X_TermTableTable,
-          ExampleSentenceTable_X_TermTableData
-        > {
-  $$ExampleSentenceTable_X_TermTableTableReferences(
-    super.$_db,
-    super.$_table,
-    super.$_typedResult,
+class $FtsExampleSentenceTokenizedFilterComposer
+    extends Composer<_$DaDb, FtsExampleSentenceTokenized> {
+  $FtsExampleSentenceTokenizedFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get exampleSentenceTokenized => $composableBuilder(
+    column: $table.exampleSentenceTokenized,
+    builder: (column) => ColumnFilters(column),
   );
+}
 
-  static $ExampleSentenceTableTable _exampleSentenceIdTable(_$DaDb db) =>
-      db.exampleSentenceTable.createAlias(
-        $_aliasNameGenerator(
-          db.exampleSentenceTableXTermTable.exampleSentenceId,
-          db.exampleSentenceTable.id,
-        ),
-      );
-
-  $$ExampleSentenceTableTableProcessedTableManager get exampleSentenceId {
-    final $_column = $_itemColumn<int>('example_sentence_id')!;
-
-    final manager = $$ExampleSentenceTableTableTableManager(
-      $_db,
-      $_db.exampleSentenceTable,
-    ).filter((f) => f.id.sqlEquals($_column));
-    final item = $_typedResult.readTableOrNull(_exampleSentenceIdTable($_db));
-    if (item == null) return manager;
-    return ProcessedTableManager(
-      manager.$state.copyWith(prefetchedData: [item]),
-    );
-  }
-
-  static $TermTableTable _termIdTable(_$DaDb db) => db.termTable.createAlias(
-    $_aliasNameGenerator(
-      db.exampleSentenceTableXTermTable.termId,
-      db.termTable.id,
-    ),
+class $FtsExampleSentenceTokenizedOrderingComposer
+    extends Composer<_$DaDb, FtsExampleSentenceTokenized> {
+  $FtsExampleSentenceTokenizedOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get exampleSentenceTokenized => $composableBuilder(
+    column: $table.exampleSentenceTokenized,
+    builder: (column) => ColumnOrderings(column),
   );
-
-  $$TermTableTableProcessedTableManager get termId {
-    final $_column = $_itemColumn<int>('term_id')!;
-
-    final manager = $$TermTableTableTableManager(
-      $_db,
-      $_db.termTable,
-    ).filter((f) => f.id.sqlEquals($_column));
-    final item = $_typedResult.readTableOrNull(_termIdTable($_db));
-    if (item == null) return manager;
-    return ProcessedTableManager(
-      manager.$state.copyWith(prefetchedData: [item]),
-    );
-  }
 }
 
-class $$ExampleSentenceTable_X_TermTableTableFilterComposer
-    extends Composer<_$DaDb, $ExampleSentenceTable_X_TermTableTable> {
-  $$ExampleSentenceTable_X_TermTableTableFilterComposer({
+class $FtsExampleSentenceTokenizedAnnotationComposer
+    extends Composer<_$DaDb, FtsExampleSentenceTokenized> {
+  $FtsExampleSentenceTokenizedAnnotationComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
-  $$ExampleSentenceTableTableFilterComposer get exampleSentenceId {
-    final $$ExampleSentenceTableTableFilterComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.exampleSentenceId,
-      referencedTable: $db.exampleSentenceTable,
-      getReferencedColumn: (t) => t.id,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$ExampleSentenceTableTableFilterComposer(
-            $db: $db,
-            $table: $db.exampleSentenceTable,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return composer;
-  }
-
-  $$TermTableTableFilterComposer get termId {
-    final $$TermTableTableFilterComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.termId,
-      referencedTable: $db.termTable,
-      getReferencedColumn: (t) => t.id,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$TermTableTableFilterComposer(
-            $db: $db,
-            $table: $db.termTable,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return composer;
-  }
+  GeneratedColumn<String> get exampleSentenceTokenized => $composableBuilder(
+    column: $table.exampleSentenceTokenized,
+    builder: (column) => column,
+  );
 }
 
-class $$ExampleSentenceTable_X_TermTableTableOrderingComposer
-    extends Composer<_$DaDb, $ExampleSentenceTable_X_TermTableTable> {
-  $$ExampleSentenceTable_X_TermTableTableOrderingComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  $$ExampleSentenceTableTableOrderingComposer get exampleSentenceId {
-    final $$ExampleSentenceTableTableOrderingComposer composer =
-        $composerBuilder(
-          composer: this,
-          getCurrentColumn: (t) => t.exampleSentenceId,
-          referencedTable: $db.exampleSentenceTable,
-          getReferencedColumn: (t) => t.id,
-          builder:
-              (
-                joinBuilder, {
-                $addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer,
-              }) => $$ExampleSentenceTableTableOrderingComposer(
-                $db: $db,
-                $table: $db.exampleSentenceTable,
-                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-                joinBuilder: joinBuilder,
-                $removeJoinBuilderFromRootComposer:
-                    $removeJoinBuilderFromRootComposer,
-              ),
-        );
-    return composer;
-  }
-
-  $$TermTableTableOrderingComposer get termId {
-    final $$TermTableTableOrderingComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.termId,
-      referencedTable: $db.termTable,
-      getReferencedColumn: (t) => t.id,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$TermTableTableOrderingComposer(
-            $db: $db,
-            $table: $db.termTable,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return composer;
-  }
-}
-
-class $$ExampleSentenceTable_X_TermTableTableAnnotationComposer
-    extends Composer<_$DaDb, $ExampleSentenceTable_X_TermTableTable> {
-  $$ExampleSentenceTable_X_TermTableTableAnnotationComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  $$ExampleSentenceTableTableAnnotationComposer get exampleSentenceId {
-    final $$ExampleSentenceTableTableAnnotationComposer composer =
-        $composerBuilder(
-          composer: this,
-          getCurrentColumn: (t) => t.exampleSentenceId,
-          referencedTable: $db.exampleSentenceTable,
-          getReferencedColumn: (t) => t.id,
-          builder:
-              (
-                joinBuilder, {
-                $addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer,
-              }) => $$ExampleSentenceTableTableAnnotationComposer(
-                $db: $db,
-                $table: $db.exampleSentenceTable,
-                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-                joinBuilder: joinBuilder,
-                $removeJoinBuilderFromRootComposer:
-                    $removeJoinBuilderFromRootComposer,
-              ),
-        );
-    return composer;
-  }
-
-  $$TermTableTableAnnotationComposer get termId {
-    final $$TermTableTableAnnotationComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.termId,
-      referencedTable: $db.termTable,
-      getReferencedColumn: (t) => t.id,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$TermTableTableAnnotationComposer(
-            $db: $db,
-            $table: $db.termTable,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return composer;
-  }
-}
-
-class $$ExampleSentenceTable_X_TermTableTableTableManager
+class $FtsExampleSentenceTokenizedTableManager
     extends
         RootTableManager<
           _$DaDb,
-          $ExampleSentenceTable_X_TermTableTable,
-          ExampleSentenceTable_X_TermTableData,
-          $$ExampleSentenceTable_X_TermTableTableFilterComposer,
-          $$ExampleSentenceTable_X_TermTableTableOrderingComposer,
-          $$ExampleSentenceTable_X_TermTableTableAnnotationComposer,
-          $$ExampleSentenceTable_X_TermTableTableCreateCompanionBuilder,
-          $$ExampleSentenceTable_X_TermTableTableUpdateCompanionBuilder,
+          FtsExampleSentenceTokenized,
+          FtsExampleSentenceTokenizedData,
+          $FtsExampleSentenceTokenizedFilterComposer,
+          $FtsExampleSentenceTokenizedOrderingComposer,
+          $FtsExampleSentenceTokenizedAnnotationComposer,
+          $FtsExampleSentenceTokenizedCreateCompanionBuilder,
+          $FtsExampleSentenceTokenizedUpdateCompanionBuilder,
           (
-            ExampleSentenceTable_X_TermTableData,
-            $$ExampleSentenceTable_X_TermTableTableReferences,
+            FtsExampleSentenceTokenizedData,
+            BaseReferences<
+              _$DaDb,
+              FtsExampleSentenceTokenized,
+              FtsExampleSentenceTokenizedData
+            >,
           ),
-          ExampleSentenceTable_X_TermTableData,
-          PrefetchHooks Function({bool exampleSentenceId, bool termId})
+          FtsExampleSentenceTokenizedData,
+          PrefetchHooks Function()
         > {
-  $$ExampleSentenceTable_X_TermTableTableTableManager(
+  $FtsExampleSentenceTokenizedTableManager(
     _$DaDb db,
-    $ExampleSentenceTable_X_TermTableTable table,
+    FtsExampleSentenceTokenized table,
   ) : super(
         TableManagerState(
           db: db,
           table: table,
           createFilteringComposer: () =>
-              $$ExampleSentenceTable_X_TermTableTableFilterComposer(
+              $FtsExampleSentenceTokenizedFilterComposer(
                 $db: db,
                 $table: table,
               ),
           createOrderingComposer: () =>
-              $$ExampleSentenceTable_X_TermTableTableOrderingComposer(
+              $FtsExampleSentenceTokenizedOrderingComposer(
                 $db: db,
                 $table: table,
               ),
           createComputedFieldComposer: () =>
-              $$ExampleSentenceTable_X_TermTableTableAnnotationComposer(
+              $FtsExampleSentenceTokenizedAnnotationComposer(
                 $db: db,
                 $table: table,
               ),
           updateCompanionCallback:
               ({
-                Value<int> exampleSentenceId = const Value.absent(),
-                Value<int> termId = const Value.absent(),
-              }) => ExampleSentenceTable_X_TermTableCompanion(
-                exampleSentenceId: exampleSentenceId,
-                termId: termId,
+                Value<String?> exampleSentenceTokenized = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => FtsExampleSentenceTokenizedCompanion(
+                exampleSentenceTokenized: exampleSentenceTokenized,
+                rowid: rowid,
               ),
           createCompanionCallback:
-              ({required int exampleSentenceId, required int termId}) =>
-                  ExampleSentenceTable_X_TermTableCompanion.insert(
-                    exampleSentenceId: exampleSentenceId,
-                    termId: termId,
-                  ),
+              ({
+                Value<String?> exampleSentenceTokenized = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => FtsExampleSentenceTokenizedCompanion.insert(
+                exampleSentenceTokenized: exampleSentenceTokenized,
+                rowid: rowid,
+              ),
           withReferenceMapper: (p0) => p0
-              .map(
-                (e) => (
-                  e.readTable(table),
-                  $$ExampleSentenceTable_X_TermTableTableReferences(
-                    db,
-                    table,
-                    e,
-                  ),
-                ),
-              )
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
               .toList(),
-          prefetchHooksCallback: ({exampleSentenceId = false, termId = false}) {
-            return PrefetchHooks(
-              db: db,
-              explicitlyWatchedTables: [],
-              addJoins:
-                  <
-                    T extends TableManagerState<
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic
-                    >
-                  >(state) {
-                    if (exampleSentenceId) {
-                      state =
-                          state.withJoin(
-                                currentTable: table,
-                                currentColumn: table.exampleSentenceId,
-                                referencedTable:
-                                    $$ExampleSentenceTable_X_TermTableTableReferences
-                                        ._exampleSentenceIdTable(db),
-                                referencedColumn:
-                                    $$ExampleSentenceTable_X_TermTableTableReferences
-                                        ._exampleSentenceIdTable(db)
-                                        .id,
-                              )
-                              as T;
-                    }
-                    if (termId) {
-                      state =
-                          state.withJoin(
-                                currentTable: table,
-                                currentColumn: table.termId,
-                                referencedTable:
-                                    $$ExampleSentenceTable_X_TermTableTableReferences
-                                        ._termIdTable(db),
-                                referencedColumn:
-                                    $$ExampleSentenceTable_X_TermTableTableReferences
-                                        ._termIdTable(db)
-                                        .id,
-                              )
-                              as T;
-                    }
-
-                    return state;
-                  },
-              getPrefetchedDataCallback: (items) async {
-                return [];
-              },
-            );
-          },
+          prefetchHooksCallback: null,
         ),
       );
 }
 
-typedef $$ExampleSentenceTable_X_TermTableTableProcessedTableManager =
+typedef $FtsExampleSentenceTokenizedProcessedTableManager =
     ProcessedTableManager<
       _$DaDb,
-      $ExampleSentenceTable_X_TermTableTable,
-      ExampleSentenceTable_X_TermTableData,
-      $$ExampleSentenceTable_X_TermTableTableFilterComposer,
-      $$ExampleSentenceTable_X_TermTableTableOrderingComposer,
-      $$ExampleSentenceTable_X_TermTableTableAnnotationComposer,
-      $$ExampleSentenceTable_X_TermTableTableCreateCompanionBuilder,
-      $$ExampleSentenceTable_X_TermTableTableUpdateCompanionBuilder,
+      FtsExampleSentenceTokenized,
+      FtsExampleSentenceTokenizedData,
+      $FtsExampleSentenceTokenizedFilterComposer,
+      $FtsExampleSentenceTokenizedOrderingComposer,
+      $FtsExampleSentenceTokenizedAnnotationComposer,
+      $FtsExampleSentenceTokenizedCreateCompanionBuilder,
+      $FtsExampleSentenceTokenizedUpdateCompanionBuilder,
       (
-        ExampleSentenceTable_X_TermTableData,
-        $$ExampleSentenceTable_X_TermTableTableReferences,
+        FtsExampleSentenceTokenizedData,
+        BaseReferences<
+          _$DaDb,
+          FtsExampleSentenceTokenized,
+          FtsExampleSentenceTokenizedData
+        >,
       ),
-      ExampleSentenceTable_X_TermTableData,
-      PrefetchHooks Function({bool exampleSentenceId, bool termId})
+      FtsExampleSentenceTokenizedData,
+      PrefetchHooks Function()
     >;
 typedef $$ExampleTable_X_TagBankTableTableCreateCompanionBuilder =
     ExampleTable_X_TagBankTableCompanion Function({
@@ -44559,6 +44588,389 @@ typedef $$ExampleAudioTable_X_StatTableTableProcessedTableManager =
       ExampleAudioTable_X_StatTableData,
       PrefetchHooks Function({bool audioId, bool statTableId})
     >;
+typedef $$ExampleSentenceTable_X_TermTableTableCreateCompanionBuilder =
+    ExampleSentenceTable_X_TermTableCompanion Function({
+      required int exampleSentenceId,
+      required int termId,
+    });
+typedef $$ExampleSentenceTable_X_TermTableTableUpdateCompanionBuilder =
+    ExampleSentenceTable_X_TermTableCompanion Function({
+      Value<int> exampleSentenceId,
+      Value<int> termId,
+    });
+
+final class $$ExampleSentenceTable_X_TermTableTableReferences
+    extends
+        BaseReferences<
+          _$DaDb,
+          $ExampleSentenceTable_X_TermTableTable,
+          ExampleSentenceTable_X_TermTableData
+        > {
+  $$ExampleSentenceTable_X_TermTableTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static $ExampleSentenceTableTable _exampleSentenceIdTable(_$DaDb db) =>
+      db.exampleSentenceTable.createAlias(
+        $_aliasNameGenerator(
+          db.exampleSentenceTableXTermTable.exampleSentenceId,
+          db.exampleSentenceTable.id,
+        ),
+      );
+
+  $$ExampleSentenceTableTableProcessedTableManager get exampleSentenceId {
+    final $_column = $_itemColumn<int>('example_sentence_id')!;
+
+    final manager = $$ExampleSentenceTableTableTableManager(
+      $_db,
+      $_db.exampleSentenceTable,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_exampleSentenceIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static $TermTableTable _termIdTable(_$DaDb db) => db.termTable.createAlias(
+    $_aliasNameGenerator(
+      db.exampleSentenceTableXTermTable.termId,
+      db.termTable.id,
+    ),
+  );
+
+  $$TermTableTableProcessedTableManager get termId {
+    final $_column = $_itemColumn<int>('term_id')!;
+
+    final manager = $$TermTableTableTableManager(
+      $_db,
+      $_db.termTable,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_termIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+}
+
+class $$ExampleSentenceTable_X_TermTableTableFilterComposer
+    extends Composer<_$DaDb, $ExampleSentenceTable_X_TermTableTable> {
+  $$ExampleSentenceTable_X_TermTableTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  $$ExampleSentenceTableTableFilterComposer get exampleSentenceId {
+    final $$ExampleSentenceTableTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.exampleSentenceId,
+      referencedTable: $db.exampleSentenceTable,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$ExampleSentenceTableTableFilterComposer(
+            $db: $db,
+            $table: $db.exampleSentenceTable,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$TermTableTableFilterComposer get termId {
+    final $$TermTableTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.termId,
+      referencedTable: $db.termTable,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$TermTableTableFilterComposer(
+            $db: $db,
+            $table: $db.termTable,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$ExampleSentenceTable_X_TermTableTableOrderingComposer
+    extends Composer<_$DaDb, $ExampleSentenceTable_X_TermTableTable> {
+  $$ExampleSentenceTable_X_TermTableTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  $$ExampleSentenceTableTableOrderingComposer get exampleSentenceId {
+    final $$ExampleSentenceTableTableOrderingComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.exampleSentenceId,
+          referencedTable: $db.exampleSentenceTable,
+          getReferencedColumn: (t) => t.id,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$ExampleSentenceTableTableOrderingComposer(
+                $db: $db,
+                $table: $db.exampleSentenceTable,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return composer;
+  }
+
+  $$TermTableTableOrderingComposer get termId {
+    final $$TermTableTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.termId,
+      referencedTable: $db.termTable,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$TermTableTableOrderingComposer(
+            $db: $db,
+            $table: $db.termTable,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$ExampleSentenceTable_X_TermTableTableAnnotationComposer
+    extends Composer<_$DaDb, $ExampleSentenceTable_X_TermTableTable> {
+  $$ExampleSentenceTable_X_TermTableTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  $$ExampleSentenceTableTableAnnotationComposer get exampleSentenceId {
+    final $$ExampleSentenceTableTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.exampleSentenceId,
+          referencedTable: $db.exampleSentenceTable,
+          getReferencedColumn: (t) => t.id,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$ExampleSentenceTableTableAnnotationComposer(
+                $db: $db,
+                $table: $db.exampleSentenceTable,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return composer;
+  }
+
+  $$TermTableTableAnnotationComposer get termId {
+    final $$TermTableTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.termId,
+      referencedTable: $db.termTable,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$TermTableTableAnnotationComposer(
+            $db: $db,
+            $table: $db.termTable,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$ExampleSentenceTable_X_TermTableTableTableManager
+    extends
+        RootTableManager<
+          _$DaDb,
+          $ExampleSentenceTable_X_TermTableTable,
+          ExampleSentenceTable_X_TermTableData,
+          $$ExampleSentenceTable_X_TermTableTableFilterComposer,
+          $$ExampleSentenceTable_X_TermTableTableOrderingComposer,
+          $$ExampleSentenceTable_X_TermTableTableAnnotationComposer,
+          $$ExampleSentenceTable_X_TermTableTableCreateCompanionBuilder,
+          $$ExampleSentenceTable_X_TermTableTableUpdateCompanionBuilder,
+          (
+            ExampleSentenceTable_X_TermTableData,
+            $$ExampleSentenceTable_X_TermTableTableReferences,
+          ),
+          ExampleSentenceTable_X_TermTableData,
+          PrefetchHooks Function({bool exampleSentenceId, bool termId})
+        > {
+  $$ExampleSentenceTable_X_TermTableTableTableManager(
+    _$DaDb db,
+    $ExampleSentenceTable_X_TermTableTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$ExampleSentenceTable_X_TermTableTableFilterComposer(
+                $db: db,
+                $table: table,
+              ),
+          createOrderingComposer: () =>
+              $$ExampleSentenceTable_X_TermTableTableOrderingComposer(
+                $db: db,
+                $table: table,
+              ),
+          createComputedFieldComposer: () =>
+              $$ExampleSentenceTable_X_TermTableTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<int> exampleSentenceId = const Value.absent(),
+                Value<int> termId = const Value.absent(),
+              }) => ExampleSentenceTable_X_TermTableCompanion(
+                exampleSentenceId: exampleSentenceId,
+                termId: termId,
+              ),
+          createCompanionCallback:
+              ({required int exampleSentenceId, required int termId}) =>
+                  ExampleSentenceTable_X_TermTableCompanion.insert(
+                    exampleSentenceId: exampleSentenceId,
+                    termId: termId,
+                  ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable(table),
+                  $$ExampleSentenceTable_X_TermTableTableReferences(
+                    db,
+                    table,
+                    e,
+                  ),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: ({exampleSentenceId = false, termId = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [],
+              addJoins:
+                  <
+                    T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic
+                    >
+                  >(state) {
+                    if (exampleSentenceId) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.exampleSentenceId,
+                                referencedTable:
+                                    $$ExampleSentenceTable_X_TermTableTableReferences
+                                        ._exampleSentenceIdTable(db),
+                                referencedColumn:
+                                    $$ExampleSentenceTable_X_TermTableTableReferences
+                                        ._exampleSentenceIdTable(db)
+                                        .id,
+                              )
+                              as T;
+                    }
+                    if (termId) {
+                      state =
+                          state.withJoin(
+                                currentTable: table,
+                                currentColumn: table.termId,
+                                referencedTable:
+                                    $$ExampleSentenceTable_X_TermTableTableReferences
+                                        ._termIdTable(db),
+                                referencedColumn:
+                                    $$ExampleSentenceTable_X_TermTableTableReferences
+                                        ._termIdTable(db)
+                                        .id,
+                              )
+                              as T;
+                    }
+
+                    return state;
+                  },
+              getPrefetchedDataCallback: (items) async {
+                return [];
+              },
+            );
+          },
+        ),
+      );
+}
+
+typedef $$ExampleSentenceTable_X_TermTableTableProcessedTableManager =
+    ProcessedTableManager<
+      _$DaDb,
+      $ExampleSentenceTable_X_TermTableTable,
+      ExampleSentenceTable_X_TermTableData,
+      $$ExampleSentenceTable_X_TermTableTableFilterComposer,
+      $$ExampleSentenceTable_X_TermTableTableOrderingComposer,
+      $$ExampleSentenceTable_X_TermTableTableAnnotationComposer,
+      $$ExampleSentenceTable_X_TermTableTableCreateCompanionBuilder,
+      $$ExampleSentenceTable_X_TermTableTableUpdateCompanionBuilder,
+      (
+        ExampleSentenceTable_X_TermTableData,
+        $$ExampleSentenceTable_X_TermTableTableReferences,
+      ),
+      ExampleSentenceTable_X_TermTableData,
+      PrefetchHooks Function({bool exampleSentenceId, bool termId})
+    >;
 typedef $$KanjiVGTableTableCreateCompanionBuilder =
     KanjiVGTableCompanion Function({
       Value<int> id,
@@ -46486,11 +46898,10 @@ class $DaDbManager {
       $$LanguageCodeTableTableTableManager(_db, _db.languageCodeTable);
   $$ExampleTableTableTableManager get exampleTable =>
       $$ExampleTableTableTableManager(_db, _db.exampleTable);
-  $$ExampleSentenceTable_X_TermTableTableTableManager
-  get exampleSentenceTableXTermTable =>
-      $$ExampleSentenceTable_X_TermTableTableTableManager(
+  $FtsExampleSentenceTokenizedTableManager get ftsExampleSentenceTokenized =>
+      $FtsExampleSentenceTokenizedTableManager(
         _db,
-        _db.exampleSentenceTableXTermTable,
+        _db.ftsExampleSentenceTokenized,
       );
   $$ExampleTable_X_TagBankTableTableTableManager
   get exampleTableXTagBankTable =>
@@ -46526,6 +46937,12 @@ class $DaDbManager {
       $$ExampleAudioTable_X_StatTableTableTableManager(
         _db,
         _db.exampleAudioTableXStatTable,
+      );
+  $$ExampleSentenceTable_X_TermTableTableTableManager
+  get exampleSentenceTableXTermTable =>
+      $$ExampleSentenceTable_X_TermTableTableTableManager(
+        _db,
+        _db.exampleSentenceTableXTermTable,
       );
   $$KanjiVGTableTableTableManager get kanjiVGTable =>
       $$KanjiVGTableTableTableManager(_db, _db.kanjiVGTable);
@@ -46727,25 +47144,12 @@ class SearchExampleBaseMatchesResult {
   });
 }
 
-class SearchExampleBaseMatchesByTermIdsResult {
+class SearchExampleBaseMatchesByTokensResult {
   final int id;
   final int groupId;
   final String languageCode;
   final int indexId;
-  SearchExampleBaseMatchesByTermIdsResult({
-    required this.id,
-    required this.groupId,
-    required this.languageCode,
-    required this.indexId,
-  });
-}
-
-class SearchExampleBaseMatchesByTermStringResult {
-  final int id;
-  final int groupId;
-  final String languageCode;
-  final int indexId;
-  SearchExampleBaseMatchesByTermStringResult({
+  SearchExampleBaseMatchesByTokensResult({
     required this.id,
     required this.groupId,
     required this.languageCode,
