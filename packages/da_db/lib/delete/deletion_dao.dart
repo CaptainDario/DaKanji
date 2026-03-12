@@ -54,11 +54,12 @@ class DeletionDao extends DatabaseAccessor<DaDb> with _$DeletionDaoMixin {
 
   /// Utility function to perform garbage collection on shared tables.
   /// Uses a TEMP table to reliably bulk-sync FTS External Content tables.
+  /// Automatically cleans up both trigram and unicode FTS indexes.
   Future<void> garbageCollectSharedTables(DaDb db) async {
-    // 0. Setup temp table. We explicitly store the text columns to feed directly back to FTS.
+    // 0. Setup temp table to store the text columns to feed directly back to FTS.
     await db.customStatement('CREATE TEMP TABLE IF NOT EXISTS fts_garbage (id INTEGER PRIMARY KEY, t1 TEXT, t2 TEXT);');
 
-    // --- 1. TERMS & fts_terms & fts_tokens ---
+    // --- 1. TERMS & FTS TABLES ---
     await db.customStatement('DELETE FROM fts_garbage;');
     await db.customStatement('''
       INSERT INTO fts_garbage (id, t1, t2)
@@ -68,17 +69,20 @@ class DeletionDao extends DatabaseAccessor<DaDb> with _$DeletionDaoMixin {
       AND NOT EXISTS (SELECT 1 FROM ${db.audioTableXTermTable.actualTableName} WHERE term_id = ${db.termTable.actualTableName}.id);
     ''');
 
-    // Force FTS5 to un-index using the exact strings captured in the temp table
+    // Force FTS5 to un-index using the exact strings captured in the temp table.
     await db.customStatement('''
       INSERT INTO fts_terms(fts_terms, rowid, term, term_normalized)
       SELECT 'delete', id, t1, t2 FROM fts_garbage;
     ''');
+    await db.customStatement('''
+      INSERT INTO fts_terms_unicode(fts_terms_unicode, rowid, term, term_normalized)
+      SELECT 'delete', id, t1, t2 FROM fts_garbage;
+    ''');
     
     // Cleanup contentless tokens and actual term rows
-    await db.customStatement('DELETE FROM fts_tokens WHERE rowid IN (SELECT id FROM fts_garbage);');
     await db.customStatement('DELETE FROM ${db.termTable.actualTableName} WHERE id IN (SELECT id FROM fts_garbage);');
 
-    // --- 2. READINGS & fts_readings ---
+    // --- 2. READINGS & FTS TABLES ---
     await db.customStatement('DELETE FROM fts_garbage;');
     await db.customStatement('''
       INSERT INTO fts_garbage (id, t1, t2)
@@ -94,10 +98,14 @@ class DeletionDao extends DatabaseAccessor<DaDb> with _$DeletionDaoMixin {
       INSERT INTO fts_readings(fts_readings, rowid, reading, reading_normalized)
       SELECT 'delete', id, t1, t2 FROM fts_garbage;
     ''');
+    await db.customStatement('''
+      INSERT INTO fts_readings_unicode(fts_readings_unicode, rowid, reading, reading_normalized)
+      SELECT 'delete', id, t1, t2 FROM fts_garbage;
+    ''');
 
     await db.customStatement('DELETE FROM ${db.readingTable.actualTableName} WHERE id IN (SELECT id FROM fts_garbage);');
 
-    // --- 3. DEFINITIONS & fts_definitions ---
+    // --- 3. DEFINITIONS & FTS TABLES ---
     await db.customStatement('DELETE FROM fts_garbage;');
     await db.customStatement('''
       INSERT INTO fts_garbage (id, t1)
@@ -110,13 +118,17 @@ class DeletionDao extends DatabaseAccessor<DaDb> with _$DeletionDaoMixin {
       INSERT INTO fts_definitions(fts_definitions, rowid, definition)
       SELECT 'delete', id, t1 FROM fts_garbage;
     ''');
+    await db.customStatement('''
+      INSERT INTO fts_definitions_unicode(fts_definitions_unicode, rowid, definition)
+      SELECT 'delete', id, t1 FROM fts_garbage;
+    ''');
 
     await db.customStatement('DELETE FROM ${db.definitionTable.actualTableName} WHERE id IN (SELECT id FROM fts_garbage);');
 
     // Drop temp table
     await db.customStatement('DROP TABLE fts_garbage;');
 
-    // --- 4. REMAINING ORPHAN LOGIC (4-18 EXACTLY AS PROVIDED) ---
+    // --- 4. REMAINING ORPHAN LOGIC ---
     final remainingQueries = [
       // 4. Delete unreferenced Kanjis
       '''DELETE FROM ${db.kanjiTable.actualTableName} 
@@ -156,6 +168,10 @@ class DeletionDao extends DatabaseAccessor<DaDb> with _$DeletionDaoMixin {
       // 12. Delete unreferenced Example FTS Tokens
       '''DELETE FROM fts_example_sentence 
          WHERE rowid NOT IN (SELECT example_sentence_id FROM ${db.exampleTable.actualTableName});''',
+      '''DELETE FROM fts_example_sentence_tokenized 
+         WHERE rowid NOT IN (SELECT example_sentence_id FROM ${db.exampleTable.actualTableName});''',
+      '''DELETE FROM fts_example_sentence_unicode 
+         WHERE rowid NOT IN (SELECT example_sentence_id FROM ${db.exampleTable.actualTableName});''',
 
       // 13. Delete unreferenced Example Sentences
       '''DELETE FROM ${db.exampleSentenceTable.actualTableName} 
@@ -165,16 +181,12 @@ class DeletionDao extends DatabaseAccessor<DaDb> with _$DeletionDaoMixin {
       '''DELETE FROM ${db.exampleAudioTable.actualTableName} 
          WHERE NOT EXISTS (SELECT 1 FROM ${db.exampleTableXExampleAudioTable.actualTableName} WHERE audio_id = ${db.exampleAudioTable.actualTableName}.id);''',
 
-      // 15. Delete unreferenced Language Codes
-      '''DELETE FROM ${db.languageCodeTable.actualTableName} 
-         WHERE NOT EXISTS (SELECT 1 FROM ${db.exampleTable.actualTableName} WHERE language_code_id = ${db.languageCodeTable.actualTableName}.id);''',
-
-      // 16. Delete unreferenced Stat Combinations
+      // 15. Delete unreferenced Stat Combinations
       '''DELETE FROM ${db.statTable.actualTableName} 
          WHERE NOT EXISTS (SELECT 1 FROM ${db.exampleTableXStatTable.actualTableName} WHERE stat_table_id = ${db.statTable.actualTableName}.id)
          AND NOT EXISTS (SELECT 1 FROM ${db.exampleAudioTableXStatTable.actualTableName} WHERE stat_table_id = ${db.statTable.actualTableName}.id);''',
 
-      // 17. Delete unreferenced Stat Names
+      // 16. Delete unreferenced Stat Names
       '''DELETE FROM ${db.statNameTable.actualTableName} 
          WHERE NOT EXISTS (SELECT 1 FROM ${db.statTable.actualTableName} WHERE stat_name_id = ${db.statNameTable.actualTableName}.id);''',
     ];

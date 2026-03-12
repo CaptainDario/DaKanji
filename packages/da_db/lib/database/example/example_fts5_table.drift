@@ -1,6 +1,6 @@
 import 'example_tables.dart';
 
--- Create the FTS5 virtual table
+-- Create the FTS5 virtual tables for Example Sentences (Non-Spaced Languages / Trigram)
 CREATE VIRTUAL TABLE IF NOT EXISTS fts_example_sentence USING fts5(
   example_sentence,
   content='example_sentence_table',
@@ -8,9 +8,19 @@ CREATE VIRTUAL TABLE IF NOT EXISTS fts_example_sentence USING fts5(
   tokenize='better_trigram'
 );
 
+-- Create the FTS5 virtual tables for Example Sentences (Space-Separated Languages / Unicode61)
+CREATE VIRTUAL TABLE IF NOT EXISTS fts_example_sentence_unicode USING fts5(
+  example_sentence,
+  content='example_sentence_table',
+  content_rowid='id',
+  tokenize='unicode61'
+);
+
+-- exampe table for tokenized search (spaces are inserted even in non-spaced languages)
 CREATE VIRTUAL TABLE IF NOT EXISTS fts_example_sentence_tokenized USING fts5(
   example_sentence_tokenized,
   content='example_sentence_table',
   content_rowid='id',
   tokenize='unicode61'
 );
+

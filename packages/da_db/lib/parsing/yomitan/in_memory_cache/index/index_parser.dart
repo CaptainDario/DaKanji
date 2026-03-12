@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:da_db/data/dictionary_types.dart';
 import 'package:da_db/util/data_converters/frequency_mode_conerter.dart';
 import 'package:drift/drift.dart';
+import 'package:language_processing/language_processing.dart';
 import 'package:universal_io/io.dart';
 
 import '/database/da_db.dart';
@@ -20,6 +21,7 @@ Future<int> parseAndInsertIndexFile(
   return await parseAndInsertIndex(jsonString, db, dictionaryType, isDefaultDictionary);
 
 }
+
 
 /// parses the given json's contents and adds it to the given [DaDb]
 Future<int> parseAndInsertIndex(
@@ -51,8 +53,8 @@ Future<int> parseAndInsertIndex(
     url: Value(jsonMap["url"]),
     description: Value(jsonMap["description"]),
     attribution: Value(jsonMap["attribution"]),
-    sourceLanguage: Value(jsonMap["sourceLanguage"]),
-    targetLanguage: Value(jsonMap["targetLanguage"]),
+    sourceLanguage: Value(parseToIso(jsonMap["sourceLanguage"]).iso3),
+    targetLanguage: Value(parseToIso(jsonMap["targetLanguage"]).iso3),
     frequencyMode: Value(mapFrequencyMode(jsonMap["frequencyMode"])),
   );
 

@@ -1,40 +1,46 @@
 import 'example_tables.dart';
 import 'example_relation_tables.dart';
-import '/database/general_tables/language_code_table.dart';
 import '/database/example/example_fts5_table.drift';
 import '/database/example/example_views.drift';
 
 ----------------------------------------------------------------------
--- PHASE 1: Base Match Discovery
+-- PHASE 1: Base Match Discovery (Unified Search)
 ----------------------------------------------------------------------
 
--- 1. Fast FTS 5 Search (Exact Surface Form via better-trigram, for full text search)
+-- 1. Fast FTS 5 Search (Exact Surface Form, unified across both tokenizers)
 searchExampleBaseMatches:
-    SELECT 
-        e.id, 
-        e.group_id, 
-        l.language_code,
-        e.index_id
-    FROM fts_example_sentence AS fts
+    WITH CombinedMatches AS (
+        SELECT 
+            e.id, 
+            e.group_id, 
+            e.index_id,
+            bm25(fts_example_sentence) AS score
+        FROM fts_example_sentence AS fts
         INNER JOIN example_table AS e ON e.example_sentence_id = fts.rowid
-        INNER JOIN language_code_table AS l ON l.id = e.language_code_id
-    WHERE fts_example_sentence MATCH :query
-        AND l.language_code IN :languages
-    ORDER BY bm25(fts_example_sentence)
+        WHERE fts_example_sentence MATCH :query
+        
+        UNION ALL
+        
+        SELECT 
+            e.id, 
+            e.group_id, 
+            e.index_id,
+            bm25(fts_example_sentence_unicode) AS score
+        FROM fts_example_sentence_unicode AS fts
+        INNER JOIN example_table AS e ON e.example_sentence_id = fts.rowid
+        WHERE fts_example_sentence_unicode MATCH :query
+    )
+    SELECT id, group_id, index_id
+    FROM CombinedMatches
+    ORDER BY score
     LIMIT :limit OFFSET :offset;
 
--- 2. Fast Token/Lemma Search (Base Form via unicode61, for searching via tokens)
+-- 2. Fast Token/Lemma Search (Base Form, unified across both tokenizers)
 searchExampleBaseMatchesByTokens:
-    SELECT 
-        e.id, 
-        e.group_id, 
-        l.language_code,
-        e.index_id
+    SELECT e.id, e.group_id, e.index_id
     FROM fts_example_sentence_tokenized AS fts
-        INNER JOIN example_table AS e ON e.example_sentence_id = fts.rowid
-        INNER JOIN language_code_table AS l ON l.id = e.language_code_id
+    INNER JOIN example_table AS e ON e.example_sentence_id = fts.rowid
     WHERE fts_example_sentence_tokenized MATCH :lemmas
-        AND l.language_code IN :languages
     ORDER BY bm25(fts_example_sentence_tokenized)
     LIMIT :limit OFFSET :offset;
 

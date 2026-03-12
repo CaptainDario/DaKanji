@@ -10,7 +10,6 @@ ExampleEntry _$ExampleEntryFromJson(Map<String, dynamic> json) => ExampleEntry(
   id: (json['id'] as num).toInt(),
   indexEntry: IndexEntry.fromJson(json['indexEntry'] as Map<String, dynamic>),
   groupId: (json['groupId'] as num?)?.toInt(),
-  languageCode: json['languageCode'] as String,
   sentence: json['sentence'] as String,
   tags:
       (json['tags'] as List<dynamic>?)
@@ -34,7 +33,6 @@ Map<String, dynamic> _$ExampleEntryToJson(ExampleEntry instance) =>
       'id': instance.id,
       'indexEntry': instance.indexEntry,
       'groupId': instance.groupId,
-      'languageCode': instance.languageCode,
       'sentence': instance.sentence,
       'tags': instance.tags,
       'stats': instance.stats,

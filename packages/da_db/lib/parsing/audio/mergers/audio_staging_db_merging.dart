@@ -1,4 +1,5 @@
 import 'package:da_db/database/da_db.dart';
+import 'package:da_db/database/index/yomitan_index.dart';
 import 'package:da_db/parsing/util/db_optimization.dart';
 
 import 'audio_bank_merger.dart';
@@ -11,6 +12,7 @@ import 'audio_bank_merger.dart';
 Future<void> mergeAudioStagingDb({
   required DaDb db,
   required String workerDbPath,
+  required YomitanIndex index,
   required int indexId,
 }) async {
   final workerAlias = 'worker_${DateTime.now().millisecondsSinceEpoch}';
@@ -24,6 +26,7 @@ Future<void> mergeAudioStagingDb({
     await AudioBankMerger().merge(
       targetDb: db, 
       workerAlias: workerAlias, 
+      index: index,
       indexId: indexId,
     );
   }

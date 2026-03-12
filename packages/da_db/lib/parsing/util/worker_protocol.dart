@@ -1,5 +1,7 @@
 import 'dart:isolate';
 
+import 'package:da_db/database/index/yomitan_index.dart';
+
 /// Base class for messages sent FROM the Main Isolate TO the Worker Isolate.
 abstract class WorkerMessage {}
 
@@ -9,12 +11,14 @@ class MsgInit extends WorkerMessage {
   final String dbPath;
   final String languageProcessorJson;
   final SendPort replyPort;
+  final YomitanIndex index;
 
   MsgInit(
     this.zipPath, 
     this.dbPath, 
     this.languageProcessorJson,
-    this.replyPort
+    this.replyPort,
+    this.index,
   );
 }
 

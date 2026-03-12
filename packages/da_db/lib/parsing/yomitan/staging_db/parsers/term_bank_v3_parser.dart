@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:crypto/crypto.dart';
+import 'package:da_db/database/index/yomitan_index.dart';
 import 'package:da_db/parsing/staging_db/staging_db.dart';
 import 'package:da_db/parsing/util/db_file_parser.dart';
 import 'package:da_db/parsing/util/parsing_constants.dart';
@@ -22,6 +23,7 @@ class TermBankV3Parser implements DbFileParser {
     LanguageProcessor? lp,
     ProcessorOptions options,
     int startId,
+    YomitanIndex index,
   ) async {
     if (lp == null) throw Exception("LanguageProcessor is required for parsing $termBankPrefix files");
 
@@ -54,11 +56,6 @@ class TermBankV3Parser implements DbFileParser {
       String? termNormalized = lp.normalize(term, options).firstOrNull;
       if (termNormalized == term) termNormalized = null;
       
-      String? termTokens = lp.parse(term, const ProcessorOptions()).segments.nonNulls.join(" ");
-      String? termTokensNormalized;
-      termTokensNormalized = lp.normalize(termTokens, options).firstOrNull;
-      if (termTokensNormalized == termTokens) termTokensNormalized = null;
-      
       String? readingNormalized = lp.normalize(reading, options).firstOrNull;
       if (readingNormalized == reading) readingNormalized = null;
 
@@ -68,9 +65,8 @@ class TermBankV3Parser implements DbFileParser {
       final compressedBytes = zlib.toSql(jsonString);
 
       termRows.add([
-        localId, term, reading, termNormalized, termTokens, 
-        termTokensNormalized, readingNormalized, popularity,
-        sequence, compressedBytes, jsonHash
+        localId, term, reading, termNormalized, readingNormalized,
+        popularity, sequence, compressedBytes, jsonHash
       ]);
 
       // --- 3. Definitions ---
@@ -124,9 +120,8 @@ Future<void> _flush(
       // 1. Term Staging
       await insertChunked(
         db, db.termStagingTable.actualTableName,
-        ['local_id', 'term', 'reading', 'term_normalized', 'term_tokens', 
-         'term_tokens_normalized', 'reading_normalized', 'popularity', 
-         'sequence_number', 'original_json', 'definition_json_hash'],
+        ['local_id', 'term', 'reading', 'term_normalized', 'reading_normalized',
+        'popularity', 'sequence_number', 'original_json', 'definition_json_hash'],
         termRows
       );
 

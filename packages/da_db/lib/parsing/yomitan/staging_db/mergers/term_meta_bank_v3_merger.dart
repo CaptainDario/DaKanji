@@ -1,5 +1,7 @@
 import 'package:da_db/database/da_db.dart';
+import 'package:da_db/database/index/yomitan_index.dart';
 import 'package:da_db/parsing/staging_db/mergers/staging_merger.dart';
+import 'package:language_processing/language_processing.dart';
 
 class TermMetaBankV3Merger implements StagingMerger {
   
@@ -7,8 +9,14 @@ class TermMetaBankV3Merger implements StagingMerger {
   Future<void> merge({
     required DaDb targetDb,
     required String workerAlias,
+    required YomitanIndex index,
     required int indexId,
   }) async {
+
+    final bool isSourceSpaceLang = usesSpaceSeparation(index.sourceLanguage);
+
+    final String ftsTermsTable = isSourceSpaceLang ? "fts_terms_unicode" : "fts_terms";
+    final String ftsReadingsTable = isSourceSpaceLang ? "fts_readings_unicode" : "fts_readings";
     
     // Pre-fetch Max IDs
     final maxMetaId = await targetDb.termMetaBankV3Dao.maxTermMetaBankV3Id();
@@ -40,19 +48,8 @@ class TermMetaBankV3Merger implements StagingMerger {
         FROM $workerAlias.term_meta_staging_table
       ''');
       await targetDb.customStatement('''
-        INSERT INTO fts_terms(rowid, term, term_normalized)
+        INSERT INTO $ftsTermsTable(rowid, term, term_normalized)
         SELECT id, term, term_normalized FROM ${tTerm.actualTableName} WHERE id > $maxTermId
-      ''');
-
-      // Manually populate the Contentless FTS Tokens table
-      await targetDb.customStatement('''
-        INSERT INTO fts_tokens(rowid, tokens, tokens_normalized)
-        SELECT DISTINCT t.${tTerm.id.name}, s.term_tokens, s.term_tokens_normalized
-        FROM $workerAlias.term_meta_staging_table s
-        JOIN ${tTerm.actualTableName} t ON t.${tTerm.term.name} = s.term
-        WHERE 
-          (s.term_tokens IS NOT NULL OR s.term_tokens_normalized IS NOT NULL)
-          AND t.${tTerm.id.name} > $maxTermId
       ''');
 
       // Types (Modes)
@@ -69,7 +66,7 @@ class TermMetaBankV3Merger implements StagingMerger {
         WHERE reading IS NOT NULL
       ''');
       await targetDb.customStatement('''
-        INSERT INTO fts_readings(rowid, reading, reading_normalized)
+        INSERT INTO $ftsReadingsTable(rowid, reading, reading_normalized)
         SELECT id, reading, reading_normalized FROM ${tReading.actualTableName} WHERE id > $maxReadingId
       ''');
 

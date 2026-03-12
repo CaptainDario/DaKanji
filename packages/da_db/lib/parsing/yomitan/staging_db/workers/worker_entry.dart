@@ -3,6 +3,7 @@ import 'dart:io';
 import 'dart:isolate';
 
 import 'package:collection/collection.dart';
+import 'package:da_db/database/index/yomitan_index.dart';
 import 'package:da_db/parsing/staging_db/staging_db.dart';
 import 'package:da_db/parsing/util/db_file_parser.dart';
 import 'package:da_db/parsing/util/db_optimization.dart';
@@ -25,6 +26,7 @@ Future<void> workerEntry(SendPort mainSendPort) async {
   StagingDatabase? db;
   LanguageProcessor? lp;
   ProcessorOptions? processorOptions;
+  late YomitanIndex currentIndexEntry;
   String? zipPath;
   int currentLocalId = 0; 
 
@@ -50,7 +52,7 @@ Future<void> workerEntry(SendPort mainSendPort) async {
       }
       
       processorOptions = ProcessorOptions();
-
+      currentIndexEntry = message.index;
       zipPath = message.zipPath;
       message.replyPort.send(MsgReady(receivePort.sendPort));
     }
@@ -70,8 +72,8 @@ Future<void> workerEntry(SendPort mainSendPort) async {
         if (fileHandle == null) throw Exception("File not found");
 
         currentLocalId = await parser.parseFileContent(
-          [fileHandle.content],
-          db, lp, processorOptions!, currentLocalId
+          [fileHandle.content], db, lp, processorOptions!, currentLocalId,
+          currentIndexEntry
         );
         mainSendPort.send(MsgDone());
 

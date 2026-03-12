@@ -1,13 +1,22 @@
 import 'package:da_db/database/da_db.dart';
+import 'package:da_db/database/index/yomitan_index.dart';
 import 'package:da_db/parsing/staging_db/mergers/staging_merger.dart';
+import 'package:language_processing/language_processing.dart';
 
 class KanjiBankV3Merger implements StagingMerger {
   @override
   Future<void> merge({
     required DaDb targetDb,
     required String workerAlias,
+    required YomitanIndex index,
     required int indexId,
   }) async {
+
+    final bool isSourceSpaceLang = usesSpaceSeparation(index.sourceLanguage);
+    final bool isTargetSpaceLang = usesSpaceSeparation(index.targetLanguage);
+
+    final String ftsReadingsTable = isSourceSpaceLang ? "fts_readings_unicode" : "fts_readings";
+    final String ftsDefsTable = isTargetSpaceLang ? "fts_definitions_unicode" : "fts_definitions";
 
     // 1. Fetch IDs
     final maxKanjiBankId = await targetDb.kanjiBankV3Dao.maxKanjiId();
@@ -44,7 +53,7 @@ class KanjiBankV3Merger implements StagingMerger {
         SELECT DISTINCT reading, reading_normalized FROM $workerAlias.kanji_reading_staging_table
       ''');
       await targetDb.customStatement('''
-        INSERT INTO fts_readings(rowid, reading, reading_normalized)
+        INSERT INTO $ftsReadingsTable(rowid, reading, reading_normalized)
         SELECT id, reading, reading_normalized FROM ${tReading.actualTableName} WHERE id > $maxReadingId
       ''');
 
@@ -54,7 +63,7 @@ class KanjiBankV3Merger implements StagingMerger {
         SELECT DISTINCT definition FROM $workerAlias.kanji_definition_staging_table
       ''');
       await targetDb.customStatement('''
-        INSERT INTO fts_definitions(rowid, definition)
+        INSERT INTO $ftsDefsTable(rowid, definition)
         SELECT id, definition FROM ${tDef.actualTableName} WHERE id > $maxDefinitionId
       ''');
 

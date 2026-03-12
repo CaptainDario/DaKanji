@@ -7,7 +7,6 @@ class ExampleStagingTable extends Table {
   
   // --- Data mapped to ExampleTable ---
   IntColumn get groupId => integer().nullable()();
-  TextColumn get languageCode => text()(); // e.g., 'jpn', 'eng'. Resolves to LanguageCodeTable
 
   // --- Data mapped to ExampleSentenceTable & FTS ---
   TextColumn get exampleSentence => text()();

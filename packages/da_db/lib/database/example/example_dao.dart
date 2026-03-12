@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import "package:da_db/data/grouping_rules.dart";
 import "package:drift/drift.dart";
-import 'package:language_processing/language_processing.dart';
 
 import "/database/example/example_entry.dart";
 import "/database/example/example_search_result.dart";
@@ -28,7 +27,6 @@ class ExampleDao extends DatabaseAccessor<DaDb> with _$ExampleDaoMixin {
   /// Returns a list of [ExampleSearchResult] objects if successful, or null on invalid query.
   Future<List<ExampleSearchResult>?> searchExamples(
     String rawFts5Query,
-    List<Iso639_3> languages,
     {
       Set<SequenceGroupingRule> groupingRules = const {},
       int limit = -1,
@@ -36,14 +34,11 @@ class ExampleDao extends DatabaseAccessor<DaDb> with _$ExampleDaoMixin {
     }
   ) async {
     if (rawFts5Query.trim().isEmpty) return [];
-
-    final langCodes = languages.map((l) => l.name).toList();
     
     // Note: Drift auto-generates the class SearchExampleBaseMatchesResult
     try {
       final rawMatches = await db.searchExampleBaseMatches(
-        rawFts5Query, langCodes, limit, offset
-      ).get();
+        rawFts5Query, limit, offset).get();
 
       if (rawMatches.isEmpty) return [];
 
@@ -62,15 +57,14 @@ class ExampleDao extends DatabaseAccessor<DaDb> with _$ExampleDaoMixin {
   /// Replaces both `searchExamplesByTermIds` and `searchExamplesByTermString`.
   Future<List<ExampleSearchResult>> searchExamplesByTokens(
     List<String> lemmas,
-    List<Iso639_3> languages, {
-    Set<SequenceGroupingRule> groupingRules = const {},
-    bool requireAllTokens = false,
-    int limit = 50,
-    int offset = 0,
-  }) async {
+    {
+      Set<SequenceGroupingRule> groupingRules = const {},
+      bool requireAllTokens = false,
+      int limit = 50,
+      int offset = 0,
+    }
+  ) async {
     if (lemmas.isEmpty) return [];
-
-    final langCodes = languages.map((l) => l.name).toList();
     
     // Construct the FTS5 query string from the list of lemmas.
     final operator = requireAllTokens ? ' ' : ' OR ';
@@ -78,7 +72,7 @@ class ExampleDao extends DatabaseAccessor<DaDb> with _$ExampleDaoMixin {
     
     try {
       final rawMatches = await db.searchExampleBaseMatchesByTokens(
-        ftsTokenQuery, langCodes, limit, offset
+        ftsTokenQuery, limit, offset
       ).get();
       
       if (rawMatches.isEmpty) return [];

@@ -1,9 +1,11 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
+import 'package:da_db/database/index/yomitan_index.dart';
 import 'package:da_db/parsing/staging_db/staging_db.dart';
 import 'package:da_db/parsing/util/db_file_parser.dart';
 import 'package:da_db/parsing/util/parsing_constants.dart';
+import 'package:da_db/parsing/util/staging_utils.dart';
 import 'package:language_processing/language_processing.dart';
 
 class ExampleTextParser implements DbFileParser {
@@ -16,8 +18,9 @@ class ExampleTextParser implements DbFileParser {
     List<Uint8List> inputBytes,
     StagingDatabase db,
     LanguageProcessor? lp,
-    ProcessorOptions options,
+    ProcessorOptions options,  
     int startId,
+    YomitanIndex index,
   ) async {
     if (lp == null) throw Exception("LanguageProcessor is required for parsing plain text examples.");
 
@@ -36,7 +39,6 @@ class ExampleTextParser implements DbFileParser {
     }
 
     // Extract file-level metadata 
-    final langIsoCode = fileMetadata['langIso3Code'] as String? ?? 'jpn';
     final groupId = fileMetadata['groupId'];
     
     final tags = (fileMetadata['tags'] as List<dynamic>?)?.cast<String>() ?? [];
@@ -46,7 +48,6 @@ class ExampleTextParser implements DbFileParser {
     var exampleRows = <List<Object?>>[];
     var tagRows = <List<Object?>>[];
     var statRows = <List<Object?>>[];
-    var termRows = <List<Object?>>[];
 
     const int batchSize = 1000;
 
@@ -64,7 +65,7 @@ class ExampleTextParser implements DbFileParser {
       String? exampleTokenized = lp.parse(sentence, const ProcessorOptions()).tokens.join(" ");
 
       // Add 5 columns to the main table
-      exampleRows.add([exampleLocalId, groupId, langIsoCode, sentence, exampleTokenized]);
+      exampleRows.add([exampleLocalId, groupId, sentence, exampleTokenized]);
 
       for (final t in tags) {
         if (t.trim().isEmpty) continue;
@@ -81,24 +82,14 @@ class ExampleTextParser implements DbFileParser {
         ]);
       }
 
-      // Extract dictionary terms from parseResult.tokens
-      final parseResult = lp.parse(sentence, ProcessorOptions());
-      final termSet = parseResult.tokens
-          .where((t) => t != null && t.trim().isNotEmpty)
-          .toSet();
-          
-      for (final term in termSet) {
-        termRows.add([exampleLocalId, term]);
-      }
-
       if (exampleRows.length >= batchSize) {
-        await _flush(db, exampleRows, tagRows, statRows, termRows);
-        exampleRows.clear(); tagRows.clear(); statRows.clear(); termRows.clear();
+        await _flush(db, exampleRows, tagRows, statRows);
+        exampleRows.clear(); tagRows.clear(); statRows.clear();
       }
     }
 
     if (exampleRows.isNotEmpty) {
-      await _flush(db, exampleRows, tagRows, statRows, termRows);
+      await _flush(db, exampleRows, tagRows, statRows);
     }
     
     return exampleLocalId;
@@ -109,22 +100,28 @@ class ExampleTextParser implements DbFileParser {
     List<List<Object?>> exampleRows,
     List<List<Object?>> tagRows,
     List<List<Object?>> statRows,
-    List<List<Object?>> termRows,
   ) async {
-    String placeholders(int count) => '(${List.filled(count, '?').join(', ')})';
-
     await db.transaction(() async {
       if (exampleRows.isNotEmpty) {
-        final sql = 'INSERT INTO ${db.exampleStagingTable.actualTableName} (local_id, group_id, language_code, example_sentence, example_sentence_tokenized) VALUES ${List.filled(exampleRows.length, placeholders(5)).join(', ')}';
-        await db.customStatement(sql, exampleRows.expand((i) => i).toList());
+        await insertChunked(
+          db, db.exampleStagingTable.actualTableName,
+          ['local_id', 'group_id', 'example_sentence', 'example_sentence_tokenized'],
+          exampleRows
+        );
       }
       if (tagRows.isNotEmpty) {
-        final sql = 'INSERT INTO ${db.exampleTagStagingTable.actualTableName} (example_local_id, tag_name) VALUES ${List.filled(tagRows.length, placeholders(2)).join(', ')}';
-        await db.customStatement(sql, tagRows.expand((i) => i).toList());
+        await insertChunked(
+          db, db.exampleTagStagingTable.actualTableName,
+          ['example_local_id', 'tag_name'],
+          tagRows
+        );
       }
       if (statRows.isNotEmpty) {
-        final sql = 'INSERT INTO ${db.exampleStatStagingTable.actualTableName} (example_local_id, stat_name, display_name, stat_value, display_value) VALUES ${List.filled(statRows.length, placeholders(5)).join(', ')}';
-        await db.customStatement(sql, statRows.expand((i) => i).toList());
+        await insertChunked(
+          db, db.exampleStatStagingTable.actualTableName,
+          ['example_local_id', 'stat_name', 'display_name', 'stat_value', 'display_value'],
+          statRows
+        );
       }
     });
   }

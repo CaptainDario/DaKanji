@@ -1,9 +1,11 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
+import 'package:da_db/database/index/yomitan_index.dart';
 import 'package:da_db/parsing/staging_db/staging_db.dart';
 import 'package:da_db/parsing/util/db_file_parser.dart';
 import 'package:da_db/parsing/util/parsing_constants.dart';
+import 'package:da_db/parsing/util/staging_utils.dart';
 import 'package:language_processing/language_processing.dart';
 
 class ExampleBankParser implements DbFileParser {
@@ -18,6 +20,7 @@ class ExampleBankParser implements DbFileParser {
     LanguageProcessor? lp,
     ProcessorOptions options,
     int startId,
+    YomitanIndex index,
   ) async {
     if (lp == null) throw Exception("LanguageProcessor is required for parsing examples");
     
@@ -44,21 +47,19 @@ class ExampleBankParser implements DbFileParser {
       exampleLocalId++;
 
       final groupId = entry['groupId'] as int? ?? 0;
-      final langIsoCode = entry['langIso3Code']!;
 
       // apply the language processor if the language matches
       String? exampleTokenized;
-      if(langIsoCode == lp.languageCode.name) {
+      if(index.sourceLanguage == lp.languageCode) {
         // 1. Analyze sentence with the Language Processor to extract tokens
         final parseResult = lp.parse(sentence, ProcessorOptions());
 
         // 2. Terms 
         exampleTokenized = parseResult.tokens.join(" ");
-        print(exampleTokenized);
       }
 
       // Add 5 columns to the main table
-      exampleRows.add([exampleLocalId, groupId, langIsoCode, sentence, exampleTokenized]);
+      exampleRows.add([exampleLocalId, groupId, sentence, exampleTokenized]);
 
       // Tags
       final tags = (entry['tags'] as List<dynamic>?)?.cast<String>() ?? [];
@@ -129,32 +130,48 @@ class ExampleBankParser implements DbFileParser {
     List<List<Object?>> audioTagRows,
     List<List<Object?>> audioStatRows,
   ) async {
-    String placeholders(int count) => '(${List.filled(count, '?').join(', ')})';
-
     await db.transaction(() async {
       if (exampleRows.isNotEmpty) {
-        final sql = 'INSERT INTO ${db.exampleStagingTable.actualTableName} (local_id, group_id, language_code, example_sentence, example_sentence_tokenized) VALUES ${List.filled(exampleRows.length, placeholders(5)).join(', ')}';
-        await db.customStatement(sql, exampleRows.expand((i) => i).toList());
+        await insertChunked(
+          db, db.exampleStagingTable.actualTableName,
+          ['local_id', 'group_id', 'example_sentence', 'example_sentence_tokenized'],
+          exampleRows
+        );
       }
       if (tagRows.isNotEmpty) {
-        final sql = 'INSERT INTO ${db.exampleTagStagingTable.actualTableName} (example_local_id, tag_name) VALUES ${List.filled(tagRows.length, placeholders(2)).join(', ')}';
-        await db.customStatement(sql, tagRows.expand((i) => i).toList());
+        await insertChunked(
+          db, db.exampleTagStagingTable.actualTableName,
+          ['example_local_id', 'tag_name'],
+          tagRows
+        );
       }
       if (statRows.isNotEmpty) {
-        final sql = 'INSERT INTO ${db.exampleStatStagingTable.actualTableName} (example_local_id, stat_name, display_name, stat_value, display_value) VALUES ${List.filled(statRows.length, placeholders(5)).join(', ')}';
-        await db.customStatement(sql, statRows.expand((i) => i).toList());
+        await insertChunked(
+          db, db.exampleStatStagingTable.actualTableName,
+          ['example_local_id', 'stat_name', 'display_name', 'stat_value', 'display_value'],
+          statRows
+        );
       }
       if (audioRows.isNotEmpty) {
-        final sql = 'INSERT INTO ${db.exampleAudioStagingTable.actualTableName} (local_id, example_local_id, path, name) VALUES ${List.filled(audioRows.length, placeholders(4)).join(', ')}';
-        await db.customStatement(sql, audioRows.expand((i) => i).toList());
+        await insertChunked(
+          db, db.exampleAudioStagingTable.actualTableName,
+          ['local_id', 'example_local_id', 'path', 'name'],
+          audioRows
+        );
       }
       if (audioTagRows.isNotEmpty) {
-        final sql = 'INSERT INTO ${db.exampleAudioTagStagingTable.actualTableName} (audio_local_id, tag_name) VALUES ${List.filled(audioTagRows.length, placeholders(2)).join(', ')}';
-        await db.customStatement(sql, audioTagRows.expand((i) => i).toList());
+        await insertChunked(
+          db, db.exampleAudioTagStagingTable.actualTableName,
+          ['audio_local_id', 'tag_name'],
+          audioTagRows
+        );
       }
       if (audioStatRows.isNotEmpty) {
-        final sql = 'INSERT INTO ${db.exampleAudioStatStagingTable.actualTableName} (audio_local_id, stat_name, display_name, stat_value, display_value) VALUES ${List.filled(audioStatRows.length, placeholders(5)).join(', ')}';
-        await db.customStatement(sql, audioStatRows.expand((i) => i).toList());
+        await insertChunked(
+          db, db.exampleAudioStatStagingTable.actualTableName,
+          ['audio_local_id', 'stat_name', 'display_name', 'stat_value', 'display_value'],
+          audioStatRows
+        );
       }
     });
   }

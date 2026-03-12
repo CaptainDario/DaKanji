@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
+import 'package:da_db/database/index/yomitan_index.dart';
 import 'package:da_db/parsing/staging_db/staging_db.dart';
 import 'package:da_db/parsing/util/db_file_parser.dart';
 import 'package:da_db/parsing/util/parsing_constants.dart';
@@ -20,6 +21,7 @@ class TermMetaBankV3Parser implements DbFileParser {
     LanguageProcessor? lp,
     ProcessorOptions options,
     int startId,
+    YomitanIndex index,
   ) async {
 
     if (lp == null) throw Exception("LanguageProcessor is required for parsing term_meta_bank");
@@ -51,11 +53,6 @@ class TermMetaBankV3Parser implements DbFileParser {
       // --- Term processing ---
       String? termNormalized = lp.normalize(term, options).firstOrNull;
       if (termNormalized == term) termNormalized = null;
-
-      String? termTokens = lp.parse(term, const ProcessorOptions()).segments.nonNulls.join(" ");
-      String? termTokensNormalized;
-      termTokensNormalized = lp.normalize(termTokens, options).firstOrNull;
-      if (termTokensNormalized == termTokens) termTokensNormalized = null;
 
       String? reading;
       String? readingNormalized;
@@ -151,8 +148,8 @@ class TermMetaBankV3Parser implements DbFileParser {
 
       // Add main meta row
       metaRows.add([
-        localId, term, termNormalized, termTokens, termTokensNormalized,
-        mode, reading, readingNormalized, freqValue, freqDisplayValue
+        localId, term, termNormalized, mode, reading, readingNormalized,
+        freqValue, freqDisplayValue
       ]);
 
       if (metaRows.length >= batchSize) {
@@ -190,7 +187,7 @@ class TermMetaBankV3Parser implements DbFileParser {
   ) async {
     await db.transaction(() async {
       await insertChunked(db, db.termMetaStagingTable.actualTableName, 
-          ['local_id', 'term', 'term_normalized', 'term_tokens', 'term_tokens_normalized', 'mode', 'reading', 'reading_normalized', 'freq_value', 'freq_display'], 
+          ['local_id', 'term', 'term_normalized', 'mode', 'reading', 'reading_normalized', 'freq_value', 'freq_display'], 
           metaRows);
 
       await insertChunked(db, db.termMetaPitchStagingTable.actualTableName, 

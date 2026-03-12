@@ -1,26 +1,29 @@
 import 'package:da_db/database/da_db.dart';
+import 'package:da_db/database/index/yomitan_index.dart';
 import 'package:da_db/parsing/staging_db/mergers/staging_merger.dart';
+import 'package:language_processing/language_processing.dart';
 
 class ExampleMerger implements StagingMerger {
   @override
   Future<void> merge({
     required DaDb targetDb,
     required String workerAlias,
+    required YomitanIndex index,
     required int indexId,
   }) async {
+
+    final bool isSourceSpaceLang = usesSpaceSeparation(index.sourceLanguage);
+    
+    final String ftsSentenceTable = isSourceSpaceLang 
+        ? "fts_example_sentence_unicode" : "fts_example_sentence";
+    final String ftsTokenizedTable = "fts_example_sentence_tokenized";
 
     final maxSentenceId = await targetDb.exampleDao.maxExampleSentenceId();
     final maxExampleId = await targetDb.exampleDao.maxExampleId();
     final maxAudioId = await targetDb.exampleDao.maxExampleAudioTableId();
 
     try {
-      // 1. Languages
-      await targetDb.customStatement('''
-        INSERT OR IGNORE INTO language_code_table (language_code)
-          SELECT DISTINCT language_code FROM $workerAlias.example_staging_table
-      ''');
-
-      // 2. Sentences (Main Data)
+      // 1. Sentences (Main Data)
       await targetDb.customStatement('''
         INSERT INTO example_sentence_table (id, example_sentence, example_sentence_tokenized)
           SELECT $maxSentenceId + local_id, example_sentence, example_sentence_tokenized
@@ -28,36 +31,34 @@ class ExampleMerger implements StagingMerger {
           ORDER BY local_id
       ''');
 
-      // 3. FTS Tokens
+      // 2. FTS Tokens
       await targetDb.customStatement('''
-        INSERT INTO fts_example_sentence (rowid, example_sentence)
+        INSERT INTO $ftsSentenceTable (rowid, example_sentence)
           SELECT $maxSentenceId + local_id, example_sentence
           FROM $workerAlias.example_staging_table
           ORDER BY local_id
       ''');
       await targetDb.customStatement('''
-        INSERT INTO fts_example_sentence_tokenized (rowid, example_sentence_tokenized)
+        INSERT INTO $ftsTokenizedTable (rowid, example_sentence_tokenized)
           SELECT $maxSentenceId + local_id, example_sentence_tokenized
           FROM $workerAlias.example_staging_table
           WHERE example_sentence_tokenized IS NOT NULL
           ORDER BY local_id
       ''');
 
-      // 4. Examples
+      // 3. Examples
       await targetDb.customStatement('''
-        INSERT INTO example_table (id, index_id, group_id, example_sentence_id, language_code_id)
+        INSERT INTO example_table (id, index_id, group_id, example_sentence_id)
           SELECT 
             $maxExampleId + e.local_id, 
             $indexId, 
             e.group_id, 
-            $maxSentenceId + e.local_id, 
-            l.id
+            $maxSentenceId + e.local_id
           FROM $workerAlias.example_staging_table AS e
-            INNER JOIN language_code_table AS l ON l.language_code = e.language_code
           ORDER BY e.local_id
       ''');
 
-      // 5. Audios
+      // 4. Audios
       await targetDb.customStatement('''
         INSERT INTO example_audio_table (id, path, name)
           SELECT $maxAudioId + a.local_id, a.path, a.name
@@ -65,14 +66,14 @@ class ExampleMerger implements StagingMerger {
           ORDER BY a.local_id
       ''');
 
-      // 6. Audio Link
+      // 5. Audio Link
       await targetDb.customStatement('''
         INSERT INTO example_table_x_example_audio_table (example_id, audio_id)
           SELECT $maxExampleId + a.example_local_id, $maxAudioId + a.local_id
           FROM $workerAlias.example_audio_staging_table AS a
       ''');
 
-      // 7. Tags (Generate dummy tags for any missing definitions, then link)
+      // 6. Tags (Generate dummy tags for any missing definitions, then link)
       await targetDb.customStatement('''
         INSERT OR IGNORE INTO tag_bank_v3_table (index_id, name, category, sorting_order, notes, score)
           SELECT DISTINCT $indexId, tag_name, 'tag', 0, '', 0 FROM $workerAlias.example_tag_staging_table
@@ -94,7 +95,7 @@ class ExampleMerger implements StagingMerger {
             INNER JOIN tag_bank_v3_table AS t ON t.name = a.tag_name AND t.index_id = $indexId
       ''');
 
-      // 8. Stats - The Grand Finale
+      // 7. Stats - The Grand Finale
       // First, pool all unique stat names and display names
       await targetDb.customStatement('''
         INSERT OR IGNORE INTO stat_name_table (name)

@@ -8,6 +8,7 @@ import 'package:archive/archive_io.dart';
 import 'package:da_db/data/dictionary_types.dart';
 import 'package:da_db/data/supported_audio_formats.dart';
 import 'package:da_db/database/da_db.dart';
+import 'package:da_db/database/index/yomitan_index.dart';
 import 'package:da_db/parsing/audio/mergers/audio_staging_db_merging.dart';
 import 'package:da_db/parsing/audio/workers/audio_worker_entry.dart';
 import 'package:da_db/parsing/example/mergers/example_staging_db_merging.dart';
@@ -27,13 +28,16 @@ import 'package:language_processing/language_processing.dart';
 import 'package:path/path.dart' as p;
 import 'package:universal_io/io.dart';
 
+typedef RoutingResult = ({
+  DictionaryTypes actualType,
+  String indexJson,
+  YomitanIndex index,
+  List<String> parallelQueue,
+  List<ArchiveFile> mediaQueue,
+  String? audioListContent,
+});
+
 /// Orchestrates the parallel extraction, parsing, and SQL merging of dictionary archives.
-/// 
-/// Operates on a dedicated Isolate to keep the main UI thread unblocked. 
-/// If [dictionaryType] is omitted, the system will automatically scan the archive's 
-/// contents to infer the correct format (Yomitan, Examples, or Audio).
-/// 
-/// Returns a [Stream] of status messages intended for UI progress indicators.
 Future<Stream<String>> parseDaDbDataSource({
   String? dataSourcePath,
   Uint8List? archiveBytes,
@@ -51,12 +55,14 @@ Future<Stream<String>> parseDaDbDataSource({
 
   ReceivePort receivePort = ReceivePort();
   receivePort.listen((message) {
-    if (message is String) controller.add(message);
-    else if (message == null) {
+    if (message is String) {
+      controller.add(message);
+    } else if (message == null) {
       receivePort.close();
       controller.close();
+    } else {
+      controller.addError(message);
     }
-    else controller.addError(message);
   });
 
   await Isolate.spawn(_unifiedOrchestratorEntry, (
@@ -73,11 +79,6 @@ Future<Stream<String>> parseDaDbDataSource({
   return controller.stream;
 }
 
-/// The core Isolate entry point for unified parsing.
-/// 
-/// Architecture flow:
-/// 1. Type Inference -> 2. File Routing -> 3. Parallel Staging -> 
-/// 4. SQLite Attachment -> 5. Transactional Merge -> 6. Cleanup.
 Future<void> _unifiedOrchestratorEntry(({
   String dataSourcePath,
   DriftIsolate dbConnection,
@@ -88,9 +89,7 @@ Future<void> _unifiedOrchestratorEntry(({
   DictionaryTypes? dictionaryType,
   Directory tempDir,
 }) params) async {
-  
   final sendPort = params.mainIsolateSendPort;
-
   final db = DaDb(
     executor: await params.dbConnection.connect(),
     inMemory: params.inMemory,
@@ -102,201 +101,232 @@ Future<void> _unifiedOrchestratorEntry(({
   try {
     sendPort.send("Scanning dictionary structure...");
     
-    // --- STEP 1: SCAN & INFER ---
-    // Extract BOTH potential metadata files up front. We must do this before routing
-    // because we rely on the archive's internal filenames to infer its type if null.
-    final allFiles = daDbDataSourceIterator(
-      archivePath: params.dataSourcePath, 
-      fileOrder: [indexFileName, yomitanIndexFile]
-    ).toList();
+    final routing = _scanAndRouteFiles(
+      dataSourcePath: params.dataSourcePath,
+      requestedType: params.dictionaryType,
+    );
+
+    final engineConfig = _configureWorkerEngine(
+      actualType: routing.actualType, 
+      parallelQueue: routing.parallelQueue,
+    );
     
-    final DictionaryTypes actualType = params.dictionaryType ?? 
-        determineDictionaryType(allFiles.map((f) => f.name));
-    
-    String? indexJson;
-    final parallelQueue = <String>[];
-    final mediaQueue = <ArchiveFile>[];
-    String? audioListContent;
-
-    // --- STEP 2: FILE ROUTING ---
-    for (final file in allFiles) {
-      final name = p.basename(file.name);
-      
-      // Strict Metadata Extraction
-      bool isMetadataFile = false;
-      if (actualType == DictionaryTypes.audio && name == yomitanIndexFile) {
-        isMetadataFile = true;
-      } else if (actualType != DictionaryTypes.audio && name == indexFileName) {
-        isMetadataFile = true;
-      } else if (actualType == DictionaryTypes.examples && name == yomitanIndexFile && indexJson == null) {
-        isMetadataFile = true; 
-      }
-
-      // Decode main metadata into memory for the orchestrator
-      if (isMetadataFile) {
-        indexJson = utf8.decode(file.rawContent!.getStream(decompress: true).toUint8List());
-        continue; 
-      }
-      
-      if (!file.isFile) continue;
-
-      // Route data files
-      switch (actualType) {
-        case DictionaryTypes.yomitan:
-          if (name == audioListName) audioListContent = utf8.decode(file.content);
-          else if(yomitanDictFiles.any((s) => name.contains(s))) parallelQueue.add(file.name);
-          else mediaQueue.add(file);
-          break;
-        case DictionaryTypes.examples:
-          if (exampleDictFiles.any((s) => name.contains(s))) parallelQueue.add(file.name);
-          else if (SupportedAudioFormats.values.any((ext) => name.endsWith(".${ext.name}"))) mediaQueue.add(file);
-          break;
-        case DictionaryTypes.audio:
-          // We DO NOT add individual files here. 
-          // The worker will handle the entire archive iteration.
-          break;
-      }
-    }
-
-    if (indexJson == null) {
-      throw Exception("No valid metadata index file found for format: ${actualType.name}");
-    }
-
-    parallelQueue.sort((a, b) => a.compareTo(b));
-    
-    // --- STEP 3: CONFIGURE WORKER ENGINE ---
-    late final void Function(SendPort) targetWorkerEntry;
-    late final int numWorkers;
-
-    switch (actualType) {
-      case DictionaryTypes.yomitan:
-        targetWorkerEntry = workerEntry; 
-        numWorkers = min(max(1, parallelQueue.where((f) => f.startsWith(RegExp("$termBankPrefix|$termMetaBankPrefix"))).length), 4);
-        break;
-      case DictionaryTypes.examples:
-        targetWorkerEntry = exampleWorkerEntry; 
-        numWorkers = min(max(1, parallelQueue.length), 4);
-        break;
-      case DictionaryTypes.audio:
-        targetWorkerEntry = audioWorkerEntry; 
-        numWorkers = 1; // 1 worker will process the entire zip in a single pass
-        
-        // Give the worker the single command to process everything
-        parallelQueue.add(processFullAudioArchive); 
-        break;
-    }
-
-    // --- STEP 4: RUN PARALLEL STAGING ---
     workerDbPaths.addAll(await StagingWorkerPool.runGreedyParallelStaging(
-      numWorkers: numWorkers,
+      numWorkers: engineConfig.numWorkers,
       dataSourcePath: params.dataSourcePath,
       languageProcessorJson: params.languageProcessorJson,
-      files: parallelQueue,
+      index: routing.index,
+      files: routing.parallelQueue,
       tempDir: params.tempDir,
-      workerEntryPoint: targetWorkerEntry,
+      workerEntryPoint: engineConfig.targetWorkerEntry,
       onStatus: (msg) => sendPort.send(msg),
     ));  
 
-    // --- STEP 5: ATTACH WORKER DATABASES ---
-    List<String> workerAliases = [];
-    for (int i = 0; i < workerDbPaths.length; i++) {
-      workerAliases.add("worker_$i");
-      await db.customStatement("ATTACH DATABASE '${workerDbPaths[i]}' AS ${workerAliases.last}");
-    }
-    
+    final workerAliases = await _attachWorkerDatabases(db, workerDbPaths);
     await optimizeTargetDbForMerge(db);
 
-    // --- STEP 6: MERGE ---
+    await _executeMergeTransaction(
+      db: db,
+      routing: routing,
+      workerAliases: workerAliases,
+      workerDbPaths: workerDbPaths,
+      isDefaultDictionary: params.isDefaultDictionary,
+      sendPort: sendPort,
+    );
+
+    sendPort.send("Optimizing database...");
+    await optimizeDbAfterImport(db);
+
+  } catch (e, stack) {
+    print("Unified Import Error: $e\n$stack");
+    sendPort.send(e.toString());
+  } finally {
+    await _cleanup(db, workerDbPaths);
+    sendPort.send(null);
+  }
+}
+
+RoutingResult _scanAndRouteFiles({
+  required String dataSourcePath,
+  DictionaryTypes? requestedType,
+}) {
+  final allFiles = daDbDataSourceIterator(
+    archivePath: dataSourcePath, 
+    fileOrder: [indexFileName, yomitanIndexFile]
+  ).toList();
+  
+  final actualType = requestedType ?? determineDictionaryType(allFiles.map((f) => f.name));
+  
+  String? indexJson;
+  final parallelQueue = <String>[];
+  final mediaQueue = <ArchiveFile>[];
+  String? audioListContent;
+
+  for (final file in allFiles) {
+    final name = p.basename(file.name);
+    
+    bool isMetadataFile = false;
+    if (actualType == DictionaryTypes.audio && name == yomitanIndexFile) {
+      isMetadataFile = true;
+    } else if (actualType != DictionaryTypes.audio && name == indexFileName) {
+      isMetadataFile = true;
+    } else if (actualType == DictionaryTypes.examples && name == yomitanIndexFile && indexJson == null) {
+      isMetadataFile = true; 
+    }
+
+    if (isMetadataFile) {
+      indexJson = utf8.decode(file.rawContent!.getStream(decompress: true).toUint8List());
+      continue; 
+    }
+    
+    if (!file.isFile) continue;
+
+    switch (actualType) {
+      case DictionaryTypes.yomitan:
+        if (name == audioListName) audioListContent = utf8.decode(file.content);
+        else if(yomitanDictFiles.any((s) => name.contains(s))) parallelQueue.add(file.name);
+        else mediaQueue.add(file);
+        break;
+      case DictionaryTypes.examples:
+        if (exampleDictFiles.any((s) => name.contains(s))) parallelQueue.add(file.name);
+        else if (SupportedAudioFormats.values.any((ext) => name.endsWith(".${ext.name}"))) mediaQueue.add(file);
+        break;
+      case DictionaryTypes.audio:
+        break;
+    }
+  }
+
+  if (indexJson == null) {
+    throw Exception("No valid metadata index file found for format: ${actualType.name}");
+  }
+
+  parallelQueue.sort((a, b) => a.compareTo(b));
+
+  return (
+    actualType: actualType,
+    indexJson: indexJson,
+    index: YomitanIndex.fromJson(jsonDecode(indexJson)),
+    parallelQueue: parallelQueue,
+    mediaQueue: mediaQueue,
+    audioListContent: audioListContent,
+  );
+}
+
+({void Function(SendPort) targetWorkerEntry, int numWorkers}) _configureWorkerEngine({
+  required DictionaryTypes actualType,
+  required List<String> parallelQueue,
+}) {
+  switch (actualType) {
+    case DictionaryTypes.yomitan:
+      return (
+        targetWorkerEntry: workerEntry, 
+        numWorkers: min(max(1, parallelQueue.where((f) => f.startsWith(RegExp("$termBankPrefix|$termMetaBankPrefix"))).length), 4)
+      );
+    case DictionaryTypes.examples:
+      return (
+        targetWorkerEntry: exampleWorkerEntry, 
+        numWorkers: min(max(1, parallelQueue.length), 4)
+      );
+    case DictionaryTypes.audio:
+      parallelQueue.add(processFullAudioArchive);
+      return (
+        targetWorkerEntry: audioWorkerEntry, 
+        numWorkers: 1 
+      );
+  }
+}
+
+Future<List<String>> _attachWorkerDatabases(DaDb db, List<String> workerDbPaths) async {
+  final List<String> workerAliases = [];
+  for (int i = 0; i < workerDbPaths.length; i++) {
+    workerAliases.add("worker_$i");
+    await db.customStatement("ATTACH DATABASE '${workerDbPaths[i]}' AS ${workerAliases.last}");
+  }
+  return workerAliases;
+}
+
+Future<void> _executeMergeTransaction({
+  required DaDb db,
+  required RoutingResult routing,
+  required List<String> workerAliases,
+  required List<String> workerDbPaths,
+  required bool isDefaultDictionary,
+  required SendPort sendPort,
+}) async {
+  await db.transaction(() async {
     final indexId = await parseAndInsertIndex(
-      indexJson, db, actualType, params.isDefaultDictionary);
+      routing.indexJson, db, routing.actualType, isDefaultDictionary);
     
     sendPort.send("Parsing complete. Merging data...");
     
-    // Dynamic Merger Routing
     for (int i = 0; i < workerAliases.length; i++) {
       sendPort.send("Merging ${i + 1}/${workerAliases.length}...");
-      switch (actualType) {
+      switch (routing.actualType) {
         case DictionaryTypes.yomitan:
-          await mergeStagingDb(db: db, workerAlias: workerAliases[i], indexId: indexId);
+          await mergeStagingDb(db: db, workerAlias: workerAliases[i], index: routing.index, indexId: indexId);
           break;
         case DictionaryTypes.examples:
-          await mergeExampleStagingDb(db: db, workerAlias: workerAliases[i], indexId: indexId);
+          await mergeExampleStagingDb(db: db, workerAlias: workerAliases[i], index: routing.index, indexId: indexId);
           break;
         case DictionaryTypes.audio:
-          await mergeAudioStagingDb(db: db, workerDbPath: workerDbPaths[i], indexId: indexId);
+          await mergeAudioStagingDb(db: db, workerDbPath: workerDbPaths[i], index: routing.index, indexId: indexId);
           break;
       }
     }
-    // merge audio lists on top level as they are small
-    if(audioListContent != null) await parseAudioList(audioListContent, db, indexId);  
+    
+    if (routing.audioListContent != null) {
+      await parseAudioList(routing.audioListContent!, db, indexId);  
+    }
 
-    // --- STEP 7: DYNAMIC MEDIA IMPORT ---
-    if (mediaQueue.isNotEmpty) {
-      sendPort.send("Importing ${mediaQueue.length} media files...");
-      final mappedMedia = mediaQueue.map((f) => (file: f, indexId: indexId, insertId: null)).toList();
+    if (routing.mediaQueue.isNotEmpty) {
+      sendPort.send("Importing ${routing.mediaQueue.length} media files...");
+      
+      // Explicitly typed to prevent implicit dynamic cast exceptions.
+      final mappedMedia = routing.mediaQueue.map<({ArchiveFile file, int indexId, int? insertId})>(
+        (f) => (file: f, indexId: indexId, insertId: null)
+      ).toList();
       
       for (var i = 0; i < mappedMedia.length; i += 200) {
         final end = min(i + 200, mappedMedia.length);
         await importMediaFiles(db, mappedMedia.sublist(i, end));
       }
     }
-
-    // Run outside the transaction as SQLite forbids VACUUM operations inside transactions.
-    sendPort.send("Optimizing database...");
-    await optimizeDbAfterImport(db);
-
-  }
-  catch (e, stack) {
-    print("Unified Import Error: $e\n$stack");
-    sendPort.send(e.toString());
-  }
-  finally {
-    // --- STEP 8: CLEANUP ---
-    // Ensure file locks are released BEFORE attempting to delete the temporary databases.
-    await restoreTargetDbAfterMerge(db);
-    for (int i = 0; i < workerDbPaths.length; i++) {
-      await db.customStatement('DETACH DATABASE worker_$i');
-      if (File(workerDbPaths[i]).existsSync()) {
-        File(workerDbPaths[i]).deleteSync();
-      }
-    }
-    db.close();
-    sendPort.send(null);
-  }
+  });
 }
 
-/// Infers the expected Dictionary Format by analyzing the archive's file structure.
-/// 
-/// Relies on established naming schemas (e.g., `term_bank_*.json` for Yomitan, 
-/// `example_bank_*.json` for Examples). Audio dictionaries are inferred via process 
-/// of elimination alongside the presence of specific mapping files (`entries.json`).
+Future<void> _cleanup(DaDb db, List<String> workerDbPaths) async {
+  await restoreTargetDbAfterMerge(db);
+  for (int i = 0; i < workerDbPaths.length; i++) {
+    await db.customStatement('DETACH DATABASE worker_$i');
+    if (File(workerDbPaths[i]).existsSync()) {
+      File(workerDbPaths[i]).deleteSync();
+    }
+  }
+  await db.close();
+}
+
 DictionaryTypes determineDictionaryType(Iterable<String> fileNames) {
   bool hasExamples = false;
   bool hasYomitanBanks = false;
   bool hasYomitanAudioList = false;
 
-  bool hasYomitanIndexFile = false; // "yomitan_index.json"
-  bool hasAudioEntries = false;     // "entries.json"
-  bool hasAudioIndex = false;       // "index.json"
+  bool hasYomitanIndexFile = false;
+  bool hasAudioEntries = false;
+  bool hasAudioIndex = false;
   bool hasMediaFiles = false;
 
   for (final path in fileNames) {
     final name = p.basename(path);
     
-    // 1. Example Fingerprints
     if (name.startsWith(exampleBankPrefix) || name.startsWith(exampleTextBankPrefix)) {
       hasExamples = true;
-    } 
-    // 2. Yomitan Fingerprints
-    else if (name.startsWith(termBankPrefix) || name.startsWith(termMetaBankPrefix) ||
-             name.startsWith(kanjiBankPrefix) || name.startsWith(kanjiMetaBankPrefix) ||
-             name.startsWith(tagBankPrefix)) {
+    } else if (name.startsWith(termBankPrefix) || name.startsWith(termMetaBankPrefix) ||
+               name.startsWith(kanjiBankPrefix) || name.startsWith(kanjiMetaBankPrefix) ||
+               name.startsWith(tagBankPrefix)) {
       hasYomitanBanks = true;
     } else if (name.startsWith(audioListName)) {
       hasYomitanAudioList = true;
-    } 
-    // 3. Audio Fingerprints
-    else if (name == yomitanIndexFile) {
+    } else if (name == yomitanIndexFile) {
       hasYomitanIndexFile = true;
     } else if (name == audioEntriesFile) {
       hasAudioEntries = true;
@@ -307,21 +337,9 @@ DictionaryTypes determineDictionaryType(Iterable<String> fileNames) {
     }
   }
 
-  // --- Resolution Order ---
-
-  // Precedence 1: Examples
   if (hasExamples) return DictionaryTypes.examples;
-
-  // Precedence 2: Yomitan 
-  // Standard banks OR specifically just a Yomitan audio_list format
   if (hasYomitanBanks || hasYomitanAudioList) return DictionaryTypes.yomitan;
+  if (hasYomitanIndexFile && (hasAudioEntries || hasAudioIndex || hasMediaFiles)) return DictionaryTypes.audio;
 
-  // Precedence 3: Explicit Audio Formats
-  // Must have yomitan_index.json AND fit one of the three Audio schemas
-  if (hasYomitanIndexFile && (hasAudioEntries || hasAudioIndex || hasMediaFiles)) {
-    return DictionaryTypes.audio;
-  }
-
-  // Fallback assumption
   return DictionaryTypes.yomitan; 
 }

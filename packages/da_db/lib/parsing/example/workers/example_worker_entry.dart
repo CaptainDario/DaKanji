@@ -4,6 +4,7 @@ import 'dart:isolate';
 import 'dart:typed_data';
 
 import 'package:collection/collection.dart';
+import 'package:da_db/database/index/yomitan_index.dart';
 import 'package:da_db/parsing/staging_db/staging_db.dart';
 import 'package:da_db/parsing/util/db_file_parser.dart';
 import 'package:da_db/parsing/util/db_optimization.dart';
@@ -24,7 +25,7 @@ Future<void> exampleWorkerEntry(SendPort mainSendPort) async {
   StagingDatabase? db;
   LanguageProcessor? lp;
   ProcessorOptions? processorOptions;
-  
+  late YomitanIndex currentIndexEntry;
   String? _zipPath;
   int currentLocalId = 0; 
 
@@ -43,8 +44,8 @@ Future<void> exampleWorkerEntry(SendPort mainSendPort) async {
         lp = LanguageProcessor.fromJsonString(message.languageProcessorJson);
         await lp.init();
       }
-      
       processorOptions = const ProcessorOptions();
+      currentIndexEntry = message.index;
       _zipPath = message.zipPath;
       message.replyPort.send(MsgReady(receivePort.sendPort));
     }
@@ -79,7 +80,7 @@ Future<void> exampleWorkerEntry(SendPort mainSendPort) async {
 
         // 3. Pass the assembled payload to the parser
         currentLocalId = await parser.parseFileContent(
-          payloadBytes, db, lp, processorOptions!, currentLocalId);
+          payloadBytes, db, lp, processorOptions!, currentLocalId, currentIndexEntry);
           
         mainSendPort.send(MsgDone());
       }
@@ -102,7 +103,6 @@ Future<void> exampleWorkerEntry(SendPort mainSendPort) async {
 }
 
 Future<void> preIndex(StagingDatabase db) async {
-  await db.customStatement('CREATE INDEX IF NOT EXISTS idx_stg_ex_lang ON ${db.exampleStagingTable.actualTableName}(language_code)');
   await db.customStatement('CREATE INDEX IF NOT EXISTS idx_stg_ex_tag ON ${db.exampleTagStagingTable.actualTableName}(tag_name)');
   await db.customStatement('CREATE INDEX IF NOT EXISTS idx_stg_exa_tag ON ${db.exampleAudioTagStagingTable.actualTableName}(tag_name)');
   

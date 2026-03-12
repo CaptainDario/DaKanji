@@ -1,4 +1,5 @@
 import 'package:da_db/database/da_db.dart';
+import 'package:da_db/database/index/yomitan_index.dart';
 
 
 
@@ -12,7 +13,9 @@ abstract class StagingMerger {
     required DaDb targetDb,
     /// The alias of the attached worker DB (e.g. 'worker_1')
     required String workerAlias,
-    /// The indexId (dictionary) to assign to all merged entries
+    /// The yomitan index data of this dictionary
+    required YomitanIndex index,
+    /// the id of this index entry in the index table
     required int indexId,
   });
 }

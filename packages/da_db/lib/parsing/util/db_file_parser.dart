@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 
+import 'package:da_db/database/index/yomitan_index.dart';
 import 'package:da_db/parsing/staging_db/staging_db.dart';
 import 'package:language_processing/language_processing.dart';
 
@@ -17,5 +18,6 @@ abstract class DbFileParser {
     LanguageProcessor? lp,
     ProcessorOptions options,
     int startId,
+    YomitanIndex index,
   );
 }

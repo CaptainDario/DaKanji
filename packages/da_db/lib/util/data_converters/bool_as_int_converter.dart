@@ -35,3 +35,21 @@ class NullableBoolAsIntConverter implements JsonConverter<bool?, int?> {
     return object ? 1 : 0;
   }
 }
+
+/// A converter that gracefully handles both JSON booleans (true/false) 
+/// and SQLite boolean integers (1/0).
+class FlexibleNullableBoolConverter implements JsonConverter<bool?, dynamic> {
+  const FlexibleNullableBoolConverter();
+
+  @override
+  bool? fromJson(dynamic json) {
+    if (json == null) return null;
+    if (json is bool) return json;
+    if (json is num) return json != 0;
+    if (json is String) return json.toLowerCase() == 'true' || json == '1';
+    return null;
+  }
+
+  @override
+  dynamic toJson(bool? object) => object;
+}

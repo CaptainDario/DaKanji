@@ -1,5 +1,7 @@
 import 'package:da_db/database/da_db.dart';
+import 'package:da_db/database/index/yomitan_index.dart';
 import 'package:da_db/parsing/staging_db/mergers/staging_merger.dart';
+import 'package:language_processing/language_processing.dart';
 
 
 
@@ -16,8 +18,13 @@ class AudioBankMerger implements StagingMerger {
   Future<void> merge({
     required DaDb targetDb,
     required String workerAlias,
+    required YomitanIndex index,
     required int indexId,
   }) async {
+
+    final bool isSourceSpaceLang = usesSpaceSeparation(index.sourceLanguage);
+    final String ftsTermsTable = isSourceSpaceLang ? "fts_terms_unicode" : "fts_terms";
+    final String ftsReadingsTable = isSourceSpaceLang ? "fts_readings_unicode" : "fts_readings";
 
     // Retrieve the current highest IDs to calculate offsets for new rows
     final int maxAudioId = (await targetDb.audioDao.maxAudioId());
@@ -45,27 +52,11 @@ class AudioBankMerger implements StagingMerger {
         FROM $workerAlias.audio_staging_table
       ''');
       await targetDb.customStatement('''
-        INSERT INTO fts_terms(rowid, term, term_normalized)
+        INSERT INTO $ftsTermsTable(rowid, term, term_normalized)
         SELECT id, term, term_normalized FROM ${tTerm.actualTableName} WHERE id > $maxTermId
       ''');
 
-      // --- 2. Search Index (FTS5) ---
-      await targetDb.customStatement('''
-        INSERT INTO fts_tokens (rowid, tokens, tokens_normalized)
-        SELECT DISTINCT 
-          t.${tTerm.id.name}, 
-          s.term_tokens, 
-          s.term_tokens_normalized
-        FROM $workerAlias.audio_staging_table s
-        JOIN ${tTerm.actualTableName} t ON t.${tTerm.term.name} = s.term
-        WHERE 
-          s.term_tokens IS NOT NULL
-          AND trim(s.term_tokens) != ''
-          AND s.term_tokens != s.term
-          AND t.${tTerm.id.name} > $maxTermId
-      ''');
-
-      // --- 3. Core Strings (Readings) ---
+      // --- 2. Core Strings (Readings) ---
       await targetDb.customStatement('''
         INSERT OR IGNORE INTO ${tReading.actualTableName} (
           ${tReading.reading.name},
@@ -78,19 +69,16 @@ class AudioBankMerger implements StagingMerger {
         WHERE reading IS NOT NULL
       ''');
       await targetDb.customStatement('''
-        INSERT INTO fts_readings(rowid, reading, reading_normalized)
+        INSERT INTO $ftsReadingsTable(rowid, reading, reading_normalized)
         SELECT id, reading, reading_normalized FROM ${tReading.actualTableName} WHERE id > $maxReadingId
       ''');
 
-      // --- 4. Binary Media ---
+      // --- 3. Binary Media ---
       // Assigns a unique, incrementing ID to every file processed in the staging DB.
       await targetDb.customStatement('''
         INSERT INTO ${tMedia.actualTableName} (
-          ${tMedia.id.name}, 
-          ${tMedia.data.name}, 
-          ${tMedia.indexId.name},
-          ${tMedia.path.name},
-          ${tMedia.name.name}
+          ${tMedia.id.name}, ${tMedia.data.name}, ${tMedia.indexId.name},
+          ${tMedia.path.name}, ${tMedia.name.name}
         )
         SELECT 
            $maxMediaId + ROW_NUMBER() OVER (ORDER BY local_id),
@@ -101,7 +89,7 @@ class AudioBankMerger implements StagingMerger {
         FROM $workerAlias.media_staging_table
       ''');
 
-      // --- 5. Audio Metadata ---
+      // --- 4. Audio Metadata ---
       // Links the binary media back to its phonetic reading and pitch accent data.
       await targetDb.customStatement('''
         INSERT INTO ${tAudio.actualTableName} (
@@ -132,7 +120,7 @@ class AudioBankMerger implements StagingMerger {
         LEFT JOIN ${tReading.actualTableName} r ON r.${tReading.reading.name} = meta.reading
       ''');
 
-      // --- 6. Junction Table (Many-to-Many Link) ---
+      // --- 5. Junction Table (Many-to-Many Link) ---
       // Resolves the link between the audio entry and the terms it represents.
       await targetDb.customStatement('''
         INSERT INTO ${tjAudioTerm.actualTableName} (${tjAudioTerm.audioId.name}, ${tjAudioTerm.termId.name})

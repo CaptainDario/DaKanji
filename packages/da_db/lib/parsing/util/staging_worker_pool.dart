@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:isolate';
 
+import 'package:da_db/database/index/yomitan_index.dart';
 import 'package:da_db/parsing/util/worker_protocol.dart';
 import 'package:path/path.dart' as p;
 import 'package:universal_io/io.dart';
@@ -13,6 +14,7 @@ class StagingWorkerPool {
     required int numWorkers,
     required String dataSourcePath,
     required String languageProcessorJson,
+    required YomitanIndex index,
     required List<String> files,
     required Directory tempDir,
     required void Function(SendPort) workerEntryPoint,
@@ -38,6 +40,7 @@ class StagingWorkerPool {
         zipPath: dataSourcePath,
         dbPath: workerDbPath,
         lpJson: languageProcessorJson,
+        index: index,
         queue: queue,
         workerEntryPoint: workerEntryPoint,
         completer: completer,
@@ -54,6 +57,7 @@ class StagingWorkerPool {
     required String zipPath,
     required String dbPath,
     required String lpJson,
+    required YomitanIndex index,
     required List<String> queue,
     required void Function(SendPort) workerEntryPoint,
     required Completer completer,
@@ -68,7 +72,7 @@ class StagingWorkerPool {
     receivePort.listen((message) {
       if (message is SendPort) {
         workerSendPort = message;
-        workerSendPort!.send(MsgInit(zipPath, dbPath, lpJson, receivePort.sendPort));
+        workerSendPort!.send(MsgInit(zipPath, dbPath, lpJson, receivePort.sendPort, index));
       } 
       else if (message is MsgReady || message is MsgDone) {
         if (message is MsgDone) {

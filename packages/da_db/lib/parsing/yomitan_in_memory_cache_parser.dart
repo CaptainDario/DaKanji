@@ -103,7 +103,7 @@ Future _parseDictionaryDataSource(({
     final indexFile = dataSources.first;
     int indexId = await parseAndInsertIndex(
       utf8.decode(indexFile.content), db, DictionaryTypes.yomitan, params.isDefaultDictionary);
-    final IndexTableData indexEntry = (await db.indexDao.getById(indexId))!;
+    final IndexTableData indexEntry = (await db.indexDao.getTableDataById(indexId))!;
 
     // create import context for parsing
     TermBankV3ParserContext? termImportContext;

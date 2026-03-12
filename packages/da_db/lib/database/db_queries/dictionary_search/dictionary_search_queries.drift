@@ -62,7 +62,7 @@ dictionary_search_drift_find_term_bank_entries(
         ),
     
         SearchResults AS (
-             -- 1. TERMS (Exact Mode)
+        -- 1. TERMS (Exact Mode - TRIGRAM)
             SELECT
                 SearchTerms.input_index,
                 SearchTerms.term AS search_term,
@@ -81,7 +81,26 @@ dictionary_search_drift_find_term_bank_entries(
 
             UNION ALL
 
-            -- 2. TERMS (Normalized Mode)
+            -- 1. TERMS (Exact Mode - UNICODE)
+            SELECT
+                SearchTerms.input_index,
+                SearchTerms.term AS search_term,
+                SearchTerms.should_prefix,
+                SearchTerms.allowed_rules,
+                SearchTerms.allowed_tags,
+                SearchTerms.fts_query,
+                T.id AS source_id,
+                1 AS data_type_id,
+                T.term AS text_data,
+                fts_terms_unicode.rank
+            FROM SearchTerms
+            JOIN fts_terms_unicode ON fts_terms_unicode.term MATCH SearchTerms.fts_query
+            JOIN term_table AS T ON fts_terms_unicode."rowid" = T.id
+            WHERE :useGlob = 0 AND :normalizedSearch = 0
+
+            UNION ALL
+
+            -- 2. TERMS (Normalized Mode - TRIGRAM)
             SELECT
                 SearchTerms.input_index,
                 SearchTerms.term AS search_term,
@@ -100,7 +119,7 @@ dictionary_search_drift_find_term_bank_entries(
 
             UNION ALL
 
-            -- 3. TOKENS (Exact Mode)
+            -- 2. TERMS (Normalized Mode - UNICODE)
             SELECT
                 SearchTerms.input_index,
                 SearchTerms.term AS search_term,
@@ -109,36 +128,17 @@ dictionary_search_drift_find_term_bank_entries(
                 SearchTerms.allowed_tags,
                 SearchTerms.fts_query,
                 T.id AS source_id,
-                2 AS data_type_id,
-                T.term AS text_data,
-                fts_tokens.rank
+                3 AS data_type_id,
+                COALESCE(T.term_normalized, T.term) AS text_data, 
+                fts_terms_unicode.rank
             FROM SearchTerms
-            JOIN fts_tokens ON fts_tokens.tokens MATCH SearchTerms.fts_query
-            JOIN term_table AS T ON fts_tokens."rowid" = T.id
-            WHERE :useGlob = 0 AND :normalizedSearch = 0
-
-            UNION ALL
-
-            -- 4. TOKENS (Normalized Mode)
-            SELECT
-                SearchTerms.input_index,
-                SearchTerms.term AS search_term,
-                SearchTerms.should_prefix,
-                SearchTerms.allowed_rules,
-                SearchTerms.allowed_tags,
-                SearchTerms.fts_query,
-                T.id AS source_id,
-                4 AS data_type_id,
-                COALESCE(T.term_normalized, T.term) AS text_data,
-                fts_tokens.rank
-            FROM SearchTerms
-            JOIN fts_tokens ON fts_tokens MATCH SearchTerms.fts_query 
-            JOIN term_table AS T ON fts_tokens."rowid" = T.id
+            JOIN fts_terms_unicode ON fts_terms_unicode MATCH SearchTerms.fts_query 
+            JOIN term_table AS T ON fts_terms_unicode."rowid" = T.id
             WHERE :useGlob = 0 AND :normalizedSearch = 1
 
             UNION ALL
 
-            -- 5. READINGS (Exact Mode)
+            -- 3. READINGS (Exact Mode - TRIGRAM)
             SELECT
                 SearchTerms.input_index,
                 SearchTerms.term AS search_term,
@@ -157,7 +157,26 @@ dictionary_search_drift_find_term_bank_entries(
 
             UNION ALL
 
-            -- 6. READINGS (Normalized Mode)
+            -- 3. READINGS (Exact Mode - UNICODE)
+            SELECT
+                SearchTerms.input_index,
+                SearchTerms.term AS search_term,
+                SearchTerms.should_prefix,
+                SearchTerms.allowed_rules,
+                SearchTerms.allowed_tags,
+                SearchTerms.fts_query,
+                R.id AS source_id,
+                5 AS data_type_id,
+                R.reading AS text_data,
+                fts_readings_unicode.rank
+            FROM SearchTerms
+            JOIN fts_readings_unicode ON fts_readings_unicode.reading MATCH SearchTerms.fts_query
+            JOIN reading_table AS R ON fts_readings_unicode."rowid" = R.id
+            WHERE :useGlob = 0 AND :normalizedSearch = 0
+
+            UNION ALL
+
+            -- 4. READINGS (Normalized Mode - TRIGRAM)
             SELECT
                 SearchTerms.input_index,
                 SearchTerms.term AS search_term,
@@ -176,7 +195,26 @@ dictionary_search_drift_find_term_bank_entries(
 
             UNION ALL
 
-            -- 7. DEFINITIONS
+            -- 4. READINGS (Normalized Mode - UNICODE)
+            SELECT
+                SearchTerms.input_index,
+                SearchTerms.term AS search_term,
+                SearchTerms.should_prefix,
+                SearchTerms.allowed_rules,
+                SearchTerms.allowed_tags,
+                SearchTerms.fts_query,
+                R.id AS source_id,
+                6 AS data_type_id,
+                COALESCE(R.reading_normalized, R.reading) AS text_data,
+                fts_readings_unicode.rank
+            FROM SearchTerms
+            JOIN fts_readings_unicode ON fts_readings_unicode MATCH SearchTerms.fts_query
+            JOIN reading_table AS R ON fts_readings_unicode."rowid" = R.id
+            WHERE :useGlob = 0 AND :normalizedSearch = 1
+
+            UNION ALL
+
+            -- 5. DEFINITIONS (TRIGRAM)
             SELECT
                 SearchTerms.input_index,
                 SearchTerms.term AS search_term,
@@ -194,7 +232,25 @@ dictionary_search_drift_find_term_bank_entries(
 
             UNION ALL
 
-            -- 8. GLOB Search (Terms)
+            -- 5. DEFINITIONS (UNICODE)
+            SELECT
+                SearchTerms.input_index,
+                SearchTerms.term AS search_term,
+                SearchTerms.should_prefix,
+                SearchTerms.allowed_rules,
+                SearchTerms.allowed_tags,
+                SearchTerms.fts_query,
+                fts_definitions_unicode."rowid" AS source_id,
+                7 AS data_type_id,
+                fts_definitions_unicode.definition AS text_data,
+                fts_definitions_unicode.rank
+            FROM SearchTerms
+            JOIN fts_definitions_unicode ON fts_definitions_unicode.definition MATCH SearchTerms.fts_query
+            WHERE :useGlob = 0 AND :normalizedSearch = 0
+
+            UNION ALL
+
+            -- 6. GLOB Search (Terms)
             SELECT
                 SearchTerms.input_index,
                 SearchTerms.term AS search_term,
@@ -204,16 +260,16 @@ dictionary_search_drift_find_term_bank_entries(
                 SearchTerms.fts_query,
                 T.id AS source_id,
                 (CASE WHEN :normalizedSearch = 0 THEN 1 ELSE 3 END) AS data_type_id,
-                (CASE WHEN :normalizedSearch = 0 THEN T.term ELSE COALESCE(T.term_normalized, T.term) END) AS text_data,
+                (CASE WHEN :normalizedSearch = 0 THEN T.term ELSE IFNULL(T.term_normalized, T.term) END) AS text_data,
                 0 AS rank
             FROM SearchTerms, term_table AS T
             WHERE 
                 :useGlob = 1
-                AND (CASE WHEN :normalizedSearch = 0 THEN T.term ELSE COALESCE(T.term_normalized, T.term) END) GLOB SearchTerms.term
+                AND (CASE WHEN :normalizedSearch = 0 THEN T.term ELSE IFNULL(T.term_normalized, T.term) END) GLOB SearchTerms.term
 
             UNION ALL
 
-            -- 9. GLOB Search (Readings)
+            -- 7. GLOB Search (Readings)
             SELECT
                 SearchTerms.input_index,
                 SearchTerms.term AS search_term,
@@ -223,16 +279,16 @@ dictionary_search_drift_find_term_bank_entries(
                 SearchTerms.fts_query,
                 R.id AS source_id,
                 (CASE WHEN :normalizedSearch = 0 THEN 5 ELSE 6 END) AS data_type_id,
-                (CASE WHEN :normalizedSearch = 0 THEN R.reading ELSE COALESCE(R.reading_normalized, R.reading) END) AS text_data,
+                (CASE WHEN :normalizedSearch = 0 THEN R.reading ELSE IFNULL(R.reading_normalized, R.reading) END) AS text_data,
                 0 AS rank
             FROM SearchTerms, reading_table AS R
             WHERE 
                 :useGlob = 1
-                AND (CASE WHEN :normalizedSearch = 0 THEN R.reading ELSE COALESCE(R.reading_normalized, R.reading) END) GLOB SearchTerms.term
+                AND (CASE WHEN :normalizedSearch = 0 THEN R.reading ELSE IFNULL(R.reading_normalized, R.reading) END) GLOB SearchTerms.term
 
             UNION ALL
 
-            -- 10. GLOB Search (Definitions)
+            -- 8. GLOB Search (Definitions)
             SELECT
                 SearchTerms.input_index,
                 SearchTerms.term AS search_term,
@@ -350,34 +406,50 @@ dictionary_search_drift_find_term_bank_entries(
 
                 -- Check Term (Using TBM.term_id from the found result)
                 (:filterTerm IS NULL OR EXISTS (
-                    SELECT 1 FROM fts_terms 
-                    WHERE "rowid" = TBM.term_id 
-                    AND :normalizedSearch = 0 
-                    AND term MATCH '"' || "REPLACE"(:filterTerm, '"', '""') || '"'
-
+                    SELECT 1 FROM fts_terms
+                        WHERE "rowid" = TBM.term_id
+                            AND :normalizedSearch = 0
+                            AND term MATCH '"' || "REPLACE"(:filterTerm, '"', '""') || '"'
                     UNION ALL
-
-                    SELECT 1 FROM fts_terms 
-                    WHERE "rowid" = TBM.term_id 
-                    AND :normalizedSearch = 1 
-                    AND fts_terms MATCH '"' || "REPLACE"(:filterTerm, '"', '""') || '"'
+                    SELECT 1 FROM fts_terms_unicode
+                        WHERE "rowid" = TBM.term_id
+                            AND :normalizedSearch = 0
+                            AND term MATCH '"' || "REPLACE"(:filterTerm, '"', '""') || '"'
+                    UNION ALL
+                    SELECT 1 FROM fts_terms
+                        WHERE "rowid" = TBM.term_id
+                            AND :normalizedSearch = 1
+                            AND fts_terms MATCH '"' || "REPLACE"(:filterTerm, '"', '""') || '"'
+                    UNION ALL
+                    SELECT 1 FROM fts_terms_unicode
+                        WHERE "rowid" = TBM.term_id
+                            AND :normalizedSearch = 1
+                            AND fts_terms_unicode MATCH '"' || "REPLACE"(:filterTerm, '"', '""') || '"'
                 ))
 
                 AND
                 
                 -- Check Reading (Using TBM.reading_id)
                 (:filterReading IS NULL OR EXISTS (
-                    SELECT 1 FROM fts_readings 
-                    WHERE "rowid" = TBM.reading_id 
-                    AND :normalizedSearch = 0 
-                    AND reading MATCH '"' || "REPLACE"(:filterReading, '"', '""') || '"'
-
+                    SELECT 1 FROM fts_readings
+                        WHERE "rowid" = TBM.reading_id
+                            AND :normalizedSearch = 0
+                            AND reading MATCH '"' || "REPLACE"(:filterReading, '"', '""') || '"'
                     UNION ALL
-
-                    SELECT 1 FROM fts_readings 
-                    WHERE "rowid" = TBM.reading_id 
-                    AND :normalizedSearch = 1 
-                    AND fts_readings MATCH '"' || "REPLACE"(:filterReading, '"', '""') || '"'
+                    SELECT 1 FROM fts_readings_unicode
+                        WHERE "rowid" = TBM.reading_id
+                            AND :normalizedSearch = 0
+                            AND reading MATCH '"' || "REPLACE"(:filterReading, '"', '""') || '"'
+                    UNION ALL
+                    SELECT 1 FROM fts_readings
+                        WHERE "rowid" = TBM.reading_id
+                            AND :normalizedSearch = 1
+                            AND fts_readings MATCH '"' || "REPLACE"(:filterReading, '"', '""') || '"'
+                    UNION ALL
+                    SELECT 1 FROM fts_readings_unicode
+                        WHERE "rowid" = TBM.reading_id
+                            AND :normalizedSearch = 1
+                            AND fts_readings_unicode MATCH '"' || "REPLACE"(:filterReading, '"', '""') || '"'
                 ))
 
                 AND
@@ -388,6 +460,13 @@ dictionary_search_drift_find_term_bank_entries(
                     JOIN fts_definitions AS def_fts ON link.definition_id = def_fts."rowid"
                     WHERE link.term_bank_id = TBM.term_bank_id
                     AND def_fts.definition MATCH '"' || "REPLACE"(:filterDefinition, '"', '""') || '"'
+                    
+                    UNION ALL
+                    
+                    SELECT 1 FROM term_bank_v3_x_definition_table AS link
+                    JOIN fts_definitions_unicode AS def_fts_u ON link.definition_id = def_fts_u."rowid"
+                    WHERE link.term_bank_id = TBM.term_bank_id
+                    AND def_fts_u.definition MATCH '"' || "REPLACE"(:filterDefinition, '"', '""') || '"'
                 ))
 
                 -- TAG/RULE CHECKS

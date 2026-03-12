@@ -1,5 +1,7 @@
 // Dart imports:
 import 'package:da_db/database/da_db.dart';
+import 'package:da_db/database/index/yomitan_index.dart';
+import 'package:language_processing/language_processing.dart';
 
 import '../../../staging_db/mergers/staging_merger.dart';
 
@@ -11,8 +13,16 @@ class TermBankV3Merger implements StagingMerger {
   Future<void> merge({
     required DaDb targetDb,
     required String workerAlias,
+    required YomitanIndex index,
     required int indexId,
   }) async {
+
+    final bool isSourceSpaceLang = usesSpaceSeparation(index.sourceLanguage);
+    final bool isTargetSpaceLang = usesSpaceSeparation(index.targetLanguage);
+
+    final String ftsTermsTable = isSourceSpaceLang ? "fts_terms_unicode" : "fts_terms";
+    final String ftsReadingsTable = isSourceSpaceLang ? "fts_readings_unicode" : "fts_readings";
+    final String ftsDefsTable = isTargetSpaceLang ? "fts_definitions_unicode" : "fts_definitions";
 
     final maxTermBankId = (await targetDb.termBankV3Dao.maxTermBankV3Id());
     final maxTermId = await targetDb.termDao.maxTermId();
@@ -42,22 +52,10 @@ class TermBankV3Merger implements StagingMerger {
         FROM $workerAlias.term_staging_table
       ''');
       await targetDb.customStatement('''
-        INSERT INTO fts_terms(rowid, term, term_normalized)
+        INSERT INTO $ftsTermsTable(rowid, term, term_normalized)
         SELECT id, term, term_normalized 
         FROM ${tTerm.actualTableName} 
         WHERE id > $maxTermId
-      ''');
-
-      // FTS Tokens (Contentless, only insertif tokens != term)
-      await targetDb.customStatement('''
-        INSERT INTO fts_tokens(rowid, tokens, tokens_normalized)
-        SELECT DISTINCT t.${tTerm.id.name}, s.term_tokens, s.term_tokens_normalized
-        FROM $workerAlias.term_staging_table s
-        JOIN ${tTerm.actualTableName} t ON t.${tTerm.term.name} = s.term
-        WHERE 
-          s.term_tokens IS NOT NULL 
-          AND s.term_tokens != s.term 
-          AND t.${tTerm.id.name} > $maxTermId
       ''');
 
       // Readings
@@ -67,7 +65,7 @@ class TermBankV3Merger implements StagingMerger {
         FROM $workerAlias.term_staging_table
       ''');
       await targetDb.customStatement('''
-        INSERT INTO fts_readings(rowid, reading, reading_normalized)
+        INSERT INTO $ftsReadingsTable(rowid, reading, reading_normalized)
         SELECT id, reading, reading_normalized 
         FROM ${tReading.actualTableName} 
         WHERE id > $maxReadingId
@@ -80,7 +78,7 @@ class TermBankV3Merger implements StagingMerger {
         FROM $workerAlias.term_definition_staging_table
       ''');
       await targetDb.customStatement('''
-        INSERT INTO fts_definitions(rowid, definition)
+        INSERT INTO $ftsDefsTable(rowid, definition)
         SELECT id, definition 
         FROM ${tDef.actualTableName} 
         WHERE id > $maxDefinitionId

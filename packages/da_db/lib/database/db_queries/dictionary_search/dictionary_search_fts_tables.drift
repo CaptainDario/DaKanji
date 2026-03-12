@@ -2,47 +2,53 @@ import '/database/general_tables/term_tables.dart';
 import '/database/general_tables/reading_tables.dart';
 import '/database/general_tables/definition_tables.dart';
 
-
-
--- 1. TERMS INDEX (External Content)
--- Links directly to term_table. Stores NO text.
+-- 1A. TERMS INDEX (Trigram)
 CREATE VIRTUAL TABLE IF NOT EXISTS fts_terms USING fts5(
-  term, 
-  term_normalized, 
-  content='term_table', 
+  term,
+  term_normalized,
+  content='term_table',
   content_rowid='id',
-  tokenize = 'unicode61',
-  prefix = '2 3'
+  tokenize = 'better_trigram',
+  prefix = '1 2 3'
+);
+-- 1B. TERMS INDEX (Unicode)
+CREATE VIRTUAL TABLE IF NOT EXISTS fts_terms_unicode USING fts5(
+  term,
+  term_normalized,
+  content='term_table',
+  content_rowid='id',
+  tokenize = 'unicode61'
 );
 
--- 2. READINGS INDEX (External Content)
--- Links directly to reading_table. Stores NO text.
+-- 2A. READINGS INDEX (Trigram)
 CREATE VIRTUAL TABLE IF NOT EXISTS fts_readings USING fts5(
-  reading, 
-  reading_normalized, 
-  content='reading_table', 
+  reading,
+  reading_normalized,
+  content='reading_table',
   content_rowid='id',
-  tokenize = 'unicode61',
-  prefix = '2 3'
+  tokenize = 'better_trigram',
+  prefix = '1 2 3'
+);
+-- 2B. READINGS INDEX (Unicode)
+CREATE VIRTUAL TABLE IF NOT EXISTS fts_readings_unicode USING fts5(
+  reading,
+  reading_normalized,
+  content='reading_table',
+  content_rowid='id',
+  tokenize = 'unicode61'
 );
 
--- 3. DEFINITIONS INDEX (External Content)
--- Links directly to definition_table. Stores NO text.
+-- 3A. DEFINITIONS INDEX (Trigram)
 CREATE VIRTUAL TABLE IF NOT EXISTS fts_definitions USING fts5(
-  definition, 
-  content='definition_table', 
+  definition,
+  content='definition_table',
   content_rowid='id',
-  tokenize = 'unicode61',
-  prefix = '2 3'
+  tokenize = 'better_trigram'
 );
-
--- 4. TOKENS INDEX (Contentless)
--- Stores NO text. manually INSERT into this during db merging.
-CREATE VIRTUAL TABLE IF NOT EXISTS fts_tokens USING fts5(
-  tokens,
-  tokens_normalized,
-  content='',
-  tokenize = 'unicode61',
-  prefix = '2 3',
-  contentless_delete=1
+-- 3B. DEFINITIONS INDEX (Unicode)
+CREATE VIRTUAL TABLE IF NOT EXISTS fts_definitions_unicode USING fts5(
+  definition,
+  content='definition_table',
+  content_rowid='id',
+  tokenize = 'unicode61'
 );

@@ -1924,28 +1924,6 @@ class $TermMetaStagingTableTable extends TermMetaStagingTable
     type: DriftSqlType.string,
     requiredDuringInsert: false,
   );
-  static const VerificationMeta _termTokensMeta = const VerificationMeta(
-    'termTokens',
-  );
-  @override
-  late final GeneratedColumn<String> termTokens = GeneratedColumn<String>(
-    'term_tokens',
-    aliasedName,
-    true,
-    type: DriftSqlType.string,
-    requiredDuringInsert: false,
-  );
-  static const VerificationMeta _termTokensNormalizedMeta =
-      const VerificationMeta('termTokensNormalized');
-  @override
-  late final GeneratedColumn<String> termTokensNormalized =
-      GeneratedColumn<String>(
-        'term_tokens_normalized',
-        aliasedName,
-        true,
-        type: DriftSqlType.string,
-        requiredDuringInsert: false,
-      );
   static const VerificationMeta _modeMeta = const VerificationMeta('mode');
   @override
   late final GeneratedColumn<String> mode = GeneratedColumn<String>(
@@ -2005,8 +1983,6 @@ class $TermMetaStagingTableTable extends TermMetaStagingTable
     localId,
     term,
     termNormalized,
-    termTokens,
-    termTokensNormalized,
     mode,
     reading,
     readingNormalized,
@@ -2047,21 +2023,6 @@ class $TermMetaStagingTableTable extends TermMetaStagingTable
         termNormalized.isAcceptableOrUnknown(
           data['term_normalized']!,
           _termNormalizedMeta,
-        ),
-      );
-    }
-    if (data.containsKey('term_tokens')) {
-      context.handle(
-        _termTokensMeta,
-        termTokens.isAcceptableOrUnknown(data['term_tokens']!, _termTokensMeta),
-      );
-    }
-    if (data.containsKey('term_tokens_normalized')) {
-      context.handle(
-        _termTokensNormalizedMeta,
-        termTokensNormalized.isAcceptableOrUnknown(
-          data['term_tokens_normalized']!,
-          _termTokensNormalizedMeta,
         ),
       );
     }
@@ -2127,14 +2088,6 @@ class $TermMetaStagingTableTable extends TermMetaStagingTable
         DriftSqlType.string,
         data['${effectivePrefix}term_normalized'],
       ),
-      termTokens: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}term_tokens'],
-      ),
-      termTokensNormalized: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}term_tokens_normalized'],
-      ),
       mode: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}mode'],
@@ -2169,8 +2122,6 @@ class TermMetaStagingTableData extends DataClass
   final int localId;
   final String term;
   final String? termNormalized;
-  final String? termTokens;
-  final String? termTokensNormalized;
   final String mode;
   final String? reading;
   final String? readingNormalized;
@@ -2180,8 +2131,6 @@ class TermMetaStagingTableData extends DataClass
     required this.localId,
     required this.term,
     this.termNormalized,
-    this.termTokens,
-    this.termTokensNormalized,
     required this.mode,
     this.reading,
     this.readingNormalized,
@@ -2195,12 +2144,6 @@ class TermMetaStagingTableData extends DataClass
     map['term'] = Variable<String>(term);
     if (!nullToAbsent || termNormalized != null) {
       map['term_normalized'] = Variable<String>(termNormalized);
-    }
-    if (!nullToAbsent || termTokens != null) {
-      map['term_tokens'] = Variable<String>(termTokens);
-    }
-    if (!nullToAbsent || termTokensNormalized != null) {
-      map['term_tokens_normalized'] = Variable<String>(termTokensNormalized);
     }
     map['mode'] = Variable<String>(mode);
     if (!nullToAbsent || reading != null) {
@@ -2225,12 +2168,6 @@ class TermMetaStagingTableData extends DataClass
       termNormalized: termNormalized == null && nullToAbsent
           ? const Value.absent()
           : Value(termNormalized),
-      termTokens: termTokens == null && nullToAbsent
-          ? const Value.absent()
-          : Value(termTokens),
-      termTokensNormalized: termTokensNormalized == null && nullToAbsent
-          ? const Value.absent()
-          : Value(termTokensNormalized),
       mode: Value(mode),
       reading: reading == null && nullToAbsent
           ? const Value.absent()
@@ -2256,10 +2193,6 @@ class TermMetaStagingTableData extends DataClass
       localId: serializer.fromJson<int>(json['localId']),
       term: serializer.fromJson<String>(json['term']),
       termNormalized: serializer.fromJson<String?>(json['termNormalized']),
-      termTokens: serializer.fromJson<String?>(json['termTokens']),
-      termTokensNormalized: serializer.fromJson<String?>(
-        json['termTokensNormalized'],
-      ),
       mode: serializer.fromJson<String>(json['mode']),
       reading: serializer.fromJson<String?>(json['reading']),
       readingNormalized: serializer.fromJson<String?>(
@@ -2276,8 +2209,6 @@ class TermMetaStagingTableData extends DataClass
       'localId': serializer.toJson<int>(localId),
       'term': serializer.toJson<String>(term),
       'termNormalized': serializer.toJson<String?>(termNormalized),
-      'termTokens': serializer.toJson<String?>(termTokens),
-      'termTokensNormalized': serializer.toJson<String?>(termTokensNormalized),
       'mode': serializer.toJson<String>(mode),
       'reading': serializer.toJson<String?>(reading),
       'readingNormalized': serializer.toJson<String?>(readingNormalized),
@@ -2290,8 +2221,6 @@ class TermMetaStagingTableData extends DataClass
     int? localId,
     String? term,
     Value<String?> termNormalized = const Value.absent(),
-    Value<String?> termTokens = const Value.absent(),
-    Value<String?> termTokensNormalized = const Value.absent(),
     String? mode,
     Value<String?> reading = const Value.absent(),
     Value<String?> readingNormalized = const Value.absent(),
@@ -2303,10 +2232,6 @@ class TermMetaStagingTableData extends DataClass
     termNormalized: termNormalized.present
         ? termNormalized.value
         : this.termNormalized,
-    termTokens: termTokens.present ? termTokens.value : this.termTokens,
-    termTokensNormalized: termTokensNormalized.present
-        ? termTokensNormalized.value
-        : this.termTokensNormalized,
     mode: mode ?? this.mode,
     reading: reading.present ? reading.value : this.reading,
     readingNormalized: readingNormalized.present
@@ -2324,12 +2249,6 @@ class TermMetaStagingTableData extends DataClass
       termNormalized: data.termNormalized.present
           ? data.termNormalized.value
           : this.termNormalized,
-      termTokens: data.termTokens.present
-          ? data.termTokens.value
-          : this.termTokens,
-      termTokensNormalized: data.termTokensNormalized.present
-          ? data.termTokensNormalized.value
-          : this.termTokensNormalized,
       mode: data.mode.present ? data.mode.value : this.mode,
       reading: data.reading.present ? data.reading.value : this.reading,
       readingNormalized: data.readingNormalized.present
@@ -2348,8 +2267,6 @@ class TermMetaStagingTableData extends DataClass
           ..write('localId: $localId, ')
           ..write('term: $term, ')
           ..write('termNormalized: $termNormalized, ')
-          ..write('termTokens: $termTokens, ')
-          ..write('termTokensNormalized: $termTokensNormalized, ')
           ..write('mode: $mode, ')
           ..write('reading: $reading, ')
           ..write('readingNormalized: $readingNormalized, ')
@@ -2364,8 +2281,6 @@ class TermMetaStagingTableData extends DataClass
     localId,
     term,
     termNormalized,
-    termTokens,
-    termTokensNormalized,
     mode,
     reading,
     readingNormalized,
@@ -2379,8 +2294,6 @@ class TermMetaStagingTableData extends DataClass
           other.localId == this.localId &&
           other.term == this.term &&
           other.termNormalized == this.termNormalized &&
-          other.termTokens == this.termTokens &&
-          other.termTokensNormalized == this.termTokensNormalized &&
           other.mode == this.mode &&
           other.reading == this.reading &&
           other.readingNormalized == this.readingNormalized &&
@@ -2393,8 +2306,6 @@ class TermMetaStagingTableCompanion
   final Value<int> localId;
   final Value<String> term;
   final Value<String?> termNormalized;
-  final Value<String?> termTokens;
-  final Value<String?> termTokensNormalized;
   final Value<String> mode;
   final Value<String?> reading;
   final Value<String?> readingNormalized;
@@ -2405,8 +2316,6 @@ class TermMetaStagingTableCompanion
     this.localId = const Value.absent(),
     this.term = const Value.absent(),
     this.termNormalized = const Value.absent(),
-    this.termTokens = const Value.absent(),
-    this.termTokensNormalized = const Value.absent(),
     this.mode = const Value.absent(),
     this.reading = const Value.absent(),
     this.readingNormalized = const Value.absent(),
@@ -2418,8 +2327,6 @@ class TermMetaStagingTableCompanion
     required int localId,
     required String term,
     this.termNormalized = const Value.absent(),
-    this.termTokens = const Value.absent(),
-    this.termTokensNormalized = const Value.absent(),
     required String mode,
     this.reading = const Value.absent(),
     this.readingNormalized = const Value.absent(),
@@ -2433,8 +2340,6 @@ class TermMetaStagingTableCompanion
     Expression<int>? localId,
     Expression<String>? term,
     Expression<String>? termNormalized,
-    Expression<String>? termTokens,
-    Expression<String>? termTokensNormalized,
     Expression<String>? mode,
     Expression<String>? reading,
     Expression<String>? readingNormalized,
@@ -2446,9 +2351,6 @@ class TermMetaStagingTableCompanion
       if (localId != null) 'local_id': localId,
       if (term != null) 'term': term,
       if (termNormalized != null) 'term_normalized': termNormalized,
-      if (termTokens != null) 'term_tokens': termTokens,
-      if (termTokensNormalized != null)
-        'term_tokens_normalized': termTokensNormalized,
       if (mode != null) 'mode': mode,
       if (reading != null) 'reading': reading,
       if (readingNormalized != null) 'reading_normalized': readingNormalized,
@@ -2462,8 +2364,6 @@ class TermMetaStagingTableCompanion
     Value<int>? localId,
     Value<String>? term,
     Value<String?>? termNormalized,
-    Value<String?>? termTokens,
-    Value<String?>? termTokensNormalized,
     Value<String>? mode,
     Value<String?>? reading,
     Value<String?>? readingNormalized,
@@ -2475,8 +2375,6 @@ class TermMetaStagingTableCompanion
       localId: localId ?? this.localId,
       term: term ?? this.term,
       termNormalized: termNormalized ?? this.termNormalized,
-      termTokens: termTokens ?? this.termTokens,
-      termTokensNormalized: termTokensNormalized ?? this.termTokensNormalized,
       mode: mode ?? this.mode,
       reading: reading ?? this.reading,
       readingNormalized: readingNormalized ?? this.readingNormalized,
@@ -2497,14 +2395,6 @@ class TermMetaStagingTableCompanion
     }
     if (termNormalized.present) {
       map['term_normalized'] = Variable<String>(termNormalized.value);
-    }
-    if (termTokens.present) {
-      map['term_tokens'] = Variable<String>(termTokens.value);
-    }
-    if (termTokensNormalized.present) {
-      map['term_tokens_normalized'] = Variable<String>(
-        termTokensNormalized.value,
-      );
     }
     if (mode.present) {
       map['mode'] = Variable<String>(mode.value);
@@ -2533,8 +2423,6 @@ class TermMetaStagingTableCompanion
           ..write('localId: $localId, ')
           ..write('term: $term, ')
           ..write('termNormalized: $termNormalized, ')
-          ..write('termTokens: $termTokens, ')
-          ..write('termTokensNormalized: $termTokensNormalized, ')
           ..write('mode: $mode, ')
           ..write('reading: $reading, ')
           ..write('readingNormalized: $readingNormalized, ')
@@ -6442,17 +6330,6 @@ class $ExampleStagingTableTable extends ExampleStagingTable
     type: DriftSqlType.int,
     requiredDuringInsert: false,
   );
-  static const VerificationMeta _languageCodeMeta = const VerificationMeta(
-    'languageCode',
-  );
-  @override
-  late final GeneratedColumn<String> languageCode = GeneratedColumn<String>(
-    'language_code',
-    aliasedName,
-    false,
-    type: DriftSqlType.string,
-    requiredDuringInsert: true,
-  );
   static const VerificationMeta _exampleSentenceMeta = const VerificationMeta(
     'exampleSentence',
   );
@@ -6479,7 +6356,6 @@ class $ExampleStagingTableTable extends ExampleStagingTable
   List<GeneratedColumn> get $columns => [
     localId,
     groupId,
-    languageCode,
     exampleSentence,
     exampleSentenceTokenized,
   ];
@@ -6506,17 +6382,6 @@ class $ExampleStagingTableTable extends ExampleStagingTable
         _groupIdMeta,
         groupId.isAcceptableOrUnknown(data['group_id']!, _groupIdMeta),
       );
-    }
-    if (data.containsKey('language_code')) {
-      context.handle(
-        _languageCodeMeta,
-        languageCode.isAcceptableOrUnknown(
-          data['language_code']!,
-          _languageCodeMeta,
-        ),
-      );
-    } else if (isInserting) {
-      context.missing(_languageCodeMeta);
     }
     if (data.containsKey('example_sentence')) {
       context.handle(
@@ -6558,10 +6423,6 @@ class $ExampleStagingTableTable extends ExampleStagingTable
         DriftSqlType.int,
         data['${effectivePrefix}group_id'],
       ),
-      languageCode: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}language_code'],
-      )!,
       exampleSentence: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}example_sentence'],
@@ -6584,13 +6445,11 @@ class ExampleStagingTableData extends DataClass
   /// The local staging ID used to link tags, stats, and terms
   final int localId;
   final int? groupId;
-  final String languageCode;
   final String exampleSentence;
   final String? exampleSentenceTokenized;
   const ExampleStagingTableData({
     required this.localId,
     this.groupId,
-    required this.languageCode,
     required this.exampleSentence,
     this.exampleSentenceTokenized,
   });
@@ -6601,7 +6460,6 @@ class ExampleStagingTableData extends DataClass
     if (!nullToAbsent || groupId != null) {
       map['group_id'] = Variable<int>(groupId);
     }
-    map['language_code'] = Variable<String>(languageCode);
     map['example_sentence'] = Variable<String>(exampleSentence);
     if (!nullToAbsent || exampleSentenceTokenized != null) {
       map['example_sentence_tokenized'] = Variable<String>(
@@ -6617,7 +6475,6 @@ class ExampleStagingTableData extends DataClass
       groupId: groupId == null && nullToAbsent
           ? const Value.absent()
           : Value(groupId),
-      languageCode: Value(languageCode),
       exampleSentence: Value(exampleSentence),
       exampleSentenceTokenized: exampleSentenceTokenized == null && nullToAbsent
           ? const Value.absent()
@@ -6633,7 +6490,6 @@ class ExampleStagingTableData extends DataClass
     return ExampleStagingTableData(
       localId: serializer.fromJson<int>(json['localId']),
       groupId: serializer.fromJson<int?>(json['groupId']),
-      languageCode: serializer.fromJson<String>(json['languageCode']),
       exampleSentence: serializer.fromJson<String>(json['exampleSentence']),
       exampleSentenceTokenized: serializer.fromJson<String?>(
         json['exampleSentenceTokenized'],
@@ -6646,7 +6502,6 @@ class ExampleStagingTableData extends DataClass
     return <String, dynamic>{
       'localId': serializer.toJson<int>(localId),
       'groupId': serializer.toJson<int?>(groupId),
-      'languageCode': serializer.toJson<String>(languageCode),
       'exampleSentence': serializer.toJson<String>(exampleSentence),
       'exampleSentenceTokenized': serializer.toJson<String?>(
         exampleSentenceTokenized,
@@ -6657,13 +6512,11 @@ class ExampleStagingTableData extends DataClass
   ExampleStagingTableData copyWith({
     int? localId,
     Value<int?> groupId = const Value.absent(),
-    String? languageCode,
     String? exampleSentence,
     Value<String?> exampleSentenceTokenized = const Value.absent(),
   }) => ExampleStagingTableData(
     localId: localId ?? this.localId,
     groupId: groupId.present ? groupId.value : this.groupId,
-    languageCode: languageCode ?? this.languageCode,
     exampleSentence: exampleSentence ?? this.exampleSentence,
     exampleSentenceTokenized: exampleSentenceTokenized.present
         ? exampleSentenceTokenized.value
@@ -6673,9 +6526,6 @@ class ExampleStagingTableData extends DataClass
     return ExampleStagingTableData(
       localId: data.localId.present ? data.localId.value : this.localId,
       groupId: data.groupId.present ? data.groupId.value : this.groupId,
-      languageCode: data.languageCode.present
-          ? data.languageCode.value
-          : this.languageCode,
       exampleSentence: data.exampleSentence.present
           ? data.exampleSentence.value
           : this.exampleSentence,
@@ -6690,7 +6540,6 @@ class ExampleStagingTableData extends DataClass
     return (StringBuffer('ExampleStagingTableData(')
           ..write('localId: $localId, ')
           ..write('groupId: $groupId, ')
-          ..write('languageCode: $languageCode, ')
           ..write('exampleSentence: $exampleSentence, ')
           ..write('exampleSentenceTokenized: $exampleSentenceTokenized')
           ..write(')'))
@@ -6698,20 +6547,14 @@ class ExampleStagingTableData extends DataClass
   }
 
   @override
-  int get hashCode => Object.hash(
-    localId,
-    groupId,
-    languageCode,
-    exampleSentence,
-    exampleSentenceTokenized,
-  );
+  int get hashCode =>
+      Object.hash(localId, groupId, exampleSentence, exampleSentenceTokenized);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is ExampleStagingTableData &&
           other.localId == this.localId &&
           other.groupId == this.groupId &&
-          other.languageCode == this.languageCode &&
           other.exampleSentence == this.exampleSentence &&
           other.exampleSentenceTokenized == this.exampleSentenceTokenized);
 }
@@ -6720,35 +6563,29 @@ class ExampleStagingTableCompanion
     extends UpdateCompanion<ExampleStagingTableData> {
   final Value<int> localId;
   final Value<int?> groupId;
-  final Value<String> languageCode;
   final Value<String> exampleSentence;
   final Value<String?> exampleSentenceTokenized;
   const ExampleStagingTableCompanion({
     this.localId = const Value.absent(),
     this.groupId = const Value.absent(),
-    this.languageCode = const Value.absent(),
     this.exampleSentence = const Value.absent(),
     this.exampleSentenceTokenized = const Value.absent(),
   });
   ExampleStagingTableCompanion.insert({
     this.localId = const Value.absent(),
     this.groupId = const Value.absent(),
-    required String languageCode,
     required String exampleSentence,
     this.exampleSentenceTokenized = const Value.absent(),
-  }) : languageCode = Value(languageCode),
-       exampleSentence = Value(exampleSentence);
+  }) : exampleSentence = Value(exampleSentence);
   static Insertable<ExampleStagingTableData> custom({
     Expression<int>? localId,
     Expression<int>? groupId,
-    Expression<String>? languageCode,
     Expression<String>? exampleSentence,
     Expression<String>? exampleSentenceTokenized,
   }) {
     return RawValuesInsertable({
       if (localId != null) 'local_id': localId,
       if (groupId != null) 'group_id': groupId,
-      if (languageCode != null) 'language_code': languageCode,
       if (exampleSentence != null) 'example_sentence': exampleSentence,
       if (exampleSentenceTokenized != null)
         'example_sentence_tokenized': exampleSentenceTokenized,
@@ -6758,14 +6595,12 @@ class ExampleStagingTableCompanion
   ExampleStagingTableCompanion copyWith({
     Value<int>? localId,
     Value<int?>? groupId,
-    Value<String>? languageCode,
     Value<String>? exampleSentence,
     Value<String?>? exampleSentenceTokenized,
   }) {
     return ExampleStagingTableCompanion(
       localId: localId ?? this.localId,
       groupId: groupId ?? this.groupId,
-      languageCode: languageCode ?? this.languageCode,
       exampleSentence: exampleSentence ?? this.exampleSentence,
       exampleSentenceTokenized:
           exampleSentenceTokenized ?? this.exampleSentenceTokenized,
@@ -6780,9 +6615,6 @@ class ExampleStagingTableCompanion
     }
     if (groupId.present) {
       map['group_id'] = Variable<int>(groupId.value);
-    }
-    if (languageCode.present) {
-      map['language_code'] = Variable<String>(languageCode.value);
     }
     if (exampleSentence.present) {
       map['example_sentence'] = Variable<String>(exampleSentence.value);
@@ -6800,7 +6632,6 @@ class ExampleStagingTableCompanion
     return (StringBuffer('ExampleStagingTableCompanion(')
           ..write('localId: $localId, ')
           ..write('groupId: $groupId, ')
-          ..write('languageCode: $languageCode, ')
           ..write('exampleSentence: $exampleSentence, ')
           ..write('exampleSentenceTokenized: $exampleSentenceTokenized')
           ..write(')'))
@@ -9556,8 +9387,6 @@ typedef $$TermMetaStagingTableTableCreateCompanionBuilder =
       required int localId,
       required String term,
       Value<String?> termNormalized,
-      Value<String?> termTokens,
-      Value<String?> termTokensNormalized,
       required String mode,
       Value<String?> reading,
       Value<String?> readingNormalized,
@@ -9570,8 +9399,6 @@ typedef $$TermMetaStagingTableTableUpdateCompanionBuilder =
       Value<int> localId,
       Value<String> term,
       Value<String?> termNormalized,
-      Value<String?> termTokens,
-      Value<String?> termTokensNormalized,
       Value<String> mode,
       Value<String?> reading,
       Value<String?> readingNormalized,
@@ -9601,16 +9428,6 @@ class $$TermMetaStagingTableTableFilterComposer
 
   ColumnFilters<String> get termNormalized => $composableBuilder(
     column: $table.termNormalized,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<String> get termTokens => $composableBuilder(
-    column: $table.termTokens,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<String> get termTokensNormalized => $composableBuilder(
-    column: $table.termTokensNormalized,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -9664,16 +9481,6 @@ class $$TermMetaStagingTableTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<String> get termTokens => $composableBuilder(
-    column: $table.termTokens,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<String> get termTokensNormalized => $composableBuilder(
-    column: $table.termTokensNormalized,
-    builder: (column) => ColumnOrderings(column),
-  );
-
   ColumnOrderings<String> get mode => $composableBuilder(
     column: $table.mode,
     builder: (column) => ColumnOrderings(column),
@@ -9717,16 +9524,6 @@ class $$TermMetaStagingTableTableAnnotationComposer
 
   GeneratedColumn<String> get termNormalized => $composableBuilder(
     column: $table.termNormalized,
-    builder: (column) => column,
-  );
-
-  GeneratedColumn<String> get termTokens => $composableBuilder(
-    column: $table.termTokens,
-    builder: (column) => column,
-  );
-
-  GeneratedColumn<String> get termTokensNormalized => $composableBuilder(
-    column: $table.termTokensNormalized,
     builder: (column) => column,
   );
 
@@ -9796,8 +9593,6 @@ class $$TermMetaStagingTableTableTableManager
                 Value<int> localId = const Value.absent(),
                 Value<String> term = const Value.absent(),
                 Value<String?> termNormalized = const Value.absent(),
-                Value<String?> termTokens = const Value.absent(),
-                Value<String?> termTokensNormalized = const Value.absent(),
                 Value<String> mode = const Value.absent(),
                 Value<String?> reading = const Value.absent(),
                 Value<String?> readingNormalized = const Value.absent(),
@@ -9808,8 +9603,6 @@ class $$TermMetaStagingTableTableTableManager
                 localId: localId,
                 term: term,
                 termNormalized: termNormalized,
-                termTokens: termTokens,
-                termTokensNormalized: termTokensNormalized,
                 mode: mode,
                 reading: reading,
                 readingNormalized: readingNormalized,
@@ -9822,8 +9615,6 @@ class $$TermMetaStagingTableTableTableManager
                 required int localId,
                 required String term,
                 Value<String?> termNormalized = const Value.absent(),
-                Value<String?> termTokens = const Value.absent(),
-                Value<String?> termTokensNormalized = const Value.absent(),
                 required String mode,
                 Value<String?> reading = const Value.absent(),
                 Value<String?> readingNormalized = const Value.absent(),
@@ -9834,8 +9625,6 @@ class $$TermMetaStagingTableTableTableManager
                 localId: localId,
                 term: term,
                 termNormalized: termNormalized,
-                termTokens: termTokens,
-                termTokensNormalized: termTokensNormalized,
                 mode: mode,
                 reading: reading,
                 readingNormalized: readingNormalized,
@@ -12144,7 +11933,6 @@ typedef $$ExampleStagingTableTableCreateCompanionBuilder =
     ExampleStagingTableCompanion Function({
       Value<int> localId,
       Value<int?> groupId,
-      required String languageCode,
       required String exampleSentence,
       Value<String?> exampleSentenceTokenized,
     });
@@ -12152,7 +11940,6 @@ typedef $$ExampleStagingTableTableUpdateCompanionBuilder =
     ExampleStagingTableCompanion Function({
       Value<int> localId,
       Value<int?> groupId,
-      Value<String> languageCode,
       Value<String> exampleSentence,
       Value<String?> exampleSentenceTokenized,
     });
@@ -12173,11 +11960,6 @@ class $$ExampleStagingTableTableFilterComposer
 
   ColumnFilters<int> get groupId => $composableBuilder(
     column: $table.groupId,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<String> get languageCode => $composableBuilder(
-    column: $table.languageCode,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -12211,11 +11993,6 @@ class $$ExampleStagingTableTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<String> get languageCode => $composableBuilder(
-    column: $table.languageCode,
-    builder: (column) => ColumnOrderings(column),
-  );
-
   ColumnOrderings<String> get exampleSentence => $composableBuilder(
     column: $table.exampleSentence,
     builder: (column) => ColumnOrderings(column),
@@ -12241,11 +12018,6 @@ class $$ExampleStagingTableTableAnnotationComposer
 
   GeneratedColumn<int> get groupId =>
       $composableBuilder(column: $table.groupId, builder: (column) => column);
-
-  GeneratedColumn<String> get languageCode => $composableBuilder(
-    column: $table.languageCode,
-    builder: (column) => column,
-  );
 
   GeneratedColumn<String> get exampleSentence => $composableBuilder(
     column: $table.exampleSentence,
@@ -12303,13 +12075,11 @@ class $$ExampleStagingTableTableTableManager
               ({
                 Value<int> localId = const Value.absent(),
                 Value<int?> groupId = const Value.absent(),
-                Value<String> languageCode = const Value.absent(),
                 Value<String> exampleSentence = const Value.absent(),
                 Value<String?> exampleSentenceTokenized = const Value.absent(),
               }) => ExampleStagingTableCompanion(
                 localId: localId,
                 groupId: groupId,
-                languageCode: languageCode,
                 exampleSentence: exampleSentence,
                 exampleSentenceTokenized: exampleSentenceTokenized,
               ),
@@ -12317,13 +12087,11 @@ class $$ExampleStagingTableTableTableManager
               ({
                 Value<int> localId = const Value.absent(),
                 Value<int?> groupId = const Value.absent(),
-                required String languageCode,
                 required String exampleSentence,
                 Value<String?> exampleSentenceTokenized = const Value.absent(),
               }) => ExampleStagingTableCompanion.insert(
                 localId: localId,
                 groupId: groupId,
-                languageCode: languageCode,
                 exampleSentence: exampleSentence,
                 exampleSentenceTokenized: exampleSentenceTokenized,
               ),

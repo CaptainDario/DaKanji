@@ -6,12 +6,18 @@ import 'package:drift/drift.dart';
 
 Future optimizeDbAfterImport(GeneratedDatabase db) async {
   
-  // optimize fts tables
-  await db.customStatement("INSERT INTO fts_terms(fts_terms) VALUES('optimize')");
-  await db.customStatement("INSERT INTO fts_readings(fts_readings) VALUES('optimize')");
-  await db.customStatement("INSERT INTO fts_definitions(fts_definitions) VALUES('optimize')");  
-  await db.customStatement("INSERT INTO fts_tokens(fts_tokens) VALUES('optimize');");
+  // optimize fts tables (trigram)
+  await db.customStatement("INSERT INTO fts_terms(fts_terms) VALUES('optimize');");
+  await db.customStatement("INSERT INTO fts_readings(fts_readings) VALUES('optimize');");
+  await db.customStatement("INSERT INTO fts_definitions(fts_definitions) VALUES('optimize');");  
   await db.customStatement("INSERT INTO fts_example_sentence(fts_example_sentence) VALUES('optimize');");
+  await db.customStatement("INSERT INTO fts_example_sentence_tokenized(fts_example_sentence_tokenized) VALUES('optimize');");
+
+  // optimize fts tables (unicode)
+  await db.customStatement("INSERT INTO fts_terms_unicode(fts_terms_unicode) VALUES('optimize');");
+  await db.customStatement("INSERT INTO fts_readings_unicode(fts_readings_unicode) VALUES('optimize');");
+  await db.customStatement("INSERT INTO fts_definitions_unicode(fts_definitions_unicode) VALUES('optimize');");  
+  await db.customStatement("INSERT INTO fts_example_sentence_unicode(fts_example_sentence_unicode) VALUES('optimize');");
 
   //  optimize statistics for query planner
   await db.customStatement('ANALYZE;');
@@ -73,12 +79,19 @@ Future optimizeStagingDbForRawInsert(StagingDatabase db) async {
 }
 
 Future optimizeDbAfterDelete(DaDb db) async {
-  // 1. Optimize FTS5 Tables
+
+  // 1. Optimize FTS5 Tables (trigram)
   await db.customStatement("INSERT INTO fts_terms(fts_terms) VALUES('optimize');");
   await db.customStatement("INSERT INTO fts_readings(fts_readings) VALUES('optimize');");
   await db.customStatement("INSERT INTO fts_definitions(fts_definitions) VALUES('optimize');");
-  await db.customStatement("INSERT INTO fts_tokens(fts_tokens) VALUES('optimize');");
   await db.customStatement("INSERT INTO fts_example_sentence(fts_example_sentence) VALUES('optimize');");
+  await db.customStatement("INSERT INTO fts_example_sentence_tokenized(fts_example_sentence_tokenized) VALUES('optimize');");
+
+  // Optimize FTS5 Tables (unicode)
+  await db.customStatement("INSERT INTO fts_terms_unicode(fts_terms_unicode) VALUES('optimize');");
+  await db.customStatement("INSERT INTO fts_readings_unicode(fts_readings_unicode) VALUES('optimize');");
+  await db.customStatement("INSERT INTO fts_definitions_unicode(fts_definitions_unicode) VALUES('optimize');");
+  await db.customStatement("INSERT INTO fts_example_sentence_unicode(fts_example_sentence_unicode) VALUES('optimize');");
 
   // 2. Reclaim Space
   await db.customStatement("VACUUM;");

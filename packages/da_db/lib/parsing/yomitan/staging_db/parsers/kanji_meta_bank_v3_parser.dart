@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:da_db/database/index/yomitan_index.dart';
 import 'package:da_db/parsing/staging_db/staging_db.dart';
 import 'package:da_db/parsing/util/db_file_parser.dart';
 import 'package:da_db/parsing/util/parsing_constants.dart';
@@ -20,6 +21,7 @@ class KanjiMetaBankV3Parser implements DbFileParser {
     LanguageProcessor? lp,
     ProcessorOptions options,
     int startId,
+    YomitanIndex index,
   ) async {
     
     List jsonInput = jsonDecode(utf8.decode(inputBytes[0]));

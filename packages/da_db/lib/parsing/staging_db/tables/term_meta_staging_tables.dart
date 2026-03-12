@@ -7,8 +7,6 @@ class TermMetaStagingTable extends Table {
   TextColumn get term => text()();
   // NLP columns for the term (needed if term doesn't exist yet)
   TextColumn get termNormalized => text().nullable()();
-  TextColumn get termTokens => text().nullable()();
-  TextColumn get termTokensNormalized => text().nullable()();
   
   TextColumn get mode => text()(); // 'freq', 'pitch', 'ipa'
   

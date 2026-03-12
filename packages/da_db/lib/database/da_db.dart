@@ -16,8 +16,6 @@ import 'package:da_db/database/general_tables/definition_dao.dart';
 import 'package:da_db/database/general_tables/definition_tables.dart';
 import 'package:da_db/database/general_tables/kanji_dao.dart';
 import 'package:da_db/database/general_tables/kanji_tables.dart';
-import 'package:da_db/database/general_tables/language_code_dao.dart';
-import 'package:da_db/database/general_tables/language_code_table.dart';
 import 'package:da_db/database/general_tables/media_dao.dart';
 import 'package:da_db/database/general_tables/media_tables.dart';
 import 'package:da_db/database/general_tables/reading_dao.dart';
@@ -69,7 +67,7 @@ part 'da_db.g.dart';
   tables: [
     AudioSourceListTable,
     KanjiTable, TermTable, ReadingTable, MediaTable,
-    DefinitionTable, TermBankV3DefinitionJsonTable, LanguageCodeTable,
+    DefinitionTable, TermBankV3DefinitionJsonTable,
 
     AudioTable, AudioTable_X_TermTable,
 
@@ -115,7 +113,7 @@ part 'da_db.g.dart';
   ],
   daos: [
     DaDbDao,
-    KanjiDao, TermDao, ReadingDao, DefinitionDao, LanguageCodeDao,
+    KanjiDao, TermDao, ReadingDao, DefinitionDao,
     AudioDao, AudioSourceListDao, MediaDao,
     RadicalDao, KanjiVGDao,
     IndexDao, TagBankV3Dao,

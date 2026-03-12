@@ -408,28 +408,24 @@ class $IndexTableTable extends IndexTable
     type: DriftSqlType.string,
     requiredDuringInsert: false,
   );
-  static const VerificationMeta _sourceLanguageMeta = const VerificationMeta(
-    'sourceLanguage',
-  );
   @override
-  late final GeneratedColumn<String> sourceLanguage = GeneratedColumn<String>(
+  late final GeneratedColumnWithTypeConverter<Iso639_3?, String>
+  sourceLanguage = GeneratedColumn<String>(
     'source_language',
     aliasedName,
     true,
     type: DriftSqlType.string,
     requiredDuringInsert: false,
-  );
-  static const VerificationMeta _targetLanguageMeta = const VerificationMeta(
-    'targetLanguage',
-  );
+  ).withConverter<Iso639_3?>($IndexTableTable.$convertersourceLanguagen);
   @override
-  late final GeneratedColumn<String> targetLanguage = GeneratedColumn<String>(
+  late final GeneratedColumnWithTypeConverter<Iso639_3?, String>
+  targetLanguage = GeneratedColumn<String>(
     'target_language',
     aliasedName,
     true,
     type: DriftSqlType.string,
     requiredDuringInsert: false,
-  );
+  ).withConverter<Iso639_3?>($IndexTableTable.$convertertargetLanguagen);
   @override
   late final GeneratedColumnWithTypeConverter<FrequencyMode?, String>
   frequencyMode = GeneratedColumn<String>(
@@ -603,24 +599,6 @@ class $IndexTableTable extends IndexTable
         ),
       );
     }
-    if (data.containsKey('source_language')) {
-      context.handle(
-        _sourceLanguageMeta,
-        sourceLanguage.isAcceptableOrUnknown(
-          data['source_language']!,
-          _sourceLanguageMeta,
-        ),
-      );
-    }
-    if (data.containsKey('target_language')) {
-      context.handle(
-        _targetLanguageMeta,
-        targetLanguage.isAcceptableOrUnknown(
-          data['target_language']!,
-          _targetLanguageMeta,
-        ),
-      );
-    }
     return context;
   }
 
@@ -704,13 +682,17 @@ class $IndexTableTable extends IndexTable
         DriftSqlType.string,
         data['${effectivePrefix}attribution'],
       ),
-      sourceLanguage: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}source_language'],
+      sourceLanguage: $IndexTableTable.$convertersourceLanguagen.fromSql(
+        attachedDatabase.typeMapping.read(
+          DriftSqlType.string,
+          data['${effectivePrefix}source_language'],
+        ),
       ),
-      targetLanguage: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}target_language'],
+      targetLanguage: $IndexTableTable.$convertertargetLanguagen.fromSql(
+        attachedDatabase.typeMapping.read(
+          DriftSqlType.string,
+          data['${effectivePrefix}target_language'],
+        ),
       ),
       frequencyMode: $IndexTableTable.$converterfrequencyModen.fromSql(
         attachedDatabase.typeMapping.read(
@@ -729,6 +711,18 @@ class $IndexTableTable extends IndexTable
   static JsonTypeConverter2<DictionaryTypes, String, String>
   $converterdictionaryType = const EnumNameConverter<DictionaryTypes>(
     DictionaryTypes.values,
+  );
+  static JsonTypeConverter2<Iso639_3, String, String> $convertersourceLanguage =
+      const EnumNameConverter<Iso639_3>(Iso639_3.values);
+  static JsonTypeConverter2<Iso639_3?, String?, String?>
+  $convertersourceLanguagen = JsonTypeConverter2.asNullable(
+    $convertersourceLanguage,
+  );
+  static JsonTypeConverter2<Iso639_3, String, String> $convertertargetLanguage =
+      const EnumNameConverter<Iso639_3>(Iso639_3.values);
+  static JsonTypeConverter2<Iso639_3?, String?, String?>
+  $convertertargetLanguagen = JsonTypeConverter2.asNullable(
+    $convertertargetLanguage,
   );
   static JsonTypeConverter2<FrequencyMode, String, String>
   $converterfrequencyMode = const EnumNameConverter<FrequencyMode>(
@@ -795,11 +789,11 @@ class IndexTableData extends DataClass implements Insertable<IndexTableData> {
   /// Attribution information for the dictionary data.
   final String? attribution;
 
-  /// Language of the terms in the dictionary.
-  final String? sourceLanguage;
+  /// Language of the terms in the dictionary (Iso639-3).
+  final Iso639_3? sourceLanguage;
 
-  /// Main language of the definitions in the dictionary.
-  final String? targetLanguage;
+  /// Main language of the definitions in the dictionary (Iso639-3).
+  final Iso639_3? targetLanguage;
 
   /// The mode of the frequency in this dictionary, one of
   /// "occurrence-based", "rank-based"
@@ -875,10 +869,14 @@ class IndexTableData extends DataClass implements Insertable<IndexTableData> {
       map['attribution'] = Variable<String>(attribution);
     }
     if (!nullToAbsent || sourceLanguage != null) {
-      map['source_language'] = Variable<String>(sourceLanguage);
+      map['source_language'] = Variable<String>(
+        $IndexTableTable.$convertersourceLanguagen.toSql(sourceLanguage),
+      );
     }
     if (!nullToAbsent || targetLanguage != null) {
-      map['target_language'] = Variable<String>(targetLanguage);
+      map['target_language'] = Variable<String>(
+        $IndexTableTable.$convertertargetLanguagen.toSql(targetLanguage),
+      );
     }
     if (!nullToAbsent || frequencyMode != null) {
       map['frequency_mode'] = Variable<String>(
@@ -970,8 +968,12 @@ class IndexTableData extends DataClass implements Insertable<IndexTableData> {
       url: serializer.fromJson<String?>(json['url']),
       description: serializer.fromJson<String?>(json['description']),
       attribution: serializer.fromJson<String?>(json['attribution']),
-      sourceLanguage: serializer.fromJson<String?>(json['sourceLanguage']),
-      targetLanguage: serializer.fromJson<String?>(json['targetLanguage']),
+      sourceLanguage: $IndexTableTable.$convertersourceLanguagen.fromJson(
+        serializer.fromJson<String?>(json['sourceLanguage']),
+      ),
+      targetLanguage: $IndexTableTable.$convertertargetLanguagen.fromJson(
+        serializer.fromJson<String?>(json['targetLanguage']),
+      ),
       frequencyMode: $IndexTableTable.$converterfrequencyModen.fromJson(
         serializer.fromJson<String?>(json['frequencyMode']),
       ),
@@ -1003,8 +1005,12 @@ class IndexTableData extends DataClass implements Insertable<IndexTableData> {
       'url': serializer.toJson<String?>(url),
       'description': serializer.toJson<String?>(description),
       'attribution': serializer.toJson<String?>(attribution),
-      'sourceLanguage': serializer.toJson<String?>(sourceLanguage),
-      'targetLanguage': serializer.toJson<String?>(targetLanguage),
+      'sourceLanguage': serializer.toJson<String?>(
+        $IndexTableTable.$convertersourceLanguagen.toJson(sourceLanguage),
+      ),
+      'targetLanguage': serializer.toJson<String?>(
+        $IndexTableTable.$convertertargetLanguagen.toJson(targetLanguage),
+      ),
       'frequencyMode': serializer.toJson<String?>(
         $IndexTableTable.$converterfrequencyModen.toJson(frequencyMode),
       ),
@@ -1030,8 +1036,8 @@ class IndexTableData extends DataClass implements Insertable<IndexTableData> {
     Value<String?> url = const Value.absent(),
     Value<String?> description = const Value.absent(),
     Value<String?> attribution = const Value.absent(),
-    Value<String?> sourceLanguage = const Value.absent(),
-    Value<String?> targetLanguage = const Value.absent(),
+    Value<Iso639_3?> sourceLanguage = const Value.absent(),
+    Value<Iso639_3?> targetLanguage = const Value.absent(),
     Value<FrequencyMode?> frequencyMode = const Value.absent(),
   }) => IndexTableData(
     id: id ?? this.id,
@@ -1209,8 +1215,8 @@ class IndexTableCompanion extends UpdateCompanion<IndexTableData> {
   final Value<String?> url;
   final Value<String?> description;
   final Value<String?> attribution;
-  final Value<String?> sourceLanguage;
-  final Value<String?> targetLanguage;
+  final Value<Iso639_3?> sourceLanguage;
+  final Value<Iso639_3?> targetLanguage;
   final Value<FrequencyMode?> frequencyMode;
   const IndexTableCompanion({
     this.id = const Value.absent(),
@@ -1332,8 +1338,8 @@ class IndexTableCompanion extends UpdateCompanion<IndexTableData> {
     Value<String?>? url,
     Value<String?>? description,
     Value<String?>? attribution,
-    Value<String?>? sourceLanguage,
-    Value<String?>? targetLanguage,
+    Value<Iso639_3?>? sourceLanguage,
+    Value<Iso639_3?>? targetLanguage,
     Value<FrequencyMode?>? frequencyMode,
   }) {
     return IndexTableCompanion(
@@ -1424,10 +1430,14 @@ class IndexTableCompanion extends UpdateCompanion<IndexTableData> {
       map['attribution'] = Variable<String>(attribution.value);
     }
     if (sourceLanguage.present) {
-      map['source_language'] = Variable<String>(sourceLanguage.value);
+      map['source_language'] = Variable<String>(
+        $IndexTableTable.$convertersourceLanguagen.toSql(sourceLanguage.value),
+      );
     }
     if (targetLanguage.present) {
-      map['target_language'] = Variable<String>(targetLanguage.value);
+      map['target_language'] = Variable<String>(
+        $IndexTableTable.$convertertargetLanguagen.toSql(targetLanguage.value),
+      );
     }
     if (frequencyMode.present) {
       map['frequency_mode'] = Variable<String>(
@@ -1974,7 +1984,7 @@ class IndexEntryAsJsonView
   @override
   Map<SqlDialect, String> get createViewStatements => {
     SqlDialect.sqlite:
-        'CREATE VIEW IF NOT EXISTS index_entry_as_json_view AS SELECT IT.id, JSON_OBJECT(\'id\', IT.id, \'isDefaultDictionary\', IT.is_default_dictionary, \'enabled\', IT.enabled, \'dictionaryType\', IT.dictionary_type, \'currentSortingOrder\', IT.current_sorting_order, \'currentFrequencyDictionary\', IT.current_frequency_dictionary, \'title\', IT.title, \'revision\', IT.revision, \'sequenced\', IT.sequenced, \'format\', IT.format, \'version\', IT.version, \'author\', IT.author, \'isUpdatable\', IT.is_updatable, \'indexUrl\', IT.index_url, \'downloadUrl\', IT.download_url, \'url\', IT.url, \'description\', IT.description, \'attribution\', IT.attribution, \'sourceLanguage\', IT.source_language, \'targetLanguage\', IT.target_language, \'frequencyMode\', IT.frequency_mode) AS index_entry FROM index_table AS IT',
+        'CREATE VIEW IF NOT EXISTS index_entry_as_json_view AS SELECT IT.id, JSON_OBJECT(\'id\', IT.id, \'isDefaultDictionary\', IT.is_default_dictionary, \'enabled\', IT.enabled, \'dictionaryType\', IT.dictionary_type, \'currentSortingOrder\', IT.current_sorting_order, \'currentFrequencyDictionary\', IT.current_frequency_dictionary, \'yomitanData\', JSON_OBJECT(\'title\', IT.title, \'revision\', IT.revision, \'sequenced\', IT.sequenced, \'format\', IT.format, \'version\', IT.version, \'author\', IT.author, \'isUpdatable\', IT.is_updatable, \'indexUrl\', IT.index_url, \'downloadUrl\', IT.download_url, \'url\', IT.url, \'description\', IT.description, \'attribution\', IT.attribution, \'sourceLanguage\', IT.source_language, \'targetLanguage\', IT.target_language, \'frequencyMode\', IT.frequency_mode)) AS index_entry FROM index_table AS IT',
   };
   @override
   IndexEntryAsJsonView get asDslTable => this;
@@ -5850,7 +5860,7 @@ class FtsTerms extends Table
   bool get dontWriteConstraints => true;
   @override
   String get moduleAndArgs =>
-      'fts5(term, term_normalized, content=\'term_table\', content_rowid=\'id\', tokenize = \'unicode61\', prefix = \'2 3\')';
+      'fts5(term, term_normalized, content=\'term_table\', content_rowid=\'id\', tokenize = \'better_trigram\', prefix = \'1 2 3\')';
 }
 
 class FtsTerm extends DataClass implements Insertable<FtsTerm> {
@@ -5998,26 +6008,28 @@ class FtsTermsCompanion extends UpdateCompanion<FtsTerm> {
   }
 }
 
-class FtsTokens extends Table
-    with TableInfo<FtsTokens, FtsToken>, VirtualTableInfo<FtsTokens, FtsToken> {
+class FtsTermsUnicode extends Table
+    with
+        TableInfo<FtsTermsUnicode, FtsTermsUnicodeData>,
+        VirtualTableInfo<FtsTermsUnicode, FtsTermsUnicodeData> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
-  FtsTokens(this.attachedDatabase, [this._alias]);
-  static const VerificationMeta _tokensMeta = const VerificationMeta('tokens');
-  late final GeneratedColumn<String> tokens = GeneratedColumn<String>(
-    'tokens',
+  FtsTermsUnicode(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _termMeta = const VerificationMeta('term');
+  late final GeneratedColumn<String> term = GeneratedColumn<String>(
+    'term',
     aliasedName,
     true,
     type: DriftSqlType.string,
     requiredDuringInsert: false,
     $customConstraints: '',
   );
-  static const VerificationMeta _tokensNormalizedMeta = const VerificationMeta(
-    'tokensNormalized',
+  static const VerificationMeta _termNormalizedMeta = const VerificationMeta(
+    'termNormalized',
   );
-  late final GeneratedColumn<String> tokensNormalized = GeneratedColumn<String>(
-    'tokens_normalized',
+  late final GeneratedColumn<String> termNormalized = GeneratedColumn<String>(
+    'term_normalized',
     aliasedName,
     true,
     type: DriftSqlType.string,
@@ -6025,31 +6037,31 @@ class FtsTokens extends Table
     $customConstraints: '',
   );
   @override
-  List<GeneratedColumn> get $columns => [tokens, tokensNormalized];
+  List<GeneratedColumn> get $columns => [term, termNormalized];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
   String get actualTableName => $name;
-  static const String $name = 'fts_tokens';
+  static const String $name = 'fts_terms_unicode';
   @override
   VerificationContext validateIntegrity(
-    Insertable<FtsToken> instance, {
+    Insertable<FtsTermsUnicodeData> instance, {
     bool isInserting = false,
   }) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
-    if (data.containsKey('tokens')) {
+    if (data.containsKey('term')) {
       context.handle(
-        _tokensMeta,
-        tokens.isAcceptableOrUnknown(data['tokens']!, _tokensMeta),
+        _termMeta,
+        term.isAcceptableOrUnknown(data['term']!, _termMeta),
       );
     }
-    if (data.containsKey('tokens_normalized')) {
+    if (data.containsKey('term_normalized')) {
       context.handle(
-        _tokensNormalizedMeta,
-        tokensNormalized.isAcceptableOrUnknown(
-          data['tokens_normalized']!,
-          _tokensNormalizedMeta,
+        _termNormalizedMeta,
+        termNormalized.isAcceptableOrUnknown(
+          data['term_normalized']!,
+          _termNormalizedMeta,
         ),
       );
     }
@@ -6059,149 +6071,148 @@ class FtsTokens extends Table
   @override
   Set<GeneratedColumn> get $primaryKey => const {};
   @override
-  FtsToken map(Map<String, dynamic> data, {String? tablePrefix}) {
+  FtsTermsUnicodeData map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return FtsToken(
-      tokens: attachedDatabase.typeMapping.read(
+    return FtsTermsUnicodeData(
+      term: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
-        data['${effectivePrefix}tokens'],
+        data['${effectivePrefix}term'],
       ),
-      tokensNormalized: attachedDatabase.typeMapping.read(
+      termNormalized: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
-        data['${effectivePrefix}tokens_normalized'],
+        data['${effectivePrefix}term_normalized'],
       ),
     );
   }
 
   @override
-  FtsTokens createAlias(String alias) {
-    return FtsTokens(attachedDatabase, alias);
+  FtsTermsUnicode createAlias(String alias) {
+    return FtsTermsUnicode(attachedDatabase, alias);
   }
 
   @override
   bool get dontWriteConstraints => true;
   @override
   String get moduleAndArgs =>
-      'fts5(tokens, tokens_normalized, content=\'\', tokenize = \'unicode61\', prefix = \'2 3\', contentless_delete=1)';
+      'fts5(term, term_normalized, content=\'term_table\', content_rowid=\'id\', tokenize = \'unicode61\')';
 }
 
-class FtsToken extends DataClass implements Insertable<FtsToken> {
-  final String? tokens;
-  final String? tokensNormalized;
-  const FtsToken({this.tokens, this.tokensNormalized});
+class FtsTermsUnicodeData extends DataClass
+    implements Insertable<FtsTermsUnicodeData> {
+  final String? term;
+  final String? termNormalized;
+  const FtsTermsUnicodeData({this.term, this.termNormalized});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
-    if (!nullToAbsent || tokens != null) {
-      map['tokens'] = Variable<String>(tokens);
+    if (!nullToAbsent || term != null) {
+      map['term'] = Variable<String>(term);
     }
-    if (!nullToAbsent || tokensNormalized != null) {
-      map['tokens_normalized'] = Variable<String>(tokensNormalized);
+    if (!nullToAbsent || termNormalized != null) {
+      map['term_normalized'] = Variable<String>(termNormalized);
     }
     return map;
   }
 
-  FtsTokensCompanion toCompanion(bool nullToAbsent) {
-    return FtsTokensCompanion(
-      tokens: tokens == null && nullToAbsent
+  FtsTermsUnicodeCompanion toCompanion(bool nullToAbsent) {
+    return FtsTermsUnicodeCompanion(
+      term: term == null && nullToAbsent ? const Value.absent() : Value(term),
+      termNormalized: termNormalized == null && nullToAbsent
           ? const Value.absent()
-          : Value(tokens),
-      tokensNormalized: tokensNormalized == null && nullToAbsent
-          ? const Value.absent()
-          : Value(tokensNormalized),
+          : Value(termNormalized),
     );
   }
 
-  factory FtsToken.fromJson(
+  factory FtsTermsUnicodeData.fromJson(
     Map<String, dynamic> json, {
     ValueSerializer? serializer,
   }) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
-    return FtsToken(
-      tokens: serializer.fromJson<String?>(json['tokens']),
-      tokensNormalized: serializer.fromJson<String?>(json['tokens_normalized']),
+    return FtsTermsUnicodeData(
+      term: serializer.fromJson<String?>(json['term']),
+      termNormalized: serializer.fromJson<String?>(json['term_normalized']),
     );
   }
   @override
   Map<String, dynamic> toJson({ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
-      'tokens': serializer.toJson<String?>(tokens),
-      'tokens_normalized': serializer.toJson<String?>(tokensNormalized),
+      'term': serializer.toJson<String?>(term),
+      'term_normalized': serializer.toJson<String?>(termNormalized),
     };
   }
 
-  FtsToken copyWith({
-    Value<String?> tokens = const Value.absent(),
-    Value<String?> tokensNormalized = const Value.absent(),
-  }) => FtsToken(
-    tokens: tokens.present ? tokens.value : this.tokens,
-    tokensNormalized: tokensNormalized.present
-        ? tokensNormalized.value
-        : this.tokensNormalized,
+  FtsTermsUnicodeData copyWith({
+    Value<String?> term = const Value.absent(),
+    Value<String?> termNormalized = const Value.absent(),
+  }) => FtsTermsUnicodeData(
+    term: term.present ? term.value : this.term,
+    termNormalized: termNormalized.present
+        ? termNormalized.value
+        : this.termNormalized,
   );
-  FtsToken copyWithCompanion(FtsTokensCompanion data) {
-    return FtsToken(
-      tokens: data.tokens.present ? data.tokens.value : this.tokens,
-      tokensNormalized: data.tokensNormalized.present
-          ? data.tokensNormalized.value
-          : this.tokensNormalized,
+  FtsTermsUnicodeData copyWithCompanion(FtsTermsUnicodeCompanion data) {
+    return FtsTermsUnicodeData(
+      term: data.term.present ? data.term.value : this.term,
+      termNormalized: data.termNormalized.present
+          ? data.termNormalized.value
+          : this.termNormalized,
     );
   }
 
   @override
   String toString() {
-    return (StringBuffer('FtsToken(')
-          ..write('tokens: $tokens, ')
-          ..write('tokensNormalized: $tokensNormalized')
+    return (StringBuffer('FtsTermsUnicodeData(')
+          ..write('term: $term, ')
+          ..write('termNormalized: $termNormalized')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(tokens, tokensNormalized);
+  int get hashCode => Object.hash(term, termNormalized);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is FtsToken &&
-          other.tokens == this.tokens &&
-          other.tokensNormalized == this.tokensNormalized);
+      (other is FtsTermsUnicodeData &&
+          other.term == this.term &&
+          other.termNormalized == this.termNormalized);
 }
 
-class FtsTokensCompanion extends UpdateCompanion<FtsToken> {
-  final Value<String?> tokens;
-  final Value<String?> tokensNormalized;
+class FtsTermsUnicodeCompanion extends UpdateCompanion<FtsTermsUnicodeData> {
+  final Value<String?> term;
+  final Value<String?> termNormalized;
   final Value<int> rowid;
-  const FtsTokensCompanion({
-    this.tokens = const Value.absent(),
-    this.tokensNormalized = const Value.absent(),
+  const FtsTermsUnicodeCompanion({
+    this.term = const Value.absent(),
+    this.termNormalized = const Value.absent(),
     this.rowid = const Value.absent(),
   });
-  FtsTokensCompanion.insert({
-    this.tokens = const Value.absent(),
-    this.tokensNormalized = const Value.absent(),
+  FtsTermsUnicodeCompanion.insert({
+    this.term = const Value.absent(),
+    this.termNormalized = const Value.absent(),
     this.rowid = const Value.absent(),
   });
-  static Insertable<FtsToken> custom({
-    Expression<String>? tokens,
-    Expression<String>? tokensNormalized,
+  static Insertable<FtsTermsUnicodeData> custom({
+    Expression<String>? term,
+    Expression<String>? termNormalized,
     Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
-      if (tokens != null) 'tokens': tokens,
-      if (tokensNormalized != null) 'tokens_normalized': tokensNormalized,
+      if (term != null) 'term': term,
+      if (termNormalized != null) 'term_normalized': termNormalized,
       if (rowid != null) 'rowid': rowid,
     });
   }
 
-  FtsTokensCompanion copyWith({
-    Value<String?>? tokens,
-    Value<String?>? tokensNormalized,
+  FtsTermsUnicodeCompanion copyWith({
+    Value<String?>? term,
+    Value<String?>? termNormalized,
     Value<int>? rowid,
   }) {
-    return FtsTokensCompanion(
-      tokens: tokens ?? this.tokens,
-      tokensNormalized: tokensNormalized ?? this.tokensNormalized,
+    return FtsTermsUnicodeCompanion(
+      term: term ?? this.term,
+      termNormalized: termNormalized ?? this.termNormalized,
       rowid: rowid ?? this.rowid,
     );
   }
@@ -6209,11 +6220,11 @@ class FtsTokensCompanion extends UpdateCompanion<FtsToken> {
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
-    if (tokens.present) {
-      map['tokens'] = Variable<String>(tokens.value);
+    if (term.present) {
+      map['term'] = Variable<String>(term.value);
     }
-    if (tokensNormalized.present) {
-      map['tokens_normalized'] = Variable<String>(tokensNormalized.value);
+    if (termNormalized.present) {
+      map['term_normalized'] = Variable<String>(termNormalized.value);
     }
     if (rowid.present) {
       map['rowid'] = Variable<int>(rowid.value);
@@ -6223,9 +6234,9 @@ class FtsTokensCompanion extends UpdateCompanion<FtsToken> {
 
   @override
   String toString() {
-    return (StringBuffer('FtsTokensCompanion(')
-          ..write('tokens: $tokens, ')
-          ..write('tokensNormalized: $tokensNormalized, ')
+    return (StringBuffer('FtsTermsUnicodeCompanion(')
+          ..write('term: $term, ')
+          ..write('termNormalized: $termNormalized, ')
           ..write('rowid: $rowid')
           ..write(')'))
         .toString();
@@ -6321,7 +6332,7 @@ class FtsReadings extends Table
   bool get dontWriteConstraints => true;
   @override
   String get moduleAndArgs =>
-      'fts5(reading, reading_normalized, content=\'reading_table\', content_rowid=\'id\', tokenize = \'unicode61\', prefix = \'2 3\')';
+      'fts5(reading, reading_normalized, content=\'reading_table\', content_rowid=\'id\', tokenize = \'better_trigram\', prefix = \'1 2 3\')';
 }
 
 class FtsReading extends DataClass implements Insertable<FtsReading> {
@@ -6473,6 +6484,249 @@ class FtsReadingsCompanion extends UpdateCompanion<FtsReading> {
   }
 }
 
+class FtsReadingsUnicode extends Table
+    with
+        TableInfo<FtsReadingsUnicode, FtsReadingsUnicodeData>,
+        VirtualTableInfo<FtsReadingsUnicode, FtsReadingsUnicodeData> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  FtsReadingsUnicode(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _readingMeta = const VerificationMeta(
+    'reading',
+  );
+  late final GeneratedColumn<String> reading = GeneratedColumn<String>(
+    'reading',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    $customConstraints: '',
+  );
+  static const VerificationMeta _readingNormalizedMeta = const VerificationMeta(
+    'readingNormalized',
+  );
+  late final GeneratedColumn<String> readingNormalized =
+      GeneratedColumn<String>(
+        'reading_normalized',
+        aliasedName,
+        true,
+        type: DriftSqlType.string,
+        requiredDuringInsert: false,
+        $customConstraints: '',
+      );
+  @override
+  List<GeneratedColumn> get $columns => [reading, readingNormalized];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'fts_readings_unicode';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<FtsReadingsUnicodeData> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('reading')) {
+      context.handle(
+        _readingMeta,
+        reading.isAcceptableOrUnknown(data['reading']!, _readingMeta),
+      );
+    }
+    if (data.containsKey('reading_normalized')) {
+      context.handle(
+        _readingNormalizedMeta,
+        readingNormalized.isAcceptableOrUnknown(
+          data['reading_normalized']!,
+          _readingNormalizedMeta,
+        ),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => const {};
+  @override
+  FtsReadingsUnicodeData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return FtsReadingsUnicodeData(
+      reading: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}reading'],
+      ),
+      readingNormalized: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}reading_normalized'],
+      ),
+    );
+  }
+
+  @override
+  FtsReadingsUnicode createAlias(String alias) {
+    return FtsReadingsUnicode(attachedDatabase, alias);
+  }
+
+  @override
+  bool get dontWriteConstraints => true;
+  @override
+  String get moduleAndArgs =>
+      'fts5(reading, reading_normalized, content=\'reading_table\', content_rowid=\'id\', tokenize = \'unicode61\')';
+}
+
+class FtsReadingsUnicodeData extends DataClass
+    implements Insertable<FtsReadingsUnicodeData> {
+  final String? reading;
+  final String? readingNormalized;
+  const FtsReadingsUnicodeData({this.reading, this.readingNormalized});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (!nullToAbsent || reading != null) {
+      map['reading'] = Variable<String>(reading);
+    }
+    if (!nullToAbsent || readingNormalized != null) {
+      map['reading_normalized'] = Variable<String>(readingNormalized);
+    }
+    return map;
+  }
+
+  FtsReadingsUnicodeCompanion toCompanion(bool nullToAbsent) {
+    return FtsReadingsUnicodeCompanion(
+      reading: reading == null && nullToAbsent
+          ? const Value.absent()
+          : Value(reading),
+      readingNormalized: readingNormalized == null && nullToAbsent
+          ? const Value.absent()
+          : Value(readingNormalized),
+    );
+  }
+
+  factory FtsReadingsUnicodeData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return FtsReadingsUnicodeData(
+      reading: serializer.fromJson<String?>(json['reading']),
+      readingNormalized: serializer.fromJson<String?>(
+        json['reading_normalized'],
+      ),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'reading': serializer.toJson<String?>(reading),
+      'reading_normalized': serializer.toJson<String?>(readingNormalized),
+    };
+  }
+
+  FtsReadingsUnicodeData copyWith({
+    Value<String?> reading = const Value.absent(),
+    Value<String?> readingNormalized = const Value.absent(),
+  }) => FtsReadingsUnicodeData(
+    reading: reading.present ? reading.value : this.reading,
+    readingNormalized: readingNormalized.present
+        ? readingNormalized.value
+        : this.readingNormalized,
+  );
+  FtsReadingsUnicodeData copyWithCompanion(FtsReadingsUnicodeCompanion data) {
+    return FtsReadingsUnicodeData(
+      reading: data.reading.present ? data.reading.value : this.reading,
+      readingNormalized: data.readingNormalized.present
+          ? data.readingNormalized.value
+          : this.readingNormalized,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('FtsReadingsUnicodeData(')
+          ..write('reading: $reading, ')
+          ..write('readingNormalized: $readingNormalized')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(reading, readingNormalized);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is FtsReadingsUnicodeData &&
+          other.reading == this.reading &&
+          other.readingNormalized == this.readingNormalized);
+}
+
+class FtsReadingsUnicodeCompanion
+    extends UpdateCompanion<FtsReadingsUnicodeData> {
+  final Value<String?> reading;
+  final Value<String?> readingNormalized;
+  final Value<int> rowid;
+  const FtsReadingsUnicodeCompanion({
+    this.reading = const Value.absent(),
+    this.readingNormalized = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  FtsReadingsUnicodeCompanion.insert({
+    this.reading = const Value.absent(),
+    this.readingNormalized = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  static Insertable<FtsReadingsUnicodeData> custom({
+    Expression<String>? reading,
+    Expression<String>? readingNormalized,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (reading != null) 'reading': reading,
+      if (readingNormalized != null) 'reading_normalized': readingNormalized,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  FtsReadingsUnicodeCompanion copyWith({
+    Value<String?>? reading,
+    Value<String?>? readingNormalized,
+    Value<int>? rowid,
+  }) {
+    return FtsReadingsUnicodeCompanion(
+      reading: reading ?? this.reading,
+      readingNormalized: readingNormalized ?? this.readingNormalized,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (reading.present) {
+      map['reading'] = Variable<String>(reading.value);
+    }
+    if (readingNormalized.present) {
+      map['reading_normalized'] = Variable<String>(readingNormalized.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('FtsReadingsUnicodeCompanion(')
+          ..write('reading: $reading, ')
+          ..write('readingNormalized: $readingNormalized, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 class FtsDefinitions extends Table
     with
         TableInfo<FtsDefinitions, FtsDefinition>,
@@ -6537,7 +6791,7 @@ class FtsDefinitions extends Table
   bool get dontWriteConstraints => true;
   @override
   String get moduleAndArgs =>
-      'fts5(definition, content=\'definition_table\', content_rowid=\'id\', tokenize = \'unicode61\', prefix = \'2 3\')';
+      'fts5(definition, content=\'definition_table\', content_rowid=\'id\', tokenize = \'better_trigram\')';
 }
 
 class FtsDefinition extends DataClass implements Insertable<FtsDefinition> {
@@ -6651,6 +6905,200 @@ class FtsDefinitionsCompanion extends UpdateCompanion<FtsDefinition> {
   @override
   String toString() {
     return (StringBuffer('FtsDefinitionsCompanion(')
+          ..write('definition: $definition, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class FtsDefinitionsUnicode extends Table
+    with
+        TableInfo<FtsDefinitionsUnicode, FtsDefinitionsUnicodeData>,
+        VirtualTableInfo<FtsDefinitionsUnicode, FtsDefinitionsUnicodeData> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  FtsDefinitionsUnicode(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _definitionMeta = const VerificationMeta(
+    'definition',
+  );
+  late final GeneratedColumn<String> definition = GeneratedColumn<String>(
+    'definition',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    $customConstraints: '',
+  );
+  @override
+  List<GeneratedColumn> get $columns => [definition];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'fts_definitions_unicode';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<FtsDefinitionsUnicodeData> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('definition')) {
+      context.handle(
+        _definitionMeta,
+        definition.isAcceptableOrUnknown(data['definition']!, _definitionMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => const {};
+  @override
+  FtsDefinitionsUnicodeData map(
+    Map<String, dynamic> data, {
+    String? tablePrefix,
+  }) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return FtsDefinitionsUnicodeData(
+      definition: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}definition'],
+      ),
+    );
+  }
+
+  @override
+  FtsDefinitionsUnicode createAlias(String alias) {
+    return FtsDefinitionsUnicode(attachedDatabase, alias);
+  }
+
+  @override
+  bool get dontWriteConstraints => true;
+  @override
+  String get moduleAndArgs =>
+      'fts5(definition, content=\'definition_table\', content_rowid=\'id\', tokenize = \'unicode61\')';
+}
+
+class FtsDefinitionsUnicodeData extends DataClass
+    implements Insertable<FtsDefinitionsUnicodeData> {
+  final String? definition;
+  const FtsDefinitionsUnicodeData({this.definition});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (!nullToAbsent || definition != null) {
+      map['definition'] = Variable<String>(definition);
+    }
+    return map;
+  }
+
+  FtsDefinitionsUnicodeCompanion toCompanion(bool nullToAbsent) {
+    return FtsDefinitionsUnicodeCompanion(
+      definition: definition == null && nullToAbsent
+          ? const Value.absent()
+          : Value(definition),
+    );
+  }
+
+  factory FtsDefinitionsUnicodeData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return FtsDefinitionsUnicodeData(
+      definition: serializer.fromJson<String?>(json['definition']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'definition': serializer.toJson<String?>(definition),
+    };
+  }
+
+  FtsDefinitionsUnicodeData copyWith({
+    Value<String?> definition = const Value.absent(),
+  }) => FtsDefinitionsUnicodeData(
+    definition: definition.present ? definition.value : this.definition,
+  );
+  FtsDefinitionsUnicodeData copyWithCompanion(
+    FtsDefinitionsUnicodeCompanion data,
+  ) {
+    return FtsDefinitionsUnicodeData(
+      definition: data.definition.present
+          ? data.definition.value
+          : this.definition,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('FtsDefinitionsUnicodeData(')
+          ..write('definition: $definition')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => definition.hashCode;
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is FtsDefinitionsUnicodeData &&
+          other.definition == this.definition);
+}
+
+class FtsDefinitionsUnicodeCompanion
+    extends UpdateCompanion<FtsDefinitionsUnicodeData> {
+  final Value<String?> definition;
+  final Value<int> rowid;
+  const FtsDefinitionsUnicodeCompanion({
+    this.definition = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  FtsDefinitionsUnicodeCompanion.insert({
+    this.definition = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  static Insertable<FtsDefinitionsUnicodeData> custom({
+    Expression<String>? definition,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (definition != null) 'definition': definition,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  FtsDefinitionsUnicodeCompanion copyWith({
+    Value<String?>? definition,
+    Value<int>? rowid,
+  }) {
+    return FtsDefinitionsUnicodeCompanion(
+      definition: definition ?? this.definition,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (definition.present) {
+      map['definition'] = Variable<String>(definition.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('FtsDefinitionsUnicodeCompanion(')
           ..write('definition: $definition, ')
           ..write('rowid: $rowid')
           ..write(')'))
@@ -14413,220 +14861,6 @@ class FtsExampleSentenceCompanion
   }
 }
 
-class $LanguageCodeTableTable extends LanguageCodeTable
-    with TableInfo<$LanguageCodeTableTable, LanguageCodeTableData> {
-  @override
-  final GeneratedDatabase attachedDatabase;
-  final String? _alias;
-  $LanguageCodeTableTable(this.attachedDatabase, [this._alias]);
-  static const VerificationMeta _idMeta = const VerificationMeta('id');
-  @override
-  late final GeneratedColumn<int> id = GeneratedColumn<int>(
-    'id',
-    aliasedName,
-    false,
-    hasAutoIncrement: true,
-    type: DriftSqlType.int,
-    requiredDuringInsert: false,
-    defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'PRIMARY KEY AUTOINCREMENT',
-    ),
-  );
-  static const VerificationMeta _languageCodeMeta = const VerificationMeta(
-    'languageCode',
-  );
-  @override
-  late final GeneratedColumn<String> languageCode = GeneratedColumn<String>(
-    'language_code',
-    aliasedName,
-    false,
-    type: DriftSqlType.string,
-    requiredDuringInsert: true,
-    defaultConstraints: GeneratedColumn.constraintIsAlways('UNIQUE'),
-  );
-  @override
-  List<GeneratedColumn> get $columns => [id, languageCode];
-  @override
-  String get aliasedName => _alias ?? actualTableName;
-  @override
-  String get actualTableName => $name;
-  static const String $name = 'language_code_table';
-  @override
-  VerificationContext validateIntegrity(
-    Insertable<LanguageCodeTableData> instance, {
-    bool isInserting = false,
-  }) {
-    final context = VerificationContext();
-    final data = instance.toColumns(true);
-    if (data.containsKey('id')) {
-      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
-    }
-    if (data.containsKey('language_code')) {
-      context.handle(
-        _languageCodeMeta,
-        languageCode.isAcceptableOrUnknown(
-          data['language_code']!,
-          _languageCodeMeta,
-        ),
-      );
-    } else if (isInserting) {
-      context.missing(_languageCodeMeta);
-    }
-    return context;
-  }
-
-  @override
-  Set<GeneratedColumn> get $primaryKey => {id};
-  @override
-  LanguageCodeTableData map(Map<String, dynamic> data, {String? tablePrefix}) {
-    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return LanguageCodeTableData(
-      id: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}id'],
-      )!,
-      languageCode: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}language_code'],
-      )!,
-    );
-  }
-
-  @override
-  $LanguageCodeTableTable createAlias(String alias) {
-    return $LanguageCodeTableTable(attachedDatabase, alias);
-  }
-}
-
-class LanguageCodeTableData extends DataClass
-    implements Insertable<LanguageCodeTableData> {
-  /// id of this entry
-  final int id;
-
-  /// the example of this entry
-  final String languageCode;
-  const LanguageCodeTableData({required this.id, required this.languageCode});
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    map['id'] = Variable<int>(id);
-    map['language_code'] = Variable<String>(languageCode);
-    return map;
-  }
-
-  LanguageCodeTableCompanion toCompanion(bool nullToAbsent) {
-    return LanguageCodeTableCompanion(
-      id: Value(id),
-      languageCode: Value(languageCode),
-    );
-  }
-
-  factory LanguageCodeTableData.fromJson(
-    Map<String, dynamic> json, {
-    ValueSerializer? serializer,
-  }) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return LanguageCodeTableData(
-      id: serializer.fromJson<int>(json['id']),
-      languageCode: serializer.fromJson<String>(json['languageCode']),
-    );
-  }
-  @override
-  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return <String, dynamic>{
-      'id': serializer.toJson<int>(id),
-      'languageCode': serializer.toJson<String>(languageCode),
-    };
-  }
-
-  LanguageCodeTableData copyWith({int? id, String? languageCode}) =>
-      LanguageCodeTableData(
-        id: id ?? this.id,
-        languageCode: languageCode ?? this.languageCode,
-      );
-  LanguageCodeTableData copyWithCompanion(LanguageCodeTableCompanion data) {
-    return LanguageCodeTableData(
-      id: data.id.present ? data.id.value : this.id,
-      languageCode: data.languageCode.present
-          ? data.languageCode.value
-          : this.languageCode,
-    );
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('LanguageCodeTableData(')
-          ..write('id: $id, ')
-          ..write('languageCode: $languageCode')
-          ..write(')'))
-        .toString();
-  }
-
-  @override
-  int get hashCode => Object.hash(id, languageCode);
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      (other is LanguageCodeTableData &&
-          other.id == this.id &&
-          other.languageCode == this.languageCode);
-}
-
-class LanguageCodeTableCompanion
-    extends UpdateCompanion<LanguageCodeTableData> {
-  final Value<int> id;
-  final Value<String> languageCode;
-  const LanguageCodeTableCompanion({
-    this.id = const Value.absent(),
-    this.languageCode = const Value.absent(),
-  });
-  LanguageCodeTableCompanion.insert({
-    this.id = const Value.absent(),
-    required String languageCode,
-  }) : languageCode = Value(languageCode);
-  static Insertable<LanguageCodeTableData> custom({
-    Expression<int>? id,
-    Expression<String>? languageCode,
-  }) {
-    return RawValuesInsertable({
-      if (id != null) 'id': id,
-      if (languageCode != null) 'language_code': languageCode,
-    });
-  }
-
-  LanguageCodeTableCompanion copyWith({
-    Value<int>? id,
-    Value<String>? languageCode,
-  }) {
-    return LanguageCodeTableCompanion(
-      id: id ?? this.id,
-      languageCode: languageCode ?? this.languageCode,
-    );
-  }
-
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    if (id.present) {
-      map['id'] = Variable<int>(id.value);
-    }
-    if (languageCode.present) {
-      map['language_code'] = Variable<String>(languageCode.value);
-    }
-    return map;
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('LanguageCodeTableCompanion(')
-          ..write('id: $id, ')
-          ..write('languageCode: $languageCode')
-          ..write(')'))
-        .toString();
-  }
-}
-
 class $ExampleTableTable extends ExampleTable
     with TableInfo<$ExampleTableTable, ExampleTableData> {
   @override
@@ -14685,27 +14919,12 @@ class $ExampleTableTable extends ExampleTable
       'REFERENCES example_sentence_table (id)',
     ),
   );
-  static const VerificationMeta _languageCodeIdMeta = const VerificationMeta(
-    'languageCodeId',
-  );
-  @override
-  late final GeneratedColumn<int> languageCodeId = GeneratedColumn<int>(
-    'language_code_id',
-    aliasedName,
-    false,
-    type: DriftSqlType.int,
-    requiredDuringInsert: true,
-    defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'REFERENCES language_code_table (id)',
-    ),
-  );
   @override
   List<GeneratedColumn> get $columns => [
     id,
     indexId,
     groupId,
     exampleSentenceId,
-    languageCodeId,
   ];
   @override
   String get aliasedName => _alias ?? actualTableName;
@@ -14747,17 +14966,6 @@ class $ExampleTableTable extends ExampleTable
     } else if (isInserting) {
       context.missing(_exampleSentenceIdMeta);
     }
-    if (data.containsKey('language_code_id')) {
-      context.handle(
-        _languageCodeIdMeta,
-        languageCodeId.isAcceptableOrUnknown(
-          data['language_code_id']!,
-          _languageCodeIdMeta,
-        ),
-      );
-    } else if (isInserting) {
-      context.missing(_languageCodeIdMeta);
-    }
     return context;
   }
 
@@ -14783,10 +14991,6 @@ class $ExampleTableTable extends ExampleTable
         DriftSqlType.int,
         data['${effectivePrefix}example_sentence_id'],
       )!,
-      languageCodeId: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}language_code_id'],
-      )!,
     );
   }
 
@@ -14808,15 +15012,11 @@ class ExampleTableData extends DataClass
   /// sentences of the same entry together
   final int? groupId;
   final int exampleSentenceId;
-
-  /// The id of the language code (iso 639 2T) of this translation
-  final int languageCodeId;
   const ExampleTableData({
     required this.id,
     required this.indexId,
     this.groupId,
     required this.exampleSentenceId,
-    required this.languageCodeId,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
@@ -14827,7 +15027,6 @@ class ExampleTableData extends DataClass
       map['group_id'] = Variable<int>(groupId);
     }
     map['example_sentence_id'] = Variable<int>(exampleSentenceId);
-    map['language_code_id'] = Variable<int>(languageCodeId);
     return map;
   }
 
@@ -14839,7 +15038,6 @@ class ExampleTableData extends DataClass
           ? const Value.absent()
           : Value(groupId),
       exampleSentenceId: Value(exampleSentenceId),
-      languageCodeId: Value(languageCodeId),
     );
   }
 
@@ -14853,7 +15051,6 @@ class ExampleTableData extends DataClass
       indexId: serializer.fromJson<int>(json['indexId']),
       groupId: serializer.fromJson<int?>(json['groupId']),
       exampleSentenceId: serializer.fromJson<int>(json['exampleSentenceId']),
-      languageCodeId: serializer.fromJson<int>(json['languageCodeId']),
     );
   }
   @override
@@ -14864,7 +15061,6 @@ class ExampleTableData extends DataClass
       'indexId': serializer.toJson<int>(indexId),
       'groupId': serializer.toJson<int?>(groupId),
       'exampleSentenceId': serializer.toJson<int>(exampleSentenceId),
-      'languageCodeId': serializer.toJson<int>(languageCodeId),
     };
   }
 
@@ -14873,13 +15069,11 @@ class ExampleTableData extends DataClass
     int? indexId,
     Value<int?> groupId = const Value.absent(),
     int? exampleSentenceId,
-    int? languageCodeId,
   }) => ExampleTableData(
     id: id ?? this.id,
     indexId: indexId ?? this.indexId,
     groupId: groupId.present ? groupId.value : this.groupId,
     exampleSentenceId: exampleSentenceId ?? this.exampleSentenceId,
-    languageCodeId: languageCodeId ?? this.languageCodeId,
   );
   ExampleTableData copyWithCompanion(ExampleTableCompanion data) {
     return ExampleTableData(
@@ -14889,9 +15083,6 @@ class ExampleTableData extends DataClass
       exampleSentenceId: data.exampleSentenceId.present
           ? data.exampleSentenceId.value
           : this.exampleSentenceId,
-      languageCodeId: data.languageCodeId.present
-          ? data.languageCodeId.value
-          : this.languageCodeId,
     );
   }
 
@@ -14901,15 +15092,13 @@ class ExampleTableData extends DataClass
           ..write('id: $id, ')
           ..write('indexId: $indexId, ')
           ..write('groupId: $groupId, ')
-          ..write('exampleSentenceId: $exampleSentenceId, ')
-          ..write('languageCodeId: $languageCodeId')
+          ..write('exampleSentenceId: $exampleSentenceId')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode =>
-      Object.hash(id, indexId, groupId, exampleSentenceId, languageCodeId);
+  int get hashCode => Object.hash(id, indexId, groupId, exampleSentenceId);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -14917,8 +15106,7 @@ class ExampleTableData extends DataClass
           other.id == this.id &&
           other.indexId == this.indexId &&
           other.groupId == this.groupId &&
-          other.exampleSentenceId == this.exampleSentenceId &&
-          other.languageCodeId == this.languageCodeId);
+          other.exampleSentenceId == this.exampleSentenceId);
 }
 
 class ExampleTableCompanion extends UpdateCompanion<ExampleTableData> {
@@ -14926,36 +15114,30 @@ class ExampleTableCompanion extends UpdateCompanion<ExampleTableData> {
   final Value<int> indexId;
   final Value<int?> groupId;
   final Value<int> exampleSentenceId;
-  final Value<int> languageCodeId;
   const ExampleTableCompanion({
     this.id = const Value.absent(),
     this.indexId = const Value.absent(),
     this.groupId = const Value.absent(),
     this.exampleSentenceId = const Value.absent(),
-    this.languageCodeId = const Value.absent(),
   });
   ExampleTableCompanion.insert({
     this.id = const Value.absent(),
     required int indexId,
     this.groupId = const Value.absent(),
     required int exampleSentenceId,
-    required int languageCodeId,
   }) : indexId = Value(indexId),
-       exampleSentenceId = Value(exampleSentenceId),
-       languageCodeId = Value(languageCodeId);
+       exampleSentenceId = Value(exampleSentenceId);
   static Insertable<ExampleTableData> custom({
     Expression<int>? id,
     Expression<int>? indexId,
     Expression<int>? groupId,
     Expression<int>? exampleSentenceId,
-    Expression<int>? languageCodeId,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
       if (indexId != null) 'index_id': indexId,
       if (groupId != null) 'group_id': groupId,
       if (exampleSentenceId != null) 'example_sentence_id': exampleSentenceId,
-      if (languageCodeId != null) 'language_code_id': languageCodeId,
     });
   }
 
@@ -14964,14 +15146,12 @@ class ExampleTableCompanion extends UpdateCompanion<ExampleTableData> {
     Value<int>? indexId,
     Value<int?>? groupId,
     Value<int>? exampleSentenceId,
-    Value<int>? languageCodeId,
   }) {
     return ExampleTableCompanion(
       id: id ?? this.id,
       indexId: indexId ?? this.indexId,
       groupId: groupId ?? this.groupId,
       exampleSentenceId: exampleSentenceId ?? this.exampleSentenceId,
-      languageCodeId: languageCodeId ?? this.languageCodeId,
     );
   }
 
@@ -14990,9 +15170,6 @@ class ExampleTableCompanion extends UpdateCompanion<ExampleTableData> {
     if (exampleSentenceId.present) {
       map['example_sentence_id'] = Variable<int>(exampleSentenceId.value);
     }
-    if (languageCodeId.present) {
-      map['language_code_id'] = Variable<int>(languageCodeId.value);
-    }
     return map;
   }
 
@@ -15002,8 +15179,209 @@ class ExampleTableCompanion extends UpdateCompanion<ExampleTableData> {
           ..write('id: $id, ')
           ..write('indexId: $indexId, ')
           ..write('groupId: $groupId, ')
-          ..write('exampleSentenceId: $exampleSentenceId, ')
-          ..write('languageCodeId: $languageCodeId')
+          ..write('exampleSentenceId: $exampleSentenceId')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class FtsExampleSentenceUnicode extends Table
+    with
+        TableInfo<FtsExampleSentenceUnicode, FtsExampleSentenceUnicodeData>,
+        VirtualTableInfo<
+          FtsExampleSentenceUnicode,
+          FtsExampleSentenceUnicodeData
+        > {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  FtsExampleSentenceUnicode(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _exampleSentenceMeta = const VerificationMeta(
+    'exampleSentence',
+  );
+  late final GeneratedColumn<String> exampleSentence = GeneratedColumn<String>(
+    'example_sentence',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    $customConstraints: '',
+  );
+  @override
+  List<GeneratedColumn> get $columns => [exampleSentence];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'fts_example_sentence_unicode';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<FtsExampleSentenceUnicodeData> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('example_sentence')) {
+      context.handle(
+        _exampleSentenceMeta,
+        exampleSentence.isAcceptableOrUnknown(
+          data['example_sentence']!,
+          _exampleSentenceMeta,
+        ),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => const {};
+  @override
+  FtsExampleSentenceUnicodeData map(
+    Map<String, dynamic> data, {
+    String? tablePrefix,
+  }) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return FtsExampleSentenceUnicodeData(
+      exampleSentence: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}example_sentence'],
+      ),
+    );
+  }
+
+  @override
+  FtsExampleSentenceUnicode createAlias(String alias) {
+    return FtsExampleSentenceUnicode(attachedDatabase, alias);
+  }
+
+  @override
+  bool get dontWriteConstraints => true;
+  @override
+  String get moduleAndArgs =>
+      'fts5(example_sentence, content=\'example_sentence_table\', content_rowid=\'id\', tokenize=\'unicode61\')';
+}
+
+class FtsExampleSentenceUnicodeData extends DataClass
+    implements Insertable<FtsExampleSentenceUnicodeData> {
+  final String? exampleSentence;
+  const FtsExampleSentenceUnicodeData({this.exampleSentence});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (!nullToAbsent || exampleSentence != null) {
+      map['example_sentence'] = Variable<String>(exampleSentence);
+    }
+    return map;
+  }
+
+  FtsExampleSentenceUnicodeCompanion toCompanion(bool nullToAbsent) {
+    return FtsExampleSentenceUnicodeCompanion(
+      exampleSentence: exampleSentence == null && nullToAbsent
+          ? const Value.absent()
+          : Value(exampleSentence),
+    );
+  }
+
+  factory FtsExampleSentenceUnicodeData.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return FtsExampleSentenceUnicodeData(
+      exampleSentence: serializer.fromJson<String?>(json['example_sentence']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'example_sentence': serializer.toJson<String?>(exampleSentence),
+    };
+  }
+
+  FtsExampleSentenceUnicodeData copyWith({
+    Value<String?> exampleSentence = const Value.absent(),
+  }) => FtsExampleSentenceUnicodeData(
+    exampleSentence: exampleSentence.present
+        ? exampleSentence.value
+        : this.exampleSentence,
+  );
+  FtsExampleSentenceUnicodeData copyWithCompanion(
+    FtsExampleSentenceUnicodeCompanion data,
+  ) {
+    return FtsExampleSentenceUnicodeData(
+      exampleSentence: data.exampleSentence.present
+          ? data.exampleSentence.value
+          : this.exampleSentence,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('FtsExampleSentenceUnicodeData(')
+          ..write('exampleSentence: $exampleSentence')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => exampleSentence.hashCode;
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is FtsExampleSentenceUnicodeData &&
+          other.exampleSentence == this.exampleSentence);
+}
+
+class FtsExampleSentenceUnicodeCompanion
+    extends UpdateCompanion<FtsExampleSentenceUnicodeData> {
+  final Value<String?> exampleSentence;
+  final Value<int> rowid;
+  const FtsExampleSentenceUnicodeCompanion({
+    this.exampleSentence = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  FtsExampleSentenceUnicodeCompanion.insert({
+    this.exampleSentence = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  static Insertable<FtsExampleSentenceUnicodeData> custom({
+    Expression<String>? exampleSentence,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (exampleSentence != null) 'example_sentence': exampleSentence,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  FtsExampleSentenceUnicodeCompanion copyWith({
+    Value<String?>? exampleSentence,
+    Value<int>? rowid,
+  }) {
+    return FtsExampleSentenceUnicodeCompanion(
+      exampleSentence: exampleSentence ?? this.exampleSentence,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (exampleSentence.present) {
+      map['example_sentence'] = Variable<String>(exampleSentence.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('FtsExampleSentenceUnicodeCompanion(')
+          ..write('exampleSentence: $exampleSentence, ')
+          ..write('rowid: $rowid')
           ..write(')'))
         .toString();
   }
@@ -17234,7 +17612,6 @@ class ExampleEntryViewData extends DataClass {
   final int? groupId;
   final String index;
   final String exampleSentence;
-  final String languageCode;
   final String tagsJson;
   final String statsJson;
   final String audiosJson;
@@ -17243,7 +17620,6 @@ class ExampleEntryViewData extends DataClass {
     this.groupId,
     required this.index,
     required this.exampleSentence,
-    required this.languageCode,
     required this.tagsJson,
     required this.statsJson,
     required this.audiosJson,
@@ -17258,7 +17634,6 @@ class ExampleEntryViewData extends DataClass {
       groupId: serializer.fromJson<int?>(json['group_id']),
       index: serializer.fromJson<String>(json['index']),
       exampleSentence: serializer.fromJson<String>(json['example_sentence']),
-      languageCode: serializer.fromJson<String>(json['language_code']),
       tagsJson: serializer.fromJson<String>(json['tags_json']),
       statsJson: serializer.fromJson<String>(json['stats_json']),
       audiosJson: serializer.fromJson<String>(json['audios_json']),
@@ -17272,7 +17647,6 @@ class ExampleEntryViewData extends DataClass {
       'group_id': serializer.toJson<int?>(groupId),
       'index': serializer.toJson<String>(index),
       'example_sentence': serializer.toJson<String>(exampleSentence),
-      'language_code': serializer.toJson<String>(languageCode),
       'tags_json': serializer.toJson<String>(tagsJson),
       'stats_json': serializer.toJson<String>(statsJson),
       'audios_json': serializer.toJson<String>(audiosJson),
@@ -17284,7 +17658,6 @@ class ExampleEntryViewData extends DataClass {
     Value<int?> groupId = const Value.absent(),
     String? index,
     String? exampleSentence,
-    String? languageCode,
     String? tagsJson,
     String? statsJson,
     String? audiosJson,
@@ -17293,7 +17666,6 @@ class ExampleEntryViewData extends DataClass {
     groupId: groupId.present ? groupId.value : this.groupId,
     index: index ?? this.index,
     exampleSentence: exampleSentence ?? this.exampleSentence,
-    languageCode: languageCode ?? this.languageCode,
     tagsJson: tagsJson ?? this.tagsJson,
     statsJson: statsJson ?? this.statsJson,
     audiosJson: audiosJson ?? this.audiosJson,
@@ -17305,7 +17677,6 @@ class ExampleEntryViewData extends DataClass {
           ..write('groupId: $groupId, ')
           ..write('index: $index, ')
           ..write('exampleSentence: $exampleSentence, ')
-          ..write('languageCode: $languageCode, ')
           ..write('tagsJson: $tagsJson, ')
           ..write('statsJson: $statsJson, ')
           ..write('audiosJson: $audiosJson')
@@ -17319,7 +17690,6 @@ class ExampleEntryViewData extends DataClass {
     groupId,
     index,
     exampleSentence,
-    languageCode,
     tagsJson,
     statsJson,
     audiosJson,
@@ -17332,7 +17702,6 @@ class ExampleEntryViewData extends DataClass {
           other.groupId == this.groupId &&
           other.index == this.index &&
           other.exampleSentence == this.exampleSentence &&
-          other.languageCode == this.languageCode &&
           other.tagsJson == this.tagsJson &&
           other.statsJson == this.statsJson &&
           other.audiosJson == this.audiosJson);
@@ -17350,7 +17719,6 @@ class ExampleEntryView extends ViewInfo<ExampleEntryView, ExampleEntryViewData>
     groupId,
     index,
     exampleSentence,
-    languageCode,
     tagsJson,
     statsJson,
     audiosJson,
@@ -17362,7 +17730,7 @@ class ExampleEntryView extends ViewInfo<ExampleEntryView, ExampleEntryViewData>
   @override
   Map<SqlDialect, String> get createViewStatements => {
     SqlDialect.sqlite:
-        'CREATE VIEW IF NOT EXISTS example_entry_view AS SELECT e.id, e.group_id, iv.index_entry AS "index", s.example_sentence, l.language_code, (SELECT json_group_array(json(tv.tag_json)) FROM example_table_x_tag_bank_table AS ext INNER JOIN tag_bank_v3_as_json_view AS tv ON tv.tag_id = ext.tag_bank_id WHERE ext.example_id = e.id) AS tags_json, (SELECT json_group_array(json_object(\'id\', st.id, \'statName\', sn.name, \'displayName\', sdn.name, \'value\', st.value, \'displayValue\', st.display_value)) FROM example_table_x_stat_table AS ext INNER JOIN stat_table AS st ON st.id = ext.stat_table_id INNER JOIN stat_name_table AS sn ON sn.id = st.stat_name_id LEFT JOIN stat_name_table AS sdn ON sdn.id = st.stat_display_name_id WHERE ext.example_id = e.id) AS stats_json, (SELECT json_group_array(json_object(\'id\', a.id, \'path\', a.path, \'name\', a.name, \'tags\', (SELECT json_group_array(json(atv.tag_json)) FROM example_audio_table_x_tag_bank_table AS axt INNER JOIN tag_bank_v3_as_json_view AS atv ON atv.tag_id = axt.tag_bank_id WHERE axt.audio_id = a.id), \'stats\', (SELECT json_group_array(json_object(\'id\', ast.id, \'statName\', asn.name, \'displayName\', asdn.name, \'value\', ast.value, \'displayValue\', ast.display_value)) FROM example_audio_table_x_stat_table AS axst INNER JOIN stat_table AS ast ON ast.id = axst.stat_table_id INNER JOIN stat_name_table AS asn ON asn.id = ast.stat_name_id LEFT JOIN stat_name_table AS asdn ON asdn.id = ast.stat_display_name_id WHERE axst.audio_id = a.id))) FROM example_table_x_example_audio_table AS exa INNER JOIN example_audio_table AS a ON a.id = exa.audio_id WHERE exa.example_id = e.id) AS audios_json FROM example_table AS e INNER JOIN example_sentence_table AS s ON s.id = e.example_sentence_id INNER JOIN language_code_table AS l ON l.id = e.language_code_id INNER JOIN index_entry_as_json_view AS iv ON iv.id = e.index_id',
+        'CREATE VIEW IF NOT EXISTS example_entry_view AS SELECT e.id, e.group_id, iv.index_entry AS "index", s.example_sentence, (SELECT json_group_array(json(tv.tag_json)) FROM example_table_x_tag_bank_table AS ext INNER JOIN tag_bank_v3_as_json_view AS tv ON tv.tag_id = ext.tag_bank_id WHERE ext.example_id = e.id) AS tags_json, (SELECT json_group_array(json_object(\'id\', st.id, \'statName\', sn.name, \'displayName\', sdn.name, \'value\', st.value, \'displayValue\', st.display_value)) FROM example_table_x_stat_table AS ext INNER JOIN stat_table AS st ON st.id = ext.stat_table_id INNER JOIN stat_name_table AS sn ON sn.id = st.stat_name_id LEFT JOIN stat_name_table AS sdn ON sdn.id = st.stat_display_name_id WHERE ext.example_id = e.id) AS stats_json, (SELECT json_group_array(json_object(\'id\', a.id, \'path\', a.path, \'name\', a.name, \'tags\', (SELECT json_group_array(json(atv.tag_json)) FROM example_audio_table_x_tag_bank_table AS axt INNER JOIN tag_bank_v3_as_json_view AS atv ON atv.tag_id = axt.tag_bank_id WHERE axt.audio_id = a.id), \'stats\', (SELECT json_group_array(json_object(\'id\', ast.id, \'statName\', asn.name, \'displayName\', asdn.name, \'value\', ast.value, \'displayValue\', ast.display_value)) FROM example_audio_table_x_stat_table AS axst INNER JOIN stat_table AS ast ON ast.id = axst.stat_table_id INNER JOIN stat_name_table AS asn ON asn.id = ast.stat_name_id LEFT JOIN stat_name_table AS asdn ON asdn.id = ast.stat_display_name_id WHERE axst.audio_id = a.id))) FROM example_table_x_example_audio_table AS exa INNER JOIN example_audio_table AS a ON a.id = exa.audio_id WHERE exa.example_id = e.id) AS audios_json FROM example_table AS e INNER JOIN example_sentence_table AS s ON s.id = e.example_sentence_id INNER JOIN index_entry_as_json_view AS iv ON iv.id = e.index_id',
   };
   @override
   ExampleEntryView get asDslTable => this;
@@ -17385,10 +17753,6 @@ class ExampleEntryView extends ViewInfo<ExampleEntryView, ExampleEntryViewData>
       exampleSentence: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}example_sentence'],
-      )!,
-      languageCode: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}language_code'],
       )!,
       tagsJson: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
@@ -17429,12 +17793,6 @@ class ExampleEntryView extends ViewInfo<ExampleEntryView, ExampleEntryViewData>
     false,
     type: DriftSqlType.string,
   );
-  late final GeneratedColumn<String> languageCode = GeneratedColumn<String>(
-    'language_code',
-    aliasedName,
-    false,
-    type: DriftSqlType.string,
-  );
   late final GeneratedColumn<String> tagsJson = GeneratedColumn<String>(
     'tags_json',
     aliasedName,
@@ -17464,7 +17822,6 @@ class ExampleEntryView extends ViewInfo<ExampleEntryView, ExampleEntryViewData>
   Set<String> get readTables => const {
     'example_table',
     'example_sentence_table',
-    'language_code_table',
     'index_table',
     'example_table_x_tag_bank_table',
     'tag_bank_v3_table',
@@ -20055,9 +20412,12 @@ abstract class _$DaDb extends GeneratedDatabase {
   );
   late final $TermTableTable termTable = $TermTableTable(this);
   late final FtsTerms ftsTerms = FtsTerms(this);
-  late final FtsTokens ftsTokens = FtsTokens(this);
+  late final FtsTermsUnicode ftsTermsUnicode = FtsTermsUnicode(this);
   late final FtsReadings ftsReadings = FtsReadings(this);
+  late final FtsReadingsUnicode ftsReadingsUnicode = FtsReadingsUnicode(this);
   late final FtsDefinitions ftsDefinitions = FtsDefinitions(this);
+  late final FtsDefinitionsUnicode ftsDefinitionsUnicode =
+      FtsDefinitionsUnicode(this);
   late final $TermBankV3DefinitionJsonTableTable termBankV3DefinitionJsonTable =
       $TermBankV3DefinitionJsonTableTable(this);
   late final $TermBankV3TableTable termBankV3Table = $TermBankV3TableTable(
@@ -20250,9 +20610,9 @@ abstract class _$DaDb extends GeneratedDatabase {
   late final $ExampleSentenceTableTable exampleSentenceTable =
       $ExampleSentenceTableTable(this);
   late final FtsExampleSentence ftsExampleSentence = FtsExampleSentence(this);
-  late final $LanguageCodeTableTable languageCodeTable =
-      $LanguageCodeTableTable(this);
   late final $ExampleTableTable exampleTable = $ExampleTableTable(this);
+  late final FtsExampleSentenceUnicode ftsExampleSentenceUnicode =
+      FtsExampleSentenceUnicode(this);
   late final FtsExampleSentenceTokenized ftsExampleSentenceTokenized =
       FtsExampleSentenceTokenized(this);
   late final $ExampleTable_X_TagBankTableTable exampleTableXTagBankTable =
@@ -20270,10 +20630,6 @@ abstract class _$DaDb extends GeneratedDatabase {
   late final $ExampleAudioTable_X_StatTableTable exampleAudioTableXStatTable =
       $ExampleAudioTable_X_StatTableTable(this);
   late final ExampleEntryView exampleEntryView = ExampleEntryView(this);
-  late final Index languageCodeTableLanguageCode = Index(
-    'LanguageCodeTable_languageCode',
-    'CREATE INDEX LanguageCodeTable_languageCode ON language_code_table (language_code)',
-  );
   late final $ExampleSentenceTable_X_TermTableTable
   exampleSentenceTableXTermTable = $ExampleSentenceTable_X_TermTableTable(this);
   late final Index exampleTableXExampleAudioTableAudioIdIndex = Index(
@@ -20307,10 +20663,6 @@ abstract class _$DaDb extends GeneratedDatabase {
   late final Index exampleTableIndexIdIndex = Index(
     'ExampleTable_indexIdIndex',
     'CREATE INDEX ExampleTable_indexIdIndex ON example_table (index_id)',
-  );
-  late final Index exampleSentencesTableLanguageCodeIdIndex = Index(
-    'ExampleSentencesTable_languageCodeIdIndex',
-    'CREATE INDEX ExampleSentencesTable_languageCodeIdIndex ON example_table (language_code_id)',
   );
   late final Index exampleSentencesTableGroupIdIndex = Index(
     'ExampleSentencesTable_groupIdIndex',
@@ -20353,7 +20705,6 @@ abstract class _$DaDb extends GeneratedDatabase {
   late final TermDao termDao = TermDao(this as DaDb);
   late final ReadingDao readingDao = ReadingDao(this as DaDb);
   late final DefinitionDao definitionDao = DefinitionDao(this as DaDb);
-  late final LanguageCodeDao languageCodeDao = LanguageCodeDao(this as DaDb);
   late final AudioDao audioDao = AudioDao(this as DaDb);
   late final AudioSourceListDao audioSourceListDao = AudioSourceListDao(
     this as DaDb,
@@ -20455,7 +20806,7 @@ abstract class _$DaDb extends GeneratedDatabase {
     int offset,
   ) {
     return customSelect(
-      'WITH SearchTerms (input_index, term, should_prefix, allowed_rules, allowed_tags, fts_query) AS (SELECT "key" AS input_index, CAST(json_extract(value, \'\$[0]\') AS TEXT), CAST(json_extract(value, \'\$[1]\') AS INTEGER), CAST(json_extract(value, \'\$[3]\') AS TEXT), CAST(json_extract(value, \'\$[4]\') AS TEXT), CASE WHEN CAST(json_extract(value, \'\$[2]\') AS INTEGER) = 1 THEN \'^\' ELSE \'\' END || \'"\' || "REPLACE"(CAST(json_extract(value, \'\$[0]\') AS TEXT), \'"\', \'""\') || \'"\' || CASE WHEN CAST(json_extract(value, \'\$[1]\') AS INTEGER) = 1 THEN \' *\' ELSE \'\' END FROM json_each(?1)), IndexesToInclude (index_id) AS (SELECT value FROM json_each(?2)WHERE value IS NOT NULL), ActiveIndexes (id, current_sorting_order, enabled, frequency_mode) AS (SELECT id, current_sorting_order, enabled, frequency_mode FROM index_table WHERE(?2 IS NOT NULL AND id IN (SELECT index_id FROM IndexesToInclude))OR(?2 IS NULL AND enabled = 1)), SearchResults AS (SELECT SearchTerms.input_index, SearchTerms.term AS search_term, SearchTerms.should_prefix, SearchTerms.allowed_rules, SearchTerms.allowed_tags, SearchTerms.fts_query, T.id AS source_id, 1 AS data_type_id, T.term AS text_data, fts_terms.rank FROM SearchTerms JOIN fts_terms ON fts_terms.term MATCH SearchTerms.fts_query JOIN term_table AS T ON fts_terms."rowid" = T.id WHERE ?3 = 0 AND ?4 = 0 UNION ALL SELECT SearchTerms.input_index, SearchTerms.term AS search_term, SearchTerms.should_prefix, SearchTerms.allowed_rules, SearchTerms.allowed_tags, SearchTerms.fts_query, T.id AS source_id, 3 AS data_type_id, COALESCE(T.term_normalized, T.term) AS text_data, fts_terms.rank FROM SearchTerms JOIN fts_terms ON fts_terms MATCH SearchTerms.fts_query JOIN term_table AS T ON fts_terms."rowid" = T.id WHERE ?3 = 0 AND ?4 = 1 UNION ALL SELECT SearchTerms.input_index, SearchTerms.term AS search_term, SearchTerms.should_prefix, SearchTerms.allowed_rules, SearchTerms.allowed_tags, SearchTerms.fts_query, T.id AS source_id, 2 AS data_type_id, T.term AS text_data, fts_tokens.rank FROM SearchTerms JOIN fts_tokens ON fts_tokens.tokens MATCH SearchTerms.fts_query JOIN term_table AS T ON fts_tokens."rowid" = T.id WHERE ?3 = 0 AND ?4 = 0 UNION ALL SELECT SearchTerms.input_index, SearchTerms.term AS search_term, SearchTerms.should_prefix, SearchTerms.allowed_rules, SearchTerms.allowed_tags, SearchTerms.fts_query, T.id AS source_id, 4 AS data_type_id, COALESCE(T.term_normalized, T.term) AS text_data, fts_tokens.rank FROM SearchTerms JOIN fts_tokens ON fts_tokens MATCH SearchTerms.fts_query JOIN term_table AS T ON fts_tokens."rowid" = T.id WHERE ?3 = 0 AND ?4 = 1 UNION ALL SELECT SearchTerms.input_index, SearchTerms.term AS search_term, SearchTerms.should_prefix, SearchTerms.allowed_rules, SearchTerms.allowed_tags, SearchTerms.fts_query, R.id AS source_id, 5 AS data_type_id, R.reading AS text_data, fts_readings.rank FROM SearchTerms JOIN fts_readings ON fts_readings.reading MATCH SearchTerms.fts_query JOIN reading_table AS R ON fts_readings."rowid" = R.id WHERE ?3 = 0 AND ?4 = 0 UNION ALL SELECT SearchTerms.input_index, SearchTerms.term AS search_term, SearchTerms.should_prefix, SearchTerms.allowed_rules, SearchTerms.allowed_tags, SearchTerms.fts_query, R.id AS source_id, 6 AS data_type_id, COALESCE(R.reading_normalized, R.reading) AS text_data, fts_readings.rank FROM SearchTerms JOIN fts_readings ON fts_readings MATCH SearchTerms.fts_query JOIN reading_table AS R ON fts_readings."rowid" = R.id WHERE ?3 = 0 AND ?4 = 1 UNION ALL SELECT SearchTerms.input_index, SearchTerms.term AS search_term, SearchTerms.should_prefix, SearchTerms.allowed_rules, SearchTerms.allowed_tags, SearchTerms.fts_query, fts_definitions."rowid" AS source_id, 7 AS data_type_id, fts_definitions.definition AS text_data, fts_definitions.rank FROM SearchTerms JOIN fts_definitions ON fts_definitions.definition MATCH SearchTerms.fts_query WHERE ?3 = 0 AND ?4 = 0 UNION ALL SELECT SearchTerms.input_index, SearchTerms.term AS search_term, SearchTerms.should_prefix, SearchTerms.allowed_rules, SearchTerms.allowed_tags, SearchTerms.fts_query, T.id AS source_id,(CASE WHEN ?4 = 0 THEN 1 ELSE 3 END)AS data_type_id,(CASE WHEN ?4 = 0 THEN T.term ELSE COALESCE(T.term_normalized, T.term) END)AS text_data, 0 AS rank FROM SearchTerms,term_table AS T WHERE ?3 = 1 AND(CASE WHEN ?4 = 0 THEN T.term ELSE COALESCE(T.term_normalized, T.term) END)GLOB SearchTerms.term UNION ALL SELECT SearchTerms.input_index, SearchTerms.term AS search_term, SearchTerms.should_prefix, SearchTerms.allowed_rules, SearchTerms.allowed_tags, SearchTerms.fts_query, R.id AS source_id,(CASE WHEN ?4 = 0 THEN 5 ELSE 6 END)AS data_type_id,(CASE WHEN ?4 = 0 THEN R.reading ELSE COALESCE(R.reading_normalized, R.reading) END)AS text_data, 0 AS rank FROM SearchTerms,reading_table AS R WHERE ?3 = 1 AND(CASE WHEN ?4 = 0 THEN R.reading ELSE COALESCE(R.reading_normalized, R.reading) END)GLOB SearchTerms.term UNION ALL SELECT SearchTerms.input_index, SearchTerms.term AS search_term, SearchTerms.should_prefix, SearchTerms.allowed_rules, SearchTerms.allowed_tags, SearchTerms.fts_query, D.id AS source_id, 7 AS data_type_id, D.definition AS text_data, 0 AS rank FROM SearchTerms,definition_table AS D WHERE ?3 = 1 AND D.definition GLOB SearchTerms.term), SearchResultMatchesClassified AS (SELECT SearchResults.*, CASE WHEN text_data = search_term THEN 1 WHEN text_data LIKE search_term || \'%\' THEN 2 ELSE 3 END AS match_type FROM SearchResults), SearchResultsDeduplicated AS (SELECT * FROM (SELECT SearchResultMatchesClassified.*, ROW_NUMBER()OVER (PARTITION BY source_id, CASE WHEN data_type_id IN (1, 2, 3, 4) THEN \'term\' WHEN data_type_id IN (5, 6) THEN \'reading\' ELSE \'def\' END ORDER BY match_type ASC, LENGTH(text_data) ASC, rank ASC RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW EXCLUDE NO OTHERS) AS rn FROM SearchResultMatchesClassified) WHERE rn = 1), TermBankMatches AS (SELECT SearchResultsDeduplicated.*, term_bank_v3_table.id AS term_bank_id, term_bank_v3_table.term_id AS term_id, term_bank_v3_table.reading_id AS reading_id, term_bank_v3_table.index_id, 1 AS match_column, term_bank_v3_table.sequence_number, 0 AS def_rank FROM SearchResultsDeduplicated JOIN term_bank_v3_table ON term_bank_v3_table.term_id = source_id AND data_type_id IN (1, 2, 3, 4) JOIN ActiveIndexes ON term_bank_v3_table.index_id = ActiveIndexes.id UNION ALL SELECT SearchResultsDeduplicated.*, term_bank_v3_table.id AS term_bank_id, term_bank_v3_table.term_id AS term_id, term_bank_v3_table.reading_id AS reading_id, term_bank_v3_table.index_id, 2 AS match_column, term_bank_v3_table.sequence_number, 0 AS def_rank FROM SearchResultsDeduplicated JOIN term_bank_v3_table ON term_bank_v3_table.reading_id = source_id AND data_type_id IN (5, 6) JOIN ActiveIndexes ON term_bank_v3_table.index_id = ActiveIndexes.id UNION ALL SELECT SearchResultsDeduplicated.*, term_bank_v3_x_definition_table.term_bank_id AS term_bank_id, term_bank_v3_table.term_id AS term_id, term_bank_v3_table.reading_id AS reading_id, term_bank_v3_table.index_id, 3 AS match_column, term_bank_v3_table.sequence_number, term_bank_v3_x_definition_table.rank AS def_rank FROM SearchResultsDeduplicated JOIN term_bank_v3_x_definition_table ON term_bank_v3_x_definition_table.definition_id = source_id JOIN term_bank_v3_table ON term_bank_v3_table.id = term_bank_v3_x_definition_table.term_bank_id AND data_type_id = 7 JOIN ActiveIndexes ON term_bank_v3_table.index_id = ActiveIndexes.id), TermBankMatchesFiltered AS (SELECT TBM.* FROM TermBankMatches AS TBM WHERE(?5 IS NULL OR EXISTS (SELECT 1 AS _c0 FROM fts_terms WHERE "rowid" = TBM.term_id AND ?4 = 0 AND term MATCH \'"\' || "REPLACE"(?5, \'"\', \'""\') || \'"\' UNION ALL SELECT 1 FROM fts_terms WHERE "rowid" = TBM.term_id AND ?4 = 1 AND fts_terms MATCH \'"\' || "REPLACE"(?5, \'"\', \'""\') || \'"\'))AND(?6 IS NULL OR EXISTS (SELECT 1 AS _c1 FROM fts_readings WHERE "rowid" = TBM.reading_id AND ?4 = 0 AND reading MATCH \'"\' || "REPLACE"(?6, \'"\', \'""\') || \'"\' UNION ALL SELECT 1 FROM fts_readings WHERE "rowid" = TBM.reading_id AND ?4 = 1 AND fts_readings MATCH \'"\' || "REPLACE"(?6, \'"\', \'""\') || \'"\'))AND(?7 IS NULL OR EXISTS (SELECT 1 AS _c2 FROM term_bank_v3_x_definition_table AS link JOIN fts_definitions AS def_fts ON link.definition_id = def_fts."rowid" WHERE link.term_bank_id = TBM.term_bank_id AND def_fts.definition MATCH \'"\' || "REPLACE"(?7, \'"\', \'""\') || \'"\'))AND(TBM.allowed_tags IS NULL OR json_array_length(TBM.allowed_tags) = 0 OR EXISTS (SELECT 1 AS _c3 FROM term_bank_v3_x_tag_bank_table AS LinkTable JOIN tag_bank_v3_table AS TagTable ON LinkTable.tag_bank_id = TagTable.id JOIN json_each(TBM.allowed_tags)AS AllowedTag ON TagTable.name = AllowedTag.value WHERE LinkTable.term_bank_id = TBM.term_bank_id))AND(TBM.allowed_rules IS NULL OR json_array_length(TBM.allowed_rules) = 0 OR EXISTS (SELECT 1 AS _c4 FROM term_bank_v3_x_rule_identifier_table AS RuleLink JOIN term_bank_v3_rule_identifier_table AS RuleTable ON RuleLink.rule_identifier_id = RuleTable.id JOIN json_each(TBM.allowed_rules)AS AllowedRule ON RuleTable.rule_identifier = AllowedRule.value WHERE RuleLink.term_bank_id = TBM.term_bank_id))), FrequencyOverrideIsActive AS (SELECT 1 AS is_active FROM index_table WHERE current_frequency_dictionary = TRUE LIMIT 1), PopularityDictionary AS (SELECT term_meta_bank_v3_table.*, IT.frequency_mode AS op_frequency_mode FROM index_table AS IT JOIN term_meta_bank_v3_table ON term_meta_bank_v3_table.index_id = IT.id JOIN term_meta_bank_v3_type_table ON term_meta_bank_v3_table.type_id = term_meta_bank_v3_type_table.id WHERE IT.current_frequency_dictionary = TRUE AND term_meta_bank_v3_type_table.type = \'freq\') SELECT TBM.term_bank_id, TBM.search_term, TBM.rank AS fts5_rank, TBM.match_type, TBM.match_column, TBM.sequence_number, ActiveIndexes.id AS indexId, ActiveIndexes.current_sorting_order, CASE WHEN FrequencyOverrideIsActive.is_active = 1 THEN CASE WHEN OP.op_frequency_mode = \'rankBased\' THEN(OP.freq_value * -1)ELSE OP.freq_value END ELSE CASE WHEN ActiveIndexes.frequency_mode = \'rankBased\' THEN(TB3T.popularity * -1)ELSE TB3T.popularity END END AS finalPopularity, CASE WHEN TBM.match_column = 1 THEN TT.term WHEN TBM.match_column = 2 THEN RT.reading ELSE TBM.text_data END AS matchedText, LENGTH(CASE WHEN TBM.match_column = 1 THEN TT.term WHEN TBM.match_column = 2 THEN RT.reading ELSE TBM.text_data END) AS matchedTextLength FROM TermBankMatchesFiltered AS TBM JOIN ActiveIndexes ON TB3T.index_id = ActiveIndexes.id JOIN term_bank_v3_table AS TB3T ON TBM.term_bank_id = TB3T.id LEFT JOIN term_table AS TT ON TB3T.term_id = TT.id LEFT JOIN reading_table AS RT ON TB3T.reading_id = RT.id LEFT JOIN FrequencyOverrideIsActive ON 1 = 1 LEFT JOIN PopularityDictionary AS OP ON OP.term_id = TB3T.term_id ORDER BY TBM.input_index ASC, CASE WHEN FrequencyOverrideIsActive.is_active = 1 THEN 0 ELSE ActiveIndexes.current_sorting_order END, TBM.match_type, TBM.match_column, CASE WHEN TBM.match_column = 3 THEN TBM.def_rank ELSE 0 END ASC, finalPopularity DESC, CASE WHEN FrequencyOverrideIsActive.is_active = 1 THEN ActiveIndexes.current_sorting_order ELSE 0 END, TBM.rank, LENGTH(matchedText) ASC, matchedText ASC LIMIT ?8 OFFSET ?9',
+      'WITH SearchTerms (input_index, term, should_prefix, allowed_rules, allowed_tags, fts_query) AS (SELECT "key" AS input_index, CAST(json_extract(value, \'\$[0]\') AS TEXT), CAST(json_extract(value, \'\$[1]\') AS INTEGER), CAST(json_extract(value, \'\$[3]\') AS TEXT), CAST(json_extract(value, \'\$[4]\') AS TEXT), CASE WHEN CAST(json_extract(value, \'\$[2]\') AS INTEGER) = 1 THEN \'^\' ELSE \'\' END || \'"\' || "REPLACE"(CAST(json_extract(value, \'\$[0]\') AS TEXT), \'"\', \'""\') || \'"\' || CASE WHEN CAST(json_extract(value, \'\$[1]\') AS INTEGER) = 1 THEN \' *\' ELSE \'\' END FROM json_each(?1)), IndexesToInclude (index_id) AS (SELECT value FROM json_each(?2)WHERE value IS NOT NULL), ActiveIndexes (id, current_sorting_order, enabled, frequency_mode) AS (SELECT id, current_sorting_order, enabled, frequency_mode FROM index_table WHERE(?2 IS NOT NULL AND id IN (SELECT index_id FROM IndexesToInclude))OR(?2 IS NULL AND enabled = 1)), SearchResults AS (SELECT SearchTerms.input_index, SearchTerms.term AS search_term, SearchTerms.should_prefix, SearchTerms.allowed_rules, SearchTerms.allowed_tags, SearchTerms.fts_query, T.id AS source_id, 1 AS data_type_id, T.term AS text_data, fts_terms.rank FROM SearchTerms JOIN fts_terms ON fts_terms.term MATCH SearchTerms.fts_query JOIN term_table AS T ON fts_terms."rowid" = T.id WHERE ?3 = 0 AND ?4 = 0 UNION ALL SELECT SearchTerms.input_index, SearchTerms.term AS search_term, SearchTerms.should_prefix, SearchTerms.allowed_rules, SearchTerms.allowed_tags, SearchTerms.fts_query, T.id AS source_id, 1 AS data_type_id, T.term AS text_data, fts_terms_unicode.rank FROM SearchTerms JOIN fts_terms_unicode ON fts_terms_unicode.term MATCH SearchTerms.fts_query JOIN term_table AS T ON fts_terms_unicode."rowid" = T.id WHERE ?3 = 0 AND ?4 = 0 UNION ALL SELECT SearchTerms.input_index, SearchTerms.term AS search_term, SearchTerms.should_prefix, SearchTerms.allowed_rules, SearchTerms.allowed_tags, SearchTerms.fts_query, T.id AS source_id, 3 AS data_type_id, COALESCE(T.term_normalized, T.term) AS text_data, fts_terms.rank FROM SearchTerms JOIN fts_terms ON fts_terms MATCH SearchTerms.fts_query JOIN term_table AS T ON fts_terms."rowid" = T.id WHERE ?3 = 0 AND ?4 = 1 UNION ALL SELECT SearchTerms.input_index, SearchTerms.term AS search_term, SearchTerms.should_prefix, SearchTerms.allowed_rules, SearchTerms.allowed_tags, SearchTerms.fts_query, T.id AS source_id, 3 AS data_type_id, COALESCE(T.term_normalized, T.term) AS text_data, fts_terms_unicode.rank FROM SearchTerms JOIN fts_terms_unicode ON fts_terms_unicode MATCH SearchTerms.fts_query JOIN term_table AS T ON fts_terms_unicode."rowid" = T.id WHERE ?3 = 0 AND ?4 = 1 UNION ALL SELECT SearchTerms.input_index, SearchTerms.term AS search_term, SearchTerms.should_prefix, SearchTerms.allowed_rules, SearchTerms.allowed_tags, SearchTerms.fts_query, R.id AS source_id, 5 AS data_type_id, R.reading AS text_data, fts_readings.rank FROM SearchTerms JOIN fts_readings ON fts_readings.reading MATCH SearchTerms.fts_query JOIN reading_table AS R ON fts_readings."rowid" = R.id WHERE ?3 = 0 AND ?4 = 0 UNION ALL SELECT SearchTerms.input_index, SearchTerms.term AS search_term, SearchTerms.should_prefix, SearchTerms.allowed_rules, SearchTerms.allowed_tags, SearchTerms.fts_query, R.id AS source_id, 5 AS data_type_id, R.reading AS text_data, fts_readings_unicode.rank FROM SearchTerms JOIN fts_readings_unicode ON fts_readings_unicode.reading MATCH SearchTerms.fts_query JOIN reading_table AS R ON fts_readings_unicode."rowid" = R.id WHERE ?3 = 0 AND ?4 = 0 UNION ALL SELECT SearchTerms.input_index, SearchTerms.term AS search_term, SearchTerms.should_prefix, SearchTerms.allowed_rules, SearchTerms.allowed_tags, SearchTerms.fts_query, R.id AS source_id, 6 AS data_type_id, COALESCE(R.reading_normalized, R.reading) AS text_data, fts_readings.rank FROM SearchTerms JOIN fts_readings ON fts_readings MATCH SearchTerms.fts_query JOIN reading_table AS R ON fts_readings."rowid" = R.id WHERE ?3 = 0 AND ?4 = 1 UNION ALL SELECT SearchTerms.input_index, SearchTerms.term AS search_term, SearchTerms.should_prefix, SearchTerms.allowed_rules, SearchTerms.allowed_tags, SearchTerms.fts_query, R.id AS source_id, 6 AS data_type_id, COALESCE(R.reading_normalized, R.reading) AS text_data, fts_readings_unicode.rank FROM SearchTerms JOIN fts_readings_unicode ON fts_readings_unicode MATCH SearchTerms.fts_query JOIN reading_table AS R ON fts_readings_unicode."rowid" = R.id WHERE ?3 = 0 AND ?4 = 1 UNION ALL SELECT SearchTerms.input_index, SearchTerms.term AS search_term, SearchTerms.should_prefix, SearchTerms.allowed_rules, SearchTerms.allowed_tags, SearchTerms.fts_query, fts_definitions."rowid" AS source_id, 7 AS data_type_id, fts_definitions.definition AS text_data, fts_definitions.rank FROM SearchTerms JOIN fts_definitions ON fts_definitions.definition MATCH SearchTerms.fts_query WHERE ?3 = 0 AND ?4 = 0 UNION ALL SELECT SearchTerms.input_index, SearchTerms.term AS search_term, SearchTerms.should_prefix, SearchTerms.allowed_rules, SearchTerms.allowed_tags, SearchTerms.fts_query, fts_definitions_unicode."rowid" AS source_id, 7 AS data_type_id, fts_definitions_unicode.definition AS text_data, fts_definitions_unicode.rank FROM SearchTerms JOIN fts_definitions_unicode ON fts_definitions_unicode.definition MATCH SearchTerms.fts_query WHERE ?3 = 0 AND ?4 = 0 UNION ALL SELECT SearchTerms.input_index, SearchTerms.term AS search_term, SearchTerms.should_prefix, SearchTerms.allowed_rules, SearchTerms.allowed_tags, SearchTerms.fts_query, T.id AS source_id,(CASE WHEN ?4 = 0 THEN 1 ELSE 3 END)AS data_type_id,(CASE WHEN ?4 = 0 THEN T.term ELSE IFNULL(T.term_normalized, T.term) END)AS text_data, 0 AS rank FROM SearchTerms,term_table AS T WHERE ?3 = 1 AND(CASE WHEN ?4 = 0 THEN T.term ELSE IFNULL(T.term_normalized, T.term) END)GLOB SearchTerms.term UNION ALL SELECT SearchTerms.input_index, SearchTerms.term AS search_term, SearchTerms.should_prefix, SearchTerms.allowed_rules, SearchTerms.allowed_tags, SearchTerms.fts_query, R.id AS source_id,(CASE WHEN ?4 = 0 THEN 5 ELSE 6 END)AS data_type_id,(CASE WHEN ?4 = 0 THEN R.reading ELSE IFNULL(R.reading_normalized, R.reading) END)AS text_data, 0 AS rank FROM SearchTerms,reading_table AS R WHERE ?3 = 1 AND(CASE WHEN ?4 = 0 THEN R.reading ELSE IFNULL(R.reading_normalized, R.reading) END)GLOB SearchTerms.term UNION ALL SELECT SearchTerms.input_index, SearchTerms.term AS search_term, SearchTerms.should_prefix, SearchTerms.allowed_rules, SearchTerms.allowed_tags, SearchTerms.fts_query, D.id AS source_id, 7 AS data_type_id, D.definition AS text_data, 0 AS rank FROM SearchTerms,definition_table AS D WHERE ?3 = 1 AND D.definition GLOB SearchTerms.term), SearchResultMatchesClassified AS (SELECT SearchResults.*, CASE WHEN text_data = search_term THEN 1 WHEN text_data LIKE search_term || \'%\' THEN 2 ELSE 3 END AS match_type FROM SearchResults), SearchResultsDeduplicated AS (SELECT * FROM (SELECT SearchResultMatchesClassified.*, ROW_NUMBER()OVER (PARTITION BY source_id, CASE WHEN data_type_id IN (1, 2, 3, 4) THEN \'term\' WHEN data_type_id IN (5, 6) THEN \'reading\' ELSE \'def\' END ORDER BY match_type ASC, LENGTH(text_data) ASC, rank ASC RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW EXCLUDE NO OTHERS) AS rn FROM SearchResultMatchesClassified) WHERE rn = 1), TermBankMatches AS (SELECT SearchResultsDeduplicated.*, term_bank_v3_table.id AS term_bank_id, term_bank_v3_table.term_id AS term_id, term_bank_v3_table.reading_id AS reading_id, term_bank_v3_table.index_id, 1 AS match_column, term_bank_v3_table.sequence_number, 0 AS def_rank FROM SearchResultsDeduplicated JOIN term_bank_v3_table ON term_bank_v3_table.term_id = source_id AND data_type_id IN (1, 2, 3, 4) JOIN ActiveIndexes ON term_bank_v3_table.index_id = ActiveIndexes.id UNION ALL SELECT SearchResultsDeduplicated.*, term_bank_v3_table.id AS term_bank_id, term_bank_v3_table.term_id AS term_id, term_bank_v3_table.reading_id AS reading_id, term_bank_v3_table.index_id, 2 AS match_column, term_bank_v3_table.sequence_number, 0 AS def_rank FROM SearchResultsDeduplicated JOIN term_bank_v3_table ON term_bank_v3_table.reading_id = source_id AND data_type_id IN (5, 6) JOIN ActiveIndexes ON term_bank_v3_table.index_id = ActiveIndexes.id UNION ALL SELECT SearchResultsDeduplicated.*, term_bank_v3_x_definition_table.term_bank_id AS term_bank_id, term_bank_v3_table.term_id AS term_id, term_bank_v3_table.reading_id AS reading_id, term_bank_v3_table.index_id, 3 AS match_column, term_bank_v3_table.sequence_number, term_bank_v3_x_definition_table.rank AS def_rank FROM SearchResultsDeduplicated JOIN term_bank_v3_x_definition_table ON term_bank_v3_x_definition_table.definition_id = source_id JOIN term_bank_v3_table ON term_bank_v3_table.id = term_bank_v3_x_definition_table.term_bank_id AND data_type_id = 7 JOIN ActiveIndexes ON term_bank_v3_table.index_id = ActiveIndexes.id), TermBankMatchesFiltered AS (SELECT TBM.* FROM TermBankMatches AS TBM WHERE(?5 IS NULL OR EXISTS (SELECT 1 AS _c0 FROM fts_terms WHERE "rowid" = TBM.term_id AND ?4 = 0 AND term MATCH \'"\' || "REPLACE"(?5, \'"\', \'""\') || \'"\' UNION ALL SELECT 1 FROM fts_terms_unicode WHERE "rowid" = TBM.term_id AND ?4 = 0 AND term MATCH \'"\' || "REPLACE"(?5, \'"\', \'""\') || \'"\' UNION ALL SELECT 1 FROM fts_terms WHERE "rowid" = TBM.term_id AND ?4 = 1 AND fts_terms MATCH \'"\' || "REPLACE"(?5, \'"\', \'""\') || \'"\' UNION ALL SELECT 1 FROM fts_terms_unicode WHERE "rowid" = TBM.term_id AND ?4 = 1 AND fts_terms_unicode MATCH \'"\' || "REPLACE"(?5, \'"\', \'""\') || \'"\'))AND(?6 IS NULL OR EXISTS (SELECT 1 AS _c1 FROM fts_readings WHERE "rowid" = TBM.reading_id AND ?4 = 0 AND reading MATCH \'"\' || "REPLACE"(?6, \'"\', \'""\') || \'"\' UNION ALL SELECT 1 FROM fts_readings_unicode WHERE "rowid" = TBM.reading_id AND ?4 = 0 AND reading MATCH \'"\' || "REPLACE"(?6, \'"\', \'""\') || \'"\' UNION ALL SELECT 1 FROM fts_readings WHERE "rowid" = TBM.reading_id AND ?4 = 1 AND fts_readings MATCH \'"\' || "REPLACE"(?6, \'"\', \'""\') || \'"\' UNION ALL SELECT 1 FROM fts_readings_unicode WHERE "rowid" = TBM.reading_id AND ?4 = 1 AND fts_readings_unicode MATCH \'"\' || "REPLACE"(?6, \'"\', \'""\') || \'"\'))AND(?7 IS NULL OR EXISTS (SELECT 1 AS _c2 FROM term_bank_v3_x_definition_table AS link JOIN fts_definitions AS def_fts ON link.definition_id = def_fts."rowid" WHERE link.term_bank_id = TBM.term_bank_id AND def_fts.definition MATCH \'"\' || "REPLACE"(?7, \'"\', \'""\') || \'"\' UNION ALL SELECT 1 FROM term_bank_v3_x_definition_table AS link JOIN fts_definitions_unicode AS def_fts_u ON link.definition_id = def_fts_u."rowid" WHERE link.term_bank_id = TBM.term_bank_id AND def_fts_u.definition MATCH \'"\' || "REPLACE"(?7, \'"\', \'""\') || \'"\'))AND(TBM.allowed_tags IS NULL OR json_array_length(TBM.allowed_tags) = 0 OR EXISTS (SELECT 1 AS _c3 FROM term_bank_v3_x_tag_bank_table AS LinkTable JOIN tag_bank_v3_table AS TagTable ON LinkTable.tag_bank_id = TagTable.id JOIN json_each(TBM.allowed_tags)AS AllowedTag ON TagTable.name = AllowedTag.value WHERE LinkTable.term_bank_id = TBM.term_bank_id))AND(TBM.allowed_rules IS NULL OR json_array_length(TBM.allowed_rules) = 0 OR EXISTS (SELECT 1 AS _c4 FROM term_bank_v3_x_rule_identifier_table AS RuleLink JOIN term_bank_v3_rule_identifier_table AS RuleTable ON RuleLink.rule_identifier_id = RuleTable.id JOIN json_each(TBM.allowed_rules)AS AllowedRule ON RuleTable.rule_identifier = AllowedRule.value WHERE RuleLink.term_bank_id = TBM.term_bank_id))), FrequencyOverrideIsActive AS (SELECT 1 AS is_active FROM index_table WHERE current_frequency_dictionary = TRUE LIMIT 1), PopularityDictionary AS (SELECT term_meta_bank_v3_table.*, IT.frequency_mode AS op_frequency_mode FROM index_table AS IT JOIN term_meta_bank_v3_table ON term_meta_bank_v3_table.index_id = IT.id JOIN term_meta_bank_v3_type_table ON term_meta_bank_v3_table.type_id = term_meta_bank_v3_type_table.id WHERE IT.current_frequency_dictionary = TRUE AND term_meta_bank_v3_type_table.type = \'freq\') SELECT TBM.term_bank_id, TBM.search_term, TBM.rank AS fts5_rank, TBM.match_type, TBM.match_column, TBM.sequence_number, ActiveIndexes.id AS indexId, ActiveIndexes.current_sorting_order, CASE WHEN FrequencyOverrideIsActive.is_active = 1 THEN CASE WHEN OP.op_frequency_mode = \'rankBased\' THEN(OP.freq_value * -1)ELSE OP.freq_value END ELSE CASE WHEN ActiveIndexes.frequency_mode = \'rankBased\' THEN(TB3T.popularity * -1)ELSE TB3T.popularity END END AS finalPopularity, CASE WHEN TBM.match_column = 1 THEN TT.term WHEN TBM.match_column = 2 THEN RT.reading ELSE TBM.text_data END AS matchedText, LENGTH(CASE WHEN TBM.match_column = 1 THEN TT.term WHEN TBM.match_column = 2 THEN RT.reading ELSE TBM.text_data END) AS matchedTextLength FROM TermBankMatchesFiltered AS TBM JOIN ActiveIndexes ON TB3T.index_id = ActiveIndexes.id JOIN term_bank_v3_table AS TB3T ON TBM.term_bank_id = TB3T.id LEFT JOIN term_table AS TT ON TB3T.term_id = TT.id LEFT JOIN reading_table AS RT ON TB3T.reading_id = RT.id LEFT JOIN FrequencyOverrideIsActive ON 1 = 1 LEFT JOIN PopularityDictionary AS OP ON OP.term_id = TB3T.term_id ORDER BY TBM.input_index ASC, CASE WHEN FrequencyOverrideIsActive.is_active = 1 THEN 0 ELSE ActiveIndexes.current_sorting_order END, TBM.match_type, TBM.match_column, CASE WHEN TBM.match_column = 3 THEN TBM.def_rank ELSE 0 END ASC, finalPopularity DESC, CASE WHEN FrequencyOverrideIsActive.is_active = 1 THEN ActiveIndexes.current_sorting_order ELSE 0 END, TBM.rank, LENGTH(matchedText) ASC, matchedText ASC LIMIT ?8 OFFSET ?9',
       variables: [
         Variable<String>(searchInputs),
         Variable<String>(indexesToInclude),
@@ -20471,10 +20822,12 @@ abstract class _$DaDb extends GeneratedDatabase {
         indexTable,
         termTable,
         ftsTerms,
-        ftsTokens,
+        ftsTermsUnicode,
         readingTable,
         ftsReadings,
+        ftsReadingsUnicode,
         ftsDefinitions,
+        ftsDefinitionsUnicode,
         definitionTable,
         termBankV3Table,
         termBankV3XDefinitionTable,
@@ -20582,8 +20935,14 @@ abstract class _$DaDb extends GeneratedDatabase {
         url: row.readNullable<String>('url'),
         description: row.readNullable<String>('description'),
         attribution: row.readNullable<String>('attribution'),
-        sourceLanguage: row.readNullable<String>('source_language'),
-        targetLanguage: row.readNullable<String>('target_language'),
+        sourceLanguage: NullAwareTypeConverter.wrapFromSql(
+          $IndexTableTable.$convertersourceLanguage,
+          row.readNullable<String>('source_language'),
+        ),
+        targetLanguage: NullAwareTypeConverter.wrapFromSql(
+          $IndexTableTable.$convertertargetLanguage,
+          row.readNullable<String>('target_language'),
+        ),
         frequencyMode: NullAwareTypeConverter.wrapFromSql(
           $IndexTableTable.$converterfrequencyMode,
           row.readNullable<String>('frequency_mode'),
@@ -20760,56 +21119,40 @@ abstract class _$DaDb extends GeneratedDatabase {
 
   Selectable<SearchExampleBaseMatchesResult> searchExampleBaseMatches(
     String query,
-    List<String> languages,
     int limit,
     int offset,
   ) {
-    var $arrayStartIndex = 4;
-    final expandedlanguages = $expandVar($arrayStartIndex, languages.length);
-    $arrayStartIndex += languages.length;
     return customSelect(
-      'SELECT e.id, e.group_id, l.language_code, e.index_id FROM fts_example_sentence AS fts INNER JOIN example_table AS e ON e.example_sentence_id = fts."rowid" INNER JOIN language_code_table AS l ON l.id = e.language_code_id WHERE fts_example_sentence MATCH ?1 AND l.language_code IN ($expandedlanguages) ORDER BY bm25(fts_example_sentence) LIMIT ?2 OFFSET ?3',
+      'WITH CombinedMatches AS (SELECT e.id, e.group_id, e.index_id, bm25(fts_example_sentence) AS score FROM fts_example_sentence AS fts INNER JOIN example_table AS e ON e.example_sentence_id = fts."rowid" WHERE fts_example_sentence MATCH ?1 UNION ALL SELECT e.id, e.group_id, e.index_id, bm25(fts_example_sentence_unicode) AS score FROM fts_example_sentence_unicode AS fts INNER JOIN example_table AS e ON e.example_sentence_id = fts."rowid" WHERE fts_example_sentence_unicode MATCH ?1) SELECT id, group_id, index_id FROM CombinedMatches ORDER BY score LIMIT ?2 OFFSET ?3',
       variables: [
         Variable<String>(query),
         Variable<int>(limit),
         Variable<int>(offset),
-        for (var $ in languages) Variable<String>($),
       ],
-      readsFrom: {exampleTable, languageCodeTable, ftsExampleSentence},
+      readsFrom: {exampleTable, ftsExampleSentence, ftsExampleSentenceUnicode},
     ).map(
       (QueryRow row) => SearchExampleBaseMatchesResult(
         id: row.read<int>('id'),
         groupId: row.readNullable<int>('group_id'),
-        languageCode: row.read<String>('language_code'),
         indexId: row.read<int>('index_id'),
       ),
     );
   }
 
   Selectable<SearchExampleBaseMatchesByTokensResult>
-  searchExampleBaseMatchesByTokens(
-    String lemmas,
-    List<String> languages,
-    int limit,
-    int offset,
-  ) {
-    var $arrayStartIndex = 4;
-    final expandedlanguages = $expandVar($arrayStartIndex, languages.length);
-    $arrayStartIndex += languages.length;
+  searchExampleBaseMatchesByTokens(String lemmas, int limit, int offset) {
     return customSelect(
-      'SELECT e.id, e.group_id, l.language_code, e.index_id FROM fts_example_sentence_tokenized AS fts INNER JOIN example_table AS e ON e.example_sentence_id = fts."rowid" INNER JOIN language_code_table AS l ON l.id = e.language_code_id WHERE fts_example_sentence_tokenized MATCH ?1 AND l.language_code IN ($expandedlanguages) ORDER BY bm25(fts_example_sentence_tokenized) LIMIT ?2 OFFSET ?3',
+      'SELECT e.id, e.group_id, e.index_id FROM fts_example_sentence_tokenized AS fts INNER JOIN example_table AS e ON e.example_sentence_id = fts."rowid" WHERE fts_example_sentence_tokenized MATCH ?1 ORDER BY bm25(fts_example_sentence_tokenized) LIMIT ?2 OFFSET ?3',
       variables: [
         Variable<String>(lemmas),
         Variable<int>(limit),
         Variable<int>(offset),
-        for (var $ in languages) Variable<String>($),
       ],
-      readsFrom: {exampleTable, languageCodeTable, ftsExampleSentenceTokenized},
+      readsFrom: {exampleTable, ftsExampleSentenceTokenized},
     ).map(
       (QueryRow row) => SearchExampleBaseMatchesByTokensResult(
         id: row.read<int>('id'),
         groupId: row.readNullable<int>('group_id'),
-        languageCode: row.read<String>('language_code'),
         indexId: row.read<int>('index_id'),
       ),
     );
@@ -20851,7 +21194,6 @@ abstract class _$DaDb extends GeneratedDatabase {
       readsFrom: {
         exampleTable,
         exampleSentenceTable,
-        languageCodeTable,
         indexTable,
         exampleTableXTagBankTable,
         tagBankV3Table,
@@ -20912,9 +21254,11 @@ abstract class _$DaDb extends GeneratedDatabase {
     tagBankV3TableName,
     termTable,
     ftsTerms,
-    ftsTokens,
+    ftsTermsUnicode,
     ftsReadings,
+    ftsReadingsUnicode,
     ftsDefinitions,
+    ftsDefinitionsUnicode,
     termBankV3DefinitionJsonTable,
     termBankV3Table,
     termBankV3XDefinitionTable,
@@ -20978,8 +21322,8 @@ abstract class _$DaDb extends GeneratedDatabase {
     audioTableMediaIdIndex,
     exampleSentenceTable,
     ftsExampleSentence,
-    languageCodeTable,
     exampleTable,
+    ftsExampleSentenceUnicode,
     ftsExampleSentenceTokenized,
     exampleTableXTagBankTable,
     statNameTable,
@@ -20990,7 +21334,6 @@ abstract class _$DaDb extends GeneratedDatabase {
     exampleAudioTableXTagBankTable,
     exampleAudioTableXStatTable,
     exampleEntryView,
-    languageCodeTableLanguageCode,
     exampleSentenceTableXTermTable,
     exampleTableXExampleAudioTableAudioIdIndex,
     exampleSentenceTableXTermTableTermIdIndex,
@@ -21000,7 +21343,6 @@ abstract class _$DaDb extends GeneratedDatabase {
     exampleAudioTableXTagBankTableTagIdIndex,
     statDataNameValueIndex,
     exampleTableIndexIdIndex,
-    exampleSentencesTableLanguageCodeIdIndex,
     exampleSentencesTableGroupIdIndex,
     exampleTableExampleSentenceIdIndex,
     kanjiVGTable,
@@ -22072,8 +22414,8 @@ typedef $$IndexTableTableCreateCompanionBuilder =
       Value<String?> url,
       Value<String?> description,
       Value<String?> attribution,
-      Value<String?> sourceLanguage,
-      Value<String?> targetLanguage,
+      Value<Iso639_3?> sourceLanguage,
+      Value<Iso639_3?> targetLanguage,
       Value<FrequencyMode?> frequencyMode,
     });
 typedef $$IndexTableTableUpdateCompanionBuilder =
@@ -22096,8 +22438,8 @@ typedef $$IndexTableTableUpdateCompanionBuilder =
       Value<String?> url,
       Value<String?> description,
       Value<String?> attribution,
-      Value<String?> sourceLanguage,
-      Value<String?> targetLanguage,
+      Value<Iso639_3?> sourceLanguage,
+      Value<Iso639_3?> targetLanguage,
       Value<FrequencyMode?> frequencyMode,
     });
 
@@ -22407,14 +22749,16 @@ class $$IndexTableTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<String> get sourceLanguage => $composableBuilder(
+  ColumnWithTypeConverterFilters<Iso639_3?, Iso639_3, String>
+  get sourceLanguage => $composableBuilder(
     column: $table.sourceLanguage,
-    builder: (column) => ColumnFilters(column),
+    builder: (column) => ColumnWithTypeConverterFilters(column),
   );
 
-  ColumnFilters<String> get targetLanguage => $composableBuilder(
+  ColumnWithTypeConverterFilters<Iso639_3?, Iso639_3, String>
+  get targetLanguage => $composableBuilder(
     column: $table.targetLanguage,
-    builder: (column) => ColumnFilters(column),
+    builder: (column) => ColumnWithTypeConverterFilters(column),
   );
 
   ColumnWithTypeConverterFilters<FrequencyMode?, FrequencyMode, String>
@@ -22844,15 +23188,17 @@ class $$IndexTableTableAnnotationComposer
     builder: (column) => column,
   );
 
-  GeneratedColumn<String> get sourceLanguage => $composableBuilder(
-    column: $table.sourceLanguage,
-    builder: (column) => column,
-  );
+  GeneratedColumnWithTypeConverter<Iso639_3?, String> get sourceLanguage =>
+      $composableBuilder(
+        column: $table.sourceLanguage,
+        builder: (column) => column,
+      );
 
-  GeneratedColumn<String> get targetLanguage => $composableBuilder(
-    column: $table.targetLanguage,
-    builder: (column) => column,
-  );
+  GeneratedColumnWithTypeConverter<Iso639_3?, String> get targetLanguage =>
+      $composableBuilder(
+        column: $table.targetLanguage,
+        builder: (column) => column,
+      );
 
   GeneratedColumnWithTypeConverter<FrequencyMode?, String> get frequencyMode =>
       $composableBuilder(
@@ -23145,8 +23491,8 @@ class $$IndexTableTableTableManager
                 Value<String?> url = const Value.absent(),
                 Value<String?> description = const Value.absent(),
                 Value<String?> attribution = const Value.absent(),
-                Value<String?> sourceLanguage = const Value.absent(),
-                Value<String?> targetLanguage = const Value.absent(),
+                Value<Iso639_3?> sourceLanguage = const Value.absent(),
+                Value<Iso639_3?> targetLanguage = const Value.absent(),
                 Value<FrequencyMode?> frequencyMode = const Value.absent(),
               }) => IndexTableCompanion(
                 id: id,
@@ -23191,8 +23537,8 @@ class $$IndexTableTableTableManager
                 Value<String?> url = const Value.absent(),
                 Value<String?> description = const Value.absent(),
                 Value<String?> attribution = const Value.absent(),
-                Value<String?> sourceLanguage = const Value.absent(),
-                Value<String?> targetLanguage = const Value.absent(),
+                Value<Iso639_3?> sourceLanguage = const Value.absent(),
+                Value<Iso639_3?> targetLanguage = const Value.absent(),
                 Value<FrequencyMode?> frequencyMode = const Value.absent(),
               }) => IndexTableCompanion.insert(
                 id: id,
@@ -30512,118 +30858,123 @@ typedef $FtsTermsProcessedTableManager =
       FtsTerm,
       PrefetchHooks Function()
     >;
-typedef $FtsTokensCreateCompanionBuilder =
-    FtsTokensCompanion Function({
-      Value<String?> tokens,
-      Value<String?> tokensNormalized,
+typedef $FtsTermsUnicodeCreateCompanionBuilder =
+    FtsTermsUnicodeCompanion Function({
+      Value<String?> term,
+      Value<String?> termNormalized,
       Value<int> rowid,
     });
-typedef $FtsTokensUpdateCompanionBuilder =
-    FtsTokensCompanion Function({
-      Value<String?> tokens,
-      Value<String?> tokensNormalized,
+typedef $FtsTermsUnicodeUpdateCompanionBuilder =
+    FtsTermsUnicodeCompanion Function({
+      Value<String?> term,
+      Value<String?> termNormalized,
       Value<int> rowid,
     });
 
-class $FtsTokensFilterComposer extends Composer<_$DaDb, FtsTokens> {
-  $FtsTokensFilterComposer({
+class $FtsTermsUnicodeFilterComposer extends Composer<_$DaDb, FtsTermsUnicode> {
+  $FtsTermsUnicodeFilterComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
-  ColumnFilters<String> get tokens => $composableBuilder(
-    column: $table.tokens,
+  ColumnFilters<String> get term => $composableBuilder(
+    column: $table.term,
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<String> get tokensNormalized => $composableBuilder(
-    column: $table.tokensNormalized,
+  ColumnFilters<String> get termNormalized => $composableBuilder(
+    column: $table.termNormalized,
     builder: (column) => ColumnFilters(column),
   );
 }
 
-class $FtsTokensOrderingComposer extends Composer<_$DaDb, FtsTokens> {
-  $FtsTokensOrderingComposer({
+class $FtsTermsUnicodeOrderingComposer
+    extends Composer<_$DaDb, FtsTermsUnicode> {
+  $FtsTermsUnicodeOrderingComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
-  ColumnOrderings<String> get tokens => $composableBuilder(
-    column: $table.tokens,
+  ColumnOrderings<String> get term => $composableBuilder(
+    column: $table.term,
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<String> get tokensNormalized => $composableBuilder(
-    column: $table.tokensNormalized,
+  ColumnOrderings<String> get termNormalized => $composableBuilder(
+    column: $table.termNormalized,
     builder: (column) => ColumnOrderings(column),
   );
 }
 
-class $FtsTokensAnnotationComposer extends Composer<_$DaDb, FtsTokens> {
-  $FtsTokensAnnotationComposer({
+class $FtsTermsUnicodeAnnotationComposer
+    extends Composer<_$DaDb, FtsTermsUnicode> {
+  $FtsTermsUnicodeAnnotationComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
-  GeneratedColumn<String> get tokens =>
-      $composableBuilder(column: $table.tokens, builder: (column) => column);
+  GeneratedColumn<String> get term =>
+      $composableBuilder(column: $table.term, builder: (column) => column);
 
-  GeneratedColumn<String> get tokensNormalized => $composableBuilder(
-    column: $table.tokensNormalized,
+  GeneratedColumn<String> get termNormalized => $composableBuilder(
+    column: $table.termNormalized,
     builder: (column) => column,
   );
 }
 
-class $FtsTokensTableManager
+class $FtsTermsUnicodeTableManager
     extends
         RootTableManager<
           _$DaDb,
-          FtsTokens,
-          FtsToken,
-          $FtsTokensFilterComposer,
-          $FtsTokensOrderingComposer,
-          $FtsTokensAnnotationComposer,
-          $FtsTokensCreateCompanionBuilder,
-          $FtsTokensUpdateCompanionBuilder,
-          (FtsToken, BaseReferences<_$DaDb, FtsTokens, FtsToken>),
-          FtsToken,
+          FtsTermsUnicode,
+          FtsTermsUnicodeData,
+          $FtsTermsUnicodeFilterComposer,
+          $FtsTermsUnicodeOrderingComposer,
+          $FtsTermsUnicodeAnnotationComposer,
+          $FtsTermsUnicodeCreateCompanionBuilder,
+          $FtsTermsUnicodeUpdateCompanionBuilder,
+          (
+            FtsTermsUnicodeData,
+            BaseReferences<_$DaDb, FtsTermsUnicode, FtsTermsUnicodeData>,
+          ),
+          FtsTermsUnicodeData,
           PrefetchHooks Function()
         > {
-  $FtsTokensTableManager(_$DaDb db, FtsTokens table)
+  $FtsTermsUnicodeTableManager(_$DaDb db, FtsTermsUnicode table)
     : super(
         TableManagerState(
           db: db,
           table: table,
           createFilteringComposer: () =>
-              $FtsTokensFilterComposer($db: db, $table: table),
+              $FtsTermsUnicodeFilterComposer($db: db, $table: table),
           createOrderingComposer: () =>
-              $FtsTokensOrderingComposer($db: db, $table: table),
+              $FtsTermsUnicodeOrderingComposer($db: db, $table: table),
           createComputedFieldComposer: () =>
-              $FtsTokensAnnotationComposer($db: db, $table: table),
+              $FtsTermsUnicodeAnnotationComposer($db: db, $table: table),
           updateCompanionCallback:
               ({
-                Value<String?> tokens = const Value.absent(),
-                Value<String?> tokensNormalized = const Value.absent(),
+                Value<String?> term = const Value.absent(),
+                Value<String?> termNormalized = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
-              }) => FtsTokensCompanion(
-                tokens: tokens,
-                tokensNormalized: tokensNormalized,
+              }) => FtsTermsUnicodeCompanion(
+                term: term,
+                termNormalized: termNormalized,
                 rowid: rowid,
               ),
           createCompanionCallback:
               ({
-                Value<String?> tokens = const Value.absent(),
-                Value<String?> tokensNormalized = const Value.absent(),
+                Value<String?> term = const Value.absent(),
+                Value<String?> termNormalized = const Value.absent(),
                 Value<int> rowid = const Value.absent(),
-              }) => FtsTokensCompanion.insert(
-                tokens: tokens,
-                tokensNormalized: tokensNormalized,
+              }) => FtsTermsUnicodeCompanion.insert(
+                term: term,
+                termNormalized: termNormalized,
                 rowid: rowid,
               ),
           withReferenceMapper: (p0) => p0
@@ -30634,18 +30985,21 @@ class $FtsTokensTableManager
       );
 }
 
-typedef $FtsTokensProcessedTableManager =
+typedef $FtsTermsUnicodeProcessedTableManager =
     ProcessedTableManager<
       _$DaDb,
-      FtsTokens,
-      FtsToken,
-      $FtsTokensFilterComposer,
-      $FtsTokensOrderingComposer,
-      $FtsTokensAnnotationComposer,
-      $FtsTokensCreateCompanionBuilder,
-      $FtsTokensUpdateCompanionBuilder,
-      (FtsToken, BaseReferences<_$DaDb, FtsTokens, FtsToken>),
-      FtsToken,
+      FtsTermsUnicode,
+      FtsTermsUnicodeData,
+      $FtsTermsUnicodeFilterComposer,
+      $FtsTermsUnicodeOrderingComposer,
+      $FtsTermsUnicodeAnnotationComposer,
+      $FtsTermsUnicodeCreateCompanionBuilder,
+      $FtsTermsUnicodeUpdateCompanionBuilder,
+      (
+        FtsTermsUnicodeData,
+        BaseReferences<_$DaDb, FtsTermsUnicode, FtsTermsUnicodeData>,
+      ),
+      FtsTermsUnicodeData,
       PrefetchHooks Function()
     >;
 typedef $FtsReadingsCreateCompanionBuilder =
@@ -30784,6 +31138,151 @@ typedef $FtsReadingsProcessedTableManager =
       FtsReading,
       PrefetchHooks Function()
     >;
+typedef $FtsReadingsUnicodeCreateCompanionBuilder =
+    FtsReadingsUnicodeCompanion Function({
+      Value<String?> reading,
+      Value<String?> readingNormalized,
+      Value<int> rowid,
+    });
+typedef $FtsReadingsUnicodeUpdateCompanionBuilder =
+    FtsReadingsUnicodeCompanion Function({
+      Value<String?> reading,
+      Value<String?> readingNormalized,
+      Value<int> rowid,
+    });
+
+class $FtsReadingsUnicodeFilterComposer
+    extends Composer<_$DaDb, FtsReadingsUnicode> {
+  $FtsReadingsUnicodeFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get reading => $composableBuilder(
+    column: $table.reading,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get readingNormalized => $composableBuilder(
+    column: $table.readingNormalized,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $FtsReadingsUnicodeOrderingComposer
+    extends Composer<_$DaDb, FtsReadingsUnicode> {
+  $FtsReadingsUnicodeOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get reading => $composableBuilder(
+    column: $table.reading,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get readingNormalized => $composableBuilder(
+    column: $table.readingNormalized,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $FtsReadingsUnicodeAnnotationComposer
+    extends Composer<_$DaDb, FtsReadingsUnicode> {
+  $FtsReadingsUnicodeAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get reading =>
+      $composableBuilder(column: $table.reading, builder: (column) => column);
+
+  GeneratedColumn<String> get readingNormalized => $composableBuilder(
+    column: $table.readingNormalized,
+    builder: (column) => column,
+  );
+}
+
+class $FtsReadingsUnicodeTableManager
+    extends
+        RootTableManager<
+          _$DaDb,
+          FtsReadingsUnicode,
+          FtsReadingsUnicodeData,
+          $FtsReadingsUnicodeFilterComposer,
+          $FtsReadingsUnicodeOrderingComposer,
+          $FtsReadingsUnicodeAnnotationComposer,
+          $FtsReadingsUnicodeCreateCompanionBuilder,
+          $FtsReadingsUnicodeUpdateCompanionBuilder,
+          (
+            FtsReadingsUnicodeData,
+            BaseReferences<_$DaDb, FtsReadingsUnicode, FtsReadingsUnicodeData>,
+          ),
+          FtsReadingsUnicodeData,
+          PrefetchHooks Function()
+        > {
+  $FtsReadingsUnicodeTableManager(_$DaDb db, FtsReadingsUnicode table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $FtsReadingsUnicodeFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $FtsReadingsUnicodeOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $FtsReadingsUnicodeAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String?> reading = const Value.absent(),
+                Value<String?> readingNormalized = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => FtsReadingsUnicodeCompanion(
+                reading: reading,
+                readingNormalized: readingNormalized,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                Value<String?> reading = const Value.absent(),
+                Value<String?> readingNormalized = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => FtsReadingsUnicodeCompanion.insert(
+                reading: reading,
+                readingNormalized: readingNormalized,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $FtsReadingsUnicodeProcessedTableManager =
+    ProcessedTableManager<
+      _$DaDb,
+      FtsReadingsUnicode,
+      FtsReadingsUnicodeData,
+      $FtsReadingsUnicodeFilterComposer,
+      $FtsReadingsUnicodeOrderingComposer,
+      $FtsReadingsUnicodeAnnotationComposer,
+      $FtsReadingsUnicodeCreateCompanionBuilder,
+      $FtsReadingsUnicodeUpdateCompanionBuilder,
+      (
+        FtsReadingsUnicodeData,
+        BaseReferences<_$DaDb, FtsReadingsUnicode, FtsReadingsUnicodeData>,
+      ),
+      FtsReadingsUnicodeData,
+      PrefetchHooks Function()
+    >;
 typedef $FtsDefinitionsCreateCompanionBuilder =
     FtsDefinitionsCompanion Function({
       Value<String?> definition,
@@ -30901,6 +31400,140 @@ typedef $FtsDefinitionsProcessedTableManager =
       $FtsDefinitionsUpdateCompanionBuilder,
       (FtsDefinition, BaseReferences<_$DaDb, FtsDefinitions, FtsDefinition>),
       FtsDefinition,
+      PrefetchHooks Function()
+    >;
+typedef $FtsDefinitionsUnicodeCreateCompanionBuilder =
+    FtsDefinitionsUnicodeCompanion Function({
+      Value<String?> definition,
+      Value<int> rowid,
+    });
+typedef $FtsDefinitionsUnicodeUpdateCompanionBuilder =
+    FtsDefinitionsUnicodeCompanion Function({
+      Value<String?> definition,
+      Value<int> rowid,
+    });
+
+class $FtsDefinitionsUnicodeFilterComposer
+    extends Composer<_$DaDb, FtsDefinitionsUnicode> {
+  $FtsDefinitionsUnicodeFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get definition => $composableBuilder(
+    column: $table.definition,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $FtsDefinitionsUnicodeOrderingComposer
+    extends Composer<_$DaDb, FtsDefinitionsUnicode> {
+  $FtsDefinitionsUnicodeOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get definition => $composableBuilder(
+    column: $table.definition,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $FtsDefinitionsUnicodeAnnotationComposer
+    extends Composer<_$DaDb, FtsDefinitionsUnicode> {
+  $FtsDefinitionsUnicodeAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get definition => $composableBuilder(
+    column: $table.definition,
+    builder: (column) => column,
+  );
+}
+
+class $FtsDefinitionsUnicodeTableManager
+    extends
+        RootTableManager<
+          _$DaDb,
+          FtsDefinitionsUnicode,
+          FtsDefinitionsUnicodeData,
+          $FtsDefinitionsUnicodeFilterComposer,
+          $FtsDefinitionsUnicodeOrderingComposer,
+          $FtsDefinitionsUnicodeAnnotationComposer,
+          $FtsDefinitionsUnicodeCreateCompanionBuilder,
+          $FtsDefinitionsUnicodeUpdateCompanionBuilder,
+          (
+            FtsDefinitionsUnicodeData,
+            BaseReferences<
+              _$DaDb,
+              FtsDefinitionsUnicode,
+              FtsDefinitionsUnicodeData
+            >,
+          ),
+          FtsDefinitionsUnicodeData,
+          PrefetchHooks Function()
+        > {
+  $FtsDefinitionsUnicodeTableManager(_$DaDb db, FtsDefinitionsUnicode table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $FtsDefinitionsUnicodeFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $FtsDefinitionsUnicodeOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $FtsDefinitionsUnicodeAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String?> definition = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => FtsDefinitionsUnicodeCompanion(
+                definition: definition,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                Value<String?> definition = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => FtsDefinitionsUnicodeCompanion.insert(
+                definition: definition,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $FtsDefinitionsUnicodeProcessedTableManager =
+    ProcessedTableManager<
+      _$DaDb,
+      FtsDefinitionsUnicode,
+      FtsDefinitionsUnicodeData,
+      $FtsDefinitionsUnicodeFilterComposer,
+      $FtsDefinitionsUnicodeOrderingComposer,
+      $FtsDefinitionsUnicodeAnnotationComposer,
+      $FtsDefinitionsUnicodeCreateCompanionBuilder,
+      $FtsDefinitionsUnicodeUpdateCompanionBuilder,
+      (
+        FtsDefinitionsUnicodeData,
+        BaseReferences<
+          _$DaDb,
+          FtsDefinitionsUnicode,
+          FtsDefinitionsUnicodeData
+        >,
+      ),
+      FtsDefinitionsUnicodeData,
       PrefetchHooks Function()
     >;
 typedef $$TermBankV3DefinitionJsonTableTableCreateCompanionBuilder =
@@ -39948,266 +40581,12 @@ typedef $FtsExampleSentenceProcessedTableManager =
       FtsExampleSentenceData,
       PrefetchHooks Function()
     >;
-typedef $$LanguageCodeTableTableCreateCompanionBuilder =
-    LanguageCodeTableCompanion Function({
-      Value<int> id,
-      required String languageCode,
-    });
-typedef $$LanguageCodeTableTableUpdateCompanionBuilder =
-    LanguageCodeTableCompanion Function({
-      Value<int> id,
-      Value<String> languageCode,
-    });
-
-final class $$LanguageCodeTableTableReferences
-    extends
-        BaseReferences<_$DaDb, $LanguageCodeTableTable, LanguageCodeTableData> {
-  $$LanguageCodeTableTableReferences(
-    super.$_db,
-    super.$_table,
-    super.$_typedResult,
-  );
-
-  static MultiTypedResultKey<$ExampleTableTable, List<ExampleTableData>>
-  _exampleTableRefsTable(_$DaDb db) => MultiTypedResultKey.fromTable(
-    db.exampleTable,
-    aliasName: $_aliasNameGenerator(
-      db.languageCodeTable.id,
-      db.exampleTable.languageCodeId,
-    ),
-  );
-
-  $$ExampleTableTableProcessedTableManager get exampleTableRefs {
-    final manager = $$ExampleTableTableTableManager(
-      $_db,
-      $_db.exampleTable,
-    ).filter((f) => f.languageCodeId.id.sqlEquals($_itemColumn<int>('id')!));
-
-    final cache = $_typedResult.readTableOrNull(_exampleTableRefsTable($_db));
-    return ProcessedTableManager(
-      manager.$state.copyWith(prefetchedData: cache),
-    );
-  }
-}
-
-class $$LanguageCodeTableTableFilterComposer
-    extends Composer<_$DaDb, $LanguageCodeTableTable> {
-  $$LanguageCodeTableTableFilterComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnFilters<int> get id => $composableBuilder(
-    column: $table.id,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<String> get languageCode => $composableBuilder(
-    column: $table.languageCode,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  Expression<bool> exampleTableRefs(
-    Expression<bool> Function($$ExampleTableTableFilterComposer f) f,
-  ) {
-    final $$ExampleTableTableFilterComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.id,
-      referencedTable: $db.exampleTable,
-      getReferencedColumn: (t) => t.languageCodeId,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$ExampleTableTableFilterComposer(
-            $db: $db,
-            $table: $db.exampleTable,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return f(composer);
-  }
-}
-
-class $$LanguageCodeTableTableOrderingComposer
-    extends Composer<_$DaDb, $LanguageCodeTableTable> {
-  $$LanguageCodeTableTableOrderingComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  ColumnOrderings<int> get id => $composableBuilder(
-    column: $table.id,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<String> get languageCode => $composableBuilder(
-    column: $table.languageCode,
-    builder: (column) => ColumnOrderings(column),
-  );
-}
-
-class $$LanguageCodeTableTableAnnotationComposer
-    extends Composer<_$DaDb, $LanguageCodeTableTable> {
-  $$LanguageCodeTableTableAnnotationComposer({
-    required super.$db,
-    required super.$table,
-    super.joinBuilder,
-    super.$addJoinBuilderToRootComposer,
-    super.$removeJoinBuilderFromRootComposer,
-  });
-  GeneratedColumn<int> get id =>
-      $composableBuilder(column: $table.id, builder: (column) => column);
-
-  GeneratedColumn<String> get languageCode => $composableBuilder(
-    column: $table.languageCode,
-    builder: (column) => column,
-  );
-
-  Expression<T> exampleTableRefs<T extends Object>(
-    Expression<T> Function($$ExampleTableTableAnnotationComposer a) f,
-  ) {
-    final $$ExampleTableTableAnnotationComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.id,
-      referencedTable: $db.exampleTable,
-      getReferencedColumn: (t) => t.languageCodeId,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$ExampleTableTableAnnotationComposer(
-            $db: $db,
-            $table: $db.exampleTable,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return f(composer);
-  }
-}
-
-class $$LanguageCodeTableTableTableManager
-    extends
-        RootTableManager<
-          _$DaDb,
-          $LanguageCodeTableTable,
-          LanguageCodeTableData,
-          $$LanguageCodeTableTableFilterComposer,
-          $$LanguageCodeTableTableOrderingComposer,
-          $$LanguageCodeTableTableAnnotationComposer,
-          $$LanguageCodeTableTableCreateCompanionBuilder,
-          $$LanguageCodeTableTableUpdateCompanionBuilder,
-          (LanguageCodeTableData, $$LanguageCodeTableTableReferences),
-          LanguageCodeTableData,
-          PrefetchHooks Function({bool exampleTableRefs})
-        > {
-  $$LanguageCodeTableTableTableManager(_$DaDb db, $LanguageCodeTableTable table)
-    : super(
-        TableManagerState(
-          db: db,
-          table: table,
-          createFilteringComposer: () =>
-              $$LanguageCodeTableTableFilterComposer($db: db, $table: table),
-          createOrderingComposer: () =>
-              $$LanguageCodeTableTableOrderingComposer($db: db, $table: table),
-          createComputedFieldComposer: () =>
-              $$LanguageCodeTableTableAnnotationComposer(
-                $db: db,
-                $table: table,
-              ),
-          updateCompanionCallback:
-              ({
-                Value<int> id = const Value.absent(),
-                Value<String> languageCode = const Value.absent(),
-              }) => LanguageCodeTableCompanion(
-                id: id,
-                languageCode: languageCode,
-              ),
-          createCompanionCallback:
-              ({
-                Value<int> id = const Value.absent(),
-                required String languageCode,
-              }) => LanguageCodeTableCompanion.insert(
-                id: id,
-                languageCode: languageCode,
-              ),
-          withReferenceMapper: (p0) => p0
-              .map(
-                (e) => (
-                  e.readTable(table),
-                  $$LanguageCodeTableTableReferences(db, table, e),
-                ),
-              )
-              .toList(),
-          prefetchHooksCallback: ({exampleTableRefs = false}) {
-            return PrefetchHooks(
-              db: db,
-              explicitlyWatchedTables: [if (exampleTableRefs) db.exampleTable],
-              addJoins: null,
-              getPrefetchedDataCallback: (items) async {
-                return [
-                  if (exampleTableRefs)
-                    await $_getPrefetchedData<
-                      LanguageCodeTableData,
-                      $LanguageCodeTableTable,
-                      ExampleTableData
-                    >(
-                      currentTable: table,
-                      referencedTable: $$LanguageCodeTableTableReferences
-                          ._exampleTableRefsTable(db),
-                      managerFromTypedResult: (p0) =>
-                          $$LanguageCodeTableTableReferences(
-                            db,
-                            table,
-                            p0,
-                          ).exampleTableRefs,
-                      referencedItemsForCurrentItem: (item, referencedItems) =>
-                          referencedItems.where(
-                            (e) => e.languageCodeId == item.id,
-                          ),
-                      typedResults: items,
-                    ),
-                ];
-              },
-            );
-          },
-        ),
-      );
-}
-
-typedef $$LanguageCodeTableTableProcessedTableManager =
-    ProcessedTableManager<
-      _$DaDb,
-      $LanguageCodeTableTable,
-      LanguageCodeTableData,
-      $$LanguageCodeTableTableFilterComposer,
-      $$LanguageCodeTableTableOrderingComposer,
-      $$LanguageCodeTableTableAnnotationComposer,
-      $$LanguageCodeTableTableCreateCompanionBuilder,
-      $$LanguageCodeTableTableUpdateCompanionBuilder,
-      (LanguageCodeTableData, $$LanguageCodeTableTableReferences),
-      LanguageCodeTableData,
-      PrefetchHooks Function({bool exampleTableRefs})
-    >;
 typedef $$ExampleTableTableCreateCompanionBuilder =
     ExampleTableCompanion Function({
       Value<int> id,
       required int indexId,
       Value<int?> groupId,
       required int exampleSentenceId,
-      required int languageCodeId,
     });
 typedef $$ExampleTableTableUpdateCompanionBuilder =
     ExampleTableCompanion Function({
@@ -40215,7 +40594,6 @@ typedef $$ExampleTableTableUpdateCompanionBuilder =
       Value<int> indexId,
       Value<int?> groupId,
       Value<int> exampleSentenceId,
-      Value<int> languageCodeId,
     });
 
 final class $$ExampleTableTableReferences
@@ -40256,28 +40634,6 @@ final class $$ExampleTableTableReferences
       $_db.exampleSentenceTable,
     ).filter((f) => f.id.sqlEquals($_column));
     final item = $_typedResult.readTableOrNull(_exampleSentenceIdTable($_db));
-    if (item == null) return manager;
-    return ProcessedTableManager(
-      manager.$state.copyWith(prefetchedData: [item]),
-    );
-  }
-
-  static $LanguageCodeTableTable _languageCodeIdTable(_$DaDb db) =>
-      db.languageCodeTable.createAlias(
-        $_aliasNameGenerator(
-          db.exampleTable.languageCodeId,
-          db.languageCodeTable.id,
-        ),
-      );
-
-  $$LanguageCodeTableTableProcessedTableManager get languageCodeId {
-    final $_column = $_itemColumn<int>('language_code_id')!;
-
-    final manager = $$LanguageCodeTableTableTableManager(
-      $_db,
-      $_db.languageCodeTable,
-    ).filter((f) => f.id.sqlEquals($_column));
-    final item = $_typedResult.readTableOrNull(_languageCodeIdTable($_db));
     if (item == null) return manager;
     return ProcessedTableManager(
       manager.$state.copyWith(prefetchedData: [item]),
@@ -40424,29 +40780,6 @@ class $$ExampleTableTableFilterComposer
           }) => $$ExampleSentenceTableTableFilterComposer(
             $db: $db,
             $table: $db.exampleSentenceTable,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return composer;
-  }
-
-  $$LanguageCodeTableTableFilterComposer get languageCodeId {
-    final $$LanguageCodeTableTableFilterComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.languageCodeId,
-      referencedTable: $db.languageCodeTable,
-      getReferencedColumn: (t) => t.id,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$LanguageCodeTableTableFilterComposer(
-            $db: $db,
-            $table: $db.languageCodeTable,
             $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
             joinBuilder: joinBuilder,
             $removeJoinBuilderFromRootComposer:
@@ -40607,29 +40940,6 @@ class $$ExampleTableTableOrderingComposer
         );
     return composer;
   }
-
-  $$LanguageCodeTableTableOrderingComposer get languageCodeId {
-    final $$LanguageCodeTableTableOrderingComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.languageCodeId,
-      referencedTable: $db.languageCodeTable,
-      getReferencedColumn: (t) => t.id,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$LanguageCodeTableTableOrderingComposer(
-            $db: $db,
-            $table: $db.languageCodeTable,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return composer;
-  }
 }
 
 class $$ExampleTableTableAnnotationComposer
@@ -40685,30 +40995,6 @@ class $$ExampleTableTableAnnotationComposer
               }) => $$ExampleSentenceTableTableAnnotationComposer(
                 $db: $db,
                 $table: $db.exampleSentenceTable,
-                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-                joinBuilder: joinBuilder,
-                $removeJoinBuilderFromRootComposer:
-                    $removeJoinBuilderFromRootComposer,
-              ),
-        );
-    return composer;
-  }
-
-  $$LanguageCodeTableTableAnnotationComposer get languageCodeId {
-    final $$LanguageCodeTableTableAnnotationComposer composer =
-        $composerBuilder(
-          composer: this,
-          getCurrentColumn: (t) => t.languageCodeId,
-          referencedTable: $db.languageCodeTable,
-          getReferencedColumn: (t) => t.id,
-          builder:
-              (
-                joinBuilder, {
-                $addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer,
-              }) => $$LanguageCodeTableTableAnnotationComposer(
-                $db: $db,
-                $table: $db.languageCodeTable,
                 $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
                 joinBuilder: joinBuilder,
                 $removeJoinBuilderFromRootComposer:
@@ -40820,7 +41106,6 @@ class $$ExampleTableTableTableManager
           PrefetchHooks Function({
             bool indexId,
             bool exampleSentenceId,
-            bool languageCodeId,
             bool exampleTableXTagBankTableRefs,
             bool exampleTableXStatTableRefs,
             bool exampleTableXExampleAudioTableRefs,
@@ -40843,13 +41128,11 @@ class $$ExampleTableTableTableManager
                 Value<int> indexId = const Value.absent(),
                 Value<int?> groupId = const Value.absent(),
                 Value<int> exampleSentenceId = const Value.absent(),
-                Value<int> languageCodeId = const Value.absent(),
               }) => ExampleTableCompanion(
                 id: id,
                 indexId: indexId,
                 groupId: groupId,
                 exampleSentenceId: exampleSentenceId,
-                languageCodeId: languageCodeId,
               ),
           createCompanionCallback:
               ({
@@ -40857,13 +41140,11 @@ class $$ExampleTableTableTableManager
                 required int indexId,
                 Value<int?> groupId = const Value.absent(),
                 required int exampleSentenceId,
-                required int languageCodeId,
               }) => ExampleTableCompanion.insert(
                 id: id,
                 indexId: indexId,
                 groupId: groupId,
                 exampleSentenceId: exampleSentenceId,
-                languageCodeId: languageCodeId,
               ),
           withReferenceMapper: (p0) => p0
               .map(
@@ -40877,7 +41158,6 @@ class $$ExampleTableTableTableManager
               ({
                 indexId = false,
                 exampleSentenceId = false,
-                languageCodeId = false,
                 exampleTableXTagBankTableRefs = false,
                 exampleTableXStatTableRefs = false,
                 exampleTableXExampleAudioTableRefs = false,
@@ -40933,21 +41213,6 @@ class $$ExampleTableTableTableManager
                                     referencedColumn:
                                         $$ExampleTableTableReferences
                                             ._exampleSentenceIdTable(db)
-                                            .id,
-                                  )
-                                  as T;
-                        }
-                        if (languageCodeId) {
-                          state =
-                              state.withJoin(
-                                    currentTable: table,
-                                    currentColumn: table.languageCodeId,
-                                    referencedTable:
-                                        $$ExampleTableTableReferences
-                                            ._languageCodeIdTable(db),
-                                    referencedColumn:
-                                        $$ExampleTableTableReferences
-                                            ._languageCodeIdTable(db)
                                             .id,
                                   )
                                   as T;
@@ -41043,11 +41308,152 @@ typedef $$ExampleTableTableProcessedTableManager =
       PrefetchHooks Function({
         bool indexId,
         bool exampleSentenceId,
-        bool languageCodeId,
         bool exampleTableXTagBankTableRefs,
         bool exampleTableXStatTableRefs,
         bool exampleTableXExampleAudioTableRefs,
       })
+    >;
+typedef $FtsExampleSentenceUnicodeCreateCompanionBuilder =
+    FtsExampleSentenceUnicodeCompanion Function({
+      Value<String?> exampleSentence,
+      Value<int> rowid,
+    });
+typedef $FtsExampleSentenceUnicodeUpdateCompanionBuilder =
+    FtsExampleSentenceUnicodeCompanion Function({
+      Value<String?> exampleSentence,
+      Value<int> rowid,
+    });
+
+class $FtsExampleSentenceUnicodeFilterComposer
+    extends Composer<_$DaDb, FtsExampleSentenceUnicode> {
+  $FtsExampleSentenceUnicodeFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get exampleSentence => $composableBuilder(
+    column: $table.exampleSentence,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $FtsExampleSentenceUnicodeOrderingComposer
+    extends Composer<_$DaDb, FtsExampleSentenceUnicode> {
+  $FtsExampleSentenceUnicodeOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get exampleSentence => $composableBuilder(
+    column: $table.exampleSentence,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $FtsExampleSentenceUnicodeAnnotationComposer
+    extends Composer<_$DaDb, FtsExampleSentenceUnicode> {
+  $FtsExampleSentenceUnicodeAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get exampleSentence => $composableBuilder(
+    column: $table.exampleSentence,
+    builder: (column) => column,
+  );
+}
+
+class $FtsExampleSentenceUnicodeTableManager
+    extends
+        RootTableManager<
+          _$DaDb,
+          FtsExampleSentenceUnicode,
+          FtsExampleSentenceUnicodeData,
+          $FtsExampleSentenceUnicodeFilterComposer,
+          $FtsExampleSentenceUnicodeOrderingComposer,
+          $FtsExampleSentenceUnicodeAnnotationComposer,
+          $FtsExampleSentenceUnicodeCreateCompanionBuilder,
+          $FtsExampleSentenceUnicodeUpdateCompanionBuilder,
+          (
+            FtsExampleSentenceUnicodeData,
+            BaseReferences<
+              _$DaDb,
+              FtsExampleSentenceUnicode,
+              FtsExampleSentenceUnicodeData
+            >,
+          ),
+          FtsExampleSentenceUnicodeData,
+          PrefetchHooks Function()
+        > {
+  $FtsExampleSentenceUnicodeTableManager(
+    _$DaDb db,
+    FtsExampleSentenceUnicode table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $FtsExampleSentenceUnicodeFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $FtsExampleSentenceUnicodeOrderingComposer(
+                $db: db,
+                $table: table,
+              ),
+          createComputedFieldComposer: () =>
+              $FtsExampleSentenceUnicodeAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<String?> exampleSentence = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => FtsExampleSentenceUnicodeCompanion(
+                exampleSentence: exampleSentence,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                Value<String?> exampleSentence = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => FtsExampleSentenceUnicodeCompanion.insert(
+                exampleSentence: exampleSentence,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $FtsExampleSentenceUnicodeProcessedTableManager =
+    ProcessedTableManager<
+      _$DaDb,
+      FtsExampleSentenceUnicode,
+      FtsExampleSentenceUnicodeData,
+      $FtsExampleSentenceUnicodeFilterComposer,
+      $FtsExampleSentenceUnicodeOrderingComposer,
+      $FtsExampleSentenceUnicodeAnnotationComposer,
+      $FtsExampleSentenceUnicodeCreateCompanionBuilder,
+      $FtsExampleSentenceUnicodeUpdateCompanionBuilder,
+      (
+        FtsExampleSentenceUnicodeData,
+        BaseReferences<
+          _$DaDb,
+          FtsExampleSentenceUnicode,
+          FtsExampleSentenceUnicodeData
+        >,
+      ),
+      FtsExampleSentenceUnicodeData,
+      PrefetchHooks Function()
     >;
 typedef $FtsExampleSentenceTokenizedCreateCompanionBuilder =
     FtsExampleSentenceTokenizedCompanion Function({
@@ -46796,12 +47202,16 @@ class $DaDbManager {
       $$TermTableTableTableManager(_db, _db.termTable);
   $FtsTermsTableManager get ftsTerms =>
       $FtsTermsTableManager(_db, _db.ftsTerms);
-  $FtsTokensTableManager get ftsTokens =>
-      $FtsTokensTableManager(_db, _db.ftsTokens);
+  $FtsTermsUnicodeTableManager get ftsTermsUnicode =>
+      $FtsTermsUnicodeTableManager(_db, _db.ftsTermsUnicode);
   $FtsReadingsTableManager get ftsReadings =>
       $FtsReadingsTableManager(_db, _db.ftsReadings);
+  $FtsReadingsUnicodeTableManager get ftsReadingsUnicode =>
+      $FtsReadingsUnicodeTableManager(_db, _db.ftsReadingsUnicode);
   $FtsDefinitionsTableManager get ftsDefinitions =>
       $FtsDefinitionsTableManager(_db, _db.ftsDefinitions);
+  $FtsDefinitionsUnicodeTableManager get ftsDefinitionsUnicode =>
+      $FtsDefinitionsUnicodeTableManager(_db, _db.ftsDefinitionsUnicode);
   $$TermBankV3DefinitionJsonTableTableTableManager
   get termBankV3DefinitionJsonTable =>
       $$TermBankV3DefinitionJsonTableTableTableManager(
@@ -46895,10 +47305,13 @@ class $DaDbManager {
       $$ExampleSentenceTableTableTableManager(_db, _db.exampleSentenceTable);
   $FtsExampleSentenceTableManager get ftsExampleSentence =>
       $FtsExampleSentenceTableManager(_db, _db.ftsExampleSentence);
-  $$LanguageCodeTableTableTableManager get languageCodeTable =>
-      $$LanguageCodeTableTableTableManager(_db, _db.languageCodeTable);
   $$ExampleTableTableTableManager get exampleTable =>
       $$ExampleTableTableTableManager(_db, _db.exampleTable);
+  $FtsExampleSentenceUnicodeTableManager get ftsExampleSentenceUnicode =>
+      $FtsExampleSentenceUnicodeTableManager(
+        _db,
+        _db.ftsExampleSentenceUnicode,
+      );
   $FtsExampleSentenceTokenizedTableManager get ftsExampleSentenceTokenized =>
       $FtsExampleSentenceTokenizedTableManager(
         _db,
@@ -47059,8 +47472,8 @@ class DictionarySearchDriftFindTermBankDetailsResult {
   final String? url;
   final String? description;
   final String? attribution;
-  final String? sourceLanguage;
-  final String? targetLanguage;
+  final Iso639_3? sourceLanguage;
+  final Iso639_3? targetLanguage;
   final FrequencyMode? frequencyMode;
   final int hasPopularityOverride;
   final int? overriddenPopularityValue;
@@ -47135,12 +47548,10 @@ class GetMbSizesDriftResult {
 class SearchExampleBaseMatchesResult {
   final int id;
   final int? groupId;
-  final String languageCode;
   final int indexId;
   SearchExampleBaseMatchesResult({
     required this.id,
     this.groupId,
-    required this.languageCode,
     required this.indexId,
   });
 }
@@ -47148,12 +47559,10 @@ class SearchExampleBaseMatchesResult {
 class SearchExampleBaseMatchesByTokensResult {
   final int id;
   final int? groupId;
-  final String languageCode;
   final int indexId;
   SearchExampleBaseMatchesByTokensResult({
     required this.id,
     this.groupId,
-    required this.languageCode,
     required this.indexId,
   });
 }

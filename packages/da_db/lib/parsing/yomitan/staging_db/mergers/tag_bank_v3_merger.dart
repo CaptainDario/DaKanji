@@ -1,4 +1,5 @@
 import 'package:da_db/database/da_db.dart';
+import 'package:da_db/database/index/yomitan_index.dart';
 import 'package:da_db/parsing/staging_db/mergers/staging_merger.dart';
 
 class TagBankMerger implements StagingMerger {
@@ -6,6 +7,7 @@ class TagBankMerger implements StagingMerger {
   Future<void> merge({
     required DaDb targetDb,
     required String workerAlias,
+    required YomitanIndex index,
     required int indexId,
   }) async {
     

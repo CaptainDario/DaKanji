@@ -7,8 +7,6 @@ mixin _$ExampleDaoMixin on DatabaseAccessor<DaDb> {
   $IndexTableTable get indexTable => attachedDatabase.indexTable;
   $ExampleSentenceTableTable get exampleSentenceTable =>
       attachedDatabase.exampleSentenceTable;
-  $LanguageCodeTableTable get languageCodeTable =>
-      attachedDatabase.languageCodeTable;
   $ExampleTableTable get exampleTable => attachedDatabase.exampleTable;
   $ExampleAudioTableTable get exampleAudioTable =>
       attachedDatabase.exampleAudioTable;
@@ -24,11 +22,6 @@ class ExampleDaoManager {
       $$ExampleSentenceTableTableTableManager(
         _db.attachedDatabase,
         _db.exampleSentenceTable,
-      );
-  $$LanguageCodeTableTableTableManager get languageCodeTable =>
-      $$LanguageCodeTableTableTableManager(
-        _db.attachedDatabase,
-        _db.languageCodeTable,
       );
   $$ExampleTableTableTableManager get exampleTable =>
       $$ExampleTableTableTableManager(_db.attachedDatabase, _db.exampleTable);

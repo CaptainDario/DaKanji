@@ -1,4 +1,5 @@
 import 'package:da_db/database/da_db.dart';
+import 'package:da_db/database/index/yomitan_index.dart';
 import 'package:da_db/parsing/staging_db/mergers/staging_merger.dart';
 
 class KanjiMetaBankV3Merger implements StagingMerger {
@@ -6,6 +7,7 @@ class KanjiMetaBankV3Merger implements StagingMerger {
   Future<void> merge({
     required DaDb targetDb,
     required String workerAlias,
+    required YomitanIndex index,
     required int indexId,
   }) async {
 
@@ -21,7 +23,6 @@ class KanjiMetaBankV3Merger implements StagingMerger {
       ''');
 
       // 2. Insert New Types (Manual ID Generation)
-      // Since 'id' is not AUTOINCREMENT in the schema, must generate it.
       final currentMaxTypeId = await targetDb.kanjiMetaBankV3Dao.maxKanjiMetaBankV3TypeId();
       
       await targetDb.customStatement('''
@@ -37,8 +38,6 @@ class KanjiMetaBankV3Merger implements StagingMerger {
       ''');
 
       // 3. Insert Main Entries
-      // Note: The Main Table ID is auto-incrementing, so no need to manually set it
-      // unless we want to strictly preserve insertion order from staging.
       await targetDb.customStatement('''
         INSERT INTO ${tMain.actualTableName} (
           ${tMain.indexId.name}, ${tMain.kanjiId.name}, ${tMain.typeId.name}, 
