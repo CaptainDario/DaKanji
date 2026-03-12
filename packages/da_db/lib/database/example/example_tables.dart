@@ -2,13 +2,10 @@
 import 'package:da_db/database/index/index_tables.dart';
 import 'package:drift/drift.dart';
 
-import '/database/general_tables/language_code_table.dart';
-
 
 
 /// Contains the example sentences
 @TableIndex(name: 'ExampleTable_indexIdIndex', columns: {#indexId})
-@TableIndex(name: 'ExampleSentencesTable_languageCodeIdIndex', columns: {#languageCodeId})
 @TableIndex(name: 'ExampleSentencesTable_groupIdIndex', columns: {#groupId})
 @TableIndex(name: 'ExampleTable_exampleSentenceIdIndex', columns: {#exampleSentenceId})
 class ExampleTable extends Table {
@@ -27,9 +24,6 @@ class ExampleTable extends Table {
 
   IntColumn get exampleSentenceId => integer()
     .references(ExampleSentenceTable, #id)();
-
-  /// The id of the language code (iso 639 2T) of this translation
-  IntColumn get languageCodeId => integer().references(LanguageCodeTable, #id)();
 
 }
 
