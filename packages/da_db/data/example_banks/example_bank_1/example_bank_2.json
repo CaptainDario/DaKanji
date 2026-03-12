@@ -2,7 +2,6 @@
   {
     "groupId": 102,
     "sentence": "猫が寝る",
-    "langIso3Code": "jpn",
     "stats": [
       { "statName": "quality", "value": 3.5 }
     ],
@@ -14,14 +13,6 @@
           { "statName": "quality", "value": 2.0 }
         ]
       }
-    ]
-  },
-  {
-    "groupId": 103,
-    "sentence": "I eat apples.",
-    "langIso3Code": "eng",
-    "stats": [
-      { "statName": "quality", "value": 4.5 }
     ]
   }
 ]

@@ -24,10 +24,7 @@ void main() {
         Stopwatch s = Stopwatch()..start();
         final queryTerms = exampleTextTestQueries[i].$1;
         
-        final results = await db.exampleDao.searchExamples(
-          queryTerms.first, 
-          exampleTextTestQueries[i].$2
-        );
+        final results = await db.exampleDao.searchExamples(queryTerms.first);
         
         print("Looking up '${queryTerms.first}' took ${s.elapsedMilliseconds}ms");
 

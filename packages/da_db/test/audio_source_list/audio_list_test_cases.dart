@@ -1,6 +1,7 @@
 import 'package:da_db/data/dictionary_types.dart';
 import 'package:da_db/database/audio_source_list/audio_source_list_entry.dart';
 import 'package:da_db/database/index/index_table_entry.dart';
+import 'package:da_db/database/index/yomitan_index.dart';
 
 IndexEntry index = IndexEntry(
   id: 1,
@@ -9,12 +10,14 @@ IndexEntry index = IndexEntry(
   dictionaryType: DictionaryTypes.yomitan,
   currentSortingOrder: 1,
   currentFrequencyDictionary: false,
-  title: "Test Example Dictionary",
-  format: 3,
-  revision: "2024-01-01",
-  sequenced: true,
-  author: "Test Author",
-  description: "A dictionary for testing the example parser."
+  yomitanData: YomitanIndex(
+    title: "Test Example Dictionary",
+    format: 3,
+    revision: "2024-01-01",
+    sequenced: true,
+    author: "Test Author",
+    description: "A dictionary for testing the example parser."
+  )
 );
 
 List<AudioSourceListEntry> audioListTestCases = [

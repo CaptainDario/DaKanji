@@ -1,29 +1,25 @@
 import 'package:da_db/database/example/example_entry.dart';
 import 'package:da_db/database/example/example_search_result.dart';
-import 'package:da_db/database/index/index_table_entry.dart';
-import 'package:language_processing/language_processing.dart';
 
-final List<(String, List<Iso639_3>, String)> groupingTestQueries = [
-  ("猫", [Iso639_3.jpn], "Basic 1-to-1 Grouping"),
-  ("犬", [Iso639_3.jpn], "Missing Target / Unrelated Dictionary"),
-  ("リンゴ", [Iso639_3.jpn], "Base Match Multiple (Both Group 10 entries)"),
-  ("Apple", [Iso639_3.eng], "Reverse / No-Rule Search"),
+import 'example_test_constants.dart';
+
+final List<(String, String)> groupingTestQueries = [
+  ("猫", "Basic 1-to-1 Grouping"),
+  ("犬", "Missing Target / Unrelated Dictionary"),
+  ("リンゴ", "Base Match Multiple (Both Group 10 entries)"),
+  ("Apple", "Reverse / No-Rule Search"),
 ];
 
-List<List<ExampleSearchResult>> getExpectedGroupingResults(
-  IndexEntry sourceIndex,
-  IndexEntry target1Index,
-  IndexEntry target2Index,
-) {
-  return [
+final groupingTestQueriesExpectations = 
+  [
     // Scenario 1: "猫" (Hit JPN, fetch ENG target)
     [
       ExampleSearchResult(
         sourceEntries: [
-          ExampleEntry(id: 0, indexEntry: sourceIndex, groupId: 12, sentence: "猫", languageCode: "jpn", tags: [], stats: [], audios: [])
+          ExampleEntry(id: 0, indexEntry: dummyIndexBank2Jpn, groupId: 12, sentence: "猫", tags: [], stats: [], audios: [])
         ],
         targetEntries: [
-          ExampleEntry(id: 0, indexEntry: target1Index, groupId: 12, sentence: "Cat", languageCode: "eng", tags: [], stats: [], audios: [])
+          ExampleEntry(id: 0, indexEntry: dummyIndexBank3Eng, groupId: 12, sentence: "Cat", tags: [], stats: [], audios: [])
         ],
       )
     ],
@@ -32,7 +28,7 @@ List<List<ExampleSearchResult>> getExpectedGroupingResults(
     [
       ExampleSearchResult(
         sourceEntries: [
-          ExampleEntry(id: 0, indexEntry: sourceIndex, groupId: 11, sentence: "犬", languageCode: "jpn", tags: [], stats: [], audios: [])
+          ExampleEntry(id: 0, indexEntry: dummyIndexBank2Jpn, groupId: 11, sentence: "犬", tags: [], stats: [], audios: [])
         ],
         targetEntries: [],
       )
@@ -42,11 +38,11 @@ List<List<ExampleSearchResult>> getExpectedGroupingResults(
     [
       ExampleSearchResult(
         sourceEntries: [
-          ExampleEntry(id: 0, indexEntry: sourceIndex, groupId: 10, sentence: "リンゴ", languageCode: "jpn", tags: [], stats: [], audios: []),
-          ExampleEntry(id: 0, indexEntry: sourceIndex, groupId: 10, sentence: "青いリンゴ", languageCode: "jpn", tags: [], stats: [], audios: [])
+          ExampleEntry(id: 0, indexEntry: dummyIndexBank2Jpn, groupId: 10, sentence: "リンゴ", tags: [], stats: [], audios: []),
+          ExampleEntry(id: 0, indexEntry: dummyIndexBank2Jpn, groupId: 10, sentence: "青いリンゴ", tags: [], stats: [], audios: [])
         ],
         targetEntries: [
-          ExampleEntry(id: 0, indexEntry: target1Index, groupId: 10, sentence: "Apple", languageCode: "eng", tags: [], stats: [], audios: [])
+          ExampleEntry(id: 0, indexEntry: dummyIndexBank3Eng, groupId: 10, sentence: "Apple", tags: [], stats: [], audios: [])
         ],
       )
     ],
@@ -55,10 +51,9 @@ List<List<ExampleSearchResult>> getExpectedGroupingResults(
     [
       ExampleSearchResult(
         sourceEntries: [
-          ExampleEntry(id: 0, indexEntry: target1Index, groupId: 10, sentence: "Apple", languageCode: "eng", tags: [], stats: [], audios: [])
+          ExampleEntry(id: 0, indexEntry: dummyIndexBank3Eng, groupId: 10, sentence: "Apple", tags: [], stats: [], audios: [])
         ],
         targetEntries: [],
       )
     ],
   ];
-}

@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:da_db/data/dictionary_types.dart';
 import 'package:da_db/database/index/index_table_entry.dart';
+import 'package:da_db/database/index/yomitan_index.dart';
 import 'package:da_db/util/check_dict_updates.dart';
 import 'package:dio/dio.dart';
 import 'package:test/test.dart';
@@ -17,11 +18,13 @@ void main() async {
     dictionaryType: DictionaryTypes.yomitan,
     currentSortingOrder: 0,
     currentFrequencyDictionary: false,
-    title: "JMDict",
-    revision: "JMdict.2024-01-01",
-    indexUrl: "https://github.com/yomidevs/jmdict-yomitan/releases/latest/download/JMdict_english.json",
-    downloadUrl: "https://github.com/yomidevs/jmdict-yomitan/releases/latest/download/JMdict_english.zip",
-    isUpdatable: true,
+    yomitanData: YomitanIndex(
+      title: "JMDict",
+      revision: "JMdict.2024-01-01",
+      indexUrl: "https://github.com/yomidevs/jmdict-yomitan/releases/latest/download/JMdict_english.json",
+      downloadUrl: "https://github.com/yomidevs/jmdict-yomitan/releases/latest/download/JMdict_english.zip",
+      isUpdatable: true,
+    )
   );
 
   test("Test old dict shows update available", () async {
@@ -39,7 +42,9 @@ void main() async {
     Dio d = Dio();
     final latest = await d.get(entry.indexUrl!);
     final latestJson = jsonDecode(latest.data);
-    entry = entry.copyWith(revision: latestJson['revision']);
+    entry = entry.copyWith(yomitanData: entry.yomitanData.copyWith(
+      revision: latestJson['revision']
+    ));
 
     bool hasUpdates = await checkIfDictionaryHasUpdates(entry);
 

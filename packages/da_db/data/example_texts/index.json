@@ -4,5 +4,6 @@
   "revision": "2024-01-01",
   "sequenced": true,
   "author": "Test Author",
-  "description": "A dictionary for testing the example parser."
+  "description": "A dictionary for testing the example parser.",
+  "sourceLanguage": "jpn"
 }

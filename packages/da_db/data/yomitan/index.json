@@ -2,5 +2,7 @@
     "title": "Test Dictionary",
     "format": 3,
     "revision": "test",
-    "sequenced": true
+    "sequenced": true,
+    "sourceLanguage": "ja",
+    "targetLanguage": "en"
 }

@@ -2,7 +2,6 @@
   {
     "groupId": 100,
     "sentence": "リンゴを食べます",
-    "langIso3Code": "jpn",
     "tags": ["fruit", "tatoeba", "license:CC-BY-4.0"],
     "stats": [
       { "statName": "difficulty", "displayName": "Difficulty", "value": 2.5 },
@@ -26,12 +25,10 @@
   },
   {
     "groupId": 101,
-    "sentence": "犬が走る",
-    "langIso3Code": "jpn"
+    "sentence": "犬が走る"
   },
   {
     "groupId": 102,
-    "sentence": "「apple」を食べます",
-    "langIso3Code": "jpn"
+    "sentence": "「apple」を食べます"
   }
 ]

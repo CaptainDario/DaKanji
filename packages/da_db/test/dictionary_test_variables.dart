@@ -1,10 +1,11 @@
 import 'package:da_db/data/dictionary_types.dart';
 import 'package:da_db/data/term_meta_entry_types.dart';
 import 'package:da_db/database/index/index_table_entry.dart';
+import 'package:da_db/database/index/yomitan_index.dart';
 import 'package:da_db/database/tag/tag_bank_v3_entry.dart';
 import 'package:da_db/database/term_meta/term_meta_bank_entry.dart';
 import 'package:da_db_shared/da_db_shared.dart';
-import 'package:language_processing/src/japanese/japanese_processor.dart';
+import 'package:language_processing/language_processing.dart';
 import 'package:mecab_for_dart/mecab_dart.dart';
 
 
@@ -43,10 +44,14 @@ IndexEntry testDictionaryIndexEntry = IndexEntry(
   currentSortingOrder: 0,
   currentFrequencyDictionary: false,
 
-  title: "Test Dictionary",
-  format: 3,
-  revision: "test",
-  sequenced: true
+  yomitanData: YomitanIndex(
+    title: "Test Dictionary",
+    format: 3,
+    revision: "test",
+    sequenced: true,
+    sourceLanguage: Iso639_3.jpn,
+    targetLanguage: Iso639_3.eng
+  )
 );
 
 IndexEntry exampleSentencesIndexEntry = IndexEntry(
@@ -57,9 +62,11 @@ IndexEntry exampleSentencesIndexEntry = IndexEntry(
   currentSortingOrder: 0,
   currentFrequencyDictionary: false,
 
-  title: "Example sentences Test [2025-11-02]",
-  format: 3,
-  revision: "example_sentences_entries_format_test.2025-11-02",
+  yomitanData: YomitanIndex(
+    title: "Example sentences Test [2025-11-02]",
+    format: 3,
+    revision: "example_sentences_entries_format_test.2025-11-02",
+  )
 );
 IndexEntry exampleTextsIndexEntry = IndexEntry(
   id: 0,
@@ -69,9 +76,11 @@ IndexEntry exampleTextsIndexEntry = IndexEntry(
   currentSortingOrder: 0,
   currentFrequencyDictionary: false,
 
-  title: "Example texts Test [2025-11-02]",
-  format: 3,
-  revision: "example_audio_entries_format_test.2025-11-02",
+  yomitanData: YomitanIndex(
+    title: "Example texts Test [2025-11-02]",
+    format: 3,
+    revision: "example_audio_entries_format_test.2025-11-02",
+  )
 );
 
 IndexEntry audioFormat1ExampleDictionaryIndexEntry = IndexEntry(
@@ -82,10 +91,12 @@ IndexEntry audioFormat1ExampleDictionaryIndexEntry = IndexEntry(
   currentSortingOrder: 0,
   currentFrequencyDictionary: false,
 
-  title: "Example Audio Entries Format Test [2025-11-02]",
-  format: 3,
-  revision: "example_audio_entries_format_test.2025-11-02",
-  sequenced: false
+  yomitanData: YomitanIndex(
+    title: "Example Audio Entries Format Test [2025-11-02]",
+    format: 3,
+    revision: "example_audio_entries_format_test.2025-11-02",
+    sequenced: false
+  )
 );
 IndexEntry audioFormat2ExampleDictionaryIndexEntry = IndexEntry(
   id: 1,
@@ -95,10 +106,12 @@ IndexEntry audioFormat2ExampleDictionaryIndexEntry = IndexEntry(
   currentSortingOrder: 0,
   currentFrequencyDictionary: false,
 
-  title: "Example Audio Index Format Test [2025-11-02]",
-  format: 3,
-  revision: "example_audio_index_format_test.2025-11-02",
-  sequenced: false
+  yomitanData: YomitanIndex(
+    title: "Example Audio Index Format Test [2025-11-02]",
+    format: 3,
+    revision: "example_audio_index_format_test.2025-11-02",
+    sequenced: false
+  )
 );
 IndexEntry audioFormat3ExampleDictionaryIndexEntry = IndexEntry(
   id: 1,
@@ -108,10 +121,12 @@ IndexEntry audioFormat3ExampleDictionaryIndexEntry = IndexEntry(
   currentSortingOrder: 0,
   currentFrequencyDictionary: false,
 
-  title: "Example Audio File Name Format Test [2025-11-02]",
-  format: 3,
-  revision: "example_audio_file_name_format_test.2025-11-02",
-  sequenced: false
+  yomitanData: YomitanIndex(
+    title: "Example Audio File Name Format Test [2025-11-02]",
+    format: 3,
+    revision: "example_audio_file_name_format_test.2025-11-02",
+    sequenced: false
+  )
 );
 
 // --- data from tag_bank_1.json ---

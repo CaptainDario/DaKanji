@@ -43,7 +43,7 @@ void main() {
     };
 
     // 4. Build expected outputs
-    expectedValues = getExpectedGroupingResults(sourceDict, targetDict1, targetDict2);
+    expectedValues = groupingTestQueriesExpectations;
   });
 
   tearDownAll(() async {
@@ -53,16 +53,13 @@ void main() {
   group('Example Sentence Grouping by GroupID', () {
     for (var i = 0; i < groupingTestQueries.length; i++) {
       final query = groupingTestQueries[i].$1;
-      final languages = groupingTestQueries[i].$2;
-      final testName = groupingTestQueries[i].$3;
+      final testName = groupingTestQueries[i].$2;
 
       test('Scenario ${i + 1}: $testName (Query: "$query")', () async {
-        // MOVE THIS INSIDE THE TEST CALLBACK!
-        // Now it runs after setUpAll is finished.
         final expected = expectedValues[i];
 
         final results = await db.exampleDao.searchExamples(
-          query, languages, groupingRules: activeRules
+          query, groupingRules: activeRules
         );
 
         expect(results, isNotNull, reason: "Query '$query' returned null.");
@@ -105,7 +102,7 @@ Future<DaDb> setupGroupedDb(List<String> dictionaryPaths, {bool inMemory = true}
       dataSourcePath: dataSourceZipPath,
       db: db,
       // Just make the first one default for testing purposes
-      isDefaultDictionary: i == 0, 
+      isDefaultDictionary: true,
     );
     
     await for (final event in stream) {

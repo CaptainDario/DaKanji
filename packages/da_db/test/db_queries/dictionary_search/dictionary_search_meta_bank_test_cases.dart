@@ -16,7 +16,7 @@ List<DictionarySearchTestCase> metaBankTestCases = [
     queryMatches: [ExpectedMatchGroup(
       exactMatches: [
         [
-ExpectedDictionaryMatch(
+          ExpectedDictionaryMatch(
             term: '土木工事',
             reading: 'どぼくこうじ',
             match: '土木工事',

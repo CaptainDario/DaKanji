@@ -164,7 +164,6 @@ void main() {
                 'queryMatches[$k] (Term: ${results.queryMatches[k].searchTerm})'
               );
             }
-            // FIX END
 
             // --- normalized matches ---
             final actualNormalized = results.normalizedQueryMatchGroups;

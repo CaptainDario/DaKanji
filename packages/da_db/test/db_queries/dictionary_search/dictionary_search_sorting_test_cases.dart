@@ -65,6 +65,9 @@ List<DictionarySearchTestCase> sortingTestCases = [
           
           // '日本晴れ' comes last because it is the longest term (4 characters).
           [ExpectedDictionaryMatch(term: '日本晴れ', reading: 'にほんばれ', match: 'にほんばれ', definitions: ["clear weather; cloudless sky"])], // pop 95, length 4
+        ],
+        tokenMatches: [
+          [ExpectedDictionaryMatch(term: '全日本', reading: 'ぜんにほん', match: 'ぜんにほん', definitions: ["all Japan"])],
         ]
       ),
     ]

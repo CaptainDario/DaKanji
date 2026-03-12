@@ -132,7 +132,10 @@
         {
             "reading": "どぼくこうじ",
             "pitches": [
-                {"position": 4, "devoice": 3}
+                {"position": 1, "devoice": 12},
+                {"position": 2, "nasal": 23, "tags": ["P1"]},
+                {"position": 3, "devoice": 34},
+                {"position": 4, "devoice": 45, "tags": ["P1", "P2"]}
             ]
         }
     ],
@@ -143,6 +146,19 @@
             "reading": "すき",
             "transcriptions": [
                 {"ipa": "[sɨᵝkʲi]", "tags": ["東京"]}
+            ]
+        }
+    ],
+    [
+        "土木工事",
+        "ipa",
+        {
+            "reading": "どぼくこうじ",
+            "transcriptions": [
+                {"ipa": "[sɨᵝkʲi]"   , "tags": ["東京", "京東"]},
+                {"ipa": "[laerglaeh]"},
+                {"ipa": "[alsjega]"  , "tags": ["東京"]},
+                {"ipa": "[laheig]"   , "tags": ["test", "asd"]}
             ]
         }
     ]

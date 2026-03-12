@@ -12,6 +12,7 @@ void main() {
 
   setUpAll(() async {
     db = await setupFreshDb(devExampleBank1Path, true, inMemory: false);
+    await setupFreshDb(devExampleBank3Path, true, existingDb: db);
   });
 
   tearDownAll(() async {
@@ -21,15 +22,18 @@ void main() {
   group('FTS5 Search (better-trigram)', () {
     for (var i = 0; i < exampleSentencesTestQueries.length; i++) {
       final query = exampleSentencesTestQueries[i].$1;
-      final languages = exampleSentencesTestQueries[i].$2;
       final expected = exampleSentenceTestExpectedValues[i];
 
       test('Returns expected FTS results for "$query"', () async {
-        final results = await db.exampleDao.searchExamples(query, languages);
+        final results = await db.exampleDao.searchExamples(query);
+        print("Query: '$query'");
+        print("Expected: $expected");
+        print("Actual: $results");
 
         if (expected == null) {
           expect(results, isNull, reason: "Query '$query' should have failed FTS5 syntax validation.");
-        } else {
+        }
+        else {
           expect(results, isNotNull, reason: "Query '$query' failed unexpectedly.");
           expect(results!.length, expected.length);
 
@@ -45,12 +49,11 @@ void main() {
   group('Lemmatized Token Search', () {
     for (var i = 0; i < exampleTokenTestQueries.length; i++) {
       final terms = exampleTokenTestQueries[i].$1; 
-      final languages = exampleTokenTestQueries[i].$2;
       final expected = exampleTokenTestExpectedValues[i]!;
 
       test('searchExamplesByTokens returns expected results for "$terms"', () async {
         // UPDATED: Now points to the new unicode61 FTS architecture
-        final results = await db.exampleDao.searchExamplesByTokens(terms, languages);
+        final results = await db.exampleDao.searchExamplesByTokens(terms);
         
         expect(results.length, expected.length);
 

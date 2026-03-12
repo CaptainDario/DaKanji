@@ -12,17 +12,24 @@ Future<DaDb> setupFreshDb(
   bool isDefaultDictionary,
   {
     bool inMemory = true,
+    DaDb? existingDb,
   }
 ) async {
 
-  if(File(daDbTestPath).existsSync()) File(daDbTestPath).deleteSync();
+  late DaDb db;
 
-  // create the testing database (delete any existing database)
-  DaDb db = DaDb(
-    dbPath: daDbTestPath, 
-    inMemory: inMemory,
-    languageProcessor: await japaneseProcessor
-  );
+  // if no db is given create the testing database (delete any existing database)
+  if(existingDb == null) {
+    if(File(daDbTestPath).existsSync()) File(daDbTestPath).deleteSync();
+    db = DaDb(
+      dbPath: daDbTestPath, 
+      inMemory: inMemory,
+      languageProcessor: await japaneseProcessor
+    );
+  }
+  else {
+    db = existingDb;
+  }
 
   // convert the test files directly from devExampleSentencesPath
   Stopwatch s = Stopwatch()..start();

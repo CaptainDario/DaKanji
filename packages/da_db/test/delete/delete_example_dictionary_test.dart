@@ -1,6 +1,7 @@
 import 'package:da_db/data/dictionary_types.dart';
 import 'package:da_db/database/da_db.dart';
 import 'package:da_db_shared/paths.dart';
+import 'package:language_processing/language_processing.dart';
 import 'package:path/path.dart' as p;
 import 'package:test/test.dart';
 import 'package:universal_io/io.dart';
@@ -46,9 +47,10 @@ void main() {
       final indexId = indexes.first.id;
 
       // Type-safe Drift Select
-      final engLang = await (db.select(db.languageCodeTable)
-        ..where((t) => t.languageCode.equals('eng'))).get();
-      expect(engLang, isNotEmpty);
+      final results = await (db.select(db.indexTable)
+        ..where((t) => t.sourceLanguage.equals(Iso639_3.eng.name))).get();
+        
+      expect(results, isNotEmpty);
 
       await runDeletion(db, indexId);
       await assertAbsoluteDatabaseEmptiness(db);
@@ -73,20 +75,14 @@ void main() {
       expect(sentenceQuery, isEmpty, 
         reason: "FAIL: Dict 1's unique sentence was left behind!");
 
-      // 2. Shared lang code must survive
-      final langQuery = await (db.select(db.languageCodeTable)
-        ..where((t) => t.languageCode.equals('jpn'))).get();
-      expect(langQuery, isNotEmpty, 
-        reason: "FAIL: Shared lang code 'jpn' was wrongly garbage collected!");
-
-      // 3. Shared stat name must survive
+      // 2. Shared stat name must survive
       // Note: Change 't.name' to 't.statName' if that is what your Dart getter is named in StatNameTable
       final statQuery = await (db.select(db.statNameTable)
         ..where((t) => t.name.equals('quality'))).get();
       expect(statQuery, isNotEmpty, 
         reason: "FAIL: Shared stat name 'quality' was wrongly garbage collected!");
 
-      // 4. Shared audio must survive
+      // 3. Shared audio must survive
       final audioQuery = await (db.select(db.exampleAudioTable)
         ..where((t) => t.path.equals('media/apple.mp3'))).get();
       expect(audioQuery, isNotEmpty, 
