@@ -4,6 +4,7 @@ import 'package:da_db_shared/paths.dart';
 import 'package:path/path.dart' as p;
 import 'package:test/test.dart';
 
+import '../test_utils/ignore_database_generated_data.dart';
 import '../test_utils/setup_fresh_db.dart';
 import 'audio_list_test_cases.dart';
 
@@ -25,11 +26,17 @@ void main() async {
 
 Future testAudio(DaDb db) async {
   
-  final results = await db.audioSourceListDao.getAllAudioSources();
+  final results = (await db.audioSourceListDao.getAllAudioSources())
+    .map(((e) => audioSourceListEntryIgnoreDatabaseGeneratedData(e)))
+    .toList();
+  final testCases = audioListTestCases
+    .map(((e) => audioSourceListEntryIgnoreDatabaseGeneratedData(e)))
+    .toList();
 
-  expect(results.length, audioListTestCases.length);
+  expect(results.length, testCases.length);
 
-  for (int i = 0; i < audioListTestCases.length; i++) {
-    expect(results.contains(audioListTestCases[i]), true);
+  for (int i = 0; i < testCases.length; i++) {
+    
+    expect(results.contains(testCases[i]), true);
   }
 }

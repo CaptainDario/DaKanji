@@ -1,6 +1,5 @@
 import 'package:da_db/database/term_meta/term_meta_bank_entry.dart';
 import 'package:da_db_ui/widgets/tag/tag_widget.dart';
-import 'package:da_db_ui/widgets/util/pitch_accent_widget.dart';
 import 'package:flutter/material.dart';
 
 
@@ -32,12 +31,13 @@ class TermMetaPitchWidget extends StatelessWidget {
                     padding: const EdgeInsets.fromLTRB(0, 0, 4, 0),
                     child: DictionaryMatchTag(texts: [tag.name]),
                   ),
-                PitchAccentWidget(
+                // TODO NOW!!!
+                /*PitchAccentWidget(
                   entry.reading ?? entry.term,
                   pitch.position,
                   nasalPosition: pitch.nasal,
                   devoicePosition: pitch.devoice,
-                ),
+                ),*/
               ]
             ),
       ],

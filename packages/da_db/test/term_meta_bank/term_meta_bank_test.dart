@@ -20,7 +20,7 @@ void main() {
     // Check some kanji bank queries
     for (int i = 0; i < termMetaBankTestCases.length; i++) {
     
-      test('should return correct metadata for "${termMetaBankTestCases[i]}"', () async {
+      test('$i. : should return correct metadata for "${termMetaBankTestCases[i]}"', () async {
         Stopwatch s = Stopwatch()..start();
         final testCase = termMetaBankTestCases[i];
         final result = (await db.termMetaBankV3Dao.searchTermMetaBankV3Entries(testCase))
@@ -33,7 +33,7 @@ void main() {
           print("Found element: $res");
         }
         expect(result.isNotEmpty , true);
-        print("Expectaiton ${termMetaBankTestCaseExpectations[i]}");
+        print("Expectation ${termMetaBankTestCaseExpectations[i]}");
         final pass = result.any((e) => termMetaBankTestCaseExpectations[i] == e);
         expect(pass, true);
       });

@@ -69,17 +69,19 @@ class DeletionDao extends DatabaseAccessor<DaDb> with _$DeletionDaoMixin {
       AND NOT EXISTS (SELECT 1 FROM ${db.audioTableXTermTable.actualTableName} WHERE term_id = ${db.termTable.actualTableName}.id);
     ''');
 
-    // Force FTS5 to un-index using the exact strings captured in the temp table.
     await db.customStatement('''
       INSERT INTO fts_terms(fts_terms, rowid, term, term_normalized)
-      SELECT 'delete', id, t1, t2 FROM fts_garbage;
-    ''');
-    await db.customStatement('''
-      INSERT INTO fts_terms_unicode(fts_terms_unicode, rowid, term, term_normalized)
-      SELECT 'delete', id, t1, t2 FROM fts_garbage;
+      SELECT 'delete', id, t1, t2 FROM fts_garbage 
+      WHERE id IN (SELECT rowid FROM fts_terms_docsize);
     ''');
     
-    // Cleanup contentless tokens and actual term rows
+    await db.customStatement('''
+      INSERT INTO fts_terms_unicode(fts_terms_unicode, rowid, term, term_normalized)
+      SELECT 'delete', id, t1, t2 FROM fts_garbage 
+      WHERE id IN (SELECT rowid FROM fts_terms_unicode_docsize);
+    ''');
+    
+    // Cleanup actual term rows
     await db.customStatement('DELETE FROM ${db.termTable.actualTableName} WHERE id IN (SELECT id FROM fts_garbage);');
 
     // --- 2. READINGS & FTS TABLES ---
@@ -96,11 +98,14 @@ class DeletionDao extends DatabaseAccessor<DaDb> with _$DeletionDaoMixin {
 
     await db.customStatement('''
       INSERT INTO fts_readings(fts_readings, rowid, reading, reading_normalized)
-      SELECT 'delete', id, t1, t2 FROM fts_garbage;
+      SELECT 'delete', id, t1, t2 FROM fts_garbage 
+      WHERE id IN (SELECT rowid FROM fts_readings_docsize);
     ''');
+    
     await db.customStatement('''
       INSERT INTO fts_readings_unicode(fts_readings_unicode, rowid, reading, reading_normalized)
-      SELECT 'delete', id, t1, t2 FROM fts_garbage;
+      SELECT 'delete', id, t1, t2 FROM fts_garbage 
+      WHERE id IN (SELECT rowid FROM fts_readings_unicode_docsize);
     ''');
 
     await db.customStatement('DELETE FROM ${db.readingTable.actualTableName} WHERE id IN (SELECT id FROM fts_garbage);');
@@ -116,14 +121,53 @@ class DeletionDao extends DatabaseAccessor<DaDb> with _$DeletionDaoMixin {
 
     await db.customStatement('''
       INSERT INTO fts_definitions(fts_definitions, rowid, definition)
-      SELECT 'delete', id, t1 FROM fts_garbage;
+      SELECT 'delete', id, t1 FROM fts_garbage 
+      WHERE id IN (SELECT rowid FROM fts_definitions_docsize);
     ''');
+    
     await db.customStatement('''
       INSERT INTO fts_definitions_unicode(fts_definitions_unicode, rowid, definition)
-      SELECT 'delete', id, t1 FROM fts_garbage;
+      SELECT 'delete', id, t1 FROM fts_garbage 
+      WHERE id IN (SELECT rowid FROM fts_definitions_unicode_docsize);
     ''');
 
     await db.customStatement('DELETE FROM ${db.definitionTable.actualTableName} WHERE id IN (SELECT id FROM fts_garbage);');
+
+    // --- 4. EXAMPLES & FTS TABLES ---
+    await db.customStatement('DELETE FROM fts_garbage;');
+    
+    // Find orphaned example sentences and store their exact text
+    await db.customStatement('''
+      INSERT INTO fts_garbage (id, t1, t2)
+      SELECT id, example_sentence, example_sentence_tokenized 
+      FROM ${db.exampleSentenceTable.actualTableName} 
+      WHERE NOT EXISTS (SELECT 1 FROM ${db.exampleTable.actualTableName} WHERE example_sentence_id = ${db.exampleSentenceTable.actualTableName}.id);
+    ''');
+
+    // 1. Standard FTS Table
+    await db.customStatement('''
+      INSERT INTO fts_example_sentence(fts_example_sentence, rowid, example_sentence)
+      SELECT 'delete', id, t1 FROM fts_garbage 
+      WHERE id IN (SELECT rowid FROM fts_example_sentence_docsize);
+    ''');
+    
+    // 2. Tokenized FTS Table (MUST check for NULLs)
+    await db.customStatement('''
+      INSERT INTO fts_example_sentence_tokenized(fts_example_sentence_tokenized, rowid, example_sentence_tokenized)
+      SELECT 'delete', id, t2 FROM fts_garbage 
+      WHERE t2 IS NOT NULL 
+      AND id IN (SELECT rowid FROM fts_example_sentence_tokenized_docsize);
+    ''');
+    
+    // 3. Unicode FTS Table
+    await db.customStatement('''
+      INSERT INTO fts_example_sentence_unicode(fts_example_sentence_unicode, rowid, example_sentence)
+      SELECT 'delete', id, t1 FROM fts_garbage 
+      WHERE id IN (SELECT rowid FROM fts_example_sentence_unicode_docsize);
+    ''');
+
+    // Finally, delete the base rows
+    await db.customStatement('DELETE FROM ${db.exampleSentenceTable.actualTableName} WHERE id IN (SELECT id FROM fts_garbage);');
 
     // Drop temp table
     await db.customStatement('DROP TABLE fts_garbage;');
@@ -165,28 +209,16 @@ class DeletionDao extends DatabaseAccessor<DaDb> with _$DeletionDaoMixin {
       '''DELETE FROM ${db.mediaTable.actualTableName} 
          WHERE NOT EXISTS (SELECT 1 FROM ${db.audioTable.actualTableName} WHERE media_id = ${db.mediaTable.actualTableName}.id);''',
 
-      // 12. Delete unreferenced Example FTS Tokens
-      '''DELETE FROM fts_example_sentence 
-         WHERE rowid NOT IN (SELECT example_sentence_id FROM ${db.exampleTable.actualTableName});''',
-      '''DELETE FROM fts_example_sentence_tokenized 
-         WHERE rowid NOT IN (SELECT example_sentence_id FROM ${db.exampleTable.actualTableName});''',
-      '''DELETE FROM fts_example_sentence_unicode 
-         WHERE rowid NOT IN (SELECT example_sentence_id FROM ${db.exampleTable.actualTableName});''',
-
-      // 13. Delete unreferenced Example Sentences
-      '''DELETE FROM ${db.exampleSentenceTable.actualTableName} 
-         WHERE NOT EXISTS (SELECT 1 FROM ${db.exampleTable.actualTableName} WHERE example_sentence_id = ${db.exampleSentenceTable.actualTableName}.id);''',
-
-      // 14. Delete unreferenced Example Audios
+      // 12. Delete unreferenced Example Audios
       '''DELETE FROM ${db.exampleAudioTable.actualTableName} 
          WHERE NOT EXISTS (SELECT 1 FROM ${db.exampleTableXExampleAudioTable.actualTableName} WHERE audio_id = ${db.exampleAudioTable.actualTableName}.id);''',
 
-      // 15. Delete unreferenced Stat Combinations
+      // 13. Delete unreferenced Stat Combinations
       '''DELETE FROM ${db.statTable.actualTableName} 
          WHERE NOT EXISTS (SELECT 1 FROM ${db.exampleTableXStatTable.actualTableName} WHERE stat_table_id = ${db.statTable.actualTableName}.id)
          AND NOT EXISTS (SELECT 1 FROM ${db.exampleAudioTableXStatTable.actualTableName} WHERE stat_table_id = ${db.statTable.actualTableName}.id);''',
 
-      // 16. Delete unreferenced Stat Names
+      // 14. Delete unreferenced Stat Names
       '''DELETE FROM ${db.statNameTable.actualTableName} 
          WHERE NOT EXISTS (SELECT 1 FROM ${db.statTable.actualTableName} WHERE stat_name_id = ${db.statNameTable.actualTableName}.id);''',
     ];

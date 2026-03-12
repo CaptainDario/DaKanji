@@ -25,7 +25,7 @@ void main() {
 
     db = DaDb(
       dbPath: daDbTestPath,
-      inMemory: false,
+      inMemory: true,
       languageProcessor: await japaneseProcessor,
     );
 

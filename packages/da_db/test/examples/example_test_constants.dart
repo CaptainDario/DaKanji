@@ -61,8 +61,10 @@ final dummyIndexTexts1Jpn = IndexEntry(
   yomitanData: YomitanIndex(
     title: "Test Example Dictionary", 
     revision: "2024-01-01",
+    author: "Test Author",
     format: 3,
     sequenced: true,
     description: "A dictionary for testing the example parser.",
+    sourceLanguage: Iso639_3.jpn,
   )
 );

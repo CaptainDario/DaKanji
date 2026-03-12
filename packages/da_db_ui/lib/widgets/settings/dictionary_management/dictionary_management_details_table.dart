@@ -57,8 +57,8 @@ class DictionaryManagementDetailsTable extends StatelessWidget {
       if(dict.url != null) ("URL", dict.url!),
       if(dict.description != null) ("Description", dict.description!),
       if(dict.attribution != null) ("Attribution", dict.attribution!),
-      if(dict.sourceLanguage != null) ("Source Language", dict.sourceLanguage!),
-      if(dict.targetLanguage != null) ("Target Language", dict.targetLanguage!),
+      if(dict.sourceLanguage != null) ("Source Language", dict.sourceLanguage!.name),
+      if(dict.targetLanguage != null) ("Target Language", dict.targetLanguage!.name),
     ];
   }
 }

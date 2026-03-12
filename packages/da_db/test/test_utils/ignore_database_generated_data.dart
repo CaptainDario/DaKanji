@@ -1,3 +1,4 @@
+import 'package:da_db/database/audio_source_list/audio_source_list_entry.dart';
 import 'package:da_db/database/db_queries/kanji_dictionary_search/kanji_dictionary_search_result.dart';
 import 'package:da_db/database/example/example_entry.dart';
 import 'package:da_db/database/example/example_search_result.dart';
@@ -125,5 +126,12 @@ ExampleSearchResult exampleSearchResultIgnoreDatabaseGeneratedData(ExampleSearch
     targetEntries: result.targetEntries
       .map((entry) => exampleEntryIgnoreDatabaseGeneratedData(entry))
       .toList(),
+  );
+}
+
+AudioSourceListEntry audioSourceListEntryIgnoreDatabaseGeneratedData(AudioSourceListEntry entry) {
+  return entry.copyWith(
+    id: 0,
+    indexEntry: entry.indexEntry.copyWith(id: 0, currentSortingOrder: 0),
   );
 }

@@ -106,14 +106,14 @@ void main(List<String> args) async {
   //await importRadicals(db);
 
   print("Importing yomitan dicts...");
-  await importDaDbDataSource(db,
+  /*await importDaDbDataSource(db,
     [
       (kanjidic2InputPath, "KanjiDic2"),
       (jpdb2_2InputPath, "JPDB 2.2"),
       (dictNameToPath[dictToUse]!(), dictToUse.name),
       ?(includeExampleDictArg ? (exampleDictPath, "yomitan example dictionary"): null),
     ],
-  );
+  );*/
 
   if(includeTatoebaExamplesArg){
     print("Adding tatoeba example sentences...");

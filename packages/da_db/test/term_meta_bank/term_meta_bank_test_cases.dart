@@ -22,6 +22,7 @@ final termMetaBankTestCases = [
   "所業",
   "土木工事",
   "好き",
+  "土木工事"
 ];
 
 /// kanjiMetaBankV3 test case expected values
@@ -203,7 +204,14 @@ final termMetaBankTestCaseExpectations = [
     reading: "どぼくこうじ",
     ipas: [],
     pitchs: [
-      TermMetaBankV3PitchEntry(position: "LHHHLL", devoice: [3], tags: []),
+      // Matches: ["position": 1, "devoice": 12]
+      TermMetaBankV3PitchEntry(position: "HLLLLL", devoice: [12], tags: []),
+      // Matches: ["position": 2, "nasal": 23, "tags": ["P1"]]
+      TermMetaBankV3PitchEntry(position: "LHLLLL", nasal: [23], tags: [p1Tag]),
+      // Matches: ["position": 3, "devoice": 34]
+      TermMetaBankV3PitchEntry(position: "LHHLLL", devoice: [34], tags: []),
+      // Matches: ["position": 4, "devoice": 45, "tags": ["P1", "P2"]]
+      TermMetaBankV3PitchEntry(position: "LHHHLL", devoice: [45], tags: [p1Tag, p2Tag]),
     ]
   ),
 
@@ -219,6 +227,32 @@ final termMetaBankTestCaseExpectations = [
       TermMetaBankV3IpaEntry(
         ipa: "[sɨᵝkʲi]",
         tags: [tokyoTag]
+      ),
+    ]
+  ),
+  TermMetaBankV3Entry(
+    indexEntry: testDictionaryIndexEntry,
+    id: 0,
+    term: "土木工事",
+    type: TermMetaBankEntryTypes.ipa,
+    reading: "どぼくこうじ",
+    pitchs: [],
+    ipas: [
+      TermMetaBankV3IpaEntry(
+        ipa: "[sɨᵝkʲi]",
+        tags: [tokyoTag, kyotoTag]
+      ),
+      TermMetaBankV3IpaEntry(
+        ipa: "[laerglaeh]",
+        tags: []
+      ),
+      TermMetaBankV3IpaEntry(
+        ipa: "[alsjega]",
+        tags: [tokyoTag]
+      ),
+      TermMetaBankV3IpaEntry(
+        ipa: "[laheig]",
+        tags: [testTag, asdTag]
       ),
     ]
   ),

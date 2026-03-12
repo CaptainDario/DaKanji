@@ -1,6 +1,5 @@
 import 'package:da_db/database/da_db.dart';
 import 'package:da_db/database/index/yomitan_index.dart';
-import 'package:da_db/parsing/util/db_optimization.dart';
 
 import 'audio_bank_merger.dart';
 
@@ -11,17 +10,11 @@ import 'audio_bank_merger.dart';
 /// and prevent SQLite alias collisions if multiple imports occur sequentially.
 Future<void> mergeAudioStagingDb({
   required DaDb db,
-  required String workerDbPath,
+  required String workerAlias,
   required YomitanIndex index,
   required int indexId,
 }) async {
-  final workerAlias = 'worker_${DateTime.now().millisecondsSinceEpoch}';
-  
-  // Temporarily disable synchronous PRAGMAs to boost transfer speed
-  await optimizeTargetDbForMerge(db);
-  
-  await db.customStatement('ATTACH DATABASE ? AS $workerAlias', [workerDbPath]);
-
+    
   try {
     await AudioBankMerger().merge(
       targetDb: db, 
@@ -33,10 +26,5 @@ Future<void> mergeAudioStagingDb({
   catch (e) {
     print("Audio Merge Error: $e");
     rethrow;
-  }
-  finally {
-    // Guarantee detachment to prevent file locks or memory leaks
-    await db.customStatement('DETACH DATABASE $workerAlias');
-    await restoreTargetDbAfterMerge(db);
   }
 }

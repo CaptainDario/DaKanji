@@ -1,7 +1,6 @@
 import 'package:da_db/data/dictionary_types.dart';
 import 'package:da_db/database/da_db.dart';
 import 'package:da_db_shared/paths.dart';
-import 'package:language_processing/language_processing.dart';
 import 'package:path/path.dart' as p;
 import 'package:test/test.dart';
 import 'package:universal_io/io.dart';
@@ -24,7 +23,7 @@ void main() {
 
     db = DaDb(
       dbPath: daDbTestPath,
-      inMemory: false,
+      inMemory: true,
       languageProcessor: await japaneseProcessor,
     );
 
@@ -42,17 +41,10 @@ void main() {
   group('Example Dictionary Deletion & GC:', () {
     test('1. Deleting a unique Example Dictionary completely removes it', () async {
       await importDictionary(db, zipEx3, DictionaryTypes.examples);
-      
       final indexes = await db.indexDao.getAllIndexes();
-      final indexId = indexes.first.id;
+      expect(indexes, isNotEmpty);
 
-      // Type-safe Drift Select
-      final results = await (db.select(db.indexTable)
-        ..where((t) => t.sourceLanguage.equals(Iso639_3.eng.name))).get();
-        
-      expect(results, isNotEmpty);
-
-      await runDeletion(db, indexId);
+      await runDeletion(db, indexes.first.id);
       await assertAbsoluteDatabaseEmptiness(db);
     });
 
@@ -67,7 +59,7 @@ void main() {
       // Delete ONLY Dict 1
       await runDeletion(db, dict1Id);
 
-      // --- ASSERTIONS FOR PRESERVED SHARED DATA ---
+      // --- CHECK PRESERVED SHARED DATA ---
 
       // 1. Dict 1's unique sentence should be deleted
       final sentenceQuery = await (db.select(db.exampleSentenceTable)

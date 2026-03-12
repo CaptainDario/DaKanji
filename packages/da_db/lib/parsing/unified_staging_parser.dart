@@ -269,7 +269,7 @@ Future<void> _executeMergeTransaction({
           await mergeExampleStagingDb(db: db, workerAlias: workerAliases[i], index: routing.index, indexId: indexId);
           break;
         case DictionaryTypes.audio:
-          await mergeAudioStagingDb(db: db, workerDbPath: workerDbPaths[i], index: routing.index, indexId: indexId);
+          await mergeAudioStagingDb(db: db, workerAlias: workerAliases[i], index: routing.index, indexId: indexId);
           break;
       }
     }

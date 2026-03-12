@@ -11,7 +11,7 @@ void main() {
   late DaDb db;
 
   setUpAll(() async {
-    db = await setupFreshDb(devExampleBank1Path, true, inMemory: false);
+    db = await setupFreshDb(devExampleBank1Path, true, inMemory: true);
     await setupFreshDb(devExampleBank3Path, true, existingDb: db);
   });
 
