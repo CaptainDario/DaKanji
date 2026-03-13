@@ -3,6 +3,26 @@ import 'example_relation_tables.dart';
 import '/database/example/example_fts5_table.drift';
 import '/database/example/example_views.drift';
 
+
+----------------------------------------------------------------------
+-- Stat Queries
+----------------------------------------------------------------------
+
+-- Gets all unique (name, displayName) pairs currently attached to examples
+getUniqueExampleStats:
+    SELECT DISTINCT
+        sn.name AS statName,
+        sdn.name AS displayName
+    FROM stat_table st
+    INNER JOIN stat_name_table sn ON sn.id = st.stat_name_id
+    LEFT JOIN stat_name_table sdn ON sdn.id = st.stat_display_name_id
+    WHERE EXISTS (
+        SELECT 1 
+        FROM example_table_x_stat_table ext 
+        WHERE ext.stat_table_id = st.id
+    )
+    ORDER BY statName, displayName;
+
 ----------------------------------------------------------------------
 -- PHASE 1: Base Match Discovery (Unified Search)
 ----------------------------------------------------------------------

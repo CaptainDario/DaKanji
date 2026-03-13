@@ -133,6 +133,17 @@ class ExampleDao extends DatabaseAccessor<DaDb> with _$ExampleDaoMixin {
       groupingRules: groupingRules,
     );
   }
+
+  Future<List<({String statName, String? displayName})>> getAllExampleStats() async {
+    
+    final results = await db.getUniqueExampleStats().get();
+
+    return results.map(
+      (r) => (statName: r.statName, displayName: r.displayName)
+    ).toList();
+
+  }
+
   // ---------------------------------------------------------------------------
   /// Get the maximum id of the [ExampleTable]
   Future<int> maxExampleId() async {

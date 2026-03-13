@@ -143,7 +143,9 @@ part 'da_db.g.dart';
     'term_meta/term_meta_bank_v3_views.drift', 'term_meta/term_meta_bank_v3_queries.drift',
     'term/term_bank_v3_views.drift', 'term/term_bank_v3_queries.drift',
 
-    'db_queries/stat_queries.drift',
+    'stats/stat_views.drift',
+
+    'db_queries/db_stat_queries.drift', 
 
     'db_queries/dictionary_search/dictionary_search_queries.drift',
     'db_queries/dictionary_search/dictionary_search_fts_tables.drift',
@@ -201,8 +203,8 @@ class DaDb extends _$DaDb {
     return qe;
   }
 
-  Future<List<GetMbSizesDriftResult>> getDbStats() async {
-    return await get_mb_sizes_drift().get();
+  Future<List<GetDbMbSizesDriftResult>> getDbStats() async {
+    return await get_db_mb_sizes_drift().get();
   }
 
   /// **WARNING**: This closes the database and DELETES the file

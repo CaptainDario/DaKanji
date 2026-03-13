@@ -5,7 +5,10 @@ import '/database/general_tables/term_tables.dart';
 import '/database/tag/tag_bank_v3_tables.dart';
 import '/database/tag/tag_bank_v3_views.drift';
 import '/database/stats/stat_tables.dart';
+import '/database/stats/stat_views.drift';
 import 'example_fts5_table.drift';
+
+
 
 CREATE VIEW IF NOT EXISTS example_entry_view AS
     SELECT 
@@ -26,19 +29,9 @@ CREATE VIEW IF NOT EXISTS example_entry_view AS
     WHERE ext.example_id = e.id) AS tags_json,
 
     -- 5. Aggregated Stats Array
-    (SELECT json_group_array(
-        json_object(
-            'id', st.id,
-            'statName', sn.name,
-            'displayName', sdn.name,
-            'value', st.value,
-            'displayValue', st.display_value
-        )
-    )
+    (SELECT json_group_array(json(sv.stat_json))
     FROM example_table_x_stat_table ext
-        INNER JOIN stat_table st ON st.id = ext.stat_table_id
-        INNER JOIN stat_name_table sn ON sn.id = st.stat_name_id
-        LEFT JOIN stat_name_table sdn ON sdn.id = st.stat_display_name_id
+        INNER JOIN stat_as_json_view sv ON sv.stat_id = ext.stat_table_id
     WHERE ext.example_id = e.id) AS stats_json,
 
     -- 6. Aggregated Audio Array
@@ -48,7 +41,7 @@ CREATE VIEW IF NOT EXISTS example_entry_view AS
             'path', a.path,
             'name', a.name,
             
-            -- Nested Audio Tags (Using predefined view)
+            -- Nested Audio Tags
             'tags', (
                 SELECT json_group_array(json(atv.tag_json))
                 FROM example_audio_table_x_tag_bank_table axt
@@ -58,19 +51,9 @@ CREATE VIEW IF NOT EXISTS example_entry_view AS
             
             -- Nested Audio Stats
             'stats', (
-                SELECT json_group_array(
-                    json_object(
-                        'id', ast.id,
-                        'statName', asn.name,
-                        'displayName', asdn.name,
-                        'value', ast.value,
-                        'displayValue', ast.display_value
-                    )
-                )
+                SELECT json_group_array(json(asv.stat_json))
                 FROM example_audio_table_x_stat_table axst
-                    INNER JOIN stat_table ast ON ast.id = axst.stat_table_id
-                    INNER JOIN stat_name_table asn ON asn.id = ast.stat_name_id
-                    LEFT JOIN stat_name_table asdn ON asdn.id = ast.stat_display_name_id
+                    INNER JOIN stat_as_json_view asv ON asv.stat_id = axst.stat_table_id
                 WHERE axst.audio_id = a.id
             )
         )
@@ -79,6 +62,7 @@ CREATE VIEW IF NOT EXISTS example_entry_view AS
         INNER JOIN example_audio_table a ON a.id = exa.audio_id
     WHERE exa.example_id = e.id) AS audios_json
 
+    -- 7. Main query joins
     FROM example_table e
         INNER JOIN example_sentence_table s ON s.id = e.example_sentence_id
         INNER JOIN index_entry_as_json_view iv ON iv.id = e.index_id;

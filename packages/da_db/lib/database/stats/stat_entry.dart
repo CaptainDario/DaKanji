@@ -15,5 +15,5 @@ abstract class StatEntry with _$StatEntry {
   }) = _StatEntry;
 
   factory StatEntry.fromJson(Map<String, dynamic> json) =>
-      _$StatEntryFromJson(json);
+    _$StatEntryFromJson(json);
 }
