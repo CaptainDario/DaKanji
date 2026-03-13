@@ -53,7 +53,7 @@ void main() {
 
       test('searchExamplesByTokens returns expected results for "$terms"', () async {
         // UPDATED: Now points to the new unicode61 FTS architecture
-        final results = await db.exampleDao.searchExamplesByTokens(terms);
+        final results = await db.exampleDao.searchExamplesByBaseForms(terms);
         
         expect(results.length, expected.length);
 

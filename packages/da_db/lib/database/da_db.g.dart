@@ -21235,21 +21235,34 @@ abstract class _$DaDb extends GeneratedDatabase {
     );
   }
 
-  Selectable<SearchExampleBaseMatchesResult> searchExampleBaseMatches(
+  Selectable<SearchExamplesResult> searchExamples(
     String query,
+    String? statName,
+    double? expectedStatValue,
+    bool? isDesc,
     int limit,
     int offset,
   ) {
     return customSelect(
-      'WITH CombinedMatches AS (SELECT e.id, e.group_id, e.index_id, bm25(fts_example_sentence) AS score FROM fts_example_sentence AS fts INNER JOIN example_table AS e ON e.example_sentence_id = fts."rowid" WHERE fts_example_sentence MATCH ?1 UNION ALL SELECT e.id, e.group_id, e.index_id, bm25(fts_example_sentence_unicode) AS score FROM fts_example_sentence_unicode AS fts INNER JOIN example_table AS e ON e.example_sentence_id = fts."rowid" WHERE fts_example_sentence_unicode MATCH ?1) SELECT id, group_id, index_id FROM CombinedMatches ORDER BY score LIMIT ?2 OFFSET ?3',
+      'WITH CombinedMatches AS (SELECT e.id, e.group_id, e.index_id, bm25(fts_example_sentence) AS score FROM fts_example_sentence AS fts INNER JOIN example_table AS e ON e.example_sentence_id = fts."rowid" WHERE fts_example_sentence MATCH ?1 UNION ALL SELECT e.id, e.group_id, e.index_id, bm25(fts_example_sentence_unicode) AS score FROM fts_example_sentence_unicode AS fts INNER JOIN example_table AS e ON e.example_sentence_id = fts."rowid" WHERE fts_example_sentence_unicode MATCH ?1), RankedMatches AS (SELECT cm.id, cm.group_id, cm.index_id, cm.score, (SELECT st.value FROM example_table_x_stat_table AS ext INNER JOIN stat_table AS st ON st.id = ext.stat_table_id INNER JOIN stat_name_table AS sn ON sn.id = st.stat_name_id WHERE ?2 IS NOT NULL AND ext.example_id = cm.id AND sn.name = ?2 LIMIT 1) AS stat_value FROM CombinedMatches AS cm) SELECT id, group_id, index_id FROM RankedMatches WHERE(?3 IS NULL OR stat_value = ?3)ORDER BY stat_value IS NULL ASC, CASE WHEN ?4 = TRUE THEN stat_value END DESC, CASE WHEN ?4 = FALSE THEN stat_value END ASC, score LIMIT ?5 OFFSET ?6',
       variables: [
         Variable<String>(query),
+        Variable<String>(statName),
+        Variable<double>(expectedStatValue),
+        Variable<bool>(isDesc),
         Variable<int>(limit),
         Variable<int>(offset),
       ],
-      readsFrom: {exampleTable, ftsExampleSentence, ftsExampleSentenceUnicode},
+      readsFrom: {
+        exampleTable,
+        ftsExampleSentence,
+        ftsExampleSentenceUnicode,
+        statTable,
+        exampleTableXStatTable,
+        statNameTable,
+      },
     ).map(
-      (QueryRow row) => SearchExampleBaseMatchesResult(
+      (QueryRow row) => SearchExamplesResult(
         id: row.read<int>('id'),
         groupId: row.readNullable<int>('group_id'),
         indexId: row.read<int>('index_id'),
@@ -21257,18 +21270,33 @@ abstract class _$DaDb extends GeneratedDatabase {
     );
   }
 
-  Selectable<SearchExampleBaseMatchesByTokensResult>
-  searchExampleBaseMatchesByTokens(String lemmas, int limit, int offset) {
+  Selectable<SearchExamplesByBaseFormResult> searchExamplesByBaseForm(
+    String? statName,
+    String ftsBaseForms,
+    double? expectedStatValue,
+    bool? isDesc,
+    int limit,
+    int offset,
+  ) {
     return customSelect(
-      'SELECT e.id, e.group_id, e.index_id FROM fts_example_sentence_tokenized AS fts INNER JOIN example_table AS e ON e.example_sentence_id = fts."rowid" WHERE fts_example_sentence_tokenized MATCH ?1 ORDER BY bm25(fts_example_sentence_tokenized) LIMIT ?2 OFFSET ?3',
+      'WITH RankedMatches AS (SELECT e.id, e.group_id, e.index_id, bm25(fts_example_sentence_tokenized) AS score, (SELECT st.value FROM example_table_x_stat_table AS ext INNER JOIN stat_table AS st ON st.id = ext.stat_table_id INNER JOIN stat_name_table AS sn ON sn.id = st.stat_name_id WHERE ?1 IS NOT NULL AND ext.example_id = e.id AND sn.name = ?1 LIMIT 1) AS stat_value FROM fts_example_sentence_tokenized AS fts INNER JOIN example_table AS e ON e.example_sentence_id = fts."rowid" WHERE fts_example_sentence_tokenized MATCH ?2) SELECT id, group_id, index_id FROM RankedMatches WHERE(?3 IS NULL OR stat_value = ?3)ORDER BY stat_value IS NULL ASC, CASE WHEN ?4 = TRUE THEN stat_value END DESC, CASE WHEN ?4 = FALSE THEN stat_value END ASC, score LIMIT ?5 OFFSET ?6',
       variables: [
-        Variable<String>(lemmas),
+        Variable<String>(statName),
+        Variable<String>(ftsBaseForms),
+        Variable<double>(expectedStatValue),
+        Variable<bool>(isDesc),
         Variable<int>(limit),
         Variable<int>(offset),
       ],
-      readsFrom: {exampleTable, ftsExampleSentenceTokenized},
+      readsFrom: {
+        exampleTable,
+        ftsExampleSentenceTokenized,
+        statTable,
+        exampleTableXStatTable,
+        statNameTable,
+      },
     ).map(
-      (QueryRow row) => SearchExampleBaseMatchesByTokensResult(
+      (QueryRow row) => SearchExamplesByBaseFormResult(
         id: row.read<int>('id'),
         groupId: row.readNullable<int>('group_id'),
         indexId: row.read<int>('index_id'),
@@ -47670,22 +47698,18 @@ class GetUniqueExampleStatsResult {
   GetUniqueExampleStatsResult({required this.statName, this.displayName});
 }
 
-class SearchExampleBaseMatchesResult {
+class SearchExamplesResult {
   final int id;
   final int? groupId;
   final int indexId;
-  SearchExampleBaseMatchesResult({
-    required this.id,
-    this.groupId,
-    required this.indexId,
-  });
+  SearchExamplesResult({required this.id, this.groupId, required this.indexId});
 }
 
-class SearchExampleBaseMatchesByTokensResult {
+class SearchExamplesByBaseFormResult {
   final int id;
   final int? groupId;
   final int indexId;
-  SearchExampleBaseMatchesByTokensResult({
+  SearchExamplesByBaseFormResult({
     required this.id,
     this.groupId,
     required this.indexId,

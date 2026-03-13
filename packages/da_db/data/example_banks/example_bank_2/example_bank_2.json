@@ -1,0 +1,39 @@
+[
+  {
+    "groupId": 200,
+    "sentence": "車を運転します",
+    "langIso3Code": "jpn",
+    "stats": [
+      { "statName": "quality", "value": 4.0 },
+      { "statName": "difficulty", "displayName": "Difficulty", "value": 1.5 },
+      { "statName": "JLPT", "value": 5.0, "displayValue": "N5" }
+    ]
+  },
+  {
+    "groupId": 201,
+    "sentence": "速い車が好きです",
+    "langIso3Code": "jpn",
+    "stats": [
+      { "statName": "quality", "value": 5.0 },
+      { "statName": "difficulty", "displayName": "Difficulty", "value": 2.0 },
+      { "statName": "JLPT", "value": 4.0, "displayValue": "N4" }
+    ]
+  },
+  {
+    "groupId": 202,
+    "sentence": "冷たい水を飲む",
+    "langIso3Code": "jpn",
+    "stats": [
+      { "statName": "quality", "value": 3.0 },
+      { "statName": "freq", "displayName": "Frequency", "value": 500.0, "displayValue": "common" }
+    ]
+  },
+  {
+    "groupId": 203,
+    "sentence": "高い山に登る",
+    "langIso3Code": "jpn",
+    "stats": [
+      { "statName": "difficulty", "displayName": "Difficulty", "value": 3.5 }
+    ]
+  }
+]
