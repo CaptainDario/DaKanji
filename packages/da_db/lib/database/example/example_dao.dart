@@ -28,6 +28,9 @@ class ExampleDao extends DatabaseAccessor<DaDb> with _$ExampleDaoMixin {
   Future<List<ExampleSearchResult>?> searchExamples(
     String rawFts5Query,
     {
+      String? statName,
+      double? expectedStatValue,
+      bool? orderDescending,
       Set<SequenceGroupingRule> groupingRules = const {},
       int limit = -1,
       int offset = 0,
@@ -37,55 +40,54 @@ class ExampleDao extends DatabaseAccessor<DaDb> with _$ExampleDaoMixin {
     
     // Note: Drift auto-generates the class SearchExampleBaseMatchesResult
     try {
-      final rawMatches = await db.searchExampleBaseMatches(
-        rawFts5Query, limit, offset).get();
-
-      if (rawMatches.isEmpty) return [];
+      final rawMatches = await db.searchExamples(
+        rawFts5Query,
+        statName, expectedStatValue, orderDescending,
+        limit, offset
+      ).get();
 
       final baseMatches = rawMatches.map((m) => 
         (id: m.id, groupId: m.groupId, indexId: m.indexId)
       ).toList();
 
       return _processBaseMatches(baseMatches, groupingRules);
-    } catch (e) {
+    }
+    catch (e) {
       // Catch syntax errors from malformed FTS queries
       return null; 
     }
   }
 
-  /// Searches the lemmatized (base form) FTS index using unicode61.
-  /// Replaces both `searchExamplesByTermIds` and `searchExamplesByTermString`.
-  Future<List<ExampleSearchResult>> searchExamplesByTokens(
-    List<String> lemmas,
+  /// Searches the base form FTS index using unicode61.
+  Future<List<ExampleSearchResult>> searchExamplesByBaseForms(
+    List<String> baseForms,
     {
+      String? statName,
+      double? expectedStatValue,
+      bool? orderDescending,
       Set<SequenceGroupingRule> groupingRules = const {},
       bool requireAllTokens = false,
       int limit = 50,
       int offset = 0,
     }
   ) async {
-    if (lemmas.isEmpty) return [];
+    if (baseForms.isEmpty) return [];
     
     // Construct the FTS5 query string from the list of lemmas.
     final operator = requireAllTokens ? ' ' : ' OR ';
-    final ftsTokenQuery = lemmas.map((l) => '"${l.replaceAll('"', '""')}"').join(operator);
+    final ftsTokenQuery = baseForms.map((l) => '"${l.replaceAll('"', '""')}"').join(operator);
     
-    try {
-      final rawMatches = await db.searchExampleBaseMatchesByTokens(
-        ftsTokenQuery, limit, offset
-      ).get();
-      
-      if (rawMatches.isEmpty) return [];
+    final rawMatches = await db.searchExamplesByBaseForm(
+      statName, ftsTokenQuery, expectedStatValue,
+      orderDescending,
+     limit, offset
+    ).get();
 
-      final baseMatches = rawMatches.map((m) => 
-        (id: m.id, groupId: m.groupId, indexId: m.indexId)
-      ).toList();
+    final baseMatches = rawMatches.map((m) => 
+      (id: m.id, groupId: m.groupId, indexId: m.indexId)
+    ).toList();
 
-      return _processBaseMatches(baseMatches, groupingRules);
-    } catch (e) {
-      print('FTS Token Search Error: $e');
-      return [];
-    }
+    return _processBaseMatches(baseMatches, groupingRules);
   }
 
   /// Orchestrates the multi-phase lookup to resolve base FTS matches into 
