@@ -110,18 +110,20 @@ class ExampleMerger implements StagingMerger {
 
       // Second, generate the unique Stat combinations
       await targetDb.customStatement('''
-        INSERT OR IGNORE INTO stat_table (stat_name_id, stat_display_name_id, value, display_value)
-          SELECT DISTINCT n1.id, n2.id, s.stat_value, s.display_value
+        INSERT INTO stat_table (stat_name_id, stat_display_name_id, value, display_value)
+          SELECT n1.id, n2.id, s.stat_value, s.display_value
           FROM $workerAlias.example_stat_staging_table s
             INNER JOIN stat_name_table n1 ON n1.name = s.stat_name
             LEFT JOIN stat_name_table n2 ON n2.name = s.display_name
           UNION
-          SELECT DISTINCT n1.id, n2.id, a.stat_value, a.display_value
+          SELECT n1.id, n2.id, a.stat_value, a.display_value
           FROM $workerAlias.example_audio_stat_staging_table a
             INNER JOIN stat_name_table n1 ON n1.name = a.stat_name
             LEFT JOIN stat_name_table n2 ON n2.name = a.display_name
+          EXCEPT
+          SELECT stat_name_id, stat_display_name_id, value, display_value 
+          FROM stat_table
       ''');
-
       // Third, Link Example Stats
       await targetDb.customStatement('''
         INSERT INTO example_table_x_stat_table (example_id, stat_table_id)
