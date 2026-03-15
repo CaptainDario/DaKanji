@@ -12,8 +12,8 @@ version: 4.0.0+144
 
 
 environment:
-  sdk: ">=3.9.0"
-  flutter: ">=3.38.1"
+  sdk: ">=3.10.1"
+  flutter: ">=3.41.4"
 
 platforms:
   android:
@@ -30,7 +30,7 @@ dependencies:
   flutter_spinbox: ^0.13.1
   linked_scroll_controller: 0.2.0
   shared_preferences: ^2.5.3
-  flutter_secure_storage: ^10.0.0-beta.5
+  flutter_secure_storage: ^10.0.0
   url_launcher: ^6.3.2
   flutter_phoenix: 1.1.1
   image: 4.5.4
@@ -53,7 +53,6 @@ dependencies:
   share_plus: ^12.0.1
   file_picker: ^10.3.2
   sqlite3: ^3.1.6
-  sqlite3_flutter_libs: ^0.6.0+eol
   drift: ^2.29.0
   json_annotation: 4.9.0
   flutter_spinkit: ^5.2.2
@@ -131,7 +130,8 @@ dependencies:
 
   # packages that I maintain
   ankidroid_for_flutter: ^1.0.3
-  mecab_for_dart: ^2.0.2
+  mecab_for_dart:
+    path: /Users/darioklepoch/dev/flutter_packages/mecab_for_dart/
   awesome_dialog: 
     git:
       url: https://github.com/CaptainDario/awesomeDialogs
@@ -170,6 +170,10 @@ dependencies:
   flutter_native_splash: ^2.4.7   # android, iOS, web
 
 dependency_overrides:
+
+  mecab_for_dart:
+    path: /Users/darioklepoch/dev/flutter_packages/mecab_for_dart/
+
   css_inline_flutter:
     path: /Users/darioklepoch/dev/DaKanji/dakanji_db/packages/css_inline_flutter
   da_db:
@@ -181,8 +185,7 @@ dependency_overrides:
   sqlite_extensions:
     path: /Users/darioklepoch/dev/DaKanji/dakanji_db/packages/sqlite_extensions
 
-  intl: any
-  html: any
+
 msix_config:
   display_name: DaKanji
   protocol_activation: dakanji, https
