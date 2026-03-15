@@ -1,7 +1,13 @@
 export 'src/deconjugation_result.dart';
 export 'src/iso/iso_table.dart';
 export 'src/iso/iso_utils.dart';
+export 'src/japanese/conjugation/jmdict_conjugate.dart';
+export 'src/japanese/conjugation/jmdict_conjugation_data/conj.dart';
+export 'src/japanese/conjugation/jmdict_conjugation_data/conjos.dart';
+export 'src/japanese/conjugation/jmdict_conjugation_data/kwpos.dart';
 export 'src/japanese/japanese_processor.dart';
+export 'src/japanese/mecab/unidic_fields.dart';
+export 'src/japanese/mecab/unidic_strings.dart';
 export 'src/language_processor.dart';
 export 'src/language_processor_options.dart';
 export 'src/term_reading_pair.dart';
