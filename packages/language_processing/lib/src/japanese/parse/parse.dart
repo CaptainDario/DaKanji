@@ -1,5 +1,4 @@
 import 'package:language_processing/language_processing.dart';
-import 'package:language_processing/src/japanese/mecab/unidic_fields.dart';
 import 'package:language_processing/src/parse_result.dart';
 import 'package:mecab_for_dart/mecab_dart.dart';
 
@@ -7,7 +6,7 @@ import 'package:mecab_for_dart/mecab_dart.dart';
 
 ParseResult parse(String text, Mecab mecab, ProcessorOptions options) {
 
-  final segments = <String?>[];
+  final surfaces = <String?>[];
   final tokens = <String?>[];
   final readings = <String?>[];
   final pos = <List<String?>>[];
@@ -18,7 +17,7 @@ ParseResult parse(String text, Mecab mecab, ProcessorOptions options) {
     if (node.surface == 'EOS') continue;
     int l = node.features.length;
 
-    segments.add(node.surface);
+    surfaces.add(node.surface);
     
     if(l > UniDicFields.pos4) {
       pos.add(node.features.sublist(0, UniDicFields.pos4+1));
@@ -44,7 +43,7 @@ ParseResult parse(String text, Mecab mecab, ProcessorOptions options) {
   }
 
   return ParseResult(
-    segments: segments,
+    surfaces: surfaces,
     tokens: tokens,
     readings: readings,
     pos: pos

@@ -16,7 +16,7 @@ ParseResult processText(String text, Mecab mecab, KanaKit kanaKit) {
   if (text.isEmpty) return ParseResult();
   if (text.trim().isEmpty) {
     return ParseResult(
-      segments: [text], 
+      surfaces: [text], 
       tokens: [text], 
       readings: [" "], 
       pos: [[]]
@@ -102,7 +102,7 @@ ParseResult processText(String text, Mecab mecab, KanaKit kanaKit) {
   }
 
   return ParseResult(
-    segments: segments,
+    surfaces: segments,
     tokens: tokens,
     readings: readings,
     pos: pos

@@ -2,13 +2,13 @@
 
 class ParseResult {
 
-  List<String?> segments;
+  List<String?> surfaces;
   List<String?> tokens;
   List<String?> readings;
   List<List<String?>> pos;
 
   ParseResult({
-    this.segments = const [],
+    this.surfaces = const [],
     this.tokens = const [],
     this.readings = const [],
     this.pos = const []

@@ -30,7 +30,7 @@ void main() {
         final ParseResult result = processText(input, mecab, kanaKit);
 
         // Assert length synchronicity across all ParseResult properties
-        expect(result.segments.length, equals(expectedSegments.length), 
+        expect(result.surfaces.length, equals(expectedSegments.length), 
             reason: 'Segment length mismatch.');
         expect(result.tokens.length, equals(expectedSegments.length), 
             reason: 'Tokens list must perfectly align with segments.');
@@ -40,7 +40,7 @@ void main() {
             reason: 'POS list must perfectly align with segments.');
 
         // Assert exact content matching
-        expect(result.segments, equals(expectedSegments));
+        expect(result.surfaces, equals(expectedSegments));
         expect(result.tokens, equals(expectedTokens));
         expect(result.readings, equals(expectedReadings));
       });
