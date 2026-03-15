@@ -68,9 +68,6 @@ bool handleDeepLink(Uri uri){
   else if(route[0] == Screens.text.name){
     handleDeepLinkText(args);
   }
-  else if(route[0] == Screens.dojg.name){
-    handleDeepLinkDojg(args);
-  }
   else if(route[0] == "kanji-table"){
     handleDeepLinkKanjiTable(args);
   }
@@ -231,30 +228,6 @@ void handleDeepLinkText(Map<String, String> linkArgs){
   
   g_NavigatorKey.currentState?.pushNamedAndRemoveUntil(
     "/${Screens.text.name}",
-    (route) => false,
-    arguments: navArgs
-  );
-}
-
-/// Handles deep links that are related to the dojg screen
-void handleDeepLinkDojg(Map<String, String> linkArgs){
-
-  NavigationArguments? navArgs = NavigationArguments(
-    false
-  );
-
-  /// set search target to web ...
-  if(linkArgs.containsKey("search")){
-    navArgs.dojgInitialSearch = linkArgs["search"]!;
-
-    if(linkArgs.containsKey("open")){
-      navArgs.dojgOpenFirstMatch = bool.tryParse(linkArgs["open"]!) ?? false;
-    }
-  }
-  
-
-  g_NavigatorKey.currentState?.pushNamedAndRemoveUntil(
-    "/${Screens.dojg.name}",
     (route) => false,
     arguments: navArgs
   );

@@ -2,10 +2,10 @@
 // 
 // 1. Create new screen in
 //     lib/screens/<<SCREEN_NAME>>/<<SCREEN_NAME>>.dart
-//   1.1 add a screen following lib/screens/dojg/dojg_screen.dart
+//   1.1 add a screen following lib/screens/<<SCREEN_NAME>>/<<SCREEN_NAME>>.dart for example
 // 2. Create screen's implementation in
 //     lib/widgets/<<SCREEN_NAME>>/
-//   2.1 add a tutorial (look at lib/widgets/dojg/dojg.dart)
+//   2.1 add a tutorial (look at lib/widgets/<<SCREEN_NAME>>/<<SCREEN_NAME>>_tutorial.dart for an example)
 //   2.2 add the if the tutorial should be shown to 
 //       lib/entities/user_data/user_data.dart
 //   2.3 add tutorial implementation in
@@ -39,7 +39,6 @@ enum Screens{
   youtube,
   immersion,
   ocr,
-  dojg,
   text,
   clipboard,
   kanjiTrainer,

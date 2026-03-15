@@ -10,7 +10,6 @@ import 'package:da_kanji_mobile/features/about/screens/about_screen.dart';
 import 'package:da_kanji_mobile/features/changelog/screens/changelog_screen.dart';
 import 'package:da_kanji_mobile/features/clipboard/screens/clipboard_screen.dart';
 import 'package:da_kanji_mobile/features/dictionary/screens/dictionary_screen.dart';
-import 'package:da_kanji_mobile/features/dojg/screens/dojg_screen.dart';
 import 'package:da_kanji_mobile/features/drawing/screens/draw_screen.dart';
 import 'package:da_kanji_mobile/features/init/screens/home_screen.dart';
 import 'package:da_kanji_mobile/features/kana_table/screens/kana_table_screen.dart';
@@ -79,13 +78,6 @@ Widget getWidgetFromScreen(String? name, NavigationArguments args){
   else if(name == "/${Screens.youtube.name}"){
     newRoute = YoutubeScreen(
       args.navigatedByDrawer, true,
-    );
-  }
-  else if(name == "/${Screens.dojg.name}"){
-    newRoute = DoJGScreen(
-      args.navigatedByDrawer, true,
-      openFirstResult: args.dojgOpenFirstMatch,
-      initialSearch: args.dojgInitialSearch,
     );
   }
   else if(name == "/${Screens.clipboard.name}"){

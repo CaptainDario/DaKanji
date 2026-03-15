@@ -25,7 +25,6 @@ UserData _$UserDataFromJson(Map<String, dynamic> json) => UserData()
   ..showTutorialDrawing = json['showTutorialDrawing'] as bool? ?? true
   ..showTutorialDictionary = json['showTutorialDictionary'] as bool? ?? true
   ..showTutorialText = json['showTutorialText'] as bool? ?? true
-  ..showTutorialDojg = json['showTutorialDojg'] as bool? ?? true
   ..showTutorialImmersion = json['showTutorialImmersion'] as bool? ?? true
   ..showTutorialOcr = json['showTutorialOcr'] as bool? ?? true
   ..showTutorialWebbrowser = json['showTutorialWebbrowser'] as bool? ?? true
@@ -39,8 +38,6 @@ UserData _$UserDataFromJson(Map<String, dynamic> json) => UserData()
   ..showRateDialog = json['showRateDialog'] as bool? ?? false
   ..showChangelog = json['showChangelog'] as bool? ?? false
   ..ankiSetup = json['ankiSetup'] as bool? ?? false
-  ..dojgImported = json['dojgImported'] as bool? ?? false
-  ..dojgWithMediaImported = json['dojgWithMediaImported'] as bool? ?? false
   ..drawingBackend = $enumDecodeNullable(
     _$InferenceBackendEnumMap,
     json['drawingBackend'],
@@ -60,7 +57,6 @@ Map<String, dynamic> _$UserDataToJson(UserData instance) => <String, dynamic>{
   'showTutorialDrawing': instance.showTutorialDrawing,
   'showTutorialDictionary': instance.showTutorialDictionary,
   'showTutorialText': instance.showTutorialText,
-  'showTutorialDojg': instance.showTutorialDojg,
   'showTutorialImmersion': instance.showTutorialImmersion,
   'showTutorialOcr': instance.showTutorialOcr,
   'showTutorialWebbrowser': instance.showTutorialWebbrowser,
@@ -74,8 +70,6 @@ Map<String, dynamic> _$UserDataToJson(UserData instance) => <String, dynamic>{
   'showRateDialog': instance.showRateDialog,
   'showChangelog': instance.showChangelog,
   'ankiSetup': instance.ankiSetup,
-  'dojgImported': instance.dojgImported,
-  'dojgWithMediaImported': instance.dojgWithMediaImported,
   'drawingBackend': _$InferenceBackendEnumMap[instance.drawingBackend],
 };
 

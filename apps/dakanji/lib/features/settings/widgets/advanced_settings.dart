@@ -149,27 +149,6 @@ class _AdvancedSettingsState extends State<AdvancedSettings> {
             await restartApp(context);
           },
         ),
-        // Delete dojg
-        ResponsiveIconButtonTile(
-          text: LocaleKeys.SettingsScreen_advanced_settings_delete_dojg.tr(),
-          icon: Icons.delete_forever,
-          onButtonPressed: () async {
-
-            GetIt.I<UserData>().dojgImported = false;
-            GetIt.I<UserData>().dojgWithMediaImported = false;
-            GetIt.I<UserData>().save();
-
-            Directory dojgDir = Directory(g_DakanjiPathManager.dojgDirectory.path);
-            if(dojgDir.existsSync()){
-              if(GetIt.I<Isars>().dojg != null){
-                await GetIt.I<Isars>().dojg!.close(deleteFromDisk: true);
-              }
-              await dojgDir.delete(recursive: true);
-              // ignore: use_build_context_synchronously
-              await restartApp(context);
-            }
-          },
-        ),
         // thanos dissolve effect for drawing screen
         ResponsiveCheckBoxTile(
           text: LocaleKeys.SettingsScreen_advanced_settings_snap.tr(),

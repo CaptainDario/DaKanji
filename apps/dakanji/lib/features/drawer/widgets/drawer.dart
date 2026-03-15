@@ -90,11 +90,6 @@ class DaKanjiDrawerState extends State<DaKanjiDrawer>
       null, null,
       true, null),
     DrawerEntry(
-      DaKanjiCustomIcons.dojg, LocaleKeys.DojgScreen_title,
-      "/${Screens.dojg.name}", Screens.dojg,
-      null, null,
-      true, null),
-    DrawerEntry(
       DaKanjiCustomIcons.kanji_table, LocaleKeys.KanjiTableScreen_title,
       "/${Screens.kanjiTable.name}", Screens.kanjiTable,
       null, null,

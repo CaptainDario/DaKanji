@@ -31,7 +31,6 @@ import 'package:da_kanji_mobile/core/routing/deep_links.dart';
 import 'package:da_kanji_mobile/core/user/user_activity.dart';
 import 'package:da_kanji_mobile/core/releases/changelog.dart';
 import 'package:da_kanji_mobile/features/dictionary/controller/dictionary_search.dart';
-import 'package:da_kanji_mobile/features/dojg/model/dojg_entry.dart';
 import 'package:da_kanji_mobile/features/drawer/controller/drawer_listener.dart';
 import 'package:da_kanji_mobile/features/drawing/model/draw_screen_layout.dart';
 import 'package:da_kanji_mobile/features/drawing/model/draw_screen_state.dart';
@@ -159,7 +158,6 @@ Future<void> initDocumentsServices(BuildContext context) async {
   // ISAR / database services
   String supportDirectory = g_DakanjiPathManager.dakanjiSupportDirectory.path;
   String isarPath = g_DakanjiPathManager.dictionaryDirectory.path;
-  String dojgIsarPath = g_DakanjiPathManager.dojgDirectory.path;
   GetIt.I.registerSingleton<Isars>(
     Isars(
       dictionary: Isar.getInstance("dictionary") ?? Isar.openSync(
@@ -177,13 +175,7 @@ Future<void> initDocumentsServices(BuildContext context) async {
       radk: Isar.getInstance("radk") ?? Isar.openSync(
         [RadkSchema], directory: isarPath,
         name: "radk", maxSizeMiB: 1
-      ),
-      dojg: GetIt.I<UserData>().dojgImported && Directory(dojgIsarPath).existsSync()
-        ? Isar.getInstance("dojg") ?? Isar.openSync(
-          [DojgEntrySchema], directory: dojgIsarPath,
-          name: "dojg", maxSizeMiB: 16
-        )
-        : null
+      )
     )
   );
 

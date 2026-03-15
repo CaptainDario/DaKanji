@@ -24,9 +24,6 @@ class PathManager {
   /// * time tracking data
   late final File userDataSqlite;
 
-  /// The directory where the files of the DoJG are stored
-  late final Directory dojgDirectory;
-
   /// directory that contains all files necessary for ml inference
   late final Directory mlDirectory;
   /// The directory for the single char recognition cnn
@@ -44,7 +41,6 @@ class PathManager {
     dictionaryDirectory = Directory(p.joinAll([dakanjiSupportDirectory.path, "assets", "dict"]));
 
     userDataSqlite = File(p.joinAll([dakanjiSupportDirectory.path, "user_data.sqlite"]));
-    dojgDirectory = Directory(p.joinAll([dakanjiSupportDirectory.path, "dojg"]));
 
     mlDirectory = Directory(p.joinAll([dakanjiSupportDirectory.path, "assets", "ml"]));
     singleCharCNNDirectory = Directory(p.joinAll([mlDirectory.path, "CNN_single_char"]));

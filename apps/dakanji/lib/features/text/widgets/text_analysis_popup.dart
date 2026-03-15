@@ -14,7 +14,6 @@ import 'package:da_kanji_mobile/core/user/user_data.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/features/dictionary/widgets/dictionary.dart';
-import 'package:da_kanji_mobile/features/dojg/widgets/dojg.dart';
 
 /// A popup used for showing dictionary entries and translations. Given a
 /// text.
@@ -70,12 +69,7 @@ class _TextAnalysisPopupState extends State<TextAnalysisPopup> with SingleTicker
     super.initState();
 
     tabNames = [LocaleKeys.DictionaryScreen_title.tr()];
-    if(GetIt.I<UserData>().dojgImported || GetIt.I<UserData>().dojgWithMediaImported){
-      tabNames.add(LocaleKeys.DojgScreen_title.tr());
-    }
-    if(g_webViewSupported){
-      tabNames.add("Deepl");
-    }
+    if(g_webViewSupported) tabNames.add("Deepl");
 
     popupTabController = TabController(length: tabNames.length, vsync: this);
     popupTabController.addListener(() {
@@ -161,17 +155,6 @@ class _TextAnalysisPopupState extends State<TextAnalysisPopup> with SingleTicker
                         allowDeconjugation: widget.allowDeconjugation,
                         backNavigationImmediatelyPopsWidget: false,
                       ),
-                      if(GetIt.I<UserData>().dojgImported || GetIt.I<UserData>().dojgWithMediaImported)
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(0.0, 8.0, 0.0, 0.0),
-                          child: DoJG(
-                            false,
-                            false,
-                            initialSearch: widget.text,
-                            includeVolumeTags: false,
-                            key: Key(widget.text),
-                          ),
-                        ),
                       if(g_webViewSupported)
                         Card(
                           child: InAppWebView(

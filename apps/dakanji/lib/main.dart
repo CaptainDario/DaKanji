@@ -70,7 +70,7 @@ Future<void> main() async {
       runApp(
         Phoenix(
           child: EasyLocalization(
-            supportedLocales: g_DaKanjiLocalizations.map((e) =>
+            supportedLocales: g_Localizations.map((e) =>
               Locale(isoToIso639_1[e.name]!.name)).toList(),
             path: 'assets/translations',
             fallbackLocale: const Locale('en'),

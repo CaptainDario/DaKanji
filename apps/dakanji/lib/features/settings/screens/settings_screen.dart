@@ -9,7 +9,6 @@ import 'package:da_kanji_mobile/features/drawer/widgets/drawer.dart';
 import 'package:da_kanji_mobile/features/settings/widgets/anki_settings.dart';
 import 'package:da_kanji_mobile/features/settings/widgets/clipboard_settings.dart';
 import 'package:da_kanji_mobile/features/settings/widgets/dictionary_settings.dart';
-import 'package:da_kanji_mobile/features/settings/widgets/dojg_settings.dart';
 import 'package:da_kanji_mobile/features/settings/widgets/drawing_settings.dart';
 import 'package:da_kanji_mobile/features/settings/widgets/kana_table_settings.dart';
 import 'package:da_kanji_mobile/features/settings/widgets/kanji_table_settings.dart';
@@ -95,7 +94,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   OcrSettings(),
 
                 TextSettings(),
-                DoJGSettings(),
                 KanjiTableSettings(),
                 KanaTableSettings(),
                 WordListSettings(),     

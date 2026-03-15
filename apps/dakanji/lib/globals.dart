@@ -96,7 +96,7 @@ int g_IsarDictMaxMiB = Platform.isIOS ? 384 : 512;
 int g_IsarExampleMaxMiB = Platform.isIOS ? 384 : 512;
 
 /// all localizations that are available in DaKanji
-const g_DaKanjiLocalizations = [
+const g_Localizations = [
   Iso639_3.eng, Iso639_3.deu, Iso639_3.rus, Iso639_3.jpn,
   Iso639_3.zho, Iso639_3.ita, Iso639_3.fra, Iso639_3.spa, Iso639_3.pol
 ];

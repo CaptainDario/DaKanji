@@ -6,7 +6,6 @@ import 'package:onboarding_overlay/onboarding_overlay.dart';
 // Project imports:
 import 'package:da_kanji_mobile/features/tutorial/model/clipboard_screen_tutorial.dart';
 import 'package:da_kanji_mobile/features/tutorial/model/dictionary_screen_tutorial.dart';
-import 'package:da_kanji_mobile/features/tutorial/model/dojg_screen_tutorial.dart';
 import 'package:da_kanji_mobile/features/tutorial/model/draw_screen_tutorial.dart';
 import 'package:da_kanji_mobile/features/tutorial/model/kana_table_screen_tutorial.dart';
 import 'package:da_kanji_mobile/features/tutorial/model/kanji_table_screen_tutorial.dart';
@@ -33,8 +32,6 @@ class Tutorials{
   late YoutubeScreenTutorial youtubeScreenTutorial;
   /// the text screen tutorial
   late TextScreenTutorial textScreenTutorial;
-  /// the dojg screen tutorial
-  late DojgScreenTutorial dojgScreenTutorial;
   /// the clipoard screen tutorial
   late ClipboardScreenTutorial clipboardScreenTutorial;
   /// the kanji table screen tutorial
@@ -82,14 +79,9 @@ class Tutorials{
       (e) => e + kanaTableScreenTutorial.indexes!.last + 1
     ).toList();
 
-    dojgScreenTutorial = DojgScreenTutorial();
-    dojgScreenTutorial.indexes = dojgScreenTutorial.indexes!.map(
-      (e) => e + wordListsScreenTutorial.indexes!.last + 1
-    ).toList();
-
     ocrScreenTutorial = OcrScreenTutorial();
     ocrScreenTutorial.indexes = ocrScreenTutorial.indexes!.map(
-      (e) => e + dojgScreenTutorial.indexes!.last + 1
+      (e) => e + wordListsScreenTutorial.indexes!.last + 1
     ).toList();
 
     immersionScreenTutorial = ImmersionScreenTutorial();
@@ -116,7 +108,6 @@ class Tutorials{
       kanjiTableScreenTutorial.steps! +
       kanaTableScreenTutorial.steps! +
       wordListsScreenTutorial.steps! + 
-      dojgScreenTutorial.steps! + 
       ocrScreenTutorial.steps! + 
       immersionScreenTutorial.steps! +
       webbrowserScreenTutorial.steps! +

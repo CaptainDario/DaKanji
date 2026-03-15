@@ -6,7 +6,6 @@ class DaKanjiIcons {
   
   static const IconData about = Icons.info_outline;
   static const IconData anki = DaKanjiCustomIcons.anki;
-  static const IconData dojg = DaKanjiCustomIcons.dojg;
   static const IconData drawing = Icons.brush;
   static const IconData dictionary = Icons.book;
   static const IconData reading = Icons.auto_stories;

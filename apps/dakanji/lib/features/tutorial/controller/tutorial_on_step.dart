@@ -66,9 +66,4 @@ void onTutorialStep (int index) async {
     GetIt.I<UserData>().showTutorialWordLists = false;
     await GetIt.I<UserData>().save();
   }
-  else if(index == GetIt.I<Tutorials>().dojgScreenTutorial.indexes!.last){
-    debugPrint("Dojg screen tutorial done, saving...");
-    GetIt.I<UserData>().showTutorialDojg = false;
-    await GetIt.I<UserData>().save();
-  }
 }

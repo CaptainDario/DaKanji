@@ -10,15 +10,22 @@
     - Improved deconjugation
     - Spellfix of searched words
 - Flash cards
-  - Study your word lists based on sophisitcated
-- Time tracking: Track you study sessions to see your effort grow
-- Sync your progress between your devices
+
+- Study Tracker: Track you study sessions to see your effort grow
+- Sync between devices
+  - Word Lists
+  - Study Tracker
+  - Search history
 - Merch: Support DaKanji while getting some fancy merch!
 
 ### Fixed
 
 - A grey screen flashing when opening the app
 - Way too many to list them all ...
+
+### Removed
+
+- DoJG
 
 ## v3.5.0b7 - 改善 (09.04.2025)
 

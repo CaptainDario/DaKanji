@@ -91,10 +91,6 @@ class UserData{
   @JsonKey(defaultValue: true)
   bool showTutorialText = true;
 
-  /// should the tutorial of the dictionary screen be shown
-  @JsonKey(defaultValue: true)
-  bool showTutorialDojg = true;
-
   /// should the tutorial of the immersion screen be shown
   @JsonKey(defaultValue: true)
   bool showTutorialImmersion = true;
@@ -146,14 +142,6 @@ class UserData{
   /// Has anki been setup successfully
   @JsonKey(defaultValue: false)
   bool ankiSetup = false;
-
-  /// Has the dictionary of japanese grammar anki deck (w/o media) been imported
-  @JsonKey(defaultValue: false)
-  bool dojgImported = false;
-
-  /// Has the dictionary of japanese grammar anki deck (w/ media) been imported
-  @JsonKey(defaultValue: false)
-  bool dojgWithMediaImported = false;
 
   /// The inference backend that should be used for drawing
   @JsonKey(defaultValue: null)
