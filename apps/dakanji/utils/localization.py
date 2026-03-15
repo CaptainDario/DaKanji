@@ -6,6 +6,7 @@ import platform
 import io
 import requests
 import pandas as pd
+import iso639
 
 # --- Configuration ---
 SHEET_ID = "1Fgue8f8CCHAT9Fxwp3DCrtB4OpYPkuJtDz_wSt2MS9s"
@@ -17,161 +18,190 @@ LOADER_PATH = "lib/CodegenLoader.dart"
 KEYS_PATH = "lib/locales_keys.dart"
 
 def get_supported_languages():
-    """Parses supported languages from globals.dart using regex."""
+    """
+    Extracts ISO 639-3 language codes from the g_Localizations list in globals.dart.
+    """
     print(f"Parsing supported languages from {GLOBALS_PATH}...")
     if not os.path.exists(GLOBALS_PATH):
         print(f"Error: {GLOBALS_PATH} not found.")
         return []
-
+        
     with open(GLOBALS_PATH, "r", encoding="utf8") as f:
         content = f.read()
         match = re.search(r"g_Localizations = \[(.*?)\];", content, re.DOTALL)
         if not match:
-            print("Error: Could not find g_Localizations in globals.dart")
             return []
-            
         return re.findall(r"Iso639_3\.(\w+)", match.group(1))
 
 def update_local_json_from_sheets(languages):
-    """Downloads the Excel export from Google Sheets and builds the master JSON."""
+    """
+    Downloads the Google Sheet as an Excel file and converts tabs into a structured 
+    master JSON file, skipping excluded sheets.
+    """
     url = f"https://docs.google.com/spreadsheets/d/{SHEET_ID}/export?format=xlsx"
-    
     print("Fetching latest localizations from Google Sheets...")
     try:
         response = requests.get(url)
         response.raise_for_status()
     except Exception as e:
-        print(f"Error: Could not download spreadsheet: {e}")
+        print(f"Network error: {e}")
         return False
 
     xl = pd.ExcelFile(io.BytesIO(response.content))
     localizations_all = {}
-
+    
     for sheet_name in sorted(xl.sheet_names):
         if sheet_name in EXCLUDE_LIST or sheet_name.startswith("_"):
             print(f" -> Skipping {sheet_name} (Excluded)")
             continue
             
-        print(f" -> Processing sheet: {sheet_name}")
+        print(f" -> Processing: {sheet_name}")
         df = xl.parse(sheet_name)
         if 'key' not in df.columns:
             continue
             
         df = df.dropna(subset=['key'])
         category_data = {}
-
+        
         for _, row in df.iterrows():
             key = str(row['key']).strip()
-            if key in ["", "nan"]: continue
+            if key in ["", "nan"]:
+                continue
             
-            translations = {}
-            for lang in languages:
-                val = row[lang] if lang in df.columns else ""
-                translations[lang] = str(val).strip() if pd.notna(val) else ""
-            
-            category_data[key] = translations
+            # Create a nested dictionary for each language code provided
+            category_data[key] = {
+                lang: (str(row[lang]).strip() if lang in df.columns and pd.notna(row[lang]) else "") 
+                for lang in languages
+            }
         
         localizations_all[sheet_name] = category_data
 
     os.makedirs(os.path.dirname(MASTER_JSON_PATH), exist_ok=True)
     with open(MASTER_JSON_PATH, "w", encoding="utf8") as f:
         json.dump(localizations_all, f, ensure_ascii=False, indent=2, sort_keys=True)
-    
-    print(f"Successfully updated {MASTER_JSON_PATH}")
     return True
 
 def clear_old_files():
-    """Removes old language JSONs and generated Dart files."""
+    """
+    Wipes the languages directory and deletes previous generated Dart files 
+    to prevent stale translation data.
+    """
     if os.path.exists(LANG_DIR):
         for f in os.listdir(LANG_DIR):
             os.remove(os.path.join(LANG_DIR, f))
     else:
         os.makedirs(LANG_DIR)
-
+        
     for path in [LOADER_PATH, KEYS_PATH]:
         if os.path.exists(path):
             os.remove(path)
 
 def generate_per_language_jsons(languages):
-    """Splits the master JSON into separate files for easy_localization to ingest."""
+    """
+    Splits the master JSON into individual {iso3}.json files required 
+    by the easy_localization generator.
+    """
     with open(MASTER_JSON_PATH, "r", encoding="utf8") as f:
         master_dict = json.load(f)
         
-        for code in languages:
-            localization = {}
-            for category, entries in master_dict.items():
-                localization[category] = {k: v.get(code, "") for k, v in entries.items()}
-            
-            output_file = os.path.join(LANG_DIR, f"{code}.json")
-            with open(output_file, "w", encoding="utf8") as f_out:
-                json.dump(localization, f_out, indent=2, sort_keys=True, ensure_ascii=False)
+    for code in languages:
+        localization = {
+            cat: {k: v.get(code, "") for k, v in entries.items()} 
+            for cat, entries in master_dict.items()
+        }
+        output_file = os.path.join(LANG_DIR, f"{code}.json")
+        with open(output_file, "w", encoding="utf8") as f_out:
+            json.dump(localization, f_out, indent=2, sort_keys=True, ensure_ascii=False)
 
 def run_flutter_generation():
-    """Executes the easy_localization generator commands."""
+    """
+    Triggers the easy_localization CLI to build locales_keys.dart and CodegenLoader.dart.
+    """
     args = ["dart", "run", "easy_localization:generate", "-S", LANG_DIR, "-O", "./lib", "-o"]
     use_shell = platform.system() == "Windows"
     
-    print("Generating localization keys...")
+    print("Running easy_localization generators...")
     subprocess.call([*args, "locales_keys.dart", "-f", "keys"], shell=use_shell)
-    print("Generating CodegenLoader...")
     subprocess.call([*args, "CodegenLoader.dart", "-f", "json"], shell=use_shell)
 
-def post_process_codegen_loader():
-    """Injects {{PRODUCT}} replacement logic and removes empty translation lines."""
+def post_process_codegen_loader(languages):
+    """
+    Modifies the generated CodegenLoader to support runtime {{PRODUCT}} replacement
+    and maps Flutter's ISO 639-1 locales to the project's ISO 639-3 keys.
+    """
     if not os.path.exists(LOADER_PATH):
         return
+
+    # Map 3-letter spreadsheet codes to 2-letter Flutter codes using iso639 package
+    mapping_dict = {}
+    for lang3 in languages:
+        try:
+            lang1 = iso639.Language.match(lang3).part1
+            if lang1:
+                mapping_dict[lang1] = lang3
+        except Exception:
+            print(f"Warning: No ISO 639-1 match found for {lang3}")
 
     with open(LOADER_PATH, "r", encoding="utf8") as f:
         content = f.read()
 
-    # 1. Filter out empty/null translation lines
+    # Strip empty lines or lines with null translations generated by the library
     lines = content.splitlines()
-    filtered_lines = [l for l in lines if '": ""' not in l and ": null" not in l]
-    content = "\n".join(filtered_lines)
+    content = "\n".join([l for l in lines if '": ""' not in l and ": null" not in l])
 
-    # 2. Define the runtime replacement logic
-    replacement_logic = """
+    # Rewrite class definition to include productName field and constructor
+    class_setup = (
+        "class CodegenLoader extends AssetLoader {\n"
+        "  final String productName;\n"
+        "  const CodegenLoader({required this.productName});"
+    )
+    
+    # Injected load method performs dynamic lookup and string replacement
+    replacement_logic = f"""
   @override
-  Future<Map<String, dynamic>?> load(String path, Locale locale) {
-    var data = mapLocales[locale.toString()];
+  Future<Map<String, dynamic>?> load(String path, Locale locale) {{
+    final Map<String, String> isoMapping = {json.dumps(mapping_dict, indent=4)};
+    final String languageCode = locale.languageCode.toLowerCase();
+    final String lookupKey = isoMapping[languageCode] ?? languageCode;
+    
+    final data = mapLocales[lookupKey];
     if (data == null) return Future.value(null);
 
-    String jsonStr = json.encode(data);
-    jsonStr = jsonStr.replaceAll('{{PRODUCT}}', g_RuntimeProductName);
-    return Future.value(json.decode(jsonStr));
-  }"""
+    try {{
+      String jsonStr = json.encode(data);
+      jsonStr = jsonStr.replaceAll('{{{{PRODUCT}}}}', productName);
+      return Future.value(json.decode(jsonStr));
+    }} catch (e) {{
+      return Future.value(data);
+    }}
+  }}"""
 
-    # 3. Use regex to replace the auto-generated 'load' method
-    content = re.sub(
-        r"@override\s+Future<Map<String, dynamic>\?> load\(String path, Locale locale\) \{.*?\n\s+\}",
-        replacement_logic,
-        content,
-        flags=re.DOTALL
-    )
-
-    # 4. Add missing import for json encoding/decoding
+    # Update class header and override the load() method
+    content = re.sub(r"class CodegenLoader extends AssetLoader\s*\{.*?const CodegenLoader\(\);", class_setup, content, flags=re.DOTALL)
+    content = re.sub(r"@override\s+Future<Map<String, dynamic>\?> load\(String path, Locale locale\) \{.*?\n\s+\}", replacement_logic, content, flags=re.DOTALL)
+    
     if "import 'dart:convert';" not in content:
         content = "import 'dart:convert';\n" + content
 
     with open(LOADER_PATH, "w", encoding="utf8") as f:
         f.write(content)
-    print(f"Post-processed {LOADER_PATH} (Empties removed & {{PRODUCT}} injected).")
+    print(f"Success: Injected {len(mapping_dict)} language mappings into CodegenLoader.")
 
 def main():
-    # 1. Setup
+    """
+    Main execution pipeline for localization synchronization.
+    """
     languages = get_supported_languages()
-    if not languages: return
+    if not languages:
+        return
 
-    # 2. Fetch Data
-    if not update_local_json_from_sheets(languages): return
+    if not update_local_json_from_sheets(languages):
+        return
 
-    # 3. Cleanup & Split
     clear_old_files()
     generate_per_language_jsons(languages)
-
-    # 4. Generate & Patch
     run_flutter_generation()
-    post_process_codegen_loader()
+    post_process_codegen_loader(languages)
 
 if __name__ == "__main__":
     main()
