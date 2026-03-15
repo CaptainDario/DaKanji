@@ -67,7 +67,7 @@ class _AdvancedSettingsState extends State<AdvancedSettings> {
             AwesomeDialog(
               context: context,
               dialogType: DialogType.noHeader,
-              btnOkColor: g_Dakanji_green,
+              btnOkColor: g_color_scheme_green,
               btnOkOnPress: (){},
               body: Padding(
                 padding: const EdgeInsets.all(8.0),

@@ -59,7 +59,7 @@ class TimeTrackingNotificationService {
     );
 
     await _notificationsPlugin.initialize(
-      initializationSettings,
+      settings: initializationSettings,
       onDidReceiveNotificationResponse: (NotificationResponse response) {
         if (response.actionId == _actionOpen) {
            // App is brought to foreground automatically by the option above.
@@ -152,10 +152,10 @@ class TimeTrackingNotificationService {
     );
 
     await _notificationsPlugin.show(
-      0,
-      'Still Studying?',
-      'Your session has been running for over 6 hours.',
-      platformChannelSpecifics,
+      id: 0,
+      title: 'Still Studying?',
+      body: 'Your session has been running for over 6 hours.',
+      notificationDetails: platformChannelSpecifics,
     );
   }
 }

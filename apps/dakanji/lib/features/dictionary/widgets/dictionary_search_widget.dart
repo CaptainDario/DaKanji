@@ -12,12 +12,10 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:database_builder/database_builder.dart';
 import 'package:get_it/get_it.dart';
 import 'package:kana_kit/kana_kit.dart';
-import 'package:language_processing/japanese/conjugation/mecab_deconjugate.dart';
-import 'package:language_processing/japanese/japanese_string_operations.dart';
-import 'package:mecab_for_flutter/mecab_for_flutter.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
+import 'package:language_processing/language_processing.dart';
 import 'package:da_kanji_mobile/features/dictionary/model/dict_search_result.dart';
 import 'package:da_kanji_mobile/features/dictionary/controller/dictionary_search.dart';
 import 'package:da_kanji_mobile/features/dictionary/model/filter_options.dart';
@@ -606,80 +604,8 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
   /// setState() needs to be called to update the ui.
   Future<void> updateSearchResults(
     String query, bool convertToHiragana, bool allowDeconjugation) async {
+      
 
-    // separate query and filters
-    List<String> filters = getFilters(query);
-    query = getQueryWithoutFilters(query);
-
-    // hide all flushbars from previous searches
-    //if(!(deconjugationFlushbar?.isDismissed() ?? true)) deconjugationFlushbar?.dismiss();
-
-    // only search in dictionary if the query is not empty
-    if(query == ""){
-      widget.context.read<DictSearch>().currentSearch = "";
-      widget.context.read<DictSearch>().currentKanaSearch = "";
-      widget.context.read<DictSearch>().currentAlternativeSearches = [];
-      widget.context.read<DictSearch>().searchResults = [];
-      return;
-    }
-
-    // if romaji conversion setting is enabled, convert query to hiragana
-    String? queryKana; KanaKit kKitRomaji = const KanaKit();
-    if(convertToHiragana) {
-      String t = kKitRomaji.toHiragana(kKitRomaji.toKana(query));
-      // assure that the outcome is japanese
-      if(kKitRomaji.isJapanese(t)) queryKana = t;
-    }
-    
-    // try to deconjugate the input if
-    // 1. setting is enabled
-    // 2. convertable to hiragana (or is already Japanese)
-    // 3. does not have spaces
-    List<String> deconjugated = []; KanaKit k = GetIt.I<KanaKit>();
-    if(allowDeconjugation && !query.contains(RegExp("\\s|${rawWildcardRegex.pattern}")) && 
-      (k.isJapanese(query) || k.isJapanese(k.toKana(query))))
-    {
-      deconjugated = getDeconjugatedTerms(k.isJapanese(query)
-        ? query
-        : k.toHiragana(k.toKana(query)),
-        GetIt.I<Mecab>(), GetIt.I<KanaKit>());
-
-      deconjugated.removeWhere((e) =>
-        e == queryKana || e == query || e.isEmpty);
-    }
-
-    debugPrint("$query $queryKana $deconjugated");
-
-    // use the sort order from the settings
-    List<String> searchTerms =
-      selectedSortPrioritiesToActualQueries(query, queryKana, deconjugated);
-
-    // if the search query was changed show a snackbar and give the option to
-    // use the original search
-    if(queryKana != query || deconjugated.isNotEmpty){
-
-      deconjugationFlushbar = DictionaryAltSearchFlushbar(
-          searchTerms, onAltSearchTapped)
-        .build(context)..show(context).then((value) {
-          deconjugationFlushbar = null;
-          return value;
-        }
-      );
-    }
-
-    // update search variables
-    widget.context.read<DictSearch>().currentSearch = query;
-    widget.context.read<DictSearch>().currentKanaSearch = queryKana ?? "";
-    widget.context.read<DictSearch>().currentAlternativeSearches = deconjugated;
-
-    debugPrint(queryKana);
-    // search
-    widget.context.read<DictSearch>().searchResults =
-      await GetIt.I<DictionarySearch>().search(
-        searchTerms,
-        filters,
-        context.read<Settings>().dictionary.limitSearchResults,
-      ) ?? [];
   }
 
   /// when the user taps on an alternative search term from the flushbar

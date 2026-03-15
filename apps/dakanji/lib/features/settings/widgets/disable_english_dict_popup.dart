@@ -15,7 +15,7 @@ AwesomeDialog disableEnglishDictPopup(BuildContext context){
   return AwesomeDialog(
     context: context,
     dialogType: DialogType.noHeader,
-    btnOkColor: g_Dakanji_green,
+    btnOkColor: g_color_scheme_green,
     btnOkOnPress: (){
 
     },

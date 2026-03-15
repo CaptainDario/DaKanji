@@ -30,7 +30,7 @@ class _CreditsScreenState extends State<CreditsScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("$g_AppTitle - ${LocaleKeys.AboutScreen_credits.tr()}"),
+        title: Text("$g_AppConfig.appTitle - ${LocaleKeys.AboutScreen_credits.tr()}"),
       ),
       body: PopScope(
         child: Center(

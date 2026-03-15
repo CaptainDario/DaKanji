@@ -3,7 +3,7 @@ import 'package:da_kanji_mobile/globals.dart';
 
 
 // --- UI Mappings ---
-const kCardColor = g_Dakanji_grey;
-const kPrimaryActionColor = g_Dakanji_blue;
-const kAccentBrand = g_Dakanji_green;
-const kAccentHighlight = g_Dakanji_red;
+const kCardColor = g_color_scheme_grey;
+const kPrimaryActionColor = g_color_scheme_blue;
+const kAccentBrand = g_color_scheme_green;
+const kAccentHighlight = g_color_scheme_red;

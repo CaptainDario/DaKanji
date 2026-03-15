@@ -9,20 +9,20 @@ final ThemeData lightTheme = ThemeData(
   fontFamily: 'NotoSansJP',
   
   brightness: Brightness.light,
-  colorSchemeSeed: g_Dakanji_green,
+  colorSchemeSeed: g_color_scheme_green,
   //colorSchemeSeed: Colors.pink,
 
-  //primarySwatch: createMaterialColor(g_Dakanji_green),
+  //primarySwatch: createMaterialColor(g_color_scheme_green),
 
   appBarTheme: const AppBarTheme(
-    backgroundColor: g_Dakanji_green,
+    backgroundColor: g_color_scheme_green,
     //color: Colors.brown.shade600,
     surfaceTintColor: Colors.transparent,
     scrolledUnderElevation: 0,
     foregroundColor: Colors.white
   ),
 
-  highlightColor: g_Dakanji_red,
+  highlightColor: g_color_scheme_red,
 
   typography: Typography.material2018()
 );

@@ -36,7 +36,7 @@ AwesomeDialog dojgImportFailedDialog(BuildContext context) {
   return AwesomeDialog(
     context: context,
     dialogType: DialogType.noHeader,
-    btnOkColor: g_Dakanji_green,
+    btnOkColor: g_color_scheme_green,
     btnOkOnPress: () {},
     dismissOnTouchOutside: false,
     body: Align(
@@ -53,7 +53,7 @@ AwesomeDialog dojgImportSucceededDialog(BuildContext context) {
   return AwesomeDialog(
     context: context,
     dialogType: DialogType.noHeader,
-    btnOkColor: g_Dakanji_green,
+    btnOkColor: g_color_scheme_green,
     btnOkOnPress: () {},
     dismissOnTouchOutside: false,
     desc: LocaleKeys.DojgScreen_dojg_import_success.tr()

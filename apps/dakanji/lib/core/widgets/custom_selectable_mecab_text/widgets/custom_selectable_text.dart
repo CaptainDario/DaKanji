@@ -9,10 +9,14 @@ import 'package:da_kanji_mobile/core/widgets/custom_selectable_mecab_text/model/
 import 'package:da_kanji_mobile/core/widgets/custom_selectable_mecab_text/model/mecab_text_field_formatter.dart';
 import 'package:keyboard_actions/keyboard_actions.dart';
 
+import 'package:language_processing/language_processing.dart';
+
 /// Widget that implements custom text selection and furigana rendering
 class CustomSelectableText extends StatefulWidget {
   const CustomSelectableText({
     super.key,
+
+    required this.lp,
 
     this.editable = true,
     this.initialText,
@@ -30,6 +34,9 @@ class CustomSelectableText extends StatefulWidget {
     this.onTripleTap,
     this.onTapOutsideOfText,
   });
+
+  /// The language processor used for analyzing the text
+  final LanguageProcessor lp;
 
   /// Is the text editable or read only
   final bool editable;
@@ -85,6 +92,7 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
     super.initState();
 
     textInputController = MecabTextEditingController(
+      lp: widget.lp,
       showRubys: widget.showRubys,
       addSpaces: widget.addSpaces,
       showColors: widget.showColors,
@@ -162,10 +170,10 @@ class _CustomSelectableTextState extends State<CustomSelectableText> {
           focusNode: f,
           cursorHeight: textInputController.textCharacterSize.height,
           showCursor: true,
-          cursorColor: g_Dakanji_red,
+          cursorColor: g_color_scheme_red,
           
-          backgroundCursorColor: g_Dakanji_red,
-          selectionColor: g_Dakanji_green.withAlpha(150),
+          backgroundCursorColor: g_color_scheme_red,
+          selectionColor: g_color_scheme_green.withAlpha(150),
           showSelectionHandles: false,
           readOnly: textInputController.readOnly,
           selectionControls: MaterialTextSelectionControls(),

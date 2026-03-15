@@ -29,19 +29,19 @@ class AboutScreen extends StatelessWidget {
   final bool openedByDrawer;
 
   final String about = LocaleKeys.AboutScreen_about_text.tr(namedArgs : {
-    "GITHUB_ISSUES" : g_GithubIssues,
-    "PRIVACY_POLICE" : g_PrivacyPoliceUrl,
+    "GITHUB_ISSUES" : g_AppConfig.githubIssues,
+    "PRIVACY_POLICE" : g_AppConfig.privacyPolicyUrl,
     "RATE_ON_MOBILE_STORE" : GetIt.I<PlatformDependentVariables>().appStoreLink,
     "DAAPPLAB_STORE_PAGE" : GetIt.I<PlatformDependentVariables>().daapplabStorePage,
-    "DISCORD_SERVER" : g_DiscordInvite,
-    "PLAYSTORE_PAGE" : g_PlaystorePage,
-    "APPSTORE_PAGE" : g_AppStorePage,
-    "MACSTORE_PAGE" : g_AppStorePage,
-    "SNAPSTORE_PAGE" : g_SnapStorePage,
-    "FLATPAKSTORE_PAGE" : g_GithubLatestReleasesPage,
-    "PORTABLE_DOWNLOAD" : g_GithubLatestReleasesPage, 
-    "MICROSOFT_STORE_PAGE" : g_MicrosoftStorePage,
-    "GITHUB_RELEASES_PAGE" : g_GithubReleasesPage,
+    "DISCORD_SERVER" : g_AppConfig.discordInviteLink,
+    "PLAYSTORE_PAGE" : g_AppConfig.playstorePage,
+    "APPSTORE_PAGE" : g_AppConfig.appStorePage,
+    "MACSTORE_PAGE" : g_AppConfig.appStorePage,
+    "SNAPSTORE_PAGE" : g_AppConfig.snapStorePage,
+    "FLATPAKSTORE_PAGE" : g_AppConfig.githubLatestReleasesPage,
+    "PORTABLE_DOWNLOAD" : g_AppConfig.githubLatestReleasesPage, 
+    "MICROSOFT_STORE_PAGE" : g_AppConfig.microsoftStorePage,
+    "GITHUB_RELEASES_PAGE" : g_AppConfig.githubReleasesPage,
   });
 
   AboutScreen(this.openedByDrawer, {super.key});
@@ -71,7 +71,7 @@ class AboutScreen extends StatelessWidget {
                     decoration: BoxDecoration(
                       color: Theme.of(context).brightness == Brightness.dark
                         ? Colors.transparent
-                        : g_Dakanji_blue,
+                        : g_color_scheme_blue,
                       borderRadius: BorderRadius.circular(100)
                     ),
                     child: Padding(
@@ -150,7 +150,7 @@ class AboutScreen extends StatelessWidget {
                         onPressed: () async {
                           showAboutDialog(
                             context: context,
-                            applicationName: g_AppTitle,
+                            applicationName: g_AppConfig.appTitle,
                             applicationVersion: g_Version.fullVersionString,
                             applicationIcon: const Image(
                               image: AssetImage("assets/images/dakanji/icon.png",),

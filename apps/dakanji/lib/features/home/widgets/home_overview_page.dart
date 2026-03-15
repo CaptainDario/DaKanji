@@ -44,11 +44,11 @@ class _HomeOverviewPageState extends State<HomeOverviewPage> {
                 start: start,
                 end: end
               ),*/
-            vocabColor: g_Dakanji_green,
-            charactersColor: g_Dakanji_red,
-            timeColor: g_Dakanji_blue,
-            streakColor: g_Dakanji_green.withAlpha(50),
-            streakGlowColor: g_Dakanji_green,
+            vocabColor: g_color_scheme_green,
+            charactersColor: g_color_scheme_red,
+            timeColor: g_color_scheme_blue,
+            streakColor: g_color_scheme_green.withAlpha(50),
+            streakGlowColor: g_color_scheme_green,
           ),
           FutureBuilder<({int currentProgress, int todaysGoal})>(
             future: () async {
@@ -67,7 +67,7 @@ class _HomeOverviewPageState extends State<HomeOverviewPage> {
                 dailyGoal: asyncSnapshot.hasData
                   ? asyncSnapshot.data!.todaysGoal
                   : 0,
-                color: g_Dakanji_blue,
+                color: g_color_scheme_blue,
                 action: LocaleKeys.HomeScreen_study_card_action_time.tr(),
                 icon: DaKanjiIcons.timeTracking,
               );
@@ -78,7 +78,7 @@ class _HomeOverviewPageState extends State<HomeOverviewPage> {
             subtitle: LocaleKeys.HomeScreen_study_card_subtitle_vocab.tr(),
             currentProgress: 20,
             dailyGoal: 20,
-            color: g_Dakanji_green,
+            color: g_color_scheme_green,
             action: LocaleKeys.HomeScreen_study_card_action_vocab.tr(),
             icon: DaKanjiIcons.wordLists,
           ),
@@ -88,7 +88,7 @@ class _HomeOverviewPageState extends State<HomeOverviewPage> {
             subtitle: LocaleKeys.HomeScreen_study_card_subtitle_chars.tr(),
             currentProgress: 21,
             dailyGoal: 40,
-            color: g_Dakanji_red,
+            color: g_color_scheme_red,
             action: LocaleKeys.HomeScreen_study_card_action_chars.tr(),
             icon: DaKanjiIcons.kanjiTrainer,
           ),*/

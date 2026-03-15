@@ -7,7 +7,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/core/iso/iso_table.dart';
+import 'package:language_processing/language_processing.dart';
 import 'package:da_kanji_mobile/features/settings/model/settings.dart';
 import 'package:da_kanji_mobile/features/dictionary/widgets/meanings_grid.dart';
 
@@ -55,7 +55,7 @@ class _WordMeaningsState extends State<WordMeanings> {
 
           // get the meaning of the selected language
           List<LanguageMeanings> meanings = widget.entry.meanings.where(
-            (element) => isoToiso639_1[element.language]!.name == lang
+            (element) => isoToIso639_1[element.language]!.name == lang
           ).toList();
           
           
@@ -73,7 +73,7 @@ class _WordMeaningsState extends State<WordMeanings> {
                   ),
                   const SizedBox(width: 10,),
                   Text(
-                    isoToLanguage[isoToiso639_1[lang]]!
+                    iso639_1ToLanguage[isoToIso639_1[lang]]!
                   )
                 ],
               ),

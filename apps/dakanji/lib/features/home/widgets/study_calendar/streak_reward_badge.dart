@@ -14,9 +14,9 @@ class StreakRewardBadge extends StatefulWidget {
   const StreakRewardBadge({
     super.key,
     required this.streak,
-    this.streakColor = g_Dakanji_green,
-    this.timeColor = g_Dakanji_blue,    
-    this.charactersColor = g_Dakanji_red, 
+    this.streakColor = g_color_scheme_green,
+    this.timeColor = g_color_scheme_blue,    
+    this.charactersColor = g_color_scheme_red, 
     this.externalAnimation,
     this.scale = 1.0,
   });

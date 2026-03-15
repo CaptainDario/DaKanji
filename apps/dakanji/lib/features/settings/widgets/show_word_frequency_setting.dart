@@ -51,7 +51,7 @@ class _ShowWordFrequencySettingState extends State<ShowWordFrequencySetting> {
         AwesomeDialog(
           context: context,
           dialogType: DialogType.noHeader,
-          btnOkColor: g_Dakanji_green,
+          btnOkColor: g_color_scheme_green,
           btnOkOnPress: (){},
           body: Center(
             child: Padding(

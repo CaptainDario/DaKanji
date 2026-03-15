@@ -420,8 +420,8 @@ void _stopTimer() async {
                           child: Material(
                             color: Colors.transparent,
                             child: InkWell(
-                              //splashColor: g_Dakanji_green,
-                              highlightColor: g_Dakanji_green.withValues(alpha: 0.1),
+                              //splashColor: g_color_scheme_green,
+                              highlightColor: g_color_scheme_green.withValues(alpha: 0.1),
                               customBorder: const CircleBorder(),
                               onTap: _resetController.isAnimating
                                   ? null

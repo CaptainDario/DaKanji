@@ -117,7 +117,7 @@ void openDictionary(BuildContext context, String char) async {
               context,
               "No translator installed", 
               LocaleKeys.General_download.tr(),
-              g_PlaystoreBaseUrl + g_GoogleTranslateId
+              g_AppConfig.playstoreBaseUrl + g_GoogleTranslateId
             );
           }
       }
@@ -147,7 +147,7 @@ void openDictionary(BuildContext context, String char) async {
               "DICTIONARY" : "aedict"
             }), 
             LocaleKeys.General_download.tr(), 
-            g_PlaystoreBaseUrl + g_AedictId 
+            g_AppConfig.playstoreBaseUrl + g_AedictId 
           );
         }
       }
@@ -175,7 +175,7 @@ void openDictionary(BuildContext context, String char) async {
                 "DICTIONARY" : "akebi"
               }), 
               LocaleKeys.General_download.tr(), 
-              g_PlaystoreBaseUrl + g_AkebiId
+              g_AppConfig.playstoreBaseUrl + g_AkebiId
             );
           }
         }
@@ -201,7 +201,7 @@ void openDictionary(BuildContext context, String char) async {
                 "DICTIONARY" : "takoboto"
               }), 
               LocaleKeys.General_download.tr(), 
-              g_PlaystoreBaseUrl + g_TakobotoId
+              g_AppConfig.playstoreBaseUrl + g_TakobotoId
             );
           }
         }
@@ -225,7 +225,7 @@ void openDictionary(BuildContext context, String char) async {
               "DICTIONARY" : "Shirabe Jisho"
             }),
             LocaleKeys.General_download.tr(), 
-            g_AppStoreBaseUrl + g_ShirabeId
+            g_AppConfig.appStoreBaseUrl + g_ShirabeId
           );
         }
       }
@@ -244,7 +244,7 @@ void openDictionary(BuildContext context, String char) async {
               "DICTIONARY" : "Imiwa?"
             }),
             LocaleKeys.General_download.tr(),
-            g_AppStoreBaseUrl + g_ImiwaId
+            g_AppConfig.appStoreBaseUrl + g_ImiwaId
           );
         }
       }
@@ -263,7 +263,7 @@ void openDictionary(BuildContext context, String char) async {
               "DICTIONARY" : "Japanese"
             }),
             LocaleKeys.General_download.tr(),
-            g_AppStoreBaseUrl + g_JapaneseId
+            g_AppConfig.appStoreBaseUrl + g_JapaneseId
           );
         }
       }
@@ -284,7 +284,7 @@ void openDictionary(BuildContext context, String char) async {
               "DICTIONARY" : "Midori"
             }),
             LocaleKeys.General_download.tr(),
-            g_AppStoreBaseUrl + g_MidoriId
+            g_AppConfig.appStoreBaseUrl + g_MidoriId
           );
         }
       }

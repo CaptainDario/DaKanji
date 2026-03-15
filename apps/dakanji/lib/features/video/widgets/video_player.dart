@@ -9,15 +9,13 @@ import 'package:chewie/chewie.dart';
 import 'package:flutter_subtitle/flutter_subtitle.dart' hide Subtitle;
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
-import 'package:kana_kit/kana_kit.dart';
-import 'package:mecab_for_flutter/mecab_for_flutter.dart';
 import 'package:video_player/video_player.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/core/widgets/custom_selectable_mecab_text/controller/custom_selectable_text_processing.dart';
 import 'package:da_kanji_mobile/core/widgets/custom_selectable_mecab_text/widgets/custom_selectable_text.dart';
 import 'package:da_kanji_mobile/features/text/widgets/text_analysis_stack.dart';
 import 'package:da_kanji_mobile/core/widgets/dakanji/dakanji_loading_indicator.dart';
+import 'package:language_processing/language_processing.dart';
 
 class VideoPlayer extends StatefulWidget {
 
@@ -25,10 +23,13 @@ class VideoPlayer extends StatefulWidget {
   final File videoFile;
   /// The file that contains the subtitles that should be displayed
   final File subsFile;
+  /// The language processor used for analyzing the text
+  final LanguageProcessor lp;
 
   const VideoPlayer(
     this.videoFile,
     this.subsFile,
+    this.lp,
     {
       super.key
     }
@@ -61,9 +62,9 @@ class _VideoPlayerState extends State<VideoPlayer>  with TickerProviderStateMixi
   ValueNotifier<List<String>> mecabSurfaces = ValueNotifier<List<String>>([]);
   //List<String> mecabSurfaces = const [];
   /// the output part of speech elements of mecab
-  List<List<String>> mecabPOS = const [];
+  List<List<String>> pos = const [];
   /// the output readings of mecab
-  List<String> mecabReadings = const [];
+  List<String> readings = const [];
 
   Offset subtitleOffset = Offset.zero;
 
@@ -100,13 +101,12 @@ class _VideoPlayerState extends State<VideoPlayer>  with TickerProviderStateMixi
         
         if(subtitle != currentSubtitle){
           currentSubtitle = subtitle;
-          final res = processText(currentSubtitle,
-            GetIt.I<Mecab>(), GetIt.I<KanaKit>());
+          final res = GetIt.I<LanguageProcessor>().parse(currentSubtitle, ProcessorOptions());
             WidgetsBinding.instance.addPostFrameCallback(
-              (timeStamp) => mecabSurfaces.value = res.item2,
+              (timeStamp) => mecabSurfaces.value = res.surfaces.nonNulls.toList(),
             );
-          mecabReadings = res.item1;
-          mecabPOS      = res.item3;
+          readings = res.readings.nonNulls.toList();
+          pos      = res.pos.map((e) => e.nonNulls.toList()).toList();
         }
         return Container();
 
@@ -179,7 +179,7 @@ class _VideoPlayerState extends State<VideoPlayer>  with TickerProviderStateMixi
                                 Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: CustomSelectableText(
-                                    
+                                    lp: widget.lp,
                                     showRubys: true,
                                     onSelectionChange: (p0) {
                                       currentSelection.value = currentSubtitle

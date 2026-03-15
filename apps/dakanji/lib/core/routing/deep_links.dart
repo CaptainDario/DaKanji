@@ -36,7 +36,7 @@ bool handleDeepLink(Uri uri){
   // extract route and args ...
   List<String> route = []; Map<String, String> args = {};
   // ... from dakanji:// based links
-  if(g_AppLinkDaKanji.toString().startsWith(g_AppLinkDaKanji)) {
+  if(g_AppConfig.appLink.toString().startsWith(g_AppConfig.appLink)) {
     if (uri.host.isNotEmpty) route.add(uri.host);
     route.addAll(uri.pathSegments);
 
@@ -50,7 +50,7 @@ bool handleDeepLink(Uri uri){
     }
   }
   // ... from https://dakanji.app/app/ based links
-  else if(uri.toString().startsWith(g_AppLinkHttps)) {
+  else if(uri.toString().startsWith(g_AppConfig.appLinkHttps)) {
     route = uri.pathSegments.sublist(1);
   }
 

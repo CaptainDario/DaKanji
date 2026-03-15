@@ -6,7 +6,7 @@ import 'package:database_builder/database_builder.dart';
 import 'package:tuple/tuple.dart';
 
 // Project imports:
-import 'package:language_processing/japanese/japanese_string_operations.dart';
+import 'package:language_processing/language_processing.dart';
 
 /// Sorts a list of Jmdict entries given a query text.
 /// If it is a search *without* wildcards the order is determined
@@ -40,7 +40,7 @@ List<List<JMdict>> sortJmdictList(
   List<List<int>> lenDifferences = List.generate(n, (i) => <int>[]);
 
   // if no wildcard is used, iterate over the entries and create a ranking for each
-  if(!allQueries.first.contains(rawWildcardRegex)){
+  if(!allQueries.first.contains("")){
     // iterate over the entries and create a ranking for each
     for (JMdict entry in entries) {
       // KANJI matched (normal query) ?

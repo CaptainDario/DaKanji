@@ -148,7 +148,7 @@ class _KanaTableScreenState extends State<KanaTableScreen> with SingleTickerProv
       drawerClosed: !widget.navigatedByDrawer,
       child: Scaffold(
         floatingActionButton: FloatingActionButton(
-          focusColor: g_Dakanji_green,
+          focusColor: g_color_scheme_green,
           onPressed: () => isDialOpen.value = !isDialOpen.value,
           child: Focus(
             focusNode: widget.includeTutorial
@@ -162,8 +162,8 @@ class _KanaTableScreenState extends State<KanaTableScreen> with SingleTickerProv
               openCloseDial: isDialOpen,
               activeIcon: Icons.close,
               iconTheme: const IconThemeData(color: Colors.white),
-              backgroundColor: g_Dakanji_green,
-              activeBackgroundColor: g_Dakanji_red,
+              backgroundColor: g_color_scheme_green,
+              activeBackgroundColor: g_color_scheme_red,
               spacing: 10,
               onClose: () => updateSettings(),
               children: [
@@ -257,7 +257,7 @@ class _KanaTableScreenState extends State<KanaTableScreen> with SingleTickerProv
                         ),
                       ),
                     ),
-                    backgroundColor: g_Dakanji_green,
+                    backgroundColor: g_color_scheme_green,
                     onTap: () {
                       setState(() => menuFunctions[i]());
                     },

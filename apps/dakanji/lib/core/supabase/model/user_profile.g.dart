@@ -8,7 +8,7 @@ part of 'user_profile.dart';
 
 UserProfile _$UserProfileFromJson(Map<String, dynamic> json) => UserProfile(
   avatarColor: json['avatarColor'] == null
-      ? g_Dakanji_red
+      ? g_color_scheme_red
       : const ColorIntConverter().fromJson(
           (json['avatarColor'] as num).toInt(),
         ),

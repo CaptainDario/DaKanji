@@ -6,4 +6,15 @@ part of 'search_history_dao.dart';
 mixin _$SearchHistoryDaoMixin on DatabaseAccessor<UserDataDB> {
   $SearchHistoryTableTable get searchHistoryTable =>
       attachedDatabase.searchHistoryTable;
+  SearchHistoryDaoManager get managers => SearchHistoryDaoManager(this);
+}
+
+class SearchHistoryDaoManager {
+  final _$SearchHistoryDaoMixin _db;
+  SearchHistoryDaoManager(this._db);
+  $$SearchHistoryTableTableTableManager get searchHistoryTable =>
+      $$SearchHistoryTableTableTableManager(
+        _db.attachedDatabase,
+        _db.searchHistoryTable,
+      );
 }

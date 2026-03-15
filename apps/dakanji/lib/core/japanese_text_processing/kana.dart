@@ -35,7 +35,7 @@ String themeMnemonicSvg(String svgString, bool darkTheme){
         colorStrings[cIdx],
         cIdx == closerToblack
           ? (darkTheme ? "ffffff" : "000000")
-          : g_Dakanji_red.toARGB32().toRadixString(16).substring(2)
+          : g_color_scheme_red.toARGB32().toRadixString(16).substring(2)
       )
     );
   }

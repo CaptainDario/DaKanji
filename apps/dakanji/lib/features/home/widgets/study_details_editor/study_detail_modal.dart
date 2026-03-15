@@ -75,7 +75,7 @@ class _StudyDetailModalState extends State<StudyDetailModal> {
         backgroundColor: const Color(0xFF1E2329),
         floatingActionButton: FloatingActionButton(
           onPressed: () => _openSessionSheet(null),
-          backgroundColor: g_Dakanji_green,
+          backgroundColor: g_color_scheme_green,
           child: const Icon(Icons.add, color: Colors.white),
         ),
         body: CustomScrollView(

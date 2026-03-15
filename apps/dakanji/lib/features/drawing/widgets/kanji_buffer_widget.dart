@@ -244,7 +244,7 @@ class _KanjiBufferWidgetState extends State<KanjiBufferWidget>
                           maxLines: 1,
                           overflow: TextOverflow.fade,
                           style: TextStyle(
-                            fontFamily: g_japaneseFontFamily,
+                            fontFamily: g_AppConfig.fontFamily,
                             color: Theme.of(context).textTheme.bodyLarge!.color,
                             fontSize: 100,
                           ),

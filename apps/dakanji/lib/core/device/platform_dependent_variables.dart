@@ -18,23 +18,23 @@ class PlatformDependentVariables {
   PlatformDependentVariables(){
 
     if(Platform.isAndroid){
-      appStoreLink = g_PlaystorePage;
+      appStoreLink = g_AppConfig.playstorePage;
       daapplabStorePage = g_DaAppLabPlaystorePage;
     }
     else if(Platform.isIOS){
-      appStoreLink = g_AppStorePage;
+      appStoreLink = g_AppConfig.appStorePage;
       daapplabStorePage = g_DaAppLabAppStorepage;
     }
     else if(Platform.isWindows){
-      appStoreLink = g_MicrosoftStorePage;
+      appStoreLink = g_AppConfig.microsoftStorePage;
       daapplabStorePage = g_MicrosoftStoreDaAppLabPage;
     }    
     else if(Platform.isLinux){
-      appStoreLink = g_SnapStorePage;
+      appStoreLink = g_AppConfig.snapStorePage;
       daapplabStorePage = g_SnapStoreDaAppLabPage;
     }
     else if(Platform.isMacOS){
-      appStoreLink = g_AppStorePage;
+      appStoreLink = g_AppConfig.appStorePage;
       daapplabStorePage = g_DaAppLabAppStorepage;
     }
     else{

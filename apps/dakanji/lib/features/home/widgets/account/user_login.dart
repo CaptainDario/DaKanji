@@ -295,7 +295,7 @@ class _AnimatedButton extends StatelessWidget {
         child: ElevatedButton(
           onPressed: isLoading ? null : onPressed,
           style: ElevatedButton.styleFrom(
-            backgroundColor: g_Dakanji_green,
+            backgroundColor: g_color_scheme_green,
             foregroundColor: Colors.white,
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
           ),

@@ -30,7 +30,7 @@ void downloadAudio(BuildContext context) async {
     btnOkOnPress: () async {
       downloadAssetFromGithubRelease(
         File(g_DakanjiPathManager.audiosDirectory.path),
-        g_GithubApiDependenciesRelase,
+        g_AppConfig.githubApiDataRelase,
       ).then((value) {
         // ignore: use_build_context_synchronously
         Navigator.of(context).pop();
@@ -118,7 +118,7 @@ Future<void> getAsset(FileSystemEntity asset, String dest, String url,
           headerAnimationLoop: false,
           desc: LocaleKeys.InitScreen_download_failed_popup_text.tr(),
           btnOkText: LocaleKeys.InitScreen_download_failed_popup_retry.tr(),
-          btnOkColor: g_Dakanji_green,
+          btnOkColor: g_color_scheme_green,
           dialogType: DialogType.noHeader,
           btnOkOnPress: (){}
         ).show();

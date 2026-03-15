@@ -187,8 +187,13 @@ class _UserAccountPageState extends State<UserAccountPage> {
               LinkToSponsorCard(
                 sponsorIcon: Icons.account_circle_outlined,
                 sponsor: "GitHub",
-                sponsorStatus: LocaleKeys.HomeScreen_acount_page_not_linked.tr() +
-                  context.read<SupabaseCacheManager>().userProfile.sponsorships.isGithubSponsor.toString(),
+                sponsorStatus: context.watch<SupabaseCacheManager>().userProfile.sponsorships.isGithubConnected
+                  ? (
+                    context.watch<SupabaseCacheManager>().userProfile.sponsorships.isGithubSponsor
+                      ? "Sponsor tier:"
+                      : "Not a sponsor"
+                  )
+                  : LocaleKeys.HomeScreen_acount_page_not_linked.tr(),
                 onTap: () async {
                   final handler = OAuthLinkerService(
                     cacheManager: context.read<SupabaseCacheManager>(),
@@ -228,7 +233,7 @@ class _UserAccountPageState extends State<UserAccountPage> {
                         Colors.white
                       ),
                       backgroundColor: WidgetStateProperty.all<Color>(
-                        g_Dakanji_green
+                        g_color_scheme_green
                       ),
                     ),
                     onPressed: _loading ? null : _updateProfile,

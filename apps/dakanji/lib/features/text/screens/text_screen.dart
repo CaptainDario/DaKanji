@@ -29,6 +29,7 @@ import 'package:da_kanji_mobile/features/text/widgets/analysis_option_button.dar
 import 'package:da_kanji_mobile/core/widgets/custom_selectable_mecab_text/widgets/custom_selectable_text.dart';
 import 'package:da_kanji_mobile/features/text/widgets/text_analysis_stack.dart';
 import 'package:da_kanji_mobile/core/widgets/multi_focus.dart';
+import 'package:language_processing/language_processing.dart';
 
 /// The "draw"-screen.
 /// 
@@ -135,7 +136,7 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin,
     );
 
     // show the sample text in debug mode initially
-    if(kDebugMode) inputText = g_SampleText;
+    if(kDebugMode) inputText = g_AppConfig.sampleText;
     // if there is initial text, set it
     if(widget.initialText != null) inputText = widget.initialText!;
 
@@ -255,6 +256,7 @@ class _TextScreenState extends State<TextScreen> with TickerProviderStateMixin,
                                 child: Align(
                                   alignment: Alignment.bottomLeft,
                                   child: CustomSelectableText(
+                                    lp: GetIt.I<LanguageProcessor>(),
                                     editable: allowTextEditing,
                                     initialText: inputText,
                                     showRubys: showRubys,

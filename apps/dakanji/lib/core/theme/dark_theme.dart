@@ -11,9 +11,9 @@ final ThemeData darkTheme = ThemeData(
 
   brightness: Brightness.dark,
 
-  primarySwatch: createMaterialColor(g_Dakanji_green),
+  primarySwatch: createMaterialColor(g_color_scheme_green),
 
-  highlightColor: g_Dakanji_red,
+  highlightColor: g_color_scheme_red,
 
   appBarTheme: const AppBarTheme(
     surfaceTintColor: Colors.transparent,

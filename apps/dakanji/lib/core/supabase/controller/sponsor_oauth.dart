@@ -17,7 +17,7 @@ class OAuthLinkerService {
 
   static final _githubClientId = Env.GITHUB_CLIENT_ID;
   static final _patreonClientId = Env.PATREON_CLIENT_ID;
-  static final String _callbackUrlScheme = g_AppLinkDaKanji.replaceAll("://", "");
+  static final String _callbackUrlScheme = g_AppConfig.appLink.replaceAll("://", "");
 
   OAuthLinkerService({
     required SupabaseCacheManager cacheManager,
@@ -68,18 +68,18 @@ class OAuthLinkerService {
     switch (provider) {
       case OAuthProvider.github:
         return "https://github.com/login/oauth/authorize"
-            "?client_id=$_githubClientId"
-            "&redirect_uri=$redirectUri"
-            "&scope=read:user"
-            "&state=${provider.name}";
+          "?client_id=$_githubClientId"
+          "&redirect_uri=$redirectUri"
+          "&scope=read:user"
+          "&state=${provider.name}";
             
       case OAuthProvider.patreon:
         return "https://www.patreon.com/oauth2/authorize"
-            "?response_type=code"
-            "&client_id=$_patreonClientId"
-            "&redirect_uri=$redirectUri"
-            "&scope=identity%20campaigns.members"
-            "&state=${provider.name}";
+          "?response_type=code"
+          "&client_id=$_patreonClientId"
+          "&redirect_uri=$redirectUri"
+          "&scope=identity%20campaigns.members"
+          "&state=${provider.name}";
     }
   }
 

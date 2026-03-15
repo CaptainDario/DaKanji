@@ -61,7 +61,7 @@ const SearchHistorySchema = CollectionSchema(
   getId: _searchHistoryGetId,
   getLinks: _searchHistoryGetLinks,
   attach: _searchHistoryAttach,
-  version: '3.3.0-dev.1',
+  version: '3.3.0',
 );
 
 int _searchHistoryEstimateSize(

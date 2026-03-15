@@ -8,18 +8,16 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:get_it/get_it.dart';
 import 'package:kana_kit/kana_kit.dart';
-import 'package:mecab_for_flutter/mecab_flutter.dart';
 
 // Project imports:
-import 'package:language_processing/japanese/furigana_matching.dart';
-import 'package:language_processing/japanese/japanese_string_operations.dart';
-import 'package:da_kanji_mobile/core/widgets/custom_selectable_mecab_text/controller/custom_selectable_text_processing.dart';
+import 'package:language_processing/language_processing.dart';
 import 'package:da_kanji_mobile/core/widgets/conditional_parent_widget.dart';
 
 /// [TextEditingController] that can show rubys over Japanese text and also
 /// colorize words based on their PoS based on analysis of MeCab
 class MecabTextEditingController extends TextEditingController {
 
+  LanguageProcessor lp;
 
   /// should the rubys be shown or not
   bool showRubys;
@@ -47,6 +45,8 @@ class MecabTextEditingController extends TextEditingController {
   final void Function(TextSelection)? onTripleTap;
 
   MecabTextEditingController({
+    required this.lp,
+
     this.showRubys = false,
     this.addSpaces = false,
     this.showColors = false,
@@ -104,24 +104,24 @@ class MecabTextEditingController extends TextEditingController {
     required BuildContext context, TextStyle? style, required bool withComposing
   }) {
 
-    final res = processText(text, GetIt.I<Mecab>(), GetIt.I<KanaKit>());
-    mecabReadings = res.item1;
-    mecabSurfaces = res.item2;
-    mecabPOS = res.item3;
+    final res = lp.parse(text, ProcessorOptions());
+    mecabReadings = res.readings.nonNulls.toList();
+    mecabSurfaces = res.surfaces.nonNulls.toList();
+    mecabPOS = res.pos.map((e) => e.nonNulls.toList()).toList();
 
     posColors = List.generate(mecabPOS.length, (i) => posToColor(mecabPOS[i]));
     
     children = []; int count = 0;
     for (var i = 0; i < mecabSurfaces.length; i++) {
       int mecabSurStartIdx = count; int mecabSurEndIdx = count+mecabSurfaces[i].length;
-      List<FuriganaPair> furiganaPairs =  
-        matchFurigana(mecabSurfaces[i], mecabReadings[i]);
+      List<TermReadingPair> furiganaPairs =  
+        lp.getTermReadingPairs(mecabSurfaces[i], mecabReadings[i], ProcessorOptions());
 
       /// The index for the current character in `mecabSurfaces`'s second-dim
       int mecabSurfaceIdx = 0;
       for (var k = 0; k < furiganaPairs.length; k++) {
-        String chars = furiganaPairs[k].kanji != ""
-          ? furiganaPairs[k].kanji
+        String chars = furiganaPairs[k].term != ""
+          ? furiganaPairs[k].term
           : furiganaPairs[k].reading;
         for (var j = 0; j < chars.length; j++) {
           final localMecabSurfaceIdx = mecabSurfaceIdx;
@@ -131,7 +131,7 @@ class MecabTextEditingController extends TextEditingController {
             children.add(const TextSpan(text:'\n'));
           }
           else {
-            String furigana = furiganaPairs[k].kanji != ""
+            String furigana = furiganaPairs[k].term != ""
               ? furiganaPairs[k].reading : " ";
             double spacing = (j == chars.length-1 && k == furiganaPairs.length-1)
               && addSpaces ? spacingSize : 0;
@@ -187,7 +187,7 @@ class MecabTextEditingController extends TextEditingController {
                   // and the ruby option is enabled
                   child: ConditionalParentWidget(
                     condition: furigana != " " && 
-                      j == (furiganaPairs[k].kanji.length/2).floor()
+                      j == (furiganaPairs[k].term.length/2).floor()
                       && showRubys
                       ,
                     // the main text
@@ -218,7 +218,7 @@ class MecabTextEditingController extends TextEditingController {
                               offset: Offset(
                                 // ... to the center of the word if the word is
                                 // of uneven length
-                                furiganaPairs[k].kanji.length%2==0
+                                furiganaPairs[k].term.length%2==0
                                   ? (-textCharacterSize.width/2)
                                   : 0,
                                 // ... to the top of the text
@@ -277,7 +277,7 @@ class MecabTextEditingController extends TextEditingController {
   /// Callback that is executed when the user does a double tap
   void _onDoubleTap(int wordStartIdx, int wordEndIdx) {
 
-    for (var match in sentenceRegex.allMatches(text)) {
+    for (var match in lp.findSentences(text, ProcessorOptions())) {
       if (match.start <= wordStartIdx && wordStartIdx <= match.end) {
         selection = TextSelection(
           baseOffset: match.start, 
@@ -292,16 +292,17 @@ class MecabTextEditingController extends TextEditingController {
 
   /// Callback that is executed when the user does a single tap
   void _onTripleTap(int wordStartIdx, int wordEndIdx) {
-
-    for (var match in paragraphRegex.allMatches(text)) {
-      if (match.start <= wordStartIdx && wordStartIdx <= match.end) {
+    // Now iterating over our custom TextSegment objects
+    for (var segment in lp.findParagraphs(text)) {
+      if (wordStartIdx >= segment.start && wordStartIdx < segment.end) {
         selection = TextSelection(
-          baseOffset: match.start, extentOffset: match.end-1);
+          baseOffset: segment.start, 
+          extentOffset: segment.end,
+        );
         break;
       }
     }
     onTripleTap?.call(selection);
-
   }
 
   /// Returns the index of the token in `mecabSurfaces` that is at position 

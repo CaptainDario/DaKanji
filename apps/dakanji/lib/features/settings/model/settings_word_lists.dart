@@ -6,7 +6,7 @@ import 'package:collection/collection.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/core/iso/iso_table.dart';
+import 'package:language_processing/language_processing.dart';
 
 part 'settings_word_lists.g.dart';
 
@@ -47,7 +47,7 @@ class SettingsWordLists with ChangeNotifier {
   List<String> langsToInclude (List<String> selectedTranslationLanguages) => 
     selectedTranslationLanguages
       .whereIndexed((index, element) => includedLanguages[index])
-      .map((e) => isoToiso639_2B[e]!.name)
+      .map((e) => isoToIso639_2B[e]!.name)
       .toList();
 
   /// The default value for `quickAddLists`

@@ -20,10 +20,10 @@ AwesomeDialog optimizeBackendsPopup(BuildContext context){
     headerAnimationLoop: false,
     dialogType: DialogType.noHeader,
     dismissOnTouchOutside: true,
-    btnCancelColor: g_Dakanji_red,
+    btnCancelColor: g_color_scheme_red,
     btnCancelText: LocaleKeys.SettingsScreen_advanced_settings_optimize_cancel.tr(),
     btnCancelOnPress: (){},
-    btnOkColor: g_Dakanji_green,
+    btnOkColor: g_color_scheme_green,
     btnOkText: LocaleKeys.SettingsScreen_advanced_settings_optimize_ok.tr(),
     btnOkOnPress: () async {
       // show intermediate dialog while optimizing
@@ -62,7 +62,7 @@ AwesomeDialog optimizingDialog(BuildContext context){
     body: Column(
       children: [
         const SpinKitSpinningLines(
-          color: g_Dakanji_green,
+          color: g_color_scheme_green,
           lineWidth: 3,
           size: 30.0,
           itemCount: 10,
@@ -86,7 +86,7 @@ AwesomeDialog resultsDialog(BuildContext context, List<Tuple2<String, List<MapEn
     dialogType: DialogType.noHeader,
     dismissOnTouchOutside: false,
     btnOkOnPress: (){},
-    btnOkColor: g_Dakanji_green,
+    btnOkColor: g_color_scheme_green,
     body: LayoutBuilder(
       builder: (context, constraints) {
         return Padding(

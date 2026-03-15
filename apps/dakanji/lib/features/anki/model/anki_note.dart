@@ -8,7 +8,7 @@ import 'package:get_it/get_it.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/features/dictionary/controller/isars.dart';
-import 'package:da_kanji_mobile/core/iso/iso_table.dart';
+import 'package:language_processing/language_processing.dart';
 import 'package:da_kanji_mobile/features/anki/model/anki_data.dart';
 import 'package:da_kanji_mobile/features/dictionary/widgets/dictionary_example_tab.dart';
 
@@ -62,7 +62,7 @@ class AnkiNote{
     for (var i = 0; i < translations.length; i++) {
       // if there is more than 1 language write the language names
       if(langs.length > 1){
-        translation += "<div class=\"language\">${isoToLanguage[isoToiso639_2T[langs[i]]]}</div>";
+        translation += "<div class=\"language\">${iso639_2TToLanguage[isoToIso639_2T[langs[i]]]}</div>";
       }
       for (var j = 0; j < translations[i].length; j++){
         translation += "${j+1}: ${translations[i][j]}";
@@ -135,7 +135,7 @@ class AnkiNote{
     
     kana = [entry.readings.first];
 
-    dakanjiLink = "${g_AppLinkDaKanji}dictionary?id=${entry.id}";
+    dakanjiLink = "${g_AppConfig.appLink}dictionary?id=${entry.id}";
 
     //audio = ;
 
@@ -156,43 +156,7 @@ class AnkiNote{
     }
   ) async {
 
-    List<ExampleSentence> examples = await searchExamples(
-      langsToInclude, entry.kanjis, entry.readings, entry.hiraganas,
-      numberOfExamples, GetIt.I<Isars>().examples.directory
-    );
-
-    if(examples.isEmpty) return;
-
-    // get the positions where the entry matches the example
-    final spans = getMatchSpans(entry, examples);
-
-    example = ""; exampleTrans = "";
-    for (var i = 0; i < min(numberOfExamples, examples.length); i++) {
-
-      if(examples.length > 1) example += "${i+1}. ";
-      
-      // set the japanese example
-      for (var span in spans[i]) {
-        example += examples[i].sentence.replaceRange(span.item1, span.item2,
-          "<b>${examples[i].sentence.substring(span.item1, span.item2)}</b>");
-      }
-      example += "<br>";
-
-      // add the translations
-      if(includeTranslations){
-        for (var langCode in langsToInclude) {
-
-          final translations = examples[i].translations
-            .where((e) => e.language == langCode);
-          
-          if(translations.isNotEmpty) exampleTrans += "${translations.first.sentence}\n";
-
-        }
-      }
-
-      if(examples.length - 1 != i) example += "<br>";
-      
-    }
+    // TODO: anki examples
 
   }
 

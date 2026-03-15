@@ -8,7 +8,7 @@ import 'package:get_it/get_it.dart';
 import 'package:tuple/tuple.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/core/iso/iso_table.dart';
+import 'package:language_processing/language_processing.dart';
 import 'package:da_kanji_mobile/features/settings/model/settings.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/features/text/screens/text_screen.dart';
@@ -52,13 +52,13 @@ class _ExampleSentenceCardState extends State<ExampleSentenceCard> {
     translations = widget.sentences.translations
       // filter translations that are not of any selected language
       .where((e) =>
-        selectedLangs.contains(isoToiso639_1[e.language]?.name)
+        selectedLangs.contains(isoToIso639_1[e.language]?.name)
       ).toList();
       
       // sort to match order set in settings
       translations.sort((a, b) => 
-        selectedLangs.indexOf(isoToiso639_1[a.language!]!.name)
-        - selectedLangs.indexOf(isoToiso639_1[b.language!]!.name)
+        selectedLangs.indexOf(isoToIso639_1[a.language!]!.name)
+        - selectedLangs.indexOf(isoToIso639_1[b.language!]!.name)
       );
       
   }
@@ -118,8 +118,8 @@ class _ExampleSentenceCardState extends State<ExampleSentenceCard> {
                                     widget.matchSpans[i].item1,
                                     widget.matchSpans[i].item2,
                                   ),
-                                  style: const TextStyle(
-                                    fontFamily: g_japaneseFontFamily,
+                                  style: TextStyle(
+                                    fontFamily: g_AppConfig.fontFamily,
                                     fontWeight: FontWeight.bold
                                   )
                                 )
@@ -150,7 +150,7 @@ class _ExampleSentenceCardState extends State<ExampleSentenceCard> {
                       width: 10,
                       child: SvgPicture.asset(
                         GetIt.I<Settings>().dictionary.translationLanguagesToSvgPath[
-                          isoToiso639_1[e.language]!.name
+                          isoToIso639_1[e.language]!.name
                         ]!
                       ),
                     ),

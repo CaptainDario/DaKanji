@@ -13,7 +13,7 @@ import 'package:provider/provider.dart';
 // Project imports:
 import 'package:da_kanji_mobile/core/icons/da_kanji_icons.dart';
 import 'package:da_kanji_mobile/features/dictionary/controller/dictionary_search.dart';
-import 'package:da_kanji_mobile/core/iso/iso_table.dart';
+import 'package:language_processing/language_processing.dart';
 import 'package:da_kanji_mobile/features/settings/model/settings.dart';
 import 'package:da_kanji_mobile/features/settings/model/settings_dictionary.dart';
 import 'package:da_kanji_mobile/core/user/user_data.dart';
@@ -90,7 +90,7 @@ class _DictionarySettingsState extends State<DictionarySettings> {
                                       
             // when disabling english dictionary tell user
             // that significant part of the dict is only in english
-            if(lang == iso639_1.en.name &&
+            if(lang == Iso639_1.en.name &&
               settings.dictionary.selectedTranslationLanguages.contains(lang)) {
               await disableEnglishDictPopup(context).show();
             }

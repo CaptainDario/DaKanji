@@ -4,7 +4,6 @@ import 'dart:math';
 // Package imports:
 import 'package:async/async.dart';
 import 'package:database_builder/database_builder.dart';
-import 'package:language_processing/japanese/japanese_string_operations.dart';
 import 'package:tuple/tuple.dart';
 
 // Project imports:
@@ -72,7 +71,7 @@ class DictionarySearch {
 
     // check if the message contains wildcards and replace them appropriately
     allQueries = allQueries.map((e) =>
-      e.replaceAll(questionMarkRegex, "???")).toList();
+      e.replaceAll("?", "???")).toList();
     
     // replace full-width chars with normal ones
     allQueries = allQueries.map((e) => e.toHalfWidth()).toList();

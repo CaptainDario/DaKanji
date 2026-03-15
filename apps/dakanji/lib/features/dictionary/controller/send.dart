@@ -30,7 +30,7 @@ Future quickAddToWordList(JMdict entry, BuildContext context) async {
       // ignore: use_build_context_synchronously
       context: context,
       dialogType: DialogType.noHeader,
-      btnOkColor: g_Dakanji_green,
+      btnOkColor: g_color_scheme_green,
       btnOkOnPress: () {
         
       },

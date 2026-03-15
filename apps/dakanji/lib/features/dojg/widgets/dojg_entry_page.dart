@@ -208,8 +208,8 @@ class _DojgEntryPageState extends State<DojgEntryPage> {
                       }
                       return null;
                     },
-                    textStyle: const TextStyle(
-                      fontFamily: g_japaneseFontFamily
+                    textStyle: TextStyle(
+                      fontFamily: g_AppConfig.fontFamily
                     ),
                   )
                 ],

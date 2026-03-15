@@ -132,12 +132,12 @@ class _InitScreenState extends State<InitScreen> {
       context: context,
       headerAnimationLoop: false,
       dialogType: DialogType.noHeader,
-      btnOkColor: g_Dakanji_green,
+      btnOkColor: g_color_scheme_green,
       btnOkText: LocaleKeys.General_download.tr(),
       btnOkOnPress: () {
         openStoreListing();
       },
-      btnCancelColor: g_Dakanji_red,
+      btnCancelColor: g_color_scheme_red,
       btnCancelOnPress: () async {},
       onDismissCallback: (dismisstype) async {
         GetIt.I<UserData>().userRefusedUpdate = DateTime.now().toUtc();

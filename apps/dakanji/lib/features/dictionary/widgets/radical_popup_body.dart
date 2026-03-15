@@ -148,7 +148,7 @@ class _RadicalPopupBodyState extends State<RadicalPopupBody> {
                                           kanjisThatUseAllRadicals[strokeIndex][index],
                                           style: TextStyle(
                                             fontSize: 28,
-                                            fontFamily: g_japaneseFontFamily,
+                                            fontFamily: g_AppConfig.fontFamily,
                                             color: Theme.of(context).brightness == Brightness.dark ?
                                               Colors.white
                                               : Colors.black,
@@ -223,7 +223,7 @@ class _RadicalPopupBodyState extends State<RadicalPopupBody> {
                                   child: Container(
                                     decoration: BoxDecoration(
                                       color: selectedRadicals.contains(krad.value[index])
-                                        ? g_Dakanji_green.withValues(alpha: 0.5)
+                                        ? g_color_scheme_green.withValues(alpha: 0.5)
                                         : null,
                                       border: Border.all(
                                         color: Colors.grey.withValues(alpha: 0.5),
@@ -252,7 +252,7 @@ class _RadicalPopupBodyState extends State<RadicalPopupBody> {
                                           krad.value[index],
                                           style: TextStyle(
                                             fontSize: 14,
-                                            fontFamily: g_japaneseFontFamily,
+                                            fontFamily: g_AppConfig.fontFamily,
                                             color: selectedRadicals.contains(krad.value[index])
                                               ? Theme.of(context).brightness == Brightness.dark
                                                 ? Colors.white.withValues(alpha: 0.5)
@@ -311,7 +311,7 @@ class _RadicalPopupBodyState extends State<RadicalPopupBody> {
                       color: Colors.transparent,
                       child: Ink(
                         decoration: BoxDecoration(
-                          color: g_Dakanji_green,
+                          color: g_color_scheme_green,
                           borderRadius: BorderRadius.circular(5000)
                         ),
                         child: InkWell(
@@ -319,7 +319,7 @@ class _RadicalPopupBodyState extends State<RadicalPopupBody> {
                             Navigator.of(context).pop();
                           },
                           borderRadius: BorderRadius.circular(5000),
-                          highlightColor: g_Dakanji_green.withValues(alpha: 0.2),
+                          highlightColor: g_color_scheme_green.withValues(alpha: 0.2),
                           child: SizedBox(
                             height: 24,
                             width: 100,

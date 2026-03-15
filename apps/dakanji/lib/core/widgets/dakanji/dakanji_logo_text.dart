@@ -25,7 +25,7 @@ class DaKanjiLogoText extends StatelessWidget {
         text: TextSpan(
           text: '',
           style: TextStyle(
-            color: g_Dakanji_red,
+            color: g_color_scheme_red,
             height: 1.2,
             fontFamily: "theater"
           ),

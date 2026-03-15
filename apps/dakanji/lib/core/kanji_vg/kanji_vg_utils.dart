@@ -303,7 +303,7 @@ String changeTextWidthAndColor(String kanjiVGEntry, double width, String color) 
 /// number's color to `color`.
 String modifyKanjiVGSvg(String svg,
   {
-    int size=14, Color textColor=g_Dakanji_red, Color strokeColor=Colors.white
+    int size=14, Color textColor=g_color_scheme_red, Color strokeColor=Colors.white
   }
 ){
 

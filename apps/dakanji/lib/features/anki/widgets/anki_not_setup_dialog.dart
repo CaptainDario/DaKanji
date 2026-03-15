@@ -26,11 +26,11 @@ AwesomeDialog ankiNotSetupDialog(BuildContext context,) {
     desc: "Anki is not setup. To add cards to anki please set it up first",
 
     btnOkText: "Setup",
-    btnOkColor: g_Dakanji_green,
+    btnOkColor: g_color_scheme_green,
     btnOkOnPress: () async {
       pushManual(context, ManualTypes.anki);
     },
-    btnCancelColor: g_Dakanji_red,
+    btnCancelColor: g_color_scheme_red,
     btnCancelOnPress: () { },
   );
 

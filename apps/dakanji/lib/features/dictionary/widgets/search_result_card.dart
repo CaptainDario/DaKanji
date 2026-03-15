@@ -9,7 +9,7 @@ import 'package:get_it/get_it.dart';
 import 'package:da_kanji_mobile/features/dictionary/controller/send.dart';
 import 'package:da_kanji_mobile/core/icons/da_kanji_icons.dart';
 import 'package:da_kanji_mobile/core/icons/da_kanji_icons_icons.dart';
-import 'package:da_kanji_mobile/core/iso/iso_table.dart';
+import 'package:language_processing/language_processing.dart';
 import 'package:da_kanji_mobile/features/settings/model/settings.dart';
 
 /// A Card that is used to preview the content of a search result
@@ -70,7 +70,7 @@ class _SearchResultCardState extends State<SearchResultCard> {
   Widget build(BuildContext context) {
     // if this entry does not have any translation that the user has selected in the settings
     if(!GetIt.I<Settings>().dictionary.selectedTranslationLanguages.any((selection) =>
-      widget.dictEntry.meanings.map((meaning) => isoToiso639_1[meaning.language]!.name)
+      widget.dictEntry.meanings.map((meaning) => isoToIso639_1[meaning.language]!.name)
       .contains(selection))) {
       return Container();
     }
@@ -127,7 +127,7 @@ class _SearchResultCardState extends State<SearchResultCard> {
                                 for (var l in GetIt.I<Settings>().dictionary.selectedTranslationLanguages) {
                                   int cnt = 0;
                                   for (var m in widget.dictEntry.meanings) {
-                                    if(isoToiso639_1[m.language]!.name == l){
+                                    if(isoToIso639_1[m.language]!.name == l){
                                       idx = cnt;
                                       break outerloop;
                                     }

@@ -136,7 +136,7 @@ class _KanjiGroupWidgetState extends State<KanjiGroupWidget> {
                         border: Border.all(
                           width: 2,
                           color: kanjiVGChars[node.key!.value] != ""
-                            ? g_Dakanji_green
+                            ? g_color_scheme_green
                             : Colors.black,
                         )
                     ),

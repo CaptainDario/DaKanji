@@ -381,9 +381,9 @@ class _KanjiTableState extends State<KanjiTable> {
                           child: FittedBox(
                             child: Text(
                               kanjis[i].character,
-                              style: const TextStyle(
+                              style: TextStyle(
                                 fontSize: 500,
-                                fontFamily: g_japaneseFontFamily
+                                fontFamily: g_AppConfig.fontFamily
                               ),
                             ),
                           ),

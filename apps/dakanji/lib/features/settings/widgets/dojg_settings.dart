@@ -42,8 +42,8 @@ class _DoJGSettingsState extends State<DoJGSettings> {
         ResponsiveIconTile(
           text: LocaleKeys.SettingsScreen_dojg_imported.tr(),
           icon: GetIt.I<UserData>().dojgImported
-            ? const Icon(Icons.check, color: g_Dakanji_green,)
-            : const Icon(Icons.do_not_disturb, color: g_Dakanji_red),
+            ? const Icon(Icons.check, color: g_color_scheme_green,)
+            : const Icon(Icons.do_not_disturb, color: g_color_scheme_red),
           onTilePressed: !GetIt.I<UserData>().dojgImported
             ? () {
               pushManual(context, ManualTypes.dojg);
@@ -54,8 +54,8 @@ class _DoJGSettingsState extends State<DoJGSettings> {
         ResponsiveIconTile(
           text: LocaleKeys.SettingsScreen_dojg_media_imported.tr(),
           icon: GetIt.I<UserData>().dojgWithMediaImported
-            ? const Icon(Icons.check, color: g_Dakanji_green,)
-            : const Icon(Icons.do_not_disturb, color: g_Dakanji_red),
+            ? const Icon(Icons.check, color: g_color_scheme_green,)
+            : const Icon(Icons.do_not_disturb, color: g_color_scheme_red),
           onTilePressed: !GetIt.I<UserData>().dojgWithMediaImported
             ? () {
               pushManual(context, ManualTypes.dojg);

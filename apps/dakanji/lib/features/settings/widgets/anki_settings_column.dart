@@ -48,8 +48,8 @@ class _AnkiSettingsColumnState extends State<AnkiSettingsColumn> {
         ResponsiveIconTile(
           text: LocaleKeys.SettingsScreen_anki_setup.tr(),
           icon: GetIt.I<UserData>().ankiSetup
-            ? const Icon(Icons.check, color: g_Dakanji_green,)
-            : const Icon(Icons.do_not_disturb, color: g_Dakanji_red),
+            ? const Icon(Icons.check, color: g_color_scheme_green,)
+            : const Icon(Icons.do_not_disturb, color: g_color_scheme_red),
           onTilePressed: !GetIt.I<UserData>().ankiSetup
             ? () => pushManual(context, ManualTypes.anki)
             : null,
@@ -105,7 +105,7 @@ class _AnkiSettingsColumnState extends State<AnkiSettingsColumn> {
             AwesomeDialog(
               context: context,
               dialogType: DialogType.noHeader,
-              btnOkColor: g_Dakanji_green,
+              btnOkColor: g_color_scheme_green,
               btnOkOnPress: (){},
               body: Center(
                 child: Padding(

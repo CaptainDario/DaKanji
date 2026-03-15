@@ -27,7 +27,7 @@ AwesomeDialog? ankiDialog(BuildContext context, JMdict entry) {
     autoDismiss: false,
     onDismissCallback: (type) {},
     dialogType: DialogType.noHeader,
-    btnOkColor: g_Dakanji_green,
+    btnOkColor: g_color_scheme_green,
     btnOkText: LocaleKeys.DictionaryScreen_word_tab_menu_send_to_anki.tr(),
     btnOkOnPress: () {
       addToAnki(entry, context, GetIt.I<Settings>().anki.allowDuplicates);
@@ -35,7 +35,7 @@ AwesomeDialog? ankiDialog(BuildContext context, JMdict entry) {
         Navigator.of(g_NavigatorKey.currentContext!).pop();
       }
     },
-    btnCancelColor: g_Dakanji_red,
+    btnCancelColor: g_color_scheme_red,
     btnCancelOnPress: () {
       Navigator.pop(context);
     },

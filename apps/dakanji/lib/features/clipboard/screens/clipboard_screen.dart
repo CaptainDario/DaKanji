@@ -203,7 +203,7 @@ class _ClipboardScreenState extends State<ClipboardScreen> with ClipboardListene
         await windowManager.setMinimumSize(g_minDesktopWindowSize);
 
         await windowManager.setTitleBarStyle(TitleBarStyle.normal, windowButtonVisibility: true);
-        await windowManager.setTitle(g_AppTitle);
+        await windowManager.setTitle(g_AppConfig.appTitle);
       }
     }
     setState(() {});

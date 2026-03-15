@@ -1,6 +1,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:language_processing/japanese/mecab_data.dart';
+import 'package:language_processing/language_processing.dart';
 
 /// Color for showing na-adjectives
 const Color naAdjectiveColor = Color.fromARGB(255, 255, 113, 205);
@@ -21,17 +21,17 @@ Color? posToColor(List<String> pos){
 
   if(pos.isEmpty) return null;
 
-  if(pos[0].contains(naAdjective)) {
+  if(pos[0].contains(UnidicStrings.naAdjective)) {
     c = naAdjectiveColor;
-  } else if([noun, pronoun].any((e) => pos[0].startsWith(e))) {
+  } else if([UnidicStrings.noun, UnidicStrings.pronoun].any((e) => pos[0].startsWith(e))) {
     c = nounColor;
-  } else if(pos[0].startsWith(verb)) {
+  } else if(pos[0].startsWith(UnidicStrings.verb)) {
     c = verbColor;
-  } else if(pos[0].startsWith(adverb)) {
+  } else if(pos[0].startsWith(UnidicStrings.adverb)) {
     c = adverbColor;
-  } else if(pos[0].startsWith(iAdjective)) {
+  } else if(pos[0].startsWith(UnidicStrings.iAdjective)) {
     c = iAdjectiveColor;
-  } else if(pos[0].startsWith(particle)) {
+  } else if(pos[0].startsWith(UnidicStrings.particle)) {
     c = particleColor;
   } else{
     //debugPrint("$pos is an unknown POS");

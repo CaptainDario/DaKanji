@@ -256,9 +256,9 @@ class _WordListSettingsState extends State<WordListSettings> {
       dismissOnBackKeyPress: false,
       title: LocaleKeys.SettingsScreen_word_lists_import_warning.tr(),
       desc: LocaleKeys.SettingsScreen_word_lists_import_warning_description.tr(),
-      btnCancelColor: g_Dakanji_red,
+      btnCancelColor: g_color_scheme_red,
       btnCancelOnPress: () {},
-      btnOkColor: g_Dakanji_green,
+      btnOkColor: g_color_scheme_green,
       btnOkOnPress: () async {
         final files = await FilePicker.platform.pickFiles(
           lockParentWindow: true,
@@ -306,7 +306,7 @@ class _WordListSettingsState extends State<WordListSettings> {
           dismissOnBackKeyPress: false,
           title: LocaleKeys.SettingsScreen_word_lists_import_error.tr(),
           desc: LocaleKeys.SettingsScreen_word_lists_import_error_description.tr(),
-          btnOkColor: g_Dakanji_green,
+          btnOkColor: g_color_scheme_green,
           btnOkOnPress: () {}
         ).show();
       }

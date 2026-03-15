@@ -15,7 +15,8 @@ import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:get_it/get_it.dart';
 import 'package:isar_community/isar.dart';
 import 'package:kana_kit/kana_kit.dart';
-import 'package:mecab_for_flutter/mecab_flutter.dart';
+import 'package:language_processing/language_processing.dart';
+import 'package:mecab_for_dart/mecab_dart.dart';
 import 'package:path/path.dart' as p;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:universal_io/io.dart';
@@ -39,7 +40,7 @@ import 'package:da_kanji_mobile/features/drawing/model/kanji_buffer.dart';
 import 'package:da_kanji_mobile/features/drawing/model/strokes.dart';
 import 'package:da_kanji_mobile/core/storage/path_manager.dart';
 import 'package:da_kanji_mobile/features/dictionary/controller/isars.dart';
-import 'package:da_kanji_mobile/core/iso/iso_table.dart';
+import 'package:da_kanji_mobile/core/app/app_config.dart';
 import 'package:da_kanji_mobile/core/device/platform_dependent_variables.dart';
 import 'package:da_kanji_mobile/core/releases/version.dart';
 import 'package:da_kanji_mobile/features/settings/model/settings.dart';
@@ -190,7 +191,7 @@ Future<void> initDocumentsServices(BuildContext context) async {
     DictionarySearch(
       GetIt.I<Settings>().advanced.noOfSearchIsolates,
       GetIt.I<Settings>().dictionary.selectedTranslationLanguages.map((e) => 
-        isoToiso639_2B[e]!.name
+        isoToIso639_3[e]!.name
       ).toList(),
       GetIt.I<Isars>().dictionary.directory!,
       GetIt.I<Isars>().dictionary.name,
@@ -199,11 +200,22 @@ Future<void> initDocumentsServices(BuildContext context) async {
   );
   await GetIt.I<DictionarySearch>().init();
 
-  // Mecab
-  GetIt.I.registerSingleton<Mecab>(Mecab());
+  // Language processing
+  LanguageProcessor? languageProcessor;
 
-  await GetIt.I<Mecab>().initFlutter(
-    p.joinAll([supportDirectory, "assets", "mecab_dict"]), true);
+  if(g_AppConfig.languageCode == Iso639_3.jpn){
+    languageProcessor = JapaneseProcessor(
+      mecabTransferableState: MecabTransferableState(
+        mecabDictDirPath: p.joinAll([supportDirectory, "assets", "mecab_dict"]),
+      )
+    );
+    await (languageProcessor as JapaneseProcessor).init();
+  }
+  else {
+    throw Exception("No LanguageProcessor implemented for ${g_AppConfig.languageCode}");
+  }
+
+  GetIt.I.registerSingleton<LanguageProcessor>(languageProcessor);
 
   g_documentsServicesInitialized = true;
 }
@@ -243,7 +255,7 @@ Future<void> initDocumentsAssets(BuildContext context) async {
     ){
       await getAsset(
         asset, p.joinAll([supportDir, ...asset.uri.pathSegments]),
-        g_GithubApiDependenciesRelase, context, !downloadAllowed
+        g_AppConfig.githubApiDataRelase, context, !downloadAllowed
       );
       downloadAllowed = true;
     }
@@ -278,7 +290,7 @@ Future<void> desktopWindowSetup() async {
   if(!g_desktopPlatform) return;
 
   await windowManager.setMinimumSize(g_minDesktopWindowSize);
-  await windowManager.setTitle(g_AppTitle);
+  await windowManager.setTitle(g_AppConfig.appTitle);
   
   await windowManager.setSize(Size(
     GetIt.I<Settings>().misc.windowWidth.toDouble(), 

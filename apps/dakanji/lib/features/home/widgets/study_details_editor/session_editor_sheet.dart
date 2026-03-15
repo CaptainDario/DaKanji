@@ -188,7 +188,7 @@ class _SessionEditorSheetState extends State<SessionEditorSheet> {
         return Theme(
           data: ThemeData.dark().copyWith(
             colorScheme: const ColorScheme.dark(
-              primary: g_Dakanji_green, // Header background & Active dial hand
+              primary: g_color_scheme_green, // Header background & Active dial hand
               onPrimary: Colors.white,
               surface: Color(0xFF2C323A), // Dialog background
               onSurface: Colors.white, // General text
@@ -197,7 +197,7 @@ class _SessionEditorSheetState extends State<SessionEditorSheet> {
               // Background color of the AM/PM container
               dayPeriodColor: WidgetStateColor.resolveWith((states) =>
                   states.contains(WidgetState.selected)
-                      ? g_Dakanji_green
+                      ? g_color_scheme_green
                       : Colors.white10),
               // Text color inside the AM/PM container
               dayPeriodTextColor: WidgetStateColor.resolveWith((states) =>
@@ -328,7 +328,7 @@ class _EditorHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const successGreen = g_Dakanji_green;
+    const successGreen = g_color_scheme_green;
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -482,7 +482,7 @@ class _ErrorMessage extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(top: 8.0, left: 4),
       child: Text(text,
-          style: const TextStyle(color: g_Dakanji_red, fontSize: 12)),
+          style: const TextStyle(color: g_color_scheme_red, fontSize: 12)),
     );
   }
 }

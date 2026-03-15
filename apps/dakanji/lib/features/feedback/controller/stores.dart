@@ -10,16 +10,16 @@ import 'package:da_kanji_mobile/globals.dart';
 /// opens the store listing of dakanji matching the current platform
 void openStoreListing(){
   if(Platform.isAndroid) {
-    launchUrlString(g_PlaystorePage);
+    launchUrlString(g_AppConfig.playstorePage);
   }
   else if(Platform.isIOS || Platform.isMacOS) {
-    launchUrlString(g_AppStorePage);
+    launchUrlString(g_AppConfig.appStorePage);
   }
   else if(Platform.isWindows) {
-    launchUrlString(g_MicrosoftStorePage);
+    launchUrlString(g_AppConfig.microsoftStorePage);
   }
   else if(Platform.isLinux) {
-    launchUrlString(g_SnapStorePage);
+    launchUrlString(g_AppConfig.snapStorePage);
   }
   else {
     throw Exception("Platform not supported");

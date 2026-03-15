@@ -6,10 +6,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:linked_scroll_controller/linked_scroll_controller.dart';
 
 // Project imports:
-import 'package:language_processing/japanese/conjugation/jmdict_conjugate.dart';
-import 'package:language_processing/japanese/conjugation/jmdict_conjugation_data/kwpos.dart';
-import 'package:language_processing/japanese/conjugation/jmdict_conjugation_data/conj.dart';
-import 'package:language_processing/japanese/conjugation/jmdict_conjugation_data/conjos.dart';
+import 'package:language_processing/language_processing.dart';
 import 'package:da_kanji_mobile/core/japanese_text_processing/conjugation_descriptions.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/features/dictionary/widgets/conjugation_column.dart';

@@ -68,7 +68,7 @@ class DrawerHomeElement extends StatelessWidget {
                         style: TextStyle(
                           fontSize: 20,
                           color: widget.currentScreen == Screens.home
-                            ? g_Dakanji_red
+                            ? g_color_scheme_red
                             : null
                         ),
                         GetIt.I<SupabaseCacheManager>().userProfile.username,

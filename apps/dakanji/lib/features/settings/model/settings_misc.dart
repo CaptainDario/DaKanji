@@ -211,14 +211,13 @@ class SettingsMisc with ChangeNotifier {
 
   /// All valid values for `sharingScheme`
   @JsonKey(includeToJson: false, includeFromJson: false)
-  List<String> sharingSchemes = [g_AppLinkHttps, g_AppLinkDaKanji];
+  List<String> sharingSchemes = [g_AppConfig.appLinkHttps, g_AppConfig.appLink];
   /// The default value for `sharingScheme`
   @JsonKey(includeToJson: false, includeFromJson: false)
   // ignore: constant_identifier_names
-  static const String d_sharingScheme = g_AppLinkHttps;
+  static String d_sharingScheme = g_AppConfig.appLinkHttps;
   /// The currently selected sharing scheme, defaults to `https://` on all
   /// platforms excepet linux
-  @JsonKey(defaultValue: d_sharingScheme)
   String _sharingScheme = d_sharingScheme;
   /// The currently selected sharing scheme, defaults to `https://` on all
   /// platforms excepet linux

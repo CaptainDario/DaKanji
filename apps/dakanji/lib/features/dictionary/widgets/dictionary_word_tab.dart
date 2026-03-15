@@ -13,7 +13,7 @@ import 'package:database_builder/database_builder.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:fvp/mdk.dart' as mdk;
 import 'package:get_it/get_it.dart';
-import 'package:language_processing/japanese/conjugation/jmdict_conjugation_data/kwpos.dart';
+import 'package:language_processing/language_processing.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher_string.dart';

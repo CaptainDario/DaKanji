@@ -9,6 +9,8 @@ import 'package:file_picker/file_picker.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/features/video/widgets/video_player.dart';
+import 'package:get_it/get_it.dart';
+import 'package:language_processing/language_processing.dart';
 
 class VideoLibrary extends StatefulWidget {
   const VideoLibrary({super.key});
@@ -40,7 +42,7 @@ class _VideoLibraryState extends State<VideoLibrary> {
             Navigator.push(context,
               MaterialPageRoute(builder: (context) {
                 return Scaffold(
-                  body: VideoPlayer(videoFile, subsFile));
+                  body: VideoPlayer(videoFile, subsFile, GetIt.I<LanguageProcessor>()));
               },));
         },
         icon: const Icon(Icons.add)

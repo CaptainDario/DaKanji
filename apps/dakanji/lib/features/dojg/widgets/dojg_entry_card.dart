@@ -40,15 +40,15 @@ class DojgEntryCard extends StatelessWidget {
                     Text(
                       dojgEntry.grammaticalConcept,
                       textScaler: const TextScaler.linear(1.5),
-                      style: const TextStyle(
-                        fontFamily: g_japaneseFontFamily
+                      style: TextStyle(
+                        fontFamily: g_AppConfig.fontFamily
                       ),
                     ),
                     Text(
                       dojgEntry.usage ?? "",
-                      style: const TextStyle(
+                      style: TextStyle(
                         color: Colors.grey,
-                        fontFamily: g_japaneseFontFamily
+                        fontFamily: g_AppConfig.fontFamily
                       ),
                     )
                   ],

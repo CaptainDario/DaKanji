@@ -1,6 +1,6 @@
 // Package imports:
 import "package:easy_localization/easy_localization.dart";
-import 'package:language_processing/japanese/conjugation/jmdict_conjugation_data/conj.dart';
+import 'package:language_processing/language_processing.dart';
 import 'package:tuple/tuple.dart';
 
 // Project imports:

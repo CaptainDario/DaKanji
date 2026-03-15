@@ -27,9 +27,9 @@ AwesomeDialog downloadPopup(
     headerAnimationLoop: false,
     customHeader: Image.asset("assets/images/dakanji/icon.png"),
     dismissOnTouchOutside: dismissable,
-    btnOkColor: g_Dakanji_green,
+    btnOkColor: g_color_scheme_green,
     btnOkOnPress: btnOkOnPress,
-    btnCancelColor: g_Dakanji_red,
+    btnCancelColor: g_color_scheme_red,
     btnCancelOnPress: dismissable ? () {} : null,
   );
 

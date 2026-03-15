@@ -2,7 +2,7 @@
 import 'dart:async';
 
 // Flutter imports:
-import 'package:da_kanji_mobile/core/supabase/controller/supabase_util.dart';
+import 'package:da_kanji_mobile/core/app/japanese_app_config.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -16,7 +16,6 @@ import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:universal_io/io.dart';
 import 'package:window_manager/window_manager.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/CodegenLoader.dart';
@@ -26,12 +25,16 @@ import 'package:da_kanji_mobile/features/feedback/model/feedback_localization.da
 import 'package:da_kanji_mobile/env.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/features/init/controller/init.dart';
+import 'package:language_processing/language_processing.dart';
 
 Future<void> main() async {
 
   // wait for flutter to initialize
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
+  
+  // set the app specfic config
+  g_AppConfig = JapaneseAppConfig();
 
   // await desktop setup
   if(g_desktopPlatform){
@@ -67,7 +70,8 @@ Future<void> main() async {
       runApp(
         Phoenix(
           child: EasyLocalization(
-            supportedLocales: g_DaKanjiLocalizations.map((e) => Locale(e)).toList(),
+            supportedLocales: g_DaKanjiLocalizations.map((e) =>
+              Locale(isoToIso639_1[e.name]!.name)).toList(),
             path: 'assets/translations',
             fallbackLocale: const Locale('en'),
             useFallbackTranslations: true,

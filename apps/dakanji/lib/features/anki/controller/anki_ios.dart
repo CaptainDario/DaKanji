@@ -110,7 +110,7 @@ class AnkiiOS {
     ClipboardData? originalClipboard = await Clipboard.getData("text/plain");
     
     // Launch anki via AnkiMobile scheme
-    await launchUrlString("$ankiMobileURLScheme/infoForAdding?x-success=$g_AppLinkDaKanji",
+    await launchUrlString("$ankiMobileURLScheme/infoForAdding?x-success=$g_AppConfig.appLink",
       mode: LaunchMode.externalApplication,
     );
     /// Wait until anki closes

@@ -13,5 +13,7 @@
             "parser": "code"
         }
     },
-    "cmake.configureOnOpen": false
+    "cmake.configureOnOpen": false,
+    "python-envs.defaultEnvManager": "ms-python.python:system",
+    "python-envs.pythonProjects": []
 }

@@ -16,11 +16,11 @@ void openReview() async {
     inAppReview.requestReview();
   } else if(Platform.isWindows) {
     inAppReview.openStoreListing(
-      appStoreId: g_AppStoreId, 
-      microsoftStoreId: g_MicrosoftStoreId
+      appStoreId: g_AppConfig.appStoreId, 
+      microsoftStoreId: g_AppConfig.microsoftStoreId
     );
   } else if(Platform.isLinux) {
-    launchUrlString(g_SnapStorePage);
+    launchUrlString(g_AppConfig.snapStorePage);
   }
 
 }

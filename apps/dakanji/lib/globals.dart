@@ -15,30 +15,26 @@ import 'package:da_kanji_mobile/core/storage/path_manager.dart';
 // Project imports:
 import 'package:da_kanji_mobile/core/releases/version.dart';
 import 'package:da_kanji_mobile/features/init/controller/init.dart';
+import 'package:language_processing/language_processing.dart';
+import 'package:da_kanji_mobile/core/app/app_config.dart';
 
-/// the title of the app
-const String g_AppTitle = "DaKanji";
 
-/// deep link pattern (https://)
-const String g_AppLinkHttps   = r"https://dakanji.app/app/";
-/// deep link pattern (dakanji://)
-const String g_AppLinkDaKanji = r"dakanji://";
+/// the app config (specialized per language/app)
+late AppConfig g_AppConfig;
+
 /// Instance to catch incoming deep links
 final AppLinks g_AppLinks = AppLinks();
 /// Has the initial deep link been handled
 bool g_initialDeepLinkHandled = false;
 
-/// The green tone that dakanji uses
-const Color g_Dakanji_green = Color.fromARGB(255, 26, 93, 71);
-/// The red tone that dakanji uses
-const Color g_Dakanji_red =  Color.fromARGB(255, 194, 32, 44);
-/// The grey tone that dakanji uses
-const Color g_Dakanji_grey =  Color.fromARGB(255, 33, 33, 33);
-/// The blue tone that dakanji uses
-const Color g_Dakanji_blue =  Color.fromARGB(255, 4, 62, 120);
-
-/// The font for Japanese text
-const String g_japaneseFontFamily = "NotoSansJP";
+/// The green tone that the app uses
+const Color g_color_scheme_green = Color.fromARGB(255, 26, 93, 71);
+/// The red tone that the app uses
+const Color g_color_scheme_red =  Color.fromARGB(255, 194, 32, 44);
+/// The grey tone that the app uses
+const Color g_color_scheme_grey =  Color.fromARGB(255, 33, 33, 33);
+/// The blue tone that the app uses
+const Color g_color_scheme_blue =  Color.fromARGB(255, 4, 62, 120);
 
 /// The key of the global navigator (material app)
 GlobalKey<NavigatorState> g_NavigatorKey = GlobalKey<NavigatorState>();
@@ -93,13 +89,17 @@ List<Version> g_ResetAnki = [
   Version(3, 5, 0), Version(3, 5, 1), Version(3, 5, 2), Version(3, 5, 3)
 ];
 
+// TODO remove for v4
 /// The maxMiB size of the dictionary isar
 int g_IsarDictMaxMiB = Platform.isIOS ? 384 : 512;
 /// The maxMiB size of the examples isar
 int g_IsarExampleMaxMiB = Platform.isIOS ? 384 : 512;
 
 /// all localizations that are available in DaKanji
-const g_DaKanjiLocalizations = ["en", "de", "ru", "ja", "zh", "it", "fr", "es", "pl"];
+const g_DaKanjiLocalizations = [
+  Iso639_3.eng, Iso639_3.deu, Iso639_3.rus, Iso639_3.jpn,
+  Iso639_3.zho, Iso639_3.ita, Iso639_3.fra, Iso639_3.spa, Iso639_3.pol
+];
 
 /// variable that indicates if a webivew is available on this platform
 late bool g_webViewSupported;
@@ -119,55 +119,19 @@ const Size g_minDesktopWindowSize = Size(480, 720);
 /// manager of frequently used paths
 late PathManager g_DakanjiPathManager;
 
-//about page
-/// link to the github repo
-const g_GithubRepoUrl = "https://github.com/CaptainDario/DaKanji";
-/// link to the github repos issues
-const g_GithubIssues = "$g_GithubRepoUrl/issues/new";
-/// link to the github repos release page
-const g_GithubReleasesPage = "$g_GithubRepoUrl/releases";
-/// link to the latest github release
-const g_GithubLatestReleasesPage = "$g_GithubRepoUrl/releases/latest";
-/// the github api endpoint to query releases
-const g_GithubReleasesApi = "https://api.github.com/repos/CaptainDario/DaKanji/releases";
-/// lin to the github repo with dependencies needed for dakanji
-const g_GithubApiDependenciesRelase = "https://api.github.com/repos/CaptainDario/DaKanji-Dependencies/releases";
-
-/// link to join the discord server
-const g_DiscordInvite = "https://discord.com/invite/gdqaux3r4P";
-
-/// the base url to ANY app on the PlayStore
-const g_PlaystoreBaseUrl = "https://play.google.com/store/apps/details?id=";
-/// the url to the PlayStore page of Dakanji 
-const g_PlaystorePage = "${g_PlaystoreBaseUrl}com.DaAppLab.DaKanjiRecognizer";
-/// the base intent to open the playstore's android app
-const g_PlaystoreBaseIntent =  "market://details?id=";
 /// the url to DaAppLab's playstore page
 const g_DaAppLabPlaystorePage = "https://play.google.com/store/apps/developer?id=DaAppLab";
 
-/// the base url to ANY app on the AppStore
-const g_AppStoreBaseUrl = "itms-apps://itunes.apple.com/app/";
-/// DaKanji's ID on the AppStore
-const g_AppStoreId = "1593741764";
-/// link to DaKanji's appstore page
-const g_AppStorePage = "https://apps.apple.com/de/app/DaKanji/id$g_AppStoreId";
 ///the url to developer's AppStore page
 const g_DaAppLabAppStorepage = "https://apps.apple.com/us/developer/dario-klepoch/id1193537491";
 
-/// DaKanji's ID on the MicrosoftStore
-const g_MicrosoftStoreId = "9n08051t2xtv";
-/// the url to the MicrosoftStore page of Dakanji 
-const g_MicrosoftStorePage = "https://www.microsoft.com/p/dakanji/$g_MicrosoftStoreId";
 /// uri to open DaAppLab's page in the Microsoft store 
 const g_MicrosoftStoreDaAppLabPage = "ms-windows-store://publisher/?name=DaAppLab";
 
-/// the url to the SnapStore page of Dakanji 
-const g_SnapStorePage = "https://snapcraft.io/dakanji";
 /// DaAppLab page in the snap store
 const g_SnapStoreDaAppLabPage = "";
-/// Link to the flatpak store
-const g_FlatpakStorePage = g_GithubReleasesPage;
 
+// TODO remove
 /// id of the takoboto package on android
 const g_TakobotoId = "jp.takoboto";
 /// id of the akebi package on android
@@ -177,6 +141,7 @@ const g_AedictId = "sk.baka.aedict3";
 /// id of the google translate package on android
 const g_GoogleTranslateId = "com.google.android.apps.translate";
 
+// TODO remove
 /// id of the shirabe package on ios
 const g_ShirabeId = "id1005203380";
 /// id of the imiwa on ios
@@ -186,10 +151,7 @@ const g_JapaneseId = "id290664053";
 /// id of the midori on ios
 const g_MidoriId = "id385231773";
 
-
-/// url to the privacy police of DaKanji
-const g_PrivacyPoliceUrl = "https://dakanji.app/dakanji-app-privacy-policy/";
-
+// TODO migrate to language agnostic system
 /// LINKS
 /// URL to japanese wikipedia
 const g_WikipediaJpUrl = "https://ja.wikipedia.org/wiki/";
@@ -212,21 +174,7 @@ const g_theKanjiMapUrl = "https://thekanjimap.com/";
 /// url to open a kanji in japanesegraph.com
 const g_japaneseGraphUrl = "https://japanesegraph.com/";
 
-/// Some japanese sample text
-const String g_SampleText = """
 
-東京に暮らす男子高校生・瀧は、夢を見ることをきっかけに田舎町の女子高生・三葉と入れ替わるようになる。
-
-慣れない女子の身体、未知の田舎暮らしに戸惑いつつ、徐々に馴染んでいく瀧。
-身体の持ち主である三葉のことをもっと知りたいと瀧が思い始めたころ、普段と違う三葉を疑問に思った周りの人たちも彼女のことを考え出して――。
-
-食べられる
-食べられました
-欲しくない
-失礼な
-基本的
-
-""";
 /// The header that is included in every KanjiVG file
 const String kanjiVGHeader = """
 <?xml version="1.0" encoding="UTF-8"?>

@@ -211,8 +211,8 @@ class _DojgEntryListState extends State<DojgEntryList> {
                           controller: searchTextEditingController,
                           autocorrect: false,
                           maxLines: 1,
-                          style: const TextStyle(
-                            fontFamily: g_japaneseFontFamily,
+                          style: TextStyle(
+                            fontFamily: g_AppConfig.fontFamily,
                             color: Colors.white
                           ),
                           decoration: InputDecoration(

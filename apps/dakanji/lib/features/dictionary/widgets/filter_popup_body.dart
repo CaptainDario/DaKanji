@@ -100,7 +100,7 @@ class _FilterPopupBodyState extends State<FilterPopupBody> {
                           child: Container(
                             decoration: BoxDecoration(
                               color: selectedFilters.contains(item.key)
-                                ? g_Dakanji_green.withValues(alpha: 0.5)
+                                ? g_color_scheme_green.withValues(alpha: 0.5)
                                 : null,
                               border: Border.all(
                                 color: Colors.grey.withValues(alpha: 0.5),
@@ -174,7 +174,7 @@ class _FilterPopupBodyState extends State<FilterPopupBody> {
                       color: Colors.transparent,
                       child: Ink(
                         decoration: BoxDecoration(
-                          color: g_Dakanji_green,
+                          color: g_color_scheme_green,
                           borderRadius: BorderRadius.circular(5000)
                         ),
                         child: InkWell(
@@ -182,7 +182,7 @@ class _FilterPopupBodyState extends State<FilterPopupBody> {
                             Navigator.of(context).pop();
                           },
                           borderRadius: BorderRadius.circular(5000),
-                          highlightColor: g_Dakanji_green.withValues(alpha: 0.2),
+                          highlightColor: g_color_scheme_green.withValues(alpha: 0.2),
                           child: SizedBox(
                             height: 24,
                             width: 100,

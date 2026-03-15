@@ -83,9 +83,9 @@ class _TimeTrackingAppbarActionState extends State<TimeTrackingAppbarAction> wit
             context: context,
             iconKey: _iconKey,
             child: TimeTrackingCard(
-              accentColor: g_Dakanji_blue,
-              secondaryAccentColor: g_Dakanji_green,
-              negativeBreakColor: g_Dakanji_red,
+              accentColor: g_color_scheme_blue,
+              secondaryAccentColor: g_color_scheme_green,
+              negativeBreakColor: g_color_scheme_red,
               sessionLength: Duration(minutes: context.read<Settings>().timeTracking.sessionLength),
               studyBreakRatio: context.read<Settings>().timeTracking.breakLength / context.read<Settings>().timeTracking.sessionLength,
             ),

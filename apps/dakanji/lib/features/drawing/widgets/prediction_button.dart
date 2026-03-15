@@ -95,7 +95,7 @@ class _PredictionButtonState extends State<PredictionButton>
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 600,
-                fontFamily: g_japaneseFontFamily,
+                fontFamily: g_AppConfig.fontFamily,
                 color: Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black
               ),
             )

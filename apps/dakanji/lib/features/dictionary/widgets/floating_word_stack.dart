@@ -305,7 +305,7 @@ class _FloatingWordStackState extends State<FloatingWordStack> with TickerProvid
                                 style: TextStyle(
                                   fontSize: entryTextStyleFontSize * min(1, entry.parallax*1.25),
                                   height: entryTextStyleHeight,
-                                  fontFamily: g_japaneseFontFamily,
+                                  fontFamily: g_AppConfig.fontFamily,
                                   color: (!GetIt.I<Settings>().advanced.iAmInTheMatrix
                                     ? Theme.of(context).brightness == Brightness.light
                                       ? Colors.black

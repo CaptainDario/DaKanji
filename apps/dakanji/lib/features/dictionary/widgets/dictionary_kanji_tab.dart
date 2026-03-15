@@ -9,7 +9,9 @@ import 'package:get_it/get_it.dart';
 import 'package:da_kanji_mobile/features/settings/model/settings.dart';
 import 'package:da_kanji_mobile/features/dictionary/model/kanjidic2.dart';
 import 'package:da_kanji_mobile/features/dictionary/widgets/kanji_card.dart';
-import 'package:language_processing/japanese/japanese_string_operations.dart';
+import 'package:language_processing/language_processing.dart';
+
+
 
 class DictionaryKanjiTab extends StatefulWidget {
   /// The entry for which examples should be shown
@@ -56,7 +58,9 @@ class _DictionaryKanjiTabState extends State<DictionaryKanjiTab> {
     }
 
     // update search results
-    List<String> kanjis = extractKanji(widget.entry!.kanjis).toList();
+    List<String> kanjis = widget.entry!.kanjis
+      .where((e) => GetIt.I<LanguageProcessor>().isIdeographic(e))
+      .toList();
     kanjiDic2s = findMatchingKanjiDic2(kanjis);
   }
 

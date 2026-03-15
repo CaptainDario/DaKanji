@@ -66,11 +66,11 @@ class StudyCalendar extends StatefulWidget {
     this.onFetchCharacters,
     this.onFetchTime,
     this.onComputeStreak,
-    this.vocabColor = g_Dakanji_green,
-    this.charactersColor = g_Dakanji_red,
-    this.timeColor = g_Dakanji_blue,
-    this.streakColor = g_Dakanji_green,
-    this.streakGlowColor = g_Dakanji_red,
+    this.vocabColor = g_color_scheme_green,
+    this.charactersColor = g_color_scheme_red,
+    this.timeColor = g_color_scheme_blue,
+    this.streakColor = g_color_scheme_green,
+    this.streakGlowColor = g_color_scheme_red,
   });
 
   @override

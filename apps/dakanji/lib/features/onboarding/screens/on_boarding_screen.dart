@@ -44,10 +44,10 @@ class _OnBoardingScreenState extends State<OnBoardingScreen>
   int totalPages = 4;
   /// background colors for the pages
   List<Color> pageColors = [
-      g_Dakanji_red,
-      g_Dakanji_grey,
-      g_Dakanji_green,
-      g_Dakanji_blue
+      g_color_scheme_red,
+      g_color_scheme_grey,
+      g_color_scheme_green,
+      g_color_scheme_blue
     ];
   /// The texts that should be shown on each onboarding page
   List onboardingPageTexts = [

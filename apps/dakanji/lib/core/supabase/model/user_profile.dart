@@ -20,7 +20,7 @@ class UserProfile extends ChangeNotifier {
   Sponsorships _sponsorships;
 
   UserProfile({
-    Color avatarColor = g_Dakanji_red,
+    Color avatarColor = g_color_scheme_red,
     String avatarCharacter = "?",
     Color avatarCharacterColor = Colors.white,
     String username = "?",

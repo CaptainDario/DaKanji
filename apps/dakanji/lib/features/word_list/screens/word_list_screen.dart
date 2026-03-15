@@ -11,7 +11,7 @@ import 'package:tuple/tuple.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/features/dictionary/controller/isars.dart';
-import 'package:da_kanji_mobile/core/iso/iso_table.dart';
+import 'package:language_processing/language_processing.dart';
 import 'package:da_kanji_mobile/features/settings/model/settings.dart';
 import 'package:da_kanji_mobile/core/tree/tree_node.dart';
 import 'package:da_kanji_mobile/features/word_list/model/word_list_action.dart';
@@ -125,7 +125,7 @@ class _WordListScreenState extends State<WordListScreen> {
           element.readings.any((reading) => reading.contains(searchTerm)) ||
           element.meanings.any((meaning) =>
             GetIt.I<Settings>().dictionary.selectedTranslationLanguages.contains(
-              isoToiso639_1[meaning.language]!.name) && 
+              isoToIso639_1[meaning.language]!.name) && 
             meaning.meanings
               .any((m) =>
                 m.attributes.any((a) => a?.contains(searchTerm) ?? false)

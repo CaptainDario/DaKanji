@@ -168,7 +168,7 @@ class _DaKanjiAppState extends State<DaKanjiApp> with
               return switchScreen(getWidgetFromScreen(settings.name, args));
               
             },
-            title: g_AppTitle,
+            title: g_AppConfig.appTitle,
             theme: lightTheme,
             darkTheme: darkTheme,
             themeMode: GetIt.I<Settings>().misc.selectedThemeMode(),

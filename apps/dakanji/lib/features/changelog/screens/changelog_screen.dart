@@ -24,7 +24,7 @@ class ChangelogScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("$g_AppTitle - ${LocaleKeys.ChangelogScreen_title.tr()}"),
+        title: Text("$g_AppConfig.appTitle - ${LocaleKeys.ChangelogScreen_title.tr()}"),
       ),
       body: PopScope(
         child: Center(

@@ -17,7 +17,7 @@ import 'package:da_kanji_mobile/locales_keys.dart';
 Future<void> updateAvailable() async {
 
   try {
-    Dio().get(g_GithubReleasesApi).then((response) async {
+    Dio().get(g_AppConfig.githubReleasesApi).then((response) async {
 
       List<Version> versions = (List<String?>.from(
       // extract tag name (version)

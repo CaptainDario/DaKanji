@@ -12,7 +12,7 @@ import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/core/iso/iso_table.dart';
+import 'package:language_processing/language_processing.dart';
 import 'package:da_kanji_mobile/features/settings/model/settings.dart';
 import 'package:da_kanji_mobile/features/settings/model/settings_word_lists.dart';
 import 'package:da_kanji_mobile/features/word_lists/controller/word_lists_queries.dart';
@@ -95,7 +95,7 @@ pw.Document createPortraitPDF(
                                 pw.Padding(
                                   padding: const pw.EdgeInsets.fromLTRB(0, 8, 0, 0),
                                   child: pw.SvgImage(
-                                    svg: languageSVGs[isoToiso639_1[language.language]!.name]!,
+                                    svg: languageSVGs[isoToIso639_1[language.language]!.name]!,
                                     height: 10,
                                     width: 10
                                   )
