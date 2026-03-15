@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:language_processing/language_processing.dart';
 import 'package:language_processing/src/parse_result.dart';
+import 'package:language_processing/src/text_segment.dart';
 
 
 
@@ -57,13 +58,17 @@ abstract class LanguageProcessor {
     List<String> forbiddenSequences
   });
 
-  /// Returns true if the string consists primarily of the language's 
+  /// Returns true if the string consists only of the language's 
   /// specific ideographs (e.g., Kanji for JP, Hanzi for CN)
   bool isIdeographic(String text);
+
+  Set<String> extractIdeographs(List<String> text);
 
   List<TermReadingPair> getTermReadingPairs(
     String term, String reading, ProcessorOptions options);
 
-  List<String> findSentences(String text, ProcessorOptions options);
+  List<TextSegment> findSentences(String text, ProcessorOptions options);
+
+  List<TextSegment> findParagraphs(String text);
 
 }

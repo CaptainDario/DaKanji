@@ -55,8 +55,8 @@ class ExampleTextParser implements DbFileParser {
     final extractedSentences = lp.findSentences(rawText, const ProcessorOptions());
 
     // Iterate and parse using MeCab
-    for (var sentence in extractedSentences) {
-      sentence = sentence.trim();
+    for (var textSegment in extractedSentences) {
+      final sentence = textSegment.text.trim();
       if (sentence.isEmpty) continue;
 
       exampleLocalId++;

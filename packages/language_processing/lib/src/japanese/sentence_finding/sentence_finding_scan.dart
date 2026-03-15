@@ -1,50 +1,53 @@
+import 'package:language_processing/src/japanese/japanese_string_operations.dart';
+import 'package:language_processing/src/text_segment.dart';
+
 /// Finds all sentences in the given text, safely ignoring punctuation 
 /// that occurs inside quotes or brackets.
-List<String> findSentences(String text) {
-  final List<String> sentences = [];
-  final StringBuffer currentSentence = StringBuffer();
+List<TextSegment> findSentences(String text) {
+  final List<TextSegment> sentences = [];
+  final StringBuffer currentBuffer = StringBuffer();
   
-  // Track bracket depth to avoid splitting inside quotes
   int bracketDepth = 0;
+  int sentenceStartIdx = 0; // Track the start of the current segment
   
-  // Common Japanese opening/closing pairs
-  const String openBrackets = '「『（【〈《〔';
-  const String closeBrackets = '」』）】〉》〕';
-  
-  // Characters that constitute a sentence end
   const String sentenceEnders = '。！？!?\n';
 
   for (int i = 0; i < text.length; i++) {
     final String char = text[i];
-    currentSentence.write(char);
+    currentBuffer.write(char);
 
-    if (openBrackets.contains(char)) {
+    if (japaneseOpenParantheses.contains(char)) {
       bracketDepth++;
-    } else if (closeBrackets.contains(char)) {
+    } else if (japaneseCloseParantheses.contains(char)) {
       bracketDepth = (bracketDepth > 0) ? bracketDepth - 1 : 0;
     }
 
-    // If we hit an ender AND we are not inside a quote/bracket
+    // Check for sentence end
     if (bracketDepth == 0 && sentenceEnders.contains(char)) {
       
-      // Look ahead to capture trailing closing quotes like 。」
-      while (i + 1 < text.length && closeBrackets.contains(text[i + 1])) {
+      // Look ahead for trailing quotes (e.g., 。」)
+      while (i + 1 < text.length && japaneseCloseParantheses.contains(text[i + 1])) {
         i++;
-        currentSentence.write(text[i]);
+        currentBuffer.write(text[i]);
       }
       
-      final sentence = currentSentence.toString().trim();
-      if (sentence.isNotEmpty) {
-        sentences.add(sentence);
+      final content = currentBuffer.toString();
+      if (content.trim().isNotEmpty) {
+        // match.end is usually exclusive, so i + 1 is the correct boundary
+        sentences.add(TextSegment(content.trim(), sentenceStartIdx, i + 1));
       }
-      currentSentence.clear();
+      
+      currentBuffer.clear();
+      sentenceStartIdx = i + 1; // The next sentence starts after the current end
     }
   }
 
-  // Catch any remaining text that didn't end in punctuation
-  final leftover = currentSentence.toString().trim();
-  if (leftover.isNotEmpty) {
-    sentences.add(leftover);
+  // Handle leftover text
+  if (currentBuffer.isNotEmpty) {
+    final content = currentBuffer.toString();
+    if (content.trim().isNotEmpty) {
+      sentences.add(TextSegment(content.trim(), sentenceStartIdx, text.length));
+    }
   }
 
   return sentences;

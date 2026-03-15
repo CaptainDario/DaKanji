@@ -13,21 +13,14 @@ final RegExp japaneseCharacterRegex =
   RegExp("[$kanaRegexGroupString$kanjiRegexGroupString]", multiLine: true);
 /// matches full and half width punctuations
 const String punctuations = "。|？|！|\\.|\\!|\\?";
+/// matches japanese opening parantheses (ADDED THIS SO WE CAN SWALLOW THEM)
+const String japaneseOpenParantheses = "『|「|（|【|〈|《|〔";
 /// matches japanese ending parantheses
-const String japaneseParantheses = "』|」";
+const String japaneseCloseParantheses = "』|」|）|】|〉|》|〕";
 /// matches any whitespace
 const String anyWhiteSpace = "\\s|　";
-/// Regex that matches a sentence
-RegExp sentenceRegex = RegExp(
-  "(?:[^$anyWhiteSpace])+?(?:(?!($punctuations)$japaneseParantheses)$punctuations|\\n|\$)",
-  multiLine: true
-);
 /// Regex that matches a paragraph
-RegExp paragraphRegex = RegExp(
-  r"(.+?):?(\n\n|$)",
-  multiLine: false,
-  dotAll: true
-);
+final paragraphRegex = RegExp(r'[^\n]+(?:\n[^\n]+)*');
 /// Regex that matchs all question marks
 RegExp questionMarkRegex = RegExp(r"\?|\﹖|\︖|\？");
 /// Regex that matchs all asteriks
