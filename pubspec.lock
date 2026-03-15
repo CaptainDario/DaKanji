@@ -1448,7 +1448,7 @@ packages:
       path: "/Users/darioklepoch/dev/flutter_packages/mecab_for_dart/"
       relative: false
     source: path
-    version: "2.0.2"
+    version: "2.0.3"
   meta:
     dependency: transitive
     description:
