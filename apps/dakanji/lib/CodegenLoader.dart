@@ -228,7 +228,7 @@ class CodegenLoader extends AssetLoader{
     "tutorial_speed_dial_yoon_special": "Ten przycisk włącza lub wyłącza rzadkie postacie Yoon."
   },
   "KanaTrainerScreen": {
-    "title": "#ERROR!"
+    "title": "Trener Kana"
   },
   "KanjiTableScreen": {
     "title": "Tabela kanji",
@@ -404,8 +404,8 @@ class CodegenLoader extends AssetLoader{
     "requires_restart": "wymaga ponownego uruchomienia",
     "restarts_app": "restart aplikacji",
     "show_tutorial": "Powtórz tutorial (@:SettingsScreen.restarts_app)",
-    "text_save_text": "#ERROR!",
-    "text_show_selection_buttons": "Pokaż przyciski wyboru tekstu",
+    "text_save_text": "Anki",
+    "text_show_selection_buttons": "Zapisywanie tekstu w różnych sesjach",
     "time_tracking_add_category": "Dodaj kategorię",
     "time_tracking_add_tag": "Dodaj tag",
     "time_tracking_break_length_description": "Minuty przerwy na sesję",
@@ -438,17 +438,6 @@ class CodegenLoader extends AssetLoader{
   },
   "ShopScreen": {
     "title": "Sklep"
-  },
-  "Stores": {
-    "long_description": "Uczysz się japońskiego? Musisz spróbować DaKanji!\n\nCzy próbowałeś kiedyś przeczytać tekst po japońsku ale nie wiedziałeś jak przeczytać niektóre Kanji? DaKanji jest tutaj żeby Ci z tym pomóc. Namaluj Kanji a aplikacja zmieni go w cyfrowy znak. Nie musisz znać kolejności pisania! Maluj znaki i buduj słowa które możesz później tłumaczyć, a to wszystko kompletnie offline.\n\nFunkcjonalności:\n* Rozpoznawanie 6500+ Kanji i całej Kany offline\n* Używaj słowników internetowych oraz aplikacji aby tłumaczyć znaki i słowa",
-    "mockup_1_1": "Tłumacz za pomocą słownika",
-    "mockup_2_1": "Nie znasz Kanji? Po prostu je namaluj!",
-    "mockup_2_2": "Kolejność malowania znaków nie ma znaczenia.",
-    "mockup_3": "Odczytaj tekst poprzez dodanie Furigany, tłumaczenia i wiele więcej!",
-    "mockup_4_1": "Używaj na wszystkich swoich urządzeniach!",
-    "mockup_4_2": "iPad, Android, PC, Mac lub Linux DaKanji działa wszędzie.",
-    "short_description": "Uczysz się japońskiego? Musisz spróbować DaKanji!\nZa pomocą malowania możesz odnajdować i tłumaczyć znaki.",
-    "shortest_description": "Uczysz się japońskiego? Musisz spróbować DaKanji!"
   },
   "TextScreen": {
     "copy_button_copy": "Skopiowane:",
@@ -483,22 +472,22 @@ class CodegenLoader extends AssetLoader{
     "select_category": "Wybierz kategorię",
     "select_tag": "Wybierz tag",
     "session_caps": "SESJA",
-    "session_editor_break_time": "#ERROR!",
-    "session_editor_break_time_must_be_shorter_than_session": "#ERROR!",
+    "session_editor_break_time": "Przerwa (min.):",
+    "session_editor_break_time_must_be_shorter_than_session": "Czas przerwy musi być krótszy niż czas trwania sesji!",
     "session_editor_category": "Kategoria",
-    "session_editor_delete_message": "#ERROR!",
-    "session_editor_delete_undo": "#ERROR!",
+    "session_editor_delete_message": "{CATEGORY} ({TIME} min.) sesja usunięta",
+    "session_editor_delete_undo": "Cofnij",
     "session_editor_edit_session": "Edytuj sesję",
     "session_editor_end": "Koniec sesji",
     "session_editor_new_session": "Nowa sesja",
-    "session_editor_no_sessions": "#ERROR!",
-    "session_editor_save": "#ERROR!",
+    "session_editor_no_sessions": "Brak sesji",
+    "session_editor_save": "Zapisz",
     "session_editor_selection_overlaps_with_session": "Ustawiony czas pokrywa się z inną sesją!",
     "session_editor_session_start_is_after_end": "Koniec sesji jest przed jej rozpoczęciem!",
     "session_editor_start": "Start",
-    "session_editor_study_time": "#ERROR!",
+    "session_editor_study_time": "Czas nauki: {STUDY_TIME}m",
     "session_editor_tag": "Tag",
-    "session_editor_timeline": "#ERROR!",
+    "session_editor_timeline": "Oś czasu",
     "start": "Start",
     "tags": "Tagi",
     "title": "Śledzenie czasu"
@@ -507,8 +496,6 @@ class CodegenLoader extends AssetLoader{
     "title": "Webbrowser",
     "tutorial_begin_text": "Pokażemy Ci krótki poradnik jak korzystać z aplikacji",
     "tutorial_begin_title": "Witamy na ekranie Webbrowser!"
-  },
-  "Webpage": {
   },
   "WebviewScreen": {
     "loading": "Ładowanie",
@@ -548,7 +535,7 @@ class CodegenLoader extends AssetLoader{
     "send_to_anki_progress": "Wysyłanie do Anki, proszę czekać...",
     "title": "Listy słowne",
     "tutorial_begin_text": "Pokażemy Ci krótki poradnik jak korzystać z aplikacji",
-    "tutorial_begin_title": "#ERROR!",
+    "tutorial_begin_title": "Witamy na ekranie list słów!",
     "tutorial_create_folder": "Możesz utworzyć nowy folder z listą słów, naciskając ten przycisk lub przeciągając listę słów do innego folderu. Możesz także zmienić kolejność folderów i list, przeciągając je.",
     "tutorial_create_list": "Za pomocą tego przycisku można utworzyć nową listę słów. Za pomocą przycisku menu po prawej stronie tej listy można również wyeksportować listę do różnych formatów.",
     "tutorial_folder": "Jest to folder listy słów. Można w nim przechowywać inne foldery lub listy słów.\nJest to również domyślny folder listy słów. Zawiera on niektóre listy słów oparte na JLPT, historii wyszukiwania itp.",
@@ -739,7 +726,7 @@ static const Map<String,dynamic> _rus = {
     "tutorial_speed_dial_yoon_special": "Эта кнопка позволяет включать или выключать редкие символы Юна."
   },
   "KanaTrainerScreen": {
-    "title": "#ERROR!"
+    "title": "Тренер Кана"
   },
   "KanjiTableScreen": {
     "title": "Таблица кандзи",
@@ -835,7 +822,7 @@ static const Map<String,dynamic> _rus = {
     "advanced_settings_delete_user_data": "Удаление пользовательских данных",
     "advanced_settings_delete_word_lists": "Удалить все списки слов",
     "advanced_settings_draw_backend": "Бэкэнд для выводов (требуется перезапуск)",
-    "advanced_settings_matrix": "#ERROR!",
+    "advanced_settings_matrix": "Я в матрице",
     "advanced_settings_number_search_procs": "Количество процессов поиска (@:SettingsScreen.requires_restart)",
     "advanced_settings_number_search_procs_body": "Когда DaKanji ищет в своей базе данных, он использует несколько процессов. Обычно 2 - это хорошее значение для стандартной базы данных, включенной в DaKanji. Однако, если вы испытываете замедления при поиске в базе данных, попробуйте использовать больше процессов.",
     "advanced_settings_optimize_backend": "Бэкэнд",
@@ -915,8 +902,8 @@ static const Map<String,dynamic> _rus = {
     "requires_restart": "требует перезапуска",
     "restarts_app": "перезапускает приложение",
     "show_tutorial": "Перезапустить учебники (@:SettingsScreen.restarts_app)",
-    "text_save_text": "#ERROR!",
-    "text_show_selection_buttons": "Показать кнопки выделения текста",
+    "text_save_text": "Энки",
+    "text_show_selection_buttons": "Сохраняйте текст в разных сеансах",
     "time_tracking_add_category": "Добавить категорию",
     "time_tracking_add_tag": "Добавить метку",
     "time_tracking_break_length_description": "Минуты перерыва на одно занятие",
@@ -949,8 +936,6 @@ static const Map<String,dynamic> _rus = {
   },
   "ShopScreen": {
     "title": "Магазин"
-  },
-  "Stores": {
   },
   "TextScreen": {
     "copy_button_copy": "Копирование:",
@@ -985,22 +970,22 @@ static const Map<String,dynamic> _rus = {
     "select_category": "Выберите категорию",
     "select_tag": "Выберите метку",
     "session_caps": "СЕССИЯ",
-    "session_editor_break_time": "#ERROR!",
-    "session_editor_break_time_must_be_shorter_than_session": "#ERROR!",
+    "session_editor_break_time": "Перерыв (мин.):",
+    "session_editor_break_time_must_be_shorter_than_session": "Время перерыва должно быть короче времени сеанса!",
     "session_editor_category": "Категория",
-    "session_editor_delete_message": "#ERROR!",
-    "session_editor_delete_undo": "#ERROR!",
+    "session_editor_delete_message": "{КАТЕГОРИЯ} ({ВРЕМЯ} мин.) сеанс удален",
+    "session_editor_delete_undo": "Отменить",
     "session_editor_edit_session": "Редактирование сессии",
     "session_editor_end": "Окончание сеанса",
     "session_editor_new_session": "Новая сессия",
-    "session_editor_no_sessions": "#ERROR!",
-    "session_editor_save": "#ERROR!",
+    "session_editor_no_sessions": "Нет сеансов",
+    "session_editor_save": "Сохранить",
     "session_editor_selection_overlaps_with_session": "Установленное вами время совпадает с другим сеансом!",
     "session_editor_session_start_is_after_end": "Конец сеанса наступает раньше его начала!",
     "session_editor_start": "Начало",
-    "session_editor_study_time": "#ERROR!",
+    "session_editor_study_time": "Время обучения: {STUDY_TIME}m",
     "session_editor_tag": "Тег",
-    "session_editor_timeline": "#ERROR!",
+    "session_editor_timeline": "Временная шкала",
     "start": "Начало",
     "tags": "Теги",
     "title": "Отслеживание времени"
@@ -1009,8 +994,6 @@ static const Map<String,dynamic> _rus = {
     "title": "Webbrowser",
     "tutorial_begin_text": "Мы покажем вам краткое руководство, чтобы вы могли начать.",
     "tutorial_begin_title": "Добро пожаловать на экран Webbrowser!"
-  },
-  "Webpage": {
   },
   "WebviewScreen": {
     "loading": "Поиск",
@@ -1050,7 +1033,7 @@ static const Map<String,dynamic> _rus = {
     "send_to_anki_progress": "Отправка в Энки, пожалуйста, подождите...",
     "title": "Списки слов",
     "tutorial_begin_text": "Мы покажем вам краткое руководство, чтобы вы могли начать.",
-    "tutorial_begin_title": "#ERROR!",
+    "tutorial_begin_title": "Добро пожаловать на экран списков слов!",
     "tutorial_create_folder": "Создать новую папку со списком слов можно либо нажатием этой кнопки, либо перетаскиванием списка слов на другую папку. Перетаскивая папки и списки, можно также изменять их порядок.",
     "tutorial_create_list": "С помощью этой кнопки можно создать новый список слов. С помощью меню-кнопки, расположенного справа от этого списка, можно также экспортировать список в различные форматы.",
     "tutorial_folder": "Это папка со списком слов. В ней можно хранить другие папки со списками слов или списки слов.\nЭто также папка со списком слов по умолчанию. Она содержит некоторые списки слов, основанные на JLPT, истории поиска и т.д.",
@@ -1240,7 +1223,7 @@ static const Map<String,dynamic> _fra = {
     "tutorial_speed_dial_yoon_special": "Ce bouton permet d'activer ou de désactiver les personnages rares de Yoon."
   },
   "KanaTrainerScreen": {
-    "title": "#ERROR!"
+    "title": "Formateur Kana"
   },
   "KanjiTableScreen": {
     "title": "Tableau des Kanji",
@@ -1416,8 +1399,8 @@ static const Map<String,dynamic> _fra = {
     "requires_restart": "nécessite un redémarrage",
     "restarts_app": "redémarre l'application",
     "show_tutorial": "Relancer les didacticiels (@:SettingsScreen.restarts_app)",
-    "text_save_text": "#ERROR!",
-    "text_show_selection_buttons": "Afficher les boutons de sélection de texte",
+    "text_save_text": "Anki",
+    "text_show_selection_buttons": "Sauvegarder le texte d'une session à l'autre",
     "time_tracking_add_category": "Ajouter une catégorie",
     "time_tracking_add_tag": "Ajouter une étiquette",
     "time_tracking_break_length_description": "Minutes de pause par session",
@@ -1450,8 +1433,6 @@ static const Map<String,dynamic> _fra = {
   },
   "ShopScreen": {
     "title": "Boutique"
-  },
-  "Stores": {
   },
   "TextScreen": {
     "copy_button_copy": "Copié :",
@@ -1486,22 +1467,22 @@ static const Map<String,dynamic> _fra = {
     "select_category": "Sélectionner une catégorie",
     "select_tag": "Sélectionner une étiquette",
     "session_caps": "SESSION",
-    "session_editor_break_time": "#ERROR!",
-    "session_editor_break_time_must_be_shorter_than_session": "#ERROR!",
+    "session_editor_break_time": "Pause (min.) :",
+    "session_editor_break_time_must_be_shorter_than_session": "Le temps de pause doit être plus court que le temps de session !",
     "session_editor_category": "Catégorie",
-    "session_editor_delete_message": "#ERROR!",
-    "session_editor_delete_undo": "#ERROR!",
+    "session_editor_delete_message": "{CATEGORY} ({TIME} min.) session supprimée",
+    "session_editor_delete_undo": "Annuler",
     "session_editor_edit_session": "Modifier la session",
     "session_editor_end": "Fin de la session",
     "session_editor_new_session": "Nouvelle session",
-    "session_editor_no_sessions": "#ERROR!",
-    "session_editor_save": "#ERROR!",
+    "session_editor_no_sessions": "Pas de sessions",
+    "session_editor_save": "Économiser",
     "session_editor_selection_overlaps_with_session": "L'heure que vous avez choisie chevauche une autre session !",
     "session_editor_session_start_is_after_end": "La fin de la session est avant le début de la session !",
     "session_editor_start": "Démarrage",
-    "session_editor_study_time": "#ERROR!",
+    "session_editor_study_time": "Durée de l'étude : {STUDY_TIME}m",
     "session_editor_tag": "Étiquette",
-    "session_editor_timeline": "#ERROR!",
+    "session_editor_timeline": "Chronologie",
     "start": "Démarrage",
     "tags": "Tags",
     "title": "Suivi du temps"
@@ -1510,8 +1491,6 @@ static const Map<String,dynamic> _fra = {
     "title": "Navigateur Web",
     "tutorial_begin_text": "Nous allons vous montrer un tutoriel rapide pour vous aider à démarrer.",
     "tutorial_begin_title": "Bienvenue sur l'écran de Webbrowser !"
-  },
-  "Webpage": {
   },
   "WebviewScreen": {
     "loading": "Recherche",
@@ -1551,7 +1530,7 @@ static const Map<String,dynamic> _fra = {
     "send_to_anki_progress": "Envoi à Anki, veuillez patienter...",
     "title": "Listes de mots",
     "tutorial_begin_text": "Nous allons vous montrer un tutoriel rapide pour vous aider à démarrer.",
-    "tutorial_begin_title": "#ERROR!",
+    "tutorial_begin_title": "Bienvenue dans l'écran des listes de mots !",
     "tutorial_create_folder": "Vous pouvez créer un nouveau dossier de listes de mots en appuyant sur ce bouton ou en faisant glisser une liste de mots sur un autre dossier. Vous pouvez également réorganiser vos dossiers et vos listes en les faisant glisser.",
     "tutorial_create_list": "Ce bouton vous permet de créer une nouvelle liste de mots. En utilisant le bouton de menu à droite de cette liste, vous pouvez également exporter votre liste dans différents formats.",
     "tutorial_folder": "Il s'agit d'un dossier de listes de mots. Vous pouvez y stocker d'autres dossiers de listes de mots ou des listes de mots.\nIl s'agit également du dossier de listes de mots par défaut. Il contient des listes de mots basées sur le JLPT, votre historique de recherche, etc.",
@@ -1764,7 +1743,7 @@ static const Map<String,dynamic> _jpn = {
     "tutorial_speed_dial_yoon_special": "その他の拗音のオン・オフの切り替え"
   },
   "KanaTrainerScreen": {
-    "title": "#ERROR!"
+    "title": "カナ・トレーナー"
   },
   "KanjiTableScreen": {
     "title": "漢字表",
@@ -1940,8 +1919,8 @@ static const Map<String,dynamic> _jpn = {
     "requires_restart": "再起動が必要です",
     "restarts_app": "アプリの再起動",
     "show_tutorial": "チュートリアルの再表示 (@:SettingsScreen.restarts_app)",
-    "text_save_text": "#ERROR!",
-    "text_show_selection_buttons": "テキスト選択ボタンを表示",
+    "text_save_text": "アンキ",
+    "text_show_selection_buttons": "セッションをまたいでテキストを保存",
     "time_tracking_add_category": "カテゴリーを追加する",
     "time_tracking_add_tag": "タグの追加",
     "time_tracking_break_length_description": "セッションごとの休憩時間",
@@ -1974,18 +1953,6 @@ static const Map<String,dynamic> _jpn = {
   },
   "ShopScreen": {
     "title": "ショップ"
-  },
-  "Stores": {
-    "long_description": "日本語を学習中ですか？それなら、DaKanjiを試してみてください！\n\nアプリ内の辞書を使って多言語で単語を調べたり、漢字を描いて検索したり、テキストにふりがなを追加したり、様々な機能を利用できます！\n\n機能の概要：\n* 6500以上の漢字とすべての仮名をオフラインで認識（描くだけでOK）\n* 内蔵辞書を使って単語をオフラインで調べる\n  * 多言語サポート：英語、スペイン語、ドイツ語、フランス語など\n  * 単語に関する詳細情報：アクセントの高低、関連単語など\n  * 漢字に関する詳細情報：部首、JLPTレベルなど\n  * 例文\n  * 描画または部首ベースの漢字検索\n  * 6000以上の音声\n* 自分だけの単語リストの作成\n* 音声とイラスト付きのかな表\n* Ankiとの連携機能で、調べた単語をAnkiにワンクリック送信\n* ふりがなやスペースを追加して、テキストを簡単に読解可能\n* すべてのデバイスで使用可：スマートフォン、タブレット、またはノートパソコン、どれでもOK！",
-    "mockup_1_1": "アプリ内臓の辞書で単語を調べることができます",
-    "mockup_1_2": "仮名、漢字、ローマ字に対応し、活用も確認することができます",
-    "mockup_2_1": "漢字が読めない？\nまずは書いてみましょう！",
-    "mockup_2_2": "書き順を知らなくても大丈夫！",
-    "mockup_3": "翻訳したり、ふりがなを振って文章を理解しよう！",
-    "mockup_4_1": "全てのデバイスで使用することができます！",
-    "mockup_4_2": "iPad, Galaxy, PC, Mac やLinuxでDakanjiを使用できます",
-    "short_description": "日本語を勉強していますか？\nそれなら「DaKanji」を試してみてください！\n辞書で単語を調べたり、知らない漢字を探したり、文章を分析したりすることができます。",
-    "shortest_description": "日本語を勉強していますか？\nそれなら「DaKanji」を試してみてください！"
   },
   "TextScreen": {
     "copy_button_copy": "コピー：",
@@ -2020,22 +1987,22 @@ static const Map<String,dynamic> _jpn = {
     "select_category": "カテゴリーを選択",
     "select_tag": "タグを選択",
     "session_caps": "セッション",
-    "session_editor_break_time": "#ERROR!",
-    "session_editor_break_time_must_be_shorter_than_session": "#ERROR!",
+    "session_editor_break_time": "休憩（分）：",
+    "session_editor_break_time_must_be_shorter_than_session": "休憩時間はセッション時間より短くなければならない！",
     "session_editor_category": "カテゴリー",
-    "session_editor_delete_message": "#ERROR!",
-    "session_editor_delete_undo": "#ERROR!",
+    "session_editor_delete_message": "{CATEGORY} ({TIME} min.) セッション削除",
+    "session_editor_delete_undo": "元に戻す",
     "session_editor_edit_session": "編集セッション",
     "session_editor_end": "セッション終了",
     "session_editor_new_session": "新規セッション",
-    "session_editor_no_sessions": "#ERROR!",
-    "session_editor_save": "#ERROR!",
+    "session_editor_no_sessions": "セッションなし",
+    "session_editor_save": "セーブ",
     "session_editor_selection_overlaps_with_session": "設定した時間が他のセッションと重なる！",
     "session_editor_session_start_is_after_end": "セッションの終わりはセッションの始まりの前である！",
     "session_editor_start": "スタート",
-    "session_editor_study_time": "#ERROR!",
+    "session_editor_study_time": "学習時間：{STUDY_TIME}m",
     "session_editor_tag": "タグ",
-    "session_editor_timeline": "#ERROR!",
+    "session_editor_timeline": "タイムライン",
     "start": "スタート",
     "tags": "タグ",
     "title": "タイムトラッキング"
@@ -2044,8 +2011,6 @@ static const Map<String,dynamic> _jpn = {
     "title": "ウェブブラウザ",
     "tutorial_begin_text": "簡単なチュートリアルをお見せします",
     "tutorial_begin_title": "ウェブブラウザの画面へようこそ！"
-  },
-  "Webpage": {
   },
   "WebviewScreen": {
     "loading": "検索中",
@@ -2085,7 +2050,7 @@ static const Map<String,dynamic> _jpn = {
     "send_to_anki_progress": "Ankiに送信中...",
     "title": "単語リスト",
     "tutorial_begin_text": "簡単なチュートリアルをお見せします",
-    "tutorial_begin_title": "#ERROR!",
+    "tutorial_begin_title": "単語リスト画面へようこそ！",
     "tutorial_create_folder": "このボタンを押すか、単語リストを別フォルダにドラッグすることで、新しい単語リスト・フォルダを作成できます。また、フォルダやリストをドラッグして並べ替えることもできます",
     "tutorial_create_list": "新しい単語リストを作成できます。このリストの右側のメニューボタンから、リストを異なる形式にエクスポートすることもできます",
     "tutorial_folder": "これは単語リストです。ここに単語リストやフォルダを作成することができます。\nデフォルトで日本語能力試験や検索履歴などに基づいた単語リストが入っています",
@@ -2313,7 +2278,7 @@ static const Map<String,dynamic> _deu = {
     "tutorial_speed_dial_yoon_special": "Diese Taste schaltet zwischen seltenen Yoon-Zeichen ein und aus."
   },
   "KanaTrainerScreen": {
-    "title": "#ERROR!"
+    "title": "Kana Trainer"
   },
   "KanjiTableScreen": {
     "title": "Kanji Tabelle",
@@ -2409,7 +2374,7 @@ static const Map<String,dynamic> _deu = {
     "advanced_settings_delete_user_data": "Benutzerdaten löschen",
     "advanced_settings_delete_word_lists": "Alle Wortlisten löschen",
     "advanced_settings_draw_backend": "Inferenz Backend (Neustart notwendig)",
-    "advanced_settings_matrix": "#ERROR!",
+    "advanced_settings_matrix": "Ich bin in der Matrix",
     "advanced_settings_number_search_procs": "Anzahl der Suchprozesse (@:SettingsScreen.requires_restart)",
     "advanced_settings_number_search_procs_body": "Wenn DaKanji seine Datenbank durchsucht, verwendet es mehrere Prozesse. Normalerweise ist 2 ein guter Wert für die in DaKanji enthaltene Standarddatenbank. Wenn Sie jedoch bei der Suche in der Datenbank slow-downs feststellen, versuchen Sie, mehr Prozesse zu verwenden.",
     "advanced_settings_optimize_backend": "Backend",
@@ -2489,8 +2454,8 @@ static const Map<String,dynamic> _deu = {
     "requires_restart": "erfordert Neustart",
     "restarts_app": "startet app neu",
     "show_tutorial": "Zeige Tutorials erneut (@:SettingsScreen.restarts_app)",
-    "text_save_text": "#ERROR!",
-    "text_show_selection_buttons": "Buttons zur Textauswahl anzeigen",
+    "text_save_text": "Anki",
+    "text_show_selection_buttons": "Text sitzungsübergreifend speichern",
     "time_tracking_add_category": "Kategorie hinzufügen",
     "time_tracking_add_tag": "Tag hinzufügen",
     "time_tracking_break_length_description": "Pausenminuten pro Sitzung",
@@ -2523,8 +2488,6 @@ static const Map<String,dynamic> _deu = {
   },
   "ShopScreen": {
     "title": "Shop"
-  },
-  "Stores": {
   },
   "TextScreen": {
     "copy_button_copy": "Kopiert:",
@@ -2559,22 +2522,22 @@ static const Map<String,dynamic> _deu = {
     "select_category": "Kategorie auswählen",
     "select_tag": "Tag auswählen",
     "session_caps": "SESSION",
-    "session_editor_break_time": "#ERROR!",
-    "session_editor_break_time_must_be_shorter_than_session": "#ERROR!",
+    "session_editor_break_time": "Pause (min.):",
+    "session_editor_break_time_must_be_shorter_than_session": "Die Pausenzeit muss kürzer sein als die Sitzungszeit!",
     "session_editor_category": "Kategorie",
-    "session_editor_delete_message": "#ERROR!",
-    "session_editor_delete_undo": "#ERROR!",
+    "session_editor_delete_message": "{CATEGORY} ({TIME} min.) Sitzung gelöscht",
+    "session_editor_delete_undo": "Rückgängig machen",
     "session_editor_edit_session": "Sitzung bearbeiten",
     "session_editor_end": "Sitzung beenden",
     "session_editor_new_session": "Neue Sitzung",
-    "session_editor_no_sessions": "#ERROR!",
-    "session_editor_save": "#ERROR!",
+    "session_editor_no_sessions": "Keine Sitzungen",
+    "session_editor_save": "Speichern Sie",
     "session_editor_selection_overlaps_with_session": "Die von Ihnen eingestellte Zeit überschneidet sich mit einer anderen Sitzung!",
     "session_editor_session_start_is_after_end": "Das Ende der Sitzung liegt vor dem Beginn der Sitzung!",
     "session_editor_start": "Start",
-    "session_editor_study_time": "#ERROR!",
+    "session_editor_study_time": "Studienzeit: {STUDY_TIME}m",
     "session_editor_tag": "Tag",
-    "session_editor_timeline": "#ERROR!",
+    "session_editor_timeline": "Zeitleiste",
     "start": "Start",
     "tags": "Tags",
     "title": "Zeiterfassung"
@@ -2583,8 +2546,6 @@ static const Map<String,dynamic> _deu = {
     "title": "Webbrowser",
     "tutorial_begin_text": "Wir zeigen dir ein kurzes Tutorial damit du loslegen kannst.",
     "tutorial_begin_title": "Willkommen auf dem Webbrowser-Bildschirm!"
-  },
-  "Webpage": {
   },
   "WebviewScreen": {
     "loading": "Suche",
@@ -2624,7 +2585,7 @@ static const Map<String,dynamic> _deu = {
     "send_to_anki_progress": "Senden zu Anki, bitte warten...",
     "title": "Wortlisten",
     "tutorial_begin_text": "Wir zeigen dir ein kurzes Tutorial damit du loslegen kannst.",
-    "tutorial_begin_title": "#ERROR!",
+    "tutorial_begin_title": "Willkommen auf dem Bildschirm mit den Wortlisten!",
     "tutorial_create_folder": "Sie können einen neuen Wortlisten-Ordner erstellen, indem Sie entweder diese Taste drücken oder eine Wortliste auf einen anderen Ordner ziehen. Sie können Ihre Ordner und Listen auch neu anordnen, indem Sie sie verschieben.",
     "tutorial_create_list": "Mit dieser Schaltfläche können Sie eine neue Wortliste erstellen. Mit dem Menü-Button auf der rechten Seite dieser Liste können Sie Ihre Liste auch in verschiedene Formate exportieren.",
     "tutorial_folder": "Dies ist ein Wortlisten-Ordner. Sie können andere Wortlisten-Ordner oder Wortlisten darin speichern.\nDies ist auch der Standard-Wortlistenordner. Er enthält einige Wortlisten, die auf dem JLPT, Ihrem Suchverlauf usw. basieren.",
@@ -2815,7 +2776,7 @@ static const Map<String,dynamic> _zho = {
     "tutorial_speed_dial_yoon_special": "该按钮可切换稀有尹氏角色的开启或关闭。"
   },
   "KanaTrainerScreen": {
-    "title": "#ERROR!"
+    "title": "卡纳培训师"
   },
   "KanjiTableScreen": {
     "title": "汉字表",
@@ -2991,8 +2952,8 @@ static const Map<String,dynamic> _zho = {
     "requires_restart": "需要重新启动",
     "restarts_app": "重新启动应用程序",
     "show_tutorial": "重新展示教程（@:SettingsScreen.restarts_app）。",
-    "text_save_text": "#ERROR!",
-    "text_show_selection_buttons": "显示文本选择按钮",
+    "text_save_text": "安基",
+    "text_show_selection_buttons": "跨会话保存文本",
     "time_tracking_add_category": "添加类别",
     "time_tracking_add_tag": "添加标签",
     "time_tracking_break_length_description": "每节课的休息时间",
@@ -3025,8 +2986,6 @@ static const Map<String,dynamic> _zho = {
   },
   "ShopScreen": {
     "title": "商店"
-  },
-  "Stores": {
   },
   "TextScreen": {
     "copy_button_copy": "已复制：",
@@ -3061,22 +3020,22 @@ static const Map<String,dynamic> _zho = {
     "select_category": "选择类别",
     "select_tag": "选择标签",
     "session_caps": "会期",
-    "session_editor_break_time": "#ERROR!",
-    "session_editor_break_time_must_be_shorter_than_session": "#ERROR!",
+    "session_editor_break_time": "休息时间（分钟）：",
+    "session_editor_break_time_must_be_shorter_than_session": "休息时间必须短于会议时间！",
     "session_editor_category": "类别",
-    "session_editor_delete_message": "#ERROR!",
-    "session_editor_delete_undo": "#ERROR!",
+    "session_editor_delete_message": "{CATEGORY} ({TIME} min.) 会话已删除",
+    "session_editor_delete_undo": "撤消",
     "session_editor_edit_session": "编辑会话",
     "session_editor_end": "会议结束",
     "session_editor_new_session": "新一届会议",
-    "session_editor_no_sessions": "#ERROR!",
-    "session_editor_save": "#ERROR!",
+    "session_editor_no_sessions": "没有会议",
+    "session_editor_save": "节省",
     "session_editor_selection_overlaps_with_session": "您设置的时间与另一个会话重叠！",
     "session_editor_session_start_is_after_end": "会议结束时间早于会议开始时间！",
     "session_editor_start": "开始",
-    "session_editor_study_time": "#ERROR!",
+    "session_editor_study_time": "学习时间：{STUDY_TIME}m",
     "session_editor_tag": "标签",
-    "session_editor_timeline": "#ERROR!",
+    "session_editor_timeline": "时间表",
     "start": "开始",
     "tags": "标签",
     "title": "时间跟踪"
@@ -3085,8 +3044,6 @@ static const Map<String,dynamic> _zho = {
     "title": "Webbrowser",
     "tutorial_begin_text": "我们将向你展示一个快速教程，让你开始。",
     "tutorial_begin_title": "欢迎进入 Webbrowser 屏幕！"
-  },
-  "Webpage": {
   },
   "WebviewScreen": {
     "loading": "搜索",
@@ -3126,7 +3083,7 @@ static const Map<String,dynamic> _zho = {
     "send_to_anki_progress": "发送至 Anki，请稍候...",
     "title": "词表",
     "tutorial_begin_text": "我们将向你展示一个快速教程，让你开始。",
-    "tutorial_begin_title": "#ERROR!",
+    "tutorial_begin_title": "欢迎来到单词列表屏幕！",
     "tutorial_create_folder": "按下该按钮或将单词表拖到另一个单词表上，即可创建新的单词表文件夹。您还可以通过拖动来重新排列文件夹和列表。",
     "tutorial_create_list": "使用此按钮，您可以创建一个新的单词表。通过列表右侧的菜单按钮，您还可以将列表导出为不同格式。",
     "tutorial_folder": "这是一个词表文件夹。您可以在其中存储其他词表文件夹或词表。\n这也是默认的单词表文件夹。它包含一些基于 JLPT 和您的搜索历史等的单词表。",
@@ -3317,7 +3274,7 @@ static const Map<String,dynamic> _ita = {
     "tutorial_speed_dial_yoon_special": "Questo pulsante consente di attivare o disattivare i personaggi rari di Yoon."
   },
   "KanaTrainerScreen": {
-    "title": "#ERROR!"
+    "title": "Allenatore Kana"
   },
   "KanjiTableScreen": {
     "title": "Tabella Kanji",
@@ -3493,8 +3450,8 @@ static const Map<String,dynamic> _ita = {
     "requires_restart": "richiede il riavvio",
     "restarts_app": "riavvia l'applicazione",
     "show_tutorial": "Ripresenta le esercitazioni (@:SettingsScreen.restarts_app)",
-    "text_save_text": "#ERROR!",
-    "text_show_selection_buttons": "Mostra i pulsanti di selezione del testo",
+    "text_save_text": "Anki",
+    "text_show_selection_buttons": "Salvare il testo in tutte le sessioni",
     "time_tracking_add_category": "Aggiungi categoria",
     "time_tracking_add_tag": "Aggiungi tag",
     "time_tracking_break_length_description": "Minuti di pausa per sessione",
@@ -3527,8 +3484,6 @@ static const Map<String,dynamic> _ita = {
   },
   "ShopScreen": {
     "title": "Negozio"
-  },
-  "Stores": {
   },
   "TextScreen": {
     "copy_button_copy": "Copiato:",
@@ -3563,22 +3518,22 @@ static const Map<String,dynamic> _ita = {
     "select_category": "Selezionare la categoria",
     "select_tag": "Seleziona il tag",
     "session_caps": "SESSIONE",
-    "session_editor_break_time": "#ERROR!",
-    "session_editor_break_time_must_be_shorter_than_session": "#ERROR!",
+    "session_editor_break_time": "Pausa (min.):",
+    "session_editor_break_time_must_be_shorter_than_session": "La pausa deve essere più breve della durata della sessione!",
     "session_editor_category": "Categoria",
-    "session_editor_delete_message": "#ERROR!",
-    "session_editor_delete_undo": "#ERROR!",
+    "session_editor_delete_message": "{CATEGORIA} ({TIME} min.) sessione cancellata",
+    "session_editor_delete_undo": "Annullamento",
     "session_editor_edit_session": "Sessione di modifica",
     "session_editor_end": "Fine sessione",
     "session_editor_new_session": "Nuova sessione",
-    "session_editor_no_sessions": "#ERROR!",
-    "session_editor_save": "#ERROR!",
+    "session_editor_no_sessions": "Nessuna sessione",
+    "session_editor_save": "Risparmiare",
     "session_editor_selection_overlaps_with_session": "L'orario impostato si sovrappone a un'altra sessione!",
     "session_editor_session_start_is_after_end": "La fine della sessione è prima dell'inizio della sessione!",
     "session_editor_start": "Inizio",
-    "session_editor_study_time": "#ERROR!",
+    "session_editor_study_time": "Tempo di studio: {STUDY_TIME}m",
     "session_editor_tag": "Tag",
-    "session_editor_timeline": "#ERROR!",
+    "session_editor_timeline": "Linea temporale",
     "start": "Inizio",
     "tags": "Tag",
     "title": "Tracciamento del tempo"
@@ -3587,8 +3542,6 @@ static const Map<String,dynamic> _ita = {
     "title": "Webbrowser",
     "tutorial_begin_text": "Vi mostreremo una rapida esercitazione per iniziare.",
     "tutorial_begin_title": "Benvenuti nella schermata di Webbrowser!"
-  },
-  "Webpage": {
   },
   "WebviewScreen": {
     "loading": "Ricerca",
@@ -3628,7 +3581,7 @@ static const Map<String,dynamic> _ita = {
     "send_to_anki_progress": "Invio ad Anki, attendere prego...",
     "title": "Elenchi di parole",
     "tutorial_begin_text": "Vi mostreremo una rapida esercitazione per iniziare.",
-    "tutorial_begin_title": "#ERROR!",
+    "tutorial_begin_title": "Benvenuti nella schermata degli elenchi di parole!",
     "tutorial_create_folder": "È possibile creare una nuova cartella di elenchi di parole premendo questo pulsante o trascinando un elenco di parole su un altro. È anche possibile riorganizzare le cartelle e gli elenchi trascinandoli.",
     "tutorial_create_list": "Con questo pulsante è possibile creare un nuovo elenco di parole. Utilizzando il pulsante del menu a destra di questo elenco, è anche possibile esportare l'elenco in diversi formati.",
     "tutorial_folder": "Questa è una cartella di elenchi di parole. In essa è possibile memorizzare altre cartelle di elenchi di parole o elenchi di parole.\nQuesta è anche la cartella predefinita degli elenchi di parole. Contiene alcuni elenchi di parole basati sul JLPT, sulla cronologia delle ricerche, ecc.",
@@ -3818,7 +3771,7 @@ static const Map<String,dynamic> _spa = {
     "tutorial_speed_dial_yoon_special": "Este botón activa o desactiva los personajes raros de Yoon."
   },
   "KanaTrainerScreen": {
-    "title": "#ERROR!"
+    "title": "Entrenador Kana"
   },
   "KanjiTableScreen": {
     "title": "Tabla de Kanji",
@@ -3994,8 +3947,8 @@ static const Map<String,dynamic> _spa = {
     "requires_restart": "requiere reinicio",
     "restarts_app": "reinicia la app",
     "show_tutorial": "Volver a mostrar el tutorial (@:SettingsScreen.restarts_app)",
-    "text_save_text": "#ERROR!",
-    "text_show_selection_buttons": "Mostrar botones de selección de texto",
+    "text_save_text": "Anki",
+    "text_show_selection_buttons": "Guardar texto entre sesiones",
     "time_tracking_add_category": "Añadir categoría",
     "time_tracking_add_tag": "Añadir etiqueta",
     "time_tracking_break_length_description": "Minutos de pausa por sesión",
@@ -4028,14 +3981,6 @@ static const Map<String,dynamic> _spa = {
   },
   "ShopScreen": {
     "title": "Tienda"
-  },
-  "Stores": {
-    "long_description": "¿Estás aprendiendo Japonés? ¡Tienes que probar DaKanji!\n\n¿Alguna vez intentaste leer un texto en Japonés pero no sabías como leer un kanji? DaKanji está para ayudarte. Dibuja un kanji y la app lo convertirá en un carácter digital. ¡Ni siquiera debes saber el orden de los trazos! Escribe caracteres y construye palabras para luego traducirlas, y todo esto siendo completamente offline.\n\nCaracterísticas:\n* Reconocer más de 6500 Kanji y todos los Kana de manera offline\n* Poder usar apps de diccionarios o diccionarios en la web para traducir caracteres o palabras",
-    "mockup_1_1": "Traduce con diccionarios",
-    "mockup_2_1": "¿No sabes un Kanji? ¡Solo dibújalo!",
-    "mockup_2_2": "Ni siquiera importa el orden de los trazos.",
-    "short_description": "¿Estás aprendiendo Japonés? ¡Tienes que probar DaKanji!\nEncuentra carácteres y tradúcelos solamente dibujándolos.",
-    "shortest_description": "¿Estás aprendiendo Japonés? ¡Tienes que probar DaKanji!"
   },
   "TextScreen": {
     "copy_button_copy": "Copiado:",
@@ -4070,22 +4015,22 @@ static const Map<String,dynamic> _spa = {
     "select_category": "Seleccionar categoría",
     "select_tag": "Seleccionar etiqueta",
     "session_caps": "SESIÓN",
-    "session_editor_break_time": "#ERROR!",
-    "session_editor_break_time_must_be_shorter_than_session": "#ERROR!",
+    "session_editor_break_time": "Pausa (min.):",
+    "session_editor_break_time_must_be_shorter_than_session": "La pausa debe ser más corta que la sesión.",
     "session_editor_category": "Categoría",
-    "session_editor_delete_message": "#ERROR!",
-    "session_editor_delete_undo": "#ERROR!",
+    "session_editor_delete_message": "{CATEGORY} ({TIME} min.) sesión eliminada",
+    "session_editor_delete_undo": "Deshacer",
     "session_editor_edit_session": "Editar sesión",
     "session_editor_end": "Fin de la sesión",
     "session_editor_new_session": "Nueva sesión",
-    "session_editor_no_sessions": "#ERROR!",
-    "session_editor_save": "#ERROR!",
+    "session_editor_no_sessions": "Sin sesiones",
+    "session_editor_save": "Guardar",
     "session_editor_selection_overlaps_with_session": "La hora fijada coincide con la de otra sesión.",
     "session_editor_session_start_is_after_end": "¡El final de la sesión es antes del comienzo de la sesión!",
     "session_editor_start": "Inicio",
-    "session_editor_study_time": "#ERROR!",
+    "session_editor_study_time": "Tiempo de estudio: {STUDY_TIME}m",
     "session_editor_tag": "Etiqueta",
-    "session_editor_timeline": "#ERROR!",
+    "session_editor_timeline": "Cronología",
     "start": "Inicio",
     "tags": "Etiquetas",
     "title": "Control del tiempo"
@@ -4094,8 +4039,6 @@ static const Map<String,dynamic> _spa = {
     "title": "Navegador",
     "tutorial_begin_text": "Vamos a mostrarte un corto tutorial para que empieces.",
     "tutorial_begin_title": "Bienvenido a la pantalla Webbrowser"
-  },
-  "Webpage": {
   },
   "WebviewScreen": {
     "loading": "Buscando",
@@ -4135,7 +4078,7 @@ static const Map<String,dynamic> _spa = {
     "send_to_anki_progress": "Enviando a Anki, por favor espere...",
     "title": "Listas de palabras",
     "tutorial_begin_text": "Vamos a mostrarte un corto tutorial para que empieces.",
-    "tutorial_begin_title": "#ERROR!",
+    "tutorial_begin_title": "Bienvenido a la pantalla de listas de palabras.",
     "tutorial_create_folder": "Puede crear una nueva carpeta de listas de palabras pulsando este botón o arrastrando una lista de palabras sobre otra. También puede reorganizar sus carpetas y listas arrastrándolas.",
     "tutorial_create_list": "Con este botón puede crear una nueva lista de palabras. Mediante el botón de menú situado a la derecha de esta lista, también puede exportar su lista a diferentes formatos.",
     "tutorial_folder": "Se trata de una carpeta de listas de palabras. En ella puede almacenar otras carpetas de listas de palabras o listas de palabras.\nTambién es la carpeta de listas de palabras por defecto. Contiene algunas listas de palabras basadas en el JLPT, tu historial de búsqueda, etc..",
@@ -4581,18 +4524,6 @@ static const Map<String,dynamic> _eng = {
   "ShopScreen": {
     "title": "Shop"
   },
-  "Stores": {
-    "long_description": "Are you learning Japanese? Then you need to try DaKanji!\n\nUse the built-in dictionary to look up words in many languages, search Kanjis by simply drawing them, add furigana to texts, and much more!\n\nFeature overview:\n\n* Recognize 6500+ Kanji and all Kana offline by just drawing them\n* Use the inbuilt dictionary to look up words offline\n  * Multi-language support: en, es, de, fr, ...\n  * Detailed information about words: pitch accent, related words, ...\n  * Detailed information about Kanji: radicals, JLPT, ...\n  * Example sentences\n  * Drawing or radical-based kanji lookup\n  * 6000+ audios\n* Create word lists to organize your studies\n* Kana table with audios and mnemonics\n* Anki integration to send dictionary entries to Anki\n* Read any text with ease by adding furigana, spaces, and more to texts\n* Use it on all your devices: Phone, Tablet or Laptop it doesn't matter!",
-    "mockup_1_1": "Use the built-in dictionary to lookup words offline.",
-    "mockup_1_2": "Use Kana, Kanji or Romaji, DaKanji knows them all.",
-    "mockup_2_1": "Don't know a Kanji?\nJust draw it!",
-    "mockup_2_2": "Find 6500+ characters, not even the stroke order matters!",
-    "mockup_3": "Read texts by adding Furigana, translations and more!",
-    "mockup_4_1": "Use it on all your devices!",
-    "mockup_4_2": "iPad, Android, PC, Mac or Linux DaKanji works everywhere.",
-    "short_description": "Are you learning Japanese? Then you need to try DaKanji!\n\nUse the built-in dictionary to look up words in many languages, search Kanjis by simply drawing them, add furigana to texts, and much more!",
-    "shortest_description": "Are you learning Japanese? Then you need to try DaKanji!"
-  },
   "TextScreen": {
     "copy_button_copy": "Copied:",
     "input_text_here": "Input text here...",
@@ -4650,43 +4581,6 @@ static const Map<String,dynamic> _eng = {
     "title": "Webbrowser",
     "tutorial_begin_text": "We will show you a quick tutorial to get you started.",
     "tutorial_begin_title": "Welcome to the Webbrowser screen!"
-  },
-  "Webpage": {
-    "download_stats_downloads": "Downloads",
-    "download_stats_reviews": "5 star reviews",
-    "download_text": "Join the Japanese learning revolution now!",
-    "feature_short_clipboard_text": "Watch your clipboard to analyse content from any source",
-    "feature_short_clipboard_title": "Clipboard",
-    "feature_short_community_text": "Join a growing community of passionate Japanese learners that use and develop DaKanji",
-    "feature_short_community_title": "Community",
-    "feature_short_devices_text": "Use it on all your devices: tablet, phone or desktop it doesn't matter",
-    "feature_short_devices_title": "Use every where",
-    "feature_short_dict_text": "Use the built-in dictionary to lookup words offline",
-    "feature_short_dict_title": "Dictionary",
-    "feature_short_draw_text": "Find 6500+ characters, not even the stroke order matters",
-    "feature_short_draw_title": "Draw",
-    "feature_short_texts_text": "Read any text with ease by adding furigana, spaces, and more",
-    "feature_short_texts_title": "Analyse texts",
-    "landing_button": "Get the app",
-    "landing_subtitle": "Use the built-in dictionary to look up words, search Kanjis by simply drawing them, add furigana to texts, and much more!",
-    "landing_title": "Your are learning Japanese?\nThen you need to try DaKanji!",
-    "support_text": "Do not hesitate to reach out to us in case that you have any questions. We will answer you as soon as possible.",
-    "support_title": "Contact",
-    "users_1_name": "Benjamin Ransom",
-    "users_1_review": "a wonderfully fantastic tool for identifying and learning kanji on the fly. I can see something totally new and not know the stroke order and still figure it out. [...]",
-    "users_2_name": "Evelyn Snyder",
-    "users_2_review": "I work somewhere with really bad 4G and whenever I want to remind myself of a word or phrases it's really hard to do so. This app has shaken things up for me and I really love it's offline functionality!",
-    "users_3_name": "Kuroodo",
-    "users_3_review": "If Google translate ever fails you, and you don't know the stroke order, use the app called DaKanji. Just draw the kanji with as many strokes as.you like and as sloppy as you like, and it should pop up as one of the results. Works like magic.",
-    "users_4_name": "StarB_fly",
-    "users_4_review": "Love that you also Support other languages besides english. As a German there isnt that much Stuff jpn-ger. So I mostly Need to translate to english then to German. It works but I Just Love having Something jpn-ger directly.",
-    "users_5_name": "Reduces",
-    "users_5_review": "Oh my god the furigana feature is a godsend! Thank you!!",
-    "users_6_name": "Sgoicharly",
-    "users_6_review": "WOW, the app is way more than I thought! Thank you for such a useful tool!",
-    "users_7_name": "Murillo Gabriel",
-    "users_7_review": "Essential for Japanese learners. Thank you for making this free!",
-    "users_title": "What the users say"
   },
   "WebviewScreen": {
     "loading": "Searching",
