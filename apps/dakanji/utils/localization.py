@@ -12,7 +12,7 @@ def update_local_json_from_sheets(languages):
     export_url = f"https://docs.google.com/spreadsheets/d/{sheet_id}/export?format=xlsx"
     
     # YOUR NEW EXCLUDE LIST
-    exclude_list = ["_Webpage", "_example", "_Stores", "Overview", "Sheet1"]
+    exclude_list = ["_Webpage", "_example", "_Stores", "__Overview", "Sheet1"]
     
     print("Fetching latest localizations from Google Sheets...")
     try:
