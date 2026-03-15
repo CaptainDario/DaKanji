@@ -73,12 +73,16 @@ Future<void> main() async {
             supportedLocales: g_Localizations.map((e) =>
               Locale(isoToIso639_1[e.name]!.name)).toList(),
             path: 'assets/translations',
-            fallbackLocale: const Locale('en'),
+            fallbackLocale: Locale(Iso639_1.en.name),
             useFallbackTranslations: true,
             useOnlyLangCode: true,
-            assetLoader: const CodegenLoader(),
+            assetLoader: CodegenLoader(
+              productName: g_AppConfig.appTitle
+            ),
             saveLocale: true,
-            startLocale: Platform.isLinux ? const Locale("en") : null,
+            startLocale: Platform.isLinux
+              ? Locale(Iso639_1.en.name)
+              : null,
             child: BetterFeedback(
               feedbackBuilder: simpleFeedbackBuilder,
               theme: FeedbackThemeData(

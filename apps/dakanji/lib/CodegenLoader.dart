@@ -7,18 +7,37 @@ import 'dart:ui';
 
 import 'package:easy_localization/easy_localization.dart' show AssetLoader;
 
-class CodegenLoader extends AssetLoader{
-  const CodegenLoader();
+class CodegenLoader extends AssetLoader {
+  final String productName;
+  const CodegenLoader({required this.productName});
 
   
   @override
   Future<Map<String, dynamic>?> load(String path, Locale locale) {
-    var data = mapLocales[locale.toString()];
+    final Map<String, String> isoMapping = {
+    "en": "eng",
+    "de": "deu",
+    "ru": "rus",
+    "ja": "jpn",
+    "zh": "zho",
+    "it": "ita",
+    "fr": "fra",
+    "es": "spa",
+    "pl": "pol"
+};
+    final String languageCode = locale.languageCode.toLowerCase();
+    final String lookupKey = isoMapping[languageCode] ?? languageCode;
+    
+    final data = mapLocales[lookupKey];
     if (data == null) return Future.value(null);
 
-    String jsonStr = json.encode(data);
-    jsonStr = jsonStr.replaceAll('{{PRODUCT}}', g_RuntimeProductName);
-    return Future.value(json.decode(jsonStr));
+    try {
+      String jsonStr = json.encode(data);
+      jsonStr = jsonStr.replaceAll('{{PRODUCT}}', productName);
+      return Future.value(json.decode(jsonStr));
+    } catch (e) {
+      return Future.value(data);
+    }
   }
 
   static const Map<String,dynamic> _pol = {
