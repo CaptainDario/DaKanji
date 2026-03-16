@@ -157,7 +157,7 @@ Future _addRadicalsToDB(
       if(["", " "].contains(radical)) continue;
 
       radKanRelComps.add(Radical_X_KanjiRelationsTableCompanion(
-        kanjiId: Value(maxKanjiId),
+        kanjiId: Value(kanjis[kradItem.key]!),
         radicalId: Value(
           (kanjiCodeLookup[radical] != null
             ? radicalIds[kanjiCodeLookup[radical]]  
