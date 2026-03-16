@@ -13,7 +13,7 @@ import 'package:da_kanji_mobile/core/user/user_data.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/features/settings/widgets/responsive_widgets/responsive_header_tile.dart';
 import 'package:da_kanji_mobile/features/settings/widgets/responsive_widgets/responsive_icon_button_tile.dart';
-import 'package:da_kanji_mobile/features/settings/widgets/dictionary_search_priority_setting.dart';
+
 
 class ClipboardSettings extends StatefulWidget {
 
@@ -33,11 +33,6 @@ class _ClipboardSettingsState extends State<ClipboardSettings> {
       LocaleKeys.ClipboardScreen_title.tr(),
       Icons.paste,
       children: [
-        // Search result sort order daggable list
-        DictionarySearchPrioritySetting(
-          settings.clipboard,
-          settings.save
-        ),
         // reshow tutorial
         ResponsiveIconButtonTile(
           text: LocaleKeys.SettingsScreen_show_tutorial.tr(),

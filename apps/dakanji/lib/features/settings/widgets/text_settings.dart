@@ -15,7 +15,8 @@ import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/features/settings/widgets/responsive_widgets/responsive_check_box_tile.dart';
 import 'package:da_kanji_mobile/features/settings/widgets/responsive_widgets/responsive_header_tile.dart';
 import 'package:da_kanji_mobile/features/settings/widgets/responsive_widgets/responsive_icon_button_tile.dart';
-import 'package:da_kanji_mobile/features/settings/widgets/dictionary_search_priority_setting.dart';
+
+
 
 class TextSettings extends StatefulWidget {
     
@@ -44,11 +45,6 @@ class _TextSettingsState extends State<TextSettings> {
             settings.text.selectionButtonsEnabled = value;
             await settings.save();
           },
-        ),
-        // Search result sort order daggable list
-        DictionarySearchPrioritySetting(
-          settings.text,
-          settings.save
         ),
         // save text across sessions
         ResponsiveCheckBoxTile(

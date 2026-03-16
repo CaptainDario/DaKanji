@@ -5,6 +5,7 @@
 list(APPEND FLUTTER_PLUGIN_LIST
   clipboard_watcher
   desktop_webview_window
+  flutter_inappwebview_linux
   flutter_secure_storage_linux
   fvp
   gtk

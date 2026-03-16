@@ -166,7 +166,7 @@ SPEC CHECKSUMS:
   desktop_webview_window: d4365e71bcd4e1aa0c14cf0377aa24db0c16a7e2
   device_info_plus: 1b14eed9bf95428983aed283a8d51cce3d8c4215
   file_picker: e716a70a9fe5fd9e09ebc922d7541464289443af
-  flutter_inappwebview_macos: bdf207b8f4ebd58e86ae06cd96b147de99a67c9b
+  flutter_inappwebview_macos: ea7f93a5dea1d30dc372fdce1f46926cbaa97138
   flutter_local_notifications: 14e285ca39907db50704f7f46c9ab7a526bd7ead
   flutter_secure_storage_darwin: 557817588b80e60213cbecb573c45c76b788018d
   flutter_web_auth_2: 3fe7e46bdb854095fec46ef73e376ddf4f2ccb73

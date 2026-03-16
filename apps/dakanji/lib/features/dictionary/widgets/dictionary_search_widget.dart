@@ -2,7 +2,14 @@
 import 'dart:async';
 
 // Flutter imports:
+import 'package:da_db/database/da_db.dart';
+import 'package:da_db/database/db_queries/dictionary_search/dictionary_search_params.dart';
+import 'package:da_db/database/db_queries/dictionary_search/dictionary_search_result.dart';
+import 'package:da_db_ui/model/da_db_localization.dart';
+import 'package:da_db_ui/da_db_localization.dart';
+import 'package:da_db_ui/widgets/search_results/dictionary_search_result_widget.dart';
 import 'package:da_kanji_mobile/core/user/user_data_db.dart';
+import 'package:da_kanji_mobile/features/dictionary/model/dictionary_search_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -203,10 +210,7 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
             collapseSearchBar();
           }
           else if (context.read<DictSearch>().selectedResult != null){
-            context.read<DictSearch>().selectedResult = null;
-            searchInputController.text = "";
-            context.read<DictSearch>().currentSearch = "";
-            context.read<DictSearch>().searchResults = [];
+            // TODO 
           }
         },
         child: ClipRRect(
@@ -422,14 +426,11 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
                     },
                     child: Stack(
                       children: [
-                        widget.context.read<DictSearch>().currentSearch != ""
+                        context.read<DictionarySearchNotifier>().results != null
                           // search results if the user entered text
-                          ? SearchResultList(
-                            searchResults: widget.context.watch<DictSearch>().searchResults,
-                            headers: getSearchResultHeaders(),
-                            onSearchResultPressed: onSearchResultPressed,
-                            showWordFrequency: GetIt.I<Settings>().dictionary.showWordFruequency,
-                            init: (controller) {},
+                          ? DictionarySearchResultWidget(
+                            result: context.read<DictionarySearchNotifier>().results!,
+                            localization: dakanjiDbLocalization
                           )
                           // otherwise the search history
                           : StreamBuilder<List<SearchHistoryTableData>>(
@@ -583,10 +584,7 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
   void onClipboardButtonPressed() async {
     if(searchInputController.text != ""){
       searchInputController.text = "";
-      widget.context.read<DictSearch>().currentSearch = "";
-      widget.context.read<DictSearch>().currentKanaSearch = "";
-      widget.context.read<DictSearch>().currentAlternativeSearches = [];
-      widget.context.read<DictSearch>().searchResults = [];
+      widget.context.read<DictionarySearchNotifier>().currentSearch = "";
       searchTextFieldFocusNode.requestFocus();
     }
     else{
@@ -604,7 +602,14 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
   /// setState() needs to be called to update the ui.
   Future<void> updateSearchResults(
     String query, bool convertToHiragana, bool allowDeconjugation) async {
-      
+    
+    widget.context.read<DictionarySearchNotifier>().results =
+      await GetIt.I<DaDb>().dictionarySearchDao.dictionarySearch(
+        DictionarySearchParams(
+          searchInput: query, options: ProcessorOptions()
+        )
+      );
+    print(widget.context.read<DictionarySearchNotifier>().results);
 
   }
 

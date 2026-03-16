@@ -139,6 +139,8 @@ dependencies:
   liquid_swipe:
   database_builder:
   language_processing:
+  da_db:
+  da_db_ui:
   
 
   # Not all platforms supported
@@ -178,6 +180,10 @@ dependency_overrides:
     path: /Users/darioklepoch/dev/DaKanji/dakanji_db/packages/language_processing
   sqlite_extensions:
     path: /Users/darioklepoch/dev/DaKanji/dakanji_db/packages/sqlite_extensions
+  da_db_ui:
+    path: /Users/darioklepoch/dev/DaKanji/dakanji_db/packages/da_db_ui
+  util:
+    path: /Users/darioklepoch/dev/DaKanji/dakanji_db/packages/util
 
 
 msix_config:

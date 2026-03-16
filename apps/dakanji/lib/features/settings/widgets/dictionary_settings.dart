@@ -1,19 +1,17 @@
 // Dart imports:
 
 // Flutter imports:
+import 'package:da_kanji_mobile/features/settings/widgets/search_profiles_button.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/core/icons/da_kanji_icons.dart';
-import 'package:da_kanji_mobile/features/dictionary/controller/dictionary_search.dart';
-import 'package:language_processing/language_processing.dart';
 import 'package:da_kanji_mobile/features/settings/model/settings.dart';
 import 'package:da_kanji_mobile/features/settings/model/settings_dictionary.dart';
 import 'package:da_kanji_mobile/core/user/user_data.dart';
@@ -24,11 +22,7 @@ import 'package:da_kanji_mobile/features/settings/widgets/responsive_widgets/res
 import 'package:da_kanji_mobile/features/settings/widgets/responsive_widgets/responsive_icon_button_tile.dart';
 import 'package:da_kanji_mobile/features/settings/widgets/responsive_widgets/responsive_input_field_tile.dart';
 import 'package:da_kanji_mobile/features/settings/widgets/responsive_widgets/responsive_slider_tile.dart';
-import 'package:da_kanji_mobile/features/settings/widgets/dictionary_search_priority_setting.dart';
-import 'package:da_kanji_mobile/features/settings/widgets/disable_english_dict_popup.dart';
 import 'package:da_kanji_mobile/features/settings/widgets/info_popup.dart';
-import 'package:da_kanji_mobile/features/settings/widgets/show_word_frequency_setting.dart';
-import 'package:da_kanji_mobile/core/widgets/loading_popup.dart';
 
 class DictionarySettings extends StatefulWidget {
   
@@ -52,113 +46,10 @@ class _DictionarySettingsState extends State<DictionarySettings> {
       LocaleKeys.DictionaryScreen_title.tr(),
       DaKanjiIcons.dictionary,
       children: [
-        // Language selection
-        ResponsiveFilterChips(
-          chipWidget: (int index) {
-            String lang = settings.dictionary.translationLanguageCodes[index];
-            return Row(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                SizedBox(
-                  width: 10,
-                  height: 10,
-                  child: SvgPicture.asset(
-                    settings.dictionary.translationLanguagesToSvgPath[lang]!
-                  )
-                ),
-                const SizedBox(width: 8,),
-                Text(lang,),
-              ],
-            );
-          },
-          selected: (int index) {
-            String lang = settings.dictionary.translationLanguageCodes[index];
-            return settings.dictionary.selectedTranslationLanguages.contains(lang);
-          },
-          numChips: settings.dictionary.translationLanguageCodes.length,
-          description: LocaleKeys.SettingsScreen_dict_languages.tr(),
-          onFilterChipTap: (selected, index) async {
 
-            String lang = settings.dictionary.translationLanguageCodes[index];
+        // Search profiles
+        SearchProfilesButton(),
 
-            // do not allow removing the last dictionary
-            if(settings.dictionary.selectedTranslationLanguages.length == 1 &&
-              settings.dictionary.selectedTranslationLanguages.contains(lang)) {
-              return;
-            }
-                                      
-            // when disabling english dictionary tell user
-            // that significant part of the dict is only in english
-            if(lang == Iso639_1.en.name &&
-              settings.dictionary.selectedTranslationLanguages.contains(lang)) {
-              await disableEnglishDictPopup(context).show();
-            }
-                                      
-            // ignore: use_build_context_synchronously
-            loadingPopup(context).show();
-                                      
-            await GetIt.I<DictionarySearch>().kill();
-            if(!settings.dictionary.selectedTranslationLanguages.contains(lang)) {
-              settings.dictionary.selectedTranslationLanguages = 
-                settings.dictionary.translationLanguageCodes.where((element) => 
-                  [lang, ...settings.dictionary.selectedTranslationLanguages].contains(element)
-                ).toList();
-            }
-            else {
-              settings.dictionary.selectedTranslationLanguages.remove(lang);
-            }
-            // reset export languages
-            settings.anki.includedLanguages =
-              List.filled(settings.dictionary.selectedTranslationLanguages.length, true);
-            settings.wordLists.includedLanguages =
-              List.filled(settings.dictionary.selectedTranslationLanguages.length, true);
-
-            // save and reload
-            await settings.save();
-            await GetIt.I<DictionarySearch>().init();
-                                      
-            // ignore: use_build_context_synchronously
-            Navigator.of(context).pop();
-                                      
-            setState(() {});
-          },
-          onReorder: (int oldIndex, int newIndex) {
-            setState(() {
-              // update order of list with languages
-              String lang = settings.dictionary.translationLanguageCodes.removeAt(oldIndex);
-              settings.dictionary.translationLanguageCodes.insert(newIndex, lang);
-      
-              // update list of selected languages
-              settings.dictionary.selectedTranslationLanguages =
-                settings.dictionary.translationLanguageCodes.where((e) => 
-                  settings.dictionary.selectedTranslationLanguages.contains(e)
-                ).toList();
-
-              // reset anki languages
-              settings.anki.includedLanguages =
-                List.filled(settings.dictionary.selectedTranslationLanguages.length, true);
-                
-              settings.save();
-            });
-          }
-        ),
-        // Search result sort order daggable list
-        DictionarySearchPrioritySetting(
-          settings.dictionary,
-          settings.save
-        ),
-        // Separate search results by matching term
-        ResponsiveCheckBoxTile(
-          text: "Separate search results by matching term",
-          value: settings.dictionary.showSearchMatchSeparation,
-          onTileTapped: (value) {
-            setState(() {
-              settings.dictionary.showSearchMatchSeparation = value;
-              settings.save();
-            });
-          },
-        ),
         // Add to anki from search results
         ResponsiveCheckBoxTile(
           text: LocaleKeys.SettingsScreen_dict_add_to_anki_from_search_results.tr(),
@@ -214,27 +105,6 @@ class _DictionarySettingsState extends State<DictionarySettings> {
           onChanged: (value) {
             setState(() {
               settings.dictionary.fallingWordsSpeed = value;
-              settings.save();
-            });
-          },
-        ),
-        // show word frequency in search results / dictionary
-        ShowWordFrequencySetting(
-          settings.dictionary.showWordFruequency,
-          onTileTapped: (value) {
-            setState(() {
-              settings.dictionary.showWordFruequency = value;
-              settings.save();
-            });
-          },
-        ),
-        // limit search results
-        ResponsiveCheckBoxTile(
-          text: "Limit search results (enable if you encounter slow downs)",
-          value: settings.dictionary.limitSearchResults != 0,
-          onTileTapped: (value) {
-            setState(() {
-              settings.dictionary.limitSearchResults = value ? 100 : 0;
               settings.save();
             });
           },
