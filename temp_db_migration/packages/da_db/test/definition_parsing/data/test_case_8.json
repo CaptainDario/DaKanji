@@ -1,0 +1,20 @@
+[
+    "画像", "がぞう", "", "", 0,
+    [
+        {
+            "type": "image",
+            "path": "cat.jpg",
+            "description": "A cute cat"
+        },
+        {
+            "type": "structured-content",
+            "content": {
+                "tag": "img",
+                "path": "dog.jpg",
+                "alt": "Dog",
+                "title": "A good boy"
+            }
+        }
+    ],
+    0, ""
+]

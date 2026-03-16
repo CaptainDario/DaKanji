@@ -1,0 +1,34 @@
+import 'index_tables.dart';
+
+
+CREATE VIEW IF NOT EXISTS index_entry_as_json_view AS
+    SELECT
+        IT.id,
+        JSON_OBJECT(
+            'id', IT.id,
+
+            'isDefaultDictionary', IT.is_default_dictionary,
+            'enabled', IT.enabled,
+            'dictionaryType', IT.dictionary_type,
+            'currentSortingOrder', IT.current_sorting_order,
+            'currentFrequencyDictionary', IT.current_frequency_dictionary,
+            
+            'yomitanData', JSON_OBJECT(
+                'title', IT.title,
+                'revision', IT.revision,
+                'sequenced', IT.sequenced,
+                'format', IT.format,
+                'version', IT.version,
+                'author', IT.author,
+                'isUpdatable', IT.is_updatable,
+                'indexUrl', IT.index_url,
+                'downloadUrl', IT.download_url,
+                'url', IT.url,
+                'description', IT.description,
+                'attribution', IT.attribution,
+                'sourceLanguage', IT.source_language,
+                'targetLanguage', IT.target_language,
+                'frequencyMode', IT.frequency_mode
+            )
+        ) AS index_entry
+    FROM index_table AS IT;

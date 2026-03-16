@@ -1,0 +1,8 @@
+{
+  "title": "Test Example Dictionary",
+  "format": 3,
+  "revision": "2024-01-01",
+  "sequenced": true,
+  "author": "Test Author",
+  "description": "A dictionary for testing the example parser."
+}

@@ -1,0 +1,18 @@
+[
+  {
+    "groupId": 102,
+    "sentence": "猫が寝る",
+    "stats": [
+      { "statName": "quality", "value": 3.5 }
+    ],
+    "audios": [
+      {
+        "url": "media/cat.mp3",
+        "tags": ["tts"],
+        "stats": [
+          { "statName": "quality", "value": 2.0 }
+        ]
+      }
+    ]
+  }
+]

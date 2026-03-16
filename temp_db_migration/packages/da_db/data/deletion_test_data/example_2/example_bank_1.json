@@ -1,0 +1,10 @@
+[
+  {
+    "groupId": 2,
+    "sentence": "猫が寝る",
+    "langIso3Code": "jpn",
+    "tags": ["animal", "fruit"],
+    "stats": [{"statName": "quality", "value": 3.0}],
+    "audios": [{"url": "media/apple.mp3", "tags": ["native"]}]
+  }
+]

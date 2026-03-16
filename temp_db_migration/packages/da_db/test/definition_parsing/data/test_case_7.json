@@ -1,0 +1,22 @@
+[
+    "テスト", "テスト", "", "", 0,
+    [
+        {
+            "type": "structured-content",
+            "content": [
+                {
+                    "tag": "span",
+                    "content": ["漢", "字"] 
+                },
+                {
+                    "tag": "ul",
+                    "content": [
+                        {"tag": "li", "content": "Apple"},
+                        {"tag": "li", "content": "Banana"}
+                    ]
+                }
+            ]
+        }
+    ],
+    0, ""
+]

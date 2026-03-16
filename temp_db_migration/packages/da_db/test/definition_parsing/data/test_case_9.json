@@ -1,0 +1,10 @@
+[
+    "明示的", "めいじてき", "", "", 0,
+    [
+        {
+            "type": "text",
+            "text": "An explicit text object definition."
+        }
+    ],
+    0, ""
+]

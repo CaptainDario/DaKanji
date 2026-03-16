@@ -1,0 +1,246 @@
+// Dart imports:
+import 'dart:convert';
+
+import 'package:da_db/parsing/yomitan/in_memory_cache/term_meta/term_meta_bank_v3_parser_context.dart';
+import 'package:drift/drift.dart';
+import 'package:language_processing/language_processing.dart';
+import 'package:universal_io/io.dart';
+
+import '/database/da_db.dart';
+
+/// Parses the given TermMetaBank and adds it to the given [DaDb]
+Future parseTermMetaBankV3File(
+  File termMetaBankFile,
+  TermMetaBankV3ParserContext pC,
+  DaDb db,
+  int indexId,
+) async {
+
+  String termMetaBankJson = termMetaBankFile.readAsStringSync();
+  await parseTermMetaBankV3(termMetaBankJson, pC, db, indexId);
+
+}
+
+/// Parses the given TermMetaBank and adds it to the given [DaDb]
+Future parseTermMetaBankV3(
+  String termMetaBankJson,
+  TermMetaBankV3ParserContext pC,
+  DaDb db,
+  int indexId,
+) async {
+
+  // decode json
+  List jsonList = jsonDecode(termMetaBankJson);
+  
+  // store data in list to bulk add them
+  List<TermTableCompanion> termComps = [];
+  List<TermMetaBankV3TableCompanion> termMetaBankComps = [];
+  List<TermMetaBankV3TypeTableCompanion> termMetaBankTypeComps = [];
+  List<ReadingTableCompanion> readingComps = [];
+  List<TagBankV3TableCompanion> tagComps = [];
+
+  List<TermMetaBankV3IpaTableCompanion> termMetaBankIpaComps = [];
+  List<TermMetaBankV3_X_IpaTableCompanion> termMetaBankIpaRelsComps = [];
+  List<TermMetaBankV3IpaTable_X_TagBankV3TableCompanion> termMetaBankIpaTagRelsComps = [];
+
+  List<TermMetaBankV3PitchTableCompanion> termMetaBankPitchComps = [];
+  List<TermMetaBankV3_X_PitchTableCompanion> termMetaBankPitchRelsComps = [];
+  List<TermMetaBankV3PitchTable_X_TagBankV3TableCompanion> termMetaBankPitchTagRelsComps = [];
+
+
+  // parse the entires
+  for (var jsonEntry in jsonList) {
+    pC.currentMaxTermMetaId++;
+
+    // parse term
+    String term = jsonEntry[0];
+    int termInsertId = pC.allTerms[term] ?? ++pC.currentMaxTermId;
+    if(pC.allTerms[term] == null){
+      pC.allTerms[term] = termInsertId;
+
+      String? termNormalized = db.languageProcessor.normalize(term, ProcessorOptions()).firstOrNull;
+      String? termTokens = db.languageProcessor
+        .parse(term, const ProcessorOptions()).surfaces.nonNulls.join(" ");
+      String? termTokensNormalized = 
+        db.languageProcessor.normalize(termTokens, ProcessorOptions()).firstOrNull;
+      termComps.add(TermTableCompanion(
+        id: Value(termInsertId),
+        term: Value(term),
+        termNormalized: termNormalized!=term && termNormalized!=null
+          ? Value(termNormalized)
+          : const Value.absent(),
+      ));
+    }
+
+    // parse type
+    int typeInsertId = pC.allTypes[jsonEntry[1]] ?? ++pC.currentMaxTypeId;
+    if(pC.allTypes[jsonEntry[1]] == null){
+      pC.allTypes[jsonEntry[1]] = typeInsertId;
+      termMetaBankTypeComps.add(TermMetaBankV3TypeTableCompanion(
+        id: Value(typeInsertId),
+        type: Value(jsonEntry[1])
+      ));
+    }
+    
+    String? reading; int? freqValue; String? freqDisplayValue;
+    int? readingInsertId; int? pitchInsertId; int? ipaInsertId;
+    if(jsonEntry[2] is int){
+      freqValue = jsonEntry[2];
+    }
+    else if(jsonEntry[2] is String){
+      freqDisplayValue = jsonEntry[2];
+    }
+    else if(jsonEntry[2] is Map){
+
+      reading = jsonEntry[2]["reading"];
+      // parse reading
+      if(reading != null){
+        readingInsertId = pC.allReadings[reading] ?? ++pC.currentMaxReadingId;
+        if(pC.allReadings[reading] == null){
+          pC.allReadings[reading] = readingInsertId;
+
+          String? normalizedReading = db.languageProcessor.normalize(reading, ProcessorOptions()).firstOrNull;
+          readingComps.add(ReadingTableCompanion(
+            id: Value(readingInsertId!),
+            reading: Value(reading),
+            readingNormalized: normalizedReading!=reading && normalizedReading!=null
+              ? Value(normalizedReading)
+              : const Value.absent(),
+          ));
+        }
+      }
+
+      if(jsonEntry[1] == "freq"){
+
+        final freq = jsonEntry[2];
+
+        if(freq is int) freqValue = freq;
+        else if(freq is String) freqDisplayValue = freq;
+        else if(freq is Map){
+
+          freqValue        = freq['value'];
+          freqDisplayValue = freq['displayValue'];
+
+          final frequency = freq["frequency"];
+          if(frequency is int){ freqValue = frequency; }
+          else if(frequency is String){ freqDisplayValue = frequency; }
+          else if(frequency is Map) {
+            freqValue        = frequency['value'];
+            freqDisplayValue = frequency['displayValue'];
+          }
+        }      
+      }
+      else if(jsonEntry[1] == "pitch"){
+        for (var pitch in jsonEntry[2]["pitches"]) {
+
+          pitchInsertId = ++pC.currentMaxPitchId;
+          
+          termMetaBankPitchComps.add(TermMetaBankV3PitchTableCompanion(
+            id: Value(pitchInsertId),
+            position: Value(pitch["position"]),
+            nasal: Value(pitch["nasal"]),
+            devoice: Value(pitch["devoice"]),
+          ));
+          termMetaBankPitchRelsComps.add(TermMetaBankV3_X_PitchTableCompanion(
+            pitchId: Value(pitchInsertId),
+            termMetaId: Value(pC.currentMaxTermMetaId),
+          ));
+
+          for (var tag in pitch["tags"] ?? []) {     
+            int tagInsertId = pC.allTags[tag] ?? ++pC.currentMaxTagId;       
+            if(pC.allTags[tag] == null){
+              // add new tag to map
+              pC.allTags[tag] = tagInsertId;
+              // add tag
+              tagComps.add(TagBankV3TableCompanion(
+                id: Value(tagInsertId),
+                indexId: Value(indexId),
+                name: Value(tag),
+                category: Value(""),
+                sortingOrder: Value(0),
+                notes: Value(""),
+                score: Value(0)
+              ));
+            }
+            termMetaBankPitchTagRelsComps.add(
+              TermMetaBankV3PitchTable_X_TagBankV3TableCompanion(
+                pitchId: Value(pitchInsertId),
+                tagId: Value(tagInsertId)
+              )
+            );
+          }
+        }
+      }
+      else if (jsonEntry[1] == "ipa"){
+        for (var transcription in jsonEntry[2]["transcriptions"]) {
+
+          ipaInsertId = ++pC.currentMaxIpaId;
+
+          termMetaBankIpaComps.add(TermMetaBankV3IpaTableCompanion(
+            id: Value(ipaInsertId),
+            ipa: Value(transcription["ipa"]),
+          ));
+          termMetaBankIpaRelsComps.add(TermMetaBankV3_X_IpaTableCompanion(
+            ipaId: Value(ipaInsertId),
+            termMetaId: Value(pC.currentMaxTermMetaId),
+          ));
+
+          for (var tag in transcription["tags"] ?? []) {
+            int tagInsertId = pC.allTags[tag] ?? ++pC.currentMaxTagId;
+            if(pC.allTags[tag] == null){
+              // add new tag to map
+              pC.allTags[tag] = tagInsertId;
+              // add tag
+              tagComps.add(TagBankV3TableCompanion(
+                id: Value(tagInsertId),
+                indexId: Value(indexId),
+                name: Value(tag),
+                category: Value(""),
+                sortingOrder: Value(0),
+                notes: Value(""),
+                score: Value(0)
+              ));
+            }
+            termMetaBankIpaTagRelsComps.add(
+              TermMetaBankV3IpaTable_X_TagBankV3TableCompanion(
+                ipaId: Value(ipaInsertId),
+                tagId: Value(tagInsertId)
+              )
+            );
+          }
+        }
+      }
+    }
+
+    termMetaBankComps.add(TermMetaBankV3TableCompanion(
+      id: Value(pC.currentMaxTermMetaId),
+      termId: Value(termInsertId),
+      typeId: Value(typeInsertId),
+      indexId: Value(indexId),
+      readingId: Value(readingInsertId),
+      freqValue: Value(freqValue),
+      freqDisplayValue: Value(freqDisplayValue),
+    ));
+
+  }
+
+  // bulk insert all data
+  await db.batch((batch) {
+    batch.insertAll(db.termTable, termComps);
+    batch.insertAll(db.termMetaBankV3Table, termMetaBankComps);
+    batch.insertAll(db.termMetaBankV3TypeTable, termMetaBankTypeComps);
+
+    batch.insertAll(db.readingTable, readingComps);
+    batch.insertAll(db.tagBankV3Table, tagComps);
+
+    batch.insertAll(db.termMetaBankV3PitchTable, termMetaBankPitchComps);
+    batch.insertAll(db.termMetaBankV3PitchTableXTagBankV3Table, termMetaBankPitchTagRelsComps);
+    batch.insertAll(db.termMetaBankV3XPitchTable, termMetaBankPitchRelsComps);
+
+    batch.insertAll(db.termMetaBankV3IpaTable, termMetaBankIpaComps);
+    batch.insertAll(db.termMetaBankV3IpaTableXTagBankV3Table, termMetaBankIpaTagRelsComps);
+    batch.insertAll(db.termMetaBankV3XIpaTable, termMetaBankIpaRelsComps);
+  },);
+
+}
+

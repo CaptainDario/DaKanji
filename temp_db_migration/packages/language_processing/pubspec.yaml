@@ -1,0 +1,21 @@
+name: language_processing
+description: A sample command-line application.
+version: 1.0.0
+resolution: workspace
+
+environment:
+  sdk: '>=3.10.0'
+
+# Add regular dependencies here.
+dependencies:
+  path: ^1.9.0
+  mecab_for_dart: 2.0.2
+  kana_kit: ^2.1.1
+  collection: ^1.19.1
+  fullwidth_halfwidth_converter: ^1.2.0
+  characters: ^1.4.1
+
+dev_dependencies:
+  lints: ^6.0.0
+  test: ^1.25.6
+  da_db_shared:

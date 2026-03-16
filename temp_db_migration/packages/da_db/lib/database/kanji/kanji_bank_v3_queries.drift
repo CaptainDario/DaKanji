@@ -1,0 +1,5 @@
+import 'kanji_bank_v3_views.drift';
+
+
+kanji_bank_v3_search_drift:
+    SELECT * FROM kanji_bank_v3_entry_view  WHERE kanji = :query;

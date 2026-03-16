@@ -1,0 +1,48 @@
+import 'audio_views.drift';
+
+
+
+-- Search query that performs bulk matching of audio entries against linguistic parameters.
+-- Accepts a JSON string containing an array of search objects.
+audio_search_drift:
+    WITH request_values AS (
+        SELECT 
+            CAST(json_extract(value, '$.term') AS TEXT) AS term,
+            CAST(json_extract(value, '$.reading') AS TEXT) AS reading,
+            -- Extracted as TEXT to support unified "H/L" string pattern matching.
+            CAST(json_extract(value, '$.pitch') AS TEXT) AS pitch
+        FROM json_each(:queryJson)
+    )
+    SELECT DISTINCT AEV.*
+    FROM request_values AS REQ
+    -- Join against the term table to support matches on both raw and normalized terms.
+    INNER JOIN term_table AS TT 
+        ON TT.term = REQ.term OR TT.term_normalized = REQ.term
+    INNER JOIN audio_table_x_term_table AS ATXTT 
+        ON ATXTT.term_id = TT.id
+    INNER JOIN audio_entry_view AS AEV 
+        ON AEV.id = ATXTT.audio_id
+    LEFT JOIN reading_table AS RT 
+        ON RT.id = AEV.reading_id
+    WHERE 
+        -- Filter by Reading: Matches if null (wildcard) or if reading/normalized reading matches.
+        (
+            REQ.reading IS NULL
+            OR AEV.reading = REQ.reading
+            OR RT.reading_normalized = REQ.reading
+        )
+        AND
+        -- Filter by Pitch: Matches if null (wildcard) or if the H/L pattern matches exactly.
+        (REQ.pitch IS NULL OR AEV.pitch_accent_pattern = REQ.pitch)
+    ORDER BY
+
+        TT.term ASC,
+
+        -- Priority sorting: Exact reading matches first, then exact pitch matches.
+        (AEV.reading IS NOT NULL) DESC,
+        AEV.reading ASC,
+
+        (AEV.pitch_accent_pattern IS NOT NULL) DESC,
+        AEV.pitch_accent_pattern ASC,
+
+        AEV.path ASC;

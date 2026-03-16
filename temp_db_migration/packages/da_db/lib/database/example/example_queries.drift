@@ -1,0 +1,156 @@
+import 'example_tables.dart';
+import 'example_relation_tables.dart';
+import '/database/example/example_fts5_table.drift';
+import '/database/example/example_views.drift';
+
+
+----------------------------------------------------------------------
+-- Stat Queries
+----------------------------------------------------------------------
+
+-- Gets all unique (name, displayName) pairs currently attached to examples
+getUniqueExampleStats:
+    SELECT DISTINCT
+        sn.name AS statName,
+        sdn.name AS displayName
+    FROM stat_table st
+    INNER JOIN stat_name_table sn ON sn.id = st.stat_name_id
+    LEFT JOIN stat_name_table sdn ON sdn.id = st.stat_display_name_id
+    WHERE EXISTS (
+        SELECT 1 
+        FROM example_table_x_stat_table ext 
+        WHERE ext.stat_table_id = st.id
+    )
+    ORDER BY statName, displayName;
+
+----------------------------------------------------------------------
+-- PHASE 1: Base Match Discovery (Unified Search)
+----------------------------------------------------------------------
+
+-- 1. Fast FTS 5 Search (searches as text appears in text)
+searchExamples(
+    :query AS TEXT,
+    :statName AS TEXT OR NULL,
+    :expectedStatValue AS REAL OR NULL,
+    :isDesc AS BOOLEAN OR NULL,
+    :limit AS INTEGER,
+    :offset AS INTEGER
+):
+    WITH CombinedMatches AS (
+        SELECT 
+            e.id,
+            e.group_id,
+            e.index_id, 
+            bm25(fts_example_sentence) AS score
+        FROM fts_example_sentence AS fts
+        INNER JOIN example_table AS e ON e.example_sentence_id = fts.rowid
+        WHERE fts_example_sentence MATCH :query
+        
+        UNION ALL
+        
+        SELECT 
+            e.id,
+            e.group_id,
+            e.index_id, 
+            bm25(fts_example_sentence_unicode) AS score
+        FROM fts_example_sentence_unicode AS fts
+        INNER JOIN example_table AS e ON e.example_sentence_id = fts.rowid
+        WHERE fts_example_sentence_unicode MATCH :query
+    ),
+    RankedMatches AS (
+        SELECT 
+            cm.id, cm.group_id, cm.index_id, cm.score,
+            (SELECT st.value 
+             FROM example_table_x_stat_table ext
+             INNER JOIN stat_table st ON st.id = ext.stat_table_id
+             INNER JOIN stat_name_table sn ON sn.id = st.stat_name_id
+             WHERE :statName IS NOT NULL -- if no stat is provided, skip this
+               AND ext.example_id = cm.id 
+               AND sn.name = :statName
+             LIMIT 1) AS stat_value
+        FROM CombinedMatches cm
+    )
+    SELECT id, group_id, index_id
+    FROM RankedMatches
+    -- Dynamic Equality Filter (Ignores if expectedStatValue is null)
+    WHERE (:expectedStatValue IS NULL OR stat_value = :expectedStatValue)
+    ORDER BY 
+        -- 1. Push missing stats to the bottom (If no stat is queried, all tie and fall through)
+        stat_value IS NULL ASC, 
+        -- 2. Sort by the value
+        CASE WHEN :isDesc = TRUE THEN stat_value END DESC,
+        CASE WHEN :isDesc = FALSE THEN stat_value END ASC,
+        -- 3. Fallback to BM25 relevance score
+        score
+    LIMIT :limit OFFSET :offset;
+
+
+-- 2. Fast Token/Lemma Search (searches base forms of words (食べます -> 食べる))
+searchExamplesByBaseForm(
+    :ftsBaseForms AS TEXT,
+    :statName AS TEXT OR NULL,
+    :expectedStatValue AS REAL OR NULL,
+    :isDesc AS BOOLEAN OR NULL,
+    :limit AS INTEGER,
+    :offset AS INTEGER
+):
+    WITH RankedMatches AS (
+        SELECT 
+            e.id, e.group_id, e.index_id,
+            bm25(fts_example_sentence_tokenized) AS score,
+            (SELECT st.value 
+             FROM example_table_x_stat_table ext
+             INNER JOIN stat_table st ON st.id = ext.stat_table_id
+             INNER JOIN stat_name_table sn ON sn.id = st.stat_name_id
+             WHERE :statName IS NOT NULL -- if no stat is provided, skip this
+               AND ext.example_id = e.id 
+               AND sn.name = :statName
+             LIMIT 1) AS stat_value
+        FROM fts_example_sentence_tokenized AS fts
+        INNER JOIN example_table AS e ON e.example_sentence_id = fts.rowid
+        WHERE fts_example_sentence_tokenized MATCH :ftsBaseForms
+    )
+    SELECT id, group_id, index_id
+    FROM RankedMatches
+    -- Dynamic Equality Filter (Ignores if expectedStatValue is null)
+    WHERE (:expectedStatValue IS NULL OR stat_value = :expectedStatValue)
+    ORDER BY 
+        -- 1. Push missing stats to the bottom (If no stat is queried, all tie and fall through)
+        stat_value IS NULL ASC, 
+        -- 2. Sort by the value
+        CASE WHEN :isDesc = TRUE THEN stat_value END DESC,
+        CASE WHEN :isDesc = FALSE THEN stat_value END ASC,
+        -- 3. Fallback to BM25 relevance score
+        score
+    LIMIT :limit OFFSET :offset;
+
+----------------------------------------------------------------------
+-- PHASE 2: Targeted Sibling Expansion
+----------------------------------------------------------------------
+
+getMissingGroupEntries:
+    WITH
+        RequiredLookups(groupId, targetIndexId) AS (
+            SELECT 
+                CAST(json_extract(value, '$.g') AS INTEGER),
+                CAST(json_extract(value, '$.i') AS INTEGER)
+            FROM json_each(:lookup_pairs)
+        )
+    SELECT 
+        e.id, 
+        e.group_id, 
+        e.index_id
+    FROM RequiredLookups
+    -- Match strictly and directly on index_id and group_id
+    INNER JOIN example_table AS e 
+        ON e.group_id = RequiredLookups.groupId
+        AND e.index_id = RequiredLookups.targetIndexId
+    WHERE e.id NOT IN :excludedIds;
+
+----------------------------------------------------------------------
+-- PHASE 3: Rich Data Hydration
+----------------------------------------------------------------------
+
+getExamplesByIds:
+    SELECT * FROM example_entry_view 
+    WHERE id IN :ids;

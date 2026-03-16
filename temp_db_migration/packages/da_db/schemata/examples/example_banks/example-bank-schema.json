@@ -1,0 +1,92 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Example Sentence Bank",
+  "description": "Schema for a chunked dictionary example sentence file",
+  "type": "array",
+  "items": {
+    "$ref": "#/definitions/Sentence"
+  },
+  "definitions": {
+    "Sentence": {
+      "type": "object",
+      "properties": {
+        "groupId": {
+          "type": ["integer", "null"],
+          "description": "Numeric ID matchable across dictionaries to group sentences. Can be null if the sentence has no group."
+        },
+        "sentence": {
+          "type": "string",
+          "description": "The complete, example sentence string. This is ignored when sentences are extracted from a accompanying example_text_bank file"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "List of string tags (e.g., 'slang', 'idiom'). These reference definitions provided in Yomitan tag_bank_*.json files (schema: '../../dictionaries/yomitan_schema/yomitan-tag-bank-schema.json')."
+        },
+        "stats": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Stat"
+          },
+          "description": "List of numeric stats associated with the sentence (e.g., frequency, JLPT level, difficulty)."
+        },
+        "audios": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Audio"
+          },
+          "description": "List of available audio pronunciations."
+        }
+      },
+      "required": ["sentence"]
+    },
+    "Audio": {
+      "type": "object",
+      "properties": {
+        "url": {
+          "type": "string",
+          "description": "Local path/URL to the audio file inside the archive."
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Tags specific to this audio file (e.g., 'native', 'female'). These map directly to definitions provided in Yomitan tag_bank_*.json files."
+        },
+        "stats": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Stat"
+          },
+          "description": "Numeric stats specific to this audio file (e.g., clarity score, speed)."
+        }
+      },
+      "required": ["url"]
+    },
+    "Stat": {
+      "type": "object",
+      "properties": {
+        "statName": {
+          "type": "string",
+          "description": "The backend identifier for the stat (e.g., 'freq', 'JLPT', 'quality')."
+        },
+        "displayName": {
+          "type": "string",
+          "description": "Optional user-friendly label for the stat (e.g., 'Frequency', 'JLPT Level')."
+        },
+        "value": {
+          "type": "number",
+          "description": "The strictly numeric value used for sorting/filtering in the database."
+        },
+        "displayValue": {
+          "type": "string",
+          "description": "Optional formatted representation of the value (e.g., 'N5', 'uncommon')."
+        }
+      },
+      "required": ["statName", "value"]
+    }
+  }
+}

@@ -1,0 +1,6 @@
+[submodule "custom_sqlite/sqlite-vec"]
+	path = custom_sqlite/sqlite-vec
+	url = https://github.com/asg017/sqlite-vec
+[submodule "custom_sqlite/cr-sqlite"]
+	path = custom_sqlite/cr-sqlite
+	url = https://github.com/vlcn-io/cr-sqlite

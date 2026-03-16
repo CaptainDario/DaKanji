@@ -1,0 +1,6 @@
+{
+    "cmake.sourceDirectory": "/Users/darioklepoch/dev/DaKanji/da_db/apps/da_db_ui_example/linux",
+    "editor.codeActionsOnSave": {
+        "source.organizeImports": "explicit"
+    }
+}

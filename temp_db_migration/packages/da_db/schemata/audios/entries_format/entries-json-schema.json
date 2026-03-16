@@ -1,0 +1,48 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Audio Entries Format",
+  "description": "Schema for entries.json audio mappings",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "properties": {
+      "kanji": {
+        "type": "array",
+        "description": "List of terms associated with this entry.",
+        "items": { "type": "string" }
+      },
+      "accents": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "soundFile": {
+              "type": "string",
+              "description": "Path to the audio file in the archive."
+            },
+            "accent": {
+              "type": "array",
+              "description": "Array of accent data. Parser currently only reads index [0].",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "pronunciation": {
+                    "type": "string",
+                    "description": "The reading of the term."
+                  },
+                  "pitchAccent": {
+                    "type": "integer",
+                    "description": "Pitch accent pattern."
+                  }
+                },
+                "required": ["pronunciation"]
+              }
+            }
+          },
+          "required": ["soundFile", "accent"]
+        }
+      }
+    },
+    "required": ["kanji", "accents"]
+  }
+}

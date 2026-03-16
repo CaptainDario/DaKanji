@@ -1,0 +1,7 @@
+import 'kanji_meta_bank_v3_tables.dart';
+import 'kanji_meta_bank_v3_views.drift';
+
+
+
+kanji_meta_bank_v3_search_drift:
+    SELECT * FROM kanji_meta_bank_v3_entry_view WHERE kanji = :kanji;

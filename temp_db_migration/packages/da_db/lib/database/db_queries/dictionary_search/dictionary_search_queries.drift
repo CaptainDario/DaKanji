@@ -1,0 +1,865 @@
+import '/database/index/index_views.drift';
+import '/database/term/term_bank_v3_views.drift';
+import 'dictionary_search_fts_tables.drift';
+import '/database/term/term_bank_v3_views.drift';
+import '/database/term_meta/term_meta_bank_v3_views.drift';
+
+
+dictionary_search_drift_find_term_bank_entries(
+    :searchInputs AS TEXT,
+    :useGlob AS INT,
+    :normalizedSearch AS INT,
+    :filterTerm AS TEXT OR NULL,
+    :filterReading AS TEXT OR NULL,
+    :filterDefinition AS TEXT OR NULL,
+    :indexes_to_include AS TEXT OR NULL,
+    :limit AS INT,
+    :offset AS INT
+):
+
+    WITH
+        SearchTerms(input_index, term, should_prefix, allowed_rules, allowed_tags, fts_query) AS (
+            SELECT 
+                "key" as input_index, -- used for sorting by input order
+                CAST(json_extract(value, '$[0]') AS TEXT),    -- Extract term
+                CAST(json_extract(value, '$[1]') AS INTEGER), -- Extract prefix search flag
+                CAST(json_extract(value, '$[3]') AS TEXT),    -- Extract Rules (PoS) Array
+                CAST(json_extract(value, '$[4]') AS TEXT),    -- Extract Tags Array
+
+                -- 
+                CASE
+                    WHEN CAST(json_extract(value, '$[2]') AS INTEGER) = 1 THEN '^' 
+                    ELSE '' 
+                END ||
+                -- the search term
+                '"' || "REPLACE"(CAST(json_extract(value, '$[0]') AS TEXT), '"', '""') || '"' ||
+                -- prefix search
+                CASE
+                    WHEN CAST(json_extract(value, '$[1]') AS INTEGER) = 1 THEN ' *' 
+                    ELSE '' 
+                END
+            FROM json_each(:searchInputs)
+        ),
+
+        IndexesToInclude(index_id) AS (
+            SELECT value FROM json_each(:indexes_to_include)
+            WHERE value IS NOT NULL
+        ),
+        -- Get the active indexes based on the input
+        ActiveIndexes(id, current_sorting_order, enabled, frequency_mode) AS (
+            SELECT id, current_sorting_order, enabled, frequency_mode
+            FROM index_table
+            WHERE
+                (
+                    :indexes_to_include IS NOT NULL
+                    AND id IN (SELECT index_id FROM IndexesToInclude)
+                )
+                OR 
+                (
+                    :indexes_to_include IS NULL
+                    AND enabled = 1
+                )
+        ),
+    
+        SearchResults AS (
+        -- 1. TERMS (Exact Mode - TRIGRAM)
+            SELECT
+                SearchTerms.input_index,
+                SearchTerms.term AS search_term,
+                SearchTerms.should_prefix,
+                SearchTerms.allowed_rules,
+                SearchTerms.allowed_tags,
+                SearchTerms.fts_query,
+                T.id AS source_id,
+                1 AS data_type_id,
+                T.term AS text_data,
+                fts_terms.rank
+            FROM SearchTerms
+            JOIN fts_terms ON fts_terms.term MATCH SearchTerms.fts_query
+            JOIN term_table AS T ON fts_terms."rowid" = T.id
+            WHERE :useGlob = 0 AND :normalizedSearch = 0
+
+            UNION ALL
+
+            -- 1. TERMS (Exact Mode - UNICODE)
+            SELECT
+                SearchTerms.input_index,
+                SearchTerms.term AS search_term,
+                SearchTerms.should_prefix,
+                SearchTerms.allowed_rules,
+                SearchTerms.allowed_tags,
+                SearchTerms.fts_query,
+                T.id AS source_id,
+                1 AS data_type_id,
+                T.term AS text_data,
+                fts_terms_unicode.rank
+            FROM SearchTerms
+            JOIN fts_terms_unicode ON fts_terms_unicode.term MATCH SearchTerms.fts_query
+            JOIN term_table AS T ON fts_terms_unicode."rowid" = T.id
+            WHERE :useGlob = 0 AND :normalizedSearch = 0
+
+            UNION ALL
+
+            -- 2. TERMS (Normalized Mode - TRIGRAM)
+            SELECT
+                SearchTerms.input_index,
+                SearchTerms.term AS search_term,
+                SearchTerms.should_prefix,
+                SearchTerms.allowed_rules,
+                SearchTerms.allowed_tags,
+                SearchTerms.fts_query,
+                T.id AS source_id,
+                3 AS data_type_id,
+                COALESCE(T.term_normalized, T.term) AS text_data, 
+                fts_terms.rank
+            FROM SearchTerms
+            JOIN fts_terms ON fts_terms MATCH SearchTerms.fts_query 
+            JOIN term_table AS T ON fts_terms."rowid" = T.id
+            WHERE :useGlob = 0 AND :normalizedSearch = 1
+
+            UNION ALL
+
+            -- 2. TERMS (Normalized Mode - UNICODE)
+            SELECT
+                SearchTerms.input_index,
+                SearchTerms.term AS search_term,
+                SearchTerms.should_prefix,
+                SearchTerms.allowed_rules,
+                SearchTerms.allowed_tags,
+                SearchTerms.fts_query,
+                T.id AS source_id,
+                3 AS data_type_id,
+                COALESCE(T.term_normalized, T.term) AS text_data, 
+                fts_terms_unicode.rank
+            FROM SearchTerms
+            JOIN fts_terms_unicode ON fts_terms_unicode MATCH SearchTerms.fts_query 
+            JOIN term_table AS T ON fts_terms_unicode."rowid" = T.id
+            WHERE :useGlob = 0 AND :normalizedSearch = 1
+
+            UNION ALL
+
+            -- 3. READINGS (Exact Mode - TRIGRAM)
+            SELECT
+                SearchTerms.input_index,
+                SearchTerms.term AS search_term,
+                SearchTerms.should_prefix,
+                SearchTerms.allowed_rules,
+                SearchTerms.allowed_tags,
+                SearchTerms.fts_query,
+                R.id AS source_id,
+                5 AS data_type_id,
+                R.reading AS text_data,
+                fts_readings.rank
+            FROM SearchTerms
+            JOIN fts_readings ON fts_readings.reading MATCH SearchTerms.fts_query
+            JOIN reading_table AS R ON fts_readings."rowid" = R.id
+            WHERE :useGlob = 0 AND :normalizedSearch = 0
+
+            UNION ALL
+
+            -- 3. READINGS (Exact Mode - UNICODE)
+            SELECT
+                SearchTerms.input_index,
+                SearchTerms.term AS search_term,
+                SearchTerms.should_prefix,
+                SearchTerms.allowed_rules,
+                SearchTerms.allowed_tags,
+                SearchTerms.fts_query,
+                R.id AS source_id,
+                5 AS data_type_id,
+                R.reading AS text_data,
+                fts_readings_unicode.rank
+            FROM SearchTerms
+            JOIN fts_readings_unicode ON fts_readings_unicode.reading MATCH SearchTerms.fts_query
+            JOIN reading_table AS R ON fts_readings_unicode."rowid" = R.id
+            WHERE :useGlob = 0 AND :normalizedSearch = 0
+
+            UNION ALL
+
+            -- 4. READINGS (Normalized Mode - TRIGRAM)
+            SELECT
+                SearchTerms.input_index,
+                SearchTerms.term AS search_term,
+                SearchTerms.should_prefix,
+                SearchTerms.allowed_rules,
+                SearchTerms.allowed_tags,
+                SearchTerms.fts_query,
+                R.id AS source_id,
+                6 AS data_type_id,
+                COALESCE(R.reading_normalized, R.reading) AS text_data,
+                fts_readings.rank
+            FROM SearchTerms
+            JOIN fts_readings ON fts_readings MATCH SearchTerms.fts_query
+            JOIN reading_table AS R ON fts_readings."rowid" = R.id
+            WHERE :useGlob = 0 AND :normalizedSearch = 1
+
+            UNION ALL
+
+            -- 4. READINGS (Normalized Mode - UNICODE)
+            SELECT
+                SearchTerms.input_index,
+                SearchTerms.term AS search_term,
+                SearchTerms.should_prefix,
+                SearchTerms.allowed_rules,
+                SearchTerms.allowed_tags,
+                SearchTerms.fts_query,
+                R.id AS source_id,
+                6 AS data_type_id,
+                COALESCE(R.reading_normalized, R.reading) AS text_data,
+                fts_readings_unicode.rank
+            FROM SearchTerms
+            JOIN fts_readings_unicode ON fts_readings_unicode MATCH SearchTerms.fts_query
+            JOIN reading_table AS R ON fts_readings_unicode."rowid" = R.id
+            WHERE :useGlob = 0 AND :normalizedSearch = 1
+
+            UNION ALL
+
+            -- 5. DEFINITIONS (TRIGRAM)
+            SELECT
+                SearchTerms.input_index,
+                SearchTerms.term AS search_term,
+                SearchTerms.should_prefix,
+                SearchTerms.allowed_rules,
+                SearchTerms.allowed_tags,
+                SearchTerms.fts_query,
+                fts_definitions."rowid" AS source_id,
+                7 AS data_type_id,
+                fts_definitions.definition AS text_data,
+                fts_definitions.rank
+            FROM SearchTerms
+            JOIN fts_definitions ON fts_definitions.definition MATCH SearchTerms.fts_query
+            WHERE :useGlob = 0 AND :normalizedSearch = 0
+
+            UNION ALL
+
+            -- 5. DEFINITIONS (UNICODE)
+            SELECT
+                SearchTerms.input_index,
+                SearchTerms.term AS search_term,
+                SearchTerms.should_prefix,
+                SearchTerms.allowed_rules,
+                SearchTerms.allowed_tags,
+                SearchTerms.fts_query,
+                fts_definitions_unicode."rowid" AS source_id,
+                7 AS data_type_id,
+                fts_definitions_unicode.definition AS text_data,
+                fts_definitions_unicode.rank
+            FROM SearchTerms
+            JOIN fts_definitions_unicode ON fts_definitions_unicode.definition MATCH SearchTerms.fts_query
+            WHERE :useGlob = 0 AND :normalizedSearch = 0
+
+            UNION ALL
+
+            -- 6. GLOB Search (Terms)
+            SELECT
+                SearchTerms.input_index,
+                SearchTerms.term AS search_term,
+                SearchTerms.should_prefix,
+                SearchTerms.allowed_rules,
+                SearchTerms.allowed_tags,
+                SearchTerms.fts_query,
+                T.id AS source_id,
+                (CASE WHEN :normalizedSearch = 0 THEN 1 ELSE 3 END) AS data_type_id,
+                (CASE WHEN :normalizedSearch = 0 THEN T.term ELSE IFNULL(T.term_normalized, T.term) END) AS text_data,
+                0 AS rank
+            FROM SearchTerms, term_table AS T
+            WHERE 
+                :useGlob = 1
+                AND (CASE WHEN :normalizedSearch = 0 THEN T.term ELSE IFNULL(T.term_normalized, T.term) END) GLOB SearchTerms.term
+
+            UNION ALL
+
+            -- 7. GLOB Search (Readings)
+            SELECT
+                SearchTerms.input_index,
+                SearchTerms.term AS search_term,
+                SearchTerms.should_prefix,
+                SearchTerms.allowed_rules,
+                SearchTerms.allowed_tags,
+                SearchTerms.fts_query,
+                R.id AS source_id,
+                (CASE WHEN :normalizedSearch = 0 THEN 5 ELSE 6 END) AS data_type_id,
+                (CASE WHEN :normalizedSearch = 0 THEN R.reading ELSE IFNULL(R.reading_normalized, R.reading) END) AS text_data,
+                0 AS rank
+            FROM SearchTerms, reading_table AS R
+            WHERE 
+                :useGlob = 1
+                AND (CASE WHEN :normalizedSearch = 0 THEN R.reading ELSE IFNULL(R.reading_normalized, R.reading) END) GLOB SearchTerms.term
+
+            UNION ALL
+
+            -- 8. GLOB Search (Definitions)
+            SELECT
+                SearchTerms.input_index,
+                SearchTerms.term AS search_term,
+                SearchTerms.should_prefix,
+                SearchTerms.allowed_rules,
+                SearchTerms.allowed_tags,
+                SearchTerms.fts_query,
+                D.id AS source_id,
+                7 AS data_type_id,
+                D.definition AS text_data,
+                0 AS rank
+            FROM SearchTerms, definition_table AS D
+            WHERE 
+                :useGlob = 1
+                AND D.definition GLOB SearchTerms.term
+        ),
+
+        -- classify each match
+        SearchResultMatchesClassified AS (
+            SELECT
+                SearchResults.*,
+                CASE
+                    WHEN text_data = search_term THEN 1
+                    WHEN text_data LIKE search_term || '%' THEN 2
+                    ELSE 3
+                END as match_type
+            FROM SearchResults
+        ),
+        
+        -- Only take the BEST entry for each found entry
+        SearchResultsDeduplicated AS (
+            SELECT * FROM (
+                SELECT
+                    SearchResultMatchesClassified.*,
+                    ROW_NUMBER() OVER(
+                        -- Partition by Source ID AND Data Type Group
+                        -- This ensures ID 100 (Term) is not compared to ID 100 (Definition)
+                        PARTITION BY 
+                            source_id, 
+                            CASE 
+                                WHEN data_type_id IN (1, 2, 3, 4) THEN 'term'
+                                WHEN data_type_id IN (5, 6) THEN 'reading'
+                                ELSE 'def'
+                            END
+                        ORDER BY 
+                            match_type ASC,        -- Exact matches first
+                            LENGTH(text_data) ASC, -- Shorter matches
+                            rank ASC               -- Better FTS rank
+                    ) AS rn
+                FROM SearchResultMatchesClassified
+            ) WHERE rn = 1
+        ),
+        
+        TermBankMatches as (
+            SELECT
+                SearchResultsDeduplicated.*,  -- used for sorting by input order
+                term_bank_v3_table.id as term_bank_id,
+                term_bank_v3_table.term_id as term_id,
+                term_bank_v3_table.reading_id as reading_id,
+                term_bank_v3_table.index_id,
+                1 as match_column,
+                term_bank_v3_table.sequence_number,
+                0 as def_rank -- Dummy rank
+            FROM SearchResultsDeduplicated 
+            JOIN term_bank_v3_table
+                ON term_bank_v3_table.term_id = source_id
+                AND data_type_id IN (1, 2, 3, 4)
+            JOIN ActiveIndexes ON term_bank_v3_table.index_id = ActiveIndexes.id
+            
+            UNION ALL
+            
+            -- get all term / reading matches
+            SELECT 
+                SearchResultsDeduplicated.*,
+                term_bank_v3_table.id as term_bank_id,
+                term_bank_v3_table.term_id as term_id,
+                term_bank_v3_table.reading_id as reading_id,
+                term_bank_v3_table.index_id,
+                2 as match_column,
+                term_bank_v3_table.sequence_number,
+                0 as def_rank -- Dummy rank
+            FROM SearchResultsDeduplicated
+            JOIN term_bank_v3_table
+                ON term_bank_v3_table.reading_id = source_id
+                AND data_type_id IN (5, 6)
+            JOIN ActiveIndexes ON term_bank_v3_table.index_id = ActiveIndexes.id
+             
+            UNION ALL
+            
+            -- get all definition matches
+            SELECT
+                SearchResultsDeduplicated.*,
+                term_bank_v3_x_definition_table.term_bank_id as term_bank_id,
+                term_bank_v3_table.term_id as term_id,
+                term_bank_v3_table.reading_id as reading_id,
+                term_bank_v3_table.index_id,
+                3 as match_column,
+                term_bank_v3_table.sequence_number,
+                term_bank_v3_x_definition_table.rank as def_rank -- Real rank
+            FROM SearchResultsDeduplicated
+            JOIN term_bank_v3_x_definition_table
+                ON term_bank_v3_x_definition_table.definition_id = source_id
+            JOIN term_bank_v3_table
+                ON term_bank_v3_table.id = term_bank_v3_x_definition_table.term_bank_id 
+                AND data_type_id  = 7
+            JOIN ActiveIndexes ON term_bank_v3_table.index_id = ActiveIndexes.id
+        ),
+
+        -- Filter based on the specific Rules and Tags attached to each search term
+        TermBankMatchesFiltered AS (
+            SELECT TBM.*
+            FROM TermBankMatches AS TBM
+            WHERE
+                -- PARAMETER CHECKS
+
+                -- Check Term (Using TBM.term_id from the found result)
+                (:filterTerm IS NULL OR EXISTS (
+                    SELECT 1 FROM fts_terms
+                        WHERE "rowid" = TBM.term_id
+                            AND :normalizedSearch = 0
+                            AND term MATCH '"' || "REPLACE"(:filterTerm, '"', '""') || '"'
+                    UNION ALL
+                    SELECT 1 FROM fts_terms_unicode
+                        WHERE "rowid" = TBM.term_id
+                            AND :normalizedSearch = 0
+                            AND term MATCH '"' || "REPLACE"(:filterTerm, '"', '""') || '"'
+                    UNION ALL
+                    SELECT 1 FROM fts_terms
+                        WHERE "rowid" = TBM.term_id
+                            AND :normalizedSearch = 1
+                            AND fts_terms MATCH '"' || "REPLACE"(:filterTerm, '"', '""') || '"'
+                    UNION ALL
+                    SELECT 1 FROM fts_terms_unicode
+                        WHERE "rowid" = TBM.term_id
+                            AND :normalizedSearch = 1
+                            AND fts_terms_unicode MATCH '"' || "REPLACE"(:filterTerm, '"', '""') || '"'
+                ))
+
+                AND
+                
+                -- Check Reading (Using TBM.reading_id)
+                (:filterReading IS NULL OR EXISTS (
+                    SELECT 1 FROM fts_readings
+                        WHERE "rowid" = TBM.reading_id
+                            AND :normalizedSearch = 0
+                            AND reading MATCH '"' || "REPLACE"(:filterReading, '"', '""') || '"'
+                    UNION ALL
+                    SELECT 1 FROM fts_readings_unicode
+                        WHERE "rowid" = TBM.reading_id
+                            AND :normalizedSearch = 0
+                            AND reading MATCH '"' || "REPLACE"(:filterReading, '"', '""') || '"'
+                    UNION ALL
+                    SELECT 1 FROM fts_readings
+                        WHERE "rowid" = TBM.reading_id
+                            AND :normalizedSearch = 1
+                            AND fts_readings MATCH '"' || "REPLACE"(:filterReading, '"', '""') || '"'
+                    UNION ALL
+                    SELECT 1 FROM fts_readings_unicode
+                        WHERE "rowid" = TBM.reading_id
+                            AND :normalizedSearch = 1
+                            AND fts_readings_unicode MATCH '"' || "REPLACE"(:filterReading, '"', '""') || '"'
+                ))
+
+                AND
+                
+                -- Check Definition (Using TBM.term_bank_id)
+                (:filterDefinition IS NULL OR EXISTS (
+                    SELECT 1 FROM term_bank_v3_x_definition_table AS link
+                    JOIN fts_definitions AS def_fts ON link.definition_id = def_fts."rowid"
+                    WHERE link.term_bank_id = TBM.term_bank_id
+                    AND def_fts.definition MATCH '"' || "REPLACE"(:filterDefinition, '"', '""') || '"'
+                    
+                    UNION ALL
+                    
+                    SELECT 1 FROM term_bank_v3_x_definition_table AS link
+                    JOIN fts_definitions_unicode AS def_fts_u ON link.definition_id = def_fts_u."rowid"
+                    WHERE link.term_bank_id = TBM.term_bank_id
+                    AND def_fts_u.definition MATCH '"' || "REPLACE"(:filterDefinition, '"', '""') || '"'
+                ))
+
+                -- TAG/RULE CHECKS
+                AND
+                (
+                    TBM.allowed_tags IS NULL 
+                    OR json_array_length(TBM.allowed_tags) = 0
+                    OR EXISTS (
+                        SELECT 1
+                        FROM term_bank_v3_x_tag_bank_table AS LinkTable
+                        JOIN tag_bank_v3_table AS TagTable ON LinkTable.tag_bank_id = TagTable.id
+                        -- Join the JSON array from the search input
+                        JOIN json_each(TBM.allowed_tags) AS AllowedTag ON TagTable.name = AllowedTag.value
+                        WHERE LinkTable.term_bank_id = TBM.term_bank_id
+                    )
+                )
+
+                AND
+
+                -- 2. Check Per-Input Rules
+                (
+                    TBM.allowed_rules IS NULL 
+                    OR json_array_length(TBM.allowed_rules) = 0
+                    OR EXISTS (
+                        SELECT 1
+                        FROM term_bank_v3_x_rule_identifier_table AS RuleLink
+                        JOIN term_bank_v3_rule_identifier_table AS RuleTable ON RuleLink.rule_identifier_id = RuleTable.id
+                        -- Join the JSON array from the search input
+                        JOIN json_each(TBM.allowed_rules) AS AllowedRule ON RuleTable.rule_identifier = AllowedRule.value
+                        WHERE RuleLink.term_bank_id = TBM.term_bank_id
+                    )
+                )
+        ),
+        
+        FrequencyOverrideIsActive AS (
+            SELECT 1 AS is_active 
+            FROM index_table 
+            WHERE current_frequency_dictionary = TRUE 
+            LIMIT 1
+        ),
+
+        -- Get the popularity override dictionary
+        PopularityDictionary AS (
+            SELECT
+                term_meta_bank_v3_table.*,
+                IT.frequency_mode AS op_frequency_mode
+            FROM
+                index_table AS IT
+            JOIN term_meta_bank_v3_table ON
+                term_meta_bank_v3_table.index_id = IT.id
+            JOIN term_meta_bank_v3_type_table ON
+                term_meta_bank_v3_table.type_id = term_meta_bank_v3_type_table.id
+            WHERE
+                IT.current_frequency_dictionary = TRUE 
+                AND term_meta_bank_v3_type_table.type = 'freq'
+        )
+
+    --- FINAL SELECT 
+    SELECT
+        TBM.term_bank_id,
+        TBM.search_term,
+        TBM.rank as fts5_rank,
+        TBM.match_type,
+        TBM.match_column,
+        TBM.sequence_number,
+        ActiveIndexes.id as indexId,
+        ActiveIndexes.current_sorting_order,
+        CASE 
+            WHEN FrequencyOverrideIsActive.is_active = 1 THEN 
+                -- Override Mode Logic
+                CASE 
+                    WHEN OP.op_frequency_mode = 'rankBased' THEN (OP.freq_value * -1)
+                    ELSE OP.freq_value 
+                END
+            ELSE 
+                -- Normal Mode Logic
+                CASE 
+                    WHEN ActiveIndexes.frequency_mode = 'rankBased' THEN (TB3T.popularity * -1)
+                    ELSE TB3T.popularity 
+                END
+        END as finalPopularity,
+        CASE
+            WHEN TBM.match_column = 1 THEN TT.term 
+            WHEN TBM.match_column = 2 THEN RT.reading
+            ELSE TBM.text_data
+        END as matchedText,
+        LENGTH(CASE
+            WHEN TBM.match_column = 1 THEN TT.term 
+            WHEN TBM.match_column = 2 THEN RT.reading
+            ELSE TBM.text_data
+        END) as matchedTextLength
+    FROM 
+        TermBankMatchesFiltered AS TBM
+        
+    JOIN ActiveIndexes ON TB3T.index_id = ActiveIndexes.id
+    JOIN term_bank_v3_table AS TB3T ON TBM.term_bank_id = TB3T.id
+    LEFT JOIN term_table AS TT ON TB3T.term_id = TT.id
+    LEFT JOIN reading_table AS RT ON TB3T.reading_id = RT.id
+    LEFT JOIN FrequencyOverrideIsActive ON 1 = 1
+    LEFT JOIN PopularityDictionary AS OP ON OP.term_id = TB3T.term_id
+        
+    ORDER BY
+        -- maintain input order
+        TBM.input_index ASC,
+        -- only apply dictionary sorting if no popularity override is active
+        CASE
+            WHEN FrequencyOverrideIsActive.is_active = 1
+            THEN 0 
+            ELSE ActiveIndexes.current_sorting_order 
+        END,
+        -- sort by match type (exact > prefix > partial)
+        TBM.match_type,
+        -- sort by matched column (term > reading > definition)
+        TBM.match_column,
+        
+        -- Prioritize earlier definition matches
+        CASE 
+            WHEN TBM.match_column = 3 THEN TBM.def_rank 
+            ELSE 0 
+        END ASC,
+        finalPopularity DESC,
+        -- if frequency override is set, use user dictionary sort order
+        CASE
+            WHEN FrequencyOverrideIsActive.is_active = 1
+            THEN ActiveIndexes.current_sorting_order
+            ELSE 0
+        END,
+        -- sort by fts rank
+        TBM.rank,
+        -- prioritize matches closer in length to the search term
+        LENGTH(matchedText) ASC,
+        -- sort by unicode characters 
+        matchedText ASC
+
+    LIMIT :limit OFFSET :offset;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+dictionary_search_drift_find_term_bank_sequences_by_pairs:
+    WITH
+        -- Extract the specific (Sequence, Dictionary) pairs we need
+        RequiredLookups(seqNumber, targetDictId) AS (
+            SELECT 
+                CAST(json_extract(value, '$.s') AS INTEGER),
+                CAST(json_extract(value, '$.d') AS INTEGER)
+            FROM json_each(:lookup_pairs)
+        ),
+        
+        -- IDs already fetched to exclude
+        ExcludedTermBankIds(termBankId) AS (
+            SELECT value FROM json_each(:excluded_term_bank_ids)
+            WHERE value IS NOT NULL
+        )
+
+    SELECT 
+        term_bank_v3_table.id as term_bank_id,
+        term_bank_v3_table.index_id,
+        NULL as search_term,
+        NULL as fts5_rank,
+        4 as match_type,
+        NULL as match_column,
+        index_table.current_sorting_order AS current_sorting_order,
+        NULL AS finalPopularity,
+        NULL as matchedText,
+        NULL as matchedTextLength,
+        term_bank_v3_table.sequence_number
+    FROM RequiredLookups
+    
+    -- JOIN strictly on BOTH Sequence AND Dictionary ID
+    JOIN term_bank_v3_table
+        ON term_bank_v3_table.sequence_number = RequiredLookups.seqNumber
+        AND term_bank_v3_table.index_id = RequiredLookups.targetDictId
+
+    JOIN index_table
+        ON term_bank_v3_table.index_id = index_table.id
+        
+    -- Exclude entries we already have
+    LEFT JOIN ExcludedTermBankIds AS Excluded
+        ON term_bank_v3_table.id = Excluded.termBankId
+    WHERE
+        Excluded.termBankId IS NULL;
+
+dictionary_search_drift_find_term_bank_details:
+    WITH
+        -- This CTE unpacks the JSON string of IDs
+        TargetIds(term_bank_id) AS (
+            SELECT CAST(value AS INTEGER) FROM json_each(:termBankIdJson)
+        ),
+    
+        -- is an popularity override present?
+        FrequencyOverrideIsActive AS (
+            SELECT 1 AS is_active 
+            FROM index_table 
+            WHERE current_frequency_dictionary = TRUE 
+            LIMIT 1
+        ),
+
+        -- Get the popularity override dictionary
+        PopularityDictionary AS (
+            SELECT
+                term_meta_bank_v3_table.*,
+                IT.frequency_mode AS op_frequency_mode
+            FROM
+                index_table AS IT
+            JOIN term_meta_bank_v3_table ON
+                term_meta_bank_v3_table.index_id = IT.id
+            JOIN term_meta_bank_v3_type_table ON
+                term_meta_bank_v3_table.type_id = term_meta_bank_v3_type_table.id
+            WHERE
+                IT.current_frequency_dictionary = TRUE 
+                AND term_meta_bank_v3_type_table.type = 'freq'
+        ),
+
+        --- ASSEMBLE TERM BANK ENTRIES ---
+        definitions_agg AS (
+            SELECT
+                term_bank_id,
+                JSON_GROUP_ARRAY(definition ORDER BY sort_key) AS definitions
+            FROM term_bank_v3_definitions_json_view
+            WHERE term_bank_id IN (SELECT term_bank_id FROM TargetIds)
+            GROUP BY term_bank_id
+        ),
+        
+        def_tags_agg AS (
+            SELECT
+                term_bank_id,
+                JSON_GROUP_ARRAY(JSON(tag_json)) AS definition_tags
+            FROM (
+                SELECT DISTINCT
+                    term_bank_id,
+                    tag_json
+                FROM term_bank_v3_def_tags_json_view
+                WHERE term_bank_id IN (SELECT term_bank_id FROM TargetIds)
+            ) AS DistinctTags
+            GROUP BY term_bank_id
+        ),
+        
+        rules_agg AS (
+            SELECT
+                term_bank_id,
+                JSON_GROUP_ARRAY(rule_identifier) AS rule_identifiers
+            FROM (
+                SELECT DISTINCT
+                    term_bank_id,
+                    rule_identifier
+                FROM term_bank_v3_rules_json_view
+                WHERE term_bank_id IN (SELECT term_bank_id FROM TargetIds)
+            ) AS DistinctRules
+            GROUP BY term_bank_id
+        ),
+        
+        tags_agg AS (
+            SELECT
+                term_bank_id,
+                JSON_GROUP_ARRAY(JSON(tag_json)) AS tags
+            FROM (
+                SELECT DISTINCT
+                    term_bank_id,
+                    tag_json
+                FROM term_bank_v3_tags_json_view
+                WHERE term_bank_id IN (SELECT term_bank_id FROM TargetIds)
+            ) AS DistinctTags
+            GROUP BY term_bank_id
+        ),
+        --- ASSEMBLE TERM BANK ENTRIES END -------------------
+        
+        --- ASSEMBLE TERM META ENTRIES ---
+        FilteredMetaBank AS (
+            SELECT
+                Base.*,
+                TBM.term_bank_id
+            FROM
+                term_meta_bank_v3_base_view AS Base
+            JOIN
+                (SELECT DISTINCT id as term_bank_id, term_id, reading_id 
+                 FROM term_bank_v3_table WHERE id IN (SELECT term_bank_id FROM TargetIds)) AS TBM
+                    ON Base.term_id = TBM.term_id
+                        AND (Base.reading_id = TBM.reading_id OR Base.reading_id IS NULL)
+        ),
+        
+        term_meta_agg AS (
+            SELECT
+                FMB.term_bank_id,
+                COALESCE(
+                    JSON_GROUP_ARRAY(
+                        JSON_OBJECT(
+                            'id', FMB.term_meta_id,
+                            'indexEntry', FMB.index_entry,
+                            'term', FMB.term,
+                            'reading', FMB.reading,
+                            'type', FMB.type,
+                            'frequency', FMB.frequency,
+                            'frequencyDisplayValue', FMB.frequencyDisplayValue,
+                            'pitchs', CASE WHEN FMB.type = 'pitch' THEN JSON(COALESCE(ap.pitches, '[]')) ELSE JSON('[]') END,
+                            'ipas', CASE WHEN FMB.type = 'ipa' THEN JSON(COALESCE(ai.ipas, '[]')) ELSE JSON('[]') END
+                        )
+                    ) FILTER (WHERE FMB.type IS NOT NULL),
+                    JSON('[]')
+                ) AS termMetaEntries
+            FROM FilteredMetaBank AS FMB
+            LEFT JOIN term_meta_bank_v3_pitches_json_view AS ap ON FMB.term_meta_id = ap.term_meta_id
+            LEFT JOIN term_meta_bank_v3_ipas_json_view AS ai ON FMB.term_meta_id = ai.term_meta_id
+            WHERE (
+                (FMB.type = 'pitch' AND ap.pitches IS NOT NULL) OR
+                (FMB.type = 'ipa' AND ai.ipas IS NOT NULL) OR
+                (FMB.type = 'freq')
+            )
+            GROUP BY
+                FMB.term_bank_id
+        )
+        --- ASSEMBLE TERM META END -------------------
+
+    -- FINAL SELECT
+    -- This selects all data, but NO search metadata
+    SELECT
+        -- index
+        index_table.*,
+
+        -- popularity override
+        COALESCE(FrequencyOverrideIsActive.is_active, 0) as hasPopularityOverride,
+        OP.freq_value AS overriddenPopularityValue,
+        TB3T.popularity AS originalPopularity,
+        CASE 
+            WHEN FrequencyOverrideIsActive.is_active = 1 THEN OP.freq_value
+            ELSE TB3T.popularity
+        END as finalPopularity,
+        
+        -- term bank entry
+        TB3T.id AS term_bank_v3_id,
+        IV.id as indexId,
+        IV.index_entry AS indexEntry,
+        TT.term,
+        RT.reading,
+        TB3T.popularity,
+        TB3T.sequence_number,
+        TDJT.definition_json AS structuredContentDefinitions,
+        
+        -- Get the aggregated data
+        COALESCE(DA.definitions, '[]') AS definitions,
+        COALESCE(DTA.definition_tags, '[]') AS definition_tags,
+        COALESCE(RA.rule_identifiers, '[]') AS rule_identifiers,
+        COALESCE(TA.tags, '[]') AS tags,
+
+        -- term meta entry
+        COALESCE(TMA.termMetaEntries, '[]') AS termMetaEntries
+    FROM 
+        term_bank_v3_table AS TB3T
+        
+    JOIN index_table ON TB3T.index_id = index_table.id
+    JOIN index_entry_as_json_view AS IV ON TB3T.index_id = IV.id
+    LEFT JOIN term_table AS TT ON TB3T.term_id = TT.id
+    LEFT JOIN reading_table AS RT ON TB3T.reading_id = RT.id
+    LEFT JOIN definitions_agg AS DA ON TB3T.id = DA.term_bank_id
+    LEFT JOIN term_bank_v3_definition_json_table AS TDJT ON TB3T.definition_json_id = TDJT.id
+    LEFT JOIN def_tags_agg AS DTA ON TB3T.id = DTA.term_bank_id
+    LEFT JOIN rules_agg AS RA ON TB3T.id = RA.term_bank_id
+    LEFT JOIN tags_agg AS TA ON TB3T.id = TA.term_bank_id
+    LEFT JOIN FrequencyOverrideIsActive ON 1 = 1
+    LEFT JOIN PopularityDictionary AS OP ON OP.term_id = TB3T.term_id
+    LEFT JOIN term_meta_agg AS TMA ON TB3T.id = TMA.term_bank_id
+
+    -- Filter by the list of IDs from the parameter
+    WHERE TB3T.id IN (SELECT term_bank_id FROM TargetIds);

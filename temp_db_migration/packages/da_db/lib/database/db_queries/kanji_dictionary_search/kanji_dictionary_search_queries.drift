@@ -1,0 +1,64 @@
+import '/database/kanji/kanji_bank_v3_tables.dart';
+import '/database/general_tables/kanji_tables.dart';
+import '/database/index/index_tables.dart';
+import '/database/kanji/kanji_bank_v3_views.drift';
+import '/database/kanji_meta/kanji_meta_bank_v3_views.drift';
+
+kanji_dictionary_find_kanji_bank_entries_drift:
+    WITH IndexesToInclude(index_id) AS (
+        SELECT value FROM json_each(:indexes_to_include)
+    )
+    SELECT
+        KBV3T.id AS id
+    FROM
+        kanji_table AS KDT
+    JOIN
+        kanji_bank_v3_table AS KBV3T ON KBV3T.kanji_id = KDT.id
+    JOIN
+        index_table AS IT ON KBV3T.index_id = IT.id
+    WHERE
+        KDT.kanji IN :kanjis
+        AND 
+        (
+             (:indexes_to_include IS NOT NULL AND IT.id IN (SELECT index_id FROM IndexesToInclude))
+             OR
+             (:indexes_to_include IS NULL AND IT.enabled = 1)
+        );
+
+kanji_dictionary_find_kanji_details_drift:
+    WITH 
+        IndexesToInclude(index_id) AS (
+            SELECT value FROM json_each(:indexes_to_include)
+        ),
+        ActiveIndexes(id) AS (
+            SELECT id 
+            FROM index_table
+            WHERE
+                (:indexes_to_include IS NOT NULL AND id IN (SELECT index_id FROM IndexesToInclude))
+                OR 
+                (:indexes_to_include IS NULL AND enabled = 1)
+        )
+    SELECT 
+        k.*,
+        (
+            SELECT
+                json_group_array(
+                    json_object(
+                        'id', km.id,
+                        'kanji', km.kanji,
+                        'indexEntry', km.indexEntry,
+                        'type', km.type,
+                        'freqValue', (km.freq_value),
+                        'freqDisplayValue', km.freq_display_value
+                    )
+                )
+            FROM kanji_meta_bank_v3_entry_view AS km
+            JOIN ActiveIndexes ON km.index_id = ActiveIndexes.id
+            WHERE km.kanji = k.kanji
+        ) AS kanjiMetaBankV3Entries
+    FROM kanji_bank_v3_entry_view AS k
+    LEFT JOIN index_table AS it ON k.indexId = it.id
+    WHERE k.id IN :ids
+    ORDER BY 
+        it.current_sorting_order ASC, 
+        k.kanji ASC;

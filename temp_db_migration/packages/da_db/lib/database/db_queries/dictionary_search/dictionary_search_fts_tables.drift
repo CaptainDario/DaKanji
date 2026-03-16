@@ -1,0 +1,54 @@
+import '/database/general_tables/term_tables.dart';
+import '/database/general_tables/reading_tables.dart';
+import '/database/general_tables/definition_tables.dart';
+
+-- 1A. TERMS INDEX (Trigram)
+CREATE VIRTUAL TABLE IF NOT EXISTS fts_terms USING fts5(
+  term,
+  term_normalized,
+  content='term_table',
+  content_rowid='id',
+  tokenize = 'better_trigram',
+  prefix = '1 2 3'
+);
+-- 1B. TERMS INDEX (Unicode)
+CREATE VIRTUAL TABLE IF NOT EXISTS fts_terms_unicode USING fts5(
+  term,
+  term_normalized,
+  content='term_table',
+  content_rowid='id',
+  tokenize = 'unicode61'
+);
+
+-- 2A. READINGS INDEX (Trigram)
+CREATE VIRTUAL TABLE IF NOT EXISTS fts_readings USING fts5(
+  reading,
+  reading_normalized,
+  content='reading_table',
+  content_rowid='id',
+  tokenize = 'better_trigram',
+  prefix = '1 2 3'
+);
+-- 2B. READINGS INDEX (Unicode)
+CREATE VIRTUAL TABLE IF NOT EXISTS fts_readings_unicode USING fts5(
+  reading,
+  reading_normalized,
+  content='reading_table',
+  content_rowid='id',
+  tokenize = 'unicode61'
+);
+
+-- 3A. DEFINITIONS INDEX (Trigram)
+CREATE VIRTUAL TABLE IF NOT EXISTS fts_definitions USING fts5(
+  definition,
+  content='definition_table',
+  content_rowid='id',
+  tokenize = 'better_trigram'
+);
+-- 3B. DEFINITIONS INDEX (Unicode)
+CREATE VIRTUAL TABLE IF NOT EXISTS fts_definitions_unicode USING fts5(
+  definition,
+  content='definition_table',
+  content_rowid='id',
+  tokenize = 'unicode61'
+);

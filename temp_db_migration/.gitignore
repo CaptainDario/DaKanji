@@ -1,0 +1,28 @@
+# https://dart.dev/guides/libraries/private-files
+# Created by `dart pub`
+.dart_tool/
+
+# macos files
+.DS_Store
+**/.DS_Store
+
+# ignore temporary outputs
+tmp/**
+!tmp/.gitkeep
+
+# ignore python
+.venv/
+
+# ignore tmp schema
+da_db_schema/schema.pdf
+
+# code counter
+.VSCodeCounter/**
+
+# ignore files that are converted from non yomitan dicts
+data/da_db_input_files/**
+!data/da_db_input_files/.gitkeep
+
+# ignore files to run mecab in pure dart
+mecab/**
+!mecab/.gitkeep

@@ -1,0 +1,68 @@
+import 'example_tables.dart';
+import 'example_relation_tables.dart';
+import '/database/index/index_views.drift';
+import '/database/general_tables/term_tables.dart';
+import '/database/tag/tag_bank_v3_tables.dart';
+import '/database/tag/tag_bank_v3_views.drift';
+import '/database/stats/stat_tables.dart';
+import '/database/stats/stat_views.drift';
+import 'example_fts5_table.drift';
+
+
+
+CREATE VIEW IF NOT EXISTS example_entry_view AS
+    SELECT 
+    -- 1. Core Metadata
+    e.id,
+    e.group_id,
+    
+    -- 2. The pre-built Index JSON string
+    iv.index_entry AS "index", 
+    
+    -- 3. Sentence Data
+    s.example_sentence,
+
+    -- 4. Aggregated Tags Array (Using predefined view)
+    (SELECT json_group_array(json(tv.tag_json))
+    FROM example_table_x_tag_bank_table ext
+        INNER JOIN tag_bank_v3_as_json_view tv ON tv.tag_id = ext.tag_bank_id
+    WHERE ext.example_id = e.id) AS tags_json,
+
+    -- 5. Aggregated Stats Array
+    (SELECT json_group_array(json(sv.stat_json))
+    FROM example_table_x_stat_table ext
+        INNER JOIN stat_as_json_view sv ON sv.stat_id = ext.stat_table_id
+    WHERE ext.example_id = e.id) AS stats_json,
+
+    -- 6. Aggregated Audio Array
+    (SELECT json_group_array(
+        json_object(
+            'id', a.id,
+            'path', a.path,
+            'name', a.name,
+            
+            -- Nested Audio Tags
+            'tags', (
+                SELECT json_group_array(json(atv.tag_json))
+                FROM example_audio_table_x_tag_bank_table axt
+                    INNER JOIN tag_bank_v3_as_json_view atv ON atv.tag_id = axt.tag_bank_id
+                WHERE axt.audio_id = a.id
+            ),
+            
+            -- Nested Audio Stats
+            'stats', (
+                SELECT json_group_array(json(asv.stat_json))
+                FROM example_audio_table_x_stat_table axst
+                    INNER JOIN stat_as_json_view asv ON asv.stat_id = axst.stat_table_id
+                WHERE axst.audio_id = a.id
+            )
+        )
+    )
+    FROM example_table_x_example_audio_table exa
+        INNER JOIN example_audio_table a ON a.id = exa.audio_id
+    WHERE exa.example_id = e.id) AS audios_json
+
+    -- 7. Main query joins
+    FROM example_table e
+        INNER JOIN example_sentence_table s ON s.id = e.example_sentence_id
+        INNER JOIN index_entry_as_json_view iv ON iv.id = e.index_id;

@@ -1,0 +1,5 @@
+[
+  ["female", "gender", 1, "Female voice", 0],
+  ["tokyo", "accent", 2, "Tokyo pitch accent", 0],
+  ["tts", "speaker", 3, "Text-to-speech generated audio", 0]
+]

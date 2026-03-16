@@ -1,0 +1,15 @@
+import 'stat_tables.dart';
+
+CREATE VIEW IF NOT EXISTS stat_as_json_view AS
+    SELECT 
+        st.id AS stat_id,
+        json_object(
+            'id', st.id,
+            'statName', sn.name,
+            'displayName', sdn.name,
+            'value', st.value,
+            'displayValue', st.display_value
+        ) AS stat_json
+    FROM stat_table st
+        INNER JOIN stat_name_table sn ON sn.id = st.stat_name_id
+        LEFT JOIN stat_name_table sdn ON sdn.id = st.stat_display_name_id;
