@@ -40,7 +40,7 @@ void main(List<String> args) async {
   bool useJitendexArg = args.contains('--use-jitendex');
   bool downloadSourcesArg = args.contains('--download-sources');
   bool includeExampleDictArg = args.contains('--include-example-dict');
-  bool includeTatoebaExamplesArg = args.contains('--convert-tatoeba');
+  bool includeTatoebaExamplesArg = args.contains('--include-tatoeba-examples');
 
   // check which dictionary to use 
   DictsToUse dictToUse = DictsToUse.jmdict;
@@ -100,20 +100,20 @@ void main(List<String> args) async {
   //await importPronunciationData(db, mecab);
 
   print("Adding KanjiVG...");
-  //await importKanjiVG(db);
+  await importKanjiVG(db);
 
   print("Adding radicals data...");
-  //await importRadicals(db);
+  await importRadicals(db);
 
   print("Importing yomitan dicts...");
-  /*await importDaDbDataSource(db,
+  await importDaDbDataSource(db,
     [
-      (kanjidic2InputPath, "KanjiDic2"),
-      (jpdb2_2InputPath, "JPDB 2.2"),
-      (dictNameToPath[dictToUse]!(), dictToUse.name),
+      //(kanjidic2InputPath, "KanjiDic2"),
+      //(jpdb2_2InputPath, "JPDB 2.2"),
+      //(dictNameToPath[dictToUse]!(), dictToUse.name),
       ?(includeExampleDictArg ? (exampleDictPath, "yomitan example dictionary"): null),
     ],
-  );*/
+  );
 
   if(includeTatoebaExamplesArg){
     print("Adding tatoeba example sentences...");
