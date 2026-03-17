@@ -4182,6 +4182,7 @@ static const Map<String,dynamic> _eng = {
     "search_no_results": "No results found.",
     "search_radical_close": "Close",
     "search_radical_ok": "Ok",
+    "search_results_kanji": "Kanji",
     "search_search_for": "Search for:",
     "search_searched": "Searched:",
     "title": "Dictionary",

@@ -1,6 +1,6 @@
 import 'package:collection/collection.dart';
 import 'package:da_db/database/kanji_meta/kanji_meta_bank_v3_entry.dart';
-import 'package:da_db_ui/widgets/tag/tag_widget.dart';
+import 'package:da_kanji_mobile/features/dictionary/widgets/tag/tag_widget.dart';
 import 'package:flutter/material.dart';
 
 

@@ -1,5 +1,5 @@
 import 'package:da_db/database/term_meta/term_meta_bank_entry.dart';
-import 'package:da_db_ui/widgets/tag/tag_widget.dart';
+import 'package:da_kanji_mobile/features/dictionary/widgets/tag/tag_widget.dart';
 import 'package:flutter/material.dart';
 
 

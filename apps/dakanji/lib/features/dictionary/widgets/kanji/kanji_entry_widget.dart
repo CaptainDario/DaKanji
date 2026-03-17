@@ -1,8 +1,8 @@
 import 'package:da_db/database/db_queries/kanji_dictionary_search/kanji_dictionary_search_result.dart';
 import 'package:da_db/database/kanji/kanji_bank_v3_entry_stat.dart';
-import 'package:da_db_ui/widgets/kanji/kanji_match_stats_widget.dart';
-import 'package:da_db_ui/widgets/kanji_meta/kanji_meta_bank_widget.dart';
-import 'package:da_db_ui/widgets/tag/tag_bank_widget.dart';
+import 'package:da_kanji_mobile/features/dictionary/widgets/kanji/kanji_match_stats_widget.dart';
+import 'package:da_kanji_mobile/features/dictionary/widgets/kanji_meta/kanji_meta_bank_widget.dart';
+import 'package:da_kanji_mobile/features/dictionary/widgets/tag/tag_bank_widget.dart';
 import 'package:flutter/material.dart';
 
 

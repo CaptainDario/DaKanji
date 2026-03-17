@@ -1,9 +1,9 @@
 import 'package:da_db/database/da_db.dart';
 import 'package:da_db/database/term/term_bank_v3_entry.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_util/widgets/conditional_parent_widget.dart';
 import 'package:get_it/get_it.dart';
 import 'package:language_processing/language_processing.dart';
-import 'package:util/widgets/conditional_parent_widget.dart';
 
 
 class TermBankTermWidget extends StatefulWidget {

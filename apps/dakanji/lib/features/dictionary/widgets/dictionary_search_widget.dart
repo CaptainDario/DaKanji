@@ -4,10 +4,7 @@ import 'dart:async';
 // Flutter imports:
 import 'package:da_db/database/da_db.dart';
 import 'package:da_db/database/db_queries/dictionary_search/dictionary_search_params.dart';
-import 'package:da_db/database/db_queries/dictionary_search/dictionary_search_result.dart';
-import 'package:da_db_ui/model/da_db_localization.dart';
-import 'package:da_db_ui/da_db_localization.dart';
-import 'package:da_db_ui/widgets/search_results/dictionary_search_result_widget.dart';
+import './search_results/dictionary_search_result_widget.dart';
 import 'package:da_kanji_mobile/core/user/user_data_db.dart';
 import 'package:da_kanji_mobile/features/dictionary/model/dictionary_search_notifier.dart';
 import 'package:flutter/material.dart';
@@ -18,13 +15,11 @@ import 'package:another_flushbar/flushbar.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:database_builder/database_builder.dart';
 import 'package:get_it/get_it.dart';
-import 'package:kana_kit/kana_kit.dart';
 import 'package:provider/provider.dart';
 
 // Project imports:
 import 'package:language_processing/language_processing.dart';
 import 'package:da_kanji_mobile/features/dictionary/model/dict_search_result.dart';
-import 'package:da_kanji_mobile/features/dictionary/controller/dictionary_search.dart';
 import 'package:da_kanji_mobile/features/dictionary/model/filter_options.dart';
 import 'package:da_kanji_mobile/features/dictionary/controller/isars.dart';
 import 'package:da_kanji_mobile/core/routing/navigation_arguments.dart';
@@ -32,7 +27,6 @@ import 'package:da_kanji_mobile/core/routing/screens.dart';
 import 'package:da_kanji_mobile/features/settings/model/settings.dart';
 import 'package:da_kanji_mobile/features/tutorial/model/tutorials.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
-import 'package:da_kanji_mobile/features/dictionary/widgets/dictionary_alt_search_flushbar.dart';
 import 'package:da_kanji_mobile/features/dictionary/widgets/filter_popup_body.dart';
 import 'package:da_kanji_mobile/features/dictionary/widgets/radical_popup_body.dart';
 import 'package:da_kanji_mobile/features/dictionary/widgets/search_result_list.dart';
@@ -430,7 +424,6 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
                           // search results if the user entered text
                           ? DictionarySearchResultWidget(
                             result: context.read<DictionarySearchNotifier>().results!,
-                            localization: dakanjiDbLocalization
                           )
                           // otherwise the search history
                           : StreamBuilder<List<SearchHistoryTableData>>(

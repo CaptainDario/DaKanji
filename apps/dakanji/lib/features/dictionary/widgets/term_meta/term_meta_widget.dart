@@ -1,10 +1,10 @@
 import "package:collection/collection.dart";
 import 'package:da_db/data/term_meta_entry_types.dart';
 import 'package:da_db/database/term_meta/term_meta_bank_entry.dart';
-import 'package:da_db_ui/widgets/tag/tag_widget.dart';
-import 'package:da_db_ui/widgets/term_meta/term_meta_freq_widget.dart';
-import 'package:da_db_ui/widgets/term_meta/term_meta_ipa_widget.dart';
-import 'package:da_db_ui/widgets/term_meta/term_meta_pitch_widget.dart';
+import 'package:da_kanji_mobile/features/dictionary/widgets/tag/tag_widget.dart';
+import 'package:da_kanji_mobile/features/dictionary/widgets/term_meta/term_meta_freq_widget.dart';
+import 'package:da_kanji_mobile/features/dictionary/widgets/term_meta/term_meta_ipa_widget.dart';
+import 'package:da_kanji_mobile/features/dictionary/widgets/term_meta/term_meta_pitch_widget.dart';
 import 'package:flutter/material.dart';
 
 

@@ -7,5 +7,7 @@ workspace:
   - apps/dakanji
 
   - flutter_packages/liquid_swipe_flutter
+  - flutter_packages/flutter_util
+
 
   - dart_packages/dakanji-dictionary/database_builder

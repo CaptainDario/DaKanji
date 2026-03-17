@@ -380,6 +380,61 @@
       "spa": "Ok",
       "zho": "好的"
     },
+    "search_results_exact_matches_header": {
+      "deu": "",
+      "eng": "",
+      "fra": "",
+      "ita": "",
+      "jpn": "",
+      "pol": "",
+      "rus": "",
+      "spa": "",
+      "zho": ""
+    },
+    "search_results_kanji": {
+      "deu": "",
+      "eng": "Kanji",
+      "fra": "",
+      "ita": "",
+      "jpn": "",
+      "pol": "",
+      "rus": "",
+      "spa": "",
+      "zho": ""
+    },
+    "search_results_prefix_matches_header": {
+      "deu": "",
+      "eng": "",
+      "fra": "",
+      "ita": "",
+      "jpn": "",
+      "pol": "",
+      "rus": "",
+      "spa": "",
+      "zho": ""
+    },
+    "search_results_sub_word_matches_header": {
+      "deu": "",
+      "eng": "",
+      "fra": "",
+      "ita": "",
+      "jpn": "",
+      "pol": "",
+      "rus": "",
+      "spa": "",
+      "zho": ""
+    },
+    "search_results_wildcard_matches_header": {
+      "deu": "",
+      "eng": "",
+      "fra": "",
+      "ita": "",
+      "jpn": "",
+      "pol": "",
+      "rus": "",
+      "spa": "",
+      "zho": ""
+    },
     "search_search_for": {
       "deu": "Suche nach:",
       "eng": "Search for:",

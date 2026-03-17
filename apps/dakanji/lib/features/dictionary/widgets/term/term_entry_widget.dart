@@ -2,10 +2,10 @@ import 'dart:async';
 
 import 'package:da_db/database/db_queries/dictionary_search/dictionary_match.dart';
 import 'package:da_db/database/tag/tag_bank_v3_entry.dart';
-import 'package:da_db_ui/widgets/tag/tag_bank_widget.dart';
-import 'package:da_db_ui/widgets/term/term_bank_definitions_widget.dart';
-import 'package:da_db_ui/widgets/term/term_bank_term_widget.dart';
-import 'package:da_db_ui/widgets/term_meta/term_meta_widget.dart';
+import 'package:da_kanji_mobile/features/dictionary/widgets/tag/tag_bank_widget.dart';
+import 'package:da_kanji_mobile/features/dictionary/widgets/term/term_bank_definitions_widget.dart';
+import 'package:da_kanji_mobile/features/dictionary/widgets/term/term_bank_term_widget.dart';
+import 'package:da_kanji_mobile/features/dictionary/widgets/term_meta/term_meta_widget.dart';
 import 'package:flutter/material.dart';
 
 

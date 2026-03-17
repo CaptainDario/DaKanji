@@ -40,6 +40,11 @@ abstract class  LocaleKeys {
   static const DictionaryScreen_search_no_results = 'DictionaryScreen.search_no_results';
   static const DictionaryScreen_search_radical_close = 'DictionaryScreen.search_radical_close';
   static const DictionaryScreen_search_radical_ok = 'DictionaryScreen.search_radical_ok';
+  static const DictionaryScreen_search_results_exact_matches_header = 'DictionaryScreen.search_results_exact_matches_header';
+  static const DictionaryScreen_search_results_kanji = 'DictionaryScreen.search_results_kanji';
+  static const DictionaryScreen_search_results_prefix_matches_header = 'DictionaryScreen.search_results_prefix_matches_header';
+  static const DictionaryScreen_search_results_sub_word_matches_header = 'DictionaryScreen.search_results_sub_word_matches_header';
+  static const DictionaryScreen_search_results_wildcard_matches_header = 'DictionaryScreen.search_results_wildcard_matches_header';
   static const DictionaryScreen_search_search_for = 'DictionaryScreen.search_search_for';
   static const DictionaryScreen_search_searched = 'DictionaryScreen.search_searched';
   static const DictionaryScreen_title = 'DictionaryScreen.title';

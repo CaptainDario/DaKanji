@@ -4,9 +4,10 @@ import 'package:da_db/database/db_queries/dictionary_search/dictionary_match.dar
 import 'package:da_db/database/db_queries/dictionary_search/dictionary_match_group.dart';
 import 'package:da_db/database/db_queries/dictionary_search/dictionary_search_result.dart';
 import 'package:da_db/database/search_profiles/search_profiles_entry.dart';
-import 'package:da_db_ui/model/da_db_localization.dart';
-import 'package:da_db_ui/widgets/kanji/kanji_entry_widget.dart';
-import 'package:da_db_ui/widgets/term/term_entry_widget.dart';
+import 'package:da_kanji_mobile/features/dictionary/widgets/kanji/kanji_entry_widget.dart';
+import 'package:da_kanji_mobile/features/dictionary/widgets/term/term_entry_widget.dart';
+import 'package:da_kanji_mobile/locales_keys.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
@@ -14,12 +15,10 @@ import 'package:provider/provider.dart';
 class DictionarySearchResultWidget extends StatefulWidget {
 
   final DictionarySearchResult result;
-  final DaDbLocalization localization;
   final Function(DictionaryMatch match)? onTap;
 
   const DictionarySearchResultWidget({
     required this.result,
-    required this.localization,
     this.onTap,
     super.key
   });
@@ -81,7 +80,7 @@ class _DictionarySearchResultWidgetState extends State<DictionarySearchResultWid
           const Icon(Icons.search_off, size: 48, color: Colors.grey),
           const SizedBox(height: 16),
           Text(
-            widget.localization.noResultsFound, 
+            LocaleKeys.DictionaryScreen_search_no_results.tr(), 
             style: Theme.of(context).textTheme.titleMedium
           ),
         ],
@@ -96,7 +95,7 @@ class _DictionarySearchResultWidgetState extends State<DictionarySearchResultWid
       return const SliverToBoxAdapter(child: SizedBox.shrink());
     }
 
-    final title = "Kanji (${widget.result.kanjiResults.map((k) => k.kanjiBankEntry.kanji).join(', ')})";
+    final title = "${LocaleKeys.DictionaryScreen_search_results_kanji.tr()} (${widget.result.kanjiResults.map((k) => k.kanjiBankEntry.kanji).join(', ')})";
     const key = "KanjiSection";
 
     return SliverMainAxisGroup(
@@ -126,7 +125,6 @@ class _DictionarySearchResultWidgetState extends State<DictionarySearchResultWid
   // --- 2. Main Sections (Iterate Match Types) ---
 
   List<Widget> _buildDictionarySections(SearchProfilesEntry profile) {
-    final loc = widget.localization;
     final r = widget.result;
 
     List<DictionaryMatchGroup> nonEmpty(List<DictionaryMatchGroup> groups) => 
@@ -140,22 +138,38 @@ class _DictionarySearchResultWidgetState extends State<DictionarySearchResultWid
       return switch (matchType.$1) {
         SearchResult1stSortOrder.queryMatch => 
           nonEmpty(r.queryMatches).isNotEmpty 
-            ? [_buildMainSection(loc.sortByDirectMatch, nonEmpty(r.queryMatches), index)] 
+            ? [_buildMainSection(
+              LocaleKeys.SettingsScreenSearchProfiles_sort_by_direct_match.tr(),
+              nonEmpty(r.queryMatches),
+              index
+            )] 
             : const [],
             
         SearchResult1stSortOrder.normalizedMatch => 
           nonEmpty(r.normalizedQueryMatchGroups).isNotEmpty 
-            ? [_buildMainSection(loc.sortByFlexibleMatch, nonEmpty(r.normalizedQueryMatchGroups), index)] 
+            ? [_buildMainSection(
+              LocaleKeys.SettingsScreenSearchProfiles_sort_by_flexible_match.tr(),
+              nonEmpty(r.normalizedQueryMatchGroups),
+              index
+            )] 
             : const [],
             
         SearchResult1stSortOrder.deconjugationMatch => 
           nonEmpty(r.queryVariantMatches).isNotEmpty 
-            ? [_buildMainSection(loc.sortBySmartGrammarMatch, nonEmpty(r.queryVariantMatches), index)] 
+            ? [_buildMainSection(
+              LocaleKeys.SettingsScreenSearchProfiles_sort_by_smart_grammar_match.tr(),
+              nonEmpty(r.queryVariantMatches),
+              index
+            )] 
             : const [],
             
         SearchResult1stSortOrder.spellfixMatch => 
           nonEmpty(r.fuzzyMatches).isNotEmpty 
-            ? [_buildMainSection(loc.sortByTypoCorrectionMatch, nonEmpty(r.fuzzyMatches), index)] 
+            ? [_buildMainSection(
+              LocaleKeys.SettingsScreenSearchProfiles_sort_by_typo_correction_match.tr(),
+              nonEmpty(r.fuzzyMatches),
+              index
+            )] 
             : const [],
       };
     }).toList();
@@ -191,7 +205,6 @@ class _DictionarySearchResultWidgetState extends State<DictionarySearchResultWid
 
   List<Widget> _buildQualitySections(List<DictionaryMatchGroup> groups, int mainIndex) {
     final profile = context.read<SearchProfilesEntry>();
-    final loc = widget.localization;
     final isMultiSearch = groups.length > 1;
 
     return profile.secondSortOrder.indexed.expand<Widget>((entry) {
@@ -199,10 +212,22 @@ class _DictionarySearchResultWidgetState extends State<DictionarySearchResultWid
       if (!matchType.$2) return const [];
 
       final (title, selector) = switch (matchType.$1) {
-        SearchResult2ndSortOrder.exactMatch    => (loc.thenByExactMatch, (DictionaryMatchGroup g) => g.exactMatches),
-        SearchResult2ndSortOrder.prefixMatch   => (loc.thenByStartsWithMatch, (DictionaryMatchGroup g) => g.prefixMatches),
-        SearchResult2ndSortOrder.subwordMatch  => (loc.thenBySubwordMatch, (DictionaryMatchGroup g) => g.tokenMatches),
-        SearchResult2ndSortOrder.wildcardMatch => (loc.thenByWildcardMatch, (DictionaryMatchGroup g) => g.wildcardMatches),
+        SearchResult2ndSortOrder.exactMatch => (
+          LocaleKeys.SettingsScreenSearchProfiles_then_by_exact_match.tr(),
+          (DictionaryMatchGroup g) => g.exactMatches
+        ),
+        SearchResult2ndSortOrder.prefixMatch => (
+          LocaleKeys.SettingsScreenSearchProfiles_then_by_starts_with_match.tr(),
+          (DictionaryMatchGroup g) => g.prefixMatches
+        ),
+        SearchResult2ndSortOrder.subwordMatch => (
+          LocaleKeys.SettingsScreenSearchProfiles_then_by_subword_match.tr(),
+          (DictionaryMatchGroup g) => g.tokenMatches
+        ),
+        SearchResult2ndSortOrder.wildcardMatch => (
+          LocaleKeys.SettingsScreenSearchProfiles_then_by_wildcard_match.tr(),
+          (DictionaryMatchGroup g) => g.wildcardMatches
+        ),
       };
 
       if (!groups.any((g) => selector(g).isNotEmpty)) return const [];

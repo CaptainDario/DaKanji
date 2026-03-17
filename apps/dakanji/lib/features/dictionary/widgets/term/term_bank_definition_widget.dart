@@ -2,11 +2,11 @@ import 'dart:async';
 
 import 'package:css_inline_flutter/css_inline_flutter.dart';
 import 'package:da_db/database/da_db.dart';
-import 'package:da_db_ui/widgets/term/structured_content/custom_html_to_widget_factory.dart';
-import 'package:da_db_ui/widgets/term/structured_content/structured_content_css.dart';
-import 'package:da_db_ui/widgets/term/structured_content/structured_content_to_html.dart';
-import 'package:da_db_ui/widgets/util/smart_html_selection.dart';
+import 'package:da_kanji_mobile/features/dictionary/widgets/term/structured_content/custom_html_to_widget_factory.dart';
+import 'package:da_kanji_mobile/features/dictionary/widgets/term/structured_content/structured_content_css.dart';
+import 'package:da_kanji_mobile/features/dictionary/widgets/term/structured_content/structured_content_to_html.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_util/widgets/smart_html_selection.dart';
 import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
 import 'package:get_it/get_it.dart';
 

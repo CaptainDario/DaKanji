@@ -140,7 +140,7 @@ dependencies:
   database_builder:
   language_processing:
   da_db:
-  
+  flutter_util:
 
   # Not all platforms supported
   in_app_review: 2.0.11                 # android, iOS, MacOS, windows (limited)
