@@ -1,6 +1,8 @@
 import 'package:da_db/database/da_db.dart';
 import 'package:da_db/database/search_profiles/search_profiles_entry.dart';
-import 'package:da_db_ui/widgets/settings/search_profile_settings_card_add_button.dart';
+import 'package:da_kanji_mobile/locales_keys.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'search_profile_settings_card_add_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:reorderables/reorderables.dart';
@@ -43,7 +45,7 @@ class _SearchProfileManagementWidgetState extends State<SearchProfileManagementW
             ),
         
             SearchProfileSearchProfileCardAddButton(
-              "Create New Profile", // TODO: Localization
+              LocaleKeys.SettingsScreenSearchProfiles_search_profiles_create_new_profile.tr(),
               onPressed: () async {
                  await db.searchProfilesDao.createNewProfile(false);
               },
@@ -91,7 +93,7 @@ class _SearchProfileManagementWidgetState extends State<SearchProfileManagementW
             IconButton(
               icon: const Icon(Icons.edit_outlined, size: 20),
               onPressed: () => _showRenameDialog(context, profile),
-              tooltip: "Rename",
+              tooltip: LocaleKeys.SettingsScreenSearchProfiles_search_profiles_rename.tr(),
             ),
             
             // Selection Indicator or Delete Button
@@ -104,7 +106,7 @@ class _SearchProfileManagementWidgetState extends State<SearchProfileManagementW
               IconButton(
                 icon: const Icon(Icons.delete_outline, size: 20),
                 onPressed: () => _handleDelete(context, profile, db),
-                tooltip: "Delete",
+                tooltip: LocaleKeys.SettingsScreenSearchProfiles_search_profiles_delete.tr(),
               ),
           ],
         ),
@@ -116,20 +118,21 @@ class _SearchProfileManagementWidgetState extends State<SearchProfileManagementW
     final confirm = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
-        // TODO: Localization
-        title: const Text("Delete Profile?"),
-        // TODO: Localization
-        content: Text("Are you sure you want to delete '${profile.name}'?"),
+        title: Text(LocaleKeys.SettingsScreenSearchProfiles_search_profiles_delete_profile_title.tr()),
+        content: Text("${LocaleKeys.SettingsScreenSearchProfiles_search_profiles_delete_profile_body.tr()} '${profile.name}'?"),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx, false),
-            // TODO: Localization
-            child: const Text("Cancel"),
+            child: Text(
+              LocaleKeys.SettingsScreenSearchProfiles_search_profiles_cancel.tr()
+            ),
           ),
           TextButton(
             onPressed: () => Navigator.pop(ctx, true),
-            // TODO: Localization
-            child: const Text("Delete", style: TextStyle(color: Colors.red)),
+            child: Text(
+              LocaleKeys.SettingsScreenSearchProfiles_search_profiles_delete.tr(),
+              style: TextStyle(color: Colors.red)
+            ),
           ),
         ],
       ),
@@ -139,8 +142,7 @@ class _SearchProfileManagementWidgetState extends State<SearchProfileManagementW
       final success = await db.searchProfilesDao.deleteProfile(profile.id);
       if (!success && context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          // TODO: Localization
-          const SnackBar(content: Text("Cannot delete the only remaining profile.")),
+          SnackBar(content: Text(LocaleKeys.SettingsScreenSearchProfiles_search_profiles_delete_last_not_possible.tr())),
         );
       }
     }
@@ -152,19 +154,18 @@ class _SearchProfileManagementWidgetState extends State<SearchProfileManagementW
     await showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        // TODO: Localization
-        title: const Text("Rename Profile"),
+        title: Text(LocaleKeys.SettingsScreenSearchProfiles_search_profiles_rename_profile_dialog_title.tr()),
         content: TextField(
           controller: controller,
-          // TODO: Localization
-          decoration: const InputDecoration(labelText: "Profile Name"),
+          decoration: InputDecoration(
+            labelText: LocaleKeys.SettingsScreenSearchProfiles_search_profiles_rename_profile_dialog_hint_text.tr()
+          ),
           autofocus: true,
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            // TODO: Localization
-            child: const Text("Cancel"),
+            child: Text(LocaleKeys.SettingsScreenSearchProfiles_search_profiles_rename_profile_dialog_title_cancel.tr()),
           ),
           TextButton(
             onPressed: () async {
@@ -176,8 +177,7 @@ class _SearchProfileManagementWidgetState extends State<SearchProfileManagementW
                 if (context.mounted) Navigator.pop(context);
               }
             },
-            // TODO: Localization
-            child: const Text("Save"),
+            child: Text(LocaleKeys.SettingsScreenSearchProfiles_search_profiles_rename_profile_dialog_title_save.tr()),
           ),
         ],
       ),

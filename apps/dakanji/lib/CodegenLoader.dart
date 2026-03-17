@@ -79,6 +79,7 @@ class CodegenLoader extends AssetLoader {
     "kanji_tab": "Kanji",
     "search_filter_close": "Zamknij",
     "search_filter_ok": "Ok",
+    "search_no_results": "Nie znaleziono żadnych wyników.",
     "search_radical_close": "Zamknij",
     "search_radical_ok": "Ok",
     "search_search_for": "Wyszukaj:",
@@ -462,6 +463,8 @@ class CodegenLoader extends AssetLoader {
     "word_lists_screensaver_show": "Wygaszacz ekranu: pokaż",
     "word_lists_screensaver_word_lists_to_use": "Wygaszacz ekranu: Lista słów do użycia"
   },
+  "SettingsScreenSearchProfiles": {
+  },
   "ShopScreen": {
     "title": "Sklep"
   },
@@ -612,6 +615,7 @@ static const Map<String,dynamic> _rus = {
     "kanji_tab": "Кандзи",
     "search_filter_close": "Закрыть",
     "search_filter_ok": "Хорошо",
+    "search_no_results": "Результаты не найдены.",
     "search_radical_close": "Закрыть",
     "search_radical_ok": "Хорошо",
     "search_search_for": "Поиск:",
@@ -960,6 +964,8 @@ static const Map<String,dynamic> _rus = {
     "word_lists_screensaver_show": "Заставка: показать",
     "word_lists_screensaver_word_lists_to_use": "Заставка: Список слов для использования"
   },
+  "SettingsScreenSearchProfiles": {
+  },
   "ShopScreen": {
     "title": "Магазин"
   },
@@ -1110,6 +1116,7 @@ static const Map<String,dynamic> _fra = {
     "kanji_tab": "Kanji",
     "search_filter_close": "Fermer",
     "search_filter_ok": "Ok",
+    "search_no_results": "Aucun résultat n'a été trouvé.",
     "search_radical_close": "Fermer",
     "search_radical_ok": "Ok",
     "search_search_for": "Recherche de :",
@@ -1457,6 +1464,8 @@ static const Map<String,dynamic> _fra = {
     "word_lists_screensaver_show": "Économiseur d'écran : montrer",
     "word_lists_screensaver_word_lists_to_use": "Économiseur d'écran : Liste de mots à utiliser"
   },
+  "SettingsScreenSearchProfiles": {
+  },
   "ShopScreen": {
     "title": "Boutique"
   },
@@ -1607,6 +1616,7 @@ static const Map<String,dynamic> _jpn = {
     "kanji_tab": "漢字",
     "search_filter_close": "閉じる",
     "search_filter_ok": "OK",
+    "search_no_results": "結果は見つからなかった。",
     "search_radical_close": "閉じる",
     "search_radical_ok": "OK",
     "search_search_for": "検索：",
@@ -1977,6 +1987,8 @@ static const Map<String,dynamic> _jpn = {
     "word_lists_screensaver_show": "スクリーンセーバー：表示",
     "word_lists_screensaver_word_lists_to_use": "スクリーンセーバー：使用単語リスト"
   },
+  "SettingsScreenSearchProfiles": {
+  },
   "ShopScreen": {
     "title": "ショップ"
   },
@@ -2127,6 +2139,7 @@ static const Map<String,dynamic> _deu = {
     "kanji_tab": "Kanji",
     "search_filter_close": "Schließen",
     "search_filter_ok": "Ok",
+    "search_no_results": "Keine Ergebnisse gefunden.",
     "search_radical_close": "Schließen",
     "search_radical_ok": "Ok",
     "search_search_for": "Suche nach:",
@@ -2512,6 +2525,8 @@ static const Map<String,dynamic> _deu = {
     "word_lists_screensaver_show": "Bildschirmschoner: anzeigen",
     "word_lists_screensaver_word_lists_to_use": "Bildschirmschoner: Wortlisten die benutuzt werden"
   },
+  "SettingsScreenSearchProfiles": {
+  },
   "ShopScreen": {
     "title": "Shop"
   },
@@ -2662,6 +2677,7 @@ static const Map<String,dynamic> _zho = {
     "kanji_tab": "汉字",
     "search_filter_close": "关闭",
     "search_filter_ok": "好的",
+    "search_no_results": "未找到结果。",
     "search_radical_close": "关闭",
     "search_radical_ok": "好的",
     "search_search_for": "搜索：",
@@ -3010,6 +3026,8 @@ static const Map<String,dynamic> _zho = {
     "word_lists_screensaver_show": "屏幕保护程序：显示",
     "word_lists_screensaver_word_lists_to_use": "屏幕保护程序使用单词列表"
   },
+  "SettingsScreenSearchProfiles": {
+  },
   "ShopScreen": {
     "title": "商店"
   },
@@ -3160,6 +3178,7 @@ static const Map<String,dynamic> _ita = {
     "kanji_tab": "Kanji",
     "search_filter_close": "Chiudere",
     "search_filter_ok": "Ok",
+    "search_no_results": "Nessun risultato trovato.",
     "search_radical_close": "Chiudere",
     "search_radical_ok": "Ok",
     "search_search_for": "Ricerca per:",
@@ -3508,6 +3527,8 @@ static const Map<String,dynamic> _ita = {
     "word_lists_screensaver_show": "Screensaver: mostra",
     "word_lists_screensaver_word_lists_to_use": "Salvaschermo: Elenco di parole da utilizzare"
   },
+  "SettingsScreenSearchProfiles": {
+  },
   "ShopScreen": {
     "title": "Negozio"
   },
@@ -3658,6 +3679,7 @@ static const Map<String,dynamic> _spa = {
     "kanji_tab": "Kanji",
     "search_filter_close": "Cerrar",
     "search_filter_ok": "Ok",
+    "search_no_results": "No se han encontrado resultados.",
     "search_radical_close": "Cerrar",
     "search_radical_ok": "Ok",
     "search_search_for": "Buscar:",
@@ -4005,6 +4027,8 @@ static const Map<String,dynamic> _spa = {
     "word_lists_screensaver_show": "Salvapantallas: mostrar",
     "word_lists_screensaver_word_lists_to_use": "Salvapantallas: Lista de palabras a utilizar"
   },
+  "SettingsScreenSearchProfiles": {
+  },
   "ShopScreen": {
     "title": "Tienda"
   },
@@ -4155,6 +4179,7 @@ static const Map<String,dynamic> _eng = {
     "kanji_tab": "Kanji",
     "search_filter_close": "Close",
     "search_filter_ok": "Ok",
+    "search_no_results": "No results found.",
     "search_radical_close": "Close",
     "search_radical_ok": "Ok",
     "search_search_for": "Search for:",
@@ -4546,6 +4571,119 @@ static const Map<String,dynamic> _eng = {
     "word_lists_screensaver_seconds_to_start": "Screensaver: seconds to start",
     "word_lists_screensaver_show": "Screensaver: show",
     "word_lists_screensaver_word_lists_to_use": "Screensaver: Word list to use"
+  },
+  "SettingsScreenSearchProfiles": {
+    "add_rule": "Add Rule",
+    "configure_grouping_title": "Configure Grouping of Search Results",
+    "default_dictionary": "Default Dictionary",
+    "delete_dictionary": "Delete",
+    "delete_dictionary_default_cannot": "Default dictionaries cannot be deleted.",
+    "delte_rule": "Delete Rule",
+    "dictionaries_header": "Dictionaries",
+    "dictionary_info_attribution": "Attribution",
+    "dictionary_info_author": "Author",
+    "dictionary_info_current_sort_order": "Current Sort Order",
+    "dictionary_info_description": "Description",
+    "dictionary_info_dictionary_type": "Dictionary Type",
+    "dictionary_info_download_url": "Download URL",
+    "dictionary_info_enabled": "Enabled",
+    "dictionary_info_format": "Format",
+    "dictionary_info_id": "ID",
+    "dictionary_info_index_url": "Index URL",
+    "dictionary_info_is_global_frequency_dictionary": "Is global frequency dictionary",
+    "dictionary_info_no": "No",
+    "dictionary_info_revision": "Revision",
+    "dictionary_info_sequenced": "Sequenced",
+    "dictionary_info_source_languagae": "Source Language",
+    "dictionary_info_target_language": "Target Language",
+    "dictionary_info_title": "Title",
+    "dictionary_info_updatable": "Updatable",
+    "dictionary_info_url": "URL",
+    "dictionary_info_user_dictionary": "User Dictionary",
+    "dictionary_info_version": "Version",
+    "dictionary_info_yes": "Yes",
+    "dictionary_search_header": "Dictionary Search",
+    "display_header": "Display",
+    "export_dictionaries_title": "Export Dictionaries",
+    "flexible_search_converts_romaj_subtitle": "Should romaji input also be converted to hiragana for flexible search matching",
+    "flexible_search_converts_romaji_title": "Flexible Search Converts Romaji",
+    "groupby": "Group by",
+    "grouping_explanation": "# How Grouping Works in DaKanji\n\nDaKanji can group entries from your different dictionaries to make your search results more organized.\nTo simplify things, one dictionary entry consists of three main things\n\n* Term (The written word): 漢字\n* Reading (how to read the word in kana): かんじ\n* Definitions (what this entry means): Japanese characters\n\nThere are four main strategies for this.\n\n## Quick Comparison\n\n| Strategy | Logic | Result |\n| :--- | :--- | :--- |\n| **No Grouping** | Show everything | Very long list, maximum detail. |\n| **Term + Reading** | Match Term AND Reading | Balanced, keeps different words separate. |\n| **Term** | Match Term only | Short list, groups all sounds together. |\n| **Related Term** | Match the \"Core Concept\" | Smartest grouping, merges spelling variations, but requires a dictionary to support it. |\n\n---\n\n## 1. No Grouping\nThis means that every entry from every dictionary is shown separately, even if they are the same.\n\n## 2. Term + Reading Grouping\nDaKanji groups entries together only if they have **both** the same Term and the same Reading.\n\n### Example\n1. If you look up \"生\", DaKanji may find 生 [せい] and 生 [しょう].\nSince their readings are different, they will be shown as separate entries.\n2. If you look up \"生\", DaKanji may find 生 [せい] with a definition of \"living\" and 生 [せい] with a definition of \"existence\", these two entries will be shown together as both the Term and Reading are identical.\n\n## 3. Term Grouping\nThis refers to grouping based solely on the Term, if two entries have the same Term they will be shown together.\n\n### Example\n1. If you look up \"生\", DaKanji may find 生 [せい] and 生 [しょう].\nSince their terms are the same, they will be shown as one entry.\n2. If you look up \"生\", DaKanji may find 生 [せい] with a definition of \"living\" and 生 [せい] with a definition of \"existence\", these two entries will be also shown together as the Terms are identical.\n\n## 4. Related Term Grouping\nIt relies on unique identification numbers provided by dictionaries like JMdict (DaKanji's default dictionary) to group entries that are conceptually the same, even if their Terms or Readings differ.\nThis is useful for example if one word can be written using multiple Terms.\nFor this to work, DaKanji needs to know which dictionary defines the Sequence (Source) and which dictionaries use the same Sequence (Targets) which needs to be selected in the UI.\n\n### Example\nSearching for \"taberu\" may find \"食べる辣油\" and \"食べるラー油\". Even though their Terms are different, JMDict uses the same ID for them, so they will be shown together.",
+    "grouping_options_no_grouping": "No Grouping",
+    "grouping_options_sequence_number": "Sequence Number",
+    "grouping_options_term": "Term",
+    "grouping_options_term_reading": "Term + Reading",
+    "grouping_title": "Grouping",
+    "import_dictionaries_title": "Import Dictionaries",
+    "import_dictionary": "Import Dictionary",
+    "info_popup_ok": "Ok",
+    "limit_definitions_height_subtitle": "Limits the height of definitions in search results",
+    "limit_definitions_height_title": "Limit Definition Height",
+    "max_search_results_subtitle": "Sets the maximum number of results returned (applied to each search method).",
+    "max_search_results_title": "Max Search Results",
+    "misc_title": "Misc",
+    "search_profiles_cancel": "Cancel",
+    "search_profiles_create_new_profile": "Create New Profile",
+    "search_profiles_delete": "Delete",
+    "search_profiles_delete_last_not_possible": "Cannot delete the only remaining profile.",
+    "search_profiles_delete_profile_body": "Are you sure you want to delete",
+    "search_profiles_delete_profile_title": "Delete Profile?",
+    "search_profiles_dictionary_management_info_text": "**How to configure your dictionaries**\n\nThe order of this list determines which definitions you see first.\nDrag and drop your favorite dictionaries to the top so their results appear before others.\n\n**Note on Frequency:** If you have set a \"Frequency Sort Source\" above, results will be sorted by popularity instead.\nThis manual list order is then used only when words are equally popular.\n\nYou can also toggle specific dictionaries off to hide them without deleting them.\nCustom dictionaries can be imported to further expand your library.",
+    "search_profiles_dictionary_management_title": "Dictionary Management",
+    "search_profiles_global_frequency_dictionary_info_text": "**Global Frequency Sorting**\n\nUses this dictionary to sort all search results by popularity. \n\nThis merges your dictionaries together, showing the most common words first regardless of which dictionary they come from.",
+    "search_profiles_global_frequency_dictionary_title": "Global frequency dictionary",
+    "search_profiles_info_text": "**What are search profiles?**\n\nSearch profiles allow you to customize how searches are performed.\nYou can create multiple profiles for different use cases, such as reading, or listening.\nFor example, you might want the spellfix disabled when reading, but enabled when listening to catch misheard words.\nOnce you have setup your profiles, you can switch between them using the dropdown menu in the app bar of each screen that uses the dictionary.",
+    "search_profiles_rename": "Rename",
+    "search_profiles_rename_profile_dialog_hint_text": "Profile Name",
+    "search_profiles_rename_profile_dialog_title": "Rename Profile",
+    "search_profiles_rename_profile_dialog_title_cancel": "Cancel",
+    "search_profiles_rename_profile_dialog_title_save": "Save",
+    "search_profiles_show_kanji_entries_info_subtitle": "Should Kanji entries be shown in search results when searching for single characters",
+    "search_profiles_show_kanji_entries_title": "Show Kanji Entries",
+    "search_profiles_switch": "Switch Search Profile",
+    "search_profiles_title": "Search Profiles",
+    "select": "Select",
+    "show_meta_entries_subtitle": "Shows Meta entries such as frequency in search results",
+    "show_meta_entries_title": "Show Meta Entries",
+    "show_separators_subtitle": "Show or hide headers such as 'Exact Matches', 'Prefix Matches', etc.",
+    "show_separators_title": "Show Separators",
+    "show_tags_subtitle": "Shows tags such as 'common' in search results",
+    "show_tags_title": "Show Tags",
+    "sort_by_direct_match": "Direct",
+    "sort_by_flexible_match": "Flexible",
+    "sort_by_smart_grammar_match": "Smart Grammar",
+    "sort_by_text": "### Customize Search Result Priority (first priority)\n*Drag items to change their importance. Unchecked items will be ignored.*\n\n* **Direct:** Matches your text exactly as typed.\n* **Flexible:** Ignores differences like capitalization or Hiragana/Katakana (e.g. Ａ = A, da = だ = ダ).\n* **Smart Grammar:** Finds the dictionary form of a word (e.g., finds *食べる* if you type *食べます*).\n* **Typo Correction:** Finds results even if your search has small spelling mistakes (e.g: \"りょこ\" finds \"りょこう (旅行)\").",
+    "sort_by_title": "Sort by",
+    "sort_by_typo_correction_match": "Typo Correction",
+    "sort_order_title": "Sort Order",
+    "source": "Source",
+    "target_dict_select_dialog_cancel": "Cancel",
+    "target_dict_select_dialog_no_indexes": "No dictionaries found",
+    "target_dict_select_dialog_o_k": "OK",
+    "target_dict_select_dialog_title": "Select Target Dictionaries",
+    "target_dict_select_dialog_used_in_other_rule": "Used in another rule",
+    "targets": "Targets",
+    "then_by_exact_match": "Exact Match",
+    "then_by_starts_with_match": "Starts With",
+    "then_by_subword_match": "Sub-word Match",
+    "then_by_text": "### Customize Search Result Priority (second priority)\n*Drag items to change their importance. Unchecked items will be ignored.*\n\n* **Exact Match:** The result is exactly equal to your search term.\n* **Starts With:** The result starts with your search term (e.g. \"食べ\" finds \"**食べ**物\").\n* **Sub-word Match:** Finds entries where your search term appears as a sub-word (e.g. \"食べる\" finds \"ボリボリ**食べる**\").\n* **Wildcard:** Advanced pattern matching (Case-sensitive & slower):\n  * `*` matches any text.\n  * `?` matches exactly one character (e.g. `?本` finds **日**本 or **三**本).\n  * `[.]` matches one character from a list (e.g. `[日一]本` finds **日**本 or **一**本).\n  * `[0-9]` matches a range of numbers or letters.\n  * `[^.]` excludes characters in the list (e.g. `[^日]本` finds **三**本 but **not** 日本).",
+    "then_by_title": "Then by",
+    "then_by_wildcard_match": "Wildcard Match",
+    "typo_correcction_max_cost_title": "Typo Correction Max Cost",
+    "typo_correction_max_cost_subtitle": "Sets the maximum cost (unlikely typos have a higher cost to fix) when using Typo Correction in search.",
+    "typo_correction_max_results_subtitle": "Sets the maximum number of results returned when using Typo Correction in search.",
+    "typo_correction_max_results_title": "Typo Correction Max Results",
+    "update_dictionary": "Update",
+    "update_dictionary_error_checking": "Error checking for updates",
+    "update_dictionary_is_up_to_date": "This dictionary is up to date.",
+    "update_dictionary_no_update_infos": "This dictionary does not provide updates.",
+    "update_dictionary_now": "Update Now",
+    "update_dictionary_update_available": "An update is available for this dictionary.",
+    "use_compact_mode_subtitle": "Writes simple text definitions in one line instead of multiple lines.",
+    "use_compact_mode_title": "Use compact mode for definitions",
+    "use_katakana_for_furigana_subtitle": "Should katakana be used for furigana readings regardless of the defined reading",
+    "use_katakana_for_furigana_title": "Use Katakana for Furigana",
+    "user_dictionary": "User Dictionary"
   },
   "ShopScreen": {
     "title": "Shop"

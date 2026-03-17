@@ -1,4 +1,4 @@
-import 'package:da_db_ui/widgets/settings/search_profile_settings_info_widgets.dart';
+import 'package:da_kanji_mobile/features/settings/widgets/search_profiles/settings//search_profile_settings_info_widgets.dart';
 import 'package:flutter/material.dart';
 
 

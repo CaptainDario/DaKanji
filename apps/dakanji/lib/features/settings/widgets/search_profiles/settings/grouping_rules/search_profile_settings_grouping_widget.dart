@@ -1,20 +1,21 @@
 import 'package:da_db/data/grouping_rules.dart';
 import 'package:da_db/database/da_db.dart';
 import 'package:da_db/database/search_profiles/search_profiles_entry.dart';
-import 'package:da_db_ui/model/da_db_localization.dart';
-import 'package:da_db_ui/widgets/settings/grouping_rules/search_profile_settings_grouping_rule_card.dart';
-import 'package:da_db_ui/widgets/settings/search_profile_settings_card_add_button.dart';
-import 'package:da_db_ui/widgets/settings/search_profile_settings_info_widgets.dart';
+import 'package:da_kanji_mobile/features/settings/widgets/search_profiles/settings/grouping_rules/search_profile_settings_grouping_rule_card.dart';
+import 'package:da_kanji_mobile/features/settings/widgets/search_profiles/settings//search_profile_settings_card_add_button.dart';
+import 'package:da_kanji_mobile/features/settings/widgets/search_profiles/settings//search_profile_settings_info_widgets.dart';
+import 'package:da_kanji_mobile/locales_keys.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 
 
 final List<String> groupingOptions = [
-  "No Grouping",
-  "Term",
-  "Term + Reading",
-  "Sequence Number",
+  LocaleKeys.SettingsScreenSearchProfiles_grouping_options_no_grouping.tr(),
+  LocaleKeys.SettingsScreenSearchProfiles_grouping_options_term.tr(),
+  LocaleKeys.SettingsScreenSearchProfiles_grouping_options_term_reading.tr(),
+  LocaleKeys.SettingsScreenSearchProfiles_grouping_options_sequence_number.tr(),
 ];
 
 String getRuleString(DictionaryGroupingRule rule) {
@@ -52,7 +53,6 @@ class _SearchProfileSettingsGroupingWidgetState extends State<SearchProfileSetti
   @override
   Widget build(BuildContext context) {
 
-    var loc = GetIt.I<DaDbLocalization>();
     var settings = context.watch<SearchProfilesEntry>();
     var rules = settings.groupingRules;
 
@@ -61,16 +61,16 @@ class _SearchProfileSettingsGroupingWidgetState extends State<SearchProfileSetti
       children: [
 
         InfoPopupButton(
-          title: loc.configureGroupingTitle,
-          infoText: loc.groupingExplanation
+          title: LocaleKeys.SettingsScreenSearchProfiles_configure_grouping_title.tr(),
+          infoText: LocaleKeys.SettingsScreenSearchProfiles_grouping_explanation.tr()
         ),
 
         for (int i = 0; i < rules.length; i++) 
-          SearchProfileSettingsGroupingRuleCard(i, loc),
+          SearchProfileSettingsGroupingRuleCard(i),
 
         // The add button
         SearchProfileSearchProfileCardAddButton(
-          loc.addRule,
+          LocaleKeys.SettingsScreenSearchProfiles_add_rule.tr(),
           onPressed: () {
             GetIt.I<DaDb>().searchProfilesDao.updateProfile(
               settings.copyWith(

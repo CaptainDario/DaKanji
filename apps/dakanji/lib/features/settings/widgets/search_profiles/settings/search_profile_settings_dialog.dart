@@ -1,6 +1,6 @@
 import 'package:da_db/database/da_db.dart';
 import 'package:da_db/database/search_profiles/search_profiles_entry.dart';
-import 'package:da_db_ui/widgets/settings/search_profile_settings_widget.dart';
+import 'package:da_kanji_mobile/features/settings/widgets/search_profiles/settings//search_profile_settings_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 

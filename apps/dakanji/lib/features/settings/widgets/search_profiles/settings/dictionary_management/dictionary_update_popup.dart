@@ -1,5 +1,7 @@
 import 'package:da_db/database/index/index_table_entry.dart';
 import 'package:da_db/util/check_dict_updates.dart';
+import 'package:da_kanji_mobile/locales_keys.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 
@@ -42,12 +44,10 @@ class _DictionaryUpdatePopupState extends State<DictionaryUpdatePopup> {
       child: FutureBuilder(
         future: checkForUpdatesFuture,
         builder: (context, snapshot) {
-          print(snapshot.data);
-          // TODO localization
           if (snapshot.hasError) {
             return Padding(
               padding: const EdgeInsets.all(16.0),
-              child: Text("Error checking for updates: ${snapshot.error}"),
+              child: Text("${LocaleKeys.SettingsScreenSearchProfiles_update_dictionary_error_checking.tr()}: ${snapshot.error}"),
             );
           }
           if (!snapshot.hasData) return SizedBox();
@@ -58,8 +58,8 @@ class _DictionaryUpdatePopupState extends State<DictionaryUpdatePopup> {
               ? Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    const Text(
-                      "An update is available for this dictionary.",
+                    Text(
+                      LocaleKeys.SettingsScreenSearchProfiles_update_dictionary_update_available.tr(),
                       style: TextStyle(fontSize: 18),
                     ),
                     const SizedBox(height: 48),
@@ -78,14 +78,14 @@ class _DictionaryUpdatePopupState extends State<DictionaryUpdatePopup> {
                             // TODO implement update logic
                             Navigator.of(context).pop();
                           },
-                          child: const Text("Update Now"),
+                          child: Text(LocaleKeys.SettingsScreenSearchProfiles_update_dictionary_now.tr()),
                         ),
                       ],
                     ),
                   ],
                 )
-              : const Text(
-                  "This dictionary is up to date.",
+              : Text(
+                  LocaleKeys.SettingsScreenSearchProfiles_update_dictionary_is_up_to_date.tr(),
                   style: TextStyle(fontSize: 18),
                 ),
           );

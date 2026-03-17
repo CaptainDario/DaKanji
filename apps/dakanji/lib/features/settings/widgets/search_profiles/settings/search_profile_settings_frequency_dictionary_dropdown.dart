@@ -57,13 +57,11 @@ class SearchProfileSettingsFrequencyDictionaryDropdown extends StatelessWidget {
                 icon: const Icon(Icons.arrow_drop_down),
                 dropdownColor: Theme.of(context).cardColor,
                 style: Theme.of(context).textTheme.bodyMedium,
-                // TODO localization
                 hint: const Text("-"),
                 items: [
                   const DropdownMenuItem<int?>(
                     value: null,
                     child: Text(
-                      // TODO localization
                       "-",
                       style: TextStyle(fontStyle: FontStyle.italic),
                     ),

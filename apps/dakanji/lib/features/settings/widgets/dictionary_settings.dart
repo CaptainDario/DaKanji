@@ -1,7 +1,7 @@
 // Dart imports:
 
 // Flutter imports:
-import 'package:da_kanji_mobile/features/settings/widgets/search_profiles_button.dart';
+import 'package:da_kanji_mobile/features/settings/widgets/search_profiles/settings/search_profiles_button.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:

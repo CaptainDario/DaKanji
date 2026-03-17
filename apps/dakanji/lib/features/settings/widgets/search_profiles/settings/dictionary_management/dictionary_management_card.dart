@@ -1,9 +1,10 @@
 import 'package:da_db/database/da_db.dart';
 import 'package:da_db/database/index/index_table_entry.dart';
-import 'package:da_db_ui/model/da_db_localization.dart';
-import 'package:da_db_ui/widgets/settings/dictionary_management/dictionary_management_details_table.dart';
-import 'package:da_db_ui/widgets/settings/dictionary_management/dictionary_update_popup.dart';
-import 'package:da_db_ui/widgets/settings/search_profile_settings_info_widgets.dart';
+import 'package:da_kanji_mobile/features/settings/widgets/search_profiles/settings/dictionary_management/dictionary_management_details_table.dart';
+import 'package:da_kanji_mobile/features/settings/widgets/search_profiles/settings/dictionary_management/dictionary_update_popup.dart';
+import 'package:da_kanji_mobile/features/settings/widgets/search_profiles/settings/search_profile_settings_info_widgets.dart';
+import 'package:da_kanji_mobile/locales_keys.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
@@ -31,7 +32,6 @@ class _DictionaryManagementCardState extends State<DictionaryManagementCard> {
   Widget build(BuildContext context) {
 
     var db = GetIt.I<DaDb>();
-    var loc = GetIt.I<DaDbLocalization>();
 
     return Card(
       elevation: 2,
@@ -103,8 +103,7 @@ class _DictionaryManagementCardState extends State<DictionaryManagementCard> {
               GestureDetector(
                 onTap: widget.entry.dictCanBeUpdated
                   ? null
-                  // TODO localization
-                  : () => showInfoSnackbar("This dictionary does not provide updates.", context),
+                  : () => showInfoSnackbar(LocaleKeys.SettingsScreenSearchProfiles_update_dictionary_no_update_infos.tr(), context),
                 child: OutlinedButton(
                   onPressed: widget.entry.dictCanBeUpdated
                     ? () async {
@@ -128,15 +127,14 @@ class _DictionaryManagementCardState extends State<DictionaryManagementCard> {
                   child: Row(
                     children: [
                       Icon(Icons.update),
-                      Text(loc.updateDictionary)
+                      Text(LocaleKeys.SettingsScreenSearchProfiles_update_dictionary.tr())
                     ],
                   ),
                 ),
               ),
               GestureDetector(
                 onTap: widget.entry.isDefaultDictionary
-                  // TODO localization
-                  ? () => showInfoSnackbar("Default dictionaries cannot be deleted.", context)
+                  ? () => showInfoSnackbar(LocaleKeys.SettingsScreenSearchProfiles_delete_dictionary_default_cannot.tr(), context)
                   : null,
                 child: OutlinedButton(
                   onPressed: widget.entry.isDefaultDictionary
@@ -147,7 +145,7 @@ class _DictionaryManagementCardState extends State<DictionaryManagementCard> {
                   child: Row(
                     children: [
                       Icon(Icons.delete),
-                      Text(loc.deleteDictionary)
+                      Text(LocaleKeys.SettingsScreenSearchProfiles_delete_dictionary.tr())
                     ],
                   ),
                 ),

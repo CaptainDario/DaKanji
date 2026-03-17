@@ -34,7 +34,7 @@ dependencies:
   url_launcher: ^6.3.2
   flutter_phoenix: 1.1.1
   image: 4.5.4
-  flutter_markdown: ^0.7.7+1
+  flutter_markdown_plus: ^1.0.7
   get_it: ^9.2.1
   provider: ^6.1.5+1
   universal_io: 2.3.1
@@ -140,7 +140,6 @@ dependencies:
   database_builder:
   language_processing:
   da_db:
-  da_db_ui:
   
 
   # Not all platforms supported
@@ -180,10 +179,6 @@ dependency_overrides:
     path: /Users/darioklepoch/dev/DaKanji/dakanji_db/packages/language_processing
   sqlite_extensions:
     path: /Users/darioklepoch/dev/DaKanji/dakanji_db/packages/sqlite_extensions
-  da_db_ui:
-    path: /Users/darioklepoch/dev/DaKanji/dakanji_db/packages/da_db_ui
-  util:
-    path: /Users/darioklepoch/dev/DaKanji/dakanji_db/packages/util
 
 
 msix_config:

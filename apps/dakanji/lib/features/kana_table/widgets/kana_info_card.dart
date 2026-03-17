@@ -5,7 +5,7 @@ import 'package:flutter/services.dart';
 
 // Package imports:
 import 'package:database_builder/database_builder.dart';
-import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
 import 'package:isar_community/isar.dart';

@@ -4,8 +4,9 @@ import 'package:da_db/data/grouping_rules.dart';
 import 'package:da_db/database/da_db.dart';
 import 'package:da_db/database/index/index_table_entry.dart';
 import 'package:da_db/database/search_profiles/search_profiles_entry.dart';
-import 'package:da_db_ui/model/da_db_localization.dart';
-import 'package:da_db_ui/widgets/settings/grouping_rules/search_profile_settings_grouping_widget.dart';
+import 'package:da_kanji_mobile/features/settings/widgets/search_profiles/settings/grouping_rules/search_profile_settings_grouping_widget.dart';
+import 'package:da_kanji_mobile/locales_keys.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
@@ -17,11 +18,8 @@ class SearchProfileSettingsGroupingRuleCard extends StatefulWidget {
 
   final int i;
 
-  final DaDbLocalization localization;
-
   const SearchProfileSettingsGroupingRuleCard(
     this.i,
-    this.localization,
     {
       super.key
     }
@@ -105,7 +103,6 @@ class _SearchProfileSettingsGroupingRuleCardState extends State<SearchProfileSet
     var rules = context.read<SearchProfilesEntry>().groupingRules;
     int i = widget.i;
     var rule = rules[i];
-    DaDbLocalization loc = widget.localization;
 
     return Card(
       child: Padding(
@@ -118,7 +115,6 @@ class _SearchProfileSettingsGroupingRuleCardState extends State<SearchProfileSet
                 // Dropdown to select grouping rule type
                 RuleTypeRow(
                   rule: rule,
-                  loc: loc,
                   onChanged: (value) {
                     if (value != null) {
                       _updateRuleAt(i, groupingRuleStringToInstance[value]!());
@@ -130,7 +126,6 @@ class _SearchProfileSettingsGroupingRuleCardState extends State<SearchProfileSet
                 if (rule is SequenceGroupingRule) ...[
                   SourceSelectorRow(
                     rule: rule,
-                    loc: loc,
                     availableIndexesFuture: _allAvaibleIndexes(true),
                     onChanged: (value) => _updateRuleAt(i, (rule.copyWith(sourceDictId: value)))
                   )
@@ -140,7 +135,6 @@ class _SearchProfileSettingsGroupingRuleCardState extends State<SearchProfileSet
                 if(rule is! NoGroupingRule)
                   TargetSelectorRow(
                     rule: rule,
-                    loc: loc,
                     onSelectPressed: () async {
                       await showAvailableIndexesDialog(
                         onSelected:(List<int> result) {
@@ -162,7 +156,7 @@ class _SearchProfileSettingsGroupingRuleCardState extends State<SearchProfileSet
                 children: [
                   Icon(Icons.delete),
                   SizedBox(width: 4,),
-                  Text(widget.localization.delteRule),
+                  Text(LocaleKeys.SettingsScreenSearchProfiles_delte_rule.tr()),
                 ],
               ),
             ),
@@ -192,7 +186,7 @@ class _SearchProfileSettingsGroupingRuleCardState extends State<SearchProfileSet
         return StatefulBuilder(
           builder: (context, setState) {
             return AlertDialog(
-              title: Text(widget.localization.targetDictSelectDialogTitle),
+              title: Text(LocaleKeys.SettingsScreenSearchProfiles_target_dict_select_dialog_title.tr()),
               content: SizedBox(
                 width: double.maxFinite,
                 child: FutureBuilder<List<({IndexEntry index, IndexGroupingUsage usage})>>(
@@ -205,7 +199,7 @@ class _SearchProfileSettingsGroupingRuleCardState extends State<SearchProfileSet
                     final data = snapshot.data!;
                     
                     if (data.isEmpty) {
-                      return Text(widget.localization.targetDictSelectDialogNoIndexes);
+                      return Text(LocaleKeys.SettingsScreenSearchProfiles_target_dict_select_dialog_no_indexes.tr());
                     }
 
                     // 3. One-time Initialization: 
@@ -238,7 +232,7 @@ class _SearchProfileSettingsGroupingRuleCardState extends State<SearchProfileSet
                           // Show explanation if disabled
                           subtitle: isDisabled 
                               ? Text(
-                                widget.localization.targetDictSelectDialogUsedInOtherRule,
+                                LocaleKeys.SettingsScreenSearchProfiles_target_dict_select_dialog_used_in_other_rule.tr(),
                                 style: TextStyle(color: Colors.grey, fontSize: 12)
                               ) 
                               : null,
@@ -268,14 +262,14 @@ class _SearchProfileSettingsGroupingRuleCardState extends State<SearchProfileSet
               actions: [
                 TextButton(
                   onPressed: () => Navigator.pop(context),
-                  child: Text(widget.localization.targetDictSelectDialogCancel),
+                  child: Text(LocaleKeys.SettingsScreenSearchProfiles_target_dict_select_dialog_cancel.tr()),
                 ),
                 TextButton(
                   onPressed: () {
                     onSelected(tempSelectedIds.toList());
                     Navigator.pop(context);
                   },
-                  child: Text(widget.localization.targetDictSelectDialogOK),
+                  child: Text(LocaleKeys.SettingsScreenSearchProfiles_target_dict_select_dialog_o_k.tr()),
                 ),
               ],
             );
@@ -290,11 +284,13 @@ class _SearchProfileSettingsGroupingRuleCardState extends State<SearchProfileSet
 class RuleTypeRow extends TableRow {
   RuleTypeRow({
     required DictionaryGroupingRule rule,
-    required DaDbLocalization loc,
     required ValueChanged<String?> onChanged,
   }) : super(
           children: [
-            Text(loc.groupby, style: const TextStyle(fontSize: 16)),
+            Text(
+              LocaleKeys.SettingsScreenSearchProfiles_groupby.tr(),
+              style: const TextStyle(fontSize: 16)
+            ),
             DropdownButton<String>(
               value: getRuleString(rule),
               items: groupingOptions.map((opt) => 
@@ -309,12 +305,14 @@ class RuleTypeRow extends TableRow {
 class SourceSelectorRow extends TableRow {
   SourceSelectorRow({
     required SequenceGroupingRule rule,
-    required DaDbLocalization loc,
     required Future<List<({IndexEntry index, IndexGroupingUsage usage})>> availableIndexesFuture,
     required ValueChanged<int?> onChanged,
   }) : super(
           children: [
-            Text(loc.source, style: const TextStyle(fontSize: 16)),
+            Text(
+              LocaleKeys.SettingsScreenSearchProfiles_source.tr(),
+              style: const TextStyle(fontSize: 16)
+            ),
             FutureBuilder<List<({IndexEntry index, IndexGroupingUsage usage})>>(
               future: availableIndexesFuture,
               builder: (context, snapshot) {
@@ -337,19 +335,18 @@ class SourceSelectorRow extends TableRow {
 class TargetSelectorRow extends TableRow {
   TargetSelectorRow({
     required DictionaryGroupingRule rule,
-    required DaDbLocalization loc,
     required VoidCallback onSelectPressed,
   }) : super(
           children: [
             Text(
-              "${loc.targets} (${rule.targetDictIds.length})",
+              "${LocaleKeys.SettingsScreenSearchProfiles_targets.tr()} (${rule.targetDictIds.length})",
               style: const TextStyle(fontSize: 16),
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: TextButton(
                 onPressed: onSelectPressed,
-                child: Text(loc.select),
+                child: Text(LocaleKeys.SettingsScreenSearchProfiles_select.tr()),
               ),
             ),
           ],

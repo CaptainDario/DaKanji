@@ -1,5 +1,7 @@
 import 'package:da_db/database/da_db.dart';
 import 'package:da_db/database/search_profiles/search_profiles_entry.dart';
+import 'package:da_kanji_mobile/locales_keys.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
@@ -23,18 +25,13 @@ class SearchProfileSelector extends StatelessWidget {
             final activeId = activeSnapshot.data?.id;
 
             return PopupMenuButton<int>(
-              // 1. The trigger icon
               icon: const Icon(Icons.person_search_outlined),
-              tooltip: 'Switch Search Profile',
-              
-              // 2. The action when an item is tapped
+              tooltip: LocaleKeys.SettingsScreenSearchProfiles_search_profiles_switch.tr(),
               onSelected: (int newProfileId) {
                 if (newProfileId != activeId) {
                   dao.switchActiveProfile(newProfileId);
                 }
               },
-
-              // 3. The list of items to show in the menu
               itemBuilder: (BuildContext context) {
                 return profiles.map((profile) {
                   final isSelected = profile.id == activeId;
@@ -43,7 +40,6 @@ class SearchProfileSelector extends StatelessWidget {
                     value: profile.id,
                     child: Row(
                       children: [
-                        // Optional: Add a checkmark for the active profile
                         Icon(
                           Icons.check,
                           color: isSelected ? Colors.blue : Colors.transparent,

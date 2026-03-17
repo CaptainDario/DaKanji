@@ -407,13 +407,6 @@ packages:
       relative: false
     source: path
     version: "1.0.0"
-  da_db_ui:
-    dependency: "direct overridden"
-    description:
-      path: "/Users/darioklepoch/dev/DaKanji/dakanji_db/packages/da_db_ui"
-      relative: false
-    source: path
-    version: "1.0.0"
   dart_jsonwebtoken:
     dependency: transitive
     description:
@@ -773,14 +766,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_markdown:
-    dependency: transitive
-    description:
-      name: flutter_markdown
-      sha256: "08fb8315236099ff8e90cb87bb2b935e0a724a3af1623000a9cec930468e0f27"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.7.7+1"
   flutter_markdown_plus:
     dependency: transitive
     description:
@@ -2244,13 +2229,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.1.5"
-  util:
-    dependency: "direct overridden"
-    description:
-      path: "/Users/darioklepoch/dev/DaKanji/dakanji_db/packages/util"
-      relative: false
-    source: path
-    version: "0.0.1"
   uuid:
     dependency: transitive
     description:
