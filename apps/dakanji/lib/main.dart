@@ -2,6 +2,7 @@
 import 'dart:async';
 
 // Flutter imports:
+import 'package:css_inline_flutter/css_inline_flutter.dart';
 import 'package:da_kanji_mobile/core/app/japanese_app_config.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -45,6 +46,7 @@ Future<void> main() async {
   // register packages
   initLiteRTFlutter();
   fvp.registerWith();
+  await initInlineCss();
 
   // init supabase
   await Supabase.initialize(
