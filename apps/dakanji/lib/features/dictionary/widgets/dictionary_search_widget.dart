@@ -3,7 +3,10 @@ import 'dart:async';
 
 // Flutter imports:
 import 'package:da_db/database/da_db.dart';
+import 'package:da_db/database/db_queries/dictionary_search/dictionary_match.dart';
 import 'package:da_db/database/db_queries/dictionary_search/dictionary_search_params.dart';
+import 'package:da_db/database/db_queries/dictionary_search/dictionary_search_result.dart';
+import 'package:da_kanji_mobile/features/dictionary/controller/dictionary_search.dart';
 import './search_results/dictionary_search_result_widget.dart';
 import 'package:da_kanji_mobile/core/user/user_data_db.dart';
 import 'package:da_kanji_mobile/features/dictionary/model/dictionary_search_notifier.dart';
@@ -11,7 +14,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 // Package imports:
-import 'package:another_flushbar/flushbar.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:database_builder/database_builder.dart';
 import 'package:get_it/get_it.dart';
@@ -26,7 +28,6 @@ import 'package:da_kanji_mobile/core/routing/navigation_arguments.dart';
 import 'package:da_kanji_mobile/core/routing/screens.dart';
 import 'package:da_kanji_mobile/features/settings/model/settings.dart';
 import 'package:da_kanji_mobile/features/tutorial/model/tutorials.dart';
-import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/features/dictionary/widgets/filter_popup_body.dart';
 import 'package:da_kanji_mobile/features/dictionary/widgets/radical_popup_body.dart';
 import 'package:da_kanji_mobile/features/dictionary/widgets/search_result_list.dart';
@@ -47,15 +48,9 @@ class DictionarySearchWidget extends StatefulWidget {
   final bool canCollapse;
   /// should the button to navigate to the drawing screen be included
   final bool includeDrawButton;
-  /// should queries be converted to kana if possible
-  final bool convertToKana;
-  /// should queries be deconjugated
-  final bool allowDeconjugation;
   /// When navigating back (OS navigation and navigator.pop) immediately closes
   /// this widget and does not firstly collapse searchbar 
   final bool backNavigationImmediatelyPopsWidget;
-  /// The current build context
-  final BuildContext context;
 
   const DictionarySearchWidget(
     {
@@ -64,10 +59,7 @@ class DictionarySearchWidget extends StatefulWidget {
       this.isExpanded = false,
       this.canCollapse = true,
       this.includeDrawButton = true,
-      required this.convertToKana,
-      this.allowDeconjugation = true,
       required this.backNavigationImmediatelyPopsWidget,
-      required this.context,
       super.key
     }
   );
@@ -105,8 +97,6 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
   bool reshowRadicalPopup = false;
   /// should the filter popup be openend when `reopenPopupTimer` finishes
   bool reshowFilterPopup = false;
-  /// The flusbar that shows that a word has been deconjugated
-  Flushbar? deconjugationFlushbar;
 
   
   @override
@@ -171,8 +161,7 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
       if(widget.initialSearch != initialSearch){
         searchInputController.text = widget.initialSearch;
         initialSearch = widget.initialSearch;
-        await updateSearchResults(initialSearch,
-          widget.convertToKana, widget.allowDeconjugation);
+        await updateSearchResults(initialSearch);
       }
       if(mounted) {
         setState(() {});
@@ -294,9 +283,7 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
 
                             text = text.trim();
                             
-                            await updateSearchResults(text,
-                              widget.allowDeconjugation,
-                              widget.convertToKana,);
+                            await updateSearchResults(text);
                             
                             setState(() {});
                           },
@@ -331,7 +318,7 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
                               GetIt.I<Settings>().drawing.selectedDictionary =
                                 GetIt.I<Settings>().drawing.inbuiltDictId;
                               Navigator.pushNamedAndRemoveUntil(
-                                widget.context, 
+                                context, 
                                 "/${Screens.drawing.name}",
                                 (route) => true,
                                 arguments: NavigationArguments(
@@ -420,16 +407,17 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
                     },
                     child: Stack(
                       children: [
-                        context.read<DictionarySearchNotifier>().results != null
+                        context.watch<DictionarySearchNotifier>().results != null
                           // search results if the user entered text
                           ? DictionarySearchResultWidget(
-                            result: context.read<DictionarySearchNotifier>().results!,
+                            result: context.watch<DictionarySearchNotifier>().results!,
+                            onTap: onSearchResultPressed,
                           )
-                          // otherwise the search history
+                          // TODO otherwise the search history
                           : StreamBuilder<List<SearchHistoryTableData>>(
                             stream: GetIt.I<UserDataDB>().searchHistoryDao.watchAllSearchHistoryIDs(),
                             builder: (context, snapshot) {
-              
+                              
                               if(snapshot.data == null) return const SizedBox();
               
                               List<JMdict> searchHistory = [];
@@ -450,7 +438,7 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
                                 showWordFrequency: GetIt.I<Settings>().dictionary.showWordFruequency,
                                 alwaysAnimateIn: false,
                                 init: (controller) {},
-                                onSearchResultPressed: onSearchResultPressed,
+                                //onSearchResultPressed: onSearchResultPressed,
                                 onDismissed: (direction, entry, idx) => 
                                   GetIt.I<UserDataDB>().searchHistoryDao.deleteEntry(
                                     sqlIDs[idx]
@@ -509,16 +497,12 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
     filterPopupOpen = true;
 
     await AwesomeDialog(
-      context: widget.context,
+      context: context,
       dialogType: DialogType.noHeader,
       bodyHeaderDistance: 0,
       alignment: Alignment.bottomCenter,
       onDismissCallback: (dismissType) async {
-        await updateSearchResults(
-          searchInputController.text,
-          widget.allowDeconjugation,
-           widget.convertToKana,
-        );
+        await updateSearchResults(searchInputController.text);
         filterPopupOpen = false;
       },
       body: FilterPopupBody(
@@ -534,17 +518,13 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
     radicalPopupOpen = true;
     
     await AwesomeDialog(
-      context: widget.context,
+      context: context,
       isDense: true,
       dialogType: DialogType.noHeader,
       bodyHeaderDistance: 0,
       alignment: Alignment.bottomCenter,
       onDismissCallback: (dismissType) async {
-        await updateSearchResults(
-          searchInputController.text,
-          widget.allowDeconjugation,
-          widget.convertToKana,
-        );
+        await updateSearchResults(searchInputController.text);
         radicalPopupOpen = false;
       },
       body: RadicalPopupBody(
@@ -557,17 +537,15 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
   }
 
   /// callback that is executed when the user presses on a search result
-  void onSearchResultPressed(JMdict entry) async {
+  void onSearchResultPressed(DictionaryMatch match) async {
     // update search variables
-    context.read<DictSearch>().selectedResult = entry;
+    context.read<DictionarySearchNotifier>().selectedResult = match;
 
-    // store new search in search history
-    GetIt.I<UserDataDB>().searchHistoryDao.addEntry(entry);
+    // TODO store new search in search history
+    //GetIt.I<UserDataDB>().searchHistoryDao.addEntry(entry);
 
     // collapse the search bar
-    if(widget.canCollapse){
-      collapseSearchBar();
-    }
+    if(widget.canCollapse) collapseSearchBar();
 
     // close the keyboard
     FocusManager.instance.primaryFocus?.unfocus();
@@ -577,14 +555,14 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
   void onClipboardButtonPressed() async {
     if(searchInputController.text != ""){
       searchInputController.text = "";
-      widget.context.read<DictionarySearchNotifier>().currentSearch = "";
+      context.read<DictionarySearchNotifier>().currentSearch = "";
       searchTextFieldFocusNode.requestFocus();
     }
     else{
       String data = (await Clipboard.getData('text/plain'))?.text ?? "";
       data = data.replaceAll("\n", " ");
       searchInputController.text = data;
-      await updateSearchResults(data, widget.convertToKana, widget.allowDeconjugation);
+      await updateSearchResults(data);
     }
 
     openSearchBar();
@@ -593,50 +571,16 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
 
   /// Searches in the dictionary and updates all search results and variables
   /// setState() needs to be called to update the ui.
-  Future<void> updateSearchResults(
-    String query, bool convertToHiragana, bool allowDeconjugation) async {
+  Future<void> updateSearchResults(String query) async {
     
-    widget.context.read<DictionarySearchNotifier>().results =
+    // set first to empty to avoid weird left over states
+    context.read<DictionarySearchNotifier>().results = DictionarySearchResult.empty();
+    context.read<DictionarySearchNotifier>().results =
       await GetIt.I<DaDb>().dictionarySearchDao.dictionarySearch(
         DictionarySearchParams(
           searchInput: query, options: ProcessorOptions()
         )
       );
-    print(widget.context.read<DictionarySearchNotifier>().results);
-
-  }
-
-  /// when the user taps on an alternative search term from the flushbar
-  void onAltSearchTapped(String text) async {
-
-    searchInputController.text = text;
-    await updateSearchResults(text, false, false);
-    deconjugationFlushbar?.dismiss();
-
-  }
-
-  /// Based on the selected search result sort priorities, returns a list of
-  /// the actual search terms following the user'spriorities
-  List<String> selectedSortPrioritiesToActualQueries(
-    String query, String? queryKana, List<String> deconjugated
-  ){
-
-    List<String> allQueries = [];
-
-    List<String> sel = context.read<Settings>().dictionary.selectedSearchResultSortPriorities;
-    for (var i = 0; i < sel.length; i++) {
-      if(sel[i] == LocaleKeys.SettingsScreen_dict_term){
-        allQueries.add(query);
-      }
-      else if(sel[i] == LocaleKeys.SettingsScreen_dict_convert_to_kana && queryKana != null){
-        allQueries.add(queryKana);
-      } 
-      else if(sel[i] == LocaleKeys.SettingsScreen_dict_base_form){
-        allQueries.addAll(deconjugated);
-      }
-    }
-    
-    return allQueries;
 
   }
 
@@ -664,25 +608,6 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
 
   }
 
-  /// Returns a list with the headers used for showing which search query 
-  /// matched so that this result shows
-  List<String?> getSearchResultHeaders(){
-
-    return GetIt.I<Settings>().dictionary.showSearchMatchSeparation
-      ? [
-        widget.context.read<DictSearch>().currentSearch,
-        "${widget.context.read<DictSearch>().currentSearch}*",
-        "*${widget.context.read<DictSearch>().currentSearch}*",
-        widget.context.read<DictSearch>().currentKanaSearch,
-        "${widget.context.read<DictSearch>().currentKanaSearch}*",
-        "*${widget.context.read<DictSearch>().currentKanaSearch}*",
-        for (var search in widget.context.read<DictSearch>().currentAlternativeSearches)
-          ...[search, "$search*", "*$search*"]
-      ]
-      : List.generate(
-        6+(widget.context.read<DictSearch>().currentAlternativeSearches.length*3),
-        (e) => null);
-  }
 
 }
 

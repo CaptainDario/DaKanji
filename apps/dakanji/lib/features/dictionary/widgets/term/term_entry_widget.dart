@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:da_db/database/db_queries/dictionary_search/dictionary_match.dart';
 import 'package:da_db/database/tag/tag_bank_v3_entry.dart';
 import 'package:da_kanji_mobile/features/dictionary/widgets/tag/tag_bank_widget.dart';
@@ -7,6 +6,7 @@ import 'package:da_kanji_mobile/features/dictionary/widgets/term/term_bank_defin
 import 'package:da_kanji_mobile/features/dictionary/widgets/term/term_bank_term_widget.dart';
 import 'package:da_kanji_mobile/features/dictionary/widgets/term_meta/term_meta_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_util/widgets/conditional_parent_widget.dart';
 
 
 
@@ -33,6 +33,9 @@ class TermEntryWidget extends StatelessWidget {
   /// Whether to render in compact mode (term bank entries and definitions in one line)
   final bool compactMode;
 
+  /// Whether to include a card widget or just render the content directly.
+  final bool includeCard;
+
   /// Callback that is called when this widget is tapped.
   final Function(DictionaryMatch match)? onTap;
 
@@ -49,6 +52,7 @@ class TermEntryWidget extends StatelessWidget {
       this.useKatakanaForFurigana = false,
       this.showAudioPlaybackButtons = false,
       this.compactMode = false,
+      this.includeCard = true,
       this.onTap,
       this.onUrlTap,
       super.key
@@ -63,10 +67,17 @@ class TermEntryWidget extends StatelessWidget {
     return SizedBox(
       width: double.infinity,
       child: SelectionArea(
-        child: Card(
-          clipBehavior: Clip.hardEdge,
+        child: ConditionalParentWidget(
+          condition: includeCard,
+          conditionalBuilder: (child) {
+            return Card(child: child);
+          },
           child: InkWell(
-            onTap: onTap?.call(match),
+            onTap: onTap == null
+              ? null
+              : () {
+                onTap?.call(match);
+              },
             child: Padding(
               padding: const EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 8.0),
               child: Column(

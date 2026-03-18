@@ -2,7 +2,7 @@
 import 'dart:math';
 
 // Flutter imports:
-import 'package:da_db/database/db_queries/dictionary_search/dictionary_search_result.dart';
+import 'package:da_db/database/db_queries/dictionary_search/dictionary_search_context.dart';
 import 'package:da_kanji_mobile/core/widgets/conditional_parent_widget.dart';
 import 'package:da_kanji_mobile/features/dictionary/model/dictionary_search_notifier.dart';
 import 'package:flutter/material.dart';
@@ -45,11 +45,6 @@ class Dictionary extends StatefulWidget {
   /// this widget and does not firstly collapse searchbar 
   final bool backNavigationImmediatelyPopsWidget;
   
-  /// Should the search term be deconjugated before searching
-  final bool allowDeconjugation;
-  /// Should the search term be converted to kana
-  final bool convertToKana;
-
   const Dictionary(
     this.includeTutorial,
     {
@@ -58,8 +53,6 @@ class Dictionary extends StatefulWidget {
       required this.includeFallingWords,
       this.includeDrawButton = true,
       this.isExpanded = false,
-      this.allowDeconjugation=true,
-      this.convertToKana=true,
       required this.backNavigationImmediatelyPopsWidget,
       super.key
     }
@@ -76,7 +69,6 @@ class _DictionaryState extends State<Dictionary> with TickerProviderStateMixin {
   /// Current search in the dictionary
   DictSearch search = DictSearch();
 
-  DictionarySearchNotifier searchResultsNotifier = DictionarySearchNotifier();
   /// Tab controller for the dictionary tabs
   TabController? dictionaryTabController;
   /// Controller of the floating words
@@ -111,8 +103,8 @@ class _DictionaryState extends State<Dictionary> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     
-    return ChangeNotifierProvider<DictionarySearchNotifier>.value(
-      value: searchResultsNotifier,
+    return ChangeNotifierProvider<DictionarySearchNotifier>(
+      create: (context) => DictionarySearchNotifier(),
       builder: (context, child) {
         return ChangeNotifierProvider<DictSearch>.value(
           value: search,
@@ -162,7 +154,7 @@ class _DictionaryState extends State<Dictionary> with TickerProviderStateMixin {
                           conditionalBuilder: (child) {
                             return FloatingWordStack(
                               levels: GetIt.I<Settings>().dictionary.selectedFallingWordsLevels,
-                              hide: search.selectedResult != null,
+                              hide: context.watch<DictionarySearchNotifier>().selectedResult != null,
                               onTap: (FloatingWord entry) {
                                 search.selectedResult =
                                   GetIt.I<Isars>().dictionary.jmdict.getSync(entry.entry.id);
@@ -187,9 +179,6 @@ class _DictionaryState extends State<Dictionary> with TickerProviderStateMixin {
                                       isExpanded: true,
                                       canCollapse: false,
                                       includeDrawButton: widget.includeDrawButton,
-                                      convertToKana: widget.convertToKana,
-                                      allowDeconjugation: widget.allowDeconjugation,
-                                      context: context,
                                       backNavigationImmediatelyPopsWidget: widget.backNavigationImmediatelyPopsWidget,
                                     ),
                                   ),
@@ -201,9 +190,7 @@ class _DictionaryState extends State<Dictionary> with TickerProviderStateMixin {
                                     focusNode: GetIt.I<Tutorials>().dictionaryScreenTutorial.wordTabStep,
                                     child: Padding(
                                       padding: const EdgeInsets.all(8),
-                                      child: DictionaryWordTab(
-                                        context.watch<DictSearch>().selectedResult,
-                                      ),
+                                      child: DictionaryWordTab(),
                                     ),
                                   ),
                                 ),
@@ -287,9 +274,7 @@ class _DictionaryState extends State<Dictionary> with TickerProviderStateMixin {
                                               controller: dictionaryTabController,
                                               children: [
                                                 if(tabsSideBySide < 2)
-                                                  DictionaryWordTab(
-                                                    context.watch<DictSearch>().selectedResult,
-                                                  ),
+                                                  DictionaryWordTab(),
                                                 if(tabsSideBySide < 4) 
                                                   DictionaryKanjiTab(
                                                     context.watch<DictSearch>().selectedResult
@@ -324,9 +309,6 @@ class _DictionaryState extends State<Dictionary> with TickerProviderStateMixin {
                           expandedHeight: constraints.maxHeight - 24,
                           isExpanded: widget.isExpanded,
                           includeDrawButton: widget.includeDrawButton,
-                          convertToKana: widget.convertToKana,
-                          allowDeconjugation: widget.allowDeconjugation,
-                          context: context,
                           backNavigationImmediatelyPopsWidget: widget.backNavigationImmediatelyPopsWidget,
                         ),
                       ),

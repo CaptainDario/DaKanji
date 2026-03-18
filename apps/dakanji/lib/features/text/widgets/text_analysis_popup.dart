@@ -7,10 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:get_it/get_it.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/core/user/user_data.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/features/dictionary/widgets/dictionary.dart';
@@ -21,8 +19,6 @@ class TextAnalysisPopup extends StatefulWidget {
   
   /// The text shown in this widget
   final String text;
-  /// Should the text be deconjugateble
-  final bool allowDeconjugation;
   /// Callback that is executed when the popup was moved by dragging it at the 
   /// header
   final Function(PointerMoveEvent)? onMovedViaHeader;
@@ -39,7 +35,6 @@ class TextAnalysisPopup extends StatefulWidget {
   const TextAnalysisPopup(
     {
       required this.text,
-      this.allowDeconjugation=true,
       this.onMovedViaHeader,
       this.onResizedViaCorner,
       this.onInitialized,
@@ -151,8 +146,6 @@ class _TextAnalysisPopupState extends State<TextAnalysisPopup> with SingleTicker
                         includeFallingWords: false,
                         includeDrawButton: false,
                         isExpanded: true,
-                        convertToKana: false,
-                        allowDeconjugation: widget.allowDeconjugation,
                         backNavigationImmediatelyPopsWidget: false,
                       ),
                       if(g_webViewSupported)

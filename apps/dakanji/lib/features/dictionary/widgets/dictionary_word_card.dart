@@ -1,10 +1,11 @@
 // Flutter imports:
+import 'package:da_kanji_mobile/features/dictionary/model/dictionary_search_notifier.dart';
+import 'package:da_kanji_mobile/features/dictionary/widgets/term/term_entry_widget.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:database_builder/database_builder.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:get_it/get_it.dart';
@@ -16,13 +17,10 @@ import 'package:da_kanji_mobile/features/settings/model/settings_dictionary.dart
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/features/dictionary/widgets/conjugation_expansion_tile.dart';
-import 'package:da_kanji_mobile/features/dictionary/widgets/dictionary_word_tab_kanji.dart';
-import 'package:da_kanji_mobile/features/dictionary/widgets/word_meanings.dart';
+import 'package:provider/provider.dart';
 
 class DictionaryWordCard extends StatefulWidget {
 
-  /// the dict entry that should be shown 
-  final JMdict? entry;
   /// should the image search expansion tile be included in this widget
   final bool showImageSearch;
   /// should the conjugation table be included in this widget
@@ -37,7 +35,6 @@ class DictionaryWordCard extends StatefulWidget {
   final Function(bool state)? onConjugationTableExpansionChanged;
 
   const DictionaryWordCard(
-    this.entry,
     {
       this.showImageSearch = true,
       this.showConjugationTable = true,
@@ -79,17 +76,16 @@ class _DictionaryWordCardState extends State<DictionaryWordCard> {
   /// parses and initializes all data elements of this widget
   void initData() {
 
-    if(widget.entry != null){
-      readingOrKanji = widget.entry!.kanjis.isEmpty
-        ? widget.entry!.readings[0]
-        : widget.entry!.kanjis[0];
+    final match = context.read<DictionarySearchNotifier>().selectedResult;
+    if(match != null){
+      readingOrKanji = match.entries.first.term.isEmpty
+        ? match.entries.first.reading
+        : match.entries.first.term;
 
       // get the pos for conjugating this word
-      conjugationPos = widget.entry!.meanings.map((e) => e.partOfSpeech)
-        .nonNulls.expand((e) => e)
-        .nonNulls.expand((e) => e.attributes)
-        .nonNulls.map((e) => posDescriptionToPosEnum[e]!)
-        .toSet().toList();
+      conjugationPos = match.entries.first.ruleIdentifiers
+        .nonNulls.map((e) => posStringToPosEnum[e])
+        .nonNulls.toSet().toList();
     }
   }
 
@@ -107,48 +103,9 @@ class _DictionaryWordCardState extends State<DictionaryWordCard> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             
-            DictionaryWordTabKanji(widget.entry!),
-              
-            const SizedBox(
-              height: 5,
-            ),
-              
-            // JLPT
-            if(widget.entry!.jlptLevel != null && widget.entry!.jlptLevel!.isNotEmpty)
-              ...[
-                Text(
-                  widget.entry!.jlptLevel!.join(", "),
-                  style: const TextStyle(
-                    color: Colors.grey,
-                    fontSize: 12
-                  ),
-                ),
-              
-                const SizedBox(
-                  height: 5,
-                ),
-              ],
-
-            // Frequency
-            if(GetIt.I<Settings>().dictionary.showWordFruequency)
-              ...[
-                Text(
-                  "${LocaleKeys.DictionaryScreen_kanji_frequency.tr()}: ${widget.entry!.frequency.toStringAsFixed(2)}",
-                  style: const TextStyle(
-                    color: Colors.grey,
-                    fontSize: 12
-                  ),
-                ),
-              
-                const SizedBox(
-                  height: 5,
-                ),
-              ],
-              
-            // meanings
-            WordMeanings(
-              entry: widget.entry!, 
-              meaningsStyle: meaningsStyle,
+            TermEntryWidget(
+              context.watch<DictionarySearchNotifier>().selectedResult!,
+              includeCard: false,
             ),
               
             if(g_webViewSupported && widget.showImageSearch)

@@ -183,7 +183,6 @@ class _ScreenSaverState extends State<ScreenSaver> with TickerProviderStateMixin
                         child: Center(
                           child: SingleChildScrollView(
                             child: DictionaryWordCard(
-                              currentEntry,
                               showConjugationTable: false,
                               showImageSearch: false,
                             ),

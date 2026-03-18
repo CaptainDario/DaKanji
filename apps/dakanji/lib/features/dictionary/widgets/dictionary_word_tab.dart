@@ -3,6 +3,9 @@ import 'dart:io';
 
 // Flutter imports:
 import 'package:da_kanji_mobile/core/user/user_data_db.dart';
+import 'package:da_kanji_mobile/features/dictionary/model/dictionary_search_notifier.dart';
+import 'package:da_kanji_mobile/features/dictionary/widgets/dictionary_word_card.dart';
+import 'package:da_kanji_mobile/features/dictionary/widgets/term/term_entry_widget.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +17,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:fvp/mdk.dart' as mdk;
 import 'package:get_it/get_it.dart';
 import 'package:language_processing/language_processing.dart';
+import 'package:provider/provider.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher_string.dart';
@@ -31,20 +35,11 @@ import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/features/anki/widgets/anki_dialog.dart';
 import 'package:da_kanji_mobile/features/anki/widgets/anki_not_setup_dialog.dart';
-import 'package:da_kanji_mobile/features/dictionary/widgets/dictionary_word_card.dart';
 import 'package:da_kanji_mobile/features/word_lists/widgets/word_lists_selection_dialog.dart';
 
 class DictionaryWordTab extends StatefulWidget {
 
-  /// the dict entry that should be shown 
-  final JMdict? entry;
-
-  const DictionaryWordTab(
-    this.entry,
-    {
-      super.key
-    }
-  );
+  const DictionaryWordTab({super.key});
 
 
   @override
@@ -112,6 +107,7 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
   /// parses and initializes all data elements of this widget
   void initData() {
 
+    /*
     if(widget.entry != null){
       readingOrKanji = widget.entry!.kanjis.isEmpty
         ? widget.entry!.readings[0]
@@ -124,6 +120,7 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
         .nonNulls.map((e) => posDescriptionToPosEnum[e]!)
         .toSet().toList();
     }
+    */
   }
 
   void initDataAsync() async {
@@ -139,20 +136,20 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
   @override
   Widget build(BuildContext context) {
 
-    if(widget.entry == null) {
-      return Container();
-    }
+    if(context.watch<DictionarySearchNotifier>().selectedResult == null) return Container();
+    
 
     return Align(
       alignment: Alignment.topCenter,
       child: SingleChildScrollView(
-        key: Key(widget.entry!.id.toString()),
+        key: Key(
+          context.watch<DictionarySearchNotifier>().selectedResult!.toString()
+        ),
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Stack(
             children: [
               DictionaryWordCard(
-                widget.entry,
                 onConjugationTableExpansionChanged: (state) {
                   conjugationsIsExpanded = state;
                 },
@@ -160,27 +157,7 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
                   googleImagesIsExpanded = state;
                 },
               ),
-              // audio play button
-              if(widget.entry!.audio != null)
-                Positioned(
-                  top: 8,
-                  right: 48,
-                  child: IconButton(
-                    splashRadius: 25,
-                    icon: const Icon(Icons.play_arrow),
-                    onPressed: () async {
-                      if(!audioFilesDir.existsSync()) {
-                        downloadAudio(context);
-                      }
-                    
-                      
-                      player.setMedia(
-                        '${audioFilesDir.path}/${widget.entry!.audio}.mp3',
-                        mdk.MediaType.audio);
-                      player.state = mdk.PlaybackState.playing;
-                    },
-                  )
-                ),
+
               // more menu, to open this word in different web pages
               Positioned(
                 right: 8,
@@ -189,69 +166,7 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
                   splashRadius: 25,
                   icon: const Icon(Icons.more_vert),
                   onSelected: (String selection) async {
-                    String url = "";
-                    // Wiki
-                    if(selection == menuItems[0]) {
-                      url = Uri.encodeFull("$g_WikipediaJpUrl$readingOrKanji");
-                    }
-                    else if(selection == menuItems[1]) {
-                      url = Uri.encodeFull("$g_WikipediaEnUrl${widget.entry!.meanings.firstWhere((e) => e.language == "eng").meanings[0].attributes[0]}");
-                    }
-                    else if(selection == menuItems[2]) {
-                      url = Uri.encodeFull("$g_WiktionaryUrl$readingOrKanji");
-                    }
-                    else if(selection == menuItems[3]) {
-                      url = Uri.encodeFull("$g_Massif$readingOrKanji");
-                    }
-                    else if(selection == menuItems[4]) {
-                      url = Uri.encodeFull("$g_forvo$readingOrKanji");
-                    }
-                    // send dakanji link
-                    else if(selection == menuItems[5]){
-                      await SharePlus.instance.share(
-                        ShareParams(
-                          text: "${GetIt.I<Settings>().misc.sharingScheme}dictionary?id=${widget.entry!.id}",
-                          sharePositionOrigin: const Rect.fromLTWH(1, 1, 10, 10)
-                        )
-                      );
-                    }
-                    // send dakanji link and image
-                    else if(selection == menuItems[6]){
-                      await sendWordCard();
-                    }
-                    // quick add to word list
-                    else if(selection == menuItems[7]) {
-                      await quickAddToWordList(widget.entry!, context);
-                    }
-                    // add to word list
-                    else if(selection == menuItems[8]) {
-                      await addToWordList();
-                    }
-                    // quick send to anki
-                    else if(selection == menuItems[9]) {
-                      if(!GetIt.I<UserData>().ankiSetup){
-                        await ankiNotSetupDialog(context).show();
-                      }
-                      else{
-                        await quickSendToAnki(widget.entry!, context);
-                      }
-                    }
-                    // send to anki
-                    else if(selection == menuItems[10]){
-                      if(!GetIt.I<UserData>().ankiSetup){
-                        await ankiNotSetupDialog(context).show();
-                      }
-                      else{
-                        await ankiDialog(context, widget.entry!)?.show();
-                      }
-                    }
-                  
-                    if(url != "") {
-                      launchUrlString(
-                        url,
-                        mode: g_webViewSupported ? LaunchMode.inAppWebView : LaunchMode.platformDefault,
-                      );
-                    }
+                    await onMoreMenuSelected(selection);
                   },
                   itemBuilder: (context) => menuItems.mapIndexed((i, e) {
         
@@ -276,7 +191,8 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
   /// to every selected word list
   Future addToWordList() async {
 
-    await showWordListSelectionDialog(context,
+    // TODO
+    /*await showWordListSelectionDialog(context,
       includeDefaults: false,
       onSelectionConfirmed: (selection) {
         // get all nodes to which the selected entry should be added
@@ -297,13 +213,16 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
         GetIt.I<UserDataDB>().wordListsDao.updateNodes(nodesToAddTo);
 
         Navigator.of(context, rootNavigator: false).pop();
-      });
+      }
+    );*/
 
   }
 
   /// Takes a screenshot of the current word card and opens the share dialog with it
   Future<void> sendWordCard () async {
 
+    // TODO
+    /*
     File f = await dictionaryWordCardToImage(
       widget.entry!,
       "${readingOrKanji}_${conjugationsIsExpanded ? "_conj" : ""}.png",
@@ -314,8 +233,79 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
       text: "${GetIt.I<Settings>().misc.sharingScheme}dictionary?id=${widget.entry!.id}",
       sharePositionOrigin: const Rect.fromLTWH(1, 1, 10, 10)
     ));
+    */
     
   }
 
+  Future onMoreMenuSelected(String selection) async {
+    String url = "";
+    // Wiki
+    if(selection == menuItems[0]) {
+      url = Uri.encodeFull("$g_WikipediaJpUrl$readingOrKanji");
+    }
+    else if(selection == menuItems[1]) {
+      // TODO
+      //url = Uri.encodeFull("$g_WikipediaEnUrl${widget.entry!.meanings.firstWhere((e) => e.language == "eng").meanings[0].attributes[0]}");
+    }
+    else if(selection == menuItems[2]) {
+      url = Uri.encodeFull("$g_WiktionaryUrl$readingOrKanji");
+    }
+    else if(selection == menuItems[3]) {
+      url = Uri.encodeFull("$g_Massif$readingOrKanji");
+    }
+    else if(selection == menuItems[4]) {
+      url = Uri.encodeFull("$g_forvo$readingOrKanji");
+    }
+    // send dakanji link
+    else if(selection == menuItems[5]){
+      // TODO
+      /*await SharePlus.instance.share(
+        ShareParams(
+          text: "${GetIt.I<Settings>().misc.sharingScheme}dictionary?id=${widget.entry!.id}",
+          sharePositionOrigin: const Rect.fromLTWH(1, 1, 10, 10)
+        )
+      );*/
+    }
+    // send dakanji link and image
+    else if(selection == menuItems[6]){
+      await sendWordCard();
+    }
+    // quick add to word list
+    else if(selection == menuItems[7]) {
+      // TODO
+      //await quickAddToWordList(widget.entry!, context);
+    }
+    // add to word list
+    else if(selection == menuItems[8]) {
+      await addToWordList();
+    }
+    // quick send to anki
+    else if(selection == menuItems[9]) {
+      if(!GetIt.I<UserData>().ankiSetup){
+        await ankiNotSetupDialog(context).show();
+      }
+      else{
+        // TODO
+        //await quickSendToAnki(widget.entry!, context);
+      }
+    }
+    // send to anki
+    else if(selection == menuItems[10]){
+      if(!GetIt.I<UserData>().ankiSetup){
+        await ankiNotSetupDialog(context).show();
+      }
+      else{
+        // TODO
+        //await ankiDialog(context, widget.entry!)?.show();
+      }
+    }
+  
+    if(url != "") {
+      launchUrlString(
+        url,
+        mode: g_webViewSupported ? LaunchMode.inAppWebView : LaunchMode.platformDefault,
+      );
+    }
+  }
 
 }

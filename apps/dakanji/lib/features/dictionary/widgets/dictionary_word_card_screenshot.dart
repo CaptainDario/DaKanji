@@ -41,7 +41,6 @@ class _DictionaryWordCardScreenshotState extends State<DictionaryWordCardScreens
         child: SizedBox(
           width: 500,
           child: DictionaryWordCard(
-            widget.entry,
             showConjugationTable: widget.showConjugationTable,
             conjugationTableExpandable: false,
             showImageSearch: false,
