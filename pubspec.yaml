@@ -8,6 +8,6 @@ workspace:
 
   - flutter_packages/liquid_swipe_flutter
   - flutter_packages/flutter_util
-
+  - flutter_packages/css_inline_flutter
 
   - dart_packages/dakanji-dictionary/database_builder

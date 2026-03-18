@@ -137,10 +137,14 @@ dependencies:
   
   # mono repo packages
   liquid_swipe:
-  database_builder:
-  language_processing:
-  da_db:
   flutter_util:
+  css_inline_flutter:
+
+  da_db:
+  language_processing:
+  
+
+  database_builder:
 
   # Not all platforms supported
   in_app_review: 2.0.11                 # android, iOS, MacOS, windows (limited)
@@ -169,8 +173,6 @@ dependency_overrides:
   mecab_for_dart:
     path: /Users/darioklepoch/dev/flutter_packages/mecab_for_dart/
 
-  css_inline_flutter:
-    path: /Users/darioklepoch/dev/DaKanji/dakanji_db/packages/css_inline_flutter
   da_db:
     path: /Users/darioklepoch/dev/DaKanji/dakanji_db/packages/da_db
   da_db_shared:

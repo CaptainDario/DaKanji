@@ -4,7 +4,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:da_db_shared/da_db_shared.dart';
-import 'package:da_db_ui/widgets/term/structured_content/structured_content_to_html.dart';
+import 'package:da_kanji_mobile/features/dictionary/widgets/term/structured_content/structured_content_to_html.dart';
 import 'package:path/path.dart' as p;
 import 'package:test/test.dart';
 
