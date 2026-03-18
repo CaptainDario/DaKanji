@@ -4,6 +4,7 @@ import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:provider/provider.dart';
 
 class SearchProfileSelector extends StatelessWidget {
   const SearchProfileSelector({super.key});
@@ -18,46 +19,40 @@ class SearchProfileSelector extends StatelessWidget {
         if (!snapshot.hasData) return const SizedBox.shrink();
 
         final profiles = snapshot.data!;
+        final activeId = context.watch<SearchProfilesEntry>().id;
 
-        return FutureBuilder<SearchProfilesEntry?>(
-          future: dao.getActiveProfile(),
-          builder: (context, activeSnapshot) {
-            final activeId = activeSnapshot.data?.id;
-
-            return PopupMenuButton<int>(
-              icon: const Icon(Icons.person_search_outlined),
-              tooltip: LocaleKeys.SettingsScreenSearchProfiles_search_profiles_switch.tr(),
-              onSelected: (int newProfileId) {
-                if (newProfileId != activeId) {
-                  dao.switchActiveProfile(newProfileId);
-                }
-              },
-              itemBuilder: (BuildContext context) {
-                return profiles.map((profile) {
-                  final isSelected = profile.id == activeId;
-                  
-                  return PopupMenuItem<int>(
-                    value: profile.id,
-                    child: Row(
-                      children: [
-                        Icon(
-                          Icons.check,
-                          color: isSelected ? Colors.blue : Colors.transparent,
-                          size: 20,
-                        ),
-                        const SizedBox(width: 12),
-                        Text(
-                          profile.name,
-                          style: TextStyle(
-                            fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
-                          ),
-                        ),
-                      ],
+        return PopupMenuButton<int>(
+          icon: const Icon(Icons.person_search_outlined),
+          tooltip: LocaleKeys.SettingsScreenSearchProfiles_search_profiles_switch.tr(),
+          onSelected: (int newProfileId) {
+            if (newProfileId != activeId) {
+              dao.switchActiveProfile(newProfileId);
+            }
+          },
+          itemBuilder: (BuildContext context) {
+            return profiles.map((profile) {
+              final isSelected = profile.id == activeId;
+              
+              return PopupMenuItem<int>(
+                value: profile.id,
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.check,
+                      color: isSelected ? Colors.blue : Colors.transparent,
+                      size: 20,
                     ),
-                  );
-                }).toList();
-              },
-            );
+                    const SizedBox(width: 12),
+                    Text(
+                      profile.name,
+                      style: TextStyle(
+                        fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            }).toList();
           },
         );
       },

@@ -2,7 +2,6 @@ import 'package:da_db/database/da_db.dart';
 import 'package:da_db/database/search_profiles/search_profiles_entry.dart';
 import 'package:da_kanji_mobile/features/settings/widgets/search_profiles/settings//search_profile_settings_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
 
 
 class SearchProfileSettingsDialog extends StatefulWidget {
@@ -30,12 +29,7 @@ class _SearchProfileSettingsDialogState extends State<SearchProfileSettingsDialo
       ),
       padding: const EdgeInsets.symmetric(vertical: 20),
       child: SingleChildScrollView(
-        child: StreamBuilder<SearchProfilesEntry>(
-          stream: GetIt.I<DaDb>().searchProfilesDao.watchActiveProfile(),
-          builder: (context, builder) {
-            return SearchProfileSettingsWidget();
-          }
-        ),
+        child: SearchProfileSettingsWidget()
       )
     );
   }

@@ -1,5 +1,4 @@
 import 'package:da_db/data/search_result_sort_order.dart';
-import 'package:da_db/database/da_db.dart';
 import 'package:da_db/database/db_queries/dictionary_search/dictionary_match.dart';
 import 'package:da_db/database/db_queries/dictionary_search/dictionary_match_group.dart';
 import 'package:da_db/database/db_queries/dictionary_search/dictionary_search_result.dart';
@@ -9,7 +8,6 @@ import 'package:da_kanji_mobile/features/dictionary/widgets/term/term_entry_widg
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 
 class DictionarySearchResultWidget extends StatefulWidget {
@@ -30,13 +28,6 @@ class DictionarySearchResultWidget extends StatefulWidget {
 class _DictionarySearchResultWidgetState extends State<DictionarySearchResultWidget> {
   
   final Set<String> _collapsedSections = {};
-  late final Stream<SearchProfilesEntry> _profilesStream;
-
-  @override
-  void initState() {
-    super.initState();
-    _profilesStream = GetIt.I<DaDb>().searchProfilesDao.watchActiveProfile();
-  }
 
   bool _isExpanded(String key) => !_collapsedSections.contains(key);
 
@@ -52,24 +43,14 @@ class _DictionarySearchResultWidgetState extends State<DictionarySearchResultWid
   Widget build(BuildContext context) {
     if (widget.result.isEmpty) return _buildEmptyState();
 
-    return StreamBuilder<SearchProfilesEntry>(
-      stream: _profilesStream,
-      builder: (context, snapshot) {
-        if (!snapshot.hasData) return const Center(child: CircularProgressIndicator());
-        if (snapshot.hasError) return Center(child: Text("Error: ${snapshot.error}"));
-
-        return Provider.value(
-          value: snapshot.data!,
-          child: CustomScrollView(
-            slivers: [
-              _buildKanjiSection(snapshot.data!),
-              ..._buildDictionarySections(snapshot.data!),
-              const SliverToBoxAdapter(child: SizedBox(height: 20)),
-            ],
-          ),
-        );
-      }
+    return CustomScrollView(
+      slivers: [
+        _buildKanjiSection(context.watch<SearchProfilesEntry>()),
+        ..._buildDictionarySections(context.watch<SearchProfilesEntry>()),
+        const SliverToBoxAdapter(child: SizedBox(height: 20)),
+      ],
     );
+    
   }
 
   Widget _buildEmptyState() {

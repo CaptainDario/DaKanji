@@ -1,4 +1,6 @@
 // Flutter imports:
+import 'package:da_db/database/da_db.dart';
+import 'package:da_db/database/search_profiles/search_profiles_entry.dart';
 import 'package:da_kanji_mobile/core/supabase/model/supabase_cache_manager.dart';
 import 'package:da_kanji_mobile/core/user/time_tracking/time_tracking_dao.dart';
 import 'package:da_kanji_mobile/core/user/user_data_db.dart';
@@ -129,6 +131,10 @@ class _DaKanjiAppState extends State<DaKanjiApp> with
         ChangeNotifierProvider<Settings>.value(
           value: GetIt.I<Settings>(),
         ),
+        StreamProvider<SearchProfilesEntry>(
+          create: (_) => GetIt.I<DaDb>().searchProfilesDao.watchActiveProfile(),
+          initialData: SearchProfilesEntry()
+        )
       ],
       builder: (context, child) {
       
