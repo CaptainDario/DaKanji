@@ -2,6 +2,10 @@ import 'package:da_db/database/index/index_table_entry.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
+
 
 
 class DictionaryManagementDetailsTable extends StatelessWidget {
@@ -29,7 +33,13 @@ class DictionaryManagementDetailsTable extends StatelessWidget {
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Text(value),
+                  child: MarkdownBody(
+                    data: value,
+                    onTapLink: (text, href, title) async {
+                      if(await canLaunchUrlString(href!))
+                        launchUrlString(href, mode: LaunchMode.externalApplication);
+                    },
+                  ),
                 ),
               ]
             )
