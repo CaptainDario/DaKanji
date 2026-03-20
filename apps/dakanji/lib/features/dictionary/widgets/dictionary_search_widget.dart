@@ -13,7 +13,7 @@ import 'package:da_kanji_mobile/features/dictionary/widgets/searchbar/paste_clea
 import 'package:da_kanji_mobile/features/dictionary/widgets/searchbar/radical_button.dart';
 import './search_results/dictionary_search_result_widget.dart';
 import 'package:da_kanji_mobile/core/user/user_data_db.dart';
-import 'package:da_kanji_mobile/features/dictionary/model/dictionary_search_notifier.dart';
+import 'package:da_kanji_mobile/features/dictionary/model/dictionary_search_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -183,10 +183,10 @@ Widget build(BuildContext context) {
           ),
           
           // --- THE BADGE IS NOW ON THE LEFT SEARCH ICON ---
-          leading: activeFilters.isEmpty 
+          leading: context.watch<DictionarySearchState>().activeFilters.isEmpty 
             ? const Icon(Icons.search) 
             : Badge(
-                label: Text('${activeFilters.length}'),
+                label: Text('${context.watch<DictionarySearchState>().activeFilters.length}'),
                 child: const Icon(Icons.search),
               ),
 
@@ -225,7 +225,8 @@ Widget build(BuildContext context) {
           topLevelWidgets.add(
             StatefulBuilder(
               builder: (context, setInnerState) {
-                if (activeFilters.isEmpty) return const SizedBox.shrink();
+                if (context.watch<DictionarySearchState>().activeFilters.isEmpty)
+                  return const SizedBox.shrink();
                 
                 return Column(
                   mainAxisSize: MainAxisSize.min,
@@ -236,9 +237,11 @@ Widget build(BuildContext context) {
                       child: SingleChildScrollView(
                         scrollDirection: Axis.horizontal,
                         child: ActiveFiltersRow(
-                          activeFilters: activeFilters,
+                          activeFilters: context.watch<DictionarySearchState>().activeFilters.toList(),
                           onDeleted: (filter) {
-                            setState(() => activeFilters.remove(filter));
+                            setState(() => 
+                              context.read<DictionarySearchState>().activeFilters.remove(filter)
+                            );
                             setInnerState(() {});
                             updateSearchResults(controller.text.trim());
                           },
@@ -300,7 +303,7 @@ Widget build(BuildContext context) {
             else {
               // Normal Search
               await updateSearchResults(input.trim());
-              final results = context.read<DictionarySearchNotifier>().results;
+              final results = context.read<DictionarySearchState>().results;
 
               if (results != null) {
                 dynamicContent = DictionarySearchResultWidget(
@@ -357,7 +360,10 @@ Widget build(BuildContext context) {
     if (!currentWord.startsWith(prefix)) return null;
 
     final searchTerm = currentWord.substring(prefix.length);
-    final matches = dummyData.keys.where((key) => key.startsWith(searchTerm));
+    final matches = dummyData.keys
+      .where((key) => key.startsWith(searchTerm) && 
+        !context.watch<DictionarySearchState>().activeFilters.contains('$prefix$key')
+      );
 
     return matches.map((key) => FilterSuggestionTile(
       filterKey: key,
@@ -367,7 +373,7 @@ Widget build(BuildContext context) {
       controller: controller,
       onSelected: () {
         setState(() {
-          activeFilters.add('$prefix$key');
+          context.read<DictionarySearchState>().activeFilters.add('$prefix$key');
           updateSearchResults(controller.text.trim());
         });
       },
@@ -409,7 +415,7 @@ Widget build(BuildContext context) {
   /// callback that is executed when the user presses on a search result
   void onSearchResultPressed(DictionaryMatch match) async {
     // update search variables
-    context.read<DictionarySearchNotifier>().selectedResult = match;
+    context.read<DictionarySearchState>().selectedResult = match;
 
     // TODO store new search in search history
     //GetIt.I<UserDataDB>().searchHistoryDao.addEntry(entry);
@@ -425,7 +431,7 @@ Widget build(BuildContext context) {
   void onClipboardButtonPressed() async {
     if(searchInputController.text != ""){
       searchInputController.text = "";
-      context.read<DictionarySearchNotifier>().currentSearch = "";
+      context.read<DictionarySearchState>().currentSearch = "";
       searchTextFieldFocusNode.requestFocus();
     }
     else{
@@ -445,8 +451,8 @@ Widget build(BuildContext context) {
   Future<void> updateSearchResults(String query) async {
     
     // set first to empty to avoid weird left over states
-    context.read<DictionarySearchNotifier>().results = DictionarySearchResult.empty();
-    context.read<DictionarySearchNotifier>().results =
+    context.read<DictionarySearchState>().results = DictionarySearchResult.empty();
+    context.read<DictionarySearchState>().results =
       await GetIt.I<DaDb>().dictionarySearchDao.dictionarySearch(
         DictionarySearchParams(
           searchInput: query, options: ProcessorOptions()
