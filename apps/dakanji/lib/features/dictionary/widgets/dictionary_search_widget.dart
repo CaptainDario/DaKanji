@@ -6,7 +6,11 @@ import 'package:da_db/database/da_db.dart';
 import 'package:da_db/database/db_queries/dictionary_search/dictionary_match.dart';
 import 'package:da_db/database/db_queries/dictionary_search/dictionary_search_params.dart';
 import 'package:da_db/database/db_queries/dictionary_search/dictionary_search_result.dart';
-import 'package:da_kanji_mobile/features/dictionary/controller/dictionary_search.dart';
+import 'package:da_kanji_mobile/features/dictionary/widgets/searchbar/active_filters_row.dart';
+import 'package:da_kanji_mobile/features/dictionary/widgets/searchbar/draw_button.dart';
+import 'package:da_kanji_mobile/features/dictionary/widgets/searchbar/filter_suggestion_tile.dart';
+import 'package:da_kanji_mobile/features/dictionary/widgets/searchbar/paste_clear_button.dart';
+import 'package:da_kanji_mobile/features/dictionary/widgets/searchbar/radical_button.dart';
 import './search_results/dictionary_search_result_widget.dart';
 import 'package:da_kanji_mobile/core/user/user_data_db.dart';
 import 'package:da_kanji_mobile/features/dictionary/model/dictionary_search_notifier.dart';
@@ -21,16 +25,9 @@ import 'package:provider/provider.dart';
 
 // Project imports:
 import 'package:language_processing/language_processing.dart';
-import 'package:da_kanji_mobile/features/dictionary/model/dict_search_result.dart';
-import 'package:da_kanji_mobile/features/dictionary/model/filter_options.dart';
 import 'package:da_kanji_mobile/features/dictionary/controller/isars.dart';
-import 'package:da_kanji_mobile/core/routing/navigation_arguments.dart';
-import 'package:da_kanji_mobile/core/routing/screens.dart';
-import 'package:da_kanji_mobile/features/settings/model/settings.dart';
 import 'package:da_kanji_mobile/features/tutorial/model/tutorials.dart';
-import 'package:da_kanji_mobile/features/dictionary/widgets/filter_popup_body.dart';
 import 'package:da_kanji_mobile/features/dictionary/widgets/radical_popup_body.dart';
-import 'package:da_kanji_mobile/features/dictionary/widgets/search_result_list.dart';
 import 'package:da_kanji_mobile/core/widgets/multi_focus.dart';
 
 /// The search widget for the dictionary.
@@ -48,9 +45,6 @@ class DictionarySearchWidget extends StatefulWidget {
   final bool canCollapse;
   /// should the button to navigate to the drawing screen be included
   final bool includeDrawButton;
-  /// When navigating back (OS navigation and navigator.pop) immediately closes
-  /// this widget and does not firstly collapse searchbar 
-  final bool backNavigationImmediatelyPopsWidget;
 
   const DictionarySearchWidget(
     {
@@ -59,7 +53,6 @@ class DictionarySearchWidget extends StatefulWidget {
       this.isExpanded = false,
       this.canCollapse = true,
       this.includeDrawButton = true,
-      required this.backNavigationImmediatelyPopsWidget,
       super.key
     }
   );
@@ -72,17 +65,11 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
   with TickerProviderStateMixin{
 
   /// the TextEditingController of the search field
-  TextEditingController searchInputController = TextEditingController();
+  SearchController searchInputController = SearchController();
   /// Used to check if `widget.initialQuery` changed
   String initialSearch = "";
   /// Is the search bar initially expanded
   bool initiallyExpanded = false;
-  /// Animation for closing and opening the search bar
-  late Animation<double> searchBarAnimation;
-  /// AnimationController for closing and opening the search bar
-  late AnimationController searchBarAnimationController;
-  /// The global key of the search input field (used to measure size)
-  GlobalKey searchTextInputKey = GlobalKey();
   /// The height of the input searchfield
   double searchBarInputHeight = 0;
   /// The FoucsNode of the search input field
@@ -91,12 +78,8 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
   Timer? reopenPopupTimer;
   /// is the radical popup open
   bool radicalPopupOpen = false;
-  /// is the filter popup open
-  bool filterPopupOpen = false;
   /// should the radical popup be openend when `reopenPopupTimer` finishes
   bool reshowRadicalPopup = false;
-  /// should the filter popup be openend when `reopenPopupTimer` finishes
-  bool reshowFilterPopup = false;
 
   
   @override
@@ -104,18 +87,6 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
     super.initState();
 
     initiallyExpanded = widget.isExpanded;
-
-    searchBarAnimationController = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 400),
-    );
-    searchBarAnimation = Tween(
-      begin: 0.0,
-      end: 1.0,
-    ).animate(CurvedAnimation(
-      parent: searchBarAnimationController,
-      curve: Curves.easeIn
-    ));
 
     init();
     
@@ -126,19 +97,17 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
 
     init();
 
-    if(radicalPopupOpen || filterPopupOpen){
+    if(radicalPopupOpen){
 
       reshowRadicalPopup = radicalPopupOpen;
-      reshowFilterPopup  = filterPopupOpen;
 
       Navigator.of(context).pop();
       reopenPopupTimer?.cancel();
       reopenPopupTimer = Timer(const Duration(seconds: 1), () {
         
         if(reshowRadicalPopup) showRadicalPopup();
-        if(reshowFilterPopup) showFilterPopup();
 
-        reshowFilterPopup = false; reshowRadicalPopup = false;
+        reshowRadicalPopup = false;
       });
     }
 
@@ -149,14 +118,10 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
   void init(){
 
     if(initiallyExpanded){
-      searchBarAnimationController.value = 1.0;
       initiallyExpanded = false;
     }
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      RenderBox r = searchTextInputKey.currentContext!.findRenderObject()! as RenderBox;
-      searchBarInputHeight = r.size.height;
-
       // check if there is an initial query or if it was update
       if(widget.initialSearch != initialSearch){
         searchInputController.text = widget.initialSearch;
@@ -171,316 +136,242 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
 
   @override
   void dispose() {
-    searchBarAnimationController.dispose();
     super.dispose();
   }
 
-  @override
-  Widget build(BuildContext context) {
 
-    return MultiFocus(
-      focusNodes: [
-        GetIt.I<Tutorials>().dictionaryScreenTutorial.searchInputStep,
-        GetIt.I<Tutorials>().dictionaryScreenTutorial.searchInputWildcardsStep,
+@override
+Widget build(BuildContext context) {
+  return MultiFocus(
+    focusNodes: [
+      GetIt.I<Tutorials>().dictionaryScreenTutorial.searchInputStep,
+      GetIt.I<Tutorials>().dictionaryScreenTutorial.searchInputWildcardsStep,
+    ],
+    child: SearchAnchor(
+      searchController: searchInputController,
+      dividerColor: Colors.transparent,
+      viewTrailing: [
+        PasteClearButton(
+          controller: searchInputController,
+          onPressed: onClipboardButtonPressed,
+        ),
+        if(widget.includeDrawButton)
+          DrawButton(controller: searchInputController),
+        RadicalButton(
+          onPressed: showRadicalPopup,
+        ),
       ],
-      child: PopScope(
-        canPop: (!searchBarAnimationController.isCompleted &&
-                context.read<DictSearch>().selectedResult == null)
-                || widget.backNavigationImmediatelyPopsWidget,
-        onPopInvokedWithResult: (didPop, result) {
 
-          if(searchBarAnimationController.isCompleted) {
-            collapseSearchBar();
-          }
-          else if (context.read<DictSearch>().selectedResult != null){
-            // TODO 
-          }
-        },
-        child: ClipRRect(
-          borderRadius: const BorderRadius.all(Radius.circular(8)),
-          child: Container(
-            decoration: BoxDecoration(
-              border: Border.all(
-                color: Theme.of(context).brightness == Brightness.dark 
-                  ? Colors.grey.shade800
-                  : Colors.grey.shade300
-              ),
-              borderRadius: const BorderRadius.all(Radius.circular(8)),
-              color: Theme.of(context).brightness == Brightness.dark
-                ? Theme.of(context).scaffoldBackgroundColor
-                : Colors.white,
-            ),
-            child: Column(
-              children: [
-                // the search bar
-                Container(
-                  decoration: BoxDecoration(
-                    border: BorderDirectional(
-                      bottom: BorderSide(
-                        color: searchBarAnimationController.isCompleted
-                          ? Theme.of(context).brightness == Brightness.dark 
-                            ? Colors.grey.shade800
-                            : Colors.grey.shade300 
-                          : Colors.transparent,
-                        style: BorderStyle.solid
-                      )
-                    )
-                  ),
-                  child: Row(
-                    key: searchTextInputKey,
-                    children: [
-                      // magnifying glass / arrow back icon button
-                      if(widget.canCollapse)
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(4.0, 4.0, 4.0, 4.0),
-                          child: AnimatedBuilder(
-                            animation: searchBarAnimationController,
-                            builder: (context, animation) {
-                              return IconButton(
-                                splashRadius: 20,
-                                icon: AnimatedSwitcher(
-                                  duration: const Duration(milliseconds: 100),
-                                  child: Icon(searchBarAnimationController.isForwardOrCompleted
-                                    ? Icons.arrow_back
-                                    : Icons.search,
-                                    key: Key(searchBarAnimationController.isForwardOrCompleted.toString()),),
-                                ),
-                                onPressed: () {
-                                  if(!widget.canCollapse) return;
-                                                  
-                                  //close onscreen keyboard
-                                  FocusManager.instance.primaryFocus?.unfocus();
-                                            
-                                  if(searchBarAnimationController.isDismissed) {
-                                    openSearchBar();
-                                  }
-                                  else{
-                                    collapseSearchBar();
-                                  }
-                                },
-                              );
-                            }
-                          ),
-                        ),
-                      // text input
-                      Expanded(
-                        child: TextField(
-                          focusNode: searchTextFieldFocusNode,
-                          decoration: const InputDecoration(
-                            border: InputBorder.none
-                          ),
-                          stylusHandwritingEnabled: true,
-                          controller: searchInputController,
-                          maxLines: 1,
-                          style: const TextStyle(
-                            fontSize: 16
-                          ),
-                          onTap: () {
-                            searchTextFieldFocusNode.requestFocus();
-                            openSearchBar();
-                          },
-                          onChanged: (text) async {
-
-                            text = text.trim();
-                            
-                            await updateSearchResults(text);
-                            
-                            setState(() {});
-                          },
-                        ),
-                      ),
-                      // Copy / clear button
-                      Focus(
-                        focusNode: GetIt.I<Tutorials>().dictionaryScreenTutorial.searchInputClearStep,
-                        child: InkWell(
-                          borderRadius: BorderRadius.circular(1000000),
-                          onTap: onClipboardButtonPressed,
-                          onLongPress: onClipboardButtonPressed,
-                          child: SizedBox(
-                            width: 30,
-                            height: 30,
-                            child: Icon(
-                              searchInputController.text == ""
-                                ? Icons.paste
-                                : Icons.clear,
-                              size: 20,
-                            ),
-                          ),
-                        ),
-                      ),
-                      // drawing screen button
-                      if(widget.includeDrawButton)
-                        Focus(
-                          focusNode: GetIt.I<Tutorials>().dictionaryScreenTutorial.searchInputDrawStep,
-                          child: InkWell(
-                            borderRadius: BorderRadius.circular(1000000),
-                            onTap: () {
-                              GetIt.I<Settings>().drawing.selectedDictionary =
-                                GetIt.I<Settings>().drawing.inbuiltDictId;
-                              Navigator.pushNamedAndRemoveUntil(
-                                context, 
-                                "/${Screens.drawing.name}",
-                                (route) => true,
-                                arguments: NavigationArguments(
-                                  false,
-                                  drawSearchPrefix: searchInputController.text.isNotEmpty
-                                    ? searchInputController.text.substring(
-                                      0,
-                                      searchInputController.selection.baseOffset == -1
-                                        ? searchInputController.text.length
-                                        : searchInputController.selection.baseOffset
-                                    )
-                                    : "",
-                                  drawSearchPostfix: searchInputController.text.isNotEmpty
-                                    ? searchInputController.text.substring(
-                                      searchInputController.selection.baseOffset == -1
-                                        ? searchInputController.text.length
-                                        : searchInputController.selection.baseOffset
-                                    )
-                                    : ""
-                                )
-                              );
-                            },
-                            child: const SizedBox(
-                              width: 30,
-                              height: 30,
-                              child: Icon(Icons.brush)
-                            ),
-                          ),
-                        ),
-                      // filter button 
-                      Focus(
-                        focusNode: GetIt.I<Tutorials>().dictionaryScreenTutorial.searchFilterStep,
-                        child: InkWell(
-                          borderRadius: BorderRadius.circular(1000000),
-                          onTap: showFilterPopup,
-                          child: const SizedBox(
-                            height: 30,
-                            width: 30,
-                            child: Icon(
-                              Icons.filter_alt_outlined,
-                              size: 20,
-                            ),
-                          ),
-                        ),
-                      ),
-                      // radical button 
-                      Focus(
-                        focusNode: GetIt.I<Tutorials>().dictionaryScreenTutorial.searchRadicalStep,
-                        child: InkWell(
-                        borderRadius: BorderRadius.circular(1000000),
-                          onTap: showRadicalPopup,
-                          child: Container(
-                            height: 30,
-                            width: 30,
-                            decoration: const BoxDecoration(
-                              shape: BoxShape.circle,
-                            ),
-                            child: Center(
-                              child: Transform.translate(
-                                offset: const Offset(0, -2),
-                                child: const Text(
-                                  "部",
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                  ),
-                                  textScaler: TextScaler.noScaling,
-                                ),
-                              ),
-                            ),
-                          )
-                        ),
-                      ),
-                      const SizedBox(width: 4,)
-                    ],
-                  ),
-                ),
-                if(searchBarInputHeight != 0)
-                  AnimatedBuilder(
-                    animation: searchBarAnimationController,
-                    builder: (context, child) {
-                      return SizedBox(
-                        height: (widget.expandedHeight - searchBarInputHeight)
-                          * searchBarAnimationController.value,
-                        child: child,
-                      );
-                    },
-                    child: Stack(
-                      children: [
-                        context.watch<DictionarySearchNotifier>().results != null
-                          // search results if the user entered text
-                          ? DictionarySearchResultWidget(
-                            result: context.watch<DictionarySearchNotifier>().results!,
-                            onTap: onSearchResultPressed,
-                          )
-                          // TODO otherwise the search history
-                          : StreamBuilder<List<SearchHistoryTableData>>(
-                            stream: GetIt.I<UserDataDB>().searchHistoryDao.watchAllSearchHistoryIDs(),
-                            builder: (context, snapshot) {
-                              
-                              if(snapshot.data == null) return const SizedBox();
-              
-                              List<JMdict> searchHistory = [];
-                              List<int> sqlIDs = [];
-                              if(snapshot.hasData){
-                                final ids = snapshot.data!.map((e) => e.dictEntryID)
-                                  .toSet().toList();
-                                searchHistory = GetIt.I<Isars>().dictionary.jmdict
-                                  .getAllSync(ids)
-                                  .nonNulls.toList();
-              
-                                sqlIDs = snapshot.data!.map((e) => e.id).toList();
-                              }
-              
-                              return SearchResultList(
-                                searchResults: [searchHistory],
-                                headers: const [null],
-                                showWordFrequency: GetIt.I<Settings>().dictionary.showWordFruequency,
-                                alwaysAnimateIn: false,
-                                init: (controller) {},
-                                //onSearchResultPressed: onSearchResultPressed,
-                                onDismissed: (direction, entry, idx) => 
-                                  GetIt.I<UserDataDB>().searchHistoryDao.deleteEntry(
-                                    sqlIDs[idx]
-                                  ),
-                              );
-                            }
-                          ),
-                      ],
-                    )
-                  )
-              ],
+      builder: (BuildContext context, SearchController controller) {
+        return SearchBar(
+          controller: controller,
+          elevation: const WidgetStatePropertyAll(0), 
+          backgroundColor: WidgetStatePropertyAll(
+            Theme.of(context).brightness == Brightness.dark
+              ? Theme.of(context).scaffoldBackgroundColor
+              : Colors.white,
+          ),
+          side: WidgetStatePropertyAll(
+            BorderSide(
+              color: Theme.of(context).brightness == Brightness.dark 
+                ? Colors.grey.shade800
+                : Colors.grey.shade300
             )
           ),
-        ),
-      ),
-    );
-  }
+          padding: const WidgetStatePropertyAll(
+            EdgeInsets.symmetric(horizontal: 12.0)
+          ),
+          
+          // --- THE BADGE IS NOW ON THE LEFT SEARCH ICON ---
+          leading: activeFilters.isEmpty 
+            ? const Icon(Icons.search) 
+            : Badge(
+                label: Text('${activeFilters.length}'),
+                child: const Icon(Icons.search),
+              ),
 
-  /// Opens the search bar, if it is not open
-  TickerFuture openSearchBar(){
+          onTap: () {
+            controller.openView();
+          },
+          onChanged: (text) async {
+            text = text.trim();
+            if (text.isNotEmpty && !controller.isOpen) {
+              controller.openView();
+            }
+            await updateSearchResults(text);
+          },
+          
+          // Trailing area is clean again
+          trailing: [
+            PasteClearButton(
+              controller: controller,
+              onPressed: onClipboardButtonPressed,
+            ),
+            if(widget.includeDrawButton)
+              DrawButton(controller: controller),
+            RadicalButton(
+              onPressed: showRadicalPopup,
+            ),
+          ],
+        );
+      },
+      suggestionsBuilder: (BuildContext context, SearchController controller) async {
+          final String input = controller.text;
+          
+          // 1. We keep our top-level list to hold the static filters + the animated body
+          List<Widget> topLevelWidgets = [];
 
-    if(searchBarAnimationController.isCompleted) TickerFuture.complete();
+          // --- PERSISTENT FILTERS (No animation, stays solid at the top) ---
+          topLevelWidgets.add(
+            StatefulBuilder(
+              builder: (context, setInnerState) {
+                if (activeFilters.isEmpty) return const SizedBox.shrink();
+                
+                return Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: ActiveFiltersRow(
+                          activeFilters: activeFilters,
+                          onDeleted: (filter) {
+                            setState(() => activeFilters.remove(filter));
+                            setInnerState(() {});
+                            updateSearchResults(controller.text.trim());
+                          },
+                        ),
+                      ),
+                    ),
+                    const Divider(height: 1),
+                  ],
+                );
+              }
+            )
+          );
+
+          // 2. Determine what the dynamic content below the filters should be
+          // CRITICAL: Every distinct view MUST have a unique ValueKey so the AnimatedSwitcher 
+          // knows when to trigger the animation!
+          Widget dynamicContent;
+
+          if (input.trim().isEmpty) {
+            dynamicContent = Column(
+              key: const ValueKey('history'),
+              mainAxisSize: MainAxisSize.min,
+              children: const [ListTile(title: Text("History placeholder"))],
+            );
+          } else {
+            final segments = input.split(' ');
+            final currentWord = segments.last.toLowerCase();
+
+            final tagSuggestions = _getFilterSuggestions(
+              currentWord: currentWord,
+              prefix: '#',
+              dummyData: {'n5': 'JLPT N5', 'common': 'Common Word', 'verb': 'Verb class'},
+              icon: Icons.tag,
+              controller: controller,
+            );
+
+            final posSuggestions = _getFilterSuggestions(
+              currentWord: currentWord,
+              prefix: r'$',
+              dummyData: {'noun': 'Noun', 'adj': 'Adjective', 'adv': 'Adverb'},
+              icon: Icons.category,
+              controller: controller,
+            );
+
+            if (tagSuggestions != null) {
+              dynamicContent = Column(
+                key: const ValueKey('tags'),
+                mainAxisSize: MainAxisSize.min,
+                children: tagSuggestions.toList(),
+              );
+            }
+            else if (posSuggestions != null) {
+              dynamicContent = Column(
+                key: const ValueKey('pos'),
+                mainAxisSize: MainAxisSize.min,
+                children: posSuggestions.toList(),
+              );
+            }
+            else {
+              // Normal Search
+              await updateSearchResults(input.trim());
+              final results = context.read<DictionarySearchNotifier>().results;
+
+              if (results != null) {
+                dynamicContent = DictionarySearchResultWidget(
+                  key: const ValueKey('results'), // Unique key for results
+                  result: results,
+                  onTap: onSearchResultPressed,
+                );
+              }
+              else {
+                dynamicContent = const SizedBox.shrink(key: ValueKey('empty'));
+              }
+            }
+          }
+
+          // --- 3. THE MAGIC: Wrap the dynamic content in an AnimatedSwitcher ---
+          topLevelWidgets.add(
+            AnimatedSwitcher(
+              duration: const Duration(milliseconds: 250),
+              switchInCurve: Curves.easeOutCubic,
+              switchOutCurve: Curves.easeInCubic,
+              transitionBuilder: (Widget child, Animation<double> animation) {
+                // Combining Fade and Size makes it look like a smooth dropdown expansion
+                return FadeTransition(
+                  opacity: animation,
+                  child: SizeTransition(
+                    sizeFactor: animation,
+                    axisAlignment: -1.0, // Anchors the animation to the top
+                    child: child,
+                  ),
+                );
+              },
+              child: dynamicContent,
+            )
+          );
+
+          return topLevelWidgets;
+        },
     
-    final t = searchBarAnimationController.forward();
-
-    t.then((value) => setState(() {}),);
-
-    return t;
-
-  }
-
-  /// Collapses the search bar if it is not collapsed
-  Future collapseSearchBar() async {
-
-    if(searchBarAnimationController.isDismissed) return TickerFuture.complete();
     
-    final t = searchBarAnimationController.reverse();
+    ),
+  );
+}
 
-    t.then((value) => setState(() {}),);
 
-    return t;
 
+
+  Iterable<Widget>? _getFilterSuggestions({
+    required String currentWord,
+    required String prefix,
+    required Map<String, String> dummyData,
+    required IconData icon,
+    required SearchController controller,
+  }) {
+    if (!currentWord.startsWith(prefix)) return null;
+
+    final searchTerm = currentWord.substring(prefix.length);
+    final matches = dummyData.keys.where((key) => key.startsWith(searchTerm));
+
+    return matches.map((key) => FilterSuggestionTile(
+      filterKey: key,
+      prefix: prefix,
+      description: dummyData[key]!,
+      icon: icon,
+      controller: controller,
+      onSelected: () {
+        setState(() {
+          activeFilters.add('$prefix$key');
+          updateSearchResults(controller.text.trim());
+        });
+      },
+    ));
   }
 
   /// Deletes an entry from the search history when the user swipes (deletes)
@@ -489,27 +380,6 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
 
     GetIt.I<UserDataDB>().searchHistoryDao.deleteEntry(entry.id);
 
-  }
-
-  /// opens the filter popup and applies the selected filters if necessary
-  Future showFilterPopup() async {
-
-    filterPopupOpen = true;
-
-    await AwesomeDialog(
-      context: context,
-      dialogType: DialogType.noHeader,
-      bodyHeaderDistance: 0,
-      alignment: Alignment.bottomCenter,
-      onDismissCallback: (dismissType) async {
-        await updateSearchResults(searchInputController.text);
-        filterPopupOpen = false;
-      },
-      body: FilterPopupBody(
-        height: widget.expandedHeight - searchBarInputHeight*1.1,
-        searchController: searchInputController,
-      )
-    ).show();
   }
 
   /// opens the radical popup and applies the selected filters if necessary
@@ -545,7 +415,7 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
     //GetIt.I<UserDataDB>().searchHistoryDao.addEntry(entry);
 
     // collapse the search bar
-    if(widget.canCollapse) collapseSearchBar();
+    if(widget.canCollapse) searchInputController.closeView(null);
 
     // close the keyboard
     FocusManager.instance.primaryFocus?.unfocus();
@@ -565,7 +435,8 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
       await updateSearchResults(data);
     }
 
-    openSearchBar();
+    // TODO open search bar
+    //openSearchBar();
     setState(() { });
   }
 
@@ -581,30 +452,6 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
           searchInput: query, options: ProcessorOptions()
         )
       );
-
-  }
-
-  /// Gets all filters that are in `query` and returns them
-  List<String> getFilters(String query){
-
-    List<String> separated = query.split(" ");
-    List<String> filters = separated
-      .where((e) => e.startsWith("#"))
-      .map((e) => jmDictAllFilters[e.replaceFirst("#", "")].toString())
-      .toList();
-
-    return filters;
-
-  }
-
-  /// Removes all filters in `query` and returns the query without them
-  String getQueryWithoutFilters(String query){
-
-    List<String> separated = query.split(" ");
-    String queryWithoutFilters = separated
-      .where((e) => !e.startsWith("#")).join(" ");
-
-    return queryWithoutFilters;
 
   }
 
