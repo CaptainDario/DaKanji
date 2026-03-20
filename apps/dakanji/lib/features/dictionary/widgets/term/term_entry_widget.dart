@@ -39,6 +39,10 @@ class TermEntryWidget extends StatelessWidget {
   /// Callback that is called when this widget is tapped.
   final Function(DictionaryMatch match)? onTap;
 
+  /// Callback that is called when a text is selected in the definition.
+  /// Returns the selected text.
+  final Function(String text)? onSmartTextSelected;
+
   /// Callback that is called when a URL is tapped.
   /// Should return true if the URL was handled.
   final FutureOr<bool> Function(String url)? onUrlTap;
@@ -54,6 +58,7 @@ class TermEntryWidget extends StatelessWidget {
       this.compactMode = false,
       this.includeCard = true,
       this.onTap,
+      this.onSmartTextSelected,
       this.onUrlTap,
       super.key
     }

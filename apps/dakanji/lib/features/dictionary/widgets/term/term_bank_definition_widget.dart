@@ -6,6 +6,7 @@ import 'package:da_kanji_mobile/features/dictionary/widgets/term/structured_cont
 import 'package:da_kanji_mobile/features/dictionary/widgets/term/structured_content/structured_content_css.dart';
 import 'package:da_kanji_mobile/features/dictionary/widgets/term/structured_content/structured_content_to_html.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_util/widgets/conditional_parent_widget.dart';
 import 'package:flutter_util/widgets/smart_html_selection.dart';
 import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
 import 'package:get_it/get_it.dart';
@@ -23,6 +24,10 @@ class TermBankDefinitionWidget extends StatefulWidget {
   /// Whether to render in compact mode (term bank entries in one line)
   final bool compactMode;
 
+  /// Callback that is called when a text is selected in the definition.
+  /// Returns the selected text.
+  final Function(String text)? onSmartTextSelected;
+
   /// Callback that is called when a URL is tapped.
   /// Should return true if the URL was handled.
   final FutureOr<bool> Function(String url)? onTapUrl;
@@ -32,6 +37,7 @@ class TermBankDefinitionWidget extends StatefulWidget {
     required this.definitions,
     required this.indexId,
     this.compactMode = false,
+    this.onSmartTextSelected,
     this.onTapUrl,
   });
 
@@ -75,11 +81,17 @@ class _TermBankDefinitionWidgetState extends State<TermBankDefinitionWidget> {
         } 
         
 
-        return SmartHtmlSelection(
-          // TOOD: correct selection
-          onTextSelected: (text) => print(text),
+        return ConditionalParentWidget(
+          condition: widget.onSmartTextSelected != null,
+          conditionalBuilder: (child) {
+            return SmartHtmlSelection(
+              onTextSelected: widget.onSmartTextSelected,
+              child: child,
+            );
+          },
           child: HtmlWidget(
             asyncSnapshot.data!,
+            buildAsync: false,
             textStyle: const TextStyle(
               overflow: TextOverflow.ellipsis,
             ),

@@ -18,6 +18,10 @@ class TermBankDefinitionsWidget extends StatefulWidget {
   /// Whether to render in compact mode (term bank entries in one line)
   final bool compactMode;
 
+  /// Callback that is called when a text is selected in the definition.
+  /// Returns the selected text.
+  final Function(String text)? onSmartTextSelected;
+
   /// Callback that is called when a URL is tapped.
   /// Should return true if the URL was handled.
   final FutureOr<bool> Function(String url)? onTapUrl;
@@ -27,6 +31,7 @@ class TermBankDefinitionsWidget extends StatefulWidget {
     {
       this.definitionsMaxHeight = 0,
       this.compactMode = false,
+      this.onSmartTextSelected,
       this.onTapUrl,
       super.key
     }
