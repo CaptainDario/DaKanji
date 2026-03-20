@@ -4,7 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:da_db/database/db_queries/dictionary_search/dictionary_search_result.dart';
 
 
-class DictionarySearchNotifier with ChangeNotifier {
+class DictionarySearchState with ChangeNotifier {
+
+  Set<String> _activeFilters = {};
+  Set<String> get activeFilters => _activeFilters;
+  set activeFilters(Set<String> filters){
+    _activeFilters = filters;
+    notifyListeners();
+  }
 
   String _currentSearch = "";
   set currentSearch(String newSearch){
@@ -19,7 +26,6 @@ class DictionarySearchNotifier with ChangeNotifier {
     notifyListeners();
   }
   DictionarySearchResult? get results => _results;
-
 
   DictionaryMatch? _selectedResult;
   set selectedResult(DictionaryMatch? newSelectedResult){

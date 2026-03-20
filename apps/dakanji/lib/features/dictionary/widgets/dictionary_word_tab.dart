@@ -3,7 +3,7 @@ import 'dart:io';
 
 // Flutter imports:
 import 'package:da_kanji_mobile/core/user/user_data_db.dart';
-import 'package:da_kanji_mobile/features/dictionary/model/dictionary_search_notifier.dart';
+import 'package:da_kanji_mobile/features/dictionary/model/dictionary_search_state.dart';
 import 'package:da_kanji_mobile/features/dictionary/widgets/dictionary_word_card.dart';
 import 'package:da_kanji_mobile/features/dictionary/widgets/term/term_entry_widget.dart';
 import 'package:flutter/foundation.dart';
@@ -111,7 +111,7 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
   /// parses and initializes all data elements of this widget
   void initData() {
 
-    final match = context.read<DictionarySearchNotifier>().selectedResult;
+    final match = context.read<DictionarySearchState>().selectedResult;
     if(match != null){
       readingOrKanji = match.entries.first.term.isEmpty
         ? match.entries.first.reading
@@ -137,14 +137,14 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
   @override
   Widget build(BuildContext context) {
 
-    if(context.watch<DictionarySearchNotifier>().selectedResult == null) return Container();
+    if(context.watch<DictionarySearchState>().selectedResult == null) return Container();
     
 
     return Align(
       alignment: Alignment.topCenter,
       child: SingleChildScrollView(
         key: Key(
-          context.watch<DictionarySearchNotifier>().selectedResult!.toString()
+          context.watch<DictionarySearchState>().selectedResult!.toString()
         ),
         child: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -222,7 +222,7 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
   /// Takes a screenshot of the current word card and opens the share dialog with it
   Future<void> sendWordCard () async {
 
-    final result = context.read<DictionarySearchNotifier>().selectedResult!;
+    final result = context.read<DictionarySearchState>().selectedResult!;
 
     File f = await dictionaryWordCardToImage(
       context,

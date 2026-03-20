@@ -3,7 +3,7 @@ import 'dart:math';
 
 // Flutter imports:
 import 'package:da_kanji_mobile/core/widgets/conditional_parent_widget.dart';
-import 'package:da_kanji_mobile/features/dictionary/model/dictionary_search_notifier.dart';
+import 'package:da_kanji_mobile/features/dictionary/model/dictionary_search_state.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
@@ -102,8 +102,8 @@ class _DictionaryState extends State<Dictionary> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     
-    return ChangeNotifierProvider<DictionarySearchNotifier>(
-      create: (context) => DictionarySearchNotifier(),
+    return ChangeNotifierProvider<DictionarySearchState>(
+      create: (context) => DictionarySearchState(),
       builder: (context, child) {
         return ChangeNotifierProvider<DictSearch>.value(
           value: search,
@@ -146,7 +146,7 @@ class _DictionaryState extends State<Dictionary> with TickerProviderStateMixin {
                       conditionalBuilder: (child) {
                         return FloatingWordStack(
                           levels: GetIt.I<Settings>().dictionary.selectedFallingWordsLevels,
-                          hide: context.watch<DictionarySearchNotifier>().selectedResult != null,
+                          hide: context.watch<DictionarySearchState>().selectedResult != null,
                           onTap: (FloatingWord entry) {
                             search.selectedResult =
                               GetIt.I<Isars>().dictionary.jmdict.getSync(entry.entry.id);

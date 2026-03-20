@@ -1,5 +1,5 @@
 // Flutter imports:
-import 'package:da_kanji_mobile/features/dictionary/model/dictionary_search_notifier.dart';
+import 'package:da_kanji_mobile/features/dictionary/model/dictionary_search_state.dart';
 import 'package:da_kanji_mobile/features/dictionary/widgets/term/term_entry_widget.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
@@ -76,7 +76,7 @@ class _DictionaryWordCardState extends State<DictionaryWordCard> {
   /// parses and initializes all data elements of this widget
   void initData() {
 
-    final match = context.read<DictionarySearchNotifier>().selectedResult;
+    final match = context.read<DictionarySearchState>().selectedResult;
     if(match != null){
       readingOrKanji = match.entries.first.term.isEmpty
         ? match.entries.first.reading
@@ -104,7 +104,7 @@ class _DictionaryWordCardState extends State<DictionaryWordCard> {
           children: [
             
             TermEntryWidget(
-              context.watch<DictionarySearchNotifier>().selectedResult!,
+              context.watch<DictionarySearchState>().selectedResult!,
               includeCard: false,
             ),
               

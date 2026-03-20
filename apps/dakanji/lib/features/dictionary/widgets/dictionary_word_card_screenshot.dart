@@ -1,6 +1,6 @@
 // Flutter imports:
 import 'package:da_db/database/db_queries/dictionary_search/dictionary_match.dart';
-import 'package:da_kanji_mobile/features/dictionary/model/dictionary_search_notifier.dart';
+import 'package:da_kanji_mobile/features/dictionary/model/dictionary_search_state.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:flutter/material.dart';
 
@@ -29,8 +29,8 @@ class DictionaryWordCardScreenshot extends StatelessWidget {
         type: MaterialType.transparency, // Uses the TermEntryWidget's background
         child: Theme(
           data: theme, // Forces your specific screenshot theme
-          child: Provider<DictionarySearchNotifier>(
-            create: (_) => DictionarySearchNotifier()..selectedResult = match,
+          child: Provider<DictionarySearchState>(
+            create: (_) => DictionarySearchState()..selectedResult = match,
             child: DictionaryWordCard(
               showConjugationTable: showConjugationTable,
               conjugationTableExpandable: false,
