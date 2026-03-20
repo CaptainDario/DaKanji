@@ -1,49 +1,41 @@
 // Flutter imports:
+import 'package:da_db/database/db_queries/dictionary_search/dictionary_match.dart';
+import 'package:da_kanji_mobile/features/dictionary/model/dictionary_search_notifier.dart';
+import 'package:da_kanji_mobile/globals.dart';
 import 'package:flutter/material.dart';
-
-// Package imports:
-import 'package:database_builder/database_builder.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/features/dictionary/widgets/dictionary_word_card.dart';
 
-/// A [DictionaryWordCard] that can be used to take a off-screen screenshot
-class DictionaryWordCardScreenshot extends StatefulWidget {
+// Project imports:
+import 'package:provider/provider.dart';
 
-  /// the dict entry that should be shown 
-  final JMdict? entry;
-  /// should the conjugation table be included in this widget
+/// A [DictionaryWordCard] that can be used to take a off-screen screenshot
+class DictionaryWordCardScreenshot extends StatelessWidget {
+  final DictionaryMatch match;
   final bool showConjugationTable;
-  /// The theme (dark / light) in which the screenshot should be taken
   final ThemeData theme;
 
+  const DictionaryWordCardScreenshot(this.match, this.showConjugationTable, this.theme, {super.key});
 
-  const DictionaryWordCardScreenshot(
-    this.entry,
-    this.showConjugationTable,
-    this.theme,
-    {
-      super.key
-    }
-  );
-
-  @override
-  State<DictionaryWordCardScreenshot> createState() => _DictionaryWordCardScreenshotState();
-}
-
-class _DictionaryWordCardScreenshotState extends State<DictionaryWordCardScreenshot> {
   @override
   Widget build(BuildContext context) {
-    return MediaQuery(
-      data: const MediaQueryData(),
-      child: Theme(
-        data: widget.theme,
-        child: SizedBox(
-          width: 500,
-          child: DictionaryWordCard(
-            showConjugationTable: widget.showConjugationTable,
-            conjugationTableExpandable: false,
-            showImageSearch: false,
+
+    // 1. Align is the safe "Cropper" that doesn't crash SelectionArea
+    return SizedBox(
+      width: g_minDesktopWindowSize.width,
+      // 2. Material prevents text from rendering with yellow error underlines
+      child: Material(
+        type: MaterialType.transparency, // Uses the TermEntryWidget's background
+        child: Theme(
+          data: theme, // Forces your specific screenshot theme
+          child: Provider<DictionarySearchNotifier>(
+            create: (_) => DictionarySearchNotifier()..selectedResult = match,
+            child: DictionaryWordCard(
+              showConjugationTable: showConjugationTable,
+              conjugationTableExpandable: false,
+              showImageSearch: false,
+            ),
           ),
         ),
       ),

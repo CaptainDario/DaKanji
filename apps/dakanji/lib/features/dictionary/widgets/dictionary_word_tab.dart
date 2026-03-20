@@ -51,7 +51,11 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
 
   /// the menu elements of the more-popup-menu
   List<String> menuItems = [
-    "Wikipedia (JP)", "Wikipedia (EN)", "Wiktionary", "Massif", "Forvo",
+    "Wikipedia (JP)",
+    "Wikipedia (EN)",
+    "Wiktionary",
+    "Massif",
+    "Forvo",
     LocaleKeys.DictionaryScreen_word_tab_menu_share.tr(),
     LocaleKeys.DictionaryScreen_word_tab_menu_share_as_image.tr(),
     LocaleKeys.DictionaryScreen_word_tab_menu_quick_add_to_list.tr(),
@@ -65,7 +69,7 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
     Factory(() => EagerGestureRecognizer())
   };
 
-  /// either `widget.entry.kanji[0]` if not null, otherwise `widget.entry.readings[0]`
+  /// either the first term if not null, otherwise the first reading
   String? readingOrKanji;
   /// The pos that should be used for conjugating this word
   List<Pos>? conjugationPos;
@@ -107,20 +111,17 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
   /// parses and initializes all data elements of this widget
   void initData() {
 
-    /*
-    if(widget.entry != null){
-      readingOrKanji = widget.entry!.kanjis.isEmpty
-        ? widget.entry!.readings[0]
-        : widget.entry!.kanjis[0];
+    final match = context.read<DictionarySearchNotifier>().selectedResult;
+    if(match != null){
+      readingOrKanji = match.entries.first.term.isEmpty
+        ? match.entries.first.reading
+        : match.entries.first.term;
 
       // get the pos for conjugating this word
-      conjugationPos = widget.entry!.meanings.map((e) => e.partOfSpeech)
-        .nonNulls.expand((e) => e)
-        .nonNulls.expand((e) => e.attributes)
-        .nonNulls.map((e) => posDescriptionToPosEnum[e]!)
-        .toSet().toList();
+      conjugationPos = match.entries.first.ruleIdentifiers
+        .nonNulls.map((e) => posStringToPosEnum[e])
+        .nonNulls.toSet().toList();
     }
-    */
   }
 
   void initDataAsync() async {
@@ -221,19 +222,21 @@ class _DictionaryWordTabState extends State<DictionaryWordTab> {
   /// Takes a screenshot of the current word card and opens the share dialog with it
   Future<void> sendWordCard () async {
 
-    // TODO
-    /*
+    final result = context.read<DictionarySearchNotifier>().selectedResult!;
+
     File f = await dictionaryWordCardToImage(
-      widget.entry!,
+      context,
+      result,
       "${readingOrKanji}_${conjugationsIsExpanded ? "_conj" : ""}.png",
-      conjugationsIsExpanded, Theme.of(context));
+      conjugationsIsExpanded,
+      Theme.of(context)
+    );
 
     await SharePlus.instance.share(ShareParams(
       files: [XFile(f.path)],
-      text: "${GetIt.I<Settings>().misc.sharingScheme}dictionary?id=${widget.entry!.id}",
+      text: "${GetIt.I<Settings>().misc.sharingScheme}dictionary?search=$readingOrKanji",
       sharePositionOrigin: const Rect.fromLTWH(1, 1, 10, 10)
     ));
-    */
     
   }
 
