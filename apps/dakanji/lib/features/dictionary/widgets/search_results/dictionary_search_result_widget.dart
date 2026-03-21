@@ -44,6 +44,8 @@ class _DictionarySearchResultWidgetState extends State<DictionarySearchResultWid
     if (widget.result.isEmpty) return _buildEmptyState();
 
     return CustomScrollView(
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
       slivers: [
         _buildKanjiSection(context.watch<SearchProfilesEntry>()),
         ..._buildDictionarySections(context.watch<SearchProfilesEntry>()),
@@ -235,8 +237,6 @@ class _DictionarySearchResultWidgetState extends State<DictionarySearchResultWid
     final expanded = _isExpanded(parentKey);
     final profile = context.read<SearchProfilesEntry>();
 
-    // FIX: Restore term name in sub-header for single searches
-    // "Exact Match (Eat)" vs "Exact Match"
     final displayTitle = !isMultiSearch && groups.isNotEmpty
         ? "$title (${groups.first.searchTerm})" 
         : title;
