@@ -8,7 +8,7 @@ import 'package:get_it/get_it.dart';
 // Project imports:
 import 'package:da_kanji_mobile/features/settings/model/settings.dart';
 import 'package:da_kanji_mobile/features/dictionary/model/kanjidic2.dart';
-import 'package:da_kanji_mobile/features/dictionary/widgets/kanji_card.dart';
+import 'package:da_kanji_mobile/features/dictionary/widgets/kanji_tab/kanji_card.dart';
 import 'package:language_processing/language_processing.dart';
 
 

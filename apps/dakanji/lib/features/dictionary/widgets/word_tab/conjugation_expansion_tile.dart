@@ -9,7 +9,7 @@ import 'package:linked_scroll_controller/linked_scroll_controller.dart';
 import 'package:language_processing/language_processing.dart';
 import 'package:da_kanji_mobile/core/japanese_text_processing/conjugation_descriptions.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
-import 'package:da_kanji_mobile/features/dictionary/widgets/conjugation_column.dart';
+import 'package:da_kanji_mobile/features/dictionary/widgets/word_tab/conjugation_column.dart';
 
 /// `ExpansionTile` that shows conjugations of `word` (verb, adjective)
 class ConjugationExpansionTile extends StatefulWidget {

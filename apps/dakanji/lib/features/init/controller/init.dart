@@ -32,7 +32,6 @@ import 'package:da_kanji_mobile/core/assets/assets.dart';
 import 'package:da_kanji_mobile/core/routing/deep_links.dart';
 import 'package:da_kanji_mobile/core/user/user_activity.dart';
 import 'package:da_kanji_mobile/core/releases/changelog.dart';
-import 'package:da_kanji_mobile/features/dictionary/controller/dictionary_search.dart';
 import 'package:da_kanji_mobile/features/drawer/controller/drawer_listener.dart';
 import 'package:da_kanji_mobile/features/drawing/model/draw_screen_layout.dart';
 import 'package:da_kanji_mobile/features/drawing/model/draw_screen_state.dart';
@@ -179,19 +178,6 @@ Future<void> initDocumentsServices(BuildContext context) async {
       )
     )
   );
-
-  GetIt.I.registerSingleton<DictionarySearch>(
-    DictionarySearch(
-      GetIt.I<Settings>().advanced.noOfSearchIsolates,
-      GetIt.I<Settings>().dictionary.selectedTranslationLanguages.map((e) => 
-        isoToIso639_3[e]!.name
-      ).toList(),
-      GetIt.I<Isars>().dictionary.directory!,
-      GetIt.I<Isars>().dictionary.name,
-      GetIt.I<Settings>().dictionary.convertToHiraganaBeforeSearch
-    ), dispose: (param) => param.kill(),
-  );
-  await GetIt.I<DictionarySearch>().init();
 
   // Language processing
   LanguageProcessor? languageProcessor;

@@ -22,7 +22,6 @@ import 'package:da_kanji_mobile/features/word_lists/controller/word_lists_querie
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/features/word_list/screens/word_list_view_entry_screen.dart';
-import 'package:da_kanji_mobile/features/dictionary/widgets/search_result_list.dart';
 import 'package:da_kanji_mobile/features/word_lists/widgets/word_lists_selection_dialog.dart';
 
 class WordListScreen extends StatefulWidget {
@@ -287,7 +286,9 @@ class _WordListScreenState extends State<WordListScreen> {
               );
             }
         
-            return SearchResultList(
+            // TODO word list
+            return Text("TODO: word list");
+            /*return SearchResultList(
               searchResults: [snapshot.data!.toList()],
               headers: const [null],
               alwaysAnimateIn: animate,
@@ -307,7 +308,7 @@ class _WordListScreenState extends State<WordListScreen> {
                   )
                 );
               },
-            );
+            );*/
           }
         ),
         

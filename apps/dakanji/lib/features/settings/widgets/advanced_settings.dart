@@ -13,7 +13,6 @@ import 'package:universal_io/io.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/core/app/restart.dart';
-import 'package:da_kanji_mobile/features/dictionary/controller/dictionary_search.dart';
 import 'package:da_kanji_mobile/features/dictionary/controller/isars.dart';
 import 'package:da_kanji_mobile/features/settings/model/settings.dart';
 import 'package:da_kanji_mobile/core/user/user_data.dart';
@@ -55,42 +54,7 @@ class _AdvancedSettingsState extends State<AdvancedSettings> {
         //    optimizeBackendsPopup(context).show();
         //  },
         //),
-        // number of search isolates
-        ResponsiveSliderTile(
-          text: LocaleKeys.SettingsScreen_advanced_settings_number_search_procs.tr(),
-          min: 1,
-          max: max(Platform.numberOfProcessors.toDouble(), 2),
-          divisions: max(Platform.numberOfProcessors - 1, 1),
-          value: widget.settings.advanced.noOfSearchIsolates.toDouble(),
-          leadingIcon: Icons.info_outline,
-          onLeadingIconPressed: () {
-            AwesomeDialog(
-              context: context,
-              dialogType: DialogType.noHeader,
-              btnOkColor: g_color_scheme_green,
-              btnOkOnPress: (){},
-              body: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Center(
-                  child: Text(
-                    LocaleKeys.SettingsScreen_advanced_settings_number_search_procs_body.tr()
-                  )
-                ),
-              )
-            ).show();
-          },
-          onChanged: (double value) {
-            setState(() {
-              widget.settings.advanced.noOfSearchIsolates = value.toInt();
-              widget.settings.save();
-            });
-          },
-          onChangeEnd: (double value) async {
-            await GetIt.I<DictionarySearch>().kill();
-            GetIt.I<DictionarySearch>().noIsolates = value.toInt();
-            await GetIt.I<DictionarySearch>().init();
-          },
-        ),
+
         // Reset settings
         ResponsiveIconButtonTile(
           text: LocaleKeys.SettingsScreen_advanced_settings_reset_settings.tr(),
@@ -126,25 +90,12 @@ class _AdvancedSettingsState extends State<AdvancedSettings> {
             await restartApp(context);
           },
         ),
-        // delete word lists history
+        // delete word lists
         ResponsiveIconButtonTile(
           text: LocaleKeys.SettingsScreen_advanced_settings_delete_word_lists.tr(),
           icon: Icons.delete_forever,
           onButtonPressed: () async {
             await GetIt.I<UserDataDB>().wordListsDao.deleteAllWordLists();
-            // ignore: use_build_context_synchronously
-            await restartApp(context);
-          },
-        ),
-        // Delete dict
-        ResponsiveIconButtonTile(
-          text: LocaleKeys.SettingsScreen_advanced_settings_delete_dict.tr(),
-          icon: Icons.delete_forever,
-          onButtonPressed: () async {
-            await GetIt.I<DictionarySearch>().kill();
-            await GetIt.I<Isars>().dictionary.close(deleteFromDisk: true);
-            await GetIt.I<Isars>().krad.close(deleteFromDisk: true);
-            await GetIt.I<Isars>().radk.close(deleteFromDisk: true);
             // ignore: use_build_context_synchronously
             await restartApp(context);
           },

@@ -4,13 +4,10 @@ import 'dart:math';
 // Package imports:
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:database_builder/database_builder.dart';
-import 'package:get_it/get_it.dart';
 
 // Project imports:
-import 'package:da_kanji_mobile/features/dictionary/controller/isars.dart';
 import 'package:language_processing/language_processing.dart';
 import 'package:da_kanji_mobile/features/anki/model/anki_data.dart';
-import 'package:da_kanji_mobile/features/dictionary/widgets/dictionary_example_tab.dart';
 
 /// Represents a DaKanji-style Anki note
 class AnkiNote{

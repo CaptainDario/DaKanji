@@ -10,7 +10,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/core/kanji_vg/kanji_vg_utils.dart';
-import 'package:da_kanji_mobile/features/dictionary/widgets/animated_kanji.dart';
+import 'package:da_kanji_mobile/features/dictionary/widgets/kanji_tab/animated_kanji.dart';
 
  /// Widget that shows an animated KanjiVG entry. After the animation finished,
  /// a static kanji is shown with stroke numbers.

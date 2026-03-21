@@ -8,7 +8,7 @@ import 'package:isar_community/isar.dart';
 
 // Project imports:
 import 'package:da_kanji_mobile/features/dictionary/controller/isars.dart';
-import 'package:da_kanji_mobile/features/dictionary/widgets/kanji_card.dart';
+import 'package:da_kanji_mobile/features/dictionary/widgets/kanji_tab/kanji_card.dart';
 
 class KanjiDetailsPage extends StatefulWidget {
 

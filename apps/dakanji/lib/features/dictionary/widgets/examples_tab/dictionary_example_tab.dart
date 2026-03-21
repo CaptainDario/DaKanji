@@ -1,26 +1,10 @@
-// Dart imports:
-import 'dart:math';
-
-// Flutter imports:
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:database_builder/database_builder.dart';
-import 'package:easy_localization/easy_localization.dart';
-import 'package:get_it/get_it.dart';
-import 'package:isar_community/isar.dart';
-import 'package:language_processing/language_processing.dart';
 import 'package:tuple/tuple.dart';
 
-// Project imports:
-import 'package:da_kanji_mobile/features/dictionary/controller/isars.dart';
-import 'package:language_processing/language_processing.dart';
-import 'package:da_kanji_mobile/features/settings/model/settings.dart';
-import 'package:da_kanji_mobile/globals.dart';
-import 'package:da_kanji_mobile/locales_keys.dart';
-import 'package:da_kanji_mobile/features/dictionary/widgets/example_sentence_card.dart';
-import 'package:da_kanji_mobile/core/widgets/dakanji/dakanji_loading_indicator.dart';
+
 
 class DictionaryExampleTab extends StatefulWidget {
 

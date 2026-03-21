@@ -17,7 +17,7 @@ import 'package:da_kanji_mobile/features/dictionary/controller/isars.dart';
 import 'package:da_kanji_mobile/features/kana_table/model/kana.dart';
 import 'package:da_kanji_mobile/features/kana_table/model/mnemonics.dart';
 import 'package:da_kanji_mobile/features/settings/model/settings.dart';
-import 'package:da_kanji_mobile/features/dictionary/widgets/kanji_vg_widget.dart';
+import 'package:da_kanji_mobile/features/dictionary/widgets/kanji_tab/kanji_vg_widget.dart';
 
 /// Widget that shows information about a given kana. This information is
 /// * romaji

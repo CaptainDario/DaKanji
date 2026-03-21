@@ -25,9 +25,9 @@ import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/features/dictionary/model/kanji_vg.dart';
 import 'package:da_kanji_mobile/features/dictionary/model/radicals.dart';
-import 'package:da_kanji_mobile/features/dictionary/widgets/kanji_group_widget.dart';
-import 'package:da_kanji_mobile/features/dictionary/widgets/kanji_vg_widget.dart';
-import 'package:da_kanji_mobile/features/dictionary/widgets/linked_kanji_text.dart';
+import 'package:da_kanji_mobile/features/dictionary/widgets/kanji_tab/kanji_group_widget.dart';
+import 'package:da_kanji_mobile/features/dictionary/widgets/kanji_tab/kanji_vg_widget.dart';
+import 'package:da_kanji_mobile/features/dictionary/widgets/kanji_tab/linked_kanji_text.dart';
 
 /// Card to show a kanji and all important attribtues of it. This includes
 /// a tree to show the different groups.

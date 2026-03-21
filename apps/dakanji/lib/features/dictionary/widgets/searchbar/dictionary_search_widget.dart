@@ -13,7 +13,7 @@ import 'package:da_kanji_mobile/features/dictionary/widgets/searchbar/filter_sug
 import 'package:da_kanji_mobile/features/dictionary/widgets/searchbar/paste_clear_button.dart';
 import 'package:da_kanji_mobile/features/dictionary/widgets/searchbar/radical_button.dart';
 import 'package:da_kanji_mobile/globals.dart';
-import './search_results/dictionary_search_result_widget.dart';
+import '../search_results/dictionary_search_result_widget.dart';
 import 'package:da_kanji_mobile/core/user/user_data_db.dart';
 import 'package:da_kanji_mobile/features/dictionary/model/dictionary_search_state.dart';
 import 'package:flutter/material.dart';
@@ -29,7 +29,7 @@ import 'package:provider/provider.dart';
 import 'package:language_processing/language_processing.dart';
 import 'package:da_kanji_mobile/features/dictionary/controller/isars.dart';
 import 'package:da_kanji_mobile/features/tutorial/model/tutorials.dart';
-import 'package:da_kanji_mobile/features/dictionary/widgets/radical_popup_body.dart';
+import 'package:da_kanji_mobile/features/dictionary/widgets/word_tab/radical_popup_body.dart';
 import 'package:da_kanji_mobile/core/widgets/multi_focus.dart';
 
 /// The search widget for the dictionary.
@@ -293,19 +293,21 @@ Widget build(BuildContext context) {
             final tagSuggestions = _getFilterSuggestions(
               currentWord: currentWord,
               prefix: '#',
-              dummyData: {'n5': 'JLPT N5', 'common': 'Common Word', 'verb': 'Verb class'},
+              // TODO
+              data: {'n5': 'JLPT N5', 'common': 'Common Word', 'verb': 'Verb class'},
               icon: Icons.tag,
               controller: controller,
-              activeFilters: context.watch<DictionarySearchState>().activeFilters,
+              activeFilters: context.read<DictionarySearchState>().activeFilters,
             );
 
             final posSuggestions = _getFilterSuggestions(
               currentWord: currentWord,
               prefix: r'$',
-              dummyData: {'noun': 'Noun', 'adj': 'Adjective', 'adv': 'Adverb'},
+              // TODO
+              data: {'noun': 'Noun', 'adj': 'Adjective', 'adv': 'Adverb'},
               icon: Icons.category,
               controller: controller,
-              activeFilters: context.watch<DictionarySearchState>().activeFilters,
+              activeFilters: context.read<DictionarySearchState>().activeFilters,
             );
 
             if (tagSuggestions != null) {
@@ -371,7 +373,7 @@ Widget build(BuildContext context) {
   Iterable<Widget>? _getFilterSuggestions({
     required String currentWord,
     required String prefix,
-    required Map<String, String> dummyData,
+    required Map<String, String> data,
     required IconData icon,
     required SearchController controller,
     required Set<String> activeFilters,
@@ -379,7 +381,7 @@ Widget build(BuildContext context) {
     if (!currentWord.startsWith(prefix)) return null;
 
     final searchTerm = currentWord.substring(prefix.length);
-    final matches = dummyData.keys
+    final matches = data.keys
       .where((key) => key.startsWith(searchTerm) && 
         !activeFilters.contains('$prefix$key')
       );
@@ -387,7 +389,7 @@ Widget build(BuildContext context) {
     return matches.map((key) => FilterSuggestionTile(
       filterKey: key,
       prefix: prefix,
-      description: dummyData[key]!,
+      description: data[key]!,
       icon: icon,
       controller: controller,
       onSelected: () {

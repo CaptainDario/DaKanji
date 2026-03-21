@@ -4,7 +4,7 @@ import 'dart:io';
 // Flutter imports:
 import 'package:da_kanji_mobile/core/user/user_data_db.dart';
 import 'package:da_kanji_mobile/features/dictionary/model/dictionary_search_state.dart';
-import 'package:da_kanji_mobile/features/dictionary/widgets/dictionary_word_card.dart';
+import 'package:da_kanji_mobile/features/dictionary/widgets/word_tab/dictionary_word_card.dart';
 import 'package:da_kanji_mobile/features/dictionary/widgets/term/term_entry_widget.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';

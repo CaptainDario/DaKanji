@@ -20,10 +20,10 @@ import 'package:da_kanji_mobile/features/dictionary/controller/isars.dart';
 import 'package:da_kanji_mobile/features/settings/model/settings.dart';
 import 'package:da_kanji_mobile/features/tutorial/model/tutorials.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
-import 'package:da_kanji_mobile/features/dictionary/widgets/dictionary_example_tab.dart';
-import 'package:da_kanji_mobile/features/dictionary/widgets/dictionary_kanji_tab.dart';
-import 'package:da_kanji_mobile/features/dictionary/widgets/dictionary_search_widget.dart';
-import 'package:da_kanji_mobile/features/dictionary/widgets/dictionary_word_tab.dart';
+import 'package:da_kanji_mobile/features/dictionary/widgets/examples_tab/dictionary_example_tab.dart';
+import 'package:da_kanji_mobile/features/dictionary/widgets/kanji_tab/dictionary_kanji_tab.dart';
+import 'package:da_kanji_mobile/features/dictionary/widgets/searchbar/dictionary_search_widget.dart';
+import 'package:da_kanji_mobile/features/dictionary/widgets/word_tab/dictionary_word_tab.dart';
 import 'package:da_kanji_mobile/features/dictionary/widgets/floating_word_stack.dart';
 
 class Dictionary extends StatefulWidget {
