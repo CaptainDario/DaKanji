@@ -7,6 +7,39 @@ class JapaneseAppConfig extends AppConfig {
   @override Iso639_3 get languageCode => Iso639_3.jpn;
   @override String get appTitle => "DaKanji";
 
+  // dictionary
+  @override List<String> get dictionaryDevToolTerms => [
+    "",
+    "?q=発条&q=打つ",
+    "?q=打つ&q=発条",
+    "English",
+    "language",
+    "お手前",
+    "のたまう",
+    "のたもうた",
+    "テキスト",
+    "中腰",
+    "内容",
+    "凄い",
+    "土木工事",
+    "好き",
+    "強み",
+    "所業",
+    "打",
+    "打ち込む",
+    "打つ",
+    "構造",
+    "画像",
+    "番号",
+    "発条",
+    "自重",
+    "読む",
+    "마시다",
+    "３９",
+    "ＵＳＢ",
+  ];
+
+  // deep links
   @override String get appLinkHttps => "https://dakanji.app/app/";
   @override String get appLink => "dakanji://";
 

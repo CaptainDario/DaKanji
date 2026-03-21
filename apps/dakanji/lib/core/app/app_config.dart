@@ -7,6 +7,10 @@ abstract class AppConfig {
   Iso639_3 get languageCode;
   String get appTitle;
 
+  // dictionary
+  List<String> get dictionaryDevToolTerms;
+
+
   // deep links
   String get appLinkHttps;
   String get appLink;

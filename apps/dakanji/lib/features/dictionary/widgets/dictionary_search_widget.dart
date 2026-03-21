@@ -212,6 +212,14 @@ Widget build(BuildContext context) {
             RadicalButton(
               onPressed: showRadicalPopup,
             ),
+            ExampleDictionarySearchPopupButton(
+              exampleTerms: g_AppConfig.dictionaryDevToolTerms,
+              onSelected: (p0) {
+                controller.text = p0;
+                controller.selection = TextSelection.collapsed(offset: controller.text.length);
+                updateSearchResults(p0);
+              },
+            )
           ],
         );
       },
