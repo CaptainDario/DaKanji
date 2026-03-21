@@ -6,10 +6,24 @@
 
 - Dictionary
   - Complete rewrite of the database
-    - Import Yomichan / tan dictionaries
+    - Import Yomi(chan/tan) dictionaries
     - Improved deconjugation
     - Spellfix of searched words
-- Flash cards
+    - Regex search
+    - ... SO much more!
+  - Rewrite of the Searchbar
+    - Suggestions for: Filter, Special searches, Regex
+- Examples
+  - Complete overhaul of the example system
+    - Import of example dictionaries
+    - New example screen
+      - Search in context, ex.: "で(歩く)" vs "を(歩く)"
+      - Listen to exmples
+      - Sort by meta data
+      - ... SO much more!
+- Audio
+  - Complete overhaul of the audio system
+    - Import of audio dictionaries
 
 - Study Tracker: Track you study sessions to see your effort grow
 - Sync between devices
@@ -25,7 +39,7 @@
 
 ### Removed
 
-- DoJG
+- DoJG (grammar can now be imported as a dicitonary)
 
 ## v3.5.0b7 - 改善 (09.04.2025)
 
