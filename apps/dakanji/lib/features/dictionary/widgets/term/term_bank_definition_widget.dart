@@ -2,9 +2,11 @@ import 'dart:async';
 
 import 'package:css_inline_flutter/css_inline_flutter.dart';
 import 'package:da_db/database/da_db.dart';
+import 'package:da_kanji_mobile/features/dictionary/controller/definition_rendering.dart';
 import 'package:da_kanji_mobile/features/dictionary/widgets/term/structured_content/custom_html_to_widget_factory.dart';
 import 'package:da_kanji_mobile/features/dictionary/widgets/term/structured_content/structured_content_css.dart';
 import 'package:da_kanji_mobile/features/dictionary/widgets/term/structured_content/structured_content_to_html.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_util/widgets/conditional_parent_widget.dart';
 import 'package:flutter_util/widgets/smart_html_selection.dart';
@@ -47,22 +49,28 @@ class TermBankDefinitionWidget extends StatefulWidget {
 
 class _TermBankDefinitionWidgetState extends State<TermBankDefinitionWidget> {
 
+  late Future<String> _renderDefinitionFuture;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    
+    _renderDefinitionFuture = renderDefinition();
+  }
 
   /// Convert the structured content JSON into a standard HTML string and inline
   /// CSS from the index and the global CSS.
   /// Returns the final HTML string.
   Future<String> renderDefinition() async {
+    final darkMode = Theme.of(context).brightness == Brightness.dark;
+    final indexCss = await GetIt.I<DaDb>().mediaDao.getCssFromIndex(widget.indexId);
 
-    String indexCss = await GetIt.I<DaDb>().mediaDao.getCssFromIndex(widget.indexId);
-    
-    String structuredContentHtmlString = renderDefinitions(
-      widget.definitions, compactMode: widget.compactMode);
-    structuredContentHtmlString = inlineFragmentSync(
-      html: structuredContentHtmlString, css: indexCss);
-    structuredContentHtmlString = inlineFragmentSync(
-      html: structuredContentHtmlString, css: getStructuredContentCss(darkMode: true));
-
-    return structuredContentHtmlString;
+    return GetIt.I<YomitanRenderService>().render((
+      definitions: widget.definitions,
+      indexCss: indexCss,
+      compactMode: true,//widget.compactMode,
+      darkMode: darkMode,
+    ));
   }
 
 
@@ -70,14 +78,14 @@ class _TermBankDefinitionWidgetState extends State<TermBankDefinitionWidget> {
   Widget build(BuildContext context) {
   
     return FutureBuilder(
-      future: renderDefinition(),
+      future: _renderDefinitionFuture,
       builder: (context, asyncSnapshot) {
 
-        if (!asyncSnapshot.hasData || asyncSnapshot.data == null) {
-          return SizedBox();
-        } 
-        else if (asyncSnapshot.hasError) {
+        if (asyncSnapshot.hasError) {
           return Text('Error rendering definition: ${asyncSnapshot.error}');
+        }
+        else if (!asyncSnapshot.hasData || asyncSnapshot.data == null) {
+          return SizedBox();
         } 
         
 
@@ -92,9 +100,11 @@ class _TermBankDefinitionWidgetState extends State<TermBankDefinitionWidget> {
           child: HtmlWidget(
             asyncSnapshot.data!,
             buildAsync: false,
+            enableCaching: true,
             textStyle: const TextStyle(
               overflow: TextOverflow.ellipsis,
             ),
+            onLoadingBuilder: (context, element, loadingProgress) => const SizedBox(),
             // Use a custom factory to handle local assets.
             factoryBuilder: () => CustomHtmlToWidgetFactory(
               widget.indexId,

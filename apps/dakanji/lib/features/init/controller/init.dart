@@ -6,6 +6,7 @@ import 'package:da_db/database/da_db.dart';
 import 'package:da_kanji_mobile/core/supabase/model/supabase_cache_manager.dart';
 import 'package:da_kanji_mobile/core/user/time_tracking/time_tracking_mock_data.dart';
 import 'package:da_kanji_mobile/core/user/user_data_db.dart';
+import 'package:da_kanji_mobile/features/dictionary/controller/definition_rendering.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -40,7 +41,6 @@ import 'package:da_kanji_mobile/features/drawing/model/kanji_buffer.dart';
 import 'package:da_kanji_mobile/features/drawing/model/strokes.dart';
 import 'package:da_kanji_mobile/core/storage/path_manager.dart';
 import 'package:da_kanji_mobile/features/dictionary/controller/isars.dart';
-import 'package:da_kanji_mobile/core/app/app_config.dart';
 import 'package:da_kanji_mobile/core/device/platform_dependent_variables.dart';
 import 'package:da_kanji_mobile/core/releases/version.dart';
 import 'package:da_kanji_mobile/features/settings/model/settings.dart';
@@ -76,7 +76,7 @@ Future<void> preRunInit() async {
   await g_DakanjiPathManager.init();
 
   Map yaml = loadYaml(await rootBundle.loadString("pubspec.yaml"));
-  debugPrint("Starting DaKanji ${yaml['version']}");
+  debugPrint("Starting ${g_AppConfig.appTitle} ${yaml['version']}");
   g_Version = Version.fromStringFull(yaml['version']);
 
   GetIt.I.registerSingleton<PlatformDependentVariables>(PlatformDependentVariables());
@@ -195,7 +195,6 @@ Future<void> initDocumentsServices(BuildContext context) async {
 
   // Language processing
   LanguageProcessor? languageProcessor;
-
   if(g_AppConfig.languageCode == Iso639_3.jpn){
     languageProcessor = JapaneseProcessor(
       mecabTransferableState: MecabTransferableState(
@@ -207,14 +206,21 @@ Future<void> initDocumentsServices(BuildContext context) async {
   else {
     throw Exception("No LanguageProcessor implemented for ${g_AppConfig.languageCode}");
   }
-
   GetIt.I.registerSingleton<LanguageProcessor>(languageProcessor);
 
+  // database
   GetIt.I.registerSingleton<DaDb>(DaDb(
     dbPath: p.joinAll([g_DakanjiPathManager.dictionaryDirectory.path, "da.db"]),
     inMemory: false,
     languageProcessor: GetIt.I<LanguageProcessor>(),
   ));
+
+  // definition rendering
+  GetIt.I.registerSingletonAsync<YomitanRenderService>(() async {
+    final service = YomitanRenderService();
+    await service.isReady;
+    return service;
+  });
 
   g_documentsServicesInitialized = true;
 }
