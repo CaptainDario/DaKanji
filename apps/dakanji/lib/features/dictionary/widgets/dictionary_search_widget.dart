@@ -8,9 +8,11 @@ import 'package:da_db/database/db_queries/dictionary_search/dictionary_search_pa
 import 'package:da_db/database/db_queries/dictionary_search/dictionary_search_result.dart';
 import 'package:da_kanji_mobile/features/dictionary/widgets/searchbar/active_filters_row.dart';
 import 'package:da_kanji_mobile/features/dictionary/widgets/searchbar/draw_button.dart';
+import 'package:da_kanji_mobile/features/dictionary/widgets/searchbar/example_dictionary_search_popup_button.dart';
 import 'package:da_kanji_mobile/features/dictionary/widgets/searchbar/filter_suggestion_tile.dart';
 import 'package:da_kanji_mobile/features/dictionary/widgets/searchbar/paste_clear_button.dart';
 import 'package:da_kanji_mobile/features/dictionary/widgets/searchbar/radical_button.dart';
+import 'package:da_kanji_mobile/globals.dart';
 import './search_results/dictionary_search_result_widget.dart';
 import 'package:da_kanji_mobile/core/user/user_data_db.dart';
 import 'package:da_kanji_mobile/features/dictionary/model/dictionary_search_state.dart';
@@ -142,6 +144,7 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
 
 @override
 Widget build(BuildContext context) {
+  
   return MultiFocus(
     focusNodes: [
       GetIt.I<Tutorials>().dictionaryScreenTutorial.searchInputStep,
@@ -223,6 +226,14 @@ Widget build(BuildContext context) {
           ],
         );
       },
+      viewBuilder: (suggestions) {
+        return ChangeNotifierProvider<DictionarySearchState>.value(
+          value: context.watch<DictionarySearchState>(),
+          child: Column(
+            children: suggestions.toList(),
+          ),
+        );
+      },
       suggestionsBuilder: (BuildContext context, SearchController controller) async {
           final String input = controller.text;
           
@@ -233,7 +244,7 @@ Widget build(BuildContext context) {
           topLevelWidgets.add(
             StatefulBuilder(
               builder: (context, setInnerState) {
-                if (context.watch<DictionarySearchState>().activeFilters.isEmpty)
+                if (context.read<DictionarySearchState>().activeFilters.isEmpty)
                   return const SizedBox.shrink();
                 
                 return Column(
@@ -245,7 +256,7 @@ Widget build(BuildContext context) {
                       child: SingleChildScrollView(
                         scrollDirection: Axis.horizontal,
                         child: ActiveFiltersRow(
-                          activeFilters: context.watch<DictionarySearchState>().activeFilters.toList(),
+                          activeFilters: context.read<DictionarySearchState>().activeFilters.toList(),
                           onDeleted: (filter) {
                             setState(() => 
                               context.read<DictionarySearchState>().activeFilters.remove(filter)
@@ -274,7 +285,8 @@ Widget build(BuildContext context) {
               mainAxisSize: MainAxisSize.min,
               children: const [ListTile(title: Text("History placeholder"))],
             );
-          } else {
+          }
+          else {
             final segments = input.split(' ');
             final currentWord = segments.last.toLowerCase();
 
@@ -284,6 +296,7 @@ Widget build(BuildContext context) {
               dummyData: {'n5': 'JLPT N5', 'common': 'Common Word', 'verb': 'Verb class'},
               icon: Icons.tag,
               controller: controller,
+              activeFilters: context.watch<DictionarySearchState>().activeFilters,
             );
 
             final posSuggestions = _getFilterSuggestions(
@@ -292,6 +305,7 @@ Widget build(BuildContext context) {
               dummyData: {'noun': 'Noun', 'adj': 'Adjective', 'adv': 'Adverb'},
               icon: Icons.category,
               controller: controller,
+              activeFilters: context.watch<DictionarySearchState>().activeFilters,
             );
 
             if (tagSuggestions != null) {
@@ -310,12 +324,10 @@ Widget build(BuildContext context) {
             }
             else {
               // Normal Search
-              await updateSearchResults(input.trim());
-              final results = context.read<DictionarySearchState>().results;
-
+              final results = await updateSearchResults(input.trim());
               if (results != null) {
                 dynamicContent = DictionarySearchResultWidget(
-                  key: const ValueKey('results'), // Unique key for results
+                  key: ValueKey('results_${input}'), // Unique key for results
                   result: results,
                   onTap: onSearchResultPressed,
                 );
@@ -349,11 +361,9 @@ Widget build(BuildContext context) {
 
           return topLevelWidgets;
         },
-    
-    
-    ),
-  );
-}
+      ),
+    );
+  }
 
 
 
@@ -364,13 +374,14 @@ Widget build(BuildContext context) {
     required Map<String, String> dummyData,
     required IconData icon,
     required SearchController controller,
+    required Set<String> activeFilters,
   }) {
     if (!currentWord.startsWith(prefix)) return null;
 
     final searchTerm = currentWord.substring(prefix.length);
     final matches = dummyData.keys
       .where((key) => key.startsWith(searchTerm) && 
-        !context.watch<DictionarySearchState>().activeFilters.contains('$prefix$key')
+        !activeFilters.contains('$prefix$key')
       );
 
     return matches.map((key) => FilterSuggestionTile(
@@ -380,10 +391,8 @@ Widget build(BuildContext context) {
       icon: icon,
       controller: controller,
       onSelected: () {
-        setState(() {
-          context.read<DictionarySearchState>().activeFilters.add('$prefix$key');
-          updateSearchResults(controller.text.trim());
-        });
+        context.read<DictionarySearchState>().activeFilters.add('$prefix$key');
+        updateSearchResults(controller.text.trim());
       },
     ));
   }
@@ -441,31 +450,35 @@ Widget build(BuildContext context) {
       searchInputController.text = "";
       context.read<DictionarySearchState>().currentSearch = "";
       searchTextFieldFocusNode.requestFocus();
+
+      if(!searchInputController.isOpen) searchInputController.openView();
+      
     }
     else{
       String data = (await Clipboard.getData('text/plain'))?.text ?? "";
       data = data.replaceAll("\n", " ");
       searchInputController.text = data;
       await updateSearchResults(data);
+
+      if(searchInputController.isOpen) searchInputController.closeView(null);
     }
 
-    // TODO open search bar
-    //openSearchBar();
-    setState(() { });
+    
   }
 
-  /// Searches in the dictionary and updates all search results and variables
-  /// setState() needs to be called to update the ui.
-  Future<void> updateSearchResults(String query) async {
+  /// Searches in the dictionary and updates the DictionarySearchState
+  Future<DictionarySearchResult?> updateSearchResults(String query) async {
     
-    // set first to empty to avoid weird left over states
-    context.read<DictionarySearchState>().results = DictionarySearchResult.empty();
-    context.read<DictionarySearchState>().results =
+    late final DictionarySearchResult? results;
+
+    context.read<DictionarySearchState>().results = results =
       await GetIt.I<DaDb>().dictionarySearchDao.dictionarySearch(
         DictionarySearchParams(
           searchInput: query, options: ProcessorOptions()
         )
       );
+
+    return results;
 
   }
 
