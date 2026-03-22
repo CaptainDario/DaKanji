@@ -502,7 +502,7 @@ Widget build(BuildContext context) {
       onResult: (p0) {
         if (!mounted) return; 
 
-        // 2. Search is done! Reset flags and update results
+        // Search is done, Reset flags and update results
         searchState.cancelLoadingTimer();
         searchState.isSearching = false;
         searchState.showLoading = false; 
