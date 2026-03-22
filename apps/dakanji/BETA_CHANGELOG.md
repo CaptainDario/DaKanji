@@ -13,6 +13,7 @@
     - ... SO much more!
   - Rewrite of the Searchbar
     - Suggestions for: Filter, Special searches, Regex
+  - Multiple searches can be kept open and navigated like a browser
 - Examples
   - Complete overhaul of the example system
     - Import of example dictionaries
