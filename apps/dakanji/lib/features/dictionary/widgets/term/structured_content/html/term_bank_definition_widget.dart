@@ -64,7 +64,7 @@ class _TermBankDefinitionWidgetState extends State<TermBankDefinitionWidget> {
     return GetIt.I<YomitanRenderService>().render((
       definitions: widget.definitions,
       indexCss: indexCss,
-      compactMode: true,//widget.compactMode,
+      compactMode: widget.compactMode,
       darkMode: darkMode,
     ));
   }
