@@ -114,7 +114,8 @@ class CustomHtmlToWidgetFactory extends WidgetFactory {
     final style = tree.element.attributes['style'];
     final title = tree.element.attributes['title'];
 
-    if (title != null && style != null && style.contains('cursor: help')) {
+    // FIX: Make whitespace parsing agnostic
+    if (title != null && style != null && style.replaceAll(' ', '').contains('cursor:help')) {
       // Register a BuildOp to customize rendering
       tree.register(htmlHelpAttributeToWidget(title));
     }

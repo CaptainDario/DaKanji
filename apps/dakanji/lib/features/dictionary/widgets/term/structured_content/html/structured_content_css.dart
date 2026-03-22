@@ -17,16 +17,20 @@ String getStructuredContentCss({required bool darkMode}) {
   --background-color: $backgroundColor;
   --border-color: $borderColor;
   --link-color: $linkColor;
+  --list-padding1: 1.4em;
+  --list-padding2: 1.4em;
 }
 
 body {
   color: var(--text-color);
   background-color: var(--background-color);
+  margin: 0;
+  padding: 0;
 }
 
 /* --- IMAGES --- */
 
-.dk-sc-image {
+.gloss-image {
   display: inline-block;
   vertical-align: top;
   object-fit: contain;
@@ -34,7 +38,7 @@ body {
   outline: none;
 }
 
-.dk-sc-image-description {
+.gloss-image-description {
   display: block;
   white-space: pre-line;
   color: var(--text-color-light);
@@ -42,36 +46,47 @@ body {
 
 /* --- TABLES --- */
 
-.dk-sc-table-container {
+.gloss-sc-table-container {
   display: block;
   overflow-x: auto;
 }
 
-.dk-sc-table {
+.gloss-sc-table {
   table-layout: auto;
   border-collapse: collapse;
   border-spacing: 0;
   color: var(--text-color);
 }
 
-.dk-sc-thead, .dk-sc-tfoot, .dk-sc-th {
+.gloss-sc-thead, .gloss-sc-tfoot, .gloss-sc-th {
   font-weight: bold;
 }
 
-.dk-sc-th, .dk-sc-td {
+.gloss-sc-th, .gloss-sc-td {
   border: 1px solid var(--border-color);
   padding: 0.25em;
   vertical-align: top;
 }
 
-.dk-sc-th {
+.gloss-sc-th {
   background-color: $tableHeaderBg;
 }
 
+/* --- LISTS --- */
+
+.gloss-sc-ul, .gloss-sc-ol {
+  padding-left: var(--list-padding2);
+  margin: 0;
+}
+
 /* --- LINKS --- */
-a {
+a.gloss-link {
   color: var(--link-color);
   text-decoration: none;
+}
+
+.gloss-link-text {
+  vertical-align: baseline;
 }
 """;
 }
