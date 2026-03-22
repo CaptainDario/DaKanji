@@ -3,6 +3,7 @@ import 'dart:async';
 
 // Flutter imports:
 import 'package:da_db/database/da_db.dart';
+import 'package:da_db/util/da_db_search_manager.dart';
 import 'package:da_kanji_mobile/core/supabase/model/supabase_cache_manager.dart';
 import 'package:da_kanji_mobile/core/user/time_tracking/time_tracking_mock_data.dart';
 import 'package:da_kanji_mobile/core/user/user_data_db.dart';
@@ -199,6 +200,9 @@ Future<void> initDocumentsServices(BuildContext context) async {
     dbPath: p.joinAll([g_DakanjiPathManager.dictionaryDirectory.path, "da.db"]),
     inMemory: false,
     languageProcessor: GetIt.I<LanguageProcessor>(),
+  ));
+  GetIt.I.registerSingleton<DaDbSearchManager>(DaDbSearchManager(
+    db: GetIt.I<DaDb>(),
   ));
 
   // definition rendering

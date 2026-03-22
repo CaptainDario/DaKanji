@@ -471,14 +471,11 @@ Widget build(BuildContext context) {
   /// Searches in the dictionary and updates the DictionarySearchState
   Future<DictionarySearchResult?> updateSearchResults(String query) async {
     
-    late final DictionarySearchResult? results;
-
-    context.read<DictionarySearchState>().results = results =
-      await GetIt.I<DaDb>().dictionarySearchDao.dictionarySearch(
-        DictionarySearchParams(
-          searchInput: query, options: ProcessorOptions()
-        )
-      );
+    GetIt.I<DaDbSearchManager>().search(
+      DictionarySearchParams(
+        searchInput: query, options: ProcessorOptions()
+      ),
+      onResult: (p0) {
 
     return results;
 
