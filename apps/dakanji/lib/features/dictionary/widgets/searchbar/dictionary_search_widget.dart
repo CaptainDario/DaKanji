@@ -13,6 +13,7 @@ import 'package:da_kanji_mobile/features/dictionary/widgets/searchbar/example_di
 import 'package:da_kanji_mobile/features/dictionary/widgets/searchbar/filter_suggestion_tile.dart';
 import 'package:da_kanji_mobile/features/dictionary/widgets/searchbar/paste_clear_button.dart';
 import 'package:da_kanji_mobile/features/dictionary/widgets/searchbar/radical_button.dart';
+import 'package:da_kanji_mobile/features/dictionary/widgets/searchbar/search_syntax_controller.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import '../search_results/dictionary_search_result_widget.dart';
 import 'package:da_kanji_mobile/core/user/user_data_db.dart';
@@ -67,8 +68,11 @@ class DictionarySearchWidget extends StatefulWidget {
 class DictionarySearchWidgetState extends State<DictionarySearchWidget>
   with TickerProviderStateMixin{
 
+
   /// the TextEditingController of the search field
-  SearchController searchInputController = SearchController();
+  /// 
+  /// Also handles syntax highliting
+  DictionarySearchController searchInputController = DictionarySearchController();
   /// Used to check if `widget.initialQuery` changed
   String initialSearch = "";
   /// Is the search bar initially expanded
@@ -145,7 +149,6 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
 
 @override
 Widget build(BuildContext context) {
-  
   return MultiFocus(
     focusNodes: [
       GetIt.I<Tutorials>().dictionaryScreenTutorial.searchInputStep,
@@ -153,10 +156,12 @@ Widget build(BuildContext context) {
     ],
     child: SearchAnchor(
       searchController: searchInputController,
-      dividerColor: Colors.transparent,
-      
-      // --- 1. THE SEARCH BAR ITSELF ---
-      builder: (BuildContext context, SearchController controller) {
+      dividerColor: context.watch<DictionarySearchState>().activeFilters.isNotEmpty
+        ? Colors.transparent
+        : Colors.grey,
+        
+      // 1. RENAME to barContext so we don't shadow the main context
+      builder: (BuildContext barContext, SearchController controller) {
         return SearchBar(
           controller: controller,
           elevation: const WidgetStatePropertyAll(0), 
@@ -175,6 +180,7 @@ Widget build(BuildContext context) {
           padding: const WidgetStatePropertyAll(
             EdgeInsets.symmetric(horizontal: 12.0)
           ),
+          // Uses parent context safely
           leading: context.watch<DictionarySearchState>().activeFilters.isEmpty 
             ? const Icon(Icons.search) 
             : Badge(
@@ -213,21 +219,18 @@ Widget build(BuildContext context) {
         );
       },
 
-      
-      
       // --- 2. THE VIEW BUILDER ---
       viewBuilder: (Iterable<Widget> suggestions) {
         return ChangeNotifierProvider<DictionarySearchState>.value(
-          value: context.watch<DictionarySearchState>(),
+          // Use parent context here to pass the state into the new route
+          value: context.read<DictionarySearchState>(),
           builder: (innerContext, _) {
             final state = innerContext.watch<DictionarySearchState>();
             
-            return Column( // Back to Box land!
+            return Column(
               children: [
-                // --- STICKY HEADER ---
                 if (state.activeFilters.isNotEmpty)
                   Container(
-                    color: Theme.of(context).scaffoldBackgroundColor,
                     width: double.infinity,
                     padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
                     child: SingleChildScrollView(
@@ -244,10 +247,6 @@ Widget build(BuildContext context) {
                 
                 if (state.activeFilters.isNotEmpty) const Divider(height: 1),
 
-                // --- SCROLLABLE CONTENT ---
-                // Expanded gives bounded height. Stack with StackFit.expand forces 
-                // the CustomScrollView inside the suggestions to take exactly the screen size.
-                // This prevents the 99000px error WITHOUT using shrinkWrap!
                 Expanded(
                   child: Stack(
                     fit: StackFit.expand,
@@ -261,132 +260,143 @@ Widget build(BuildContext context) {
       },
 
       // --- 3. THE SUGGESTIONS BUILDER ---
-      suggestionsBuilder: (BuildContext _, SearchController controller) async {
+      // 2. RENAME to suggestionContext so we don't shadow the main context
+      suggestionsBuilder: (BuildContext suggestionContext, SearchController controller) async {
         final String input = controller.text.trim();
+        
+        // Because we renamed the parameter above, 'context' now correctly 
+        // refers to the parent widget's context where the provider lives!
         final searchState = context.read<DictionarySearchState>();
 
         // CASE 1: EMPTY QUERY (History)
         if (input.isEmpty) {
-          // Wrap in a standard ListView so it handles its own scrolling
-          return [
-            ListView(
-              padding: EdgeInsets.zero,
-              children: const [
-                ListTile(
-                  leading: Icon(Icons.history),
-                  title: Text("History placeholder"),
-                ),
-              ],
-            ),
-          ];
+          return _buildHistorySuggestions();
         }
 
         final segments = input.split(' ');
         final currentWord = segments.last.toLowerCase();
 
         // CASE 2: TAG SUGGESTIONS
-        final tagSuggestions = _getFilterSuggestions(
-          currentWord: currentWord,
-          prefix: '#',
-          data: {'n5': 'JLPT N5', 'common': 'Common Word', 'verb': 'Verb class'},
-          icon: Icons.tag,
-          controller: controller,
-          activeFilters: searchState.activeFilters,
-        );
-
-        if (tagSuggestions != null && tagSuggestions.isNotEmpty) {
-          return [
-            ListView(
-              padding: EdgeInsets.zero,
-              children: tagSuggestions.toList(),
-            ),
-          ];
-        }
+        final tagSuggestions = _buildTagSuggestions(currentWord, controller, searchState.activeFilters);
+        if (tagSuggestions != null) return tagSuggestions;
 
         // CASE 3: POS SUGGESTIONS
-        final posSuggestions = _getFilterSuggestions(
-          currentWord: currentWord,
-          prefix: r'$',
-          data: {'noun': 'Noun', 'adj': 'Adjective', 'adv': 'Adverb'},
-          icon: Icons.category,
-          controller: controller,
-          activeFilters: searchState.activeFilters,
-        );
-
-        if (posSuggestions != null && posSuggestions.isNotEmpty) {
-          return [
-            ListView(
-              padding: EdgeInsets.zero,
-              children: posSuggestions.toList(),
-            ),
-          ];
-        }
+        final posSuggestions = _buildPosSuggestions(currentWord, controller, searchState.activeFilters);
+        if (posSuggestions != null) return posSuggestions;
 
         // CASE 4: SEARCH RESULTS
-        updateSearchResults(input);
-        
-        return [
-          Consumer<DictionarySearchState>(
-            builder: (context, state, child) {
-              
-              // NEW CHECK: Are we searching, but we have no old results to fade out?
-              // (Adjust 'state.results.isEmpty' to match your actual class property)
-              bool hasNoOldResults = state.results.isEmpty; 
-              
-              if (state.isSearching && hasNoOldResults) {
-                // Just show the loading bar if it takes too long, otherwise show nothing.
-                // Do NOT show the DictionarySearchResultWidget yet.
-                return state.showLoading 
-                    ? const Align(
-                        alignment: Alignment.topCenter,
-                        child: LinearProgressIndicator(minHeight: 2.0),
-                      )
-                    : const SizedBox.shrink();
-              }
-
-              // IF WE GET HERE: We either have results to show, OR we are done searching.
-              return Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  // 1. The Loading Bar 
-                  if (state.isSearching && state.showLoading) 
-                    const LinearProgressIndicator(minHeight: 2.0), 
-
-                  // 2. The Results Area
-                  Expanded(
-                    child: IgnorePointer(
-                      ignoring: state.isSearching, 
-                      
-                      // Smoothly fade out old results (if they exist) while typing
-                      child: AnimatedOpacity(
-                        opacity: state.isSearching ? 0.4 : 1.0, 
-                        duration: const Duration(milliseconds: 200), 
-                        
-                        child: DictionarySearchResultWidget(
-                          key: ValueKey('results_$input'),
-                          result: state.results, 
-                          onTap: onSearchResultPressed,
-                          wrapWithScrollView: true, 
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              );
-            },
-          ),
-        ];
+        return _buildSearchResults(input);
       },
-    
-    
-    
-    
     ),
   );
 }
+/// Builds the placeholder list for search history when the query is empty
+  Iterable<Widget> _buildHistorySuggestions() {
+    return [
+      ListView(
+        padding: EdgeInsets.zero,
+        children: const [
+          ListTile(
+            leading: Icon(Icons.history),
+            title: Text("History placeholder"),
+          ),
+        ],
+      ),
+    ];
+  }
 
+  /// Checks for and builds tag-based suggestions (e.g., #n5, #common)
+  Iterable<Widget>? _buildTagSuggestions(String currentWord, SearchController controller, Set<String> activeFilters) {
+    final tagSuggestions = _getFilterSuggestions(
+      currentWord: currentWord,
+      prefix: '#',
+      data: {'n5': 'JLPT N5', 'common': 'Common Word', 'verb': 'Verb class'},
+      icon: Icons.tag,
+      controller: controller,
+      activeFilters: activeFilters,
+    );
 
+    if (tagSuggestions != null && tagSuggestions.isNotEmpty) {
+      return [
+        ListView(
+          padding: EdgeInsets.zero,
+          children: tagSuggestions.toList(),
+        ),
+      ];
+    }
+    return null;
+  }
 
+  /// Checks for and builds Part-of-Speech suggestions (e.g., $noun, $adj)
+  Iterable<Widget>? _buildPosSuggestions(String currentWord, SearchController controller, Set<String> activeFilters) {
+    final posSuggestions = _getFilterSuggestions(
+      currentWord: currentWord,
+      prefix: r'$',
+      data: {'noun': 'Noun', 'adj': 'Adjective', 'adv': 'Adverb'},
+      icon: Icons.category,
+      controller: controller,
+      activeFilters: activeFilters,
+    );
+
+    if (posSuggestions != null && posSuggestions.isNotEmpty) {
+      return [
+        ListView(
+          padding: EdgeInsets.zero,
+          children: posSuggestions.toList(),
+        ),
+      ];
+    }
+    return null;
+  }
+
+  /// Triggers a dictionary search and builds the UI for the results/loading states
+  Iterable<Widget> _buildSearchResults(String input) {
+    updateSearchResults(input);
+    
+    return [
+      Consumer<DictionarySearchState>(
+        builder: (context, state, child) {
+          
+          bool hasNoOldResults = state.results.isEmpty; 
+          
+          // 1. Loading with no previous results
+          if (state.isSearching && hasNoOldResults) {
+            return state.showLoading 
+                ? const Align(
+                    alignment: Alignment.topCenter,
+                    child: LinearProgressIndicator(minHeight: 2.0),
+                  )
+                : const SizedBox.shrink();
+          }
+
+          // 2. We have results to show, or are done searching
+          return Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              if (state.isSearching && state.showLoading) 
+                const LinearProgressIndicator(minHeight: 2.0), 
+
+              Expanded(
+                child: IgnorePointer(
+                  ignoring: state.isSearching, 
+                  child: AnimatedOpacity(
+                    opacity: state.isSearching ? 0.4 : 1.0, 
+                    duration: const Duration(milliseconds: 200), 
+                    child: DictionarySearchResultWidget(
+                      key: ValueKey('results_$input'),
+                      result: state.results, 
+                      onTap: onSearchResultPressed,
+                      wrapWithScrollView: true, 
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          );
+        },
+      ),
+    ];
+  }
 
   Iterable<Widget>? _getFilterSuggestions({
     required String currentWord,
