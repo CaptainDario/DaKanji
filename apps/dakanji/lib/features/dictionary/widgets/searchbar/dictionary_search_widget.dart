@@ -6,6 +6,7 @@ import 'package:da_db/database/da_db.dart';
 import 'package:da_db/database/db_queries/dictionary_search/dictionary_match.dart';
 import 'package:da_db/database/db_queries/dictionary_search/dictionary_search_params.dart';
 import 'package:da_db/database/db_queries/dictionary_search/dictionary_search_result.dart';
+import 'package:da_db/util/da_db_search_manager.dart';
 import 'package:da_kanji_mobile/features/dictionary/widgets/searchbar/active_filters_row.dart';
 import 'package:da_kanji_mobile/features/dictionary/widgets/searchbar/draw_button.dart';
 import 'package:da_kanji_mobile/features/dictionary/widgets/searchbar/example_dictionary_search_popup_button.dart';
@@ -128,7 +129,7 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
       if(widget.initialSearch != initialSearch){
         searchInputController.text = widget.initialSearch;
         initialSearch = widget.initialSearch;
-        await updateSearchResults(initialSearch);
+        updateSearchResults(initialSearch);
       }
       if(mounted) {
         setState(() {});
@@ -153,18 +154,8 @@ Widget build(BuildContext context) {
     child: SearchAnchor(
       searchController: searchInputController,
       dividerColor: Colors.transparent,
-      viewTrailing: [
-        PasteClearButton(
-          controller: searchInputController,
-          onPressed: onClipboardButtonPressed,
-        ),
-        if(widget.includeDrawButton)
-          DrawButton(controller: searchInputController),
-        RadicalButton(
-          onPressed: showRadicalPopup,
-        ),
-      ],
-
+      
+      // --- 1. THE SEARCH BAR ITSELF ---
       builder: (BuildContext context, SearchController controller) {
         return SearchBar(
           controller: controller,
@@ -184,15 +175,12 @@ Widget build(BuildContext context) {
           padding: const WidgetStatePropertyAll(
             EdgeInsets.symmetric(horizontal: 12.0)
           ),
-          
-          // --- THE BADGE IS NOW ON THE LEFT SEARCH ICON ---
           leading: context.watch<DictionarySearchState>().activeFilters.isEmpty 
             ? const Icon(Icons.search) 
             : Badge(
                 label: Text('${context.watch<DictionarySearchState>().activeFilters.length}'),
                 child: const Icon(Icons.search),
               ),
-
           onTap: () {
             controller.openView();
           },
@@ -201,10 +189,8 @@ Widget build(BuildContext context) {
             if (text.isNotEmpty && !controller.isOpen) {
               controller.openView();
             }
-            await updateSearchResults(text);
+            updateSearchResults(text);
           },
-          
-          // Trailing area is clean again
           trailing: [
             PasteClearButton(
               controller: controller,
@@ -226,146 +212,178 @@ Widget build(BuildContext context) {
           ],
         );
       },
-      viewBuilder: (suggestions) {
+
+      
+      
+      // --- 2. THE VIEW BUILDER ---
+      viewBuilder: (Iterable<Widget> suggestions) {
         return ChangeNotifierProvider<DictionarySearchState>.value(
           value: context.watch<DictionarySearchState>(),
-          child: Column(
-            children: suggestions.toList(),
-          ),
+          builder: (innerContext, _) {
+            final state = innerContext.watch<DictionarySearchState>();
+            
+            return Column( // Back to Box land!
+              children: [
+                // --- STICKY HEADER ---
+                if (state.activeFilters.isNotEmpty)
+                  Container(
+                    color: Theme.of(context).scaffoldBackgroundColor,
+                    width: double.infinity,
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: ActiveFiltersRow(
+                        activeFilters: state.activeFilters.toList(),
+                        onDeleted: (filter) {
+                          state.activeFilters.remove(filter);
+                          updateSearchResults(searchInputController.text.trim());
+                        },
+                      ),
+                    ),
+                  ),
+                
+                if (state.activeFilters.isNotEmpty) const Divider(height: 1),
+
+                // --- SCROLLABLE CONTENT ---
+                // Expanded gives bounded height. Stack with StackFit.expand forces 
+                // the CustomScrollView inside the suggestions to take exactly the screen size.
+                // This prevents the 99000px error WITHOUT using shrinkWrap!
+                Expanded(
+                  child: Stack(
+                    fit: StackFit.expand,
+                    children: suggestions.toList(),
+                  ),
+                ),
+              ],
+            );
+          },
         );
       },
-      suggestionsBuilder: (BuildContext context, SearchController controller) async {
-          final String input = controller.text;
-          
-          // 1. We keep our top-level list to hold the static filters + the animated body
-          List<Widget> topLevelWidgets = [];
 
-          // --- PERSISTENT FILTERS (No animation, stays solid at the top) ---
-          topLevelWidgets.add(
-            StatefulBuilder(
-              builder: (context, setInnerState) {
-                if (context.read<DictionarySearchState>().activeFilters.isEmpty)
-                  return const SizedBox.shrink();
-                
-                return Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-                      child: SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: ActiveFiltersRow(
-                          activeFilters: context.read<DictionarySearchState>().activeFilters.toList(),
-                          onDeleted: (filter) {
-                            setState(() => 
-                              context.read<DictionarySearchState>().activeFilters.remove(filter)
-                            );
-                            setInnerState(() {});
-                            updateSearchResults(controller.text.trim());
-                          },
+      // --- 3. THE SUGGESTIONS BUILDER ---
+      suggestionsBuilder: (BuildContext _, SearchController controller) async {
+        final String input = controller.text.trim();
+        final searchState = context.read<DictionarySearchState>();
+
+        // CASE 1: EMPTY QUERY (History)
+        if (input.isEmpty) {
+          // Wrap in a standard ListView so it handles its own scrolling
+          return [
+            ListView(
+              padding: EdgeInsets.zero,
+              children: const [
+                ListTile(
+                  leading: Icon(Icons.history),
+                  title: Text("History placeholder"),
+                ),
+              ],
+            ),
+          ];
+        }
+
+        final segments = input.split(' ');
+        final currentWord = segments.last.toLowerCase();
+
+        // CASE 2: TAG SUGGESTIONS
+        final tagSuggestions = _getFilterSuggestions(
+          currentWord: currentWord,
+          prefix: '#',
+          data: {'n5': 'JLPT N5', 'common': 'Common Word', 'verb': 'Verb class'},
+          icon: Icons.tag,
+          controller: controller,
+          activeFilters: searchState.activeFilters,
+        );
+
+        if (tagSuggestions != null && tagSuggestions.isNotEmpty) {
+          return [
+            ListView(
+              padding: EdgeInsets.zero,
+              children: tagSuggestions.toList(),
+            ),
+          ];
+        }
+
+        // CASE 3: POS SUGGESTIONS
+        final posSuggestions = _getFilterSuggestions(
+          currentWord: currentWord,
+          prefix: r'$',
+          data: {'noun': 'Noun', 'adj': 'Adjective', 'adv': 'Adverb'},
+          icon: Icons.category,
+          controller: controller,
+          activeFilters: searchState.activeFilters,
+        );
+
+        if (posSuggestions != null && posSuggestions.isNotEmpty) {
+          return [
+            ListView(
+              padding: EdgeInsets.zero,
+              children: posSuggestions.toList(),
+            ),
+          ];
+        }
+
+        // CASE 4: SEARCH RESULTS
+        updateSearchResults(input);
+        
+        return [
+          Consumer<DictionarySearchState>(
+            builder: (context, state, child) {
+              
+              // NEW CHECK: Are we searching, but we have no old results to fade out?
+              // (Adjust 'state.results.isEmpty' to match your actual class property)
+              bool hasNoOldResults = state.results.isEmpty; 
+              
+              if (state.isSearching && hasNoOldResults) {
+                // Just show the loading bar if it takes too long, otherwise show nothing.
+                // Do NOT show the DictionarySearchResultWidget yet.
+                return state.showLoading 
+                    ? const Align(
+                        alignment: Alignment.topCenter,
+                        child: LinearProgressIndicator(minHeight: 2.0),
+                      )
+                    : const SizedBox.shrink();
+              }
+
+              // IF WE GET HERE: We either have results to show, OR we are done searching.
+              return Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  // 1. The Loading Bar 
+                  if (state.isSearching && state.showLoading) 
+                    const LinearProgressIndicator(minHeight: 2.0), 
+
+                  // 2. The Results Area
+                  Expanded(
+                    child: IgnorePointer(
+                      ignoring: state.isSearching, 
+                      
+                      // Smoothly fade out old results (if they exist) while typing
+                      child: AnimatedOpacity(
+                        opacity: state.isSearching ? 0.4 : 1.0, 
+                        duration: const Duration(milliseconds: 200), 
+                        
+                        child: DictionarySearchResultWidget(
+                          key: ValueKey('results_$input'),
+                          result: state.results, 
+                          onTap: onSearchResultPressed,
+                          wrapWithScrollView: true, 
                         ),
                       ),
                     ),
-                    const Divider(height: 1),
-                  ],
-                );
-              }
-            )
-          );
-
-          // 2. Determine what the dynamic content below the filters should be
-          // CRITICAL: Every distinct view MUST have a unique ValueKey so the AnimatedSwitcher 
-          // knows when to trigger the animation!
-          Widget dynamicContent;
-
-          if (input.trim().isEmpty) {
-            dynamicContent = Column(
-              key: const ValueKey('history'),
-              mainAxisSize: MainAxisSize.min,
-              children: const [ListTile(title: Text("History placeholder"))],
-            );
-          }
-          else {
-            final segments = input.split(' ');
-            final currentWord = segments.last.toLowerCase();
-
-            final tagSuggestions = _getFilterSuggestions(
-              currentWord: currentWord,
-              prefix: '#',
-              // TODO
-              data: {'n5': 'JLPT N5', 'common': 'Common Word', 'verb': 'Verb class'},
-              icon: Icons.tag,
-              controller: controller,
-              activeFilters: context.read<DictionarySearchState>().activeFilters,
-            );
-
-            final posSuggestions = _getFilterSuggestions(
-              currentWord: currentWord,
-              prefix: r'$',
-              // TODO
-              data: {'noun': 'Noun', 'adj': 'Adjective', 'adv': 'Adverb'},
-              icon: Icons.category,
-              controller: controller,
-              activeFilters: context.read<DictionarySearchState>().activeFilters,
-            );
-
-            if (tagSuggestions != null) {
-              dynamicContent = Column(
-                key: const ValueKey('tags'),
-                mainAxisSize: MainAxisSize.min,
-                children: tagSuggestions.toList(),
-              );
-            }
-            else if (posSuggestions != null) {
-              dynamicContent = Column(
-                key: const ValueKey('pos'),
-                mainAxisSize: MainAxisSize.min,
-                children: posSuggestions.toList(),
-              );
-            }
-            else {
-              // Normal Search
-              final results = await updateSearchResults(input.trim());
-              if (results != null) {
-                dynamicContent = DictionarySearchResultWidget(
-                  key: ValueKey('results_${input}'), // Unique key for results
-                  result: results,
-                  onTap: onSearchResultPressed,
-                );
-              }
-              else {
-                dynamicContent = const SizedBox.shrink(key: ValueKey('empty'));
-              }
-            }
-          }
-
-          // --- 3. THE MAGIC: Wrap the dynamic content in an AnimatedSwitcher ---
-          topLevelWidgets.add(
-            AnimatedSwitcher(
-              duration: const Duration(milliseconds: 250),
-              switchInCurve: Curves.easeOutCubic,
-              switchOutCurve: Curves.easeInCubic,
-              transitionBuilder: (Widget child, Animation<double> animation) {
-                // Combining Fade and Size makes it look like a smooth dropdown expansion
-                return FadeTransition(
-                  opacity: animation,
-                  child: SizeTransition(
-                    sizeFactor: animation,
-                    axisAlignment: -1.0, // Anchors the animation to the top
-                    child: child,
                   ),
-                );
-              },
-              child: dynamicContent,
-            )
-          );
-
-          return topLevelWidgets;
-        },
-      ),
-    );
-  }
+                ],
+              );
+            },
+          ),
+        ];
+      },
+    
+    
+    
+    
+    ),
+  );
+}
 
 
 
@@ -419,7 +437,7 @@ Widget build(BuildContext context) {
       bodyHeaderDistance: 0,
       alignment: Alignment.bottomCenter,
       onDismissCallback: (dismissType) async {
-        await updateSearchResults(searchInputController.text);
+        updateSearchResults(searchInputController.text);
         radicalPopupOpen = false;
       },
       body: RadicalPopupBody(
@@ -460,7 +478,7 @@ Widget build(BuildContext context) {
       String data = (await Clipboard.getData('text/plain'))?.text ?? "";
       data = data.replaceAll("\n", " ");
       searchInputController.text = data;
-      await updateSearchResults(data);
+      updateSearchResults(data);
 
       if(searchInputController.isOpen) searchInputController.closeView(null);
     }
@@ -469,18 +487,30 @@ Widget build(BuildContext context) {
   }
 
   /// Searches in the dictionary and updates the DictionarySearchState
-  Future<DictionarySearchResult?> updateSearchResults(String query) async {
+  void updateSearchResults(String query) async {
+    final searchState = context.read<DictionarySearchState>();
     
+    // 1. Instantly update state to "Pending"
+    searchState.isSearching = true; 
+    searchState.showLoading = false; 
+    searchState.startLoadingTimer(); 
+      
     GetIt.I<DaDbSearchManager>().search(
       DictionarySearchParams(
         searchInput: query, options: ProcessorOptions()
       ),
       onResult: (p0) {
+        if (!mounted) return; 
 
-    return results;
-
+        // 2. Search is done! Reset flags and update results
+        searchState.cancelLoadingTimer();
+        searchState.isSearching = false;
+        searchState.showLoading = false; 
+        
+        searchState.results = p0 ?? DictionarySearchResult.empty();
+      }
+    );
   }
 
 
 }
-
