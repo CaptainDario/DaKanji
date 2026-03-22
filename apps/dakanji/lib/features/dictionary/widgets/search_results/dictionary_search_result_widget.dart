@@ -8,15 +8,18 @@ import 'package:da_kanji_mobile/features/dictionary/widgets/term/term_entry_widg
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_util/widgets/conditional_parent_widget.dart';
 import 'package:provider/provider.dart';
 
 class DictionarySearchResultWidget extends StatefulWidget {
 
   final DictionarySearchResult result;
+  final bool wrapWithScrollView;
   final Function(DictionaryMatch match)? onTap;
 
   const DictionarySearchResultWidget({
     required this.result,
+    required this.wrapWithScrollView,
     this.onTap,
     super.key
   });
@@ -41,16 +44,34 @@ class _DictionarySearchResultWidgetState extends State<DictionarySearchResultWid
 
   @override
   Widget build(BuildContext context) {
-    if (widget.result.isEmpty) return _buildEmptyState();
 
-    return CustomScrollView(
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      slivers: [
-        _buildKanjiSection(context.watch<SearchProfilesEntry>()),
-        ..._buildDictionarySections(context.watch<SearchProfilesEntry>()),
-        const SliverToBoxAdapter(child: SizedBox(height: 20)),
-      ],
+    Widget content;
+    
+    if (widget.result.isEmpty) {
+      // Wrap empty state in SliverFillRemaining so it centers in the CustomScrollView
+      content = SliverFillRemaining(
+        hasScrollBody: false, 
+        child: _buildEmptyState()
+      );
+    }
+    else {
+      content = SliverMainAxisGroup(
+        slivers: [
+          _buildKanjiSection(context.watch<SearchProfilesEntry>()),
+          ..._buildDictionarySections(context.watch<SearchProfilesEntry>()),
+          const SliverToBoxAdapter(child: SizedBox(height: 20)),
+        ],
+      );
+    }
+
+    return ConditionalParentWidget(
+      condition: widget.wrapWithScrollView,
+      child: content,
+      conditionalBuilder: (child) {
+        return CustomScrollView(
+          slivers: [child]
+        );
+      },
     );
     
   }
@@ -311,20 +332,17 @@ class _DictionarySearchResultWidgetState extends State<DictionarySearchResultWid
     
     return SliverList.builder(
       key: ValueKey("${keyPrefix}_List"),
-      addAutomaticKeepAlives: false,
+      addAutomaticKeepAlives: true,
       itemCount: matches.length,
-      itemBuilder: (context, i) => RepaintBoundary(
-        key: ValueKey("${keyPrefix}_Item_$i"),
-        child: TermEntryWidget(
-          matches[i],
-          showTags: profile.showTags,
-          showMetaEntries: profile.showMetaEntries,
-          definitionsMaxHeight: profile.definitionsMaxHeight,
-          useKatakanaForFurigana: profile.useKatakanaForFurigana,
-          showAudioPlaybackButtons: false,
-          compactMode: profile.definitionsCompactMode,
-          onTap: widget.onTap,
-        ),
+      itemBuilder: (context, i) => TermEntryWidget(
+        matches[i],
+        showTags: profile.showTags,
+        showMetaEntries: profile.showMetaEntries,
+        definitionsMaxHeight: profile.definitionsMaxHeight,
+        useKatakanaForFurigana: profile.useKatakanaForFurigana,
+        showAudioPlaybackButtons: false,
+        compactMode: profile.definitionsCompactMode,
+        onTap: widget.onTap,
       ),
     );
   }
