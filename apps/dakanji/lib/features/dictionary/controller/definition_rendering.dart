@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'dart:isolate';
 import 'package:css_inline_flutter/css_inline_flutter.dart';
-import 'package:da_kanji_mobile/features/dictionary/widgets/term/structured_content/structured_content_css.dart';
-import 'package:da_kanji_mobile/features/dictionary/widgets/term/structured_content/structured_content_to_html.dart';
+import 'package:da_kanji_mobile/features/dictionary/widgets/term/structured_content/html/structured_content_css.dart';
+import 'package:da_kanji_mobile/features/dictionary/widgets/term/structured_content/html/structured_content_to_html.dart';
 
 /// Data required to render a Yomitan definition into an HTML string.
 typedef RenderRequest = ({

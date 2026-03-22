@@ -1,5 +1,5 @@
 import 'package:da_db/database/da_db.dart';
-import 'package:da_kanji_mobile/features/dictionary/widgets/term/structured_content/html_help_attribute_to_widget_factory.dart';
+import 'package:da_kanji_mobile/features/dictionary/widgets/term/structured_content/html/html_help_attribute_to_widget_factory.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
 import 'package:flutter_util/widget_utils/future_image_provider.dart';

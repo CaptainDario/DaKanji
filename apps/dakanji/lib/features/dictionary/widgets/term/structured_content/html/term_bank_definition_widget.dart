@@ -1,12 +1,8 @@
 import 'dart:async';
 
-import 'package:css_inline_flutter/css_inline_flutter.dart';
 import 'package:da_db/database/da_db.dart';
 import 'package:da_kanji_mobile/features/dictionary/controller/definition_rendering.dart';
-import 'package:da_kanji_mobile/features/dictionary/widgets/term/structured_content/custom_html_to_widget_factory.dart';
-import 'package:da_kanji_mobile/features/dictionary/widgets/term/structured_content/structured_content_css.dart';
-import 'package:da_kanji_mobile/features/dictionary/widgets/term/structured_content/structured_content_to_html.dart';
-import 'package:flutter/foundation.dart';
+import 'package:da_kanji_mobile/features/dictionary/widgets/term/structured_content/html/custom_html_to_widget_factory.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_util/widgets/conditional_parent_widget.dart';
 import 'package:flutter_util/widgets/smart_html_selection.dart';
@@ -101,6 +97,7 @@ class _TermBankDefinitionWidgetState extends State<TermBankDefinitionWidget> {
             asyncSnapshot.data!,
             buildAsync: false,
             enableCaching: true,
+            renderMode: RenderMode.column,
             textStyle: const TextStyle(
               overflow: TextOverflow.ellipsis,
             ),

@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:da_db/database/term/term_bank_v3_entry.dart';
 import 'package:da_db/util/data_converters/string_extensions.dart';
 import 'package:da_kanji_mobile/features/dictionary/widgets/tag/tag_widget.dart';
-import 'package:da_kanji_mobile/features/dictionary/widgets/term/term_bank_definition_widget.dart';
+import 'package:da_kanji_mobile/features/dictionary/widgets/term/structured_content/html/term_bank_definition_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_util/widgets/cut_and_fade_long_widget_wrapper.dart';
 
