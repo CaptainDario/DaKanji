@@ -283,7 +283,20 @@ void _renderAttributes(Map node, StringBuffer buffer) {
 
 void _renderStyles(Map node, StringBuffer buffer) {
   if (node.containsKey('style') && node['style'] is Map) {
-    String css = _mapToCss(node['style']);
+    Map<String, dynamic> styles = Map<String, dynamic>.from(node['style']);
+
+    // Concisely convert ANY percentage value to 'em' across all properties
+    styles.forEach((key, value) {
+      if (value is String && value.contains('%')) {
+        styles[key] = value.replaceAllMapped(RegExp(r'([0-9.]+)\s*%'), (m) {
+          final percent = double.tryParse(m.group(1)!) ?? 0.0;
+          // Standard CSS conversion: 100% = 1em
+          return '${(percent / 100).toStringAsFixed(2)}em'; 
+        });
+      }
+    });
+
+    String css = _mapToCss(styles);
     if (css.isNotEmpty) {
       buffer.write(' style="$css"');
     }
