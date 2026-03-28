@@ -152,8 +152,9 @@ String _renderList(Map node) {
   
   if (node.containsKey('style') && node['style'] is Map) {
     String css = _mapToCss(node['style']);
-    buffer.write(' style="$defaultStyles $css"');
-  } else {
+    buffer.write(' style="$defaultStyles ${_escapeAttribute(css)}"');
+  }
+  else {
     buffer.write(' style="$defaultStyles"');
   }
 
@@ -250,7 +251,7 @@ String _renderInlineImage(Map node) {
   if (node['appearance'] == 'monochrome') styles['filter'] = 'grayscale(100%)';
 
   if (styles.isNotEmpty) {
-     buffer.write(' style="${_mapToCss(styles)}"');
+    buffer.write(' style="${_escapeAttribute(_mapToCss(styles))}"');
   }
 
   if (node['collapsed'] == true) buffer.write(' data-sc-collapsed="true"');
@@ -298,7 +299,7 @@ void _renderStyles(Map node, StringBuffer buffer) {
 
     String css = _mapToCss(styles);
     if (css.isNotEmpty) {
-      buffer.write(' style="$css"');
+      buffer.write(' style="${_escapeAttribute(css)}"');
     }
   }
 }
