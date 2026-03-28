@@ -1,282 +1,226 @@
+import 'dart:collection';
 import 'package:collection/collection.dart';
 import 'package:language_processing/src/japanese/conjugation/yomitan_conjugation_data/japanese_transforms.dart';
 
-/// Represents a single step in a deconjugation chain.
-class TraceFrame {
-  final String transformId;
+
+/// Represents a single mutation in a chain of deconjugations.
+class InflectionStep {
+  final String groupId;
   final int ruleIndex;
-  final String text;
+  final String surfaceTerm;
 
-  TraceFrame(this.transformId, this.ruleIndex, this.text);
-
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is TraceFrame &&
-          runtimeType == other.runtimeType &&
-          transformId == other.transformId &&
-          ruleIndex == other.ruleIndex &&
-          text == other.text;
-
-  @override
-  int get hashCode => transformId.hashCode ^ ruleIndex.hashCode ^ text.hashCode;
+  InflectionStep(this.groupId, this.ruleIndex, this.surfaceTerm);
 }
 
-/// Represents a potential deconjugated form of a source word.
-class TransformedText {
-  final String text;
-  final int conditions;
-  final List<TraceFrame> trace;
+/// Represents a potential dictionary form discovered during traversal.
+class CandidateNode {
+  final String term;
+  final int activeMask;
+  final List<InflectionStep> history;
 
-  TransformedText(this.text, this.conditions, this.trace);
+  CandidateNode(this.term, this.activeMask, this.history);
 
-  /// Extracts the chain of transform IDs from the trace.
-  List<String> get transformIds => trace.map((f) => f.transformId).toList();
+  List<String> get pathIds => history.map((h) => h.groupId).toList();
 }
 
-/// Represents user-facing information about an inflection rule.
-class InflectionRuleInfo {
-  final String name;
-  final String? description;
+/// Metadata about a successfully applied rule group.
+class RuleDescription {
+  final String title;
+  final String? details;
 
-  InflectionRuleInfo({required this.name, this.description});
+  RuleDescription({required this.title, this.details});
 }
 
-// Internal representation of a rule using integer flags for conditions.
-class _FlagRule {
-  final RegExp isInflected;
-  final String Function(String) deinflect;
-  final int conditionsIn;
-  final int conditionsOut;
+// Internal compiled structures for fast bitwise execution
+class _CompiledRule {
+  final RegExp matcher;
+  final String Function(String) apply;
+  final int requiredMask;
+  final int resultingMask;
 
-  _FlagRule({
-    required this.isInflected,
-    required this.deinflect,
-    required this.conditionsIn,
-    required this.conditionsOut,
-  });
+  _CompiledRule(this.matcher, this.apply, this.requiredMask, this.resultingMask);
 }
 
-// Internal representation of a transform containing rules with integer flags.
-class _FlagTransform {
+class _CompiledGroup {
   final String id;
-  final String name;
-  final String? description;
-  final RegExp heuristic;
-  final List<_FlagRule> rules;
+  final String title;
+  final String? details;
+  final RegExp quickReject;
+  final List<_CompiledRule> rules;
 
-  _FlagTransform({
-    required this.id,
-    required this.name,
-    this.description,
-    required this.heuristic,
-    required this.rules,
-  });
+  _CompiledGroup(this.id, this.title, this.details, this.quickReject, this.rules);
 }
 
-class LanguageTransformer {
-  int _nextFlagIndex = 0;
-  final List<_FlagTransform> _transforms = [];
-  final Map<String, int> _conditionTypeToConditionFlagsMap = {};
-  final Map<String, int> _partOfSpeechToConditionFlagsMap = {};
+/// Manages the resolution and allocation of bitwise flags for grammar conditions.
+class _ConditionRegistry {
+  final Map<String, int> masks = {};
+  final Map<String, int> dictionaryMasks = {};
+  int _nextBit = 0;
 
-  /// Resets the transformer's state.
-  void clear() {
-    _nextFlagIndex = 0;
-    _transforms.clear();
-    _conditionTypeToConditionFlagsMap.clear();
-    _partOfSpeechToConditionFlagsMap.clear();
-  }
+  void compile(Map<String, ConditionInfo> conditions) {
+    var pending = conditions.entries.toList();
 
-  void addDescriptor(LanguageTransformDescriptor descriptor) {
-    final conditionEntries = descriptor.conditions.entries.toList();
-    final conditionFlagsMapResult =
-        _getConditionFlagsMap(conditionEntries, _nextFlagIndex);
-    final conditionFlagsMap = conditionFlagsMapResult.conditionFlagsMap;
-    _nextFlagIndex = conditionFlagsMapResult.nextFlagIndex;
+    // Topological resolution of nested conditions
+    while (pending.isNotEmpty) {
+      final stillPending = <MapEntry<String, ConditionInfo>>[];
 
-    for (final transformEntry in descriptor.transforms.entries) {
-      final transformId = transformEntry.key;
-      final transformData = transformEntry.value;
+      for (final entry in pending) {
+        final subs = entry.value.subConditions;
+        
+        if (subs == null) {
+          masks[entry.key] = 1 << _nextBit++;
+        } else {
+          int combined = 0;
+          bool ready = true;
+          for (final sub in subs) {
+            if (!masks.containsKey(sub)) {
+              ready = false;
+              break;
+            }
+            combined |= masks[sub]!;
+          }
 
-      final flagRules = <_FlagRule>[];
-      for (final rule in transformData.rules) {
-        final flagsIn =
-            _getConditionFlagsStrict(conditionFlagsMap, rule.conditionsIn);
-        final flagsOut =
-            _getConditionFlagsStrict(conditionFlagsMap, rule.conditionsOut);
-        if (flagsIn == null || flagsOut == null) {
-          throw Exception(
-              'Invalid conditionsIn or conditionsOut for transform $transformId');
+          if (ready) {
+            masks[entry.key] = combined;
+          } else {
+            stillPending.add(entry);
+          }
         }
-
-        flagRules.add(_FlagRule(
-          isInflected: rule.isInflected,
-          deinflect: rule.deinflect,
-          conditionsIn: flagsIn,
-          conditionsOut: flagsOut,
-        ));
       }
 
-      final heuristic = RegExp(
-          transformData.rules.map((r) => r.isInflected.pattern).join('|'));
+      if (stillPending.length == pending.length) {
+        throw StateError('Circular dependency detected in grammar conditions.');
+      }
+      pending = stillPending;
+    }
 
-      _transforms.add(_FlagTransform(
-        id: transformId,
-        // Assumes `transformData` has `name` and optional `description` fields.
-        name: transformData.name,
-        description: transformData.description,
-        rules: flagRules,
-        heuristic: heuristic,
+    // Isolate dictionary forms
+    for (final entry in conditions.entries) {
+      if (entry.value.isDictionaryForm) {
+        dictionaryMasks[entry.key] = masks[entry.key]!;
+      }
+    }
+  }
+
+  int resolveMask(List<String> types) {
+    int mask = 0;
+    for (final t in types) {
+      mask |= (masks[t] ?? 0);
+    }
+    return mask;
+  }
+}
+
+/// The main engine that evaluates word morphology.
+class DeinflectionEngine {
+  final List<_CompiledGroup> _groups = [];
+  final _ConditionRegistry _registry = _ConditionRegistry();
+
+  void loadGrammar(LanguageTransformDescriptor data) {
+    _groups.clear();
+    _registry.masks.clear();
+    _registry.dictionaryMasks.clear();
+    _registry._nextBit = 0;
+
+    _registry.compile(data.conditions);
+
+    for (final entry in data.transforms.entries) {
+      final rules = <_CompiledRule>[];
+      final patterns = <String>[];
+
+      for (final r in entry.value.rules) {
+        // We cast back to InflectionPattern because we changed the interface
+        final pattern = r;
+        
+        final reqMask = _registry.resolveMask(pattern.expectedFlags);
+        final resMask = _registry.resolveMask(pattern.nextFlags);
+
+        rules.add(_CompiledRule(
+          pattern.matchPattern,
+          pattern.revert,
+          reqMask,
+          resMask,
+        ));
+        patterns.add(pattern.matchPattern.pattern);
+      }
+
+      _groups.add(_CompiledGroup(
+        entry.key,
+        entry.value.name,
+        entry.value.description,
+        RegExp(patterns.join('|')),
+        rules,
       ));
     }
+  }
 
-    for (final entry in conditionEntries) {
-      final type = entry.key;
-      final conditionInfo = entry.value;
-      final flags = conditionFlagsMap[type];
-      if (flags == null) continue;
-      _conditionTypeToConditionFlagsMap[type] = flags;
-      if (conditionInfo.isDictionaryForm) {
-        _partOfSpeechToConditionFlagsMap[type] = flags;
-      }
+  int maskForPartsOfSpeech(List<String> pos) {
+    int mask = 0;
+    for (final p in pos) {
+      mask |= (_registry.dictionaryMasks[p] ?? 0);
     }
+    return mask;
   }
 
-  int getConditionFlagsFromPartsOfSpeech(List<String> partsOfSpeech) {
-    return _getConditionFlags(_partOfSpeechToConditionFlagsMap, partsOfSpeech);
-  }
+  int maskForCondition(String condition) => _registry.masks[condition] ?? 0;
 
-  int getConditionFlagsFromConditionType(String conditionType) {
-    return _getConditionFlags(
-        _conditionTypeToConditionFlagsMap, [conditionType]);
-  }
+  /// Analyzes a string and returns all valid morphological paths.
+  List<CandidateNode> analyze(String input) {
+    // Breadth-first search queue
+    final queue = Queue<CandidateNode>()..add(CandidateNode(input, 0, []));
+    final validPaths = <CandidateNode>[];
 
-  /// Deconjugates a given source word, returning all possible transformations.
-  List<TransformedText> transform(String sourceText) {
-    final results = [TransformedText(sourceText, 0, [])];
+    while (queue.isNotEmpty) {
+      final current = queue.removeFirst();
+      validPaths.add(current);
 
-    for (var i = 0; i < results.length; ++i) {
-      final current = results[i];
+      for (final group in _groups) {
+        if (!group.quickReject.hasMatch(current.term)) continue;
 
-      for (final transform in _transforms) {
-        if (!transform.heuristic.hasMatch(current.text)) {
-          continue;
-        }
+        for (var i = 0; i < group.rules.length; i++) {
+          final rule = group.rules[i];
 
-        for (var j = 0; j < transform.rules.length; j++) {
-          final rule = transform.rules[j];
-          if (!conditionsMatch(current.conditions, rule.conditionsIn)) {
-            continue;
-          }
-          if (!rule.isInflected.hasMatch(current.text)) {
-            continue;
-          }
+          // Check condition overlaps safely
+          if (!_isCompatible(current.activeMask, rule.requiredMask)) continue;
+          if (!rule.matcher.hasMatch(current.term)) continue;
 
-          final isCycle = current.trace.any((frame) =>
-              frame.transformId == transform.id &&
-              frame.ruleIndex == j &&
-              frame.text == current.text);
-          if (isCycle) {
-            continue;
-          }
+          // Prevent infinite cyclic loops
+          final isCycle = current.history.any((step) =>
+              step.groupId == group.id &&
+              step.ruleIndex == i &&
+              step.surfaceTerm == current.term);
 
-          final newText = rule.deinflect(current.text);
+          if (isCycle) continue;
 
-          final newTrace = [
-            TraceFrame(transform.id, j, current.text),
-            ...current.trace
-          ];
-
-          results.add(TransformedText(newText, rule.conditionsOut, newTrace));
+          final step = InflectionStep(group.id, i, current.term);
+          final nextTerm = rule.apply(current.term);
+          
+          queue.add(CandidateNode(
+            nextTerm,
+            rule.resultingMask,
+            [step, ...current.history], // Prepend to maintain reverse order
+          ));
         }
       }
     }
-    return results;
+
+    return validPaths;
   }
 
-  /// Gets user-friendly information for a chain of inflection rule IDs.
-  List<InflectionRuleInfo> getUserFacingInflectionRules(
-      List<String> inflectionRuleIds) {
-    return inflectionRuleIds.map((ruleId) {
-      final fullRule = _transforms.firstWhereOrNull(
-        (transform) => transform.id == ruleId,
-      );
-
-      if (fullRule == null) {
-        return InflectionRuleInfo(name: ruleId);
-      }
-
-      return InflectionRuleInfo(
-        name: fullRule.name,
-        description: fullRule.description,
+  List<RuleDescription> getDescriptions(List<String> pathIds) {
+    return pathIds.map((id) {
+      final group = _groups.firstWhereOrNull((g) => g.id == id);
+      return RuleDescription(
+        title: group?.title ?? id,
+        details: group?.details,
       );
     }).toList();
   }
 
-  /// Checks if the conditions match. If currentConditions is 0 (initial state),
-  /// it always matches. Otherwise, there must be an overlap.
-  static bool conditionsMatch(int currentConditions, int nextConditions) {
-    return currentConditions == 0 || (currentConditions & nextConditions) != 0;
+  static bool _isCompatible(int currentMask, int requiredMask) {
+    return currentMask == 0 || (currentMask & requiredMask) != 0;
   }
 
-  ({Map<String, int> conditionFlagsMap, int nextFlagIndex})
-      _getConditionFlagsMap(
-          List<MapEntry<String, ConditionInfo>> conditions, int nextFlagIndex) {
-    final conditionFlagsMap = <String, int>{};
-    var targets = List.of(conditions);
-
-    while (targets.isNotEmpty) {
-      final nextTargets = <MapEntry<String, ConditionInfo>>[];
-      for (final target in targets) {
-        final type = target.key;
-        final condition = target.value;
-        final subConditions = condition.subConditions;
-        int? flags;
-
-        if (subConditions == null) {
-          if (nextFlagIndex >= 32) {
-            throw Exception('Maximum number of conditions (32) was exceeded');
-          }
-          flags = 1 << nextFlagIndex;
-          nextFlagIndex++;
-        } else {
-          flags = _getConditionFlagsStrict(conditionFlagsMap, subConditions);
-          if (flags == null) {
-            nextTargets.add(target);
-            continue;
-          }
-        }
-        conditionFlagsMap[type] = flags;
-      }
-      if (nextTargets.length == targets.length) {
-        throw Exception(
-            'Cycle in sub-condition declaration or unresolved condition');
-      }
-      targets = nextTargets;
-    }
-    return (conditionFlagsMap: conditionFlagsMap, nextFlagIndex: nextFlagIndex);
-  }
-
-  int? _getConditionFlagsStrict(
-      Map<String, int> conditionFlagsMap, List<String> conditionTypes) {
-    int flags = 0;
-    for (final conditionType in conditionTypes) {
-      final flags2 = conditionFlagsMap[conditionType];
-      if (flags2 == null) {
-        return null;
-      }
-      flags |= flags2;
-    }
-    return flags;
-  }
-
-  int _getConditionFlags(
-      Map<String, int> conditionFlagsMap, List<String> conditionTypes) {
-    int flags = 0;
-    for (final conditionType in conditionTypes) {
-      flags |= conditionFlagsMap[conditionType] ?? 0;
-    }
-    return flags;
-  }
+  // Exposed for tests
+  static bool checkOverlap(int a, int b) => _isCompatible(a, b);
 }

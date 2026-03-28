@@ -29,7 +29,7 @@ class Transform {
   final String name;
   final String description;
   final List<I18nInfo> i18n;
-  final List<Rule<String>> rules;
+  final List<InflectionPattern<String>> rules;
 
   const Transform({
     required this.name,
@@ -82,9 +82,9 @@ const fuVerbTeConjugations = [
   ['たゆたう', 'たゆとう'],
 ];
 
-List<SuffixRule<String>> irregularVerbSuffixInflections(
+List<SuffixModification<String>> irregularVerbSuffixInflections(
     String suffix, List<String> conditionsIn, List<String> conditionsOut) {
-  final inflections = <SuffixRule<String>>[];
+  final inflections = <SuffixModification<String>>[];
   for (final verb in ikuVerbs) {
     inflections.add(suffixInflection(
         '${verb[0]}っ$suffix', verb, conditionsIn, conditionsOut));

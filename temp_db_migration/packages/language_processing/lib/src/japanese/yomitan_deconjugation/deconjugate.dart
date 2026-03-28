@@ -1,45 +1,52 @@
+// lib/src/japanese/yomitan_deconjugation/deconjugate.dart
+
 import 'package:language_processing/src/deconjugation_result.dart';
 import 'package:language_processing/src/japanese/conjugation/yomitan_conjugation_data/japanese_transforms.dart';
-import 'package:language_processing/src/japanese/yomitan_deconjugation/language_transformer.dart';
+import 'language_transformer.dart';
 
 
-/// A service class to deconjugate Japanese words
-class JapaneseDeconjugator {
-  final LanguageTransformer _transformer;
-  final List<String> _dictionaryForms;
+/// Represents user-facing information about an inflection rule.
+class InflectionRuleInfo {
+  final String name;
+  final String? description;
 
-  /// Creates and initializes the deconjugator.
-  JapaneseDeconjugator()
-      : _transformer = LanguageTransformer(),
-        _dictionaryForms = [] {
-    // Load the Japanese grammar rules into the transformer.
-    _transformer.addDescriptor(japaneseTransforms); //
+  InflectionRuleInfo({required this.name, this.description});
+}
 
-    // Pre-compile a list of all conditions that are valid dictionary forms
-    // by checking the `isDictionaryForm` flag from the descriptor.
-    for (final entry in japaneseTransforms.conditions.entries) { //
-      if (entry.value.isDictionaryForm) { //
-        _dictionaryForms.add(entry.key);
+/// Analyzes and deconjugates Japanese surface forms.
+class JapaneseWordAnalyzer {
+  final DeinflectionEngine _engine;
+  final List<String> _validDictionaryForms;
+
+  JapaneseWordAnalyzer()
+      : _engine = DeinflectionEngine(),
+        _validDictionaryForms = [] {
+    
+    _engine.loadGrammar(japaneseTransforms);
+
+    // Cache valid parts of speech to evaluate nodes later
+    for (final entry in japaneseTransforms.conditions.entries) {
+      if (entry.value.isDictionaryForm) {
+        _validDictionaryForms.add(entry.key);
       }
     }
   }
 
-  /// Returns all possible deconjugations for a given [inflectedWord].
-  Set<DeconjugationResult> deconjugate(String inflectedWord) {
-    final allTransforms = _transformer.transform(inflectedWord); //
+  /// Processes a single word into a set of distinct deconjugation results.
+  Set<DeconjugationResult> processSingle(String word) {
+    final candidates = _engine.analyze(word);
     final validResults = <DeconjugationResult>{};
 
-    for (final result in allTransforms) {
-      final requiredPos = _findRequiredPartsOfSpeech(result.conditions);
+    for (final candidate in candidates) {
+      final matchingPos = _evaluatePartsOfSpeech(candidate.activeMask);
 
-      if (requiredPos.isNotEmpty) {
-        final rules =
-            _transformer.getUserFacingInflectionRules(result.transformIds); //
+      if (matchingPos.isNotEmpty) {
+        final rules = _engine.getDescriptions(candidate.pathIds);
         validResults.add(
           DeconjugationResult(
-            deconjugatedTerm: result.text,
-            requiredPartsOfSpeech: requiredPos,
-            transformRules: rules,
+            deconjugatedTerm: candidate.term,
+            requiredPartsOfSpeech: matchingPos,
+            transformRules: rules.map((r) => InflectionRuleInfo(name: r.title, description: r.details)).toList(), // Adapt to your old DTO if needed
           ),
         );
       }
@@ -47,42 +54,37 @@ class JapaneseDeconjugator {
     return validResults;
   }
 
-  List<Set<DeconjugationResult>> deconjugateAll(List<String> terms) {
+  /// Batch processes multiple terms, filtering out redundant roots.
+  List<Set<DeconjugationResult>> processBatch(List<String> terms) {
+    final results = <Set<DeconjugationResult>>[];
+    final skippedSet = terms.toSet();
 
-    final List<Set<DeconjugationResult>> results = [];
-    final Set<String> exclusions = terms.toSet();
+    for (final term in terms) {
+      if (term.isEmpty) {
+        results.add({});
+        continue;
+      }
 
-    for (String d in terms) {
-      results.add({});
-      if (d.isEmpty) continue;
+      final processed = processSingle(term);
+      // Filter out results that are identical to any of the input seeds
+      final filtered = processed.where((res) => !skippedSet.contains(res.deconjugatedTerm)).toSet();
       
-      results.last.addAll(
-        deconjugate(d).where((e) => !exclusions.contains(e.deconjugatedTerm))
-      );
+      results.add(filtered);
     }
 
     return results;
   }
 
-  /// Finds the required PoS by testing every known dictionary form
-  /// against the result's condition flags.
-  List<String> _findRequiredPartsOfSpeech(int resultConditions) {
-    final matchingPos = <String>[];
-    if (resultConditions == 0) {
-      return matchingPos;
-    }
+  List<String> _evaluatePartsOfSpeech(int mask) {
+    if (mask == 0) return const [];
 
-    // For every known dictionary form (e.g., 'v1', 'v5', 'adj-i')...
-    for (final posString in _dictionaryForms) {
-      // ...get its unique integer flag using the public API...
-      final posFlag =
-          _transformer.getConditionFlagsFromPartsOfSpeech([posString]); //
-
-      // ...and check if it matches the result's conditions.
-      if (LanguageTransformer.conditionsMatch(resultConditions, posFlag)) { //
-        matchingPos.add(posString);
+    final posList = <String>[];
+    for (final pos in _validDictionaryForms) {
+      final targetMask = _engine.maskForPartsOfSpeech([pos]);
+      if (DeinflectionEngine.checkOverlap(mask, targetMask)) {
+        posList.add(pos);
       }
     }
-    return matchingPos;
+    return posList;
   }
 }

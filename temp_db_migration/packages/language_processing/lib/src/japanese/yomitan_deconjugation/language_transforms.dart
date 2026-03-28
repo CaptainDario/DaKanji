@@ -1,116 +1,97 @@
-// lib/src/language_transforms.dart
+// lib/src/japanese/yomitan_deconjugation/language_transforms.dart
 
-/// A generic rule for transforming text.
-abstract class Rule<TCondition> {
-  /// A regular expression to check if the rule applies to a given text.
-  RegExp get isInflected;
+/// Represents a generic morphological rule.
+abstract class InflectionPattern<TFlag> {
+  /// The regex used to identify if this pattern *might* apply.
+  RegExp get matchPattern;
 
-  /// The function that performs the deinflection.
-  String deinflect(String text);
+  /// Modifies the string to its previous state.
+  String revert(String surfaceForm);
 
-  /// The conditions that the resulting (deinflected) term will have.
-  List<TCondition> get conditionsIn;
+  /// The flags the current term must have (corresponds to Yomitan's conditionsIn)
+  List<TFlag> get expectedFlags;
 
-  /// The conditions that the source (inflected) term must satisfy for the rule to apply.
-  List<TCondition> get conditionsOut;
+  /// The flags assigned to the resulting term (corresponds to Yomitan's conditionsOut)
+  List<TFlag> get nextFlags;
 }
 
-/// A rule that applies to the suffix of a word.
-class SuffixRule<TCondition> implements Rule<TCondition> {
-  final String inflectedSuffix;
-  final String deinflectedSuffix;
+/// Handles modifications at the end of a string.
+class SuffixModification<TFlag> implements InflectionPattern<TFlag> {
+  final String _inflected;
+  final String _base;
+  
   @override
-  final List<TCondition> conditionsIn;
+  final List<TFlag> expectedFlags;
+  
   @override
-  final List<TCondition> conditionsOut;
+  final List<TFlag> nextFlags;
 
-  SuffixRule(this.inflectedSuffix, this.deinflectedSuffix, this.conditionsIn,
-      this.conditionsOut);
-
-  @override
-  late final RegExp isInflected = RegExp('$inflectedSuffix\$');
+  SuffixModification(this._inflected, this._base, this.expectedFlags, this.nextFlags);
 
   @override
-  String deinflect(String text) {
-    if (text.length < inflectedSuffix.length) {
-      return text; // Should not happen if isInflected matches
-    }
-    return '${text.substring(0, text.length - inflectedSuffix.length)}$deinflectedSuffix';
+  late final RegExp matchPattern = RegExp('$_inflected\$');
+
+  @override
+  String revert(String surfaceForm) {
+    if (!surfaceForm.endsWith(_inflected)) return surfaceForm;
+    return surfaceForm.substring(0, surfaceForm.length - _inflected.length) + _base;
   }
 }
 
-/// A rule that applies to the prefix of a word.
-class PrefixRule<TCondition> implements Rule<TCondition> {
-  final String inflectedPrefix;
-  final String deinflectedPrefix;
+/// Handles modifications at the beginning of a string.
+class PrefixModification<TFlag> implements InflectionPattern<TFlag> {
+  final String _inflected;
+  final String _base;
+  
   @override
-  final List<TCondition> conditionsIn;
+  final List<TFlag> expectedFlags;
+  
   @override
-  final List<TCondition> conditionsOut;
+  final List<TFlag> nextFlags;
 
-  PrefixRule(this.inflectedPrefix, this.deinflectedPrefix, this.conditionsIn,
-      this.conditionsOut);
-
-  @override
-  late final RegExp isInflected = RegExp('^$inflectedPrefix');
+  PrefixModification(this._inflected, this._base, this.expectedFlags, this.nextFlags);
 
   @override
-  String deinflect(String text) {
-    if (text.length < inflectedPrefix.length) {
-      return text;
-    }
-    return '$deinflectedPrefix${text.substring(inflectedPrefix.length)}';
+  late final RegExp matchPattern = RegExp('^$_inflected');
+
+  @override
+  String revert(String surfaceForm) {
+    if (!surfaceForm.startsWith(_inflected)) return surfaceForm;
+    return _base + surfaceForm.substring(_inflected.length);
   }
 }
 
-/// A rule that applies to the entire word.
-class WholeWordRule<TCondition> implements Rule<TCondition> {
-  final String inflectedWord;
-  final String deinflectedWord;
+/// Handles total replacements of strings.
+class ExactMatchModification<TFlag> implements InflectionPattern<TFlag> {
+  final String _inflected;
+  final String _base;
+  
   @override
-  final List<TCondition> conditionsIn;
+  final List<TFlag> expectedFlags;
+  
   @override
-  final List<TCondition> conditionsOut;
+  final List<TFlag> nextFlags;
 
-  WholeWordRule(this.inflectedWord, this.deinflectedWord, this.conditionsIn,
-      this.conditionsOut);
-
-  @override
-  late final RegExp isInflected = RegExp('^$inflectedWord\$');
+  ExactMatchModification(this._inflected, this._base, this.expectedFlags, this.nextFlags);
 
   @override
-  String deinflect(String text) => deinflectedWord;
+  late final RegExp matchPattern = RegExp('^$_inflected\$');
+
+  @override
+  String revert(String surfaceForm) => _base;
 }
 
-/// Factory function to create a [SuffixRule].
-SuffixRule<TCondition> suffixInflection<TCondition>(
-  String inflectedSuffix,
-  String deinflectedSuffix,
-  List<TCondition> conditionsIn,
-  List<TCondition> conditionsOut,
-) {
-  return SuffixRule(
-      inflectedSuffix, deinflectedSuffix, conditionsIn, conditionsOut);
-}
+// Factory adapters to keep compatibility with `japanese_transforms.dart`
+// Notice how conditionsIn maps to expectedFlags, and conditionsOut maps to nextFlags.
 
-/// Factory function to create a [PrefixRule].
-PrefixRule<TCondition> prefixInflection<TCondition>(
-  String inflectedPrefix,
-  String deinflectedPrefix,
-  List<TCondition> conditionsIn,
-  List<TCondition> conditionsOut,
-) {
-  return PrefixRule(
-      inflectedPrefix, deinflectedPrefix, conditionsIn, conditionsOut);
-}
+SuffixModification<T> suffixInflection<T>(
+  String inflected, String base, List<T> conditionsIn, List<T> conditionsOut
+) => SuffixModification(inflected, base, conditionsIn, conditionsOut);
 
-/// Factory function to create a [WholeWordRule].
-WholeWordRule<TCondition> wholeWordInflection<TCondition>(
-  String inflectedWord,
-  String deinflectedWord,
-  List<TCondition> conditionsIn,
-  List<TCondition> conditionsOut,
-) {
-  return WholeWordRule(
-      inflectedWord, deinflectedWord, conditionsIn, conditionsOut);
-}
+PrefixModification<T> prefixInflection<T>(
+  String inflected, String base, List<T> conditionsIn, List<T> conditionsOut
+) => PrefixModification(inflected, base, conditionsIn, conditionsOut);
+
+ExactMatchModification<T> wholeWordInflection<T>(
+  String inflected, String base, List<T> conditionsIn, List<T> conditionsOut
+) => ExactMatchModification(inflected, base, conditionsIn, conditionsOut);

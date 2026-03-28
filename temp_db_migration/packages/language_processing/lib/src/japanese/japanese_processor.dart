@@ -26,7 +26,7 @@ class JapaneseProcessor extends LanguageProcessor{
     
   Mecab? _mecab;
 
-  jp_dec.JapaneseDeconjugator deconjugator = jp_dec.JapaneseDeconjugator();
+  jp_dec.JapaneseWordAnalyzer deconjugator = jp_dec.JapaneseWordAnalyzer();
 
   Mecab get mecab {
     if (!_initialized || _mecab == null) {
@@ -106,11 +106,11 @@ class JapaneseProcessor extends LanguageProcessor{
 
   @override
   Set<DeconjugationResult> deconjugate(String term) 
-    => deconjugator.deconjugate(term);
+    => deconjugator.processSingle(term);
 
   @override
   List<Set<DeconjugationResult>> deconjugateAll(List<String> terms)
-    => deconjugator.deconjugateAll(terms);
+    => deconjugator.processBatch(terms);
 
   @override
   ParseResult parse(String term, ProcessorOptions options)
