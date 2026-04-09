@@ -207,7 +207,7 @@ Future<void> initDocumentsServices(BuildContext context) async {
 
   // definition rendering
   GetIt.I.registerSingletonAsync<YomitanRenderService>(() async {
-    final service = YomitanRenderService();
+    final service = YomitanRenderService(GetIt.I<DaDb>());
     await service.isReady;
     return service;
   });

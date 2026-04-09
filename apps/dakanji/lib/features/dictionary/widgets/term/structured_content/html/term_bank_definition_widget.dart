@@ -45,7 +45,7 @@ class TermBankDefinitionWidget extends StatefulWidget {
 
 class _TermBankDefinitionWidgetState extends State<TermBankDefinitionWidget> {
 
-  late Future<String> _renderDefinitionFuture;
+  late Future<NodeList?> _renderDefinitionFuture;
 
   @override
   void didChangeDependencies() {
@@ -57,13 +57,12 @@ class _TermBankDefinitionWidgetState extends State<TermBankDefinitionWidget> {
   /// Convert the structured content JSON into a standard HTML string and inline
   /// CSS from the index and the global CSS.
   /// Returns the final HTML string.
-  Future<String> renderDefinition() async {
+  Future<NodeList> renderDefinition() async {
     final darkMode = Theme.of(context).brightness == Brightness.dark;
-    final indexCss = await GetIt.I<DaDb>().mediaDao.getCssFromIndex(widget.indexId);
 
     return GetIt.I<YomitanRenderService>().render((
       definitions: widget.definitions,
-      indexCss: indexCss,
+      indexId: widget.indexId,
       compactMode: widget.compactMode,
       darkMode: darkMode,
     ));
@@ -83,7 +82,6 @@ class _TermBankDefinitionWidgetState extends State<TermBankDefinitionWidget> {
         else if (!asyncSnapshot.hasData || asyncSnapshot.data == null) {
           return SizedBox();
         } 
-        
 
         return ConditionalParentWidget(
           condition: widget.onSmartTextSelected != null,
@@ -94,7 +92,8 @@ class _TermBankDefinitionWidgetState extends State<TermBankDefinitionWidget> {
             );
           },
           child: HtmlWidget(
-            asyncSnapshot.data!,
+            "",
+            parsedNodes: asyncSnapshot.data!,
             buildAsync: false,
             enableCaching: true,
             renderMode: RenderMode.column,
