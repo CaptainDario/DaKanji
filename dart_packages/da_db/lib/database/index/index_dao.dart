@@ -2,8 +2,8 @@
 import "package:da_db/database/index/index_table_entry.dart";
 import "package:drift/drift.dart";
 
-import "/database/index/index_tables.dart";
 import "../da_db.dart";
+import "index_tables.dart";
 
 part 'index_dao.g.dart';
 
