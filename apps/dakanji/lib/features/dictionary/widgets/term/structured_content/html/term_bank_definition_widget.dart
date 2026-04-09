@@ -109,6 +109,21 @@ class _TermBankDefinitionWidgetState extends State<TermBankDefinitionWidget> {
             ),
             // Handle taps on internal dictionary links.
             onTapUrl: widget.onTapUrl,
+            customStylesBuilder: (element) {
+              final lang = element.attributes['lang'];
+              
+              if (lang == 'ja' || lang == 'ja-JP') {
+                return {'font-family': 'NotoSansJP'};
+              } 
+              if (lang == 'zh-CN' || lang == 'zh') {
+                return {'font-family': 'NotoSansSC'};
+              }
+              if (lang == 'zh-TW') {
+                return {'font-family': 'NotoSansTC'};
+              }
+              
+              return null;
+            },
           ),
         );
       }
