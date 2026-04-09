@@ -283,7 +283,7 @@ packages:
     source: hosted
     version: "1.1.2"
   code_assets:
-    dependency: transitive
+    dependency: "direct overridden"
     description:
       name: code_assets
       sha256: "83ccdaa064c980b5596c35dd64a8d3ecc68620174ab9b90b6343b753aa721687"
@@ -386,20 +386,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.8"
-  da_db:
-    dependency: "direct overridden"
-    description:
-      path: "/Users/darioklepoch/dev/DaKanji/dakanji_db/packages/da_db"
-      relative: false
-    source: path
-    version: "1.0.0"
-  da_db_shared:
-    dependency: "direct overridden"
-    description:
-      path: "/Users/darioklepoch/dev/DaKanji/dakanji_db/packages/da_db_shared"
-      relative: false
-    source: path
-    version: "1.0.0"
   dart_jsonwebtoken:
     dependency: transitive
     description:
@@ -936,6 +922,14 @@ packages:
       relative: false
     source: path
     version: "0.17.2"
+  freezed:
+    dependency: transitive
+    description:
+      name: freezed
+      sha256: f23ea33b3863f119b58ed1b586e881a46bd28715ddcc4dbc33104524e3434131
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.2.5"
   freezed_annotation:
     dependency: transitive
     description:
@@ -1038,13 +1032,13 @@ packages:
     source: hosted
     version: "2.1.0"
   hooks:
-    dependency: transitive
+    dependency: "direct overridden"
     description:
       name: hooks
-      sha256: e79ed1e8e1929bc6ecb6ec85f0cb519c887aa5b423705ded0d0f2d9226def388
+      sha256: "7a08a0d684cb3b8fb604b78455d5d352f502b68079f7b80b831c62220ab0a4f6"
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.2"
+    version: "1.0.1"
   html:
     dependency: transitive
     description:
@@ -1085,6 +1079,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.5.4"
+  import_sorter:
+    dependency: transitive
+    description:
+      name: import_sorter
+      sha256: eb15738ccead84e62c31e0208ea4e3104415efcd4972b86906ca64a1187d0836
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.6.0"
   in_app_review:
     dependency: transitive
     description:
@@ -1229,13 +1231,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.8.1"
-  language_processing:
-    dependency: "direct overridden"
-    description:
-      path: "/Users/darioklepoch/dev/DaKanji/dakanji_db/packages/language_processing"
-      relative: false
-    source: path
-    version: "1.0.0"
   leak_tracker:
     dependency: transitive
     description:
@@ -1272,10 +1267,10 @@ packages:
     dependency: transitive
     description:
       name: lints
-      sha256: "12f842a479589fea194fe5c5a3095abc7be0c1f2ddfa9a0e76aed1dbd26a87df"
+      sha256: a5e2b223cb7c9c8efdc663ef484fdd95bb243bff242ef5b13e26883547fce9a0
       url: "https://pub.dev"
     source: hosted
-    version: "6.1.0"
+    version: "6.0.0"
   lite_rt_for_dart:
     dependency: transitive
     description:
@@ -1395,11 +1390,12 @@ packages:
     source: hosted
     version: "0.13.0"
   mecab_for_dart:
-    dependency: "direct overridden"
+    dependency: transitive
     description:
-      path: "/Users/darioklepoch/dev/flutter_packages/mecab_for_dart/"
-      relative: false
-    source: path
+      name: mecab_for_dart
+      sha256: "4618280ce24debe58f576fdc755d4a60d693fe892cb4bcd1594dcf787e97546d"
+      url: "https://pub.dev"
+    source: hosted
     version: "2.0.3"
   meta:
     dependency: transitive
@@ -1950,13 +1946,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.2.0"
-  sqlite_extensions:
-    dependency: "direct overridden"
-    description:
-      path: "/Users/darioklepoch/dev/DaKanji/dakanji_db/packages/sqlite_extensions"
-      relative: false
-    source: path
-    version: "1.0.0"
   sqlite_vector:
     dependency: transitive
     description:
@@ -2117,6 +2106,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.11.0"
+  tint:
+    dependency: transitive
+    description:
+      name: tint
+      sha256: "9652d9a589f4536d5e392cf790263d120474f15da3cf1bee7f1fdb31b4de5f46"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.1"
   tuple:
     dependency: transitive
     description:

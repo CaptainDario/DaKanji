@@ -127,31 +127,19 @@ dependencies:
   intl: ^0.20.2
   kana_kit:
 
-
-  # packages that I maintain
-  ankidroid_for_flutter: ^1.0.3
-  mecab_for_dart:
-    path: /Users/darioklepoch/dev/flutter_packages/mecab_for_dart/
-  awesome_dialog: 
-    git:
-      url: https://github.com/CaptainDario/awesomeDialogs
-  
-  # mono repo packages
-  liquid_swipe:
-  flutter_util:
-  css_inline_flutter:
-
-  da_db:
-  language_processing:
-  
-
-  database_builder:
-
   # Not all platforms supported
   in_app_review: 2.0.11                 # android, iOS, MacOS, windows (limited)
   clipboard_watcher: 0.3.0              # android, iOS, macos, windows, linux
   store_checker: 1.8.0                  # ios, android
 
+  # packages that should only target specific platforms
+  android_intent_plus: ^6.0.0      # android
+  window_manager: ^0.5.1           # desktop
+  screen_retriever: 0.2.0         # desktop
+
+
+  # TODO remove once migraiton is done
+  database_builder:
   #isar: android, iOS, macos, windows, linux
   isar_community: 
     git:
@@ -164,24 +152,23 @@ dependencies:
       path: packages/isar_community_flutter_libs
       ref: 3.3.0-original
 
-  # packages that should only target specific platforms
-  android_intent_plus: ^6.0.0      # android
-  window_manager: ^0.5.1           # desktop
-  screen_retriever: 0.2.0         # desktop
-
-dependency_overrides:
-
-  mecab_for_dart:
-    path: /Users/darioklepoch/dev/flutter_packages/mecab_for_dart/
+  # packages that I maintain
+  ankidroid_for_flutter: ^1.0.3
+  mecab_for_dart: ^2.0.3
+  awesome_dialog: 
+    git:
+      url: https://github.com/CaptainDario/awesomeDialogs
+  
+  # mono repo packages
+  liquid_swipe:
+  flutter_util:
+  css_inline_flutter:
 
   da_db:
-    path: /Users/darioklepoch/dev/DaKanji/dakanji_db/packages/da_db
-  da_db_shared:
-    path: /Users/darioklepoch/dev/DaKanji/dakanji_db/packages/da_db_shared
   language_processing:
-    path: /Users/darioklepoch/dev/DaKanji/dakanji_db/packages/language_processing
-  sqlite_extensions:
-    path: /Users/darioklepoch/dev/DaKanji/dakanji_db/packages/sqlite_extensions
+
+#dependency_overrides:
+
 
 
 msix_config:

@@ -1,4 +1,4 @@
-name: _
+name: DaLang
 publish_to: none
 environment:
   sdk: ^3.9.0
@@ -10,4 +10,10 @@ workspace:
   - flutter_packages/flutter_util
   - flutter_packages/css_inline_flutter
 
+  - dart_packages/da_db
+  - dart_packages/da_db_shared
+  - dart_packages/language_processing
+  - dart_packages/sqlite_extensions
+
+  # TODO remove once migraiton is done
   - dart_packages/dakanji-dictionary/database_builder
