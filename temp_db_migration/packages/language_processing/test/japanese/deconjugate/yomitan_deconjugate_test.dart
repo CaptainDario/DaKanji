@@ -1,14 +1,14 @@
+// test/yomitan_deconjugate_test.dart
+
 import 'package:collection/collection.dart';
-// Your library imports
-
-import 'package:language_processing/src/japanese/conjugation/yomitan_conjugation_data/japanese_transforms.dart';
+import 'package:da_db_shared/da_db_shared.dart';
 import 'package:language_processing/src/japanese/yomitan_deconjugation/language_transformer.dart';
+import 'package:language_processing/src/japanese/yomitan_deconjugation/transform_loader.dart';
 import 'package:test/test.dart';
+import 'package:path/path.dart' as p;
 
-// Import the externally defined test cases
 import 'yomitan_deconjugate_test_cases.dart';
 
-/// A data class to hold test case data for better type safety.
 class DeconjugationTestCase {
   final String source;
   final String term;
@@ -23,54 +23,40 @@ class DeconjugationTestCase {
   });
 }
 
-/// This is the Dart equivalent of the `hasTermReasons` helper function from the JS test runner.
-///
-/// It checks if any deconjugation path for [source] perfectly matches the
-/// expected term, rule, and reasons.
-bool _findMatch(
-  LanguageTransformer transformer,
-  DeconjugationTestCase testCase,
-) {
-  final results = transformer.transform(testCase.source);
+bool _findMatch(DeinflectionEngine engine, DeconjugationTestCase testCase) {
+  final nodes = engine.analyze(testCase.source);
 
-  for (final result in results) {
-    if (result.text != testCase.term) {
-      continue;
-    }
+  for (final node in nodes) {
+    if (node.term != testCase.term) continue;
 
     if (testCase.rule != null) {
-      final expectedConditions =
-          transformer.getConditionFlagsFromConditionType(testCase.rule!);
-      if (!LanguageTransformer.conditionsMatch(
-          result.conditions, expectedConditions)) {
+      final ruleMask = engine.maskForCondition(testCase.rule!);
+      if (!DeinflectionEngine.checkOverlap(node.activeMask, ruleMask)) {
         continue;
       }
     }
 
-    // If reasons are null in the test case, we don't check them.
-    // If they are not null, we check for a perfect match.
     if (testCase.reasons != null) {
-      final actualReasons = result.trace.map((f) => f.transformId).toList();
-      if (!const ListEquality().equals(actualReasons, testCase.reasons)) {
-        // If reasons don't match, this path is not the one we're looking for.
+      final actualPath = node.pathIds;
+      if (!const ListEquality().equals(actualPath, testCase.reasons)) {
         continue;
       }
     }
 
-    // If we get here, it means all conditions (term, rule, reasons) matched.
-    return true;
+    return true; // Complete match found
   }
 
-  // No perfect match was found across all possible deconjugation paths.
   return false;
 }
 
 void main() {
-  final transformer = LanguageTransformer();
-  transformer.addDescriptor(japaneseTransforms);
+  final engine = DeinflectionEngine();
+  final descriptor = GrammarLoader.loadFromFile(
+    p.join(coreTestsPath, 'japanese-transforms.json')
+  );
+  engine.loadGrammar(descriptor);
 
   group('De-inflections', () {
-    // This loop structure now uses the imported test case data.
     for (final data in yomitanConjugateTestCases) {
       final category = data['category'] as String;
       final isValid = data['valid'] as bool;
@@ -78,7 +64,6 @@ void main() {
 
       group(category, () {
         for (final testCaseMap in tests) {
-          // Convert the map from the file into our typed data class.
           final testCase = DeconjugationTestCase(
             source: testCaseMap['source'],
             term: testCaseMap['term'],
@@ -91,9 +76,7 @@ void main() {
               ' with reasons ${testCase.reasons}';
 
           test(testName, () {
-            final hasMatch = _findMatch(transformer, testCase);
-
-            // The final, crucial assertion: does the result match the expected validity?
+            final hasMatch = _findMatch(engine, testCase);
             expect(hasMatch, isValid);
           });
         }
