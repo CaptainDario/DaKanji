@@ -1,17 +1,15 @@
 // Dart imports:
 import 'dart:math';
 
-// Flutter imports:
-import 'package:flutter/material.dart';
-import 'package:flutter/physics.dart';
-
-// Package imports:
-import 'package:get_it/get_it.dart';
-
 // Project imports:
 import 'package:da_kanji_mobile/features/drawing/controller/handle_predictions.dart';
 import 'package:da_kanji_mobile/features/drawing/model/draw_screen_state.dart';
 import 'package:da_kanji_mobile/globals.dart';
+// Flutter imports:
+import 'package:flutter/material.dart';
+import 'package:flutter/physics.dart';
+// Package imports:
+import 'package:get_it/get_it.dart';
 
 /// A draggable `OutlinedButton` that moves back to `Alignment.center` when it's
 /// released.

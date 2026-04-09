@@ -1,25 +1,23 @@
 // Flutter imports:
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-
 // Package imports:
 import 'package:android_intent_plus/android_intent.dart';
-import 'package:easy_localization/easy_localization.dart';
-import 'package:get_it/get_it.dart';
-import 'package:universal_io/io.dart' show Platform;
-import 'package:url_launcher/url_launcher_string.dart';
-
+import 'package:da_kanji_mobile/core/routing/navigation_arguments.dart';
+import 'package:da_kanji_mobile/core/routing/screens.dart';
+import 'package:da_kanji_mobile/core/widgets/download_app_dialogue.dart';
 // Project imports:
 import 'package:da_kanji_mobile/features/drawing/model/draw_screen_layout.dart';
 import 'package:da_kanji_mobile/features/drawing/model/draw_screen_state.dart';
-import 'package:da_kanji_mobile/core/routing/navigation_arguments.dart';
-import 'package:da_kanji_mobile/core/routing/screens.dart';
 import 'package:da_kanji_mobile/features/settings/model/settings.dart';
 import 'package:da_kanji_mobile/features/settings/model/settings_drawing.dart';
+import 'package:da_kanji_mobile/features/webview/screens/webview_screen.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
-import 'package:da_kanji_mobile/features/webview/screens/webview_screen.dart';
-import 'package:da_kanji_mobile/core/widgets/download_app_dialogue.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:get_it/get_it.dart';
+import 'package:universal_io/io.dart' show Platform;
+import 'package:url_launcher/url_launcher_string.dart';
 
 /// Convenience classes to handle long and short presses for the 
 /// predictions of the drawing screens.

@@ -1,16 +1,14 @@
 // Dart imports:
 import 'dart:convert';
 
-// Flutter imports:
-import 'package:flutter/foundation.dart';
-
-// Package imports:
-import 'package:http/http.dart' as http;
-
+import 'package:da_kanji_mobile/features/anki/model/anki_data.dart';
 // Project imports:
 import 'package:da_kanji_mobile/features/anki/model/anki_note.dart';
 import 'package:da_kanji_mobile/features/settings/model/settings_anki.dart';
-import 'package:da_kanji_mobile/features/anki/model/anki_data.dart';
+// Flutter imports:
+import 'package:flutter/foundation.dart';
+// Package imports:
+import 'package:http/http.dart' as http;
 
 /// Class to communicate with anki desktop
 class AnkiDesktop {

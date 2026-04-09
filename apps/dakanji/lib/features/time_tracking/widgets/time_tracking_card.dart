@@ -1,15 +1,15 @@
+import 'package:da_kanji_mobile/core/user/user_data_db.dart';
 import 'package:da_kanji_mobile/features/home/controller/long_running_timer_watcher.dart';
 import 'package:da_kanji_mobile/features/time_tracking/widgets/paused_clock_face.dart';
 import 'package:da_kanji_mobile/features/time_tracking/widgets/running_clock_face.dart';
-import 'package:da_kanji_mobile/globals.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:da_kanji_mobile/features/time_tracking/widgets/time_tracking_card_border_glow_painter.dart';
 import 'package:da_kanji_mobile/features/time_tracking/widgets/timer_control_bar.dart';
+import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:get_it/get_it.dart';
-import 'package:da_kanji_mobile/core/user/user_data_db.dart';
 
 class TimeTrackingCard extends StatefulWidget {
   final Color accentColor;

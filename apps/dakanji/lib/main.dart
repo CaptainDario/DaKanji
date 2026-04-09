@@ -3,30 +3,28 @@ import 'dart:async';
 
 // Flutter imports:
 import 'package:css_inline_flutter/css_inline_flutter.dart';
+// Project imports:
+import 'package:da_kanji_mobile/CodegenLoader.dart';
 import 'package:da_kanji_mobile/core/app/japanese_app_config.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
-
+import 'package:da_kanji_mobile/dakanji_app.dart';
+import 'package:da_kanji_mobile/env.dart';
+import 'package:da_kanji_mobile/features/feedback/controller/feedback.dart';
+import 'package:da_kanji_mobile/features/feedback/model/feedback_localization.dart';
+import 'package:da_kanji_mobile/features/init/controller/init.dart';
+import 'package:da_kanji_mobile/globals.dart';
 // Package imports:
 import 'package:easy_localization/easy_localization.dart';
 import 'package:feedback/feedback.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:fvp/fvp.dart' as fvp;
+import 'package:language_processing/language_processing.dart';
 import 'package:lite_rt_for_flutter/lite_rt_for_flutter.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:universal_io/io.dart';
 import 'package:window_manager/window_manager.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
-
-// Project imports:
-import 'package:da_kanji_mobile/CodegenLoader.dart';
-import 'package:da_kanji_mobile/features/feedback/controller/feedback.dart';
-import 'package:da_kanji_mobile/dakanji_app.dart';
-import 'package:da_kanji_mobile/features/feedback/model/feedback_localization.dart';
-import 'package:da_kanji_mobile/env.dart';
-import 'package:da_kanji_mobile/globals.dart';
-import 'package:da_kanji_mobile/features/init/controller/init.dart';
-import 'package:language_processing/language_processing.dart';
 
 Future<void> main() async {
 

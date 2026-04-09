@@ -1,6 +1,7 @@
 // Dart imports:
 import 'dart:convert';
 
+import 'package:da_db/database/da_db.dart';
 import 'package:da_db/parsing/yomitan/in_memory_cache/term/definition_parser.dart';
 import 'package:da_db/parsing/yomitan/in_memory_cache/term/definition_parsing_classes.dart';
 import 'package:da_db/parsing/yomitan/in_memory_cache/term/term_bank_v3_parser_context.dart';
@@ -8,8 +9,6 @@ import 'package:drift/drift.dart';
 import 'package:kana_kit/kana_kit.dart';
 import 'package:language_processing/language_processing.dart';
 import 'package:universal_io/io.dart';
-
-import '/database/da_db.dart';
 
 
 /// Debug printing

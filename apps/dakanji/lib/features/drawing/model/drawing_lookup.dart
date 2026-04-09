@@ -1,8 +1,7 @@
 // Flutter imports:
-import 'package:flutter/foundation.dart';
-
 // Project imports:
 import 'package:da_kanji_mobile/features/drawing/controller/handle_predictions.dart';
+import 'package:flutter/foundation.dart';
 
 /// Class which notifies its listeners always when [_chars] changed.
 class DrawingLookup with ChangeNotifier{

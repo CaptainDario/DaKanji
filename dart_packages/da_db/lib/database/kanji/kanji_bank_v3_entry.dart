@@ -1,12 +1,11 @@
 
 import 'dart:convert';
 
+import 'package:da_db/database/da_db.dart';
 import 'package:da_db/database/index/index_table_entry.dart';
+import 'package:da_db/database/kanji/kanji_bank_v3_entry_stat.dart';
+import 'package:da_db/database/tag/tag_bank_v3_entry.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-
-import '/database/da_db.dart';
-import '/database/kanji/kanji_bank_v3_entry_stat.dart';
-import '/database/tag/tag_bank_v3_entry.dart';
 
 part 'kanji_bank_v3_entry.freezed.dart';
 part 'kanji_bank_v3_entry.g.dart';

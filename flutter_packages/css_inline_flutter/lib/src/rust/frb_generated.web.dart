@@ -6,10 +6,11 @@
 // Static analysis wrongly picks the IO variant, thus ignore this
 // ignore_for_file: argument_type_not_assignable
 
-import 'api/simple.dart';
 import 'dart:async';
 import 'dart:convert';
-import 'frb_generated.dart';
+
+import 'package:css_inline_flutter/src/rust/api/simple.dart';
+import 'package:css_inline_flutter/src/rust/frb_generated.dart';
 import 'package:flutter_rust_bridge/flutter_rust_bridge_for_generated_web.dart';
 
 abstract class RustLibApiImplPlatform extends BaseApiImpl<RustLibWire> {

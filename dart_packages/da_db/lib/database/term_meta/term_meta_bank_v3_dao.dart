@@ -1,13 +1,12 @@
 
+import 'package:da_db/database/da_db.dart';
+import 'package:da_db/database/general_tables/reading_tables.dart';
+import 'package:da_db/database/general_tables/term_tables.dart';
 import "package:da_db/database/tag/tag_bank_v3_tables.dart";
+import 'package:da_db/database/term_meta/term_meta_bank_entry.dart';
+import 'package:da_db/database/term_meta/term_meta_bank_relation_tables.dart';
+import 'package:da_db/database/term_meta/term_meta_bank_v3_tables.dart';
 import "package:drift/drift.dart";
-
-import "/database/general_tables/reading_tables.dart";
-import "/database/general_tables/term_tables.dart";
-import "/database/term_meta/term_meta_bank_entry.dart";
-import "/database/term_meta/term_meta_bank_relation_tables.dart";
-import "/database/term_meta/term_meta_bank_v3_tables.dart";
-import "../da_db.dart";
 
 part 'term_meta_bank_v3_dao.g.dart';
 

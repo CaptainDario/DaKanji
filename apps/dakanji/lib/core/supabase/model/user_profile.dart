@@ -1,8 +1,8 @@
 import 'package:da_kanji_mobile/core/supabase/model/sponsorships.dart';
 import 'package:da_kanji_mobile/core/utils/json_utils.dart';
 import 'package:da_kanji_mobile/globals.dart';
-import 'package:json_annotation/json_annotation.dart';
 import 'package:flutter/material.dart';
+import 'package:json_annotation/json_annotation.dart';
 
 part 'user_profile.g.dart';
 

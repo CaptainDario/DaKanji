@@ -1,13 +1,11 @@
 // Flutter imports:
-import 'package:flutter/material.dart';
-
-// Package imports:
-import 'package:get_it/get_it.dart';
-import 'package:provider/provider.dart';
-
 // Project imports:
 import 'package:da_kanji_mobile/features/drawing/model/strokes.dart';
 import 'package:da_kanji_mobile/features/tutorial/model/tutorials.dart';
+import 'package:flutter/material.dart';
+// Package imports:
+import 'package:get_it/get_it.dart';
+import 'package:provider/provider.dart';
 
 class DrawScreenUndoButton extends StatelessWidget {
   

@@ -2,18 +2,16 @@
 import 'dart:async';
 import 'dart:isolate';
 
-// Flutter imports:
-import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:async/async.dart';
-import 'package:database_builder/database_builder.dart';
-import 'package:isar_community/isar.dart';
-import 'package:tuple/tuple.dart';
-
+import 'package:da_kanji_mobile/features/dictionary/model/dictionary_search_queries.dart';
 // Project imports:
 import 'package:da_kanji_mobile/globals.dart';
-import 'package:da_kanji_mobile/features/dictionary/model/dictionary_search_queries.dart';
+import 'package:database_builder/database_builder.dart';
+// Flutter imports:
+import 'package:flutter/material.dart';
+import 'package:isar_community/isar.dart';
+import 'package:tuple/tuple.dart';
 
 class DictionarySearchIsolate {
 

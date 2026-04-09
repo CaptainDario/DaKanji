@@ -1,13 +1,11 @@
 // Flutter imports:
 import 'package:da_kanji_mobile/core/user/user_data_db.dart';
-import 'package:flutter/material.dart';
-
-// Package imports:
-import 'package:get_it/get_it.dart';
-
+import 'package:da_kanji_mobile/features/screen_saver/screens/screen_saver_screen.dart';
 // Project imports:
 import 'package:da_kanji_mobile/globals.dart';
-import 'package:da_kanji_mobile/features/screen_saver/screens/screen_saver_screen.dart';
+import 'package:flutter/material.dart';
+// Package imports:
+import 'package:get_it/get_it.dart';
 
 /// Starts a screensaver using the words from the given word lists
 void startScreensaver(List<int> wordListIDs) async {

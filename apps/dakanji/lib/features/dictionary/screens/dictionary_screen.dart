@@ -1,18 +1,15 @@
 // Flutter imports:
-import 'package:flutter/material.dart';
-
-// Package imports:
-import 'package:database_builder/database_builder.dart';
-import 'package:get_it/get_it.dart';
-import 'package:onboarding_overlay/onboarding_overlay.dart';
-
 // Project imports:
 import 'package:da_kanji_mobile/core/routing/screens.dart';
-import 'package:da_kanji_mobile/features/settings/model/settings.dart';
-import 'package:da_kanji_mobile/features/tutorial/model/tutorials.dart';
 import 'package:da_kanji_mobile/core/user/user_data.dart';
 import 'package:da_kanji_mobile/features/dictionary/widgets/dictionary.dart';
 import 'package:da_kanji_mobile/features/drawer/widgets/drawer.dart';
+import 'package:da_kanji_mobile/features/tutorial/model/tutorials.dart';
+// Package imports:
+import 'package:database_builder/database_builder.dart';
+import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
+import 'package:onboarding_overlay/onboarding_overlay.dart';
 
 class DictionaryScreen extends StatefulWidget {
 

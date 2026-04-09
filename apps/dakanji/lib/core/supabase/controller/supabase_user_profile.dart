@@ -1,11 +1,11 @@
 import 'package:da_kanji_mobile/core/supabase/model/supabase_cache_manager.dart';
 import 'package:da_kanji_mobile/core/supabase/model/user_profile.dart';
+import 'package:da_kanji_mobile/core/utils/snackbar.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:da_kanji_mobile/core/utils/snackbar.dart';
 
 
 

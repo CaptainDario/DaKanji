@@ -1,12 +1,10 @@
 // Flutter imports:
 import 'package:da_db/database/db_queries/dictionary_search/dictionary_match.dart';
 import 'package:da_kanji_mobile/features/dictionary/model/dictionary_search_state.dart';
-import 'package:da_kanji_mobile/globals.dart';
-import 'package:flutter/material.dart';
-
 // Project imports:
 import 'package:da_kanji_mobile/features/dictionary/widgets/word_tab/dictionary_word_card.dart';
-
+import 'package:da_kanji_mobile/globals.dart';
+import 'package:flutter/material.dart';
 // Project imports:
 import 'package:provider/provider.dart';
 

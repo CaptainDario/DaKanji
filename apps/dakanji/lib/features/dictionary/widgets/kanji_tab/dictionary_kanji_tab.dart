@@ -1,14 +1,12 @@
 // Flutter imports:
-import 'package:flutter/material.dart';
-
-// Package imports:
-import 'package:database_builder/database_builder.dart';
-import 'package:get_it/get_it.dart';
-
-// Project imports:
-import 'package:da_kanji_mobile/features/settings/model/settings.dart';
 import 'package:da_kanji_mobile/features/dictionary/model/kanjidic2.dart';
 import 'package:da_kanji_mobile/features/dictionary/widgets/kanji_tab/kanji_card.dart';
+// Project imports:
+import 'package:da_kanji_mobile/features/settings/model/settings.dart';
+// Package imports:
+import 'package:database_builder/database_builder.dart';
+import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:language_processing/language_processing.dart';
 
 

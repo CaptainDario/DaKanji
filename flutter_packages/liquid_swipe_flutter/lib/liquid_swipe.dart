@@ -11,7 +11,7 @@ import 'package:provider/provider.dart';
 export 'package:liquid_swipe/Helpers/Helpers.dart';
 export 'package:liquid_swipe/PageHelpers/LiquidController.dart';
 
-final key = new GlobalKey<_LiquidSwipe>();
+final key = GlobalKey<_LiquidSwipe>();
 
 /// Callback to provide the current page Index whenever it changes
 ///
@@ -236,7 +236,7 @@ class LiquidSwipe extends StatefulWidget {
   ///
   /// You can just create a list using this type of widgets
   LiquidSwipe({
-    Key? key,
+    super.key,
     required List<Widget> pages,
     this.fullTransitionValue = FULL_TRANSITION_PX,
     this.initialPage = 0,
@@ -253,8 +253,7 @@ class LiquidSwipe extends StatefulWidget {
     this.enableSideReveal = false,
   })  : assert(initialPage >= 0 && initialPage < pages.length),
         assert(positionSlideIcon >= 0 && positionSlideIcon <= 1),
-        liquidSwipeChildDelegate = LiquidSwipePagesChildDelegate(pages),
-        super(key: key);
+        liquidSwipeChildDelegate = LiquidSwipePagesChildDelegate(pages);
 
   ///A builder constructor with same fields but with [itemBuilder]
   ///Sample itembuilder :
@@ -298,7 +297,7 @@ class LiquidSwipe extends StatefulWidget {
   ///
   /// See Example for complete reference.
   LiquidSwipe.builder({
-    Key? key,
+    super.key,
     required IndexedWidgetBuilder itemBuilder,
     required int itemCount,
     this.fullTransitionValue = FULL_TRANSITION_PX,
@@ -318,8 +317,7 @@ class LiquidSwipe extends StatefulWidget {
         assert(initialPage >= 0 && initialPage < itemCount),
         assert(positionSlideIcon >= 0 && positionSlideIcon <= 1),
         liquidSwipeChildDelegate =
-            LiquidSwipeBuilderChildDelegate(itemBuilder, itemCount),
-        super(key: key);
+            LiquidSwipeBuilderChildDelegate(itemBuilder, itemCount);
 
   @override
   State<StatefulWidget> createState() => _LiquidSwipe();
@@ -366,16 +364,16 @@ class _LiquidSwipe extends State<LiquidSwipe> with TickerProviderStateMixin {
             PageReveal(
               //next page reveal
               horizontalReveal: notifier.slidePercentHor,
-              child: notifier.slideDirection == SlideDirection.leftToRight
-                  ? widget.liquidSwipeChildDelegate
-                      .getChildAtIndex(context, notifier.nextPageIndex)
-                  : widget.liquidSwipeChildDelegate
-                      .getChildAtIndex(context, notifier.activePageIndex),
               slideDirection: notifier.slideDirection,
               iconSize: notifier.iconSize,
               waveType: widget.waveType,
               verticalReveal: notifier.slidePercentVer,
               enableSideReveal: notifier.enableSideReveal,
+              child: notifier.slideDirection == SlideDirection.leftToRight
+                  ? widget.liquidSwipeChildDelegate
+                      .getChildAtIndex(context, notifier.nextPageIndex)
+                  : widget.liquidSwipeChildDelegate
+                      .getChildAtIndex(context, notifier.activePageIndex),
             ),
             PageDragger(
               //Used for gesture control

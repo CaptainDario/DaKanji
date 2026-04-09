@@ -1,24 +1,22 @@
 // Flutter imports:
-import 'package:flutter/material.dart';
-
-// Package imports:
-import 'package:database_builder/database_builder.dart';
-import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
-import 'package:get_it/get_it.dart';
-import 'package:isar_community/isar.dart';
-import 'package:onboarding_overlay/onboarding_overlay.dart';
-
+import 'package:da_kanji_mobile/core/user/user_data.dart';
 // Project imports:
 import 'package:da_kanji_mobile/features/dictionary/controller/isars.dart';
 import 'package:da_kanji_mobile/features/kanji_table/model/kanji_category.dart';
 import 'package:da_kanji_mobile/features/kanji_table/model/kanji_sorting.dart';
+import 'package:da_kanji_mobile/features/kanji_table/widgets/kanji_details_page.dart';
 import 'package:da_kanji_mobile/features/settings/model/settings.dart';
 import 'package:da_kanji_mobile/features/tutorial/model/tutorials.dart';
-import 'package:da_kanji_mobile/core/user/user_data.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
-import 'package:da_kanji_mobile/features/kanji_table/widgets/kanji_details_page.dart';
+// Package imports:
+import 'package:database_builder/database_builder.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
+import 'package:get_it/get_it.dart';
+import 'package:isar_community/isar.dart';
+import 'package:onboarding_overlay/onboarding_overlay.dart';
 
 class KanjiTable extends StatefulWidget {
   /// should the focus nodes for the tutorial be included

@@ -1,12 +1,11 @@
 import 'dart:convert';
 
 import "package:da_db/data/grouping_rules.dart";
+import 'package:da_db/database/da_db.dart';
+import 'package:da_db/database/example/example_entry.dart';
+import 'package:da_db/database/example/example_search_result.dart';
+import 'package:da_db/database/example/example_tables.dart';
 import "package:drift/drift.dart";
-
-import "/database/example/example_entry.dart";
-import "/database/example/example_search_result.dart";
-import "/database/example/example_tables.dart";
-import "../da_db.dart";
 
 part 'example_dao.g.dart';
 

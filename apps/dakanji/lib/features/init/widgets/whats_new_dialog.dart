@@ -1,18 +1,16 @@
 // Flutter imports:
-import 'package:flutter/material.dart';
-
+// Project imports:
+import 'package:da_kanji_mobile/core/releases/changelog.dart';
+import 'package:da_kanji_mobile/features/changelog/screens/changelog_screen.dart';
+import 'package:da_kanji_mobile/features/settings/model/settings.dart';
+import 'package:da_kanji_mobile/locales_keys.dart';
 // Package imports:
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
 import 'package:get_it/get_it.dart';
 import 'package:lottie/lottie.dart';
 import 'package:url_launcher/url_launcher_string.dart';
-
-// Project imports:
-import 'package:da_kanji_mobile/core/releases/changelog.dart';
-import 'package:da_kanji_mobile/features/settings/model/settings.dart';
-import 'package:da_kanji_mobile/locales_keys.dart';
-import 'package:da_kanji_mobile/features/changelog/screens/changelog_screen.dart';
 
 class WhatsNewDialogue extends StatefulWidget {
   const WhatsNewDialogue(

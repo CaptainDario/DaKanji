@@ -1,10 +1,8 @@
 // Flutter imports:
-import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:collection/collection.dart';
+import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
-
 // Project imports:
 import 'package:language_processing/language_processing.dart';
 

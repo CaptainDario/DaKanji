@@ -1,10 +1,9 @@
 // Flutter imports:
 
-// Package imports:
-import 'package:kana_kit/kana_kit.dart';
-
 // Project imports:
 import 'package:da_kanji_mobile/globals.dart';
+// Package imports:
+import 'package:kana_kit/kana_kit.dart';
 
 
 /// Stlyes a given svg string to fit the given theme `darkTheme`

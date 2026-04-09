@@ -1,8 +1,7 @@
 
+import 'package:da_db/database/general_tables/kanji_tables.dart';
+import 'package:da_db/database/index/index_tables.dart';
 import 'package:drift/drift.dart';
-
-import '/database/general_tables/kanji_tables.dart';
-import '/database/index/index_tables.dart';
 
 /// Table that store the main term of a meta term bank and links to its data
 @TableIndex(name: 'KanjiMetaBankV3Table_indexIdIndex', columns: {#indexId})

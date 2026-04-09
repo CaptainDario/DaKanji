@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:awesome_dialog/awesome_dialog.dart';
-import 'package:da_db/database/da_db.dart';
 import 'package:da_db/database/db_queries/dictionary_search/dictionary_match.dart';
 import 'package:da_db/database/db_queries/dictionary_search/dictionary_search_params.dart';
 import 'package:da_db/database/db_queries/dictionary_search/dictionary_search_result.dart';
@@ -57,7 +56,7 @@ class DictionarySearchWidgetState extends State<DictionarySearchWidget>
   
   String _currentInitialSearch = "";
   bool _initiallyExpanded = false;
-  double _searchBarInputHeight = 0;
+  final double _searchBarInputHeight = 0;
   
   Timer? _reopenPopupTimer;
   bool _radicalPopupOpen = false;

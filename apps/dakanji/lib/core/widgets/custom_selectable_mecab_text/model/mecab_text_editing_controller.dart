@@ -1,17 +1,12 @@
 // Dart imports:
 import 'dart:math';
 
+import 'package:da_kanji_mobile/core/widgets/conditional_parent_widget.dart';
 // Flutter imports:
 import 'package:da_kanji_mobile/core/widgets/custom_selectable_mecab_text/model/mecab_data_ui.dart';
 import 'package:flutter/material.dart';
-
-// Package imports:
-import 'package:get_it/get_it.dart';
-import 'package:kana_kit/kana_kit.dart';
-
 // Project imports:
 import 'package:language_processing/language_processing.dart';
-import 'package:da_kanji_mobile/core/widgets/conditional_parent_widget.dart';
 
 /// [TextEditingController] that can show rubys over Japanese text and also
 /// colorize words based on their PoS based on analysis of MeCab

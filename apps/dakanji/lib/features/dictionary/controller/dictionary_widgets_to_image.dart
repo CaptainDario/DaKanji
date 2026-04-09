@@ -4,14 +4,12 @@ import 'dart:typed_data';
 
 // Flutter imports:
 import 'package:da_db/database/db_queries/dictionary_search/dictionary_match.dart';
+// Project imports:
+import 'package:da_kanji_mobile/features/dictionary/widgets/word_tab/dictionary_word_card_screenshot.dart';
 import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:path_provider/path_provider.dart';
 import 'package:screenshot/screenshot.dart';
-
-// Project imports:
-import 'package:da_kanji_mobile/features/dictionary/widgets/word_tab/dictionary_word_card_screenshot.dart';
 
 
 /// Takes a screeshot of a [DictionaryWordCard] dispalying `entry` and stores

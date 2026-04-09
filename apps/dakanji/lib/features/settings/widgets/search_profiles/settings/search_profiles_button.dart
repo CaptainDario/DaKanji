@@ -1,6 +1,6 @@
 import 'package:da_db/database/search_profiles/search_profiles_entry.dart';
+import 'package:da_kanji_mobile/features/settings/widgets/search_profiles/settings/search_profile_settings_dialog.dart';
 import 'package:flutter/material.dart';
-import 'search_profile_settings_dialog.dart';
 
 
 class SearchProfilesButton extends StatelessWidget {

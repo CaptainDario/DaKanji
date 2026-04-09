@@ -1,12 +1,10 @@
 // Flutter imports:
-import 'package:flutter/cupertino.dart';
-
+// Project imports:
+import 'package:da_kanji_mobile/locales_keys.dart';
 // Package imports:
 import 'package:easy_localization/easy_localization.dart';
 import 'package:feedback/feedback.dart';
-
-// Project imports:
-import 'package:da_kanji_mobile/locales_keys.dart';
+import 'package:flutter/cupertino.dart';
 
 class CustomFeedbackLocalizations implements FeedbackLocalizations {
   

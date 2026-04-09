@@ -1,8 +1,7 @@
 // Flutter imports:
-import 'package:flutter/material.dart';
-
 // Project imports:
 import 'package:da_kanji_mobile/features/dictionary/widgets/word_tab/verb_conjugation_entry.dart';
+import 'package:flutter/material.dart';
 
 /// `ExpansionTile` that shows conjugations of `word` (verb, adjective)
 class ConjugationColumn extends StatefulWidget {

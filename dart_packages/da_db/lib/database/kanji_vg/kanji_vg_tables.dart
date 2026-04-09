@@ -1,8 +1,7 @@
 
+import 'package:da_db/database/general_tables/kanji_tables.dart';
 import 'package:da_db/util/data_converters/zlib_text_converter_io.dart';
 import 'package:drift/drift.dart';
-
-import '/database/general_tables/kanji_tables.dart';
 
 
 

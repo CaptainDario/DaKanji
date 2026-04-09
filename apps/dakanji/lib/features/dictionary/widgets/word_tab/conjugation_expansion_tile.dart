@@ -1,15 +1,13 @@
 // Flutter imports:
-import 'package:flutter/material.dart';
-
+import 'package:da_kanji_mobile/core/japanese_text_processing/conjugation_descriptions.dart';
+import 'package:da_kanji_mobile/features/dictionary/widgets/word_tab/conjugation_column.dart';
+import 'package:da_kanji_mobile/locales_keys.dart';
 // Package imports:
 import 'package:easy_localization/easy_localization.dart';
-import 'package:linked_scroll_controller/linked_scroll_controller.dart';
-
+import 'package:flutter/material.dart';
 // Project imports:
 import 'package:language_processing/language_processing.dart';
-import 'package:da_kanji_mobile/core/japanese_text_processing/conjugation_descriptions.dart';
-import 'package:da_kanji_mobile/locales_keys.dart';
-import 'package:da_kanji_mobile/features/dictionary/widgets/word_tab/conjugation_column.dart';
+import 'package:linked_scroll_controller/linked_scroll_controller.dart';
 
 /// `ExpansionTile` that shows conjugations of `word` (verb, adjective)
 class ConjugationExpansionTile extends StatefulWidget {

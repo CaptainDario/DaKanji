@@ -1,8 +1,7 @@
 
+import 'package:da_db/database/da_db.dart';
+import 'package:da_db/database/tag/tag_bank_v3_tables.dart';
 import "package:drift/drift.dart";
-
-import "/database/tag/tag_bank_v3_tables.dart";
-import "../da_db.dart";
 
 part 'tag_bank_v3_dao.g.dart';
 

@@ -1,27 +1,25 @@
 // Flutter imports:
-import 'package:flutter/material.dart';
-
-// Package imports:
-import 'package:flutter_inappwebview/flutter_inappwebview.dart';
-import 'package:get_it/get_it.dart';
-import 'package:onboarding_overlay/onboarding_overlay.dart';
-import 'package:provider/provider.dart';
-
+import 'package:da_kanji_mobile/core/routing/screens.dart';
+import 'package:da_kanji_mobile/core/user/user_data.dart';
+import 'package:da_kanji_mobile/features/drawer/widgets/drawer.dart';
+import 'package:da_kanji_mobile/features/drawing/controller/drawing_interpreter.dart';
 // Project imports:
 import 'package:da_kanji_mobile/features/drawing/controller/handle_predictions.dart';
 import 'package:da_kanji_mobile/features/drawing/model/draw_screen_layout.dart';
 import 'package:da_kanji_mobile/features/drawing/model/draw_screen_state.dart';
-import 'package:da_kanji_mobile/features/drawing/controller/drawing_interpreter.dart';
-import 'package:da_kanji_mobile/core/routing/screens.dart';
-import 'package:da_kanji_mobile/features/tutorial/model/tutorials.dart';
-import 'package:da_kanji_mobile/core/user/user_data.dart';
-import 'package:da_kanji_mobile/features/drawer/widgets/drawer.dart';
 import 'package:da_kanji_mobile/features/drawing/widgets/draw_screen_clear_button.dart';
 import 'package:da_kanji_mobile/features/drawing/widgets/draw_screen_drawing_canvas.dart';
 import 'package:da_kanji_mobile/features/drawing/widgets/draw_screen_multi_char_search.dart';
 import 'package:da_kanji_mobile/features/drawing/widgets/draw_screen_prediction_buttons.dart';
 import 'package:da_kanji_mobile/features/drawing/widgets/draw_screen_responsive_layout.dart';
 import 'package:da_kanji_mobile/features/drawing/widgets/draw_screen_undo_button.dart';
+import 'package:da_kanji_mobile/features/tutorial/model/tutorials.dart';
+import 'package:flutter/material.dart';
+// Package imports:
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
+import 'package:get_it/get_it.dart';
+import 'package:onboarding_overlay/onboarding_overlay.dart';
+import 'package:provider/provider.dart';
 
 /// The "draw"-screen.
 /// 

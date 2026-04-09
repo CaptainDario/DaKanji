@@ -1,25 +1,23 @@
 // Dart imports:
 import 'dart:async';
 
+// Package imports:
+import 'package:archive/archive_io.dart';
+import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:da_kanji_mobile/core/widgets/dakanji/dakanji_loading_indicator.dart';
+import 'package:da_kanji_mobile/core/widgets/download_popup.dart';
+// Project imports:
+import 'package:da_kanji_mobile/globals.dart';
+import 'package:da_kanji_mobile/locales_keys.dart';
+import 'package:dio/dio.dart';
+import 'package:easy_localization/easy_localization.dart';
 // Flutter imports:
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
-// Package imports:
-import 'package:archive/archive_io.dart';
-import 'package:awesome_dialog/awesome_dialog.dart';
-import 'package:dio/dio.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:path/path.dart' as p;
 import 'package:tuple/tuple.dart';
 import 'package:universal_io/io.dart';
-
-// Project imports:
-import 'package:da_kanji_mobile/globals.dart';
-import 'package:da_kanji_mobile/locales_keys.dart';
-import 'package:da_kanji_mobile/core/widgets/download_popup.dart';
-import 'package:da_kanji_mobile/core/widgets/dakanji/dakanji_loading_indicator.dart';
 
 /// Download the audio files from the github release matching this version
 void downloadAudio(BuildContext context) async {

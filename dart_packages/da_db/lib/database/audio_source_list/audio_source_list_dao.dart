@@ -1,11 +1,10 @@
 import "dart:convert";
 
 import "package:da_db/database/audio_source_list/audio_source_list_entry.dart";
+import 'package:da_db/database/audio_source_list/audio_source_list_tables.dart';
 import "package:da_db/database/da_db.dart";
 import "package:da_db/database/index/index_table_entry.dart";
 import "package:drift/drift.dart";
-
-import "audio_source_list_tables.dart";
 
 part 'audio_source_list_dao.g.dart';
 

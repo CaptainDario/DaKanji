@@ -1,8 +1,7 @@
+import 'package:da_kanji_mobile/features/home/widgets/study_calendar/calendar_day_cell.dart';
+import 'package:da_kanji_mobile/features/home/widgets/study_calendar/streak_footer.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:flutter/material.dart';
-
-import 'calendar_day_cell.dart';
-import 'streak_footer.dart';
 
 /// Data model representing a single day's study progress
 class DailyStudyStats {

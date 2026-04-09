@@ -4,8 +4,8 @@ import 'package:collection/collection.dart';
 import 'package:da_db_shared/da_db_shared.dart';
 import 'package:language_processing/src/japanese/yomitan_deconjugation/language_transformer.dart';
 import 'package:language_processing/src/japanese/yomitan_deconjugation/transform_loader.dart';
-import 'package:test/test.dart';
 import 'package:path/path.dart' as p;
+import 'package:test/test.dart';
 
 import 'yomitan_deconjugate_test_cases.dart';
 

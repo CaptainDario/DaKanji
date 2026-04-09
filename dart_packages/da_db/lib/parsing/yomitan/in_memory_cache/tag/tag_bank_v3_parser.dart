@@ -1,10 +1,9 @@
 // Dart imports:
 import 'dart:convert';
 
+import 'package:da_db/database/da_db.dart';
 import 'package:drift/drift.dart';
 import 'package:universal_io/io.dart';
-
-import '/database/da_db.dart';
 
 /// parses the given json's contents and adds it to the given [DaDb]
 Future parseTagBankV3File(File tagJsonFile, DaDb db, int dictId) async {

@@ -1,6 +1,6 @@
 
-import 'conj.dart';
-import 'kwpos.dart';
+import 'package:language_processing/src/japanese/conjugation/jmdict_conjugation_data/conj.dart';
+import 'package:language_processing/src/japanese/conjugation/jmdict_conjugation_data/kwpos.dart';
 
 /// Convenience class grouping together 
 /// 

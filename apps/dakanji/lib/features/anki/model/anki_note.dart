@@ -1,13 +1,12 @@
 // Dart imports:
 import 'dart:math';
 
+import 'package:da_kanji_mobile/features/anki/model/anki_data.dart';
 // Package imports:
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:database_builder/database_builder.dart';
-
 // Project imports:
 import 'package:language_processing/language_processing.dart';
-import 'package:da_kanji_mobile/features/anki/model/anki_data.dart';
 
 /// Represents a DaKanji-style Anki note
 class AnkiNote{

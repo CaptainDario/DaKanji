@@ -5,9 +5,6 @@ import 'package:collection/collection.dart';
 import 'package:database_builder/database_builder.dart';
 import 'package:tuple/tuple.dart';
 
-// Project imports:
-import 'package:language_processing/language_processing.dart';
-
 /// Sorts a list of Jmdict entries given a query text.
 /// If it is a search *without* wildcards the order is determined
 /// by those sorting criteria:

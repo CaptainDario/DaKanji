@@ -1,23 +1,21 @@
 // Flutter imports:
+// Project imports:
+import 'package:da_kanji_mobile/core/japanese_text_processing/kana.dart';
 import 'package:da_kanji_mobile/core/kanji_vg/kanji_vg_utils.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-
+import 'package:da_kanji_mobile/features/dictionary/controller/isars.dart';
+import 'package:da_kanji_mobile/features/dictionary/widgets/kanji_tab/kanji_vg_widget.dart';
+import 'package:da_kanji_mobile/features/kana_table/model/kana.dart';
+import 'package:da_kanji_mobile/features/kana_table/model/mnemonics.dart';
+import 'package:da_kanji_mobile/features/settings/model/settings.dart';
 // Package imports:
 import 'package:database_builder/database_builder.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
 import 'package:isar_community/isar.dart';
 import 'package:lite_rt_for_flutter/lite_rt_for_flutter.dart';
-
-// Project imports:
-import 'package:da_kanji_mobile/core/japanese_text_processing/kana.dart';
-import 'package:da_kanji_mobile/features/dictionary/controller/isars.dart';
-import 'package:da_kanji_mobile/features/kana_table/model/kana.dart';
-import 'package:da_kanji_mobile/features/kana_table/model/mnemonics.dart';
-import 'package:da_kanji_mobile/features/settings/model/settings.dart';
-import 'package:da_kanji_mobile/features/dictionary/widgets/kanji_tab/kanji_vg_widget.dart';
 
 /// Widget that shows information about a given kana. This information is
 /// * romaji

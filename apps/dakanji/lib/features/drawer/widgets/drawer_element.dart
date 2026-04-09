@@ -1,8 +1,7 @@
 // Flutter imports:
-import 'package:flutter/material.dart';
-
 // Project imports:
 import 'package:da_kanji_mobile/core/routing/navigation_arguments.dart';
+import 'package:flutter/material.dart';
 
 // Package imports:
 

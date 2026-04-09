@@ -1,9 +1,8 @@
 // Flutter imports:
-import 'package:flutter/material.dart';
-
 // Project imports:
 import 'package:da_kanji_mobile/core/utils/color_conversion.dart';
 import 'package:da_kanji_mobile/globals.dart';
+import 'package:flutter/material.dart';
 
 final ThemeData darkTheme = ThemeData(
 

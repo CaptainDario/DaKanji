@@ -1,4 +1,4 @@
-import 'unidic_fields.dart';
+import 'package:language_processing/src/japanese/mecab/unidic_fields.dart';
 
 
 /// Defines which indices in the MeCab feature array map to specific linguistic concepts.

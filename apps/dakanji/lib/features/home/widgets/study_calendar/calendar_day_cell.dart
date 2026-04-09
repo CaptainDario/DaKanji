@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
-import 'breathing_neon_wrapper.dart';
-import '../study_details_editor/study_detail_modal.dart'; 
+import 'package:da_kanji_mobile/features/home/widgets/study_calendar/breathing_neon_wrapper.dart';
+import 'package:da_kanji_mobile/features/home/widgets/study_details_editor/study_detail_modal.dart';
+import 'package:flutter/material.dart'; 
 
 class CalendarDayCell extends StatelessWidget {
   final DateTime date;

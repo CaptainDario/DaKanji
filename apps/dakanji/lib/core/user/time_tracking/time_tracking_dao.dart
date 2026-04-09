@@ -1,9 +1,9 @@
+import 'package:async/async.dart';
 import 'package:da_kanji_mobile/core/user/time_tracking/time_tracking_table.dart';
 import 'package:da_kanji_mobile/core/user/time_tracking/timer_status.dart';
 import 'package:da_kanji_mobile/core/user/user_data_db.dart';
 import 'package:da_kanji_mobile/core/utils/sql_utils.dart';
 import 'package:drift/drift.dart';
-import 'package:async/async.dart';
 
 part 'time_tracking_dao.g.dart';
 

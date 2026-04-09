@@ -1,10 +1,11 @@
 import 'dart:async';
 import 'dart:io';
+
+// Adjust import path as needed for your project structure
+import 'package:da_kanji_mobile/core/user/time_tracking/time_tracking_dao.dart';
 import 'package:flutter/foundation.dart'; // For kIsWeb
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-// Adjust import path as needed for your project structure
-import 'package:da_kanji_mobile/core/user/time_tracking/time_tracking_dao.dart';
 
 class TimeTrackingNotificationService {
   static final TimeTrackingNotificationService _instance = TimeTrackingNotificationService._internal();

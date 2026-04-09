@@ -1,17 +1,15 @@
 // Flutter imports:
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-
-// Package imports:
-import 'package:database_builder/database_builder.dart';
-import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
-import 'package:isar_community/isar.dart';
-
+import 'package:da_kanji_mobile/features/dictionary/model/radicals.dart' as radk;
 // Project imports:
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
-import 'package:da_kanji_mobile/features/dictionary/model/radicals.dart' as radk;
+// Package imports:
+import 'package:database_builder/database_builder.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
+import 'package:isar_community/isar.dart';
 
 /// Popup body of the popup to select radicals
 class RadicalPopupBody extends StatefulWidget {

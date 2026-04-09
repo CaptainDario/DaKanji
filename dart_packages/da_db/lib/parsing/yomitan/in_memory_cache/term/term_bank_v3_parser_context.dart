@@ -1,7 +1,6 @@
 
+import 'package:da_db/database/da_db.dart';
 import 'package:da_db/parsing/util/import_context.dart';
-
-import '/database/da_db.dart';
 
 class TermBankV3ParserContext extends ParserContext{
 

@@ -1,22 +1,20 @@
 // Flutter imports:
 import 'package:da_kanji_mobile/features/dictionary/model/dictionary_search_state.dart';
 import 'package:da_kanji_mobile/features/dictionary/widgets/term/term_entry_widget.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/gestures.dart';
-import 'package:flutter/material.dart';
-
-// Package imports:
-import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter_inappwebview/flutter_inappwebview.dart';
-import 'package:get_it/get_it.dart';
-
-// Project imports:
-import 'package:language_processing/language_processing.dart';
+import 'package:da_kanji_mobile/features/dictionary/widgets/word_tab/conjugation_expansion_tile.dart';
 import 'package:da_kanji_mobile/features/settings/model/settings.dart';
 import 'package:da_kanji_mobile/features/settings/model/settings_dictionary.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
-import 'package:da_kanji_mobile/features/dictionary/widgets/word_tab/conjugation_expansion_tile.dart';
+// Package imports:
+import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
+import 'package:get_it/get_it.dart';
+// Project imports:
+import 'package:language_processing/language_processing.dart';
 import 'package:provider/provider.dart';
 
 class DictionaryWordCard extends StatefulWidget {

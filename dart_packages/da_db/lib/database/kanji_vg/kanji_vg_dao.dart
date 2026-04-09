@@ -1,8 +1,7 @@
 
+import 'package:da_db/database/da_db.dart';
+import 'package:da_db/database/kanji_vg/kanji_vg_tables.dart';
 import "package:drift/drift.dart";
-
-import "/database/kanji_vg/kanji_vg_tables.dart";
-import "../da_db.dart";
 
 part 'kanji_vg_dao.g.dart';
 

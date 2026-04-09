@@ -2,17 +2,16 @@ import 'dart:io';
 
 import 'package:da_kanji_mobile/core/user/search_history/search_history_dao.dart';
 import 'package:da_kanji_mobile/core/user/search_history/search_history_tables.dart';
+import 'package:da_kanji_mobile/core/user/stats/dict_stats_table.dart';
 import 'package:da_kanji_mobile/core/user/time_tracking/time_tracking_dao.dart';
 import 'package:da_kanji_mobile/core/user/time_tracking/time_tracking_table.dart';
 import 'package:da_kanji_mobile/core/user/word_lists/word_lists_dao.dart';
 import 'package:da_kanji_mobile/core/user/word_lists/word_lists_tables.dart';
 import 'package:da_kanji_mobile/core/utils/sql_utils.dart';
 import 'package:da_kanji_mobile/features/word_lists/model/word_list_types.dart';
+import 'package:da_kanji_mobile/globals.dart';
 import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
-
-import 'stats/dict_stats_table.dart';
-import 'package:da_kanji_mobile/globals.dart';
 
 // neccessary imports to make drift generated code work
 

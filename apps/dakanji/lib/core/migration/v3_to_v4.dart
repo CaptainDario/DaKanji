@@ -4,6 +4,10 @@ import 'dart:convert';
 // Package imports:
 import 'package:archive/archive_io.dart';
 import 'package:da_kanji_mobile/core/user/user_data_db.dart';
+import 'package:da_kanji_mobile/features/word_lists/controller/word_lists_queries.dart';
+// Project imports:
+import 'package:da_kanji_mobile/features/word_lists/model/word_list_types.dart';
+import 'package:da_kanji_mobile/globals.dart';
 import 'package:database_builder/database_builder.dart';
 import 'package:drift/drift.dart';
 import 'package:flutter/material.dart';
@@ -11,11 +15,6 @@ import 'package:get_it/get_it.dart';
 import 'package:path/path.dart' as p;
 import 'package:tuple/tuple.dart';
 import 'package:universal_io/io.dart';
-
-// Project imports:
-import 'package:da_kanji_mobile/features/word_lists/model/word_list_types.dart';
-import 'package:da_kanji_mobile/features/word_lists/controller/word_lists_queries.dart';
-import 'package:da_kanji_mobile/globals.dart';
 
 /// Stores all word lists in a directory called `v4_word_list_migration` in the
 /// users support directory to migrate the data once DaKanji 4 releases

@@ -1,12 +1,11 @@
 
 
 // Package imports:
+// Project imports:
+import 'package:da_kanji_mobile/features/dictionary/controller/isars.dart';
 import 'package:database_builder/database_builder.dart';
 import 'package:get_it/get_it.dart';
 import 'package:isar_community/isar.dart';
-
-// Project imports:
-import 'package:da_kanji_mobile/features/dictionary/controller/isars.dart';
 
 /// Searches in KanjiVG the matching entries to `kanjis` and returns them
 List<Kanjidic2> findMatchingKanjiDic2(List<String> kanjis){

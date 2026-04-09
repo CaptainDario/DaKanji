@@ -1,10 +1,9 @@
 import 'dart:async';
-import 'package:da_kanji_mobile/features/shop/model/product.dart';
-import 'package:flutter/material.dart';
 
-import 'shop_constants.dart';
-import 'shop_main_carousel.dart';
-import 'product_details_section.dart';
+import 'package:da_kanji_mobile/features/shop/model/product.dart';
+import 'package:da_kanji_mobile/features/shop/widgets/product_details_section.dart';
+import 'package:da_kanji_mobile/features/shop/widgets/shop_main_carousel.dart';
+import 'package:flutter/material.dart';
 
 class ShopCategoryPage extends StatefulWidget {
   final List<Product> products;

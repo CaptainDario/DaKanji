@@ -2,27 +2,25 @@
 import 'dart:math';
 import 'dart:ui';
 
+import 'package:da_kanji_mobile/core/icons/da_kanji_icons.dart';
+// Project imports:
+import 'package:da_kanji_mobile/core/japanese_text_processing/kana.dart';
+import 'package:da_kanji_mobile/core/routing/screens.dart';
+import 'package:da_kanji_mobile/core/user/user_data.dart';
+import 'package:da_kanji_mobile/features/drawer/widgets/drawer.dart';
+import 'package:da_kanji_mobile/features/kana_table/model/kana.dart';
+import 'package:da_kanji_mobile/features/kana_table/widgets/kana_grid.dart';
+import 'package:da_kanji_mobile/features/kana_table/widgets/kana_info_card.dart';
+import 'package:da_kanji_mobile/features/settings/model/settings.dart';
+import 'package:da_kanji_mobile/features/tutorial/model/tutorials.dart';
+import 'package:da_kanji_mobile/globals.dart';
 // Flutter imports:
 import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:fvp/mdk.dart' as mdk;
 import 'package:get_it/get_it.dart';
 import 'package:onboarding_overlay/onboarding_overlay.dart';
-
-// Project imports:
-import 'package:da_kanji_mobile/core/japanese_text_processing/kana.dart';
-import 'package:da_kanji_mobile/core/icons/da_kanji_icons.dart';
-import 'package:da_kanji_mobile/features/kana_table/model/kana.dart';
-import 'package:da_kanji_mobile/core/routing/screens.dart';
-import 'package:da_kanji_mobile/features/settings/model/settings.dart';
-import 'package:da_kanji_mobile/features/tutorial/model/tutorials.dart';
-import 'package:da_kanji_mobile/core/user/user_data.dart';
-import 'package:da_kanji_mobile/globals.dart';
-import 'package:da_kanji_mobile/features/drawer/widgets/drawer.dart';
-import 'package:da_kanji_mobile/features/kana_table/widgets/kana_grid.dart';
-import 'package:da_kanji_mobile/features/kana_table/widgets/kana_info_card.dart';
 import 'package:universal_io/io.dart';
 
 class KanaTableScreen extends StatefulWidget {

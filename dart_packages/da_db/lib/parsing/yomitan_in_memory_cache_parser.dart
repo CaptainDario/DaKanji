@@ -6,6 +6,7 @@ import 'dart:typed_data';
 
 import 'package:archive/archive_io.dart';
 import 'package:da_db/data/dictionary_types.dart';
+import 'package:da_db/database/da_db.dart';
 import 'package:da_db/parsing/util/db_optimization.dart';
 import 'package:da_db/parsing/util/import_context.dart';
 import 'package:da_db/parsing/util/parsing_constants.dart';
@@ -26,8 +27,6 @@ import 'package:da_db/util/memory_usage.dart';
 import 'package:drift/isolate.dart';
 import 'package:language_processing/language_processing.dart';
 import 'package:path/path.dart' as p;
-
-import '/database/da_db.dart';
 
 
 

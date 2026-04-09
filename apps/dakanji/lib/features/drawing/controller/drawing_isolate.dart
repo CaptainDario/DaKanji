@@ -3,12 +3,11 @@ import 'dart:isolate';
 
 // Package imports:
 import 'package:async/async.dart';
-import 'package:lite_rt_for_flutter/lite_rt_for_flutter.dart';
-import 'package:tuple/tuple.dart';
-
+import 'package:da_kanji_mobile/core/tf_lite/inference_stats.dart';
 // Project imports:
 import 'package:da_kanji_mobile/features/drawing/model/drawing_data.dart';
-import 'package:da_kanji_mobile/core/tf_lite/inference_stats.dart';
+import 'package:lite_rt_for_flutter/lite_rt_for_flutter.dart';
+import 'package:tuple/tuple.dart';
 
 /// Bundles data to pass between Isolate
 class DrawingIsolate {

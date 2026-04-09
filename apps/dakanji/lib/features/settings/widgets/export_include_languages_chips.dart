@@ -1,12 +1,10 @@
 // Flutter imports:
-import 'package:flutter/material.dart';
-
-// Package imports:
-import 'package:flutter_svg/flutter_svg.dart';
-
 // Project imports:
 import 'package:da_kanji_mobile/features/settings/model/settings.dart';
 import 'package:da_kanji_mobile/features/settings/widgets/responsive_widgets/responsive_filter_chips.dart';
+import 'package:flutter/material.dart';
+// Package imports:
+import 'package:flutter_svg/flutter_svg.dart';
 
 /// A set of language chips that define which languages to include when exporting
 /// to anki, pdf, etc.. Only the languages that are active in the dictionary

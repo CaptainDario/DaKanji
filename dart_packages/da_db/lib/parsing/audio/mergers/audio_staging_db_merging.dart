@@ -1,7 +1,7 @@
 import 'package:da_db/database/da_db.dart';
 import 'package:da_db/database/index/yomitan_index.dart';
 
-import 'audio_bank_merger.dart';
+import 'package:da_db/parsing/audio/mergers/audio_bank_merger.dart';
 
 /// Attaches the populated audio staging database to the main database and 
 /// executes the merge pipeline.

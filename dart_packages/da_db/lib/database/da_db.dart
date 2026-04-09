@@ -6,6 +6,7 @@ import 'package:da_db/database/audio/audio_dao.dart';
 import 'package:da_db/database/audio/audio_relation_tables.dart';
 import 'package:da_db/database/audio/audio_tables.dart';
 import 'package:da_db/database/audio_source_list/audio_source_list_dao.dart';
+import 'package:da_db/database/audio_source_list/audio_source_list_tables.dart';
 import 'package:da_db/database/da_db_dao.dart';
 import 'package:da_db/database/db_queries/dictionary_search_dao.dart';
 import 'package:da_db/database/db_queries/kanji_search_dao.dart';
@@ -56,8 +57,6 @@ import 'package:language_processing/language_processing.dart';
 import 'package:sqlite3/sqlite3.dart';
 import 'package:sqlite_extensions/sqlite_extensions.dart';
 import 'package:universal_io/io.dart';
-
-import 'audio_source_list/audio_source_list_tables.dart';
 
 part 'da_db.g.dart';
 

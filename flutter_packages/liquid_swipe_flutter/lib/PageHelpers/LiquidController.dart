@@ -44,13 +44,13 @@ class LiquidController {
   LiquidController();
 
   ///Internal Method Should not be used.
-  setContext(BuildContext context) {
+  void setContext(BuildContext context) {
     provider = Provider.of<LiquidProvider>(context, listen: false);
   }
 
   ///Jump Directly to mentioned Page index but without Animation
   ///see also : [LiquidProvider.jumpToPage]
-  jumpToPage({required int page}) {
+  void jumpToPage({required int page}) {
     assert(provider != null,
         "LiquidController not attached to any LiquidSwipe Widget.");
     provider?.jumpToPage(page);
@@ -58,7 +58,7 @@ class LiquidController {
 
   ///Animate to mentioned page within given [Duration]
   ///Remember the [duration] here is the total duration in which it will animate though all pages not the single page
-  animateToPage({required int page, int duration = 600}) {
+  void animateToPage({required int page, int duration = 600}) {
     assert(provider != null,
         "LiquidController not attached to any LiquidSwipe Widget.");
     provider?.animateToPage(page, duration);
@@ -70,7 +70,7 @@ class LiquidController {
 
   ///Use this method to disable gestures during runtime, like on certain pages using [OnPageChangeCallback]
   ///If you want to disable gestures from start use [LiquidSwipe.disableUserGesture]
-  shouldDisableGestures({required bool disable}) {
+  void shouldDisableGestures({required bool disable}) {
     assert(provider != null,
         "LiquidController not attached to any LiquidSwipe Widget.");
     provider?.setUserGesture = disable;

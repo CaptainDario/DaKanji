@@ -1,6 +1,5 @@
 import 'package:da_db/database/da_db.dart';
 import 'package:da_db/database/search_profiles/search_profiles_entry.dart';
-import 'package:da_kanji_mobile/features/settings/widgets/search_profiles/settings/dictionary_management/dictionary_management_widget.dart';
 import 'package:da_kanji_mobile/features/settings/widgets/search_profiles/settings//grouping_rules/search_profile_settings_grouping_widget.dart';
 import 'package:da_kanji_mobile/features/settings/widgets/search_profiles/settings//search_profile_management_widget.dart';
 import 'package:da_kanji_mobile/features/settings/widgets/search_profiles/settings//search_profile_settings_category_separator.dart';
@@ -9,6 +8,7 @@ import 'package:da_kanji_mobile/features/settings/widgets/search_profiles/settin
 import 'package:da_kanji_mobile/features/settings/widgets/search_profiles/settings//search_profile_settings_info_widgets.dart';
 import 'package:da_kanji_mobile/features/settings/widgets/search_profiles/settings//search_profile_settings_search_result_sort_order.dart';
 import 'package:da_kanji_mobile/features/settings/widgets/search_profiles/settings//search_profile_settings_toggle_list_tile.dart';
+import 'package:da_kanji_mobile/features/settings/widgets/search_profiles/settings/dictionary_management/dictionary_management_widget.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';

@@ -1,33 +1,31 @@
 // Flutter imports:
 import 'package:da_db/database/da_db.dart';
 import 'package:da_db/database/search_profiles/search_profiles_entry.dart';
+import 'package:da_kanji_mobile/core/routing/navigation_arguments.dart';
+// Project imports:
+import 'package:da_kanji_mobile/core/routing/routing.dart';
 import 'package:da_kanji_mobile/core/supabase/model/supabase_cache_manager.dart';
+import 'package:da_kanji_mobile/core/theme/dark_theme.dart';
+import 'package:da_kanji_mobile/core/theme/light_theme.dart';
 import 'package:da_kanji_mobile/core/user/time_tracking/time_tracking_dao.dart';
+import 'package:da_kanji_mobile/core/user/user_activity.dart';
+import 'package:da_kanji_mobile/core/user/user_data.dart';
 import 'package:da_kanji_mobile/core/user/user_data_db.dart';
+import 'package:da_kanji_mobile/core/widgets/dakanji/dakanji_splash.dart';
 import 'package:da_kanji_mobile/features/home/controller/long_running_timer_watcher.dart';
-import 'package:flutter/material.dart';
-
+import 'package:da_kanji_mobile/features/init/screens/home_screen.dart';
+import 'package:da_kanji_mobile/features/settings/model/settings.dart';
+import 'package:da_kanji_mobile/features/tutorial/controller/tutorial_on_step.dart';
+import 'package:da_kanji_mobile/features/tutorial/model/tutorials.dart';
+import 'package:da_kanji_mobile/globals.dart';
 // Package imports:
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:onboarding_overlay/onboarding_overlay.dart';
 import 'package:provider/provider.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:window_manager/window_manager.dart';
-
-// Project imports:
-import 'package:da_kanji_mobile/core/routing/routing.dart';
-import 'package:da_kanji_mobile/core/user/user_activity.dart';
-import 'package:da_kanji_mobile/features/tutorial/controller/tutorial_on_step.dart';
-import 'package:da_kanji_mobile/core/routing/navigation_arguments.dart';
-import 'package:da_kanji_mobile/features/settings/model/settings.dart';
-import 'package:da_kanji_mobile/features/tutorial/model/tutorials.dart';
-import 'package:da_kanji_mobile/core/theme/dark_theme.dart';
-import 'package:da_kanji_mobile/core/theme/light_theme.dart';
-import 'package:da_kanji_mobile/core/user/user_data.dart';
-import 'package:da_kanji_mobile/globals.dart';
-import 'package:da_kanji_mobile/core/widgets/dakanji/dakanji_splash.dart';
-import 'package:da_kanji_mobile/features/init/screens/home_screen.dart';
 
 /// The starting widget of the app
 class DaKanjiApp extends StatefulWidget {

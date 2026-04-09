@@ -164,7 +164,7 @@ class LiquidProvider extends ChangeNotifier {
   ///Required parameters :
   /// - [page], the page index you want to animate to.
   /// - [duration], of [Duration] type, for complete animation
-  animateToPage(int page, int duration) {
+  void animateToPage(int page, int duration) {
     if (isInProgress || activePageIndex == page) return;
     isInProgress = true;
     int diff = 0;
@@ -218,7 +218,7 @@ class LiquidProvider extends ChangeNotifier {
   }
 
   ///Directly Jump to the mentioned [page] without any animation
-  jumpToPage(int page) {
+  void jumpToPage(int page) {
     if (page == activePageIndex || isInProgress) return;
     if (page > pagesLength - 1 || page < 0) {
       throw ("Index $page not found in the Pages list");
@@ -384,7 +384,7 @@ class LiquidProvider extends ChangeNotifier {
 
   ///Setter for [isUserGestureDisabled]
   set setUserGesture(bool disable) {
-    this.shouldDisableUserGesture = disable;
+    shouldDisableUserGesture = disable;
     notifyListeners();
   }
 
@@ -392,7 +392,7 @@ class LiquidProvider extends ChangeNotifier {
   bool get isUserGestureDisabled => shouldDisableUserGesture;
 
   ///Method to set [iconSize]
-  setIconSize(Size size) {
+  void setIconSize(Size size) {
     iconSize = size;
     notifyListeners();
   }

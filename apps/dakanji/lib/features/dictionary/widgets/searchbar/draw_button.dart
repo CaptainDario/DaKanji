@@ -1,10 +1,8 @@
 import 'package:da_kanji_mobile/core/routing/navigation_arguments.dart';
 import 'package:da_kanji_mobile/core/routing/screens.dart';
-import 'package:da_kanji_mobile/features/settings/model/settings.dart';
 import 'package:da_kanji_mobile/features/tutorial/model/tutorials.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:provider/provider.dart';
 // Add your other imports (Settings, Screens, NavigationArguments, Tutorials)
 
 class DrawButton extends StatelessWidget {

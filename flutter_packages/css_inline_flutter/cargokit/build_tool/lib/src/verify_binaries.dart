@@ -1,17 +1,17 @@
 /// This is copied from Cargokit (which is the official way to use it currently)
 /// Details: https://fzyzcjy.github.io/flutter_rust_bridge/manual/integrate/builtin
+library;
 
 import 'dart:io';
 
+import 'package:build_tool/src/artifacts_provider.dart';
+import 'package:build_tool/src/cargo.dart';
+import 'package:build_tool/src/crate_hash.dart';
+import 'package:build_tool/src/options.dart';
+import 'package:build_tool/src/precompile_binaries.dart';
+import 'package:build_tool/src/target.dart';
 import 'package:ed25519_edwards/ed25519_edwards.dart';
 import 'package:http/http.dart';
-
-import 'artifacts_provider.dart';
-import 'cargo.dart';
-import 'crate_hash.dart';
-import 'options.dart';
-import 'precompile_binaries.dart';
-import 'target.dart';
 
 class VerifyBinaries {
   VerifyBinaries({

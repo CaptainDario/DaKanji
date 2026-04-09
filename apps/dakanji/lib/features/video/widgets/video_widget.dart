@@ -1,14 +1,12 @@
 // Flutter imports:
+import 'package:da_kanji_mobile/core/user/user_data.dart';
+// Project imports:
+import 'package:da_kanji_mobile/features/tutorial/model/tutorials.dart';
+import 'package:da_kanji_mobile/features/video/widgets/video_library.dart';
 import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:get_it/get_it.dart';
 import 'package:onboarding_overlay/onboarding_overlay.dart';
-
-// Project imports:
-import 'package:da_kanji_mobile/features/tutorial/model/tutorials.dart';
-import 'package:da_kanji_mobile/core/user/user_data.dart';
-import 'package:da_kanji_mobile/features/video/widgets/video_library.dart';
 
 class VideoWidget extends StatefulWidget {
 

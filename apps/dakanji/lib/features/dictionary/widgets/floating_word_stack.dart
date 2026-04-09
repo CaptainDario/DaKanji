@@ -2,20 +2,18 @@
 import 'dart:async';
 import 'dart:math';
 
-// Flutter imports:
-import 'package:flutter/material.dart';
-
-// Package imports:
-import 'package:database_builder/database_builder.dart';
-import 'package:get_it/get_it.dart';
-import 'package:isar_community/isar.dart';
-
 // Project imports:
 import 'package:da_kanji_mobile/features/dictionary/controller/falling_word_stack_controller.dart';
-import 'package:da_kanji_mobile/features/dictionary/model/floating_word.dart';
 import 'package:da_kanji_mobile/features/dictionary/controller/isars.dart';
+import 'package:da_kanji_mobile/features/dictionary/model/floating_word.dart';
 import 'package:da_kanji_mobile/features/settings/model/settings.dart';
 import 'package:da_kanji_mobile/globals.dart';
+// Package imports:
+import 'package:database_builder/database_builder.dart';
+// Flutter imports:
+import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
+import 'package:isar_community/isar.dart';
 import 'package:provider/provider.dart';
 
 /// Widget that shows downwards floating words that can be tapped and scrolled

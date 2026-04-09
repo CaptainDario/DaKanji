@@ -1,10 +1,9 @@
 // Package imports:
+// Project imports:
+import 'package:da_kanji_mobile/features/dictionary/controller/isars.dart';
 import 'package:database_builder/database_builder.dart';
 import 'package:get_it/get_it.dart';
 import 'package:isar_community/isar.dart';
-
-// Project imports:
-import 'package:da_kanji_mobile/features/dictionary/controller/isars.dart';
 
 /// Returns the entry IDs of a default list given by its `listName`
 List<int> getEntryIDsOfDefaultList(String listName){

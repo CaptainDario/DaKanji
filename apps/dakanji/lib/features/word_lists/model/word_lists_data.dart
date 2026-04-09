@@ -1,12 +1,10 @@
 // Flutter imports:
-import 'package:flutter/material.dart';
-
-// Package imports:
-import 'package:json_annotation/json_annotation.dart';
-
 // Project imports:
 import 'package:da_kanji_mobile/core/tree/tree_node_serializable.dart';
 import 'package:da_kanji_mobile/features/word_lists/model/word_list_types.dart';
+import 'package:flutter/material.dart';
+// Package imports:
+import 'package:json_annotation/json_annotation.dart';
 
 part 'word_lists_data.g.dart';
 

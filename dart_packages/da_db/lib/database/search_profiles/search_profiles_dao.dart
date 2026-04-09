@@ -1,8 +1,7 @@
+import 'package:da_db/database/da_db.dart';
 import "package:da_db/database/search_profiles/search_profile_tables.dart";
 import "package:da_db/database/search_profiles/search_profiles_entry.dart";
 import "package:drift/drift.dart";
-
-import "../da_db.dart";
 
 part 'search_profiles_dao.g.dart';
 

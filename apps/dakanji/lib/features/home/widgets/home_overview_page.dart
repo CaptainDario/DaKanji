@@ -1,6 +1,5 @@
 import 'package:da_kanji_mobile/core/icons/da_kanji_icons.dart';
 import 'package:da_kanji_mobile/core/supabase/model/supabase_cache_manager.dart';
-import 'package:da_kanji_mobile/core/user/activity_chart_mock_data.dart';
 import 'package:da_kanji_mobile/core/user/user_data_db.dart';
 import 'package:da_kanji_mobile/features/home/widgets/greeting_widget.dart';
 import 'package:da_kanji_mobile/features/home/widgets/study_calendar/study_calendar.dart';

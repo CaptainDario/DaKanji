@@ -1,13 +1,11 @@
 // Flutter imports:
-import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:awesome_dialog/awesome_dialog.dart';
-import 'package:easy_localization/easy_localization.dart';
-
 // Project imports:
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/material.dart';
 
 /// Info popup that informs the user that a significant part of the dictionary
 /// is only available in english

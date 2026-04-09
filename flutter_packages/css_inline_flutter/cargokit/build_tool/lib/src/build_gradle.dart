@@ -1,16 +1,16 @@
 /// This is copied from Cargokit (which is the official way to use it currently)
 /// Details: https://fzyzcjy.github.io/flutter_rust_bridge/manual/integrate/builtin
+library;
 
 import 'dart:io';
 
+import 'package:build_tool/src/artifacts_provider.dart';
+import 'package:build_tool/src/builder.dart';
+import 'package:build_tool/src/environment.dart';
+import 'package:build_tool/src/options.dart';
+import 'package:build_tool/src/target.dart';
 import 'package:logging/logging.dart';
 import 'package:path/path.dart' as path;
-
-import 'artifacts_provider.dart';
-import 'builder.dart';
-import 'environment.dart';
-import 'options.dart';
-import 'target.dart';
 
 final log = Logger('build_gradle');
 

@@ -1,8 +1,7 @@
 
 import 'package:da_db/database/tag/tag_bank_v3_tables.dart';
+import 'package:da_db/database/term_meta/term_meta_bank_v3_tables.dart';
 import 'package:drift/drift.dart';
-
-import '/database/term_meta/term_meta_bank_v3_tables.dart';
 
 /// Relationship table between TermMetaBank and PitchTable
 @TableIndex(name: 'TermMetaBankV3_X_PitchTable_termMetaIdIndex', columns: {#termMetaId})

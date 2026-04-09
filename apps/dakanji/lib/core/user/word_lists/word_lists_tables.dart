@@ -1,9 +1,8 @@
 // Package imports:
-import 'package:drift/drift.dart';
-
 // Project imports:
 import 'package:da_kanji_mobile/core/utils/sql_utils.dart';
 import 'package:da_kanji_mobile/features/word_lists/model/word_list_types.dart';
+import 'package:drift/drift.dart';
 
 
 

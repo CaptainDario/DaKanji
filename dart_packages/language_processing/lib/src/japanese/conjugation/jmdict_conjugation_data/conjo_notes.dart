@@ -2,7 +2,7 @@
 //https://gitlab.com/yamagoya/jmdictdb/-/tree/master/jmdictdb/data
 
 
-import 'conjo_note.dart';
+import 'package:language_processing/src/japanese/conjugation/jmdict_conjugation_data/conjo_note.dart';
 
 // convenience vars  
 const String f = 'f';

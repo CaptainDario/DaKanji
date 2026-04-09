@@ -1,16 +1,16 @@
 /// This is copied from Cargokit (which is the official way to use it currently)
 /// Details: https://fzyzcjy.github.io/flutter_rust_bridge/manual/integrate/builtin
+library;
 
 import 'dart:io';
 import 'dart:isolate';
 import 'dart:math' as math;
 
+import 'package:build_tool/src/target.dart';
+import 'package:build_tool/src/util.dart';
 import 'package:collection/collection.dart';
 import 'package:path/path.dart' as path;
 import 'package:version/version.dart';
-
-import 'target.dart';
-import 'util.dart';
 
 class AndroidEnvironment {
   AndroidEnvironment({

@@ -23,7 +23,7 @@ class PageDragger extends StatefulWidget {
   final bool ignoreUserGestureWhileAnimating;
 
   ///Constructor with some default values
-  PageDragger({
+  const PageDragger({super.key, 
     this.fullTransitionPX = FULL_TRANSITION_PX,
     this.slideIconWidget,
     this.iconPosition,
@@ -36,7 +36,7 @@ class PageDragger extends StatefulWidget {
 
 ///State for PageDragger
 class _PageDraggerState extends State<PageDragger> {
-  GlobalKey _keyIcon = GlobalKey();
+  final GlobalKey _keyIcon = GlobalKey();
 
   ///Current [Offset] of the User Touch
   Offset? dragStart;
@@ -52,7 +52,7 @@ class _PageDraggerState extends State<PageDragger> {
 
   /// Method invoked when ever user touch the screen and drag starts
   /// called at [GestureDetector.onHorizontalDragStart]
-  onDragStart(DragStartDetails details) {
+  void onDragStart(DragStartDetails details) {
     final model = Provider.of<LiquidProvider>(context, listen: false);
 
     ///Ignoring user gesture if the animation is running (optional)
@@ -65,7 +65,7 @@ class _PageDraggerState extends State<PageDragger> {
 
   ///Updating data while user drags and touch offset changes
   ///called at [GestureDetector.onHorizontalDragUpdate]
-  onDragUpdate(DragUpdateDetails details) {
+  void onDragUpdate(DragUpdateDetails details) {
     if (dragStart != null) {
       //Getting new position details
       final newPosition = details.globalPosition;
@@ -101,7 +101,7 @@ class _PageDraggerState extends State<PageDragger> {
 
   ///This method executes when user ends dragging and leaves the screen
   ///called at [GestureDetector.onHorizontalDragEnd]
-  onDragEnd(DragEndDetails details) {
+  void onDragEnd(DragEndDetails details) {
     Provider.of<LiquidProvider>(context, listen: false).updateSlide(SlideUpdate(
       SlideDirection.none,
       slidePercentHor,

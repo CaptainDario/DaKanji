@@ -1,16 +1,14 @@
 // Dart imports:
 import 'dart:math';
 
-// Flutter imports:
-import 'package:flutter/material.dart';
-
-// Package imports:
-import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
-import 'package:get_it/get_it.dart';
-
 // Project imports:
 import 'package:da_kanji_mobile/core/japanese_text_processing/kana.dart';
 import 'package:da_kanji_mobile/features/tutorial/model/tutorials.dart';
+// Flutter imports:
+import 'package:flutter/material.dart';
+// Package imports:
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
+import 'package:get_it/get_it.dart';
 
 class KanaGrid extends StatefulWidget {
 

@@ -1,12 +1,10 @@
 // Flutter imports:
-import 'package:flutter/material.dart';
-
-// Package imports:
-import 'package:path_parsing/path_parsing.dart';
-
 // Project imports:
 import 'package:da_kanji_mobile/core/utils/path_modifier.dart';
 import 'package:da_kanji_mobile/features/dictionary/widgets/kanji_tab/animated_kanji_painter.dart';
+import 'package:flutter/material.dart';
+// Package imports:
+import 'package:path_parsing/path_parsing.dart';
 
 /// Widget that shows an animated version of a kanjiVG entry
 class AnimatedKanji extends StatefulWidget {

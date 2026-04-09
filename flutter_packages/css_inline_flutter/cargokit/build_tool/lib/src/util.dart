@@ -1,14 +1,14 @@
 /// This is copied from Cargokit (which is the official way to use it currently)
 /// Details: https://fzyzcjy.github.io/flutter_rust_bridge/manual/integrate/builtin
+library;
 
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:build_tool/src/logging.dart';
+import 'package:build_tool/src/rustup.dart';
 import 'package:logging/logging.dart';
 import 'package:path/path.dart' as path;
-
-import 'logging.dart';
-import 'rustup.dart';
 
 final log = Logger("process");
 

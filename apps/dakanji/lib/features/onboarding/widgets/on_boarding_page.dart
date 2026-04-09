@@ -2,15 +2,13 @@
 import 'dart:core';
 import 'dart:ui' as ui;
 
-// Flutter imports:
-import 'package:flutter/material.dart';
-
-// Package imports:
-import 'package:easy_localization/easy_localization.dart';
-import 'package:liquid_swipe/liquid_swipe.dart';
-
 // Project imports:
 import 'package:da_kanji_mobile/locales_keys.dart';
+// Package imports:
+import 'package:easy_localization/easy_localization.dart';
+// Flutter imports:
+import 'package:flutter/material.dart';
+import 'package:liquid_swipe/liquid_swipe.dart';
 
 /// The widget which is used for one OnBoarding Page.
 /// 

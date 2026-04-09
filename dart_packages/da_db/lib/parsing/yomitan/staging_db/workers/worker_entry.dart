@@ -8,15 +8,14 @@ import 'package:da_db/parsing/staging_db/staging_db.dart';
 import 'package:da_db/parsing/util/db_file_parser.dart';
 import 'package:da_db/parsing/util/db_optimization.dart';
 import 'package:da_db/parsing/util/parsing_util.dart';
+import 'package:da_db/parsing/util/worker_protocol.dart';
 import 'package:da_db/parsing/yomitan/staging_db/parsers/kanji_bank_v3_parser.dart';
 import 'package:da_db/parsing/yomitan/staging_db/parsers/kanji_meta_bank_v3_parser.dart';
 import 'package:da_db/parsing/yomitan/staging_db/parsers/tag_bank_v3_parser.dart';
 import 'package:da_db/parsing/yomitan/staging_db/parsers/term_bank_v3_parser.dart';
 import 'package:da_db/parsing/yomitan/staging_db/parsers/term_meta_bank_v3_parser.dart';
 import 'package:drift/native.dart';
-import 'package:language_processing/language_processing.dart';
-
-import '../../../util/worker_protocol.dart'; 
+import 'package:language_processing/language_processing.dart'; 
 
 
 Future<void> workerEntry(SendPort mainSendPort) async {

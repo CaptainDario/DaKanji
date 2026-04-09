@@ -1,20 +1,16 @@
 // Dart imports:
 import 'dart:io';
 
+import 'package:da_kanji_mobile/core/tree/tree_node.dart';
 // Flutter imports:
 import 'package:da_kanji_mobile/core/user/user_data_db.dart';
-import 'package:flutter/material.dart';
-
+import 'package:da_kanji_mobile/features/settings/model/settings.dart';
+import 'package:da_kanji_mobile/features/word_lists/controller/word_lists_queries.dart';
+import 'package:da_kanji_mobile/features/word_lists/model/word_lists_data.dart';
 // Package imports:
 import 'package:database_builder/database_builder.dart';
+import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-
-// Project imports:
-import 'package:da_kanji_mobile/features/dictionary/controller/dictionary_widgets_to_image.dart';
-import 'package:da_kanji_mobile/features/settings/model/settings.dart';
-import 'package:da_kanji_mobile/core/tree/tree_node.dart';
-import 'package:da_kanji_mobile/features/word_lists/model/word_lists_data.dart';
-import 'package:da_kanji_mobile/features/word_lists/controller/word_lists_queries.dart';
 
 
 

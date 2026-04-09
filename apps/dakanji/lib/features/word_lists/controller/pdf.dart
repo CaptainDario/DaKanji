@@ -1,21 +1,19 @@
 // Dart imports:
 import 'dart:math';
 
-// Flutter imports:
-import 'package:flutter/services.dart';
-
-// Package imports:
-import 'package:database_builder/database_builder.dart';
-import 'package:get_it/get_it.dart';
-import 'package:pdf/pdf.dart';
-import 'package:pdf/widgets.dart' as pw;
-import 'package:printing/printing.dart';
-
-// Project imports:
-import 'package:language_processing/language_processing.dart';
 import 'package:da_kanji_mobile/features/settings/model/settings.dart';
 import 'package:da_kanji_mobile/features/settings/model/settings_word_lists.dart';
 import 'package:da_kanji_mobile/features/word_lists/controller/word_lists_queries.dart';
+// Package imports:
+import 'package:database_builder/database_builder.dart';
+// Flutter imports:
+import 'package:flutter/services.dart';
+import 'package:get_it/get_it.dart';
+// Project imports:
+import 'package:language_processing/language_processing.dart';
+import 'package:pdf/pdf.dart';
+import 'package:pdf/widgets.dart' as pw;
+import 'package:printing/printing.dart';
 
 // Project imports
 

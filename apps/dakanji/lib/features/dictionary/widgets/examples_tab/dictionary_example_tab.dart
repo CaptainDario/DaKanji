@@ -1,7 +1,6 @@
-import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:database_builder/database_builder.dart';
+import 'package:flutter/material.dart';
 import 'package:tuple/tuple.dart';
 
 

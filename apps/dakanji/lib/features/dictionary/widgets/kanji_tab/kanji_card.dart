@@ -1,14 +1,23 @@
 // Dart imports:
 import 'dart:io';
 
+// Package imports:
+import 'package:collection/collection.dart';
+// Project imports:
+import 'package:da_kanji_mobile/features/dictionary/controller/isars.dart';
+import 'package:da_kanji_mobile/features/dictionary/model/kanji_vg.dart';
+import 'package:da_kanji_mobile/features/dictionary/model/radicals.dart';
+import 'package:da_kanji_mobile/features/dictionary/widgets/kanji_tab/kanji_group_widget.dart';
+import 'package:da_kanji_mobile/features/dictionary/widgets/kanji_tab/kanji_vg_widget.dart';
+import 'package:da_kanji_mobile/features/dictionary/widgets/kanji_tab/linked_kanji_text.dart';
+import 'package:da_kanji_mobile/features/settings/model/settings.dart';
+import 'package:da_kanji_mobile/globals.dart';
+import 'package:da_kanji_mobile/locales_keys.dart';
+import 'package:database_builder/database_builder.dart';
+import 'package:easy_localization/easy_localization.dart';
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
-// Package imports:
-import 'package:collection/collection.dart';
-import 'package:database_builder/database_builder.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_layout_grid/flutter_layout_grid.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
@@ -17,17 +26,6 @@ import 'package:provider/provider.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher_string.dart';
-
-// Project imports:
-import 'package:da_kanji_mobile/features/dictionary/controller/isars.dart';
-import 'package:da_kanji_mobile/features/settings/model/settings.dart';
-import 'package:da_kanji_mobile/globals.dart';
-import 'package:da_kanji_mobile/locales_keys.dart';
-import 'package:da_kanji_mobile/features/dictionary/model/kanji_vg.dart';
-import 'package:da_kanji_mobile/features/dictionary/model/radicals.dart';
-import 'package:da_kanji_mobile/features/dictionary/widgets/kanji_tab/kanji_group_widget.dart';
-import 'package:da_kanji_mobile/features/dictionary/widgets/kanji_tab/kanji_vg_widget.dart';
-import 'package:da_kanji_mobile/features/dictionary/widgets/kanji_tab/linked_kanji_text.dart';
 
 /// Card to show a kanji and all important attribtues of it. This includes
 /// a tree to show the different groups.

@@ -4,13 +4,12 @@
 // The basic approach is as described in the README of jconj and the NOTE in
 // this folder
 
+import 'package:language_processing/src/japanese/conjugation/jmdict_conjugation_data/conj.dart';
+import 'package:language_processing/src/japanese/conjugation/jmdict_conjugation_data/conjo.dart';
+import 'package:language_processing/src/japanese/conjugation/jmdict_conjugation_data/conjos.dart';
+import 'package:language_processing/src/japanese/conjugation/jmdict_conjugation_data/kwpos.dart';
 // Flutter imports:
 import 'package:language_processing/src/japanese/japanese_string_operations.dart';
-
-import 'jmdict_conjugation_data/conj.dart';
-import 'jmdict_conjugation_data/conjo.dart';
-import 'jmdict_conjugation_data/conjos.dart';
-import 'jmdict_conjugation_data/kwpos.dart';
 
 /// Convenience function to get all conjugations that match the given arguments.
 /// The returned list can contain multiple entries if `onum == null`. 

@@ -1,8 +1,7 @@
 // Flutter imports:
-import 'package:flutter/material.dart';
-
 // Project imports:
 import 'package:da_kanji_mobile/globals.dart';
+import 'package:flutter/material.dart';
 
 final ThemeData lightTheme = ThemeData(
 

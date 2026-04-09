@@ -1,8 +1,7 @@
 // Flutter imports:
-import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:flutter/material.dart';
 
 /// Shows a info dialog using the given `explanationText`
 void infoPopup(BuildContext context, String explanationTitle, String explanationText){

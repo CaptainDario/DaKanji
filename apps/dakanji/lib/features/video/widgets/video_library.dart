@@ -1,14 +1,12 @@
 // Dart imports:
 import 'dart:io';
 
-// Flutter imports:
-import 'package:flutter/material.dart';
-
-// Package imports:
-import 'package:file_picker/file_picker.dart';
-
 // Project imports:
 import 'package:da_kanji_mobile/features/video/widgets/video_player.dart';
+// Package imports:
+import 'package:file_picker/file_picker.dart';
+// Flutter imports:
+import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:language_processing/language_processing.dart';
 

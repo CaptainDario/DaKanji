@@ -1,13 +1,6 @@
 // Dart imports:
 import 'dart:convert';
 
-// Flutter imports:
-import 'package:da_kanji_mobile/features/settings/model/settings_time_tracking.dart';
-import 'package:flutter/material.dart';
-
-// Package imports:
-import 'package:shared_preferences/shared_preferences.dart';
-
 // Project imports:
 import 'package:da_kanji_mobile/features/settings/model/settings_advanced.dart';
 import 'package:da_kanji_mobile/features/settings/model/settings_anki.dart';
@@ -18,7 +11,12 @@ import 'package:da_kanji_mobile/features/settings/model/settings_kana_table.dart
 import 'package:da_kanji_mobile/features/settings/model/settings_kanji_table.dart';
 import 'package:da_kanji_mobile/features/settings/model/settings_misc.dart';
 import 'package:da_kanji_mobile/features/settings/model/settings_text.dart';
+// Flutter imports:
+import 'package:da_kanji_mobile/features/settings/model/settings_time_tracking.dart';
 import 'package:da_kanji_mobile/features/settings/model/settings_word_lists.dart';
+import 'package:flutter/material.dart';
+// Package imports:
+import 'package:shared_preferences/shared_preferences.dart';
 
 /// Class to store all settings of DaKanji
 /// 

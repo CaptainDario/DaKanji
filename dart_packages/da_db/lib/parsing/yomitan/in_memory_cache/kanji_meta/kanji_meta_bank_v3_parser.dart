@@ -1,11 +1,10 @@
 // Dart imports:
 import 'dart:convert';
 
+import 'package:da_db/database/da_db.dart';
 import 'package:da_db/parsing/yomitan/in_memory_cache/kanji_meta/kanji_meta_bank_v3_parser_context.dart';
 import 'package:drift/drift.dart';
 import 'package:universal_io/io.dart';
-
-import '/database/da_db.dart';
 
 /// Parses the given KanjiMetaBank and adds it to the given [DaDb]
 Future parseKanjiMetaBankV3File(File kanjiMetaBankFile, KanjiMetaBankV3ParserContext pC, DaDb db, int dictId) async {

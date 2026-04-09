@@ -1,13 +1,11 @@
 // Flutter imports:
-import 'package:da_kanji_mobile/features/time_tracking/widgets/time_tracking_appbar_action.dart';
-import 'package:flutter/material.dart';
-
-// Package imports:
-import 'package:easy_localization/easy_localization.dart';
-
 // Project imports:
 import 'package:da_kanji_mobile/core/routing/screens.dart';
+import 'package:da_kanji_mobile/features/time_tracking/widgets/time_tracking_appbar_action.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
+// Package imports:
+import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/material.dart';
 
 class DrawerAppBar extends StatelessWidget {
   const DrawerAppBar({

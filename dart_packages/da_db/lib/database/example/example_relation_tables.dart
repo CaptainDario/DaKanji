@@ -1,9 +1,8 @@
+import 'package:da_db/database/example/example_tables.dart';
 import 'package:da_db/database/general_tables/term_tables.dart';
 import 'package:da_db/database/stats/stat_tables.dart';
 import 'package:da_db/database/tag/tag_bank_v3_tables.dart';
 import 'package:drift/drift.dart';
-
-import '/database/example/example_tables.dart';
 
 /// Contains the relationships between example sentences and their associated audio files.
 @TableIndex(name: 'ExampleTable_X_ExampleAudioTable_audioIdIndex', columns: {#audioId})

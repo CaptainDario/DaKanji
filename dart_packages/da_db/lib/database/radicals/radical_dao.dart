@@ -1,10 +1,9 @@
 
 import "package:collection/collection.dart";
+import 'package:da_db/database/da_db.dart';
+import 'package:da_db/database/radicals/radical_relation_tables.dart';
+import 'package:da_db/database/radicals/radical_tables.dart';
 import "package:drift/drift.dart";
-
-import "/database/radicals/radical_relation_tables.dart";
-import "/database/radicals/radical_tables.dart";
-import "../da_db.dart";
 
 part 'radical_dao.g.dart';
 

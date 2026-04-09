@@ -1,21 +1,18 @@
-library my_prj.globals;
+library;
 
 // Dart imports:
 import 'dart:async';
 
-// Flutter imports:
-import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:app_links/app_links.dart';
-import 'package:universal_io/io.dart';
-import 'package:da_kanji_mobile/core/storage/path_manager.dart';
-
+import 'package:da_kanji_mobile/core/app/app_config.dart';
 // Project imports:
 import 'package:da_kanji_mobile/core/releases/version.dart';
-import 'package:da_kanji_mobile/features/init/controller/init.dart';
+import 'package:da_kanji_mobile/core/storage/path_manager.dart';
+// Flutter imports:
+import 'package:flutter/material.dart';
 import 'package:language_processing/language_processing.dart';
-import 'package:da_kanji_mobile/core/app/app_config.dart';
+import 'package:universal_io/io.dart';
 
 
 /// the app config (specialized per language/app)

@@ -1,21 +1,19 @@
 // Dart imports:
 import 'dart:io';
 
-// Flutter imports:
-import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:chewie/chewie.dart';
+// Project imports:
+import 'package:da_kanji_mobile/core/widgets/custom_selectable_mecab_text/widgets/custom_selectable_text.dart';
+import 'package:da_kanji_mobile/core/widgets/dakanji/dakanji_loading_indicator.dart';
+import 'package:da_kanji_mobile/features/text/widgets/text_analysis_stack.dart';
+// Flutter imports:
+import 'package:flutter/material.dart';
 import 'package:flutter_subtitle/flutter_subtitle.dart' hide Subtitle;
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
-import 'package:video_player/video_player.dart';
-
-// Project imports:
-import 'package:da_kanji_mobile/core/widgets/custom_selectable_mecab_text/widgets/custom_selectable_text.dart';
-import 'package:da_kanji_mobile/features/text/widgets/text_analysis_stack.dart';
-import 'package:da_kanji_mobile/core/widgets/dakanji/dakanji_loading_indicator.dart';
 import 'package:language_processing/language_processing.dart';
+import 'package:video_player/video_player.dart';
 
 class VideoPlayer extends StatefulWidget {
 

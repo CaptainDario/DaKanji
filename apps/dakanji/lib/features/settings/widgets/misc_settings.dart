@@ -1,25 +1,23 @@
 // Flutter imports:
 
-// Flutter imports:
-import 'package:flutter/material.dart';
-
-// Package imports:
-import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter_phoenix/flutter_phoenix.dart';
-import 'package:provider/provider.dart';
-import 'package:window_manager/window_manager.dart';
-
 // Project imports:
 import 'package:da_kanji_mobile/core/icons/da_kanji_icons.dart';
 import 'package:da_kanji_mobile/features/settings/model/settings.dart';
-import 'package:da_kanji_mobile/globals.dart';
-import 'package:da_kanji_mobile/locales_keys.dart';
+import 'package:da_kanji_mobile/features/settings/widgets/advanced_settings.dart';
 import 'package:da_kanji_mobile/features/settings/widgets/responsive_widgets/responsive_check_box_tile.dart';
 import 'package:da_kanji_mobile/features/settings/widgets/responsive_widgets/responsive_drop_down_tile.dart';
 import 'package:da_kanji_mobile/features/settings/widgets/responsive_widgets/responsive_header_tile.dart';
 import 'package:da_kanji_mobile/features/settings/widgets/responsive_widgets/responsive_icon_button_tile.dart';
 import 'package:da_kanji_mobile/features/settings/widgets/responsive_widgets/responsive_slider_tile.dart';
-import 'package:da_kanji_mobile/features/settings/widgets/advanced_settings.dart';
+import 'package:da_kanji_mobile/globals.dart';
+import 'package:da_kanji_mobile/locales_keys.dart';
+// Package imports:
+import 'package:easy_localization/easy_localization.dart';
+// Flutter imports:
+import 'package:flutter/material.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
+import 'package:provider/provider.dart';
+import 'package:window_manager/window_manager.dart';
 
 class MiscSettings extends StatefulWidget {
 

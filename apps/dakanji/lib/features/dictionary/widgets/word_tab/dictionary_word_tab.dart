@@ -1,19 +1,20 @@
 // Dart imports:
 import 'dart:io';
 
-// Flutter imports:
-import 'package:da_kanji_mobile/core/user/user_data_db.dart';
+// Package imports:
+import 'package:collection/collection.dart';
+import 'package:da_kanji_mobile/core/user/user_data.dart';
+import 'package:da_kanji_mobile/features/anki/widgets/anki_not_setup_dialog.dart';
+import 'package:da_kanji_mobile/features/dictionary/controller/dictionary_widgets_to_image.dart';
 import 'package:da_kanji_mobile/features/dictionary/model/dictionary_search_state.dart';
 import 'package:da_kanji_mobile/features/dictionary/widgets/word_tab/dictionary_word_card.dart';
-import 'package:da_kanji_mobile/features/dictionary/widgets/term/term_entry_widget.dart';
+import 'package:da_kanji_mobile/features/settings/model/settings.dart';
+import 'package:da_kanji_mobile/globals.dart';
+import 'package:da_kanji_mobile/locales_keys.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-
-// Package imports:
-import 'package:collection/collection.dart';
-import 'package:database_builder/database_builder.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:fvp/mdk.dart' as mdk;
 import 'package:get_it/get_it.dart';
 import 'package:language_processing/language_processing.dart';
@@ -21,21 +22,6 @@ import 'package:provider/provider.dart';
 import 'package:screenshot/screenshot.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher_string.dart';
-
-// Project imports:
-import 'package:da_kanji_mobile/core/assets/assets.dart';
-import 'package:da_kanji_mobile/features/dictionary/controller/send.dart';
-import 'package:da_kanji_mobile/features/dictionary/controller/dictionary_widgets_to_image.dart';
-import 'package:da_kanji_mobile/features/settings/model/settings.dart';
-import 'package:da_kanji_mobile/core/tree/tree_node.dart';
-import 'package:da_kanji_mobile/core/user/user_data.dart';
-import 'package:da_kanji_mobile/features/word_lists/model/word_list_types.dart';
-import 'package:da_kanji_mobile/features/word_lists/model/word_lists_data.dart';
-import 'package:da_kanji_mobile/globals.dart';
-import 'package:da_kanji_mobile/locales_keys.dart';
-import 'package:da_kanji_mobile/features/anki/widgets/anki_dialog.dart';
-import 'package:da_kanji_mobile/features/anki/widgets/anki_not_setup_dialog.dart';
-import 'package:da_kanji_mobile/features/word_lists/widgets/word_lists_selection_dialog.dart';
 
 class DictionaryWordTab extends StatefulWidget {
 

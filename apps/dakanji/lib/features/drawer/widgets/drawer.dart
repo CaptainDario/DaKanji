@@ -1,28 +1,26 @@
 // Dart imports:
 import 'dart:math';
 
+import 'package:da_kanji_mobile/core/icons/da_kanji_icons.dart';
+import 'package:da_kanji_mobile/core/icons/da_kanji_icons_icons.dart';
+import 'package:da_kanji_mobile/core/routing/screens.dart';
 // Flutter imports:
 import 'package:da_kanji_mobile/core/widgets/dakanji/dakanji_logo_widget.dart';
+import 'package:da_kanji_mobile/features/drawer/controller/drawer_listener.dart';
+import 'package:da_kanji_mobile/features/drawer/model/drawer_entries.dart';
+import 'package:da_kanji_mobile/features/drawer/widgets/drawer_app_bar.dart';
+import 'package:da_kanji_mobile/features/drawer/widgets/drawer_element.dart';
 import 'package:da_kanji_mobile/features/drawer/widgets/drawer_home_element.dart';
+// Project imports:
+import 'package:da_kanji_mobile/features/feedback/controller/feedback.dart';
+import 'package:da_kanji_mobile/features/settings/model/settings.dart';
+import 'package:da_kanji_mobile/locales_keys.dart';
+// Package imports:
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-
-// Package imports:
-import 'package:easy_localization/easy_localization.dart';
 import 'package:get_it/get_it.dart';
-
-// Project imports:
-import 'package:da_kanji_mobile/features/feedback/controller/feedback.dart';
-import 'package:da_kanji_mobile/core/icons/da_kanji_icons.dart';
-import 'package:da_kanji_mobile/core/icons/da_kanji_icons_icons.dart';
-import 'package:da_kanji_mobile/features/drawer/model/drawer_entries.dart';
-import 'package:da_kanji_mobile/features/drawer/controller/drawer_listener.dart';
-import 'package:da_kanji_mobile/core/routing/screens.dart';
-import 'package:da_kanji_mobile/features/settings/model/settings.dart';
-import 'package:da_kanji_mobile/locales_keys.dart';
-import 'package:da_kanji_mobile/features/drawer/widgets/drawer_app_bar.dart';
-import 'package:da_kanji_mobile/features/drawer/widgets/drawer_element.dart';
 
 /// Da Kanji's drawer.
 /// 

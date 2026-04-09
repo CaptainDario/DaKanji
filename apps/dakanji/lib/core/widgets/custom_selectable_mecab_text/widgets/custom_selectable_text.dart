@@ -1,14 +1,12 @@
 // Flutter imports:
+import 'package:da_kanji_mobile/core/widgets/custom_selectable_mecab_text/model/mecab_text_editing_controller.dart';
+import 'package:da_kanji_mobile/core/widgets/custom_selectable_mecab_text/model/mecab_text_field_formatter.dart';
+// Project imports:
+import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-
-// Project imports:
-import 'package:da_kanji_mobile/globals.dart';
-import 'package:da_kanji_mobile/core/widgets/custom_selectable_mecab_text/model/mecab_text_editing_controller.dart';
-import 'package:da_kanji_mobile/core/widgets/custom_selectable_mecab_text/model/mecab_text_field_formatter.dart';
 import 'package:keyboard_actions/keyboard_actions.dart';
-
 import 'package:language_processing/language_processing.dart';
 
 /// Widget that implements custom text selection and furigana rendering

@@ -1,14 +1,12 @@
 // Flutter imports:
-import 'package:flutter/material.dart';
-
-// Package imports:
-import 'package:database_builder/database_builder.dart';
-import 'package:get_it/get_it.dart';
-import 'package:isar_community/isar.dart';
-
 // Project imports:
 import 'package:da_kanji_mobile/features/dictionary/controller/isars.dart';
 import 'package:da_kanji_mobile/features/dictionary/widgets/kanji_tab/kanji_card.dart';
+// Package imports:
+import 'package:database_builder/database_builder.dart';
+import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
+import 'package:isar_community/isar.dart';
 
 class KanjiDetailsPage extends StatefulWidget {
 

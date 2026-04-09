@@ -1,7 +1,7 @@
 import 'package:da_kanji_mobile/core/user/user_data_db.dart';
 import 'package:da_kanji_mobile/features/home/model/stud_session_model.dart';
-import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/material.dart';
 
 class SessionTimelineRow extends StatelessWidget {
   final StudySessionUiModel session;

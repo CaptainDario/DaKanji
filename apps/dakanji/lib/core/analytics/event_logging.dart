@@ -2,19 +2,17 @@
 import 'dart:convert';
 import 'dart:math';
 
+import 'package:da_kanji_mobile/core/device/installation_method.dart';
+import 'package:da_kanji_mobile/core/device/os_info.dart';
+// Project imports:
+import 'package:da_kanji_mobile/env.dart';
+import 'package:da_kanji_mobile/globals.dart';
 // Flutter imports:
 import 'package:flutter/foundation.dart';
-
 // Package imports:
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:universal_io/io.dart';
-
-// Project imports:
-import 'package:da_kanji_mobile/env.dart';
-import 'package:da_kanji_mobile/globals.dart';
-import 'package:da_kanji_mobile/core/device/installation_method.dart';
-import 'package:da_kanji_mobile/core/device/os_info.dart';
 
 /// The api to use for posthog
 String posthogServiceURL = 'https://eu.posthog.com/capture/';

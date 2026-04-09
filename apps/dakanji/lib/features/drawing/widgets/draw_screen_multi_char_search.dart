@@ -1,16 +1,14 @@
 // Flutter imports:
-import 'package:flutter/material.dart';
-
-// Package imports:
-import 'package:get_it/get_it.dart';
-import 'package:provider/provider.dart';
-
+import 'package:da_kanji_mobile/core/widgets/multi_focus.dart';
 // Project imports:
 import 'package:da_kanji_mobile/features/drawing/model/draw_screen_state.dart';
 import 'package:da_kanji_mobile/features/drawing/model/kanji_buffer.dart';
-import 'package:da_kanji_mobile/features/tutorial/model/tutorials.dart';
 import 'package:da_kanji_mobile/features/drawing/widgets/kanji_buffer_widget.dart';
-import 'package:da_kanji_mobile/core/widgets/multi_focus.dart';
+import 'package:da_kanji_mobile/features/tutorial/model/tutorials.dart';
+import 'package:flutter/material.dart';
+// Package imports:
+import 'package:get_it/get_it.dart';
+import 'package:provider/provider.dart';
 
 class DrawScreenMultiCharSearch extends StatelessWidget {
   const DrawScreenMultiCharSearch(

@@ -5,6 +5,8 @@ import 'dart:typed_data';
 
 import 'package:collection/collection.dart';
 import 'package:da_db/database/index/yomitan_index.dart';
+import 'package:da_db/parsing/example/parsers/example_bank_parser.dart';
+import 'package:da_db/parsing/example/parsers/example_text_parser.dart'; // Add your new text parser import
 import 'package:da_db/parsing/staging_db/staging_db.dart';
 import 'package:da_db/parsing/util/db_file_parser.dart';
 import 'package:da_db/parsing/util/db_optimization.dart';
@@ -15,9 +17,6 @@ import 'package:da_db/parsing/yomitan/staging_db/parsers/tag_bank_v3_parser.dart
 import 'package:drift/native.dart';
 import 'package:language_processing/language_processing.dart';
 
-import '../parsers/example_bank_parser.dart';
-import '../parsers/example_text_parser.dart'; // Add your new text parser import
-
 Future<void> exampleWorkerEntry(SendPort mainSendPort) async {
   final receivePort = ReceivePort();
   mainSendPort.send(receivePort.sendPort);
@@ -26,7 +25,7 @@ Future<void> exampleWorkerEntry(SendPort mainSendPort) async {
   LanguageProcessor? lp;
   ProcessorOptions? processorOptions;
   late YomitanIndex currentIndexEntry;
-  String? _zipPath;
+  String? zipPath;
   int currentLocalId = 0; 
 
   final List<DbFileParser> parsers = [
@@ -46,7 +45,7 @@ Future<void> exampleWorkerEntry(SendPort mainSendPort) async {
       }
       processorOptions = const ProcessorOptions();
       currentIndexEntry = message.index;
-      _zipPath = message.zipPath;
+      zipPath = message.zipPath;
       message.replyPort.send(MsgReady(receivePort.sendPort));
     }
     else if (message is MsgProcessFile) {
@@ -58,7 +57,7 @@ Future<void> exampleWorkerEntry(SendPort mainSendPort) async {
           orElse: () => throw Exception("No parser found for ${message.fileName}")
         );
 
-        final archive = daDbDataSourceIterator(archivePath: _zipPath);
+        final archive = daDbDataSourceIterator(archivePath: zipPath);
         final mainFile = archive.firstWhereOrNull((f) => f.name == message.fileName);
 
         if (mainFile == null) throw Exception("File not found");

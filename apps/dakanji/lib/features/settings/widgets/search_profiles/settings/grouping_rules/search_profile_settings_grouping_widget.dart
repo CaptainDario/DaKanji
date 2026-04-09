@@ -1,9 +1,9 @@
 import 'package:da_db/data/grouping_rules.dart';
 import 'package:da_db/database/da_db.dart';
 import 'package:da_db/database/search_profiles/search_profiles_entry.dart';
-import 'package:da_kanji_mobile/features/settings/widgets/search_profiles/settings/grouping_rules/search_profile_settings_grouping_rule_card.dart';
 import 'package:da_kanji_mobile/features/settings/widgets/search_profiles/settings//search_profile_settings_card_add_button.dart';
 import 'package:da_kanji_mobile/features/settings/widgets/search_profiles/settings//search_profile_settings_info_widgets.dart';
+import 'package:da_kanji_mobile/features/settings/widgets/search_profiles/settings/grouping_rules/search_profile_settings_grouping_rule_card.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';

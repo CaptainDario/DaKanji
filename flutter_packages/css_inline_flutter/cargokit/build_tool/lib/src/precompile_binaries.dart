@@ -1,20 +1,20 @@
 /// This is copied from Cargokit (which is the official way to use it currently)
 /// Details: https://fzyzcjy.github.io/flutter_rust_bridge/manual/integrate/builtin
+library;
 
 import 'dart:io';
 
+import 'package:build_tool/src/artifacts_provider.dart';
+import 'package:build_tool/src/builder.dart';
+import 'package:build_tool/src/cargo.dart';
+import 'package:build_tool/src/crate_hash.dart';
+import 'package:build_tool/src/options.dart';
+import 'package:build_tool/src/rustup.dart';
+import 'package:build_tool/src/target.dart';
 import 'package:ed25519_edwards/ed25519_edwards.dart';
 import 'package:github/github.dart';
 import 'package:logging/logging.dart';
 import 'package:path/path.dart' as path;
-
-import 'artifacts_provider.dart';
-import 'builder.dart';
-import 'cargo.dart';
-import 'crate_hash.dart';
-import 'options.dart';
-import 'rustup.dart';
-import 'target.dart';
 
 final _log = Logger('precompile_binaries');
 

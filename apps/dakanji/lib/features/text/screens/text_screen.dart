@@ -1,35 +1,33 @@
 // Dart imports:
 import 'dart:async';
 
+// Package imports:
+import 'package:another_flushbar/flushbar.dart';
+import 'package:clipboard_watcher/clipboard_watcher.dart';
+import 'package:da_kanji_mobile/core/routing/screens.dart';
+import 'package:da_kanji_mobile/core/user/user_data.dart';
+// Project imports:
+import 'package:da_kanji_mobile/core/widgets/custom_selectable_mecab_text/model/mecab_text_editing_controller.dart';
+import 'package:da_kanji_mobile/core/widgets/custom_selectable_mecab_text/widgets/custom_selectable_text.dart';
+import 'package:da_kanji_mobile/core/widgets/multi_focus.dart';
+import 'package:da_kanji_mobile/features/drawer/widgets/drawer.dart';
+import 'package:da_kanji_mobile/features/settings/model/settings.dart';
+import 'package:da_kanji_mobile/features/text/widgets/analysis_option_button.dart';
+import 'package:da_kanji_mobile/features/text/widgets/text_analysis_stack.dart';
+import 'package:da_kanji_mobile/features/tutorial/model/tutorials.dart';
+import 'package:da_kanji_mobile/globals.dart';
+import 'package:da_kanji_mobile/locales_keys.dart';
+import 'package:easy_localization/easy_localization.dart';
 // Flutter imports:
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
-// Package imports:
-import 'package:another_flushbar/flushbar.dart';
-import 'package:clipboard_watcher/clipboard_watcher.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:get_it/get_it.dart';
 import 'package:keyboard_detection/keyboard_detection.dart';
+import 'package:language_processing/language_processing.dart';
 import 'package:onboarding_overlay/onboarding_overlay.dart';
 import 'package:provider/provider.dart';
 import 'package:universal_io/io.dart';
-
-// Project imports:
-import 'package:da_kanji_mobile/core/widgets/custom_selectable_mecab_text/model/mecab_text_editing_controller.dart';
-import 'package:da_kanji_mobile/core/routing/screens.dart';
-import 'package:da_kanji_mobile/features/settings/model/settings.dart';
-import 'package:da_kanji_mobile/features/tutorial/model/tutorials.dart';
-import 'package:da_kanji_mobile/core/user/user_data.dart';
-import 'package:da_kanji_mobile/globals.dart';
-import 'package:da_kanji_mobile/locales_keys.dart';
-import 'package:da_kanji_mobile/features/drawer/widgets/drawer.dart';
-import 'package:da_kanji_mobile/features/text/widgets/analysis_option_button.dart';
-import 'package:da_kanji_mobile/core/widgets/custom_selectable_mecab_text/widgets/custom_selectable_text.dart';
-import 'package:da_kanji_mobile/features/text/widgets/text_analysis_stack.dart';
-import 'package:da_kanji_mobile/core/widgets/multi_focus.dart';
-import 'package:language_processing/language_processing.dart';
 
 /// The "draw"-screen.
 /// 

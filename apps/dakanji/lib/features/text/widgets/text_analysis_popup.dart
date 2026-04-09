@@ -1,17 +1,15 @@
 // Flutter imports:
-import 'package:flutter/foundation.dart';
-import 'package:flutter/gestures.dart';
-import 'package:flutter/material.dart';
-
-// Package imports:
-import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter_inappwebview/flutter_inappwebview.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-
+import 'package:da_kanji_mobile/features/dictionary/widgets/dictionary.dart';
 // Project imports:
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
-import 'package:da_kanji_mobile/features/dictionary/widgets/dictionary.dart';
+// Package imports:
+import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 /// A popup used for showing dictionary entries and translations. Given a
 /// text.

@@ -1,13 +1,11 @@
 // Flutter imports:
-import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:awesome_dialog/awesome_dialog.dart';
-
 // Project imports:
 import 'package:da_kanji_mobile/features/manual/controller/manual.dart';
 import 'package:da_kanji_mobile/features/manual/model/manual_types.dart';
 import 'package:da_kanji_mobile/globals.dart';
+import 'package:flutter/material.dart';
 
 // Project imports:
 

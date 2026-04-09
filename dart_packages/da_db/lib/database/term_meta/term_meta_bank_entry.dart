@@ -4,11 +4,10 @@ import 'dart:convert';
 import 'package:da_db/data/term_meta_entry_types.dart';
 import 'package:da_db/database/da_db.dart';
 import 'package:da_db/database/index/index_table_entry.dart';
+import 'package:da_db/database/term_meta/term_meta_bank_ipa_entry.dart';
+import 'package:da_db/database/term_meta/term_meta_bank_pitch_entry.dart';
 import 'package:da_db/util/data_converters/json_index_converter.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-
-import '/database/term_meta/term_meta_bank_ipa_entry.dart';
-import '/database/term_meta/term_meta_bank_pitch_entry.dart';
 
 part 'term_meta_bank_entry.freezed.dart';
 part 'term_meta_bank_entry.g.dart';

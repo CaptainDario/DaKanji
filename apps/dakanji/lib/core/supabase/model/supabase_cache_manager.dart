@@ -1,9 +1,10 @@
 import 'dart:convert';
+
 import 'package:da_kanji_mobile/core/supabase/controller/supabase_user_profile.dart';
+import 'package:da_kanji_mobile/core/supabase/model/user_profile.dart';
+import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:dart_jsonwebtoken/dart_jsonwebtoken.dart';
-import 'package:da_kanji_mobile/core/supabase/model/user_profile.dart';
 
 class SupabaseCacheManager with ChangeNotifier {
   // Keys for Secure Storage

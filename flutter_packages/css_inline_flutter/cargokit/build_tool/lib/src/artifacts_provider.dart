@@ -1,19 +1,19 @@
 /// This is copied from Cargokit (which is the official way to use it currently)
 /// Details: https://fzyzcjy.github.io/flutter_rust_bridge/manual/integrate/builtin
+library;
 
 import 'dart:io';
 
+import 'package:build_tool/src/builder.dart';
+import 'package:build_tool/src/crate_hash.dart';
+import 'package:build_tool/src/options.dart';
+import 'package:build_tool/src/precompile_binaries.dart';
+import 'package:build_tool/src/rustup.dart';
+import 'package:build_tool/src/target.dart';
 import 'package:ed25519_edwards/ed25519_edwards.dart';
 import 'package:http/http.dart';
 import 'package:logging/logging.dart';
 import 'package:path/path.dart' as path;
-
-import 'builder.dart';
-import 'crate_hash.dart';
-import 'options.dart';
-import 'precompile_binaries.dart';
-import 'rustup.dart';
-import 'target.dart';
 
 class Artifact {
   /// File system location of the artifact.

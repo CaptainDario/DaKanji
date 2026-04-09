@@ -1,28 +1,26 @@
 // Dart imports:
 
-// Flutter imports:
-import 'package:da_kanji_mobile/features/settings/widgets/search_profiles/settings/search_profiles_button.dart';
-import 'package:flutter/material.dart';
-
-// Package imports:
-import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter_phoenix/flutter_phoenix.dart';
-import 'package:get_it/get_it.dart';
-import 'package:provider/provider.dart';
-
 // Project imports:
 import 'package:da_kanji_mobile/core/icons/da_kanji_icons.dart';
+import 'package:da_kanji_mobile/core/user/user_data.dart';
 import 'package:da_kanji_mobile/features/settings/model/settings.dart';
 import 'package:da_kanji_mobile/features/settings/model/settings_dictionary.dart';
-import 'package:da_kanji_mobile/core/user/user_data.dart';
-import 'package:da_kanji_mobile/locales_keys.dart';
+import 'package:da_kanji_mobile/features/settings/widgets/info_popup.dart';
 import 'package:da_kanji_mobile/features/settings/widgets/responsive_widgets/responsive_check_box_tile.dart';
 import 'package:da_kanji_mobile/features/settings/widgets/responsive_widgets/responsive_filter_chips.dart';
 import 'package:da_kanji_mobile/features/settings/widgets/responsive_widgets/responsive_header_tile.dart';
 import 'package:da_kanji_mobile/features/settings/widgets/responsive_widgets/responsive_icon_button_tile.dart';
 import 'package:da_kanji_mobile/features/settings/widgets/responsive_widgets/responsive_input_field_tile.dart';
 import 'package:da_kanji_mobile/features/settings/widgets/responsive_widgets/responsive_slider_tile.dart';
-import 'package:da_kanji_mobile/features/settings/widgets/info_popup.dart';
+// Flutter imports:
+import 'package:da_kanji_mobile/features/settings/widgets/search_profiles/settings/search_profiles_button.dart';
+import 'package:da_kanji_mobile/locales_keys.dart';
+// Package imports:
+import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
+import 'package:get_it/get_it.dart';
+import 'package:provider/provider.dart';
 
 class DictionarySettings extends StatefulWidget {
   

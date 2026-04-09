@@ -1,12 +1,11 @@
 import 'dart:convert';
 
 import 'package:da_db/database/da_db.dart';
+import 'package:da_db/database/example/example_audio_entry.dart';
 import 'package:da_db/database/index/index_table_entry.dart';
 import 'package:da_db/database/stats/stat_entry.dart';
 import 'package:da_db/database/tag/tag_bank_v3_entry.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-
-import 'example_audio_entry.dart';
 
 part 'example_entry.freezed.dart';
 part 'example_entry.g.dart';

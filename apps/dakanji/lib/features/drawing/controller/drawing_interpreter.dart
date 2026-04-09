@@ -1,20 +1,18 @@
 // Flutter imports:
+import 'package:da_kanji_mobile/core/tf_lite/inference_backend.dart';
+import 'package:da_kanji_mobile/core/tf_lite/inference_stats.dart';
+import 'package:da_kanji_mobile/core/user/user_data.dart';
+import 'package:da_kanji_mobile/features/drawing/controller/drawing_isolate.dart';
+// Project imports:
+import 'package:da_kanji_mobile/features/drawing/model/drawing_data.dart';
+import 'package:da_kanji_mobile/globals.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
 // Package imports:
 import 'package:get_it/get_it.dart';
 import 'package:lite_rt_for_flutter/lite_rt_for_flutter.dart';
 import 'package:tuple/tuple.dart';
 import 'package:universal_io/io.dart';
-
-// Project imports:
-import 'package:da_kanji_mobile/features/drawing/model/drawing_data.dart';
-import 'package:da_kanji_mobile/features/drawing/controller/drawing_isolate.dart';
-import 'package:da_kanji_mobile/core/tf_lite/inference_backend.dart';
-import 'package:da_kanji_mobile/core/tf_lite/inference_stats.dart';
-import 'package:da_kanji_mobile/core/user/user_data.dart';
-import 'package:da_kanji_mobile/globals.dart';
 
 /// The tf lite interpreter to recognize the hand drawn kanji characters.
 /// 

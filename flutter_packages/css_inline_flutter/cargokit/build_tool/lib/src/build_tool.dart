@@ -1,24 +1,24 @@
 /// This is copied from Cargokit (which is the official way to use it currently)
 /// Details: https://fzyzcjy.github.io/flutter_rust_bridge/manual/integrate/builtin
+library;
 
 import 'dart:io';
 
 import 'package:args/command_runner.dart';
+import 'package:build_tool/src/android_environment.dart';
+import 'package:build_tool/src/build_cmake.dart';
+import 'package:build_tool/src/build_gradle.dart';
+import 'package:build_tool/src/build_pod.dart';
+import 'package:build_tool/src/logging.dart';
+import 'package:build_tool/src/options.dart';
+import 'package:build_tool/src/precompile_binaries.dart';
+import 'package:build_tool/src/target.dart';
+import 'package:build_tool/src/util.dart';
+import 'package:build_tool/src/verify_binaries.dart';
 import 'package:ed25519_edwards/ed25519_edwards.dart';
 import 'package:github/github.dart';
 import 'package:hex/hex.dart';
 import 'package:logging/logging.dart';
-
-import 'android_environment.dart';
-import 'build_cmake.dart';
-import 'build_gradle.dart';
-import 'build_pod.dart';
-import 'logging.dart';
-import 'options.dart';
-import 'precompile_binaries.dart';
-import 'target.dart';
-import 'util.dart';
-import 'verify_binaries.dart';
 
 final log = Logger('build_tool');
 

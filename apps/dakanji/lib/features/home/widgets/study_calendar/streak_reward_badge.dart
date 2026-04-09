@@ -1,7 +1,7 @@
+import 'package:da_kanji_mobile/features/home/widgets/study_calendar/breathing_neon_wrapper.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'breathing_neon_wrapper.dart';
 
 class StreakRewardBadge extends StatefulWidget {
   final int streak;

@@ -1,10 +1,9 @@
 
+import 'package:da_db/database/general_tables/reading_tables.dart';
+import 'package:da_db/database/general_tables/term_tables.dart';
+import 'package:da_db/database/index/index_tables.dart';
 import 'package:da_db/util/data_converters/sql_nullable_json_converter.dart';
 import 'package:drift/drift.dart';
-
-import '/database/general_tables/reading_tables.dart';
-import '/database/general_tables/term_tables.dart';
-import '/database/index/index_tables.dart';
 
 /// Table that store the main term of a meta term bank and links to its data
 @TableIndex(name: 'TermMetaBankV3Table_indexIdIndex', columns: {#indexId})

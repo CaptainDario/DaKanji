@@ -1,9 +1,8 @@
 import "dart:convert";
 
+import 'package:da_db/database/da_db.dart';
 import "package:da_db/database/db_queries/kanji_dictionary_search/kanji_dictionary_search_result.dart";
 import "package:drift/drift.dart";
-
-import "../da_db.dart";
 
 part "kanji_search_dao.g.dart";
 

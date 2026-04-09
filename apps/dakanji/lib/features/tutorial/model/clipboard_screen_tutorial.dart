@@ -1,9 +1,8 @@
 // Package imports:
-import 'package:easy_localization/easy_localization.dart';
-
 // Project imports:
 import 'package:da_kanji_mobile/features/tutorial/model/tutorial.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class ClipboardScreenTutorial extends Tutorial {
 

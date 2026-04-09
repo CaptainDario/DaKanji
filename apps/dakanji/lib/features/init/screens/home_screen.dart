@@ -1,30 +1,28 @@
 // Flutter imports:
-import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:awesome_dialog/awesome_dialog.dart';
-import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
-import 'package:get_it/get_it.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
+import 'package:da_kanji_mobile/core/analytics/event_logging.dart';
+import 'package:da_kanji_mobile/core/migration/migration.dart';
+import 'package:da_kanji_mobile/core/releases/releases.dart';
+import 'package:da_kanji_mobile/core/releases/version.dart';
+import 'package:da_kanji_mobile/core/routing/deep_links.dart';
+import 'package:da_kanji_mobile/core/routing/screens.dart';
+import 'package:da_kanji_mobile/core/user/user_data.dart';
+import 'package:da_kanji_mobile/core/widgets/dakanji/dakanji_splash.dart';
 // Project imports:
 import 'package:da_kanji_mobile/features/feedback/controller/stores.dart';
-import 'package:da_kanji_mobile/core/migration/migration.dart';
-import 'package:da_kanji_mobile/core/routing/deep_links.dart';
-import 'package:da_kanji_mobile/core/releases/version.dart';
-import 'package:da_kanji_mobile/core/routing/screens.dart';
-import 'package:da_kanji_mobile/features/settings/model/settings.dart';
-import 'package:da_kanji_mobile/core/user/user_data.dart';
-import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/features/init/controller/init.dart';
-import 'package:da_kanji_mobile/locales_keys.dart';
-import 'package:da_kanji_mobile/core/analytics/event_logging.dart';
-import 'package:da_kanji_mobile/core/releases/releases.dart';
 import 'package:da_kanji_mobile/features/init/widgets/downgrade_dialog.dart';
 import 'package:da_kanji_mobile/features/init/widgets/rate_dialog.dart' as rate_popup;
 import 'package:da_kanji_mobile/features/init/widgets/whats_new_dialog.dart';
-import 'package:da_kanji_mobile/core/widgets/dakanji/dakanji_splash.dart';
+import 'package:da_kanji_mobile/features/settings/model/settings.dart';
+import 'package:da_kanji_mobile/globals.dart';
+import 'package:da_kanji_mobile/locales_keys.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_markdown_plus/flutter_markdown_plus.dart';
+import 'package:get_it/get_it.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 /// The "init"-screen
 /// 

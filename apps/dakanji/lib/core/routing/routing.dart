@@ -1,8 +1,4 @@
 // Flutter imports:
-import 'package:da_kanji_mobile/features/home/screens/home_screen.dart';
-import 'package:da_kanji_mobile/features/shop/screens/shop_screen.dart';
-import 'package:flutter/material.dart';
-
 // Project imports:
 import 'package:da_kanji_mobile/core/routing/navigation_arguments.dart';
 import 'package:da_kanji_mobile/core/routing/screens.dart';
@@ -11,6 +7,8 @@ import 'package:da_kanji_mobile/features/changelog/screens/changelog_screen.dart
 import 'package:da_kanji_mobile/features/clipboard/screens/clipboard_screen.dart';
 import 'package:da_kanji_mobile/features/dictionary/screens/dictionary_screen.dart';
 import 'package:da_kanji_mobile/features/drawing/screens/draw_screen.dart';
+import 'package:da_kanji_mobile/features/home/screens/home_screen.dart';
+import 'package:da_kanji_mobile/features/immersion/screens/immersion_screen.dart';
 import 'package:da_kanji_mobile/features/init/screens/home_screen.dart';
 import 'package:da_kanji_mobile/features/kana_table/screens/kana_table_screen.dart';
 import 'package:da_kanji_mobile/features/kana_trainer/screens/kana_trainer_screen.dart';
@@ -19,12 +17,13 @@ import 'package:da_kanji_mobile/features/kanji_trainer/screens/kanji_trainer_scr
 import 'package:da_kanji_mobile/features/manual/screens/manual_screen.dart';
 import 'package:da_kanji_mobile/features/ocr/screens/ocr_screen.dart';
 import 'package:da_kanji_mobile/features/onboarding/screens/on_boarding_screen.dart';
-import 'package:da_kanji_mobile/features/immersion/screens/immersion_screen.dart';
 import 'package:da_kanji_mobile/features/settings/screens/settings_screen.dart';
+import 'package:da_kanji_mobile/features/shop/screens/shop_screen.dart';
 import 'package:da_kanji_mobile/features/text/screens/text_screen.dart';
 import 'package:da_kanji_mobile/features/webbrowser/screens/webbrowser_screen.dart';
 import 'package:da_kanji_mobile/features/word_lists/screens/word_lists_screen.dart';
 import 'package:da_kanji_mobile/features/youtube/screens/youtube_screen.dart';
+import 'package:flutter/material.dart';
 
 /// Returns the screen matching `name` 
 Widget getWidgetFromScreen(String? name, NavigationArguments args){

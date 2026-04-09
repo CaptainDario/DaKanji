@@ -1,18 +1,16 @@
 // Flutter imports:
-import "package:flutter/material.dart";
-
-// Package imports:
-import 'package:flutter_inappwebview/flutter_inappwebview.dart';
-import 'package:get_it/get_it.dart';
-import 'package:tuple/tuple.dart';
-
 // Project imports:
 import 'package:da_kanji_mobile/features/drawing/model/draw_screen_layout.dart';
-import 'package:da_kanji_mobile/features/settings/model/settings.dart';
 import 'package:da_kanji_mobile/features/drawing/widgets/draw_screen_landscape.dart';
 import 'package:da_kanji_mobile/features/drawing/widgets/draw_screen_landscape_with_webview.dart';
 import 'package:da_kanji_mobile/features/drawing/widgets/draw_screen_portrait.dart';
 import 'package:da_kanji_mobile/features/drawing/widgets/draw_screen_portrait_with_webview.dart';
+import 'package:da_kanji_mobile/features/settings/model/settings.dart';
+import "package:flutter/material.dart";
+// Package imports:
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
+import 'package:get_it/get_it.dart';
+import 'package:tuple/tuple.dart';
 
 // Widget which builds the DrawScreen matching the current screen orientation
 class DrawScreenResponsiveLayout extends StatelessWidget {

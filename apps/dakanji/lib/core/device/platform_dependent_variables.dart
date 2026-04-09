@@ -1,8 +1,7 @@
 // Package imports:
-import 'package:universal_io/io.dart';
-
 // Project imports:
 import 'package:da_kanji_mobile/globals.dart';
+import 'package:universal_io/io.dart';
 
 /// Class to handle platform dependent variables
 

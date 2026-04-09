@@ -1,20 +1,19 @@
 
 
 // Package imports:
-import 'package:onboarding_overlay/onboarding_overlay.dart';
-
 // Project imports:
 import 'package:da_kanji_mobile/features/tutorial/model/clipboard_screen_tutorial.dart';
 import 'package:da_kanji_mobile/features/tutorial/model/dictionary_screen_tutorial.dart';
 import 'package:da_kanji_mobile/features/tutorial/model/draw_screen_tutorial.dart';
+import 'package:da_kanji_mobile/features/tutorial/model/immersion_screen_tutorial.dart';
 import 'package:da_kanji_mobile/features/tutorial/model/kana_table_screen_tutorial.dart';
 import 'package:da_kanji_mobile/features/tutorial/model/kanji_table_screen_tutorial.dart';
 import 'package:da_kanji_mobile/features/tutorial/model/ocr_screen_tutorial.dart';
 import 'package:da_kanji_mobile/features/tutorial/model/text_screen_tutorial.dart';
-import 'package:da_kanji_mobile/features/tutorial/model/immersion_screen_tutorial.dart';
 import 'package:da_kanji_mobile/features/tutorial/model/webbrowser_screen_tutorial.dart';
 import 'package:da_kanji_mobile/features/tutorial/model/word_lists_screen_tutorial.dart';
 import 'package:da_kanji_mobile/features/tutorial/model/youtube_screen_tutorial.dart';
+import 'package:onboarding_overlay/onboarding_overlay.dart';
 
 class Tutorials{
 

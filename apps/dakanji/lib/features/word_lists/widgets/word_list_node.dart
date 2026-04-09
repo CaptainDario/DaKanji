@@ -1,33 +1,31 @@
 // Dart imports:
 import 'dart:typed_data';
 
+import 'package:da_kanji_mobile/core/tree/tree_node.dart';
+import 'package:da_kanji_mobile/core/user/user_data.dart';
 // Flutter imports:
 import 'package:da_kanji_mobile/core/user/user_data_db.dart';
-import 'package:flutter/material.dart';
-
-// Package imports:
-import 'package:easy_localization/easy_localization.dart';
-import 'package:file_picker/file_picker.dart';
-import 'package:get_it/get_it.dart';
-import 'package:path/path.dart' as p;
-import 'package:pdf/widgets.dart' as pw;
-import 'package:universal_io/io.dart';
-
+import 'package:da_kanji_mobile/core/widgets/loading_popup.dart';
+import 'package:da_kanji_mobile/features/anki/widgets/anki_not_setup_dialog.dart';
 // Project imports:
 import 'package:da_kanji_mobile/features/screen_saver/controller/screensaver.dart';
+import 'package:da_kanji_mobile/features/settings/model/settings.dart';
 import 'package:da_kanji_mobile/features/word_lists/controller/anki.dart';
 import 'package:da_kanji_mobile/features/word_lists/controller/csv.dart';
 import 'package:da_kanji_mobile/features/word_lists/controller/images.dart';
 import 'package:da_kanji_mobile/features/word_lists/controller/pdf.dart';
-import 'package:da_kanji_mobile/features/settings/model/settings.dart';
-import 'package:da_kanji_mobile/core/tree/tree_node.dart';
-import 'package:da_kanji_mobile/core/user/user_data.dart';
 import 'package:da_kanji_mobile/features/word_lists/model/word_list_types.dart';
 import 'package:da_kanji_mobile/features/word_lists/model/word_lists_data.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
-import 'package:da_kanji_mobile/features/anki/widgets/anki_not_setup_dialog.dart';
-import 'package:da_kanji_mobile/core/widgets/loading_popup.dart';
+// Package imports:
+import 'package:easy_localization/easy_localization.dart';
+import 'package:file_picker/file_picker.dart';
+import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
+import 'package:path/path.dart' as p;
+import 'package:pdf/widgets.dart' as pw;
+import 'package:universal_io/io.dart';
 
 /// All actions a user can do when clicking the 
 enum  WordListNodePopupMenuButtonItems {

@@ -1,14 +1,13 @@
 import "dart:convert";
 
 import "package:da_db/data/grouping_rules.dart";
+import 'package:da_db/database/da_db.dart';
 import "package:da_db/database/db_queries/dictionary_search/dictionary_search_context.dart";
 import "package:da_db/database/db_queries/dictionary_search/dictionary_search_params.dart";
 import "package:da_db/database/db_queries/dictionary_search/dictionary_search_result.dart";
 import "package:da_db/database/db_queries/dictionary_search/dictionary_search_utils.dart";
 import "package:da_db/database/db_queries/kanji_dictionary_search/kanji_dictionary_search_result.dart";
 import "package:drift/drift.dart";
-
-import "../da_db.dart";
 
 part "dictionary_search_dao.g.dart";
 

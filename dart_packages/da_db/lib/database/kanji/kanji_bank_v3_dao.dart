@@ -1,10 +1,9 @@
 
+import 'package:da_db/database/da_db.dart';
+import 'package:da_db/database/kanji/kanji_bank_v3_entry.dart';
+import 'package:da_db/database/kanji/kanji_bank_v3_relation_tables.dart';
+import 'package:da_db/database/kanji/kanji_bank_v3_tables.dart';
 import "package:drift/drift.dart";
-
-import "/database/kanji/kanji_bank_v3_entry.dart";
-import "/database/kanji/kanji_bank_v3_relation_tables.dart";
-import "/database/kanji/kanji_bank_v3_tables.dart";
-import "../da_db.dart";
 
 part 'kanji_bank_v3_dao.g.dart';
 

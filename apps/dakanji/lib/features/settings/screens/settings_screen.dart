@@ -1,8 +1,4 @@
 // Flutter imports:
-import 'package:da_kanji_mobile/features/settings/widgets/time_tracking_settings.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
-
 // Project imports:
 import 'package:da_kanji_mobile/core/routing/screens.dart';
 import 'package:da_kanji_mobile/features/drawer/widgets/drawer.dart';
@@ -10,15 +6,18 @@ import 'package:da_kanji_mobile/features/settings/widgets/anki_settings.dart';
 import 'package:da_kanji_mobile/features/settings/widgets/clipboard_settings.dart';
 import 'package:da_kanji_mobile/features/settings/widgets/dictionary_settings.dart';
 import 'package:da_kanji_mobile/features/settings/widgets/drawing_settings.dart';
+import 'package:da_kanji_mobile/features/settings/widgets/immersion_settings.dart';
 import 'package:da_kanji_mobile/features/settings/widgets/kana_table_settings.dart';
 import 'package:da_kanji_mobile/features/settings/widgets/kanji_table_settings.dart';
 import 'package:da_kanji_mobile/features/settings/widgets/misc_settings.dart';
 import 'package:da_kanji_mobile/features/settings/widgets/ocr_settings.dart';
 import 'package:da_kanji_mobile/features/settings/widgets/text_settings.dart';
-import 'package:da_kanji_mobile/features/settings/widgets/immersion_settings.dart';
+import 'package:da_kanji_mobile/features/settings/widgets/time_tracking_settings.dart';
 import 'package:da_kanji_mobile/features/settings/widgets/webbrowser_settings.dart';
 import 'package:da_kanji_mobile/features/settings/widgets/word_lists_settings.dart';
 import 'package:da_kanji_mobile/features/settings/widgets/youtube_settings.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 
 // Package imports:
 

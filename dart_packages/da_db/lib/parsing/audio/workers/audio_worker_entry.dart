@@ -23,7 +23,7 @@ Future<void> audioWorkerEntry(SendPort mainSendPort) async {
   StagingDatabase? stagingDb;
   LanguageProcessor? lp;
   AudioStagingHelper? helper;
-  String? _zipPath;
+  String? zipPath;
   
   // --- Worker State ---
   final Map<String, ({List<String> terms, String reading, String? pitchPattern})> metadataCache = {};
@@ -41,7 +41,7 @@ Future<void> audioWorkerEntry(SendPort mainSendPort) async {
         onStatus: (msg) => mainSendPort.send(msg) 
       );
       
-      _zipPath = message.zipPath;
+      zipPath = message.zipPath;
       message.replyPort.send(MsgReady(receivePort.sendPort));
     }
     
@@ -53,7 +53,7 @@ Future<void> audioWorkerEntry(SendPort mainSendPort) async {
           
           // 1. Open the archive ONCE and force the index/entries files to yield first
           final allFiles = daDbDataSourceIterator(
-            archivePath: _zipPath,
+            archivePath: zipPath,
             fileOrder: [audioIndexFile, audioEntriesFile] 
           );
 

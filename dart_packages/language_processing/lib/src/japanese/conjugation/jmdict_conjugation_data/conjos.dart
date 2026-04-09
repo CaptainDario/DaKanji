@@ -2,9 +2,9 @@
 //https://gitlab.com/yamagoya/jmdictdb/-/tree/master/jmdictdb/data
 
 
-import 'conjo.dart';
-import 'conj.dart';
-import 'kwpos.dart';
+import 'package:language_processing/src/japanese/conjugation/jmdict_conjugation_data/conj.dart';
+import 'package:language_processing/src/japanese/conjugation/jmdict_conjugation_data/conjo.dart';
+import 'package:language_processing/src/japanese/conjugation/jmdict_conjugation_data/kwpos.dart';
 
 // Convenience constants
 const bool f = false;

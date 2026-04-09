@@ -1,21 +1,20 @@
 // Flutter imports:
+// Project imports:
+import 'package:da_kanji_mobile/core/icons/da_kanji_icons.dart';
+import 'package:da_kanji_mobile/core/user/user_data.dart';
+import 'package:da_kanji_mobile/features/drawing/model/draw_screen_state.dart';
+import 'package:da_kanji_mobile/features/drawing/widgets/drawing_canvas.dart';
+import 'package:da_kanji_mobile/features/drawing/widgets/kanji_buffer_widget.dart';
+import 'package:da_kanji_mobile/features/drawing/widgets/prediction_button.dart';
+import 'package:da_kanji_mobile/features/settings/model/settings.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get_it/get_it.dart';
 import 'package:integration_test/integration_test.dart';
 
-// Project imports:
-import 'package:da_kanji_mobile/core/icons/da_kanji_icons.dart';
-import 'package:da_kanji_mobile/features/drawing/model/draw_screen_state.dart';
-import 'package:da_kanji_mobile/features/settings/model/settings.dart';
-import 'package:da_kanji_mobile/core/user/user_data.dart';
-import 'package:da_kanji_mobile/features/drawing/widgets/drawing_canvas.dart';
-import 'package:da_kanji_mobile/features/drawing/widgets/kanji_buffer_widget.dart';
-import 'package:da_kanji_mobile/features/drawing/widgets/prediction_button.dart';
 import 'draw_screen_test_util.dart';
 import 'test_utils.dart';
 

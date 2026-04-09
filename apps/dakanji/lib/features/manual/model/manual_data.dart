@@ -1,20 +1,18 @@
 // Flutter imports:
-import 'package:flutter/material.dart';
-
-// Package imports:
-import 'package:easy_localization/easy_localization.dart';
-
 // Project imports:
 import 'package:da_kanji_mobile/core/icons/da_kanji_icons.dart';
 import 'package:da_kanji_mobile/core/icons/da_kanji_icons_icons.dart';
 import 'package:da_kanji_mobile/features/manual/model/manual_types.dart';
-import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/features/manual/widgets/manual_anki.dart';
 import 'package:da_kanji_mobile/features/manual/widgets/manual_deep_links.dart';
 import 'package:da_kanji_mobile/features/manual/widgets/manual_dictionary.dart';
 import 'package:da_kanji_mobile/features/manual/widgets/manual_kana_table.dart';
 import 'package:da_kanji_mobile/features/manual/widgets/manual_misc.dart';
 import 'package:da_kanji_mobile/features/manual/widgets/manual_text.dart';
+import 'package:da_kanji_mobile/locales_keys.dart';
+// Package imports:
+import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/material.dart';
 
 /// Data class to store all data related to the manual
 class ManualData {

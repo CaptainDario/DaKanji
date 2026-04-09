@@ -1,5 +1,5 @@
+import 'package:da_kanji_mobile/features/shop/widgets/shop_constants.dart';
 import 'package:flutter/material.dart';
-import 'shop_constants.dart';
 
 class AddToCartButton extends StatelessWidget {
   final String label;

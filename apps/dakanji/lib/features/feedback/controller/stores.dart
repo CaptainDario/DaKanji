@@ -1,11 +1,10 @@
 // Dart imports:
 import 'dart:io';
 
-// Package imports:
-import 'package:url_launcher/url_launcher_string.dart';
-
 // Project imports:
 import 'package:da_kanji_mobile/globals.dart';
+// Package imports:
+import 'package:url_launcher/url_launcher_string.dart';
 
 /// opens the store listing of dakanji matching the current platform
 void openStoreListing(){

@@ -3,13 +3,12 @@ import 'dart:convert';
 import 'dart:isolate';
 
 import 'package:archive/archive_io.dart';
+import 'package:da_db/database/da_db.dart';
 import 'package:da_db/parsing/util/db_optimization.dart';
 import 'package:da_db/parsing/util/parsing_util.dart';
 import 'package:drift/drift.dart';
 import 'package:drift/isolate.dart';
 import 'package:language_processing/language_processing.dart';
-
-import '/database/da_db.dart';
 
 /// Converts the KanjiVG data source at the given path and adds it to the given
 /// [DaDb].

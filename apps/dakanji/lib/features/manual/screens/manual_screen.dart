@@ -1,15 +1,14 @@
 // Dart imports:
 import 'dart:math';
 
-// Flutter imports:
-import 'package:flutter/material.dart';
-
+import 'package:da_kanji_mobile/core/routing/screens.dart';
+import 'package:da_kanji_mobile/features/drawer/widgets/drawer.dart';
 // Project imports:
 import 'package:da_kanji_mobile/features/manual/controller/manual.dart';
 import 'package:da_kanji_mobile/features/manual/model/manual_data.dart';
-import 'package:da_kanji_mobile/core/routing/screens.dart';
-import 'package:da_kanji_mobile/features/drawer/widgets/drawer.dart';
 import 'package:da_kanji_mobile/features/manual/widgets/manual_button.dart';
+// Flutter imports:
+import 'package:flutter/material.dart';
 
 // Project imports:
 

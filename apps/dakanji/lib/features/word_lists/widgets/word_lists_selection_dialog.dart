@@ -1,18 +1,15 @@
 // Flutter imports:
-import 'package:da_kanji_mobile/core/user/user_data_db.dart';
-import 'package:da_kanji_mobile/core/user/word_lists/word_lists_dao.dart';
-import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:awesome_dialog/awesome_dialog.dart';
-import 'package:get_it/get_it.dart';
-
+// Project imports:
+ import 'package:da_kanji_mobile/core/tree/tree_node.dart';
+import 'package:da_kanji_mobile/core/user/user_data_db.dart';
+import 'package:da_kanji_mobile/core/user/word_lists/word_lists_dao.dart';
 // Project imports:
 import 'package:da_kanji_mobile/features/word_lists/model/word_lists_data.dart';
 import 'package:da_kanji_mobile/features/word_lists/widgets/word_lists.dart' as word_lists_ui;
-
-// Project imports:
- import 'package:da_kanji_mobile/core/tree/tree_node.dart';
+import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 
 
 

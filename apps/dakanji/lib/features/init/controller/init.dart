@@ -4,16 +4,36 @@ import 'dart:async';
 // Flutter imports:
 import 'package:da_db/database/da_db.dart';
 import 'package:da_db/util/da_db_search_manager.dart';
+import 'package:da_kanji_mobile/core/analytics/event_logging.dart';
+import 'package:da_kanji_mobile/core/assets/assets.dart';
+import 'package:da_kanji_mobile/core/device/platform_dependent_variables.dart';
+import 'package:da_kanji_mobile/core/releases/changelog.dart';
+import 'package:da_kanji_mobile/core/releases/version.dart';
+import 'package:da_kanji_mobile/core/routing/deep_links.dart';
+import 'package:da_kanji_mobile/core/storage/path_manager.dart';
 import 'package:da_kanji_mobile/core/supabase/model/supabase_cache_manager.dart';
 import 'package:da_kanji_mobile/core/user/time_tracking/time_tracking_mock_data.dart';
+import 'package:da_kanji_mobile/core/user/user_activity.dart';
+import 'package:da_kanji_mobile/core/user/user_data.dart';
 import 'package:da_kanji_mobile/core/user/user_data_db.dart';
+// Project imports:
+import 'package:da_kanji_mobile/features/anki/controller/anki.dart';
 import 'package:da_kanji_mobile/features/dictionary/controller/definition_rendering.dart';
+import 'package:da_kanji_mobile/features/dictionary/controller/isars.dart';
+import 'package:da_kanji_mobile/features/drawer/controller/drawer_listener.dart';
+import 'package:da_kanji_mobile/features/drawing/model/draw_screen_layout.dart';
+import 'package:da_kanji_mobile/features/drawing/model/draw_screen_state.dart';
+import 'package:da_kanji_mobile/features/drawing/model/drawing_lookup.dart';
+import 'package:da_kanji_mobile/features/drawing/model/kanji_buffer.dart';
+import 'package:da_kanji_mobile/features/drawing/model/strokes.dart';
+import 'package:da_kanji_mobile/features/settings/model/settings.dart';
+import 'package:da_kanji_mobile/features/tutorial/model/tutorials.dart';
+import 'package:da_kanji_mobile/globals.dart';
+// Package imports:
+import 'package:database_builder/database_builder.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
-// Package imports:
-import 'package:database_builder/database_builder.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:get_it/get_it.dart';
 import 'package:isar_community/isar.dart';
@@ -26,28 +46,6 @@ import 'package:universal_io/io.dart';
 import 'package:wakelock_plus/wakelock_plus.dart';
 import 'package:window_manager/window_manager.dart';
 import 'package:yaml/yaml.dart';
-
-// Project imports:
-import 'package:da_kanji_mobile/features/anki/controller/anki.dart';
-import 'package:da_kanji_mobile/core/assets/assets.dart';
-import 'package:da_kanji_mobile/core/routing/deep_links.dart';
-import 'package:da_kanji_mobile/core/user/user_activity.dart';
-import 'package:da_kanji_mobile/core/releases/changelog.dart';
-import 'package:da_kanji_mobile/features/drawer/controller/drawer_listener.dart';
-import 'package:da_kanji_mobile/features/drawing/model/draw_screen_layout.dart';
-import 'package:da_kanji_mobile/features/drawing/model/draw_screen_state.dart';
-import 'package:da_kanji_mobile/features/drawing/model/drawing_lookup.dart';
-import 'package:da_kanji_mobile/features/drawing/model/kanji_buffer.dart';
-import 'package:da_kanji_mobile/features/drawing/model/strokes.dart';
-import 'package:da_kanji_mobile/core/storage/path_manager.dart';
-import 'package:da_kanji_mobile/features/dictionary/controller/isars.dart';
-import 'package:da_kanji_mobile/core/device/platform_dependent_variables.dart';
-import 'package:da_kanji_mobile/core/releases/version.dart';
-import 'package:da_kanji_mobile/features/settings/model/settings.dart';
-import 'package:da_kanji_mobile/features/tutorial/model/tutorials.dart';
-import 'package:da_kanji_mobile/core/user/user_data.dart';
-import 'package:da_kanji_mobile/globals.dart';
-import 'package:da_kanji_mobile/core/analytics/event_logging.dart';
 
 
 

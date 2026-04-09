@@ -1,9 +1,8 @@
 import 'dart:async';
 
 import 'package:da_db/database/db_queries/dictionary_search/dictionary_match.dart';
-import 'package:flutter/material.dart';
-
 import 'package:da_db/database/db_queries/dictionary_search/dictionary_search_result.dart';
+import 'package:flutter/material.dart';
 
 
 class DictionarySearchState with ChangeNotifier {

@@ -1,10 +1,9 @@
 
+import 'package:da_db/database/general_tables/definition_tables.dart';
+import 'package:da_db/database/general_tables/reading_tables.dart';
+import 'package:da_db/database/kanji/kanji_bank_v3_tables.dart';
+import 'package:da_db/database/tag/tag_bank_v3_tables.dart';
 import 'package:drift/drift.dart';
-
-import '/database/general_tables/definition_tables.dart';
-import '/database/general_tables/reading_tables.dart';
-import '/database/kanji/kanji_bank_v3_tables.dart';
-import '/database/tag/tag_bank_v3_tables.dart';
 
 /// Contains the relationships between readings (onyomi) and kanjis
 @TableIndex(name: 'KanjiBankV3_X_OnyomiReadingTable_kanjiIdIndex', columns: {#kanjiId})

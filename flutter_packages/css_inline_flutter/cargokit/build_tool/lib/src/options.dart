@@ -1,8 +1,12 @@
 /// This is copied from Cargokit (which is the official way to use it currently)
 /// Details: https://fzyzcjy.github.io/flutter_rust_bridge/manual/integrate/builtin
+library;
 
 import 'dart:io';
 
+import 'package:build_tool/src/builder.dart';
+import 'package:build_tool/src/environment.dart';
+import 'package:build_tool/src/rustup.dart';
 import 'package:collection/collection.dart';
 import 'package:ed25519_edwards/ed25519_edwards.dart';
 import 'package:hex/hex.dart';
@@ -10,10 +14,6 @@ import 'package:logging/logging.dart';
 import 'package:path/path.dart' as path;
 import 'package:source_span/source_span.dart';
 import 'package:yaml/yaml.dart';
-
-import 'builder.dart';
-import 'environment.dart';
-import 'rustup.dart';
 
 final _log = Logger('options');
 

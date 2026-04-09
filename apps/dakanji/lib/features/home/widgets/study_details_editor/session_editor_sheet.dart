@@ -375,7 +375,6 @@ class _SelectionTile extends StatelessWidget {
     required this.value,
     required this.icon,
     required this.onTap,
-    this.activeColor,
     this.valueColor,
   });
 

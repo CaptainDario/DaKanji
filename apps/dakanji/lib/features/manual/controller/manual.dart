@@ -1,9 +1,8 @@
 // Flutter imports:
-import 'package:flutter/material.dart';
-
 // Project imports:
 import 'package:da_kanji_mobile/features/manual/model/manual_data.dart';
 import 'package:da_kanji_mobile/features/manual/model/manual_types.dart';
+import 'package:flutter/material.dart';
 
 void pushManual(BuildContext context, ManualTypes manualType){
   

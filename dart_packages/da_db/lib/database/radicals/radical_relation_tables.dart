@@ -1,8 +1,7 @@
 
+import 'package:da_db/database/general_tables/kanji_tables.dart';
+import 'package:da_db/database/radicals/radical_tables.dart';
 import 'package:drift/drift.dart';
-
-import '/database/general_tables/kanji_tables.dart';
-import '/database/radicals/radical_tables.dart';
 
 /// Contains the relationships between kanjis and radicals
 @TableIndex(name: 'Radical_X_KanjiRelationsTable_radicalIdIndex', columns: {#radicalId})

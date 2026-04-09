@@ -1,8 +1,7 @@
 
+import 'package:da_db/database/da_db.dart';
+import 'package:da_db/database/kanji/kanji_bank_v3_tables.dart';
 import 'package:da_db/parsing/util/import_context.dart';
-
-import '/database/da_db.dart';
-import '/database/kanji/kanji_bank_v3_tables.dart';
 
 
 

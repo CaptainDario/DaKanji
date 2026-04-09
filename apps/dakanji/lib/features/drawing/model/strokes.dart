@@ -70,7 +70,7 @@ class Strokes with ChangeNotifier{
     notifyListeners();
   }
   
-  get strokeCount {
+  int get strokeCount {
     return _strokeCount;
   }
 

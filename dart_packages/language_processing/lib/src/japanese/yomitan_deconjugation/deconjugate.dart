@@ -2,7 +2,7 @@
 
 import 'package:language_processing/src/deconjugation_result.dart';
 import 'package:language_processing/src/japanese/conjugation/yomitan_conjugation_data/japanese_transforms.dart';
-import 'language_transformer.dart';
+import 'package:language_processing/src/japanese/yomitan_deconjugation/language_transformer.dart';
 
 
 /// Represents user-facing information about an inflection rule.

@@ -1,5 +1,6 @@
-import 'package:flutter/material.dart';
 import 'dart:ui'; // Required for ImageFilter
+
+import 'package:flutter/material.dart';
 
 class StudyCard extends StatelessWidget {
   final String title;

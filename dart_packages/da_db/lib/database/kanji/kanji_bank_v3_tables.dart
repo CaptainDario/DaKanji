@@ -1,10 +1,9 @@
 
+import 'package:da_db/database/general_tables/kanji_tables.dart';
+import 'package:da_db/database/index/index_tables.dart';
 import 'package:da_db/database/tag/tag_bank_v3_tables.dart';
 import 'package:da_db/util/data_converters/sql_json_converter.dart';
 import 'package:drift/drift.dart';
-
-import '/database/general_tables/kanji_tables.dart';
-import '/database/index/index_tables.dart';
 
 /// Contains the main Kanji entries to which the other tables link
 @TableIndex(name: 'KanjiBankV3Table_indexIdIndex', columns: {#indexId})

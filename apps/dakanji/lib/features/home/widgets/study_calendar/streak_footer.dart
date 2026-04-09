@@ -1,8 +1,8 @@
 import 'package:da_kanji_mobile/core/user/user_data_db.dart';
-import 'package:flutter/material.dart';
+import 'package:da_kanji_mobile/features/home/widgets/study_calendar/streak_reward_badge.dart'; // Import the new reusable widget
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'streak_reward_badge.dart'; // Import the new reusable widget
 
 class StreakFooter extends StatelessWidget {
   final int streak;

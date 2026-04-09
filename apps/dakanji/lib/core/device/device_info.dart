@@ -1,13 +1,11 @@
 // Dart imports:
 
-// Flutter imports:
-import 'package:flutter/material.dart';
-
-// Package imports:
-import 'package:device_info_plus/device_info_plus.dart';
-
 // Project imports:
 import 'package:da_kanji_mobile/globals.dart';
+// Package imports:
+import 'package:device_info_plus/device_info_plus.dart';
+// Flutter imports:
+import 'package:flutter/material.dart';
 
 
 /// Returns a String containing details about the device the app is running on

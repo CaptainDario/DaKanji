@@ -1,8 +1,8 @@
-import 'package:flutter/material.dart';
 import 'package:da_kanji_mobile/features/shop/model/product.dart';
-import 'shop_constants.dart';
-import 'shop_cart_button.dart';
-import 'shop_indicator_dot.dart';
+import 'package:da_kanji_mobile/features/shop/widgets/shop_cart_button.dart';
+import 'package:da_kanji_mobile/features/shop/widgets/shop_constants.dart';
+import 'package:da_kanji_mobile/features/shop/widgets/shop_indicator_dot.dart';
+import 'package:flutter/material.dart';
 
 class ShopMainCarousel extends StatelessWidget {
   final List<Product> products;

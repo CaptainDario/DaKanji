@@ -1,11 +1,9 @@
 // Flutter imports:
-import 'package:flutter/material.dart';
-
-// Package imports:
-import 'package:database_builder/database_builder.dart';
-
 // Project imports:
 import 'package:da_kanji_mobile/features/dictionary/widgets/dictionary.dart';
+// Package imports:
+import 'package:database_builder/database_builder.dart';
+import 'package:flutter/material.dart';
 
 class WordListViewEntryScreen extends StatelessWidget {
 

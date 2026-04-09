@@ -1,11 +1,11 @@
 /// This is copied from Cargokit (which is the official way to use it currently)
 /// Details: https://fzyzcjy.github.io/flutter_rust_bridge/manual/integrate/builtin
+library;
 
 import 'dart:io';
 
+import 'package:build_tool/src/util.dart';
 import 'package:collection/collection.dart';
-
-import 'util.dart';
 
 class Target {
   Target({

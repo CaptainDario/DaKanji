@@ -1,5 +1,5 @@
-import 'forbidden_sequences.dart';
-import 'substitutions.dart';
+import 'package:language_processing/src/japanese/spellfix/forbidden_sequences.dart';
+import 'package:language_processing/src/japanese/spellfix/substitutions.dart';
 
 
 List<String> generateSpellingVariations({

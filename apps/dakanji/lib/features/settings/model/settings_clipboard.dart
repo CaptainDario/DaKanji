@@ -1,12 +1,10 @@
 // Flutter imports:
-import 'package:flutter/material.dart';
-
-// Package imports:
-import 'package:json_annotation/json_annotation.dart';
-
 // Project imports:
 import 'package:da_kanji_mobile/features/settings/model/dictionary_search_priority_interface.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
+import 'package:flutter/material.dart';
+// Package imports:
+import 'package:json_annotation/json_annotation.dart';
 
 part 'settings_clipboard.g.dart';
 

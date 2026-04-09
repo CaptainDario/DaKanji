@@ -2,12 +2,11 @@ import "dart:convert";
 
 import "package:da_db/database/audio/audio_entry.dart";
 import "package:da_db/database/audio/audio_tables.dart";
+import 'package:da_db/database/da_db.dart';
 import "package:da_db/database/term/term_bank_v3_entry.dart";
 import "package:da_db/database/term_meta/term_meta_bank_entry.dart";
 import "package:drift/drift.dart";
 import 'package:language_processing/language_processing.dart';
-
-import "../da_db.dart";
 
 part 'audio_dao.g.dart';
 

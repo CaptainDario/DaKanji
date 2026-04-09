@@ -1,9 +1,8 @@
 // Flutter imports:
 import 'package:da_kanji_mobile/features/settings/model/settings.dart';
-import 'package:flutter/material.dart';
-
 // Project imports:
 import 'package:da_kanji_mobile/features/text/widgets/text_analysis_popup.dart';
+import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 /// A widget that shows `TextAnalysisPopup` over its `children`.

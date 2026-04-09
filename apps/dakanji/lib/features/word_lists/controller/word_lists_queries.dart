@@ -3,12 +3,11 @@ import 'dart:math';
 
 // Package imports:
 import 'package:da_kanji_mobile/core/user/user_data_db.dart';
+// Project imports:
+import 'package:da_kanji_mobile/features/dictionary/controller/isars.dart';
 import 'package:database_builder/database_builder.dart';
 import 'package:get_it/get_it.dart';
 import 'package:tuple/tuple.dart';
-
-// Project imports:
-import 'package:da_kanji_mobile/features/dictionary/controller/isars.dart';
 
 
 

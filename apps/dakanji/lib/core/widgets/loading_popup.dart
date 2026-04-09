@@ -1,11 +1,9 @@
 // Flutter imports:
-import 'package:flutter/material.dart';
-
 // Package imports:
 import 'package:awesome_dialog/awesome_dialog.dart';
-
 // Project imports:
 import 'package:da_kanji_mobile/core/widgets/dakanji/dakanji_loading_indicator.dart';
+import 'package:flutter/material.dart';
 
 /// Simple popup that shows a spinning animation
 AwesomeDialog loadingPopup(BuildContext context,

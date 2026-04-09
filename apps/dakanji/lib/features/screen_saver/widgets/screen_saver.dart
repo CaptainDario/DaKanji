@@ -2,23 +2,21 @@
 import 'dart:async';
 import 'dart:math';
 
-// Flutter imports:
-import 'package:flutter/material.dart';
-
-// Package imports:
-import 'package:database_builder/database_builder.dart';
-import 'package:easy_localization/easy_localization.dart';
-import 'package:get_it/get_it.dart';
-import 'package:wakelock_plus/wakelock_plus.dart';
-import 'package:window_manager/window_manager.dart';
-
+import 'package:da_kanji_mobile/features/dictionary/controller/isars.dart';
+import 'package:da_kanji_mobile/features/dictionary/widgets/word_tab/dictionary_word_card.dart';
 // Project imports:
 import 'package:da_kanji_mobile/features/screen_saver/controller/screensaver.dart';
-import 'package:da_kanji_mobile/features/dictionary/controller/isars.dart';
 import 'package:da_kanji_mobile/features/settings/model/settings.dart';
 import 'package:da_kanji_mobile/globals.dart';
 import 'package:da_kanji_mobile/locales_keys.dart';
-import 'package:da_kanji_mobile/features/dictionary/widgets/word_tab/dictionary_word_card.dart';
+// Package imports:
+import 'package:database_builder/database_builder.dart';
+import 'package:easy_localization/easy_localization.dart';
+// Flutter imports:
+import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
+import 'package:wakelock_plus/wakelock_plus.dart';
+import 'package:window_manager/window_manager.dart';
 
 /// Shows a screen saver that iterates through different dictionary entries
 class ScreenSaver extends StatefulWidget {

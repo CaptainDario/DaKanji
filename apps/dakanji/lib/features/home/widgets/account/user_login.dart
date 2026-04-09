@@ -1,7 +1,8 @@
 import 'dart:math';
-import 'package:flutter/material.dart';
+
 import 'package:da_kanji_mobile/core/widgets/dakanji/dakanji_logo_widget.dart';
 import 'package:da_kanji_mobile/globals.dart';
+import 'package:flutter/material.dart';
 
 class UserLogin extends StatefulWidget {
   final TextEditingController emailController;

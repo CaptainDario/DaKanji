@@ -1,22 +1,20 @@
 // Dart imports:
 import 'dart:ui' as ui;
 
-// Flutter imports:
-import 'package:flutter/material.dart';
-
-// Package imports:
-import 'package:easy_localization/easy_localization.dart';
-import 'package:get_it/get_it.dart';
-import 'package:liquid_swipe/liquid_swipe.dart';
-import 'package:vector_graphics/vector_graphics.dart';
-
 // Project imports:
 import 'package:da_kanji_mobile/core/routing/screens.dart';
 import 'package:da_kanji_mobile/core/user/user_data.dart';
-import 'package:da_kanji_mobile/globals.dart';
-import 'package:da_kanji_mobile/locales_keys.dart';
 import 'package:da_kanji_mobile/features/dictionary/screens/dictionary_screen.dart';
 import 'package:da_kanji_mobile/features/onboarding/widgets/on_boarding_page.dart';
+import 'package:da_kanji_mobile/globals.dart';
+import 'package:da_kanji_mobile/locales_keys.dart';
+// Package imports:
+import 'package:easy_localization/easy_localization.dart';
+// Flutter imports:
+import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
+import 'package:liquid_swipe/liquid_swipe.dart';
+import 'package:vector_graphics/vector_graphics.dart';
 
 /// The "home"-screen
 /// 

@@ -1,9 +1,8 @@
 // Dart imports:
 import 'package:da_db/database/da_db.dart';
 import 'package:da_db/database/index/yomitan_index.dart';
+import 'package:da_db/parsing/staging_db/mergers/staging_merger.dart';
 import 'package:language_processing/language_processing.dart';
-
-import '../../../staging_db/mergers/staging_merger.dart';
 
 class TermBankV3Merger implements StagingMerger {
 
