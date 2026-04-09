@@ -932,11 +932,10 @@ packages:
   flutter_widget_from_html_core:
     dependency: transitive
     description:
-      name: flutter_widget_from_html_core
-      sha256: "1120ee6ed3509ceff2d55aa6c6cbc7b6b1291434422de2411b5a59364dd6ff03"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.17.0"
+      path: "/Users/darioklepoch/dev/flutter_packages/flutter_widget_from_html_2/packages/core/"
+      relative: false
+    source: path
+    version: "0.17.2"
   freezed_annotation:
     dependency: transitive
     description:

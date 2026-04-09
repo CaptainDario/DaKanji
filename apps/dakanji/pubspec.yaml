@@ -72,7 +72,8 @@ dependencies:
   flutter_subtitle: ^0.0.6
   supabase_flutter: ^2.10.3
 
-  flutter_widget_from_html_core: ^0.17.0
+  flutter_widget_from_html_core:
+    path: /Users/darioklepoch/dev/flutter_packages/flutter_widget_from_html_2/packages/core/
   lite_rt_for_flutter: 0.0.1
   
   lite_rt_for_flutter_libs_android:
