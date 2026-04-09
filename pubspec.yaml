@@ -1,4 +1,4 @@
-name: DaLang
+name: da_lang
 publish_to: none
 environment:
   sdk: ^3.9.0
