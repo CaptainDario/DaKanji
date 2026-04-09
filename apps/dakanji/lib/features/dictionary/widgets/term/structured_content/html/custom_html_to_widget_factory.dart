@@ -1,5 +1,6 @@
 import 'package:da_db/database/da_db.dart';
 import 'package:da_kanji_mobile/features/dictionary/widgets/term/structured_content/html/html_help_attribute_to_widget_factory.dart';
+import 'package:da_kanji_mobile/features/dictionary/widgets/term/structured_content/html/image_from_html_with_loading.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
 import 'package:flutter_util/widget_utils/future_image_provider.dart';
@@ -24,8 +25,9 @@ class CustomHtmlToWidgetFactory extends WidgetFactory {
   ImageProvider<Object>? imageProviderFromNetwork(String url) {
 
     if (!url.startsWith(RegExp(r'^https?://'))){
-      return FutureImageProvider(url,
-        () => db.mediaDao.getMediaByPath(url, indexId),);
+      return FutureImageProvider(url, () async {
+        return db.mediaDao.getMediaByPath(url, indexId);
+      });
     }
     else {
       return super.imageProviderFromNetwork(url);
@@ -41,6 +43,11 @@ class CustomHtmlToWidgetFactory extends WidgetFactory {
 
     final url = data.sources.isNotEmpty ? data.sources.first.url : '';
     if (url.isEmpty) return builtImage;
+
+    final provider = imageProviderFromNetwork(url);
+    if (provider != null) {
+      return ImageFromHtmlWithLoading(provider: provider, child: builtImage);
+    }
 
     final uniqueTag = "$url-${tree.element.hashCode}";
 

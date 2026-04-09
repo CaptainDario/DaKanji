@@ -15,7 +15,7 @@ BuildOp htmlHelpAttributeToWidget(String title){
         ),
       );
 
-      // 2. Return the result inside a WidgetPlaceholder to keep it inline
+      // Return the result inside a WidgetPlaceholder to keep it inline
       return WidgetPlaceholder(
         child: interactiveWidget,
       );
