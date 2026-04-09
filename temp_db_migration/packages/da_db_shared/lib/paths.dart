@@ -2,7 +2,7 @@
 import 'package:path/path.dart' as p;
 import 'package:universal_io/io.dart';
 
-/// Finds the project root by searching upwards for a `melos.yaml` file.
+/// Finds the project root by searching upwards for a `anchorFileName` file.
 ///
 /// Starts from the current directory and traverses up the file system.
 /// Throws a StateError if the root is not found.
