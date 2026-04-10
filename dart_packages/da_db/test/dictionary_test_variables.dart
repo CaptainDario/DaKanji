@@ -4,9 +4,10 @@ import 'package:da_db/database/index/index_table_entry.dart';
 import 'package:da_db/database/index/yomitan_index.dart';
 import 'package:da_db/database/tag/tag_bank_v3_entry.dart';
 import 'package:da_db/database/term_meta/term_meta_bank_entry.dart';
-import 'package:da_db_shared/da_db_shared.dart';
 import 'package:language_processing/language_processing.dart';
 import 'package:mecab_for_dart/mecab_dart.dart';
+
+import '../../shared_utils/lib/root_path.dart';
 
 
 

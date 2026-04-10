@@ -1,8 +1,8 @@
-import 'package:da_db_shared/da_db_shared.dart';
 import 'package:language_processing/src/japanese/mecab_text_processing/mecab_process_text.dart';
 import 'package:mecab_for_dart/mecab_dart.dart';
 import 'package:test/test.dart';
 
+import '../../../../shared_utils/lib/shared_utils.dart';
 import 'mecab_select_word_test_cases.dart';
 
 

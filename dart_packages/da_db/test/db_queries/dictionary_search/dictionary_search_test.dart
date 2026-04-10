@@ -5,12 +5,12 @@ import 'dart:io';
 import 'package:da_db/database/da_db.dart';
 import 'package:da_db/database/db_queries/dictionary_search/dictionary_search_params.dart';
 import 'package:da_db/parsing/util/parsing_constants.dart';
-import 'package:da_db_shared/da_db_shared.dart';
 import 'package:drift/drift.dart';
 import 'package:language_processing/src/language_processor_options.dart';
 import 'package:path/path.dart' as p;
 import 'package:test/test.dart';
 
+import '../../../../shared_utils/lib/shared_utils.dart';
 import '../../dictionary_test_variables.dart';
 import '../../test_utils/db_files.dart';
 import 'dictionary_multi_search_test_cases.dart';

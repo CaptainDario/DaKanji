@@ -1,7 +1,7 @@
 import 'package:da_db/database/da_db.dart';
-import 'package:da_db_shared/paths.dart';
 import 'package:test/test.dart';
 
+import '../../../shared_utils/lib/da_db_paths.dart';
 import '../test_utils/ignore_database_generated_data.dart';
 import '../test_utils/setup_fresh_db.dart';
 import 'example_bank_fts_test_cases.dart';

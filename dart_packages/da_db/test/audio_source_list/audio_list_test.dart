@@ -1,9 +1,9 @@
 
 import 'package:da_db/database/da_db.dart';
-import 'package:da_db_shared/paths.dart';
 import 'package:path/path.dart' as p;
 import 'package:test/test.dart';
 
+import '../../../shared_utils/lib/da_db_paths.dart';
 import '../test_utils/ignore_database_generated_data.dart';
 import '../test_utils/setup_fresh_db.dart';
 import 'audio_list_test_cases.dart';

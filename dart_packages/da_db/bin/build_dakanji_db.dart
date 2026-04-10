@@ -5,12 +5,13 @@ import 'package:da_db/parsing/kanji_vg_parser.dart';
 import 'package:da_db/parsing/radicals_parser.dart';
 import 'package:da_db/parsing/tatoeba_parser.dart';
 import 'package:da_db/parsing/unified_staging_parser.dart';
-import 'package:da_db_shared/paths.dart';
 import 'package:language_processing/language_processing.dart';
 import 'package:mecab_for_dart/mecab_dart.dart';
 import 'package:path/path.dart' as p;
 import 'package:universal_io/io.dart';
 
+import '../../shared_utils/lib/da_db_paths.dart';
+import '../../shared_utils/lib/root_path.dart';
 import '../test/test_utils/db_files.dart';
 import 'get_sources.dart';
 

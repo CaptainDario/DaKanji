@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:da_db/database/da_db.dart';
 import 'package:da_db/parsing/unified_staging_parser.dart';
-import 'package:da_db_shared/paths.dart';
+import '../../../shared_utils/lib/da_db_paths.dart';
 
 import '../dictionary_test_variables.dart';
 import '../test_utils/db_files.dart';

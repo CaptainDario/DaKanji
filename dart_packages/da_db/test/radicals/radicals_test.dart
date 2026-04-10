@@ -1,10 +1,10 @@
 
 import 'package:da_db/database/da_db.dart';
 import 'package:da_db/parsing/radicals_parser.dart';
-import 'package:da_db_shared/paths.dart';
 import 'package:test/test.dart';
 import 'package:universal_io/io.dart';
 
+import '../../../shared_utils/lib/da_db_paths.dart';
 import '../dictionary_test_variables.dart';
 import 'radicals_test_cases.dart';
 

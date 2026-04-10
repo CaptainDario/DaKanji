@@ -1,10 +1,10 @@
-import 'package:da_db_shared/paths.dart';
 import 'package:kana_kit/kana_kit.dart';
 import 'package:language_processing/src/japanese/mecab_word_selection/select_word.dart';
 import 'package:language_processing/src/parse_result.dart';
 import 'package:mecab_for_dart/mecab_dart.dart';
 import 'package:test/test.dart';
 
+import '../../../../shared_utils/lib/shared_utils.dart';
 import 'mecab_process_text_test_cases.dart';
 
 void main() {

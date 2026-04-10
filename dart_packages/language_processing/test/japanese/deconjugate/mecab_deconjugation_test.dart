@@ -1,9 +1,9 @@
 
-import 'package:da_db_shared/da_db_shared.dart';
 import 'package:language_processing/src/japanese/mecab_deconjugation/deconjugate.dart';
 import 'package:mecab_for_dart/mecab_dart.dart';
 import 'package:test/test.dart';
 
+import '../../../../shared_utils/lib/shared_utils.dart';
 import 'mecab_deconjugation_test_cases.dart';
 
 void main() async {

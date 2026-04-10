@@ -2,11 +2,11 @@
 import 'package:da_db/database/da_db.dart';
 import 'package:da_db/database/db_queries/kanji_dictionary_search/kanji_dictionary_search_result.dart';
 import 'package:da_db/parsing/unified_staging_parser.dart';
-import 'package:da_db_shared/paths.dart';
 import 'package:path/path.dart' as p;
 import 'package:test/test.dart';
 import 'package:universal_io/io.dart';
 
+import '../../../../shared_utils/lib/da_db_paths.dart';
 import '../../dictionary_test_variables.dart';
 import '../../test_utils/db_files.dart';
 import '../../test_utils/ignore_database_generated_data.dart';

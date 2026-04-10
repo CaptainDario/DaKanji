@@ -1,10 +1,10 @@
 import 'package:da_db/data/dictionary_types.dart';
 import 'package:da_db/database/da_db.dart';
-import 'package:da_db_shared/paths.dart';
 import 'package:path/path.dart' as p;
 import 'package:test/test.dart';
 import 'package:universal_io/io.dart';
 
+import '../../../shared_utils/lib/da_db_paths.dart';
 import '../dictionary_test_variables.dart';
 import '../test_utils/db_files.dart';
 import 'delete_dictionary_test_util.dart';

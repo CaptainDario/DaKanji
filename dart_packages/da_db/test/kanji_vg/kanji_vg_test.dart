@@ -2,9 +2,9 @@ import 'dart:io';
 
 import 'package:da_db/database/da_db.dart';
 import 'package:da_db/parsing/kanji_vg_parser.dart';
-import 'package:da_db_shared/da_db_shared.dart';
 import 'package:test/test.dart';
 
+import '../../../shared_utils/lib/shared_utils.dart';
 import '../dictionary_test_variables.dart';
 import 'kanji_vg_test_cases.dart';
 

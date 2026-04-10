@@ -3,10 +3,10 @@ import 'package:da_db/database/da_db.dart';
 import 'package:da_db/database/example/example_search_result.dart';
 import 'package:da_db/database/index/index_table_entry.dart';
 import 'package:da_db/parsing/unified_staging_parser.dart';
-import 'package:da_db_shared/da_db_shared.dart';
 import 'package:test/test.dart';
 import 'package:universal_io/universal_io.dart';
 
+import '../../../shared_utils/lib/shared_utils.dart';
 import '../dictionary_test_variables.dart';
 import '../test_utils/db_files.dart';
 import '../test_utils/ignore_database_generated_data.dart';

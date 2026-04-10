@@ -11,7 +11,7 @@ workspace:
   - flutter_packages/css_inline_flutter
 
   - dart_packages/da_db
-  - dart_packages/da_db_shared
+  - dart_packages/shared_utils
   - dart_packages/language_processing
   - dart_packages/sqlite_extensions
 

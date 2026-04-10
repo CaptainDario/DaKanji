@@ -2,10 +2,10 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:da_db/parsing/yomitan/in_memory_cache/term/definition_parser.dart';
-import 'package:da_db_shared/paths.dart';
 import 'package:path/path.dart' as p;
 import 'package:test/test.dart';
 
+import '../../../shared_utils/lib/da_db_paths.dart';
 import 'definition_parsing_test_cases.dart';
 
 

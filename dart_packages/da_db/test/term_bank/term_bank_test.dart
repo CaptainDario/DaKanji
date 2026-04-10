@@ -4,10 +4,10 @@ import 'dart:io';
 import 'package:da_db/database/da_db.dart';
 import 'package:da_db/database/term/term_bank_v3_entry.dart';
 import 'package:da_db/parsing/util/parsing_constants.dart';
-import 'package:da_db_shared/paths.dart';
 import 'package:path/path.dart' as p;
 import 'package:test/test.dart';
 
+import '../../../shared_utils/lib/da_db_paths.dart';
 import '../dictionary_test_variables.dart';
 import '../test_utils/db_files.dart';
 import '../test_utils/ignore_database_generated_data.dart';

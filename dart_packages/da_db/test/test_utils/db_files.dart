@@ -2,9 +2,10 @@ import 'package:archive/archive_io.dart';
 import 'package:da_db/database/da_db.dart';
 import 'package:da_db/parsing/unified_staging_parser.dart';
 import 'package:da_db/parsing/util/db_optimization.dart';
-import 'package:da_db_shared/da_db_shared.dart';
 import 'package:path/path.dart' as p;
 import 'package:universal_io/io.dart';
+
+import '../../../shared_utils/lib/shared_utils.dart';
 
 
 /// For some tests it is desirable to only import a subset of the dictionary
