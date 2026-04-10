@@ -1,13 +1,15 @@
 // test/yomitan_deconjugate_test.dart
 
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:collection/collection.dart';
 import 'package:language_processing/src/japanese/yomitan_deconjugation/language_transformer.dart';
 import 'package:language_processing/src/japanese/yomitan_deconjugation/transform_loader.dart';
 import 'package:path/path.dart' as p;
+import 'package:shared_utils/shared_utils.dart';
 import 'package:test/test.dart';
 
-import '../../../../shared_utils/lib/shared_utils.dart';
-import 'yomitan_deconjugate_test_cases.dart';
 
 class DeconjugationTestCase {
   final String source;
@@ -52,12 +54,22 @@ bool _findMatch(DeinflectionEngine engine, DeconjugationTestCase testCase) {
 void main() {
   final engine = DeinflectionEngine();
   final descriptor = GrammarLoader.loadFromFile(
-    p.join(coreTestsPath, 'japanese-transforms.json')
+    p.join(languageProcessingTestsPath, 'japanese', 'deconjugate', 'test', 'japanese-transforms.json')
   );
   engine.loadGrammar(descriptor);
 
+  final testDataPath = p.join(
+    languageProcessingTestsPath,
+    'test_data',
+    'yomitan-deinflection-rules',
+    'tests',
+    'japanese-transforms.json',
+  );
+  final testCases = (jsonDecode(File(testDataPath).readAsStringSync()) as List)
+      .cast<Map<String, dynamic>>();
+
   group('De-inflections', () {
-    for (final data in yomitanConjugateTestCases) {
+    for (final data in testCases) {
       final category = data['category'] as String;
       final isValid = data['valid'] as bool;
       final tests = data['tests'] as List;

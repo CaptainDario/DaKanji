@@ -4,3 +4,6 @@
 [submodule "dart_packages/dakanji-dictionary"]
 	path = dart_packages/dakanji-dictionary
 	url = https://github.com/CaptainDario/DaKanji-Dictionary
+[submodule "dart_packages/language_processing/test/test_data/yomitan-deinflection-rules"]
+	path = dart_packages/language_processing/test/test_data/yomitan-deinflection-rules
+	url = https://github.com/CaptainDario/yomitan-deinflection-rules

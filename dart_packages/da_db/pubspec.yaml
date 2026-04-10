@@ -31,7 +31,6 @@ dependencies:
   fullwidth_halfwidth_converter: 1.2.0
   crypto: ^3.0.2
   sqlite_extensions:
-  da_db_shared:
 
 dev_dependencies:
   drift_dev: ^2.32.0
@@ -41,6 +40,7 @@ dev_dependencies:
   lints: 6.0.0
   test: ^1.26.0
   json_serializable: ^6.11.1
+  shared_utils:
   
 dependency_overrides:
   hooks: 1.0.1
