@@ -67,7 +67,7 @@ Feature overview:
 
 ## Contributing
 
-<a href="https://discord.gg/gdqaux3r4P"><img src="https://discordapp.com/api/guilds/852915748300783636/widget.png?style=banner2" width="25%"></a>
+<a href="https://discord.gg/XUrv6ADDTu"><img src="https://discordapp.com/api/guilds/852915748300783636/widget.png?style=banner2" width="25%"></a>
 
 All contributions are welcome!
 Here is a list of things that would help this project:
